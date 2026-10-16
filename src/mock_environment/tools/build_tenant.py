@@ -54,6 +54,16 @@ def _merge_users(lists):
     return list(seen.values())
 
 
+# COEP's "arrayScope" rules (e.g. "BccRecipient should not have Flag... when it is
+# group") fail when the array is absent on every record, even though the schema
+# makes it optional. Always emit the recipient arrays, empty if unused.
+EMAIL_ARRAYS = ("ToRecipients", "CcRecipients", "BccRecipients")
+
+
+def _normalize_email(e: dict) -> dict:
+    return {**e, **{k: e.get(k) or [] for k in EMAIL_ARRAYS}}
+
+
 def _write(path: Path, data) -> None:
     path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
@@ -65,7 +75,7 @@ def main() -> None:
 
     data = {
         "users": _merge_users(s.users() for s in SCENARIOS),
-        "emails": [e for s in SCENARIOS for e in s.emails()],
+        "emails": [_normalize_email(e) for s in SCENARIOS for e in s.emails()],
         "chats": [c for s in SCENARIOS for c in s.chats()],
         "events": [e for s in SCENARIOS for e in s.events()],
         "files": [f for s in SCENARIOS for f in s.files()],

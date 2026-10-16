@@ -200,6 +200,24 @@ def cross_checks(pkg: Path, data: dict) -> None:
             err(f"{w}: Meeting chat EventId not in events")
 
 
+def array_scope_checks(data: dict) -> None:
+    """COEP fails an "arrayScope" rule outright when that array is absent on every
+    record of the type, even if the schema makes the field optional."""
+    for type_name, records in data.items():
+        rules_path = SCHEMAS / type_name / "rules.json"
+        if not isinstance(records, list) or not records or not rules_path.exists():
+            continue
+        scopes = set(re.findall(r'"arrayScope":\s*"([^"]+)"', rules_path.read_text(encoding="utf-8")))
+        for scope in sorted(scopes):
+            def resolve(obj, parts=scope.split(".")):
+                for p in parts:
+                    obj = obj.get(p) if isinstance(obj, dict) else None
+                return obj
+            if not any(isinstance(resolve(r), list) for r in records):
+                err(f"{type_name}: '{scope}' must be an array (use [] if unused) on at least one record; "
+                    f"COEP rule arrayScope '{scope}' can't be evaluated otherwise")
+
+
 def main() -> int:
     global AS_OF
     ap = argparse.ArgumentParser(description="Validate a COEP grounding-data package.")
@@ -215,6 +233,7 @@ def main() -> int:
         err("config.json is required")
     data = schema_check(pkg)
     cross_checks(pkg, data)
+    array_scope_checks(data)
     counts = ", ".join(f"{k}={len(v) if isinstance(v, list) else 1}" for k, v in sorted(data.items()))
     print(f"Package: {pkg}\nLoaded: {counts}")
     if errors:
