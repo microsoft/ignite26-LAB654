@@ -50,5 +50,23 @@
         "SentDateTime": "2026-10-12T12:07:00Z"
       }
     ]
+  },
+  {
+    "ChatId": "finance-chat-001",
+    "ChatType": "OneOnOne",
+    "Members": [
+      "jreyes",
+      "amorgan"
+    ],
+    "CreatedDateTime": "2026-10-09T19:59:00Z",
+    "ChatMessages": [
+      {
+        "ChatMessageId": "1",
+        "From": "jreyes",
+        "ContentType": "text",
+        "Content": "Committee wants a view on NVIDIA Monday. Should we add more? Bring a short memo.",
+        "SentDateTime": "2026-10-09T20:00:00Z"
+      }
+    ]
   }
 ]

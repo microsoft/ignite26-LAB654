@@ -55,7 +55,7 @@ To get a token, sign in to the portal and copy the `Authorization` bearer value 
 | Scenario | Source | Tenant seed | Connector seed |
 |----------|--------|-------------|----------------|
 | Legal | [scenario](../scenarios/legal/scenario.md), [seed kit](../scenarios/legal/seed_kit.md) | `tools/scenarios/legal/`: 3 users, 1 email, 2 chats | `mock_mcp_servers/imanage/seed_files/` |
-| Finance | Pending | Pending | Pending |
+| Finance | [scenario](../scenarios/finance/scenario.md) | `tools/scenarios/finance/`: 2 users, 1 chat | Pending: data specs in `mock_mcp_servers/lseg/`, `factset/`, `moodys/` |
 | Productivity | Pending | Pending | Pending |
 
 To add a scenario, create a module or package under `tools/scenarios/` that exposes `users()`, `emails()`, `chats()`, `events()` and `files()`, and optionally `build_documents(files_dir)`. Then add it to `SCENARIOS` in `build_tenant.py`.
@@ -64,3 +64,5 @@ To add a scenario, create a module or package under `tools/scenarios/` that expo
 
 - User aliases (`mhollowell`, `rsengupta`, `taguilar`) follow the kit's .eml addresses. Marcus has the Microsoft 365 Copilot license; Radhika and Tomás have mailbox and Teams only, as the kit specifies.
 - External people (Diane Xu and Priya Ramasubramanian at Cognivault) have no accounts and appear only in documents.
+- Finance: the one-pager names only "Alex" and "Jordan" at "an asset manager". The surnames (Morgan, Reyes), aliases (`amorgan`, `jreyes`), firm (Woodgrove Asset Management) and New York / Eastern time are placeholders. Alex has the Microsoft 365 Copilot license; Jordan has mailbox and Teams only.
+- Finance: Jordan's trigger message is pinned to Fri Oct 9, 2026, 4:00 PM ET (`ASK_DATE` in `tools/scenarios/finance/__init__.py`). The investment committee isn't seeded as people or a meeting because the one-pager doesn't name its members or time.

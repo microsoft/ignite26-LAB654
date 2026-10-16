@@ -18,12 +18,12 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
-from scenarios import legal  # noqa: E402
+from scenarios import finance, legal  # noqa: E402
 
 PACKAGE_DIR = HERE.parent / "Connectors_Ignite_EMP"
 
-# Add finance / productivity modules here as they're authored.
-SCENARIOS = [legal]
+# Add the productivity module here once it's authored.
+SCENARIOS = [legal, finance]
 
 CONFIG = {
     "Tenant": {

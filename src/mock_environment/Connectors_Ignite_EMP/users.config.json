@@ -65,5 +65,36 @@
       "Microsoft Teams Enterprise",
       "Office 365 E5 (no Teams)"
     ]
+  },
+  {
+    "MailNickName": "amorgan",
+    "DisplayName": "Alex Morgan",
+    "FirstName": "Alex",
+    "LastName": "Morgan",
+    "JobTitle": "Equity Analyst",
+    "Department": "Investments",
+    "CompanyName": "Woodgrove Asset Management",
+    "UsageLocation": "US",
+    "OfficeLocation": "New York, NY",
+    "Licenses": [
+      "Microsoft 365 Copilot",
+      "Microsoft Teams Enterprise",
+      "Office 365 E5 (no Teams)"
+    ]
+  },
+  {
+    "MailNickName": "jreyes",
+    "DisplayName": "Jordan Reyes",
+    "FirstName": "Jordan",
+    "LastName": "Reyes",
+    "JobTitle": "Portfolio Manager",
+    "Department": "Investments",
+    "CompanyName": "Woodgrove Asset Management",
+    "UsageLocation": "US",
+    "OfficeLocation": "New York, NY",
+    "Licenses": [
+      "Microsoft Teams Enterprise",
+      "Office 365 E5 (no Teams)"
+    ]
   }
 ]

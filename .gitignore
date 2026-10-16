@@ -427,3 +427,6 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# COEP upload archives (built manually, never tracked)
+src/mock_environment/**/*.zip
