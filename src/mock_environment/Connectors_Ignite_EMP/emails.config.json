@@ -22,16 +22,16 @@
   {
     "EmailId": "productivity-email-001",
     "EmailAction": "Send",
-    "Sender": "jblake",
+    "Sender": "rblake",
     "ToRecipients": [
       {
-        "Recipient": "achen"
+        "Recipient": "mhollowell"
       }
     ],
     "Subject": "Aurora POS kits – ETA for our stores?",
-    "Body": "<p>Hi Avery,</p>\n<p>Quick check on the Zava Aurora POS kits for our stores. What's the current ETA for delivery to Contoso Retail?</p>\n<p>Our store staff training is on Tuesday, Oct 27, and the stores need the complete kits (signage included) on site before then so the teams can set up and train on the real displays.</p>\n<p>Can you confirm the dates, or let me know if anything has changed?</p>\n<p>Thanks,<br>Jordan<br>Contoso Retail</p>",
+    "Body": "<p>Hi Marcus,</p>\n<p>Quick check on the Verdantis Aurora POS kits for our stores. What's the current ETA for delivery to Contoso Retail?</p>\n<p>Our store staff training is on Tuesday, Oct 27, and the stores need the complete kits (signage included) on site before then so the teams can set up and train on the real displays.</p>\n<p>Can you confirm the dates, or let me know if anything has changed?</p>\n<p>Thanks,<br>Riley<br>Contoso Retail</p>",
     "BodyType": "html",
-    "Timestamp": "2026-10-12T14:40:00Z",
+    "Timestamp": "2026-10-12T11:40:00Z",
     "CcRecipients": [],
     "BccRecipients": []
   }

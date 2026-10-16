@@ -1,22 +1,27 @@
-"""Productivity scenario tenant seed data (Zava Aurora launch, vendor slip).
+"""Productivity scenario tenant seed data (Verdantis Aurora launch, vendor slip).
 
 Source: src/scenarios/productivity/scenario.md
 (Ignite_Lab_Productivity_Module_Smartsheet_Notion_Intranet.docx).
 
 The doc asks the M365 tenant for:
 
-- Lab users: Avery (launch PM), Sam (Retail Ops lead) and Jordan (Contoso
+- Lab users: the launch lead, Sam (Retail Ops lead) and Riley (Contoso
   Retail). The unnamed "Aurora core team" is not seeded.
-- Jordan's email to Avery asking for the POS kit ETA (doc 6.1). The doc gives
-  only its gist; the wording here is authored.
-- Zava Hub intranet pages (doc 6.4), seeded as COEP intranetwebsite items so
-  the synced Enterprise Websites connector has content to ground on.
+- Riley's email to the launch lead asking for the POS kit ETA (doc 6.1). The
+  doc gives only its gist; the wording here is authored.
+- Verdantis Hub intranet pages (doc 6.4), seeded as COEP intranetwebsite items
+  so the synced Enterprise Websites connector has content to ground on.
 
 Smartsheet and Notion data are served by the mock MCP servers, not the tenant.
 
+One lab account plays every domain, so the launch lead is Marcus Hollowell
+(defined by the legal module, which is already in the tenant) instead of the
+doc's Avery, and Zava becomes Verdantis. The doc's Jordan is renamed Riley so
+it doesn't clash with finance's Jordan.
+
 Dates: the doc's Monday "today" (Nov 16, 2026) is shifted back 35 days to
-STORY_DATE so every timestamp is in the past. Surnames, titles, Seattle
-location, hub.zava.com host, decoy page paths and the page author identity are
+STORY_DATE so every timestamp is in the past. Surnames, titles,
+hub.verdantis.com host, decoy page paths and the page author identity are
 placeholders; see the README's assumptions.
 """
 
@@ -28,52 +33,46 @@ from datetime import date, datetime, time, timedelta, timezone
 from html import escape
 from zoneinfo import ZoneInfo
 
+from ..legal import MARCUS, TEAMS_ONLY
+from ..legal import _user as _verdantis_user
+
 STORY_DATE = date(2026, 10, 12)  # Monday "today"; doc date Nov 16, 2026
 
-PT = ZoneInfo("America/Los_Angeles")
+ET = ZoneInfo("America/New_York")  # Verdantis is in Stamford, CT
 
-TEAMS_ONLY = ["Microsoft Teams Enterprise", "Office 365 E5 (no Teams)"]
-COPILOT_USER = ["Microsoft 365 Copilot", *TEAMS_ONLY]
+SAM, RILEY = "spatel", "rblake"
 
-AVERY, SAM, JORDAN = "achen", "spatel", "jblake"
-
-HUB = "https://hub.zava.com"
-HUB_AUTHOR = ("Zava Hub Content Team", "hubcontent@zava.com")
+HUB = "https://hub.verdantis.com"
+HUB_AUTHOR = ("Verdantis Hub Content Team", "hubcontent@verdantis.com")
 
 
 def utc(day_offset: int, hh: int, mm: int) -> str:
-    local = datetime.combine(STORY_DATE + timedelta(days=day_offset), time(hh, mm), tzinfo=PT)
+    local = datetime.combine(STORY_DATE + timedelta(days=day_offset), time(hh, mm), tzinfo=ET)
     return local.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-
-
-def _user(nick, first, last, title, dept, company, licenses):
-    return {
-        "MailNickName": nick,
-        "DisplayName": f"{first} {last}",
-        "FirstName": first,
-        "LastName": last,
-        "JobTitle": title,
-        "Department": dept,
-        "CompanyName": company,
-        "UsageLocation": "US",
-        "OfficeLocation": "Seattle, WA",
-        "Licenses": licenses,
-    }
 
 
 def users():
     return [
-        _user(AVERY, "Avery", "Chen", "Launch Program Manager", "Product Marketing", "Zava", COPILOT_USER),
-        _user(SAM, "Sam", "Patel", "Retail Operations Lead", "Retail Operations", "Zava", TEAMS_ONLY),
-        _user(JORDAN, "Jordan", "Blake", "Partner Account Manager", "Partner Operations", "Contoso Retail", TEAMS_ONLY),
+        _verdantis_user(SAM, "Sam", "Patel", "Retail Operations Lead", "Retail Operations", TEAMS_ONLY),
+        {
+            "MailNickName": RILEY,
+            "DisplayName": "Riley Blake",
+            "FirstName": "Riley",
+            "LastName": "Blake",
+            "JobTitle": "Partner Account Manager",
+            "Department": "Partner Operations",
+            "CompanyName": "Contoso Retail",
+            "UsageLocation": "US",
+            "Licenses": TEAMS_ONLY,
+        },
     ]
 
 
-JORDAN_EMAIL = """<p>Hi Avery,</p>
-<p>Quick check on the Zava Aurora POS kits for our stores. What's the current ETA for delivery to Contoso Retail?</p>
+RILEY_EMAIL = """<p>Hi Marcus,</p>
+<p>Quick check on the Verdantis Aurora POS kits for our stores. What's the current ETA for delivery to Contoso Retail?</p>
 <p>Our store staff training is on Tuesday, Oct 27, and the stores need the complete kits (signage included) on site before then so the teams can set up and train on the real displays.</p>
 <p>Can you confirm the dates, or let me know if anything has changed?</p>
-<p>Thanks,<br>Jordan<br>Contoso Retail</p>"""
+<p>Thanks,<br>Riley<br>Contoso Retail</p>"""
 
 
 def emails():
@@ -81,10 +80,10 @@ def emails():
         {
             "EmailId": "productivity-email-001",
             "EmailAction": "Send",
-            "Sender": JORDAN,
-            "ToRecipients": [{"Recipient": AVERY}],
+            "Sender": RILEY,
+            "ToRecipients": [{"Recipient": MARCUS}],
             "Subject": "Aurora POS kits \u2013 ETA for our stores?",
-            "Body": JORDAN_EMAIL,
+            "Body": RILEY_EMAIL,
             "BodyType": "html",
             "Timestamp": utc(0, 7, 40),
         }
@@ -103,7 +102,7 @@ def files():
     return []
 
 
-# --- Zava Hub intranet pages (COEP intranetwebsite) -------------------------
+# --- Verdantis Hub intranet pages (COEP intranetwebsite) -------------------------
 
 def _page_html(crumbs, title, updated: date, body: str) -> str:
     items = "".join(f'<li><a href="{HUB}{href}">{escape(name)}</a></li>' for name, href in crumbs)
@@ -118,7 +117,7 @@ PAGES = [
         "crumbs": [("Retail", "/retail")],
         "title": "Retail Partner Launch Playbook",
         "description": (
-            "The current rules every Zava launch team follows when shipping launch materials to retail partner stores. "
+            "The current rules every Verdantis launch team follows when shipping launch materials to retail partner stores. "
             "It covers POS kit timing against store staff training, when split shipments are allowed and who approves them, "
             "and how quickly partners must hear about changes."
         ),
@@ -126,7 +125,7 @@ PAGES = [
         "created": -220,
         "modified": -27,
         "body": """
-<p>This playbook applies to every Zava product launch that ships point-of-sale (POS) kits, signage or other launch materials to retail partner stores. It replaces the <a href="/retail/launch-playbook-2025">2025 playbook</a>, which is archived and no longer in force.</p>
+<p>This playbook applies to every Verdantis product launch that ships point-of-sale (POS) kits, signage or other launch materials to retail partner stores. It replaces the <a href="/retail/launch-playbook-2025">2025 playbook</a>, which is archived and no longer in force.</p>
 <h2>Who this is for</h2>
 <p>Launch program managers, Retail Operations, and anyone who commits dates to a retail partner. If you are unsure whether a rule applies, ask Retail Operations before you promise anything to a partner.</p>
 <h2>POS kit timing</h2>
@@ -185,7 +184,7 @@ PAGES = [
 <h2>Quality and delivery</h2>
 <p>All vendors ship to the addresses on the PO and provide tracking. Report damaged or incorrect deliveries to Procurement within 2 business days so the vendor can reprint.</p>
 <h2>Contacts</h2>
-<p>Procurement: procurement@zava.com. Include the launch name and PO number in the subject line.</p>
+<p>Procurement: procurement@verdantis.com. Include the launch name and PO number in the subject line.</p>
 """,
     },
     {
@@ -245,7 +244,7 @@ PAGES = [
         "modified": -400,
         "body": """
 <blockquote><strong>Archived.</strong> This page is superseded by the current <a href="/retail/launch-playbook">Retail Partner Launch Playbook</a> and is kept for reference only. Do not use these rules for current launches.</blockquote>
-<p>This playbook applied to Zava product launches in 2025 that shipped launch materials to retail partner stores.</p>
+<p>This playbook applied to Verdantis product launches in 2025 that shipped launch materials to retail partner stores.</p>
 <h2>POS kit timing</h2>
 <p>POS kits must arrive in partner stores at least <strong>5 days</strong> before store staff training.</p>
 <h2>Split shipments</h2>
@@ -276,7 +275,7 @@ PAGES = [
         "crumbs": [("Customer Service", "/customer-service")],
         "title": "Holiday Returns Policy",
         "description": (
-            "The extended return window for Zava products bought during the holiday season. "
+            "The extended return window for Verdantis products bought during the holiday season. "
             "It explains which purchases qualify, the return deadline, the condition products must be in, "
             "and how store and online customers return items."
         ),
@@ -284,18 +283,18 @@ PAGES = [
         "created": -380,
         "modified": -30,
         "body": """
-<p>To make holiday gifting easier, Zava extends the standard 30-day return window for purchases made during the holiday season. This policy applies to Zava products bought directly from Zava and from participating retail partners.</p>
+<p>To make holiday gifting easier, Verdantis extends the standard 30-day return window for purchases made during the holiday season. This policy applies to Verdantis products bought directly from Verdantis and from participating retail partners.</p>
 <h2>Eligible purchases</h2>
 <p>Products bought between <strong>November 1 and December 31</strong> can be returned until <strong>January 31</strong> of the following year with proof of purchase.</p>
 <h2>Condition of returned products</h2>
 <ul>
 <li>Opened devices must include all accessories, cables and packaging.</li>
-<li>Devices must be reset to factory settings and removed from the customer's Zava account.</li>
+<li>Devices must be reset to factory settings and removed from the customer's Verdantis account.</li>
 <li>Products with physical damage not caused by a defect are not eligible.</li>
 </ul>
 <h2>How to return</h2>
 <table><thead><tr><th>Bought from</th><th>Return to</th></tr></thead><tbody>
-<tr><td>Zava online store</td><td>Start a return from the order page; a prepaid label is emailed.</td></tr>
+<tr><td>Verdantis online store</td><td>Start a return from the order page; a prepaid label is emailed.</td></tr>
 <tr><td>Retail partner</td><td>The partner store where it was bought, under the partner's process.</td></tr>
 </tbody></table>
 <h2>Refunds</h2>
@@ -311,23 +310,23 @@ PAGES = [
 """,
     },
     {
-        "path": "/products/zava-lumen/launch-faq",
-        "crumbs": [("Products", "/products"), ("Zava Lumen", "/products/zava-lumen")],
-        "title": "Zava Lumen Launch FAQ",
+        "path": "/products/verdantis-lumen/launch-faq",
+        "crumbs": [("Products", "/products"), ("Verdantis Lumen", "/products/verdantis-lumen")],
+        "title": "Verdantis Lumen Launch FAQ",
         "description": (
-            "Frequently asked questions about the Zava Lumen smart lighting launch for internal teams. "
+            "Frequently asked questions about the Verdantis Lumen smart lighting launch for internal teams. "
             "It covers who owns the launch, where its tracker and materials live, and how to raise questions. "
-            "It does not cover the Zava Aurora launch."
+            "It does not cover the Verdantis Aurora launch."
         ),
-        "keywords": ["Zava Lumen", "Launch", "FAQ"],
+        "keywords": ["Verdantis Lumen", "Launch", "FAQ"],
         "created": -120,
         "modified": -20,
         "body": """
-<p>Zava Lumen is our smart lighting line. This FAQ answers common internal questions about its launch. For other launches, check that product's own pages.</p>
-<h2>Who owns the Zava Lumen launch?</h2>
+<p>Verdantis Lumen is our smart lighting line. This FAQ answers common internal questions about its launch. For other launches, check that product's own pages.</p>
+<h2>Who owns the Verdantis Lumen launch?</h2>
 <p>The Lumen launch team in Product Marketing owns the launch plan, partner communication and launch event.</p>
 <h2>Where is the launch tracker?</h2>
-<p>In Smartsheet, under "Zava Lumen Launch Tracker". Ask the Lumen launch team for access.</p>
+<p>In Smartsheet, under "Verdantis Lumen Launch Tracker". Ask the Lumen launch team for access.</p>
 <h2>Which retail partners are carrying Lumen?</h2>
 <p>Lumen launches online first. Retail partners will be confirmed later; until then, don't commit dates or materials to any partner.</p>
 <h2>Are there POS kits for Lumen?</h2>
@@ -335,7 +334,7 @@ PAGES = [
 <h2>Where are the product images and messaging?</h2>
 <p>In the Lumen brand folder, linked from the launch tracker. Use only approved assets.</p>
 <h2>Who do I ask about pricing?</h2>
-<p>The Commercial team. Don't share pricing outside Zava before the launch date.</p>
+<p>The Commercial team. Don't share pricing outside Verdantis before the launch date.</p>
 <h2>How do I raise a question that isn't answered here?</h2>
 <p>Post it in the Lumen launch channel, or contact the Lumen launch team directly. We update this FAQ weekly during the launch period.</p>
 <h2>Is there a launch event?</h2>
@@ -351,7 +350,7 @@ PAGES = [
         "crumbs": [("Finance", "/finance")],
         "title": "Travel & Expense Policy",
         "description": (
-            "The rules for booking business travel and claiming business expenses at Zava. "
+            "The rules for booking business travel and claiming business expenses at Verdantis. "
             "It covers booking channels, approval requirements, travel classes, meals and lodging limits, "
             "and the deadline and receipts needed to submit an expense claim."
         ),
@@ -359,7 +358,7 @@ PAGES = [
         "created": -500,
         "modified": -90,
         "body": """
-<p>This policy applies to all Zava employees and contractors who travel or spend money on Zava's behalf. It helps you spend responsibly and get reimbursed quickly.</p>
+<p>This policy applies to all Verdantis employees and contractors who travel or spend money on Verdantis's behalf. It helps you spend responsibly and get reimbursed quickly.</p>
 <h2>Booking travel</h2>
 <ul>
 <li>Book flights, hotels and rental cars through the corporate travel tool.</li>
@@ -380,7 +379,7 @@ PAGES = [
 <ul>
 <li>Personal entertainment and upgrades you choose for yourself.</li>
 <li>Traffic and parking fines.</li>
-<li>Expenses for people who aren't on Zava business.</li>
+<li>Expenses for people who aren't on Verdantis business.</li>
 </ul>
 <h2>Frequently asked questions</h2>
 <dl>
@@ -457,7 +456,7 @@ def _intranet_item(i: int, p: dict) -> dict:
             "FileType": "html",
             "URL": url,
             "Title": p["title"],
-            "IconUrl": "/assets/icons/zava-hub.svg",
+            "IconUrl": "/assets/icons/verdantis-hub.svg",
             "Keywords": p["keywords"],
             "Authors": [HUB_AUTHOR[0]],
             "LastModifiedBy": HUB_AUTHOR[0],

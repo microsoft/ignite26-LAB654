@@ -1,6 +1,8 @@
 # LAB654 · Finance track: Friday ask → Monday investment committee
 
 > Converted from `LAB654_Finance_Track_OnePager.docx` (owner: Anshuman). Wording is preserved; layout is simplified to Markdown.
+>
+> **Single lab persona:** one lab account plays all three domains, so Alex is replaced by Marcus Hollowell at Verdantis (the legal persona), the asset manager becomes the Verdantis Investment Office, and prompt 1a no longer states a job title.
 
 **Connectors:** LSEG · FactSet · Moody's  |  **~15 min hands-on**  |  **Owner:** Anshuman
 
@@ -14,26 +16,26 @@
 
 ## Persona and scenario
 
-Alex, equity analyst at an asset manager. The fund already owns NVIDIA.
+Marcus, at Verdantis, a US car and home insurer. Verdantis's investment portfolio already owns NVIDIA.
 
-Friday 4pm: the boss asks, "Should we buy more NVIDIA (or Company X)? Bring it to Monday's investment committee."
+Friday 4pm: Jordan, the portfolio manager, asks, "Should we buy more NVIDIA (or Company X)? Bring it to Monday's investment committee."
 
 Today: ~2 days across data services, Excel, Word and PowerPoint. In the lab: ~20 min with Copilot.
 
-Meet Alex. Alex works at an asset manager, a firm that invests money for pension funds and savers. One of the fund's biggest holdings is NVIDIA, the company behind most AI chips. It's Friday afternoon, and Alex's boss asks: "Should we buy more NVIDIA? Bring a recommendation to Monday's investment committee", the weekly meeting where senior people approve big investments. Normally that's a weekend of jumping between three paid data services, copying numbers into Excel and writing a memo. Today Alex does it with Copilot in three steps.
+Meet Marcus. Marcus works at Verdantis, an insurer whose Investment Office invests the premiums it holds to pay future claims. One of the portfolio's biggest holdings is NVIDIA, the company behind most AI chips. It's Friday afternoon, and Jordan, who runs the portfolio, asks Marcus: "Should we buy more NVIDIA? Bring a recommendation to Monday's investment committee", the weekly meeting where senior people approve big investments. Normally that's a weekend of jumping between three paid data services, copying numbers into Excel and writing a memo. Today Marcus does it with Copilot in three steps.
 
 *Not in finance?* This is any business case: is it worth a closer look, what do the numbers say, does my argument survive tough questions, then write it up for the people who decide.
 
 | | |
 |---|---|
-| **The people** | Alex, equity analyst: the Copilot user. · Jordan, portfolio manager: Alex's boss; asks the question. · The investment committee: senior people who approve big investments and will challenge the case. |
+| **The people** | Marcus Hollowell: the Copilot user. · Jordan Reyes, portfolio manager, Verdantis Investment Office: asks the question. · The investment committee: senior people who approve big investments and will challenge the case. |
 | **The trigger** | Jordan on Teams, Friday 4pm: "Committee wants a view on NVIDIA Monday. Should we add more? Bring a short memo." |
-| **Why it matters** | The fund already holds a lot of NVIDIA, so buying more puts even more savers' money on one company. A weak case gets torn apart on Monday. |
-| **What Alex needs for Monday** | 1. Is the business beating expectations? 2. Is it stronger than its rivals? 3. What's the upside and downside at today's price? 4. A view that survives tough questions, written up as a memo. |
+| **Why it matters** | The portfolio already holds a lot of NVIDIA, so buying more puts even more policyholders' money on one company. A weak case gets torn apart on Monday. |
+| **What Marcus needs for Monday** | 1. Is the business beating expectations? 2. Is it stronger than its rivals? 3. What's the upside and downside at today's price? 4. A view that survives tough questions, written up as a memo. |
 
 ## Flow
 
-| Step | Min | Alex's question | Output |
+| Step | Min | Marcus's question | Output |
 |---|---|---|---|
 | 1 · Sense check | 0–4 | Is NVIDIA worth a closer look? | Quick read on earnings and rivals |
 | 2 · Deep dive on the numbers | 4–12 | What do the numbers say, and what's the upside? | NVDA IC Pack workbook: snapshot + scenarios |
@@ -44,7 +46,7 @@ Meet Alex. Alex works at an asset manager, a firm that invests money for pension
 | # | Step | Prompt | Connector / skill |
 |---|---|---|---|
 | | **Step 1 · Sense check: Is NVIDIA worth a closer look?** | | |
-| 1a | Did it beat expectations? | [Copilot App] I'm an equity analyst preparing a recommendation for Monday's investment committee on whether our fund should buy more NVIDIA. To start with, Did NVIDIA beat analysts' expectations last quarter? Using LSEG, compare its actual earnings per share and revenue with the analyst consensus, and show the quarter and source. | LSEG |
+| 1a | Did it beat expectations? | [Copilot App] I'm preparing a recommendation for Monday's investment committee on whether our portfolio should buy more NVIDIA. To start with, Did NVIDIA beat analysts' expectations last quarter? Using LSEG, compare its actual earnings per share and revenue with the analyst consensus, and show the quarter and source. | LSEG |
 | 1b | Is it stronger than rivals? | [Copilot App] Using FactSet, compare how profitable NVIDIA, AMD and Broadcom have been over the past 5 years, using gross margin and return on invested capital (ROIC). | FactSet |
 | 1c | Is it worth a deeper look | [Copilot App] What is NVIDIA's credit rating and outlook according to Moody's and what's driving them? Then, based on everything so far, give me a one-line verdict on whether NVIDIA is worth a deeper look | Moody's |
 | | **Step 2 · Deep dive on the numbers: What do the numbers say?** | | |

@@ -30,7 +30,7 @@ Write tools must change the stored data so a follow-up live read returns the new
 
 ## Data required
 
-### 1. Sheet: "Zava Aurora Launch Tracker"
+### 1. Sheet: "Verdantis Aurora Launch Tracker"
 
 Columns, in order: **Task · Workstream · Owner · Status · Start · Due Date · Depends On · Notes**.
 
@@ -39,12 +39,12 @@ Status values: Not Started, In Progress, At Risk, Complete. "At Risk" must be a 
 | Task | Workstream | Owner | Status | Due Date |
 |------|-----------|-------|--------|----------|
 | Final hero video | Creative | Fabrikam Creative | In Progress | Sat Oct 10 |
-| Retail pricing sign-off | Commercial | Avery | Complete | Tue Oct 6 |
+| Retail pricing sign-off | Commercial | Marcus | Complete | Tue Oct 6 |
 | Print brochures & in-store signage | Retail | Northwind Print | In Progress | Fri Oct 16 |
 | Assemble POS kits | Retail | Ops | Not Started | Sun Oct 18 |
 | Ship POS kits to Contoso Retail stores | Retail | Ops | Not Started | Wed Oct 21 |
 | Store staff training | Retail | Contoso Retail | Not Started | Tue Oct 27 |
-| Press briefing deck | PR | Avery | In Progress | Sat Oct 24 |
+| Press briefing deck | PR | Marcus | In Progress | Sat Oct 24 |
 | Website launch page | Digital | Web team | In Progress | Thu Oct 29 |
 | Influencer seeding | Marketing | Marketing | Not Started | Wed Oct 28 |
 | Launch event run-of-show | Events | Events team | In Progress | Sat Oct 31 |
@@ -78,22 +78,22 @@ Each seat also sees these. They test that Copilot picks the right tracker.
 
 | Sheet | Contents |
 |-------|----------|
-| Zava Aurora – Retail Readiness Checklist | Store fixture checklist items, no dates |
+| Verdantis Aurora – Retail Readiness Checklist | Store fixture checklist items, no dates |
 | 2025 Holiday Launch Tracker (archived) | Old rows including Northwind Print tasks with 2025 dates |
-| Zava Lumen Launch Tracker | A different product's launch plan |
+| Verdantis Lumen Launch Tracker | A different product's launch plan |
 
 Decoys need only enough rows to be plausible. None should mention Aurora POS kits with 2026 dates.
 
 ## Seats and isolation
 
-- One copy of every sheet per lab seat (`avery01`, `avery02`, …), visible only to that seat's Smartsheet user. Write actions would collide on shared sheets.
+- One copy of every sheet per lab seat (`mhollowell01`, `mhollowell02`, …), visible only to that seat's Smartsheet user. Write actions would collide on shared sheets.
 - The Step 3 changes are made by the seat user, so updates and comments record that user as the author.
 - Reset each seat's sheets to the seed state between lab runs.
 
 ## Consistency rules
 
 - Dates match the shifted timeline in the [scenario doc](../../../scenarios/productivity/scenario.md); weekdays must be right.
-- Owner names match the tenant and other sources: Avery is the seat user; "Contoso Retail" and "Northwind Print" are organization names, not users.
+- Owner names match the tenant and other sources: Marcus is the seat user; "Contoso Retail" and "Northwind Print" are organization names, not users.
 - The Step 2 answer depends on these dates: signage must be in stores by Sat Oct 24 (3 days before training on Oct 27), so Northwind's signage ships express Oct 23.
 
 ## Open questions

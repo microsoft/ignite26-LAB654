@@ -67,48 +67,23 @@
     ]
   },
   {
-    "MailNickName": "amorgan",
-    "DisplayName": "Alex Morgan",
-    "FirstName": "Alex",
-    "LastName": "Morgan",
-    "JobTitle": "Equity Analyst",
-    "Department": "Investments",
-    "CompanyName": "Woodgrove Asset Management",
-    "UsageLocation": "US",
-    "OfficeLocation": "New York, NY",
-    "Licenses": [
-      "Microsoft 365 Copilot",
-      "Microsoft Teams Enterprise",
-      "Office 365 E5 (no Teams)"
-    ]
-  },
-  {
     "MailNickName": "jreyes",
     "DisplayName": "Jordan Reyes",
     "FirstName": "Jordan",
     "LastName": "Reyes",
     "JobTitle": "Portfolio Manager",
-    "Department": "Investments",
-    "CompanyName": "Woodgrove Asset Management",
+    "Department": "Investment Office",
+    "CompanyName": "Verdantis Technologies, Inc.",
     "UsageLocation": "US",
-    "OfficeLocation": "New York, NY",
+    "OfficeLocation": "Stamford, CT",
+    "Address": {
+      "Street": "200 Harborview Drive, Suite 1400",
+      "City": "Stamford",
+      "State": "CT",
+      "PostalCode": "06902",
+      "Country": "USA"
+    },
     "Licenses": [
-      "Microsoft Teams Enterprise",
-      "Office 365 E5 (no Teams)"
-    ]
-  },
-  {
-    "MailNickName": "achen",
-    "DisplayName": "Avery Chen",
-    "FirstName": "Avery",
-    "LastName": "Chen",
-    "JobTitle": "Launch Program Manager",
-    "Department": "Product Marketing",
-    "CompanyName": "Zava",
-    "UsageLocation": "US",
-    "OfficeLocation": "Seattle, WA",
-    "Licenses": [
-      "Microsoft 365 Copilot",
       "Microsoft Teams Enterprise",
       "Office 365 E5 (no Teams)"
     ]
@@ -120,24 +95,30 @@
     "LastName": "Patel",
     "JobTitle": "Retail Operations Lead",
     "Department": "Retail Operations",
-    "CompanyName": "Zava",
+    "CompanyName": "Verdantis Technologies, Inc.",
     "UsageLocation": "US",
-    "OfficeLocation": "Seattle, WA",
+    "OfficeLocation": "Stamford, CT",
+    "Address": {
+      "Street": "200 Harborview Drive, Suite 1400",
+      "City": "Stamford",
+      "State": "CT",
+      "PostalCode": "06902",
+      "Country": "USA"
+    },
     "Licenses": [
       "Microsoft Teams Enterprise",
       "Office 365 E5 (no Teams)"
     ]
   },
   {
-    "MailNickName": "jblake",
-    "DisplayName": "Jordan Blake",
-    "FirstName": "Jordan",
+    "MailNickName": "rblake",
+    "DisplayName": "Riley Blake",
+    "FirstName": "Riley",
     "LastName": "Blake",
     "JobTitle": "Partner Account Manager",
     "Department": "Partner Operations",
     "CompanyName": "Contoso Retail",
     "UsageLocation": "US",
-    "OfficeLocation": "Seattle, WA",
     "Licenses": [
       "Microsoft Teams Enterprise",
       "Office 365 E5 (no Teams)"

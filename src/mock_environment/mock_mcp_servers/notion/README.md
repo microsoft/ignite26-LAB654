@@ -34,10 +34,10 @@ Write tools must change the stored data so a later read shows the new row.
 
 | Section | Content |
 |---------|---------|
-| Goals | Retail launch of Zava Aurora (the doc doesn't say what the product is; keep goals generic) |
+| Goals | Retail launch of the Verdantis Aurora smart-home hub |
 | Key dates | Store staff training **Tue Oct 27**; launch event **Tue Nov 3** |
-| Owners | Avery (launch PM); Sam (Retail Ops); workstream owners as in the Smartsheet tracker |
-| Links | The Smartsheet "Zava Aurora Launch Tracker" and the Zava Hub Retail Partner Launch Playbook (`https://hub.zava.com/retail/launch-playbook`) |
+| Owners | Marcus (launch lead); Sam (Retail Ops); workstream owners as in the Smartsheet tracker |
+| Links | The Smartsheet "Verdantis Aurora Launch Tracker" and the Verdantis Hub Retail Partner Launch Playbook (`https://hub.verdantis.com/retail/launch-playbook`) |
 
 ### 2. Page: "Weekly Sync – Oct 6"
 
@@ -62,18 +62,18 @@ Older sync pages are optional. If included, date them before Oct 6.
 
 Seed **3 prior decisions** as examples, dated before Oct 12 and about other Aurora topics (for example the retail price point or the hero video cut), with a mix of statuses. None should be about split shipments or the Northwind slip; Step 4 creates that row.
 
-Step 4's expected new row: Decision "Ship Contoso Retail POS kits in two waves – kits + brochures on Oct 21, signage express on Oct 23 (in stores Oct 24)", Owner Avery, Approver Sam (Retail Ops), Status Proposed, with context and both links.
+Step 4's expected new row: Decision "Ship Contoso Retail POS kits in two waves – kits + brochures on Oct 21, signage express on Oct 23 (in stores Oct 24)", Owner Marcus, Approver Sam (Retail Ops), Status Proposed, with context and both links.
 
 ## Seats and isolation
 
-- One Notion workspace member per lab seat (`avery01`, `avery02`, …). Each seat needs its own copy of the decision log, or Step 4 rows from different seats collide.
+- One Notion workspace member per lab seat (`mhollowell01`, `mhollowell02`, …). Each seat needs its own copy of the decision log, or Step 4 rows from different seats collide.
 - Reset each seat's pages and database to the seed state between lab runs.
 
 ## Consistency rules
 
-- Names match the tenant: Avery Chen (seat user), Sam Patel (Retail Ops lead). Contoso Retail is the partner.
-- Dates and the Sam approval rule match the [Zava Hub playbook](../zava_hub/README.md).
+- Names match the tenant: Marcus Hollowell (seat user), Sam Patel (Retail Ops lead). Contoso Retail is the partner.
+- Dates and the Sam approval rule match the [Verdantis Hub playbook](../verdantis_hub/README.md).
 
 ## Open questions
 
-- Is Owner/Approver a Notion person property (needs Notion users for Avery and Sam per seat) or plain text?
+- Is Owner/Approver a Notion person property (needs Notion users for Marcus and Sam per seat) or plain text?
