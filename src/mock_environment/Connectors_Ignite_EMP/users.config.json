@@ -96,5 +96,51 @@
       "Microsoft Teams Enterprise",
       "Office 365 E5 (no Teams)"
     ]
+  },
+  {
+    "MailNickName": "achen",
+    "DisplayName": "Avery Chen",
+    "FirstName": "Avery",
+    "LastName": "Chen",
+    "JobTitle": "Launch Program Manager",
+    "Department": "Product Marketing",
+    "CompanyName": "Zava",
+    "UsageLocation": "US",
+    "OfficeLocation": "Seattle, WA",
+    "Licenses": [
+      "Microsoft 365 Copilot",
+      "Microsoft Teams Enterprise",
+      "Office 365 E5 (no Teams)"
+    ]
+  },
+  {
+    "MailNickName": "spatel",
+    "DisplayName": "Sam Patel",
+    "FirstName": "Sam",
+    "LastName": "Patel",
+    "JobTitle": "Retail Operations Lead",
+    "Department": "Retail Operations",
+    "CompanyName": "Zava",
+    "UsageLocation": "US",
+    "OfficeLocation": "Seattle, WA",
+    "Licenses": [
+      "Microsoft Teams Enterprise",
+      "Office 365 E5 (no Teams)"
+    ]
+  },
+  {
+    "MailNickName": "jblake",
+    "DisplayName": "Jordan Blake",
+    "FirstName": "Jordan",
+    "LastName": "Blake",
+    "JobTitle": "Partner Account Manager",
+    "Department": "Partner Operations",
+    "CompanyName": "Contoso Retail",
+    "UsageLocation": "US",
+    "OfficeLocation": "Seattle, WA",
+    "Licenses": [
+      "Microsoft Teams Enterprise",
+      "Office 365 E5 (no Teams)"
+    ]
   }
 ]

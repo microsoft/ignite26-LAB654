@@ -3,15 +3,17 @@
 Usage (from repo root):
     python src/mock_environment/tools/validate_package.py [package_dir] [--as-of 2026-11-09T14:00Z]
 
-Checks each *.config.json (and config.json) against its JSON schema, then a
+Checks each *.config.json (and config.json), and each connector folder's
+<type>/<type>_*.jsonl, against its JSON schema, then a
 subset of the COEP cross-file rules (user references, file references, shared
-links, placeholders, email chains, licences, timestamps). It doesn't replace
+links, placeholders, email chains, licences, timestamps, intranet page ids). It doesn't replace
 COEP's own validation; it catches the common mistakes before upload.
 """
 
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 import sys
@@ -37,23 +39,53 @@ def load(path: Path):
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def load_jsonl(path: Path) -> list:
+    items = []
+    for n, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+        if not line.strip():
+            continue
+        try:
+            obj = json.loads(line)
+        except json.JSONDecodeError as e:
+            err(f"{path.name}:{n}: not valid JSON ({e.msg})")
+            continue
+        if not isinstance(obj, dict):
+            err(f"{path.name}:{n}: each line must be one JSON object, not an array")
+            continue
+        items.append(obj)
+    return items
+
+
 def schema_check(pkg: Path) -> dict[str, list | dict]:
     data = {}
-    targets = {"config": pkg / "config.json"}
+    targets = {"config": [pkg / "config.json"]}
     for p in pkg.glob("*.config.json"):
-        targets[p.name.split(".")[0].lower()] = p
-    for type_name, path in targets.items():
+        targets[p.name.split(".")[0].lower()] = [p]
+    # Connector types: <type>/<type>_*.jsonl (COEP Connector Entity Guide).
+    for d in pkg.iterdir():
+        if d.is_dir() and d.name != "files":
+            files = sorted(d.glob("*.jsonl"))
+            for p in files:
+                if p.name.split("_")[0] != d.name or d.name != d.name.lower():
+                    err(f"{d.name}/{p.name}: folder and file prefix must both be the lowercase type name")
+            if files:
+                targets[d.name] = files
+    for type_name, paths in targets.items():
         schema_path = SCHEMAS / type_name / "schema.json"
         if not schema_path.exists():
-            err(f"{path.name}: no local schema for type '{type_name}'")
+            err(f"{paths[0].name}: no local schema for type '{type_name}'")
             continue
-        doc = load(path)
+        if paths[0].suffix == ".jsonl":
+            doc = [i for p in paths for i in load_jsonl(p)]
+        else:
+            doc = load(paths[0])
         data[type_name] = doc
         schema = load(schema_path)
         v = validator_for(schema)(schema, format_checker=validator_for(schema).FORMAT_CHECKER)
+        label = paths[0].name if len(paths) == 1 else f"{type_name}/*.jsonl"
         for e in sorted(v.iter_errors(doc), key=lambda e: list(e.absolute_path)):
             loc = "/".join(str(x) for x in e.absolute_path)
-            err(f"{path.name}:{loc}: {e.message[:300]}")
+            err(f"{label}:{loc}: {e.message[:300]}")
     return data
 
 
@@ -198,6 +230,33 @@ def cross_checks(pkg: Path, data: dict) -> None:
             placeholders(m.get("Content"), m.get("Placeholders"), mw)
         if c["ChatType"] == "Meeting" and c.get("EventId") not in event_ids:
             err(f"{w}: Meeting chat EventId not in events")
+
+    connector_ids: set[str] = set()
+    for p in data.get("intranetwebsite", []):
+        props = p["properties"]
+        w = f"intranetwebsite[{props['URL']}]"
+        if not re.fullmatch(r"[A-Za-z0-9]+", p["id"]):
+            err(f"{w}: id must contain only letters and digits")
+        if p["id"] in connector_ids:
+            err(f"{w}: duplicate id")
+        connector_ids.add(p["id"])
+        if p["displayName"] != props["URL"]:
+            err(f"{w}: displayName must equal properties.URL")
+        if p["id"] != hashlib.sha512(props["URL"].encode("utf-16-le")).hexdigest().upper():
+            err(f"{w}: id must be the uppercase SHA-512 of the URL (UTF-16LE)")
+        if props["LastModifiedBy"] not in props["Authors"]:
+            err(f"{w}: LastModifiedBy must be one of Authors")
+        if props["CreatedDateTime"] > props["LastModifiedDateTime"]:
+            err(f"{w}: CreatedDateTime after LastModifiedDateTime")
+        past(props["LastModifiedDateTime"], w)
+        acts = p["activityList"]
+        created = [a for a in acts if a["ActivityType"] == "created"]
+        if len(created) != 1 or created[0]["ActivityDateTime"] != props["CreatedDateTime"]:
+            err(f"{w}: needs one 'created' activity matching CreatedDateTime")
+        for a in acts:
+            past(a["ActivityDateTime"], f"{w}.activity[{a['id']}]")
+            if created and a["ActivityDateTime"] < created[0]["ActivityDateTime"]:
+                err(f"{w}: activity {a['id']} is earlier than 'created'")
 
 
 def array_scope_checks(data: dict) -> None:

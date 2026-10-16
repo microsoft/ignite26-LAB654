@@ -7,7 +7,7 @@ Synthetic tenant data for testing the LAB654 scenarios (legal, finance and produ
 | Path | Purpose |
 |------|---------|
 | `_schemas/` | The latest COEP schemas, rules and examples for every type, laid out as `<Category>/<type>/`. `manifest.json` records the version and fetch date. |
-| `Connectors_Ignite_EMP/` | The COEP package for the virtual tenant: `config.json` plus a `<type>.config.json` for each type that has data (currently users, emails and chats). |
+| `Connectors_Ignite_EMP/` | The COEP package for the virtual tenant: `config.json` plus a `<type>.config.json` for each Microsoft 365 type that has data (currently users, emails and chats). Connector types use a `<type>/` folder of `<type>_<scenario>.jsonl` files, one item per line (currently `intranetwebsite/`), as COEP's Connector Entity Guide requires. |
 | `Connectors_Ignite_EMP/files/` | Enterprise documents for `files.config.json`. Created only when a scenario puts files in the tenant. The legal scenario has none. |
 | `mock_mcp_servers/` | Mock MCP servers for third-party connectors, each with a `seed_files/` folder. See [its README](mock_mcp_servers/README.md). |
 | `tools/` | The generator, validator and schema refresh scripts. |
@@ -56,9 +56,9 @@ To get a token, sign in to the portal and copy the `Authorization` bearer value 
 |----------|--------|-------------|----------------|
 | Legal | [scenario](../scenarios/legal/scenario.md), [seed kit](../scenarios/legal/seed_kit.md) | `tools/scenarios/legal/`: 3 users, 1 email, 2 chats | `mock_mcp_servers/imanage/seed_files/` |
 | Finance | [scenario](../scenarios/finance/scenario.md) | `tools/scenarios/finance/`: 2 users, 1 chat | Pending: data specs in `mock_mcp_servers/lseg/`, `factset/`, `moodys/` |
-| Productivity | Pending | Pending | Pending |
+| Productivity | [scenario](../scenarios/productivity/scenario.md) | `tools/scenarios/productivity/`: 3 users, 1 email, 7 intranet pages (Zava Hub) | Pending: data specs in `mock_mcp_servers/smartsheet/`, `notion/` |
 
-To add a scenario, create a module or package under `tools/scenarios/` that exposes `users()`, `emails()`, `chats()`, `events()` and `files()`, and optionally `build_documents(files_dir)`. Then add it to `SCENARIOS` in `build_tenant.py`.
+To add a scenario, create a module or package under `tools/scenarios/` that exposes `users()`, `emails()`, `chats()`, `events()` and `files()`, and optionally `intranetpages()` and `build_documents(files_dir)`. Then add it to `SCENARIOS` in `build_tenant.py`.
 
 ## Assumptions to review
 
@@ -66,3 +66,7 @@ To add a scenario, create a module or package under `tools/scenarios/` that expo
 - External people (Diane Xu and Priya Ramasubramanian at Cognivault) have no accounts and appear only in documents.
 - Finance: the one-pager names only "Alex" and "Jordan" at "an asset manager". The surnames (Morgan, Reyes), aliases (`amorgan`, `jreyes`), firm (Woodgrove Asset Management) and New York / Eastern time are placeholders. Alex has the Microsoft 365 Copilot license; Jordan has mailbox and Teams only.
 - Finance: Jordan's trigger message is pinned to Fri Oct 9, 2026, 4:00 PM ET (`ASK_DATE` in `tools/scenarios/finance/__init__.py`). The investment committee isn't seeded as people or a meeting because the one-pager doesn't name its members or time.
+- Productivity: the doc names only "Avery", "Sam" and "Jordan". The surnames (Chen, Patel, Blake), aliases, titles, Seattle / Pacific time, and Jordan's employer "Contoso Retail" as a tenant account are placeholders. Only one Avery is seeded; per-seat accounts (`avery01`…) and the core team (Danny and others) aren't. Avery has the Microsoft 365 Copilot license; Sam and Jordan have mailbox and Teams only.
+- Productivity: story dates are moved back 35 days so "today" is Mon Oct 12, 2026 (`STORY_DATE`). There's no redate script for this scenario yet. Jordan's email body is authored from the doc's one-line description.
+- Productivity: Zava Hub pages are seeded as `intranetwebsite` items at `https://hub.zava.com` (placeholder), authored by one placeholder identity, "Zava Hub Content Team". Decoy page paths are invented. COEP's 2,000-character minimum means each page has authored supporting text (FAQ, process, scope) beyond the doc's rules; the demo-critical rules are unchanged. They're written to `intranetwebsite/intranetwebsite_productivity.jsonl`, the layout COEP's Connector Entity Guide specifies; COEP's guide also says connector items support only Everyone access.
+- Productivity: the doc highlights 2 tracker rows ("Print brochures & in-store signage" and "Ship POS kits to Contoso Retail stores"), not 3.

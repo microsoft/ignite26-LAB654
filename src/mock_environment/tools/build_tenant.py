@@ -5,7 +5,9 @@ Usage (from repo root):
 
 Each scenario module in tools/scenarios exposes users(), emails(), chats(),
 events() and files(), and optionally build_documents(files_dir) for documents
-that must be generated into Connectors_Ignite_EMP/files. The package is
+that must be generated into Connectors_Ignite_EMP/files and intranetpages()
+for COEP intranetwebsite connector items (written as
+intranetwebsite/intranetwebsite_<scenario>.jsonl). The package is
 rebuilt from scratch on every run. Then run validate_package.py.
 """
 
@@ -18,12 +20,11 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
-from scenarios import finance, legal  # noqa: E402
+from scenarios import finance, legal, productivity  # noqa: E402
 
 PACKAGE_DIR = HERE.parent / "Connectors_Ignite_EMP"
 
-# Add the productivity module here once it's authored.
-SCENARIOS = [legal, finance]
+SCENARIOS = [legal, finance, productivity]
 
 CONFIG = {
     "Tenant": {
@@ -42,6 +43,10 @@ ENTITY_FILES = {
     "events": "events.config.json",
     "files": "files.config.json",
 }
+
+# Connector (3P) types use a different layout: <type>/<type>_<name>.jsonl, one
+# searchable item per line (COEP Connector Entity Guide). One file per scenario.
+CONNECTOR_TYPES = {"intranetwebsite": "intranetpages"}
 
 
 def _merge_users(lists):
@@ -68,10 +73,18 @@ def _write(path: Path, data) -> None:
     path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
+def _write_jsonl(path: Path, items) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text("".join(json.dumps(i, ensure_ascii=False) + "\n" for i in items), encoding="utf-8")
+
+
 def main() -> None:
     PACKAGE_DIR.mkdir(parents=True, exist_ok=True)
     for p in PACKAGE_DIR.glob("*.config.json"):
         p.unlink()
+    for t in CONNECTOR_TYPES:
+        for p in (PACKAGE_DIR / t).glob(f"{t}_*.jsonl"):
+            p.unlink()
 
     data = {
         "users": _merge_users(s.users() for s in SCENARIOS),
@@ -86,12 +99,20 @@ def main() -> None:
         if data[key]:
             _write(PACKAGE_DIR / name, data[key])
 
+    for t, fn in CONNECTOR_TYPES.items():
+        data[t] = []
+        for s in SCENARIOS:
+            items = getattr(s, fn, lambda: [])()
+            if items:
+                _write_jsonl(PACKAGE_DIR / t / f"{t}_{s.__name__.rsplit('.', 1)[-1]}.jsonl", items)
+                data[t] += items
+
     files_dir = PACKAGE_DIR / "files"
     for s in SCENARIOS:
         build = getattr(s, "build_documents", None)
         for p in build(files_dir) if build else []:
             print(f"wrote {p.relative_to(PACKAGE_DIR)}")
-    for key in ENTITY_FILES:
+    for key in [*ENTITY_FILES, *CONNECTOR_TYPES]:
         print(f"{key}: {len(data[key])}")
 
 
