@@ -1,0 +1,10 @@
+[
+  {
+    "name": "apex-solutions-senai",
+    "description": "Sample data for user version 1.0.0",
+    "content": "{\r\n  \"ObjectType\": \"User\",\r\n  \"ObjectId\": \"f3513ed7-751e-4cb3-8ed4-df5f19a8f7b9\",\r\n  \"FirstName\": \"Senai\",\r\n  \"LastName\": \"Assefa\",\r\n  \"DisplayName\": \"Senai Assefa\",\r\n  \"Mail\": \"senai.assefa@apexsolutions.com\",\r\n  \"JobTitle\": \"CEO\",\r\n  \"CompanyName\": \"Apex Solutions\",\r\n  \"Department\": \"Engineering\",\r\n  \"City\": \"Seattle\",\r\n  \"OfficeLocation\": \"\"\r\n}",
+    "format": "Json",
+    "jsonContent": "{\r\n  \"ObjectType\": \"User\",\r\n  \"ObjectId\": \"f3513ed7-751e-4cb3-8ed4-df5f19a8f7b9\",\r\n  \"FirstName\": \"Senai\",\r\n  \"LastName\": \"Assefa\",\r\n  \"DisplayName\": \"Senai Assefa\",\r\n  \"Mail\": \"senai.assefa@apexsolutions.com\",\r\n  \"JobTitle\": \"CEO\",\r\n  \"CompanyName\": \"Apex Solutions\",\r\n  \"Department\": \"Engineering\",\r\n  \"City\": \"Seattle\",\r\n  \"OfficeLocation\": \"\"\r\n}",
+    "version": "1.0.0"
+  }
+]

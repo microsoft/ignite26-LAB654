@@ -1,0 +1,239 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "This schema defines the structure of a Microsoft Graph custom connector configuration, including the external connection metadata, the schema of indexed properties, and the items to ingest.",
+  "title": "CustomConnectors",
+  "type": "object",
+  "properties": {
+    "ConnectionId": {
+      "type": "string",
+      "description": "Unique ID of the connection within the tenant. Must be between 3 and 32 characters in length. Must only contain alphanumeric characters. Cannot begin with 'Microsoft' and cannot be one of the reserved values: None, Directory, Exchange, ExchangeArchive, LinkedIn, Mailbox, OneDriveBusiness, SharePoint, Teams, Yammer, Connectors, TaskFabric, PowerBI, Assistant, TopicEngine, MSFT_All_Connectors.",
+      "minLength": 3,
+      "maxLength": 32,
+      "pattern": "(?i)^(?!Microsoft)(?!(?:None|Directory|Exchange|ExchangeArchive|LinkedIn|Mailbox|OneDriveBusiness|SharePoint|Teams|Yammer|Connectors|TaskFabric|PowerBI|Assistant|TopicEngine)$)[A-Za-z0-9]+$"
+    },
+    "ConnectionName": {
+      "type": "string",
+      "description": "The display name of the connection to be displayed in the Microsoft 365 admin center.",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "ConnectionDescription": {
+      "type": "string",
+      "description": "Description of the connection displayed in the Microsoft 365 admin center.",
+      "minLength": 1
+    },
+    "ContentCategory": {
+      "type": "string",
+      "description": "Specifies the domain category of the content associated with the external connection. This property helps Microsoft Graph optimize relevance, ranking, and semantic understanding by signaling the nature of the ingested content. The default value is 'uncategorized'.",
+      "enum": [
+        "uncategorized",
+        "knowledgeBase",
+        "wikis",
+        "fileRepository",
+        "qna",
+        "crm",
+        "dashboard",
+        "people",
+        "media",
+        "email",
+        "messaging",
+        "meetingTranscripts",
+        "taskManagement",
+        "learningManagement"
+      ]
+    },
+    "Properties": {
+      "description": "The list of property definitions that make up the connection schema.",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Property"
+      },
+      "minItems": 1,
+      "maxItems": 128,
+      "uniqueItems": true
+    },
+    "Items": {
+      "description": "The list of external items to ingest into the connection.",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Item"
+      },
+      "minItems": 1,
+      "maxItems": 5000,
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "ConnectionId",
+    "ConnectionName",
+    "Properties",
+    "Items"
+  ],
+  "$defs": {
+    "Property": {
+      "description": "Defines a single property in the external connection schema.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the property.",
+          "minLength": 1,
+          "maxLength": 32,
+          "pattern": "^[A-Za-z0-9]+$"
+        },
+        "type": {
+          "type": "string",
+          "description": "The data type of the property.",
+          "enum": [
+            "string",
+            "int64",
+            "double",
+            "dateTime",
+            "boolean",
+            "stringCollection",
+            "int64Collection",
+            "doubleCollection",
+            "dateTimeCollection",
+            "principal",
+            "principalCollection"
+          ]
+        },
+        "description": {
+          "type": "string",
+          "description": "A human-readable description that explains the purpose, usage, or guidance related to the property. Recommended for queryable properties.",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "labels": {
+          "type": "array",
+          "description": "One or more well-known semantic tags applied to the property.",
+          "items": {
+            "type": "string",
+            "enum": [
+              "title",
+              "url",
+              "createdBy",
+              "lastModifiedBy",
+              "authors",
+              "createdDateTime",
+              "lastModifiedDateTime",
+              "fileName",
+              "fileExtension",
+              "iconUrl",
+              "containerName",
+              "containerUrl",
+              "assignedToPeople",
+              "dueDate",
+              "closedDate",
+              "closedBy",
+              "reportedBy",
+              "sprintName",
+              "severity",
+              "state",
+              "priority",
+              "secondaryId",
+              "itemParentId",
+              "parentUrl",
+              "tags",
+              "itemType",
+              "itemPath",
+              "numReactions",
+              "personAccount",
+              "personName",
+              "personCurrentPosition",
+              "personAddresses",
+              "personAnniversaries",
+              "personAwards",
+              "personCertifications",
+              "personEducationalActivities",
+              "personEmails",
+              "personInterests",
+              "personLanguages",
+              "personNote",
+              "personPatents",
+              "personPhones",
+              "personProjects",
+              "personPublications",
+              "personSkills",
+              "personWebAccounts",
+              "personWebSite",
+              "personWorkPositions"
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "aliases": {
+          "type": "array",
+          "description": "The aliases of the property",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 32,
+            "pattern": "^[A-Za-z0-9]+$"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "isSearchable": {
+          "type": "boolean",
+          "description": "Specifies if the property is searchable. Only properties of type 'string' or 'stringCollection' can be searchable. Non-searchable properties aren't added to the search index."
+        },
+        "isRetrievable": {
+          "type": "boolean",
+          "description": "Specifies if the property is retrievable. Retrievable properties are returned in the result set when items are returned by the search API. Retrievable properties are also available to add to the display template used to render search results."
+        },
+        "isQueryable": {
+          "type": "boolean",
+          "description": "Specifies if the property is queryable. Queryable properties can be used in Keyword Query Language (KQL) queries."
+        },
+        "isRefinable": {
+          "type": "boolean",
+          "description": "Specifies if the property is refinable. Refinable properties can be used to filter search results in the Search API and add a refiner control in the Microsoft Search user experience."
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ]
+    },
+    "Item": {
+      "description": "An external item to ingest into the connection.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier of the item within the connection.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9]+$"
+        },
+        "properties": {
+          "type": "object",
+          "description": "The properties of the item. The keys must match the 'name' of a property defined in the connection schema. The values must match the corresponding declared 'type'.",
+          "minProperties": 1
+        },
+        "content": {
+          "type": "string",
+          "description": "A plain-text representation of the contents of the item. The text in this property is full-text indexed.",
+          "minLength": 1
+        },
+        "contentType": {
+          "type": "string",
+          "description": "The type of content in the property value. Possible values are text and html. By default the value is text if content is provided and contentType is not specified.",
+          "enum": [
+            "text",
+            "html"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "properties"
+      ]
+    }
+  }
+}

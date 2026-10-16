@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Manufactured Sites schema",
+  "title": "Sites",
+  "type": "array",
+  "uniqueItems": true,
+  "items": {
+    "$ref": "#/$defs/Site"
+  },
+  "$defs": {
+    "Site": {
+      "description": "The Site JSON Schema is designed to capture essential details for creating and managing SharePoint sites.",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "DisplayName": {
+          "description": "The display name of the site, e.g., 'Marketing Team Site'.",
+          "type": "string",
+          "minLength": 1
+        },
+        "Description": {
+          "description": "An optional description of the site.",
+          "type": "string"
+        },
+        "MailNickname": {
+          "description": "The mail nickname for the site, must be lowercase alphanumeric, e.g., 'marketingteam'.",
+          "type": "string",
+          "pattern": "^[a-z0-9]+$",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "Visibility": {
+          "description": "The visibility setting for the site.",
+          "type": "string",
+          "enum": [
+            "Private",
+            "Public"
+          ]
+        },
+        "Owners": {
+          "description": "An array of user identifiers who are owners of the site.",
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "Members": {
+          "description": "An array of user identifiers who are members of the site.",
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "DisplayName",
+        "MailNickname",
+        "Visibility",
+        "Owners",
+        "Members"
+      ]
+    }
+  }
+}

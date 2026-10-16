@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "VivaEngageVotes",
+  "description": "Manufactured VivaEngageVotes schema",
+  "type": "array",
+  "uniqueItems": true,
+  "items": {
+    "$ref": "#/$defs/VivaEngageVote"
+  },
+  "$defs": {
+    "VivaEngageVote": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ConversationId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "TargetMessageId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "From": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?![.-])[A-Za-z0-9_]+([.-][A-Za-z0-9_]+)*$"
+        },
+        "OptionIndex": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "CreationMode": {
+          "const": "migration"
+        }
+      },
+      "required": [
+        "ConversationId",
+        "TargetMessageId",
+        "From",
+        "CreationMode"
+      ]
+    }
+  }
+}

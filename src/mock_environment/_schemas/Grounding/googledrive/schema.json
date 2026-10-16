@@ -1,0 +1,2488 @@
+{
+  "$id": "graph_simulator/2.1.0/googledrivefile/schema",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Google Drive File Schema",
+  "description": "Schema of the manufactured Google Drive file used to generate realistic, enterprise-style synthetic Drive content for evaluating chat, search and deep-reasoning scenarios. The schema enforces strict structural, semantic and descriptive standards to ensure generated files follow Google Drive conventions and internal enterprise document patterns. Examples assist the LLM in producing high-quality output.",
+  "type": "array",
+  "items": {
+    "$ref": "#/$defs/GoogleDriveFile"
+  },
+  "$defs": {
+    "GoogleDriveFile": {
+      "description": "Schema of a manufactured Google Drive file used to generate realistic, enterprise-style synthetic Drive content for evaluating chat, search and deep-reasoning scenarios. The schema enforces strict structural, semantic and descriptive standards so generated files follow Google Drive conventions — Drive file ids and share links, owner and last-modifying-user identities, file types and sizes, folder hierarchy and access control. Field descriptions and examples guide the LLM to produce high-quality, indexable output.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "isContainer": {
+          "description": "Whether this item is a container for other items. Always false — Google Drive files are leaf content items.",
+          "type": "boolean",
+          "enum": [
+            false
+          ],
+          "default": false,
+          "examples": [
+            false
+          ]
+        },
+        "containerId": {
+          "description": "Identifier of the parent container item. Always null for Google Drive files.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null,
+          "examples": [
+            null
+          ]
+        },
+        "properties": {
+          "type": "object",
+          "additionalProperties": true,
+          "description": "The Google Drive item's source properties. Contains the file's Drive metadata: name, share link, timestamps, owner and last-modifying user, size, type, folder location and description.",
+          "properties": {
+            "Name": {
+              "description": "The file name as shown in Google Drive, including the document title. For native Google formats the name may omit a file extension. Equals the item-level displayName.",
+              "type": "string",
+              "minLength": 1,
+              "examples": [
+                "Employee Referral Program",
+                "Contoso Employee Handbook",
+                "Contoso - Org Chart.pptx"
+              ]
+            },
+            "Link": {
+              "description": "The canonical Google Drive URL to open or edit this file. For native Google documents this is a docs.google.com edit link (document/spreadsheets/presentation); for uploaded files it is a drive.google.com file link. The Drive file id in this URL (the '/d/<id>' segment) corresponds to the item-level id.",
+              "type": "string",
+              "format": "uri",
+              "minLength": 1,
+              "examples": [
+                "https://docs.google.com/document/d/1c6CavgLkuauFOml9JigBTZZIyxNQmsVR3MGHYIoAUX8/edit?usp=drivesdk",
+                "https://drive.google.com/file/d/1B7v-tIMsRH-KCx6eF8OZlC-DajuRieGA/view?usp=drivesdk"
+              ]
+            },
+            "CreatedTime": {
+              "description": "When the file was created in Google Drive, in ISO 8601 UTC format.",
+              "type": "string",
+              "format": "date-time",
+              "minLength": 1,
+              "examples": [
+                "2024-03-14T13:40:50Z"
+              ]
+            },
+            "ModifiedTime": {
+              "description": "When the file content was last modified in Google Drive, in ISO 8601 UTC format. Should be greater than or equal to CreatedTime.",
+              "type": "string",
+              "format": "date-time",
+              "minLength": 1,
+              "examples": [
+                "2024-11-23T13:47:15Z"
+              ]
+            },
+            "Owner": {
+              "description": "The Google Drive user who owns the file. Null for items whose owner is not surfaced by the source (for example associated-content items). When populated, the same identity appears as the single entry of Authors.",
+              "type": [
+                "object",
+                "null"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "userSyncAction": {
+                  "description": "Synchronization action flag used by the identity-sync pipeline. Always 0 for Google Drive identities (no pending sync action).",
+                  "type": "integer",
+                  "enum": [
+                    0
+                  ],
+                  "examples": [
+                    0
+                  ]
+                },
+                "identitySourceProperties": {
+                  "description": "Additional source-system identity attributes. Always null for Google Drive identities.",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "examples": [
+                    null
+                  ]
+                },
+                "metadata": {
+                  "description": "Additional identity metadata. Always null for Google Drive identities.",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "examples": [
+                    null
+                  ]
+                },
+                "ExternalId": {
+                  "description": "Unique identifier (GUID) of the user within the source system, in standard GUID format with hyphens. May be an empty string when the source does not surface a directory GUID (as with Google Drive), in which case identity resolves via the email carried in 'id'.",
+                  "type": "string",
+                  "examples": [
+                    "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                    ""
+                  ]
+                },
+                "EntraId": {
+                  "description": "The user's Microsoft Entra directory object id, formatted as a GUID. Always the all-zero (nil) GUID for Google Drive identities because the source user is not resolved to Entra; a resolved user would carry a standard Entra object-id GUID.",
+                  "type": "string",
+                  "format": "uuid",
+                  "examples": [
+                    "00000000-0000-0000-0000-000000000000",
+                    "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                    "94c0305a-ad9a-4c08-8f02-14679330aa49",
+                    "7f9c6b2e-1d3a-4c5b-9e8f-2a1b0c3d4e5f"
+                  ]
+                },
+                "Email": {
+                  "description": "Corporate email of the user. Must share the same domain as all other user identities in this item. Always populated for Google Drive identities and used as the identity-resolution key (equals the 'id' field).",
+                  "type": "string",
+                  "format": "email",
+                  "minLength": 1,
+                  "examples": [
+                    "sarah.johnson@company.com",
+                    "michael.chen@company.com"
+                  ]
+                },
+                "ExternalName": {
+                  "description": "Full display name of the user. Always populated for Google Drive identities.",
+                  "type": "string",
+                  "minLength": 1,
+                  "examples": [
+                    "Sarah Johnson",
+                    "Michael Chen",
+                    "Priya Patel"
+                  ]
+                },
+                "PrincipalType": {
+                  "description": "Always 'user' for individual employees, never groups.",
+                  "type": "string",
+                  "enum": [
+                    "user"
+                  ],
+                  "default": "user",
+                  "examples": [
+                    "user"
+                  ]
+                },
+                "identitySource": {
+                  "description": "Name of the resolving identity source. Always the literal 'None' for Google Drive identities (not resolved against a directory).",
+                  "type": "string",
+                  "enum": [
+                    "None"
+                  ],
+                  "examples": [
+                    "None"
+                  ]
+                },
+                "displayName": {
+                  "description": "Resolved directory display name. Always null for Google Drive identities (the human name is carried by ExternalName).",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "examples": [
+                    null
+                  ]
+                },
+                "identityType": {
+                  "description": "Numeric identity type code. Always 0 for Google Drive identities (a plain, unresolved user reference).",
+                  "type": "integer",
+                  "enum": [
+                    0
+                  ],
+                  "examples": [
+                    0
+                  ]
+                },
+                "id": {
+                  "description": "Identity resolution key. Must match the Email field exactly. Always populated for Google Drive identities (equals Email).",
+                  "type": "string",
+                  "minLength": 1,
+                  "examples": [
+                    "sarah.johnson@company.com",
+                    "michael.chen@company.com"
+                  ]
+                }
+              },
+              "required": [
+                "userSyncAction",
+                "identitySourceProperties",
+                "metadata",
+                "ExternalId",
+                "EntraId",
+                "Email",
+                "ExternalName",
+                "PrincipalType",
+                "identitySource",
+                "displayName",
+                "identityType",
+                "id"
+              ],
+              "examples": [
+                {
+                  "userSyncAction": 0,
+                  "identitySourceProperties": null,
+                  "metadata": null,
+                  "ExternalId": "",
+                  "EntraId": "00000000-0000-0000-0000-000000000000",
+                  "Email": "sarah.johnson@company.com",
+                  "ExternalName": "Sarah Johnson",
+                  "PrincipalType": "user",
+                  "identitySource": "None",
+                  "displayName": null,
+                  "identityType": 0,
+                  "id": "sarah.johnson@company.com"
+                },
+                null
+              ]
+            },
+            "LastModifingUser": {
+              "description": "The user who last modified the file. Usually the full identity object of the modifier; some source records carry only the modifier's display-name string. This is a single user reference, never an array.",
+              "oneOf": [
+                {
+                  "description": "Full identity of the user who last modified the file.",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "userSyncAction": {
+                      "description": "Synchronization action flag used by the identity-sync pipeline. Always 0 for Google Drive identities (no pending sync action).",
+                      "type": "integer",
+                      "enum": [
+                        0
+                      ],
+                      "examples": [
+                        0
+                      ]
+                    },
+                    "identitySourceProperties": {
+                      "description": "Additional source-system identity attributes. Always null for Google Drive identities.",
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "examples": [
+                        null
+                      ]
+                    },
+                    "metadata": {
+                      "description": "Additional identity metadata. Always null for Google Drive identities.",
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "examples": [
+                        null
+                      ]
+                    },
+                    "ExternalId": {
+                      "description": "Unique identifier (GUID) of the user within the source system, in standard GUID format with hyphens. May be an empty string when the source does not surface a directory GUID (as with Google Drive), in which case identity resolves via the email carried in 'id'.",
+                      "type": "string",
+                      "examples": [
+                        "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                        ""
+                      ]
+                    },
+                    "EntraId": {
+                      "description": "The user's Microsoft Entra directory object id, formatted as a GUID. Always the all-zero (nil) GUID for Google Drive identities because the source user is not resolved to Entra; a resolved user would carry a standard Entra object-id GUID.",
+                      "type": "string",
+                      "format": "uuid",
+                      "examples": [
+                        "00000000-0000-0000-0000-000000000000",
+                        "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                        "94c0305a-ad9a-4c08-8f02-14679330aa49",
+                        "7f9c6b2e-1d3a-4c5b-9e8f-2a1b0c3d4e5f"
+                      ]
+                    },
+                    "Email": {
+                      "description": "Corporate email of the user. Must share the same domain as all other user identities in this item. Always populated for Google Drive identities and used as the identity-resolution key (equals the 'id' field).",
+                      "type": "string",
+                      "format": "email",
+                      "minLength": 1,
+                      "examples": [
+                        "sarah.johnson@company.com",
+                        "michael.chen@company.com"
+                      ]
+                    },
+                    "ExternalName": {
+                      "description": "Full display name of the user. Always populated for Google Drive identities.",
+                      "type": "string",
+                      "minLength": 1,
+                      "examples": [
+                        "Sarah Johnson",
+                        "Michael Chen",
+                        "Priya Patel"
+                      ]
+                    },
+                    "PrincipalType": {
+                      "description": "Always 'user' for individual employees, never groups.",
+                      "type": "string",
+                      "enum": [
+                        "user"
+                      ],
+                      "default": "user",
+                      "examples": [
+                        "user"
+                      ]
+                    },
+                    "identitySource": {
+                      "description": "Name of the resolving identity source. Always the literal 'None' for Google Drive identities (not resolved against a directory).",
+                      "type": "string",
+                      "enum": [
+                        "None"
+                      ],
+                      "examples": [
+                        "None"
+                      ]
+                    },
+                    "displayName": {
+                      "description": "Resolved directory display name. Always null for Google Drive identities (the human name is carried by ExternalName).",
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "examples": [
+                        null
+                      ]
+                    },
+                    "identityType": {
+                      "description": "Numeric identity type code. Always 0 for Google Drive identities (a plain, unresolved user reference).",
+                      "type": "integer",
+                      "enum": [
+                        0
+                      ],
+                      "examples": [
+                        0
+                      ]
+                    },
+                    "id": {
+                      "description": "Identity resolution key. Must match the Email field exactly. Always populated for Google Drive identities (equals Email).",
+                      "type": "string",
+                      "minLength": 1,
+                      "examples": [
+                        "sarah.johnson@company.com",
+                        "michael.chen@company.com"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "userSyncAction",
+                    "identitySourceProperties",
+                    "metadata",
+                    "ExternalId",
+                    "EntraId",
+                    "Email",
+                    "ExternalName",
+                    "PrincipalType",
+                    "identitySource",
+                    "displayName",
+                    "identityType",
+                    "id"
+                  ]
+                },
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Display name of the last-modifying user when only a name string is carried by the source.",
+                  "examples": [
+                    "Ang Gao",
+                    "Qiaoxu Chong"
+                  ]
+                }
+              ],
+              "examples": [
+                {
+                  "userSyncAction": 0,
+                  "identitySourceProperties": null,
+                  "metadata": null,
+                  "ExternalId": "",
+                  "EntraId": "00000000-0000-0000-0000-000000000000",
+                  "Email": "michael.chen@company.com",
+                  "ExternalName": "Michael Chen",
+                  "PrincipalType": "user",
+                  "identitySource": "None",
+                  "displayName": null,
+                  "identityType": 0,
+                  "id": "michael.chen@company.com"
+                },
+                "Ang Gao"
+              ]
+            },
+            "Size": {
+              "description": "Size of the file in bytes. Always a positive integer.",
+              "type": "integer",
+              "minimum": 1,
+              "examples": [
+                3807,
+                152340,
+                8565600
+              ]
+            },
+            "FileType": {
+              "description": "The file's format short-code (lowercase, no leading dot). Every Google Drive item has a format. The enum covers common Google Drive and Office file formats such as pdf, docx, xlsx, pptx, csv and loop. Always equal to FileExtension.",
+              "type": "string",
+              "enum": [
+                "csv",
+                "docx",
+                "loop",
+                "pdf",
+                "pptx",
+                "xlsx",
+                "doc",
+                "xls",
+                "ppt",
+                "txt",
+                "rtf",
+                "odt",
+                "ods",
+                "odp",
+                "gdoc",
+                "gsheet",
+                "gslides",
+                "gform",
+                "gdraw",
+                "json",
+                "xml",
+                "html",
+                "md",
+                "epub",
+                "jpg",
+                "jpeg",
+                "png",
+                "gif",
+                "bmp",
+                "svg",
+                "tif",
+                "webp",
+                "mp4",
+                "mov",
+                "avi",
+                "mp3",
+                "wav",
+                "zip"
+              ],
+              "minLength": 1,
+              "examples": [
+                "pdf",
+                "docx",
+                "xlsx",
+                "pptx",
+                "csv",
+                "loop"
+              ]
+            },
+            "FileExtension": {
+              "description": "The file's extension (lowercase, no leading dot). Always present and always equal to FileType.",
+              "type": "string",
+              "enum": [
+                "csv",
+                "docx",
+                "loop",
+                "pdf",
+                "pptx",
+                "xlsx",
+                "doc",
+                "xls",
+                "ppt",
+                "txt",
+                "rtf",
+                "odt",
+                "ods",
+                "odp",
+                "gdoc",
+                "gsheet",
+                "gslides",
+                "gform",
+                "gdraw",
+                "json",
+                "xml",
+                "html",
+                "md",
+                "epub",
+                "jpg",
+                "jpeg",
+                "png",
+                "gif",
+                "bmp",
+                "svg",
+                "tif",
+                "webp",
+                "mp4",
+                "mov",
+                "avi",
+                "mp3",
+                "wav",
+                "zip"
+              ],
+              "minLength": 1,
+              "examples": [
+                "pdf",
+                "docx",
+                "xlsx",
+                "pptx",
+                "csv",
+                "loop"
+              ]
+            },
+            "ParentFolderLink": {
+              "description": "The Google Drive URL of the folder that directly contains this file. Always a drive.google.com/drive/folders/<id> link; the folder id in this URL corresponds to ParentId.",
+              "type": "string",
+              "format": "uri",
+              "minLength": 1,
+              "examples": [
+                "https://drive.google.com/drive/folders/1x8iR29zNG6Pc62deb0mMG1ppK7cVA06H"
+              ]
+            },
+            "ParentFolderName": {
+              "description": "The name of the folder that directly contains this file.",
+              "type": "string",
+              "minLength": 1,
+              "examples": [
+                "Contoso",
+                "Research Papers",
+                "Meetings",
+                "Contoso V1"
+              ]
+            },
+            "Description": {
+              "description": "The file description or a generated summary of the file contents shown in Drive. Null when the file has no description. This is distinct from content.parsedData, which holds the base64-encoded file bytes.",
+              "type": [
+                "string",
+                "null"
+              ],
+              "default": null,
+              "examples": [
+                null,
+                "Summary of the key points: eligibility, rewards, and payout schedule for the referral program."
+              ]
+            },
+            "IconLink": {
+              "description": "URL of the Google Drive file-type icon used in previews and listings.",
+              "type": "string",
+              "format": "uri",
+              "minLength": 1,
+              "examples": [
+                "https://res.cdn.office.net/admincenter/admin-content/admin/images/udt/googledrive_icon_pdf.png",
+                "https://res.cdn.office.net/admincenter/admin-content/admin/images/udt/googledrive_icon_word.png"
+              ]
+            },
+            "Authors": {
+              "type": "array",
+              "minItems": 1,
+              "description": "List of users who authored the file. Present for standard file items and omitted for associated-content items. When present it contains exactly one entry, which is the same identity as Owner (mirroring the ADO convention that the first author equals the creator).",
+              "items": {
+                "description": "Identity of an author of the file.",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "userSyncAction": {
+                    "description": "Synchronization action flag used by the identity-sync pipeline. Always 0 for Google Drive identities (no pending sync action).",
+                    "type": "integer",
+                    "enum": [
+                      0
+                    ],
+                    "examples": [
+                      0
+                    ]
+                  },
+                  "identitySourceProperties": {
+                    "description": "Additional source-system identity attributes. Always null for Google Drive identities.",
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "examples": [
+                      null
+                    ]
+                  },
+                  "metadata": {
+                    "description": "Additional identity metadata. Always null for Google Drive identities.",
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "examples": [
+                      null
+                    ]
+                  },
+                  "ExternalId": {
+                    "description": "Unique identifier (GUID) of the user within the source system, in standard GUID format with hyphens. May be an empty string when the source does not surface a directory GUID (as with Google Drive), in which case identity resolves via the email carried in 'id'.",
+                    "type": "string",
+                    "examples": [
+                      "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                      ""
+                    ]
+                  },
+                  "EntraId": {
+                    "description": "The user's Microsoft Entra directory object id, formatted as a GUID. Always the all-zero (nil) GUID for Google Drive identities because the source user is not resolved to Entra; a resolved user would carry a standard Entra object-id GUID.",
+                    "type": "string",
+                    "format": "uuid",
+                    "examples": [
+                      "00000000-0000-0000-0000-000000000000",
+                      "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                      "94c0305a-ad9a-4c08-8f02-14679330aa49",
+                      "7f9c6b2e-1d3a-4c5b-9e8f-2a1b0c3d4e5f"
+                    ]
+                  },
+                  "Email": {
+                    "description": "Corporate email of the user. Must share the same domain as all other user identities in this item. Always populated for Google Drive identities and used as the identity-resolution key (equals the 'id' field).",
+                    "type": "string",
+                    "format": "email",
+                    "minLength": 1,
+                    "examples": [
+                      "sarah.johnson@company.com",
+                      "michael.chen@company.com"
+                    ]
+                  },
+                  "ExternalName": {
+                    "description": "Full display name of the user. Always populated for Google Drive identities.",
+                    "type": "string",
+                    "minLength": 1,
+                    "examples": [
+                      "Sarah Johnson",
+                      "Michael Chen",
+                      "Priya Patel"
+                    ]
+                  },
+                  "PrincipalType": {
+                    "description": "Always 'user' for individual employees, never groups.",
+                    "type": "string",
+                    "enum": [
+                      "user"
+                    ],
+                    "default": "user",
+                    "examples": [
+                      "user"
+                    ]
+                  },
+                  "identitySource": {
+                    "description": "Name of the resolving identity source. Always the literal 'None' for Google Drive identities (not resolved against a directory).",
+                    "type": "string",
+                    "enum": [
+                      "None"
+                    ],
+                    "examples": [
+                      "None"
+                    ]
+                  },
+                  "displayName": {
+                    "description": "Resolved directory display name. Always null for Google Drive identities (the human name is carried by ExternalName).",
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "examples": [
+                      null
+                    ]
+                  },
+                  "identityType": {
+                    "description": "Numeric identity type code. Always 0 for Google Drive identities (a plain, unresolved user reference).",
+                    "type": "integer",
+                    "enum": [
+                      0
+                    ],
+                    "examples": [
+                      0
+                    ]
+                  },
+                  "id": {
+                    "description": "Identity resolution key. Must match the Email field exactly. Always populated for Google Drive identities (equals Email).",
+                    "type": "string",
+                    "minLength": 1,
+                    "examples": [
+                      "sarah.johnson@company.com",
+                      "michael.chen@company.com"
+                    ]
+                  }
+                },
+                "required": [
+                  "userSyncAction",
+                  "identitySourceProperties",
+                  "metadata",
+                  "ExternalId",
+                  "EntraId",
+                  "Email",
+                  "ExternalName",
+                  "PrincipalType",
+                  "identitySource",
+                  "displayName",
+                  "identityType",
+                  "id"
+                ]
+              },
+              "examples": [
+                [
+                  {
+                    "userSyncAction": 0,
+                    "identitySourceProperties": null,
+                    "metadata": null,
+                    "ExternalId": "",
+                    "EntraId": "00000000-0000-0000-0000-000000000000",
+                    "Email": "sarah.johnson@company.com",
+                    "ExternalName": "Sarah Johnson",
+                    "PrincipalType": "user",
+                    "identitySource": "None",
+                    "displayName": null,
+                    "identityType": 0,
+                    "id": "sarah.johnson@company.com"
+                  }
+                ]
+              ]
+            },
+            "ItemPath": {
+              "description": "The human-readable Drive path from the owner's My Drive down to the containing folder. Omitted for associated-content items.",
+              "type": "string",
+              "minLength": 1,
+              "examples": [
+                "Qiaoxu's MyDrive/golden data set/golden set/Contoso",
+                "Qiaoxu's MyDrive/golden data set/golden set/Research Papers"
+              ]
+            },
+            "ParentId": {
+              "description": "The Google Drive folder id of the directly containing folder. Equals the folder id embedded in ParentFolderLink. Omitted for associated-content items.",
+              "type": "string",
+              "minLength": 1,
+              "examples": [
+                "1x8iR29zNG6Pc62deb0mMG1ppK7cVA06H",
+                "14k9WOZePukkZ6zWFw3V5d9-KcSVb4xuY"
+              ]
+            },
+            "Labels": {
+              "type": "array",
+              "minItems": 0,
+              "default": [],
+              "description": "Google Drive labels applied to the file for classification. Empty when the file has no labels; when populated, each entry is a non-empty label string. Omitted for associated-content items.",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "examples": [
+                [],
+                [
+                  "Confidential"
+                ],
+                [
+                  "HR",
+                  "Policy"
+                ]
+              ]
+            }
+          },
+          "required": [
+            "Name",
+            "Link",
+            "CreatedTime",
+            "ModifiedTime",
+            "Owner",
+            "LastModifingUser",
+            "Size",
+            "FileType",
+            "FileExtension",
+            "ParentFolderLink",
+            "ParentFolderName",
+            "Description",
+            "IconLink"
+          ]
+        },
+        "accessControlList": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "description": "Access control permissions for this file. Always exactly one entry granting read access to EVERYONE (all authenticated users in the tenant). Generate this exact EVERYONE structure; do not introduce group principals.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "principal": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "The access principal for this rule. For Google Drive items this is always the EVERYONE principal.",
+                "properties": {
+                  "type": {
+                    "description": "Scope of this principal. Always 'everyone' — applies to all authenticated users in the tenant.",
+                    "type": "string",
+                    "enum": [
+                      "everyone"
+                    ],
+                    "default": "everyone",
+                    "examples": [
+                      "everyone"
+                    ]
+                  },
+                  "value": {
+                    "description": "Canonical value for the everyone principal. Always the uppercase literal 'EVERYONE'.",
+                    "type": "string",
+                    "enum": [
+                      "EVERYONE"
+                    ],
+                    "default": "EVERYONE",
+                    "examples": [
+                      "EVERYONE"
+                    ]
+                  },
+                  "identitySource": {
+                    "description": "Not applicable for the everyone principal. Always null.",
+                    "type": "null",
+                    "examples": [
+                      null
+                    ]
+                  },
+                  "identitySourceEnum": {
+                    "description": "Identity provider for this tenant. Always 'azureActiveDirectory'.",
+                    "type": "string",
+                    "enum": [
+                      "azureActiveDirectory"
+                    ],
+                    "default": "azureActiveDirectory",
+                    "examples": [
+                      "azureActiveDirectory"
+                    ]
+                  },
+                  "identityType": {
+                    "description": "Numeric code for the principal category. Always 3 (the everyone group type).",
+                    "type": "integer",
+                    "enum": [
+                      3
+                    ],
+                    "default": 3,
+                    "examples": [
+                      3
+                    ]
+                  },
+                  "identitySourceProperties": {
+                    "description": "Not applicable for the everyone principal. Always null.",
+                    "type": "null",
+                    "examples": [
+                      null
+                    ]
+                  },
+                  "metadata": {
+                    "description": "Additional principal metadata. Always null for the everyone principal.",
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "default": null,
+                    "examples": [
+                      null
+                    ]
+                  },
+                  "displayName": {
+                    "description": "Display-name override. Always null for the everyone principal.",
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "default": null,
+                    "examples": [
+                      null
+                    ]
+                  }
+                },
+                "required": [
+                  "type",
+                  "value",
+                  "identitySource",
+                  "identitySourceEnum",
+                  "identityType",
+                  "identitySourceProperties",
+                  "metadata",
+                  "displayName"
+                ]
+              },
+              "ruleNode": {
+                "description": "Complex rule expression for this entry. Always null for a simple EVERYONE grant.",
+                "type": "null",
+                "examples": [
+                  null
+                ]
+              },
+              "accessType": {
+                "description": "Whether this entry grants or denies access. Always 'grant'.",
+                "type": "string",
+                "enum": [
+                  "grant"
+                ],
+                "default": "grant",
+                "examples": [
+                  "grant"
+                ]
+              },
+              "transformedIdentity": {
+                "description": "Transformed identity for this entry. Always null.",
+                "type": "null",
+                "examples": [
+                  null
+                ]
+              },
+              "sourceLastModifiedDateTime": {
+                "description": "When the access-control source was last modified, in ISO 8601 format, or null. Present only on associated-content items, where it is null.",
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "default": null,
+                "examples": [
+                  null
+                ]
+              }
+            },
+            "required": [
+              "principal",
+              "ruleNode",
+              "accessType",
+              "transformedIdentity"
+            ]
+          },
+          "examples": [
+            [
+              {
+                "principal": {
+                  "type": "everyone",
+                  "value": "EVERYONE",
+                  "identitySource": null,
+                  "identitySourceEnum": "azureActiveDirectory",
+                  "identityType": 3,
+                  "identitySourceProperties": null,
+                  "metadata": null,
+                  "displayName": null
+                },
+                "ruleNode": null,
+                "accessType": "grant",
+                "transformedIdentity": null
+              }
+            ]
+          ]
+        },
+        "aclSourceLastModifiedDateTime": {
+          "description": "When the access-control source was last modified, in ISO 8601 format, or null. Present only on associated-content items (null there); omitted on standard file items.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null,
+          "examples": [
+            null
+          ]
+        },
+        "UniversalAccessControlBlock": {
+          "description": "Universal access-control block. Not used for Google Drive files; access is expressed via accessControlList. Always null.",
+          "type": "null",
+          "examples": [
+            null
+          ]
+        },
+        "activityList": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "minItems": 0,
+          "default": null,
+          "description": "Optional list of activity events for this file (created, modified, viewed). Null when no activity data is attached. When present, the 'created' activity is the earliest entry.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "ActivityType": {
+                "description": "Type of activity performed on this file.",
+                "type": "string",
+                "enum": [
+                  "created",
+                  "modified",
+                  "viewed",
+                  "commented"
+                ],
+                "examples": [
+                  "created",
+                  "modified"
+                ]
+              },
+              "ActivityPerformer": {
+                "description": "Identity of the user who performed this activity.",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "userSyncAction": {
+                    "description": "Synchronization action flag used by the identity-sync pipeline. Always 0 for Google Drive identities (no pending sync action).",
+                    "type": "integer",
+                    "enum": [
+                      0
+                    ],
+                    "examples": [
+                      0
+                    ]
+                  },
+                  "identitySourceProperties": {
+                    "description": "Additional source-system identity attributes. Always null for Google Drive identities.",
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "examples": [
+                      null
+                    ]
+                  },
+                  "metadata": {
+                    "description": "Additional identity metadata. Always null for Google Drive identities.",
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "examples": [
+                      null
+                    ]
+                  },
+                  "ExternalId": {
+                    "description": "Unique identifier (GUID) of the user within the source system, in standard GUID format with hyphens. May be an empty string when the source does not surface a directory GUID (as with Google Drive), in which case identity resolves via the email carried in 'id'.",
+                    "type": "string",
+                    "examples": [
+                      "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                      ""
+                    ]
+                  },
+                  "EntraId": {
+                    "description": "The user's Microsoft Entra directory object id, formatted as a GUID. Always the all-zero (nil) GUID for Google Drive identities because the source user is not resolved to Entra; a resolved user would carry a standard Entra object-id GUID.",
+                    "type": "string",
+                    "format": "uuid",
+                    "examples": [
+                      "00000000-0000-0000-0000-000000000000",
+                      "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                      "94c0305a-ad9a-4c08-8f02-14679330aa49",
+                      "7f9c6b2e-1d3a-4c5b-9e8f-2a1b0c3d4e5f"
+                    ]
+                  },
+                  "Email": {
+                    "description": "Corporate email of the user. Must share the same domain as all other user identities in this item. Always populated for Google Drive identities and used as the identity-resolution key (equals the 'id' field).",
+                    "type": "string",
+                    "format": "email",
+                    "minLength": 1,
+                    "examples": [
+                      "sarah.johnson@company.com",
+                      "michael.chen@company.com"
+                    ]
+                  },
+                  "ExternalName": {
+                    "description": "Full display name of the user. Always populated for Google Drive identities.",
+                    "type": "string",
+                    "minLength": 1,
+                    "examples": [
+                      "Sarah Johnson",
+                      "Michael Chen",
+                      "Priya Patel"
+                    ]
+                  },
+                  "PrincipalType": {
+                    "description": "Always 'user' for individual employees, never groups.",
+                    "type": "string",
+                    "enum": [
+                      "user"
+                    ],
+                    "default": "user",
+                    "examples": [
+                      "user"
+                    ]
+                  },
+                  "identitySource": {
+                    "description": "Name of the resolving identity source. Always the literal 'None' for Google Drive identities (not resolved against a directory).",
+                    "type": "string",
+                    "enum": [
+                      "None"
+                    ],
+                    "examples": [
+                      "None"
+                    ]
+                  },
+                  "displayName": {
+                    "description": "Resolved directory display name. Always null for Google Drive identities (the human name is carried by ExternalName).",
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "examples": [
+                      null
+                    ]
+                  },
+                  "identityType": {
+                    "description": "Numeric identity type code. Always 0 for Google Drive identities (a plain, unresolved user reference).",
+                    "type": "integer",
+                    "enum": [
+                      0
+                    ],
+                    "examples": [
+                      0
+                    ]
+                  },
+                  "id": {
+                    "description": "Identity resolution key. Must match the Email field exactly. Always populated for Google Drive identities (equals Email).",
+                    "type": "string",
+                    "minLength": 1,
+                    "examples": [
+                      "sarah.johnson@company.com",
+                      "michael.chen@company.com"
+                    ]
+                  }
+                },
+                "required": [
+                  "userSyncAction",
+                  "identitySourceProperties",
+                  "metadata",
+                  "ExternalId",
+                  "EntraId",
+                  "Email",
+                  "ExternalName",
+                  "PrincipalType",
+                  "identitySource",
+                  "displayName",
+                  "identityType",
+                  "id"
+                ]
+              },
+              "ActivityTimestamp": {
+                "description": "When the activity occurred, in ISO 8601 format.",
+                "type": "string",
+                "format": "date-time",
+                "minLength": 1,
+                "examples": [
+                  "2024-03-14T13:40:50Z"
+                ]
+              }
+            },
+            "required": [
+              "ActivityType",
+              "ActivityPerformer",
+              "ActivityTimestamp"
+            ]
+          },
+          "examples": [
+            null
+          ]
+        },
+        "contentEnrichmentData": {
+          "description": "Enrichment payload for OCR processing. Always null for Google Drive files (no binary enrichment is required).",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "EnrichmentTypes": {
+                    "description": "Enrichment operation. 1 = OCR.",
+                    "type": "integer",
+                    "enum": [
+                      1
+                    ],
+                    "default": 1,
+                    "examples": [
+                      1
+                    ]
+                  },
+                  "payload": {
+                    "description": "Base64-encoded binary content for OCR processing.",
+                    "type": "string",
+                    "examples": [
+                      "base64-encoded-binary-data"
+                    ]
+                  },
+                  "mimeType": {
+                    "description": "MIME type of the payload binary content.",
+                    "type": "string",
+                    "enum": [
+                      "image/png",
+                      "image/jpg",
+                      "application/pdf"
+                    ],
+                    "examples": [
+                      "image/png"
+                    ]
+                  }
+                },
+                "required": [
+                  "EnrichmentTypes",
+                  "payload",
+                  "mimeType"
+                ]
+              }
+            }
+          ],
+          "default": null,
+          "examples": [
+            null
+          ]
+        },
+        "content": {
+          "description": "The rendered content body for this file. Null for file types Google Drive cannot render to a binary body (for example csv and loop). When present, parsedData holds base64-encoded raw file bytes and type is 'binary'.",
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "parsedData": {
+              "description": "Base64-encoded raw file bytes of the document (pdf, docx, xlsx, pptx). This is the original binary, not extracted plain text; the parser extracts text downstream.",
+              "type": "string",
+              "examples": [
+                "JVBERi0xLjcNCiXi48/TDQo..."
+              ]
+            },
+            "type": {
+              "description": "Format of the content in parsedData. Always 'binary' for Google Drive files with an extractable binary body; parsedData carries base64-encoded raw file bytes. Other values are reserved.",
+              "type": "string",
+              "enum": [
+                "markdown",
+                "text",
+                "none",
+                "binary",
+                "bmp",
+                "jpg",
+                "pdf",
+                "png",
+                "tif",
+                "unknownFutureValue",
+                "html"
+              ],
+              "default": "binary",
+              "examples": [
+                "binary"
+              ]
+            },
+            "annotation": {
+              "description": "Populated by the data pipeline. Always null.",
+              "type": "null",
+              "examples": [
+                null
+              ]
+            },
+            "semanticContent": {
+              "description": "Reserved for future semantic content classification. Always null.",
+              "type": "null",
+              "examples": [
+                null
+              ]
+            }
+          },
+          "required": [
+            "parsedData",
+            "type",
+            "annotation",
+            "semanticContent"
+          ],
+          "examples": [
+            {
+              "parsedData": "JVBERi0xLjcNCiXi48/TDQo...",
+              "type": "binary",
+              "annotation": null,
+              "semanticContent": null
+            },
+            null
+          ]
+        },
+        "associatedItemsMetadata": {
+          "description": "Metadata describing associated child content. Null for standard file items. On associated-content items it is an object carrying the Drive FileId and the associated user's email.",
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "FileId": {
+              "description": "The Google Drive file id this associated content refers to.",
+              "type": "string",
+              "minLength": 1,
+              "examples": [
+                "1sXGwl1D8aQ9_wXwroGyZoKhI8mPdMFX_4HhyNEPaZ9s"
+              ]
+            },
+            "UserEmail": {
+              "description": "Email of the user associated with this content (for example the commenter).",
+              "type": "string",
+              "format": "email",
+              "minLength": 1,
+              "examples": [
+                "ang.gao@company.com"
+              ]
+            }
+          },
+          "required": [
+            "FileId",
+            "UserEmail"
+          ],
+          "default": null,
+          "examples": [
+            null,
+            {
+              "FileId": "1sXGwl1D8aQ9_wXwroGyZoKhI8mPdMFX_4HhyNEPaZ9s",
+              "UserEmail": "ang.gao@company.com"
+            }
+          ]
+        },
+        "attachments": {
+          "type": "array",
+          "minItems": 0,
+          "description": "Optional list of file attachments associated with this file. Empty when the file has no attachments. When present, each entry carries the attachment content, its representation, the uploader and the upload timestamp.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "uploadedBy": {
+                "description": "Identity of the user who uploaded this attachment.",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "userSyncAction": {
+                    "description": "Synchronization action flag used by the identity-sync pipeline. Always 0 for Google Drive identities (no pending sync action).",
+                    "type": "integer",
+                    "enum": [
+                      0
+                    ],
+                    "examples": [
+                      0
+                    ]
+                  },
+                  "identitySourceProperties": {
+                    "description": "Additional source-system identity attributes. Always null for Google Drive identities.",
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "examples": [
+                      null
+                    ]
+                  },
+                  "metadata": {
+                    "description": "Additional identity metadata. Always null for Google Drive identities.",
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "examples": [
+                      null
+                    ]
+                  },
+                  "ExternalId": {
+                    "description": "Unique identifier (GUID) of the user within the source system, in standard GUID format with hyphens. May be an empty string when the source does not surface a directory GUID (as with Google Drive), in which case identity resolves via the email carried in 'id'.",
+                    "type": "string",
+                    "examples": [
+                      "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                      ""
+                    ]
+                  },
+                  "EntraId": {
+                    "description": "The user's Microsoft Entra directory object id, formatted as a GUID. Always the all-zero (nil) GUID for Google Drive identities because the source user is not resolved to Entra; a resolved user would carry a standard Entra object-id GUID.",
+                    "type": "string",
+                    "format": "uuid",
+                    "examples": [
+                      "00000000-0000-0000-0000-000000000000",
+                      "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                      "94c0305a-ad9a-4c08-8f02-14679330aa49",
+                      "7f9c6b2e-1d3a-4c5b-9e8f-2a1b0c3d4e5f"
+                    ]
+                  },
+                  "Email": {
+                    "description": "Corporate email of the user. Must share the same domain as all other user identities in this item. Always populated for Google Drive identities and used as the identity-resolution key (equals the 'id' field).",
+                    "type": "string",
+                    "format": "email",
+                    "minLength": 1,
+                    "examples": [
+                      "sarah.johnson@company.com",
+                      "michael.chen@company.com"
+                    ]
+                  },
+                  "ExternalName": {
+                    "description": "Full display name of the user. Always populated for Google Drive identities.",
+                    "type": "string",
+                    "minLength": 1,
+                    "examples": [
+                      "Sarah Johnson",
+                      "Michael Chen",
+                      "Priya Patel"
+                    ]
+                  },
+                  "PrincipalType": {
+                    "description": "Always 'user' for individual employees, never groups.",
+                    "type": "string",
+                    "enum": [
+                      "user"
+                    ],
+                    "default": "user",
+                    "examples": [
+                      "user"
+                    ]
+                  },
+                  "identitySource": {
+                    "description": "Name of the resolving identity source. Always the literal 'None' for Google Drive identities (not resolved against a directory).",
+                    "type": "string",
+                    "enum": [
+                      "None"
+                    ],
+                    "examples": [
+                      "None"
+                    ]
+                  },
+                  "displayName": {
+                    "description": "Resolved directory display name. Always null for Google Drive identities (the human name is carried by ExternalName).",
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "examples": [
+                      null
+                    ]
+                  },
+                  "identityType": {
+                    "description": "Numeric identity type code. Always 0 for Google Drive identities (a plain, unresolved user reference).",
+                    "type": "integer",
+                    "enum": [
+                      0
+                    ],
+                    "examples": [
+                      0
+                    ]
+                  },
+                  "id": {
+                    "description": "Identity resolution key. Must match the Email field exactly. Always populated for Google Drive identities (equals Email).",
+                    "type": "string",
+                    "minLength": 1,
+                    "examples": [
+                      "sarah.johnson@company.com",
+                      "michael.chen@company.com"
+                    ]
+                  }
+                },
+                "required": [
+                  "userSyncAction",
+                  "identitySourceProperties",
+                  "metadata",
+                  "ExternalId",
+                  "EntraId",
+                  "Email",
+                  "ExternalName",
+                  "PrincipalType",
+                  "identitySource",
+                  "displayName",
+                  "identityType",
+                  "id"
+                ]
+              },
+              "uploadedTimestamp": {
+                "description": "When the file was attached, in ISO 8601 format.",
+                "type": "string",
+                "format": "date-time",
+                "minLength": 1,
+                "examples": [
+                  "2025-01-15T10:30:00Z"
+                ]
+              },
+              "attachmentName": {
+                "description": "Filename of the attached file including its extension.",
+                "type": "string",
+                "minLength": 1,
+                "examples": [
+                  "design_review.pdf",
+                  "screenshot_error.png"
+                ]
+              },
+              "entitySemanticType": {
+                "type": "string",
+                "enum": [
+                  "document"
+                ],
+                "default": "document",
+                "description": "Always 'document'.",
+                "examples": [
+                  "document"
+                ]
+              },
+              "entityContent": {
+                "type": "string",
+                "description": "Content of the attachment. The exact representation depends on the (entityEncoding, entityFormat) pair used for each file type:\n- Text-based files (.txt, .csv, .json, .yaml): raw text in entityContent (entityEncoding='raw', entityFormat='txt').\n- Markdown (.md): raw markdown text (entityEncoding='raw', entityFormat='markdown').\n- HTML (.html, .htm): raw HTML text (entityEncoding='raw', entityFormat='html').\n- Office documents (.pdf, .docx, .xlsx, .pptx): base64-encoded RAW FILE BYTES (entityEncoding='b64', entityFormat='unknown'). Do not pre-extract text; the parser handles extraction downstream.\n- Images (.png, .jpg, .jpeg): OCR text or a human-readable image description (entityEncoding='raw', entityFormat='txt').\n- Other binary files (.fig and similar): base64-encoded raw file bytes (entityEncoding='b64', entityFormat='unknown')."
+              },
+              "entityEncoding": {
+                "type": "string",
+                "enum": [
+                  "raw",
+                  "b64"
+                ],
+                "default": "b64",
+                "description": "Encoding of the entityContent value. 'raw' — entityContent is submitted as-is; use for text files (.txt, .csv, .json, .yaml, .md, .html) and for image OCR/descriptions (.png, .jpg). 'b64' — entityContent is base64-encoded; use for office documents (.pdf, .docx, .xlsx, .pptx) carrying raw file bytes, and for other binary files (.fig).",
+                "examples": [
+                  "b64",
+                  "raw"
+                ]
+              },
+              "entityFormat": {
+                "type": "string",
+                "enum": [
+                  "txt",
+                  "html",
+                  "markdown",
+                  "unknown"
+                ],
+                "default": "txt",
+                "description": "Format of the content represented in entityContent. Use 'txt' for plain text, logs, structured data files (.txt, .csv, .json, .yaml), and for image OCR/descriptions (.png, .jpg). Use 'html' for HTML content. Use 'markdown' for Markdown (.md). Use 'unknown' for office documents and other binary files (.pdf, .docx, .xlsx, .pptx, .fig) where entityContent is base64 of raw file bytes and there is no plain-text format.",
+                "examples": [
+                  "txt",
+                  "html",
+                  "unknown"
+                ]
+              }
+            },
+            "required": [
+              "uploadedBy",
+              "uploadedTimestamp",
+              "attachmentName",
+              "entitySemanticType",
+              "entityContent",
+              "entityEncoding",
+              "entityFormat"
+            ]
+          },
+          "examples": [
+            [],
+            [
+              {
+                "uploadedBy": {
+                  "userSyncAction": 0,
+                  "identitySourceProperties": null,
+                  "metadata": null,
+                  "ExternalId": "",
+                  "EntraId": "00000000-0000-0000-0000-000000000000",
+                  "Email": "sarah.johnson@company.com",
+                  "ExternalName": "Sarah Johnson",
+                  "PrincipalType": "user",
+                  "identitySource": "None",
+                  "displayName": null,
+                  "identityType": 0,
+                  "id": "sarah.johnson@company.com"
+                },
+                "uploadedTimestamp": "2024-11-23T13:47:15Z",
+                "attachmentName": "referral_payouts_q3.csv",
+                "entitySemanticType": "document",
+                "entityContent": "Employee,Referral,Payout\nJordan Lee,Mia Chen,2000\nSam Patel,Alex Kim,1500",
+                "entityEncoding": "raw",
+                "entityFormat": "txt"
+              }
+            ]
+          ]
+        },
+        "comments": {
+          "type": "array",
+          "minItems": 0,
+          "description": "Optional list of comments on this file from team members. Empty when there are no comments.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "CommentText": {
+                "description": "Plain-text rendering of the comment body, mirroring entityContent once decoded.",
+                "type": "string",
+                "examples": [
+                  "Please review the eligibility section before we publish this to the team.",
+                  "@michael.chen@company.com can you confirm the Q3 figures on the summary tab?",
+                  "Updated the payout schedule to match the latest HR guidance."
+                ]
+              },
+              "entitySemanticType": {
+                "description": "Semantic type of the entity. Always 'comment' for comment records.",
+                "type": "string",
+                "enum": [
+                  "comment"
+                ],
+                "default": "comment",
+                "examples": [
+                  "comment"
+                ]
+              },
+              "commentId": {
+                "description": "Unique identifier of the comment within the dataset.",
+                "type": "string",
+                "minLength": 1,
+                "examples": [
+                  "AAABrnLyGzM"
+                ]
+              },
+              "parentCommentId": {
+                "description": "commentId of the parent comment if this is a reply, or null for a top-level comment.",
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "default": null,
+                "examples": [
+                  null
+                ]
+              },
+              "creator": {
+                "description": "Identity of the user who wrote this comment. Null when the source does not resolve the comment author.",
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "userSyncAction": {
+                    "description": "Synchronization action flag used by the identity-sync pipeline. Always 0 for Google Drive identities (no pending sync action).",
+                    "type": "integer",
+                    "enum": [
+                      0
+                    ],
+                    "examples": [
+                      0
+                    ]
+                  },
+                  "identitySourceProperties": {
+                    "description": "Additional source-system identity attributes. Always null for Google Drive identities.",
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "examples": [
+                      null
+                    ]
+                  },
+                  "metadata": {
+                    "description": "Additional identity metadata. Always null for Google Drive identities.",
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "examples": [
+                      null
+                    ]
+                  },
+                  "ExternalId": {
+                    "description": "Unique identifier (GUID) of the user within the source system, in standard GUID format with hyphens. May be an empty string when the source does not surface a directory GUID (as with Google Drive), in which case identity resolves via the email carried in 'id'.",
+                    "type": "string",
+                    "examples": [
+                      "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                      ""
+                    ]
+                  },
+                  "EntraId": {
+                    "description": "The user's Microsoft Entra directory object id, formatted as a GUID. Always the all-zero (nil) GUID for Google Drive identities because the source user is not resolved to Entra; a resolved user would carry a standard Entra object-id GUID.",
+                    "type": "string",
+                    "format": "uuid",
+                    "examples": [
+                      "00000000-0000-0000-0000-000000000000",
+                      "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                      "94c0305a-ad9a-4c08-8f02-14679330aa49",
+                      "7f9c6b2e-1d3a-4c5b-9e8f-2a1b0c3d4e5f"
+                    ]
+                  },
+                  "Email": {
+                    "description": "Corporate email of the user. Must share the same domain as all other user identities in this item. Always populated for Google Drive identities and used as the identity-resolution key (equals the 'id' field).",
+                    "type": "string",
+                    "format": "email",
+                    "minLength": 1,
+                    "examples": [
+                      "sarah.johnson@company.com",
+                      "michael.chen@company.com"
+                    ]
+                  },
+                  "ExternalName": {
+                    "description": "Full display name of the user. Always populated for Google Drive identities.",
+                    "type": "string",
+                    "minLength": 1,
+                    "examples": [
+                      "Sarah Johnson",
+                      "Michael Chen",
+                      "Priya Patel"
+                    ]
+                  },
+                  "PrincipalType": {
+                    "description": "Always 'user' for individual employees, never groups.",
+                    "type": "string",
+                    "enum": [
+                      "user"
+                    ],
+                    "default": "user",
+                    "examples": [
+                      "user"
+                    ]
+                  },
+                  "identitySource": {
+                    "description": "Name of the resolving identity source. Always the literal 'None' for Google Drive identities (not resolved against a directory).",
+                    "type": "string",
+                    "enum": [
+                      "None"
+                    ],
+                    "examples": [
+                      "None"
+                    ]
+                  },
+                  "displayName": {
+                    "description": "Resolved directory display name. Always null for Google Drive identities (the human name is carried by ExternalName).",
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "examples": [
+                      null
+                    ]
+                  },
+                  "identityType": {
+                    "description": "Numeric identity type code. Always 0 for Google Drive identities (a plain, unresolved user reference).",
+                    "type": "integer",
+                    "enum": [
+                      0
+                    ],
+                    "examples": [
+                      0
+                    ]
+                  },
+                  "id": {
+                    "description": "Identity resolution key. Must match the Email field exactly. Always populated for Google Drive identities (equals Email).",
+                    "type": "string",
+                    "minLength": 1,
+                    "examples": [
+                      "sarah.johnson@company.com",
+                      "michael.chen@company.com"
+                    ]
+                  }
+                },
+                "required": [
+                  "userSyncAction",
+                  "identitySourceProperties",
+                  "metadata",
+                  "ExternalId",
+                  "EntraId",
+                  "Email",
+                  "ExternalName",
+                  "PrincipalType",
+                  "identitySource",
+                  "displayName",
+                  "identityType",
+                  "id"
+                ],
+                "examples": [
+                  null,
+                  {
+                    "userSyncAction": 0,
+                    "identitySourceProperties": null,
+                    "metadata": null,
+                    "ExternalId": "",
+                    "EntraId": "00000000-0000-0000-0000-000000000000",
+                    "Email": "sarah.johnson@company.com",
+                    "ExternalName": "Sarah Johnson",
+                    "PrincipalType": "user",
+                    "identitySource": "None",
+                    "displayName": null,
+                    "identityType": 0,
+                    "id": "sarah.johnson@company.com"
+                  }
+                ]
+              },
+              "modifier": {
+                "description": "Identity of the user who last edited this comment; equals creator when never edited. Null when the source does not resolve the editor.",
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "userSyncAction": {
+                    "description": "Synchronization action flag used by the identity-sync pipeline. Always 0 for Google Drive identities (no pending sync action).",
+                    "type": "integer",
+                    "enum": [
+                      0
+                    ],
+                    "examples": [
+                      0
+                    ]
+                  },
+                  "identitySourceProperties": {
+                    "description": "Additional source-system identity attributes. Always null for Google Drive identities.",
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "examples": [
+                      null
+                    ]
+                  },
+                  "metadata": {
+                    "description": "Additional identity metadata. Always null for Google Drive identities.",
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "examples": [
+                      null
+                    ]
+                  },
+                  "ExternalId": {
+                    "description": "Unique identifier (GUID) of the user within the source system, in standard GUID format with hyphens. May be an empty string when the source does not surface a directory GUID (as with Google Drive), in which case identity resolves via the email carried in 'id'.",
+                    "type": "string",
+                    "examples": [
+                      "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                      ""
+                    ]
+                  },
+                  "EntraId": {
+                    "description": "The user's Microsoft Entra directory object id, formatted as a GUID. Always the all-zero (nil) GUID for Google Drive identities because the source user is not resolved to Entra; a resolved user would carry a standard Entra object-id GUID.",
+                    "type": "string",
+                    "format": "uuid",
+                    "examples": [
+                      "00000000-0000-0000-0000-000000000000",
+                      "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                      "94c0305a-ad9a-4c08-8f02-14679330aa49",
+                      "7f9c6b2e-1d3a-4c5b-9e8f-2a1b0c3d4e5f"
+                    ]
+                  },
+                  "Email": {
+                    "description": "Corporate email of the user. Must share the same domain as all other user identities in this item. Always populated for Google Drive identities and used as the identity-resolution key (equals the 'id' field).",
+                    "type": "string",
+                    "format": "email",
+                    "minLength": 1,
+                    "examples": [
+                      "sarah.johnson@company.com",
+                      "michael.chen@company.com"
+                    ]
+                  },
+                  "ExternalName": {
+                    "description": "Full display name of the user. Always populated for Google Drive identities.",
+                    "type": "string",
+                    "minLength": 1,
+                    "examples": [
+                      "Sarah Johnson",
+                      "Michael Chen",
+                      "Priya Patel"
+                    ]
+                  },
+                  "PrincipalType": {
+                    "description": "Always 'user' for individual employees, never groups.",
+                    "type": "string",
+                    "enum": [
+                      "user"
+                    ],
+                    "default": "user",
+                    "examples": [
+                      "user"
+                    ]
+                  },
+                  "identitySource": {
+                    "description": "Name of the resolving identity source. Always the literal 'None' for Google Drive identities (not resolved against a directory).",
+                    "type": "string",
+                    "enum": [
+                      "None"
+                    ],
+                    "examples": [
+                      "None"
+                    ]
+                  },
+                  "displayName": {
+                    "description": "Resolved directory display name. Always null for Google Drive identities (the human name is carried by ExternalName).",
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "examples": [
+                      null
+                    ]
+                  },
+                  "identityType": {
+                    "description": "Numeric identity type code. Always 0 for Google Drive identities (a plain, unresolved user reference).",
+                    "type": "integer",
+                    "enum": [
+                      0
+                    ],
+                    "examples": [
+                      0
+                    ]
+                  },
+                  "id": {
+                    "description": "Identity resolution key. Must match the Email field exactly. Always populated for Google Drive identities (equals Email).",
+                    "type": "string",
+                    "minLength": 1,
+                    "examples": [
+                      "sarah.johnson@company.com",
+                      "michael.chen@company.com"
+                    ]
+                  }
+                },
+                "required": [
+                  "userSyncAction",
+                  "identitySourceProperties",
+                  "metadata",
+                  "ExternalId",
+                  "EntraId",
+                  "Email",
+                  "ExternalName",
+                  "PrincipalType",
+                  "identitySource",
+                  "displayName",
+                  "identityType",
+                  "id"
+                ],
+                "examples": [
+                  null,
+                  {
+                    "userSyncAction": 0,
+                    "identitySourceProperties": null,
+                    "metadata": null,
+                    "ExternalId": "",
+                    "EntraId": "00000000-0000-0000-0000-000000000000",
+                    "Email": "sarah.johnson@company.com",
+                    "ExternalName": "Sarah Johnson",
+                    "PrincipalType": "user",
+                    "identitySource": "None",
+                    "displayName": null,
+                    "identityType": 0,
+                    "id": "sarah.johnson@company.com"
+                  }
+                ]
+              },
+              "createdDateTime": {
+                "description": "When the comment was created, in ISO 8601 format.",
+                "type": "string",
+                "minLength": 1,
+                "examples": [
+                  "2025-09-28T08:04:04.5660000+00:00"
+                ]
+              },
+              "modifiedDateTime": {
+                "description": "When the comment was last edited, in ISO 8601 format. Equals createdDateTime if never edited.",
+                "type": "string",
+                "minLength": 1,
+                "examples": [
+                  "2025-09-28T08:04:04.5660000+00:00"
+                ]
+              },
+              "mentionedUsers": {
+                "type": "array",
+                "minItems": 0,
+                "description": "Users mentioned via @mention in the comment. Empty when none are mentioned.",
+                "items": {
+                  "description": "Identity of a user mentioned via @mention in this comment.",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "userSyncAction": {
+                      "description": "Synchronization action flag used by the identity-sync pipeline. Always 0 for Google Drive identities (no pending sync action).",
+                      "type": "integer",
+                      "enum": [
+                        0
+                      ],
+                      "examples": [
+                        0
+                      ]
+                    },
+                    "identitySourceProperties": {
+                      "description": "Additional source-system identity attributes. Always null for Google Drive identities.",
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "examples": [
+                        null
+                      ]
+                    },
+                    "metadata": {
+                      "description": "Additional identity metadata. Always null for Google Drive identities.",
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "examples": [
+                        null
+                      ]
+                    },
+                    "ExternalId": {
+                      "description": "Unique identifier (GUID) of the user within the source system, in standard GUID format with hyphens. May be an empty string when the source does not surface a directory GUID (as with Google Drive), in which case identity resolves via the email carried in 'id'.",
+                      "type": "string",
+                      "examples": [
+                        "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                        ""
+                      ]
+                    },
+                    "EntraId": {
+                      "description": "The user's Microsoft Entra directory object id, formatted as a GUID. Always the all-zero (nil) GUID for Google Drive identities because the source user is not resolved to Entra; a resolved user would carry a standard Entra object-id GUID.",
+                      "type": "string",
+                      "format": "uuid",
+                      "examples": [
+                        "00000000-0000-0000-0000-000000000000",
+                        "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                        "94c0305a-ad9a-4c08-8f02-14679330aa49",
+                        "7f9c6b2e-1d3a-4c5b-9e8f-2a1b0c3d4e5f"
+                      ]
+                    },
+                    "Email": {
+                      "description": "Corporate email of the user. Must share the same domain as all other user identities in this item. Always populated for Google Drive identities and used as the identity-resolution key (equals the 'id' field).",
+                      "type": "string",
+                      "format": "email",
+                      "minLength": 1,
+                      "examples": [
+                        "sarah.johnson@company.com",
+                        "michael.chen@company.com"
+                      ]
+                    },
+                    "ExternalName": {
+                      "description": "Full display name of the user. Always populated for Google Drive identities.",
+                      "type": "string",
+                      "minLength": 1,
+                      "examples": [
+                        "Sarah Johnson",
+                        "Michael Chen",
+                        "Priya Patel"
+                      ]
+                    },
+                    "PrincipalType": {
+                      "description": "Always 'user' for individual employees, never groups.",
+                      "type": "string",
+                      "enum": [
+                        "user"
+                      ],
+                      "default": "user",
+                      "examples": [
+                        "user"
+                      ]
+                    },
+                    "identitySource": {
+                      "description": "Name of the resolving identity source. Always the literal 'None' for Google Drive identities (not resolved against a directory).",
+                      "type": "string",
+                      "enum": [
+                        "None"
+                      ],
+                      "examples": [
+                        "None"
+                      ]
+                    },
+                    "displayName": {
+                      "description": "Resolved directory display name. Always null for Google Drive identities (the human name is carried by ExternalName).",
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "examples": [
+                        null
+                      ]
+                    },
+                    "identityType": {
+                      "description": "Numeric identity type code. Always 0 for Google Drive identities (a plain, unresolved user reference).",
+                      "type": "integer",
+                      "enum": [
+                        0
+                      ],
+                      "examples": [
+                        0
+                      ]
+                    },
+                    "id": {
+                      "description": "Identity resolution key. Must match the Email field exactly. Always populated for Google Drive identities (equals Email).",
+                      "type": "string",
+                      "minLength": 1,
+                      "examples": [
+                        "sarah.johnson@company.com",
+                        "michael.chen@company.com"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "userSyncAction",
+                    "identitySourceProperties",
+                    "metadata",
+                    "ExternalId",
+                    "EntraId",
+                    "Email",
+                    "ExternalName",
+                    "PrincipalType",
+                    "identitySource",
+                    "displayName",
+                    "identityType",
+                    "id"
+                  ]
+                },
+                "examples": [
+                  []
+                ]
+              },
+              "reactions": {
+                "type": "array",
+                "minItems": 0,
+                "description": "Emoji reactions on the comment from other users. Empty when there are none.",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "description": "A single emoji reaction on the comment.",
+                  "properties": {
+                    "reactionType": {
+                      "description": "The emoji reaction type added to the comment. 'Like' is the most common.",
+                      "type": "string",
+                      "enum": [
+                        "Like",
+                        "Love",
+                        "Celebrate",
+                        "Insightful",
+                        "Curious"
+                      ],
+                      "examples": [
+                        "Like",
+                        "Celebrate"
+                      ]
+                    },
+                    "reactionBy": {
+                      "description": "Identity of the user who added this reaction.",
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "userSyncAction": {
+                          "description": "Synchronization action flag used by the identity-sync pipeline. Always 0 for Google Drive identities (no pending sync action).",
+                          "type": "integer",
+                          "enum": [
+                            0
+                          ],
+                          "examples": [
+                            0
+                          ]
+                        },
+                        "identitySourceProperties": {
+                          "description": "Additional source-system identity attributes. Always null for Google Drive identities.",
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "examples": [
+                            null
+                          ]
+                        },
+                        "metadata": {
+                          "description": "Additional identity metadata. Always null for Google Drive identities.",
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "examples": [
+                            null
+                          ]
+                        },
+                        "ExternalId": {
+                          "description": "Unique identifier (GUID) of the user within the source system, in standard GUID format with hyphens. May be an empty string when the source does not surface a directory GUID (as with Google Drive), in which case identity resolves via the email carried in 'id'.",
+                          "type": "string",
+                          "examples": [
+                            "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                            ""
+                          ]
+                        },
+                        "EntraId": {
+                          "description": "The user's Microsoft Entra directory object id, formatted as a GUID. Always the all-zero (nil) GUID for Google Drive identities because the source user is not resolved to Entra; a resolved user would carry a standard Entra object-id GUID.",
+                          "type": "string",
+                          "format": "uuid",
+                          "examples": [
+                            "00000000-0000-0000-0000-000000000000",
+                            "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                            "94c0305a-ad9a-4c08-8f02-14679330aa49",
+                            "7f9c6b2e-1d3a-4c5b-9e8f-2a1b0c3d4e5f"
+                          ]
+                        },
+                        "Email": {
+                          "description": "Corporate email of the user. Must share the same domain as all other user identities in this item. Always populated for Google Drive identities and used as the identity-resolution key (equals the 'id' field).",
+                          "type": "string",
+                          "format": "email",
+                          "minLength": 1,
+                          "examples": [
+                            "sarah.johnson@company.com",
+                            "michael.chen@company.com"
+                          ]
+                        },
+                        "ExternalName": {
+                          "description": "Full display name of the user. Always populated for Google Drive identities.",
+                          "type": "string",
+                          "minLength": 1,
+                          "examples": [
+                            "Sarah Johnson",
+                            "Michael Chen",
+                            "Priya Patel"
+                          ]
+                        },
+                        "PrincipalType": {
+                          "description": "Always 'user' for individual employees, never groups.",
+                          "type": "string",
+                          "enum": [
+                            "user"
+                          ],
+                          "default": "user",
+                          "examples": [
+                            "user"
+                          ]
+                        },
+                        "identitySource": {
+                          "description": "Name of the resolving identity source. Always the literal 'None' for Google Drive identities (not resolved against a directory).",
+                          "type": "string",
+                          "enum": [
+                            "None"
+                          ],
+                          "examples": [
+                            "None"
+                          ]
+                        },
+                        "displayName": {
+                          "description": "Resolved directory display name. Always null for Google Drive identities (the human name is carried by ExternalName).",
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "examples": [
+                            null
+                          ]
+                        },
+                        "identityType": {
+                          "description": "Numeric identity type code. Always 0 for Google Drive identities (a plain, unresolved user reference).",
+                          "type": "integer",
+                          "enum": [
+                            0
+                          ],
+                          "examples": [
+                            0
+                          ]
+                        },
+                        "id": {
+                          "description": "Identity resolution key. Must match the Email field exactly. Always populated for Google Drive identities (equals Email).",
+                          "type": "string",
+                          "minLength": 1,
+                          "examples": [
+                            "sarah.johnson@company.com",
+                            "michael.chen@company.com"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "userSyncAction",
+                        "identitySourceProperties",
+                        "metadata",
+                        "ExternalId",
+                        "EntraId",
+                        "Email",
+                        "ExternalName",
+                        "PrincipalType",
+                        "identitySource",
+                        "displayName",
+                        "identityType",
+                        "id"
+                      ]
+                    },
+                    "reactionTimestamp": {
+                      "description": "When the reaction was added, in ISO 8601 format.",
+                      "type": "string",
+                      "format": "date-time",
+                      "minLength": 1,
+                      "examples": [
+                        "2025-03-01T10:30:00Z"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "reactionType",
+                    "reactionBy",
+                    "reactionTimestamp"
+                  ]
+                },
+                "examples": [
+                  []
+                ]
+              },
+              "entityContent": {
+                "description": "The comment body. Its representation follows the (entityEncoding, entityFormat) pair: raw plain text (entityEncoding='raw', entityFormat='txt'), raw HTML ('raw','html'), raw markdown ('raw','markdown'), or base64-encoded plain text ('b64','txt'). Google Drive comments are plain text; mirrored by CommentText once decoded.",
+                "type": "string",
+                "examples": [
+                  "UGxlYXNlIHJldmlldyB0aGUgZWxpZ2liaWxpdHkgc2VjdGlvbiBiZWZvcmUgd2UgcHVibGlzaCB0aGlzIHRvIHRoZSB0ZWFtLg==",
+                  "QG1pY2hhZWwuY2hlbkBjb21wYW55LmNvbSBjYW4geW91IGNvbmZpcm0gdGhlIFEzIGZpZ3VyZXMgb24gdGhlIHN1bW1hcnkgdGFiPw==",
+                  "VXBkYXRlZCB0aGUgcGF5b3V0IHNjaGVkdWxlIHRvIG1hdGNoIHRoZSBsYXRlc3QgSFIgZ3VpZGFuY2Uu"
+                ]
+              },
+              "entityEncoding": {
+                "description": "Encoding of the entityContent value. 'raw' — entityContent is submitted as-is (use for plain text, HTML, or markdown). 'b64' — entityContent is base64-encoded (use to carry base64-encoded text).",
+                "type": "string",
+                "enum": [
+                  "raw",
+                  "b64"
+                ],
+                "default": "b64",
+                "examples": [
+                  "b64",
+                  "raw"
+                ]
+              },
+              "entityFormat": {
+                "description": "Format of the content represented in entityContent. Use 'txt' for plain text (Google Drive comments are plain text), 'html' for HTML content, or 'markdown' for Markdown.",
+                "type": "string",
+                "enum": [
+                  "txt",
+                  "html",
+                  "markdown"
+                ],
+                "default": "txt",
+                "examples": [
+                  "txt",
+                  "html",
+                  "markdown"
+                ]
+              }
+            },
+            "required": [
+              "CommentText",
+              "entitySemanticType",
+              "commentId",
+              "parentCommentId",
+              "creator",
+              "modifier",
+              "createdDateTime",
+              "modifiedDateTime",
+              "mentionedUsers",
+              "reactions",
+              "entityContent",
+              "entityEncoding",
+              "entityFormat"
+            ]
+          },
+          "examples": [
+            [],
+            [
+              {
+                "CommentText": "Please review the eligibility section before we publish this to the team.",
+                "entitySemanticType": "comment",
+                "commentId": "AAABrnLyGzM",
+                "parentCommentId": null,
+                "creator": null,
+                "modifier": null,
+                "createdDateTime": "2025-09-28T08:04:04.5660000+00:00",
+                "modifiedDateTime": "2025-09-28T08:04:04.5660000+00:00",
+                "mentionedUsers": [],
+                "reactions": [],
+                "entityContent": "UGxlYXNlIHJldmlldyB0aGUgZWxpZ2liaWxpdHkgc2VjdGlvbiBiZWZvcmUgd2UgcHVibGlzaCB0aGlzIHRvIHRoZSB0ZWFtLg==",
+                "entityEncoding": "b64",
+                "entityFormat": "txt"
+              }
+            ]
+          ]
+        },
+        "itemVersion": {
+          "description": "Integer version stamp used by the indexing layer. Always null for Google Drive files.",
+          "type": [
+            "integer",
+            "null"
+          ],
+          "default": null,
+          "examples": [
+            null
+          ]
+        },
+        "contentDomainCategoryName": {
+          "description": "Content domain category for the index. 'fileRepository' for Google Drive file content, or null when not categorized.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "fileRepository",
+            null
+          ],
+          "default": null,
+          "examples": [
+            null,
+            "fileRepository"
+          ]
+        },
+        "isAssociatedItem": {
+          "description": "Whether this item is itself an associated entity of a parent item. Always false — Google Drive files are top-level items.",
+          "type": "boolean",
+          "enum": [
+            false
+          ],
+          "default": false,
+          "examples": [
+            false
+          ]
+        },
+        "hasAssociatedContent": {
+          "description": "Whether the item has associated child content such as comments. Present (and true) only on associated-content items; omitted on standard file items.",
+          "type": "boolean",
+          "examples": [
+            true
+          ]
+        },
+        "dataSourceResponse": {
+          "description": "Raw data-source response payload retained by the connector. Always null for Google Drive files.",
+          "type": "null",
+          "examples": [
+            null
+          ]
+        },
+        "displayName": {
+          "description": "Display name of the item. Always the same as properties.Name.",
+          "type": "string",
+          "minLength": 1,
+          "examples": [
+            "Employee Referral Program",
+            "Contoso Employee Handbook"
+          ]
+        },
+        "shouldHashId": {
+          "description": "Whether the item id should be hashed before storage by the indexing layer.",
+          "type": "boolean",
+          "default": false,
+          "examples": [
+            false,
+            true
+          ]
+        },
+        "hashedId": {
+          "description": "The hashed item id when id hashing is applied. Null when not hashed.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null,
+          "examples": [
+            null
+          ]
+        },
+        "id": {
+          "description": "The item's primary identifier — the Google Drive file id. This is the same file id that appears in the file's Link URL (the '/d/<id>' segment).",
+          "type": "string",
+          "minLength": 1,
+          "examples": [
+            "1c6CavgLkuauFOml9JigBTZZIyxNQmsVR3MGHYIoAUX8"
+          ]
+        },
+        "containerIdsWithPrecompute": {
+          "description": "Reserved precompute field carried by the connector. Present only on associated-content items (null there); omitted on standard file items.",
+          "type": [
+            "object",
+            "array",
+            "null"
+          ],
+          "default": null,
+          "examples": [
+            null
+          ]
+        }
+      },
+      "required": [
+        "isContainer",
+        "containerId",
+        "properties",
+        "accessControlList",
+        "UniversalAccessControlBlock",
+        "activityList",
+        "contentEnrichmentData",
+        "content",
+        "associatedItemsMetadata",
+        "attachments",
+        "comments",
+        "itemVersion",
+        "contentDomainCategoryName",
+        "isAssociatedItem",
+        "dataSourceResponse",
+        "displayName",
+        "shouldHashId",
+        "hashedId",
+        "id"
+      ]
+    }
+  }
+}

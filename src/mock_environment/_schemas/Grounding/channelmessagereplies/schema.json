@@ -1,0 +1,356 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Manufactured Channel Message Replies schema",
+  "title": "ChannelMessageReplies",
+  "type": "array",
+  "uniqueItems": true,
+  "items": {
+    "$ref": "#/$defs/ChannelMessageReply"
+  },
+  "$defs": {
+    "ChannelMessageReply": {
+      "description": "Represents a reply to an individual channel message.",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "ChannelMessageReplyId": {
+          "description": "An identifier for each channel message reply, useful for tracking and reference.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 50,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "ChannelMessageId": {
+          "description": "An identifier for Channel Message that this reply is for.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 50,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "From": {
+          "description": "Identifier of the sender of the message. Usually is the MailNickName of the user.",
+          "$ref": "#/$defs/MailNickName"
+        },
+        "ContentType": {
+          "description": "The type of the content. Possible values are text and html.",
+          "enum": [
+            "html",
+            "text"
+          ]
+        },
+        "Content": {
+          "description": "The content of the message.",
+          "type": "string",
+          "minLength": 1
+        },
+        "Importance": {
+          "description": "Importance of the channel message. Maps to Microsoft Graph ChatMessageImportance enum.",
+          "type": "string",
+          "enum": [
+            "normal",
+            "high",
+            "urgent"
+          ]
+        },
+        "SentDateTime": {
+          "description": "Timestamp of when the channel message was created. This follows the ISO 8601 pattern.",
+          "type": "string",
+          "pattern": "^[1-9][0-9]{3}-(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9]|3[0-1])T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+        },
+        "Placeholders": {
+          "description": "List of placeholders in the channel message reply.",
+          "type": [
+            "array",
+            "null"
+          ],
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/Placeholder"
+          }
+        }
+      },
+      "required": [
+        "ChannelMessageReplyId",
+        "ChannelMessageId",
+        "From",
+        "ContentType",
+        "Content",
+        "SentDateTime"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "ContentType": {
+                "const": "html"
+              }
+            },
+            "required": [
+              "ContentType"
+            ]
+          },
+          "then": {
+            "properties": {
+              "Content": {
+                "allOf": [
+                  {
+                    "not": {
+                      "pattern": "<\\s*[A-Za-z][A-Za-z0-9:-]*[^>]*\\s+[Ii][Tt][Ee][Mm][Tt][Yy][Pp][Ee]\\s*=.*>"
+                    }
+                  },
+                  {
+                    "not": {
+                      "pattern": "<\\s*[Ii][Mm][Gg]\\b[^>]*>"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "Placeholders": {
+                "type": "array",
+                "minItems": 1
+              }
+            },
+            "required": [
+              "Placeholders"
+            ]
+          },
+          "then": {
+            "properties": {
+              "ContentType": {
+                "const": "html"
+              }
+            },
+            "required": [
+              "ContentType"
+            ]
+          }
+        }
+      ]
+    },
+    "Placeholder": {
+      "description": "Represents a placeholder in a message that can be of various types (Hyperlink, Attachment, Mention)",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "PlaceholderId": {
+          "description": "Unique identifier for the placeholder",
+          "type": "string",
+          "minLength": 1
+        },
+        "Type": {
+          "description": "The type of placeholder",
+          "type": "string",
+          "enum": [
+            "hyperlink",
+            "attachment",
+            "mention",
+            "img"
+          ]
+        },
+        "HyperLinkContent": {
+          "description": "Content when Type is 'hyperlink', 'attachment', or 'mention'",
+          "$ref": "#/$defs/HyperLinkContent"
+        }
+      },
+      "required": [
+        "PlaceholderId",
+        "Type",
+        "HyperLinkContent"
+      ]
+    },
+    "HyperLinkContent": {
+      "description": "Content for hyperlink, attachment, or mention placeholders",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "DisplayText": {
+          "description": "Text to display for the hyperlink",
+          "type": "string",
+          "minLength": 1
+        },
+        "HrefUrl": {
+          "description": "The URL that the hyperlink points to",
+          "type": "string"
+        },
+        "FileId": {
+          "description": "ID of a file if the hyperlink references a file",
+          "type": "string"
+        },
+        "SharedLinkId": {
+          "description": "ID of a shared link",
+          "type": "string"
+        },
+        "FileOwner": {
+          "description": "Owner of the file",
+          "type": "string"
+        },
+        "UserIdentityType": {
+          "description": "Type of user identity, e.g., 'aadUser' for Azure AD users",
+          "type": "string",
+          "enum": [
+            "aadUser"
+          ]
+        },
+        "MentionId": {
+          "description": "Unique identifier for the mention",
+          "type": "integer"
+        },
+        "MentionIdentifier": {
+          "description": "Identifier for the mention. For aadUser, it should be user's mailnickname. For channel/team, it should be the channel/team ID.",
+          "type": "string",
+          "minLength": 1
+        },
+        "ConversationIdentityType": {
+          "description": "Type of conversation identity. Use 'channel' to mention a channel, 'team' to mention a team. Only applicable when mentioning channels or teams.",
+          "type": "string",
+          "enum": [
+            "channel",
+            "team"
+          ]
+        },
+        "ImageFullPath": {
+          "type": "string",
+          "pattern": "^files(/[^%\\\\:*?\"<>|\\x00-\\x1f/]+)+$"
+        },
+        "ImageContentType": {
+          "type": "string",
+          "enum": [
+            "image/png",
+            "image/jpg"
+          ]
+        },
+        "HostedContentId": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "HrefUrl",
+            "DisplayText"
+          ],
+          "not": {
+            "required": [
+              "FileId",
+              "SharedLinkId",
+              "FileOwner",
+              "UserIdentityType",
+              "MentionIdentifier",
+              "MentionId",
+              "ConversationIdentityType",
+              "ImageFullPath",
+              "ImageContentType",
+              "HostedContentId"
+            ]
+          }
+        },
+        {
+          "required": [
+            "FileId",
+            "SharedLinkId",
+            "FileOwner",
+            "DisplayText"
+          ],
+          "not": {
+            "required": [
+              "HrefUrl",
+              "UserIdentityType",
+              "MentionIdentifier",
+              "MentionId",
+              "ConversationIdentityType",
+              "ImageFullPath",
+              "ImageContentType",
+              "HostedContentId"
+            ]
+          }
+        },
+        {
+          "required": [
+            "MentionId",
+            "UserIdentityType",
+            "MentionIdentifier",
+            "DisplayText"
+          ],
+          "not": {
+            "required": [
+              "HrefUrl",
+              "FileId",
+              "SharedLinkId",
+              "FileOwner",
+              "ConversationIdentityType",
+              "ImageFullPath",
+              "ImageContentType",
+              "HostedContentId"
+            ]
+          }
+        },
+        {
+          "required": [
+            "MentionId",
+            "ConversationIdentityType",
+            "MentionIdentifier",
+            "DisplayText"
+          ],
+          "not": {
+            "required": [
+              "HrefUrl",
+              "FileId",
+              "SharedLinkId",
+              "FileOwner",
+              "UserIdentityType",
+              "ImageFullPath",
+              "ImageContentType",
+              "HostedContentId"
+            ]
+          }
+        },
+        {
+          "required": [
+            "ImageFullPath",
+            "ImageContentType",
+            "HostedContentId"
+          ],
+          "not": {
+            "required": [
+              "HrefUrl",
+              "DisplayText",
+              "FileId",
+              "SharedLinkId",
+              "FileOwner",
+              "UserIdentityType",
+              "MentionIdentifier",
+              "MentionId",
+              "ConversationIdentityType"
+            ]
+          }
+        }
+      ]
+    },
+    "MailNickName": {
+      "description": "User MailNickName only (full email address is not supported)",
+      "type": "string",
+      "minLength": 1,
+      "allOf": [
+        {
+          "not": {
+            "pattern": ".*'.*"
+          }
+        },
+        {
+          "not": {
+            "pattern": "@"
+          }
+        }
+      ],
+      "pattern": "^(?![.-])[A-Za-z0-9_]+([.-][A-Za-z0-9_]+)*$"
+    }
+  }
+}

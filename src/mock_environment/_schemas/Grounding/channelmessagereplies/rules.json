@@ -1,0 +1,362 @@
+{
+  "typeName": "channelmessagereplies",
+  "rules": [
+    {
+      "ruleId": "d4bf20e4-f772-4951-a807-8ecb92eda673",
+      "name": "Channel message reply id is unique",
+      "description": "Channel message reply id is unique",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "unique": {
+          "var": "ChannelMessageReplyId",
+          "caseSensitive": true
+        }
+      },
+      "metadata": {
+        "field": "ChannelMessageReplyId",
+        "expression": "All values of 'ChannelMessageReplyId' must be unique"
+      },
+      "category": "Uniqueness",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "89de87e9-5fd7-4084-a48a-4a650966a532",
+      "name": "Channel message reply sent date time is past time",
+      "description": "Channel message reply sent date time is past time",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "SentDateTime",
+            "operator": "is_not_null",
+            "valueType": "string"
+          },
+          "then": {
+            "field": "SentDateTime",
+            "operator": "is_past",
+            "valueType": "datetime"
+          }
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "IF 'SentDateTime' is_not_null THEN 'SentDateTime' is_past"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "604ce21e-0c72-41dd-9428-060c88557734",
+      "name": "Message reply sent date time is unique in each post",
+      "description": "Message reply sent date time is unique in each post",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "unique_by_group": {
+          "var": "SentDateTime",
+          "groupBy": "ChannelMessageId",
+          "caseSensitive": true
+        }
+      },
+      "metadata": {
+        "field": "SentDateTime",
+        "expression": "All values of 'SentDateTime' must be unique within each 'ChannelMessageId'"
+      },
+      "category": "Uniqueness",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "aa20f205-f71d-464f-b82b-d647c3054296",
+      "name": "Channel message reply sender exist in user list",
+      "description": "Channel message reply sender exist in user list",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "channelmessagereplies",
+          "sourceField": "From",
+          "targetType": "users",
+          "targetField": "MailNickName",
+          "sourceExtractPattern": "^([^@]+)$"
+        }
+      },
+      "metadata": {
+        "field": "From",
+        "expression": "For each 'channelmessagereplies.From' (extracted via pattern: ^([^@]+)$), a matching 'users.MailNickName' must exist"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "32c4e159-8e64-4314-8232-85b9af59534c",
+      "name": "Message reply sent time is not earlier than channel message sent time",
+      "description": "Message reply sent time is not earlier than channel message sent time",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "integrityCheck": {
+          "source": {
+            "keyField": "ChannelMessageId"
+          },
+          "target": {
+            "logicType": "or",
+            "conditions": [
+              {
+                "type": "array-exists",
+                "targetType": "channelmessages",
+                "keyField": "ChannelMessageId",
+                "additionalConditions": [
+                  {
+                    "field": "SentDateTime",
+                    "operator": "<=",
+                    "isSourceFieldRef": true,
+                    "sourceField": "SentDateTime",
+                    "useCurrentSourceItem": true,
+                    "valueType": "datetime"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "field": "ChannelMessageId",
+        "expression": "Each value from 'ChannelMessageId' must exists in channelmessages with matching 'ChannelMessageId' and SentDateTime<=currentItem.SentDateTime"
+      },
+      "category": "IntegrityCheck",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "6bf9a0b4-217f-4e01-aaa2-ad9a62829075",
+      "name": "Message id exist in channelmessages",
+      "description": "Message id exist in channelmessages",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "channelmessagereplies",
+          "sourceField": "ChannelMessageId",
+          "targetType": "channelmessages",
+          "targetField": "ChannelMessageId"
+        }
+      },
+      "metadata": {
+        "field": "ChannelMessageId",
+        "expression": "For each 'channelmessagereplies.ChannelMessageId', a matching 'channelmessages.ChannelMessageId' must exist"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "b8d2e3f4-a5c6-4789-9012-3456789abcde",
+      "name": "Channel message reply sender exists in channel member list",
+      "description": "Validates that the sender of a channel message reply is a member of the channel where the parent message was posted",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "channel-message-reply-sender-in-channel-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "From",
+        "expression": "Channel message reply sender must be a member of the channel"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "fc62b28a-b590-4f60-9519-9e479cb03821",
+      "name": "Channel message reply sender shouldn't be a shared mailbox",
+      "description": "Channel message reply sender shouldn't be a shared mailbox",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "channel-message-reply-from-user-reference-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'channel-message-reply-from-user-reference-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "97201183-6675-4855-87d6-e3f73f6a8e7b",
+      "name": "Channel message reply placeholder mention shouldn't be a shared mailbox",
+      "description": "Channel message reply placeholder mention shouldn't be a shared mailbox",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "channel-message-reply-mention-user-reference-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'channel-message-reply-mention-user-reference-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "0e60a2a0-97c4-4f14-8749-dfd7e08de6e1",
+      "name": "Reply placeholder IDs unique",
+      "description": "PlaceholderId must be unique within each channel message reply",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "unique_by_group": {
+          "var": "Placeholders.PlaceholderId",
+          "groupBy": "ChannelMessageReplyId",
+          "caseSensitive": true
+        }
+      },
+      "metadata": {
+        "field": "Placeholders.PlaceholderId",
+        "expression": "All values of 'Placeholders.PlaceholderId' must be unique within each 'ChannelMessageReplyId'"
+      },
+      "category": "Uniqueness",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "09e5ba9c-89f8-4fcb-879c-9ff44353cc53",
+      "name": "Reply placeholder MentionId unique",
+      "description": "MentionId must be unique within each channel message reply",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "unique_by_group": {
+          "var": "Placeholders.HyperLinkContent.MentionId",
+          "groupBy": "ChannelMessageReplyId",
+          "caseSensitive": true
+        }
+      },
+      "metadata": {
+        "field": "Placeholders.HyperLinkContent.MentionId",
+        "expression": "All values of 'Placeholders.HyperLinkContent.MentionId' must be unique within each 'ChannelMessageReplyId'"
+      },
+      "category": "Uniqueness",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "6752b0b2-25ab-41c3-8a3c-06d650f0690a",
+      "name": "Reply placeholder consistency from placeholders",
+      "description": "Placeholder must be used in channel message reply content",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "channelmessagereplies",
+          "sourceField": "Placeholders.PlaceholderId",
+          "targetType": "channelmessagereplies",
+          "targetField": "Content",
+          "targetExtractPattern": "\\{placeholder:([^}]+)\\}",
+          "sameItemLookup": true
+        }
+      },
+      "metadata": {
+        "field": "Placeholders.PlaceholderId",
+        "expression": "For each 'Placeholders.PlaceholderId', a matching value must exist in 'Content' (extracted via pattern: \\{placeholder:([^}]+)\\}) within the same item"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "ca4af254-b388-4636-a28f-c866b4a393c1",
+      "name": "Reply channel mention identifier must exist in channels",
+      "description": "For channel mentions (ConversationIdentityType 'channel'), Mention Identifier must exist as a ChannelId in the channels list",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "integrityCheck": {
+          "source": {
+            "arrayField": "Placeholders.HyperLinkContent",
+            "keyField": "MentionIdentifier",
+            "filterConditions": [
+              {
+                "field": "ConversationIdentityType",
+                "operator": "==",
+                "value": "channel"
+              }
+            ]
+          },
+          "target": {
+            "logicType": "or",
+            "conditions": [
+              {
+                "type": "array-exists",
+                "targetType": "channels",
+                "keyField": "ChannelId"
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "field": "Placeholders.HyperLinkContent.MentionIdentifier",
+        "expression": "For each 'MentionIdentifier' (where ConversationIdentityType==channel), a matching 'channels.ChannelId' must exist"
+      },
+      "category": "IntegrityCheck",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "bc5f16ce-bc3e-4362-aa75-f018149f2ed2",
+      "name": "Reply team mention identifier must exist in teams",
+      "description": "For team mentions (ConversationIdentityType 'team'), Mention Identifier must exist as a TeamId in the teams list",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "integrityCheck": {
+          "source": {
+            "arrayField": "Placeholders.HyperLinkContent",
+            "keyField": "MentionIdentifier",
+            "filterConditions": [
+              {
+                "field": "ConversationIdentityType",
+                "operator": "==",
+                "value": "team"
+              }
+            ]
+          },
+          "target": {
+            "logicType": "or",
+            "conditions": [
+              {
+                "type": "array-exists",
+                "targetType": "teams",
+                "keyField": "TeamId"
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "field": "Placeholders.HyperLinkContent.MentionIdentifier",
+        "expression": "For each 'MentionIdentifier' (where ConversationIdentityType==team), a matching 'teams.TeamId' must exist"
+      },
+      "category": "IntegrityCheck",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "e6be7d0b-c14c-e46e-c8ba-f441f7bd1358",
+      "name": "Unsupported properties are detected in grounding data",
+      "description": "Report unsupported properties that are not declared by the schema definition used for validation",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {},
+      "metadata": {
+        "expression": "All properties must be declared by the selected schema version",
+        "field": ""
+      },
+      "category": "UnsupportedProperty",
+      "isEnabled": true
+    }
+  ],
+  "jsonLogicVersion": "2.0"
+}

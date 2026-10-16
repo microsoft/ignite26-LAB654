@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "This schema defines the structure of OneNote notebook resources. Each item represents a notebook containing sections and pages.",
+  "title": "OneNotes",
+  "type": "array",
+  "uniqueItems": true,
+  "items": {
+    "$ref": "#/$defs/OneNote"
+  },
+  "$defs": {
+    "OneNote": {
+      "description": "A OneNote notebook containing sections and pages. Represents the top-level organizational unit in OneNote.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "NotebookName": {
+          "type": "string",
+          "description": "The name of the OneNote notebook. Notebook names typically represent projects, topics, or functional areas (e.g., 'Q3 Planning', 'Research Notes', 'Team Standup Notes').",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[^?*:/|<>\"']+$"
+        },
+        "Owner": {
+          "type": "string",
+          "description": "The alias (username) of the notebook owner. This is the user under whose OneDrive or site the notebook is created.",
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9._-]+$"
+        },
+        "DestinationType": {
+          "type": "string",
+          "description": "Indicates whether the notebook is stored in the user's personal OneDrive or a SharePoint site.",
+          "enum": [
+            "onedrive",
+            "site"
+          ]
+        },
+        "DestinationSiteName": {
+          "type": "string",
+          "description": "The name of the destination SharePoint site. Only applicable when DestinationType is 'site'.",
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+$"
+        },
+        "Sections": {
+          "description": "The sections within this notebook. Each section contains one or more pages.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Section"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "NotebookName",
+        "Owner",
+        "DestinationType",
+        "Sections"
+      ]
+    },
+    "Section": {
+      "description": "A section within a OneNote notebook. Sections organize pages by subtopic or category.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "SectionName": {
+          "type": "string",
+          "description": "The name of the section (e.g., 'Meeting Notes', 'Action Items', 'References').",
+          "minLength": 1,
+          "maxLength": 50,
+          "pattern": "^[^?*/:<>|&#'\"%~{}^\\\\]+$"
+        },
+        "Pages": {
+          "description": "The pages within this section.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Page"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "SectionName",
+        "Pages"
+      ]
+    },
+    "Page": {
+      "description": "A page within a OneNote section.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "PageId": {
+          "type": "string",
+          "description": "A unique identifier for the page within the dataset.",
+          "minLength": 1,
+          "maxLength": 50,
+          "pattern": "^[a-zA-Z0-9_-]+$"
+        },
+        "PageTitle": {
+          "type": "string",
+          "description": "The title of the OneNote page.",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "CreatedDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The timestamp of the page's creation in ISO 8601 format.",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$"
+        },
+        "Body": {
+          "type": "string",
+          "description": "The HTML body content of the OneNote page which can be placed directly inside the <body> tag. Should use HTML elements supported by the OneNote API (e.g., <h1>-<h6>, <p>, <ul>, <ol>, <li>, <table>, <b>, <i>) and may include data-tag attributes for note tags (e.g., data-tag='to-do', data-tag='to-do:completed', data-tag='important').",
+          "minLength": 100,
+          "maxLength": 1752000
+        }
+      },
+      "required": [
+        "PageId",
+        "PageTitle",
+        "CreatedDate",
+        "Body"
+      ]
+    }
+  }
+}

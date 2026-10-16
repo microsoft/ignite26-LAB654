@@ -1,0 +1,10 @@
+[
+  {
+    "name": "1.0.0",
+    "description": "Sample data for channelmessagereplies version 1.0.0",
+    "content": "[\r\n  {\r\n    \"ChannelMessageReplyId\": \"reply-001\",\r\n    \"ChannelMessageId\": \"chmsg-001\",\r\n    \"From\": \"jane.smith\",\r\n    \"ContentType\": \"text\",\r\n    \"Content\": \"Thanks for the welcome!\",\r\n    \"SentDateTime\": \"2025-01-10T09:15:00Z\",\r\n    \"Importance\": \"normal\"\r\n  }\r\n]",
+    "format": "Json",
+    "jsonContent": "[\r\n  {\r\n    \"ChannelMessageReplyId\": \"reply-001\",\r\n    \"ChannelMessageId\": \"chmsg-001\",\r\n    \"From\": \"jane.smith\",\r\n    \"ContentType\": \"text\",\r\n    \"Content\": \"Thanks for the welcome!\",\r\n    \"SentDateTime\": \"2025-01-10T09:15:00Z\",\r\n    \"Importance\": \"normal\"\r\n  }\r\n]",
+    "version": "1.0.0"
+  }
+]

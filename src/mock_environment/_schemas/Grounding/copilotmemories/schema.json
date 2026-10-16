@@ -1,0 +1,181 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "copilotmemories/1.0.0/schema",
+  "title": "Copilot Memories",
+  "description": "Saved Microsoft 365 Copilot memories owned by tenant users and published to Annotation Store.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "Memories": {
+      "description": "Saved memories to publish.",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/CopilotMemory"
+      }
+    }
+  },
+  "required": [
+    "Memories"
+  ],
+  "$defs": {
+    "CopilotMemory": {
+      "description": "One saved memory and the user whose mailbox owns it.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "Owner": {
+          "description": "The owner MailNickName or full email address.",
+          "$ref": "#/$defs/MailNickNameOrEmail"
+        },
+        "Record": {
+          "$ref": "#/$defs/CopilotMemoryRecord"
+        }
+      },
+      "required": [
+        "Owner",
+        "Record"
+      ]
+    },
+    "CopilotMemoryRecord": {
+      "description": "The Annotation Store CopilotMemory contact payload.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "AlternateId": {
+          "description": "Caller-defined idempotency identifier. Values must be unique within Memories.",
+          "type": "string",
+          "pattern": "\\S"
+        },
+        "PersonalNotes": {
+          "description": "Saved-memory text. Optional when structured memory data is supplied.",
+          "type": "string"
+        },
+        "MultiValueExtendedProperties": {
+          "description": "Multi-value MAPI extended properties.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MultiValueExtendedProperty"
+          }
+        },
+        "SingleValueExtendedProperties": {
+          "description": "Single-value MAPI extended properties. Exactly one non-empty model-version property is required.",
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/SingleValueExtendedProperty"
+          },
+          "contains": {
+            "type": "object",
+            "properties": {
+              "PropertyId": {
+                "const": "String 0x0200107B"
+              },
+              "Value": {
+                "type": "string",
+                "pattern": "\\S"
+              }
+            },
+            "required": [
+              "PropertyId",
+              "Value"
+            ]
+          },
+          "minContains": 1,
+          "maxContains": 1
+        }
+      },
+      "required": [
+        "AlternateId",
+        "SingleValueExtendedProperties"
+      ],
+      "anyOf": [
+        {
+          "properties": {
+            "PersonalNotes": {
+              "type": "string",
+              "pattern": "\\S"
+            }
+          },
+          "required": [
+            "PersonalNotes"
+          ]
+        },
+        {
+          "properties": {
+            "SingleValueExtendedProperties": {
+              "contains": {
+                "type": "object",
+                "properties": {
+                  "PropertyId": {
+                    "const": "String 0x020010CB"
+                  },
+                  "Value": {
+                    "type": "string",
+                    "pattern": "\\S"
+                  }
+                },
+                "required": [
+                  "PropertyId",
+                  "Value"
+                ]
+              },
+              "minContains": 1,
+              "maxContains": 1
+            }
+          }
+        }
+      ]
+    },
+    "MultiValueExtendedProperty": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "PropertyId": {
+          "type": "string",
+          "pattern": "\\S"
+        },
+        "Value": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "PropertyId",
+        "Value"
+      ]
+    },
+    "SingleValueExtendedProperty": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "PropertyId": {
+          "type": "string",
+          "pattern": "\\S"
+        },
+        "Value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "PropertyId",
+        "Value"
+      ]
+    },
+    "MailNickNameOrEmail": {
+      "description": "User MailNickName or external full email address.",
+      "type": "string",
+      "minLength": 1,
+      "anyOf": [
+        {
+          "pattern": "^[\\w\\-.]+$"
+        },
+        {
+          "format": "idn-email"
+        }
+      ]
+    }
+  }
+}

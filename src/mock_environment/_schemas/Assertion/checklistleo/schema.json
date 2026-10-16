@@ -1,0 +1,251 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ChecklistLeo (TSV)",
+  "description": "Upload format: TSV file in the Bizchat Converged (CWC) format used by SEVAL's ChecklistLeo metric. The JSON Schema below describes the in-memory shape after CsvValidator converts each TSV row into a JSON object (the full file becomes a JSON array) ΓÇö it is NOT the upload format. Each row has two columns: 'query' (a JSON-encoded array of conversation turns) and 'metadata' (a JSON object carrying at least `segment`). Checks may be attached inline on a turn (`checks` / `checklistleo`) or at the metadata level (`checklistleo`), and cascade down per ChecklistLeo's configuration model.",
+  "type": "array",
+  "minItems": 1,
+  "items": {
+    "type": "object",
+    "required": [
+      "query",
+      "metadata"
+    ],
+    "properties": {
+      "query": {
+        "description": "JSON array of conversation turns (parsed from JSON in the 'query'/'conversation' TSV column). Supports single-turn and multi-turn conversations.",
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "$ref": "#/definitions/turn"
+        }
+      },
+      "metadata": {
+        "description": "JSON object (parsed from JSON in the 'metadata' TSV column). Must carry a `segment`; may carry a `checklistleo` cascading config that applies to all turns.",
+        "$ref": "#/definitions/metadata"
+      }
+    }
+  },
+  "definitions": {
+    "turn": {
+      "type": "object",
+      "required": [
+        "text",
+        "author"
+      ],
+      "properties": {
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The contents of the message."
+        },
+        "author": {
+          "type": "string",
+          "enum": [
+            "user",
+            "bot"
+          ],
+          "description": "Who owns the message turn."
+        },
+        "checks": {
+          "type": "array",
+          "description": "Inline checks evaluated against the response to this turn. Each entry is a short-form string or a long-form check object.",
+          "items": {
+            "$ref": "#/definitions/check"
+          }
+        },
+        "checklistleo": {
+          "$ref": "#/definitions/checklistleoConfig"
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "required": [
+        "segment"
+      ],
+      "properties": {
+        "segment": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Segment classification used to group conversations."
+        },
+        "checklistleo": {
+          "$ref": "#/definitions/checklistleoConfig"
+        }
+      }
+    },
+    "checklistleoConfig": {
+      "type": "object",
+      "description": "ChecklistLeo cascading configuration object. Holds a `checks` array plus any check properties that cascade down to the checks defined inside it.",
+      "properties": {
+        "checks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/check"
+          }
+        },
+        "importance": {
+          "$ref": "#/definitions/importance"
+        },
+        "owners": {
+          "$ref": "#/definitions/owners"
+        },
+        "selector": {
+          "$ref": "#/definitions/selector"
+        },
+        "previous_turns": {
+          "$ref": "#/definitions/previousTurns"
+        },
+        "additional_fields": {
+          "$ref": "#/definitions/additionalFields"
+        },
+        "prompt_template": {
+          "type": "string",
+          "description": "Jinja2 prompt template override applied to natural-language checks at this level."
+        },
+        "custom_prompt_template": {
+          "type": "string",
+          "description": "Fully custom Jinja2 prompt template (used with natural_check_type = 'custom')."
+        },
+        "natural_check_type": {
+          "type": "string",
+          "description": "Natural-language check prompt mode (e.g., 'custom')."
+        },
+        "base_configuration": {
+          "type": "string",
+          "description": "Base configuration reference, e.g. 'config:ruleleo' to enable RuleLeo-compatible mode."
+        },
+        "rule_scenario": {
+          "type": "string",
+          "description": "RuleLeo scenario selector (e.g., 'default', 'ruleleo_groundingv3', 'canvas')."
+        }
+      }
+    },
+    "check": {
+      "description": "A ChecklistLeo check. Short-form is a string (optionally prefixed with 'jmespath:' or 'pythonic:'); long-form is an object with a `check` plus properties.",
+      "oneOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "$ref": "#/definitions/checkObject"
+        }
+      ]
+    },
+    "checkObject": {
+      "type": "object",
+      "required": [
+        "check"
+      ],
+      "properties": {
+        "check": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The check body: natural-language statement, JMESPath expression, or Pythonic function reference."
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "natural",
+            "jmespath",
+            "pythonic"
+          ],
+          "description": "Check type. Defaults to 'natural' when omitted. A prefix in the check string ('jmespath:'/'pythonic:') takes precedence."
+        },
+        "args": {
+          "type": "array",
+          "description": "Arguments for pythonic checks (ignored for other types). Values must be Python primitive literals.",
+          "items": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "null"
+            ]
+          }
+        },
+        "additional_fields": {
+          "$ref": "#/definitions/additionalFields"
+        },
+        "importance": {
+          "$ref": "#/definitions/importance"
+        },
+        "owners": {
+          "$ref": "#/definitions/owners"
+        },
+        "selector": {
+          "$ref": "#/definitions/selector"
+        },
+        "previous_turns": {
+          "$ref": "#/definitions/previousTurns"
+        },
+        "natural_check_type": {
+          "type": "string",
+          "description": "Natural-language check prompt mode (e.g., 'custom')."
+        },
+        "custom_prompt_template": {
+          "type": "string",
+          "description": "Fully custom Jinja2 prompt template (used with natural_check_type = 'custom')."
+        }
+      }
+    },
+    "additionalFields": {
+      "description": "Response fields (from the SydneyResponse object) to include in a natural-language check's prompt. Either an array of field names or an object mapping field name to a human-readable label.",
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "object"
+        }
+      ]
+    },
+    "importance": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100,
+      "description": "Weight/priority of the check when aggregating scores. Default 10. For LMChecklist compatibility use 10 (critical), 9 (expected), or 8 (aspirational)."
+    },
+    "owners": {
+      "type": "array",
+      "description": "Set of owners (team or person) responsible for the check. Merged across cascading levels.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "previousTurns": {
+      "description": "Number of previous turns to include as context. 0 (default) = current turn only; a positive integer = up to that many prior turns; '*' = all previous turns.",
+      "oneOf": [
+        {
+          "type": "integer",
+          "minimum": 0
+        },
+        {
+          "type": "string",
+          "enum": [
+            "*"
+          ]
+        }
+      ]
+    },
+    "selector": {
+      "type": "object",
+      "description": "Selects which turns a check applies to. A turn selector ('turns') or a query-regex selector ('query-regex').",
+      "minProperties": 1,
+      "properties": {
+        "turns": {
+          "type": "string",
+          "description": "Turn index selector (0-indexed, Python slice semantics). Examples: '*', '0', '-1', '0:2', '-2:-1'."
+        },
+        "query-regex": {
+          "type": "string",
+          "description": "Python regular expression matched (re.search) against the turn's query text."
+        }
+      }
+    }
+  }
+}

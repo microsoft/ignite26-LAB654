@@ -1,0 +1,184 @@
+{
+  "typeName": "teams",
+  "rules": [
+    {
+      "ruleId": "e211c0f6-b61c-4228-8b4e-8f189ffdd800",
+      "name": "Unique Team IDs",
+      "description": "Each team must have a unique TeamId within the file",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "unique": {
+          "var": "TeamId",
+          "caseSensitive": true
+        }
+      },
+      "metadata": {
+        "field": "TeamId",
+        "expression": "All values of 'TeamId' must be unique"
+      },
+      "category": "Uniqueness",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "77e73265-be7a-412b-8e99-ed2ffe060ef1",
+      "name": "Unique Team Names",
+      "description": "Team Name should be unique across the file",
+      "severity": "Info",
+      "scope": "SingleFile",
+      "logic": {
+        "unique": {
+          "var": "Name",
+          "caseSensitive": true
+        }
+      },
+      "metadata": {
+        "field": "Name",
+        "expression": "All values of 'Name' must be unique"
+      },
+      "category": "Uniqueness",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "894e529a-de9f-4e30-b3bc-1d22d9569b7f",
+      "name": "Past CreatedDateTime",
+      "description": "CreatedDateTime must be in the past",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "CreatedDateTime",
+            "operator": "is_not_null",
+            "valueType": "string"
+          },
+          "then": {
+            "field": "CreatedDateTime",
+            "operator": "is_past",
+            "valueType": "datetime"
+          }
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "IF 'CreatedDateTime' is_not_null THEN 'CreatedDateTime' is_past"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "e24523c0-bfcf-4c53-a29b-fd03b2b43b61",
+      "name": "No Owner-Member Overlap",
+      "description": "Owners and Members arrays must not overlap",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "and": [
+              {
+                "field": "Members",
+                "operator": "has_value",
+                "valueType": "array"
+              },
+              {
+                "field": "Owners",
+                "operator": "has_value",
+                "valueType": "array"
+              }
+            ]
+          },
+          "then": {
+            "field": "Members",
+            "operator": "no_overlap",
+            "valueType": "array",
+            "compareField": "Owners"
+          }
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "IF ('Members' has_value) AND ('Owners' has_value) THEN 'Members' no_overlap 'Owners'"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "b889562c-ee11-448a-b663-a7fc92404bb5",
+      "name": "Internal Owner must in users",
+      "description": "Internal Owner must in users",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "teams",
+          "sourceField": "Owners",
+          "targetType": "users",
+          "targetField": "MailNickName",
+          "sourceExtractPattern": "^([^@]+)$"
+        }
+      },
+      "metadata": {
+        "field": "Owners",
+        "expression": "For each 'teams.Owners' (extracted via pattern: ^([^@]+)$), a matching 'users.MailNickName' must exist"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "44caba08-adf2-4c8c-91da-a94980feddb3",
+      "name": "Internal Member must in users",
+      "description": "Internal Member must in users",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "teams",
+          "sourceField": "Members",
+          "targetType": "users",
+          "targetField": "MailNickName",
+          "sourceExtractPattern": "^([^@]+)$"
+        }
+      },
+      "metadata": {
+        "field": "Members",
+        "expression": "For each 'teams.Members' (extracted via pattern: ^([^@]+)$), a matching 'users.MailNickName' must exist"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "9e878a71-e579-72bc-89ca-8f7c802c00ba",
+      "name": "Unsupported properties are detected in grounding data",
+      "description": "Report unsupported properties that are not declared by the schema definition used for validation",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {},
+      "metadata": {
+        "expression": "All properties must be declared by the selected schema version",
+        "field": ""
+      },
+      "category": "UnsupportedProperty",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "a1911b77-3965-45ab-827b-b6994995d0b7",
+      "name": "Owner and members shouldn't be a shared mailbox",
+      "description": "Owner and members shouldn't be a shared mailbox",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "team-owners-members-user-reference-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'team-owners-members-user-reference-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    }
+  ],
+  "jsonLogicVersion": "2.0"
+}

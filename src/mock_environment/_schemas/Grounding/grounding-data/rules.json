@@ -1,0 +1,490 @@
+{
+  "typeName": "grounding-data",
+  "rules": [
+    {
+      "ruleId": "7e8f9a0b-1c2d-4e3f-4a5b-6c7d8e9f0a1b",
+      "name": "Required Configuration Files Present",
+      "description": "The grounding data package must contain at minimum users.config.json and config.json",
+      "severity": "Error",
+      "scope": "Dataset",
+      "logic": {
+        "and": [
+          {
+            "file_exists": "users.config.json"
+          },
+          {
+            "file_exists": "config.json"
+          }
+        ]
+      },
+      "metadata": {
+        "requiredFiles": "users.config.json, config.json"
+      },
+      "category": "None",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "8f9a0b1c-2d3e-4f4a-5b6c-7d8e9f0a1b2c",
+      "name": "Package Manifest Structure Valid",
+      "description": "If manifest.json exists, it must conform to the grounding-data schema and reference valid file paths",
+      "severity": "Error",
+      "scope": "Dataset",
+      "logic": {
+        "if": [
+          {
+            "file_exists": "manifest.json"
+          },
+          {
+            "and": [
+              {
+                "schema_valid": {
+                  "file": "manifest.json",
+                  "type": "grounding-data"
+                }
+              },
+              {
+                "forall": {
+                  "var": "manifest.files.*"
+                },
+                "condition": {
+                  "file_exists": {
+                    "var": "$"
+                  }
+                }
+              }
+            ]
+          },
+          true
+        ]
+      },
+      "metadata": {
+        "expression": "All file paths in manifest.json must point to existing files"
+      },
+      "category": "None",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "9a0b1c2d-3e4f-4a5b-6c7d-8e9f0a1b2c3d",
+      "name": "All User References Valid Across Files",
+      "description": "All user references in emails, chats, files, events, etc. must exist in users.config.json",
+      "severity": "Error",
+      "scope": "Dataset",
+      "logic": {
+        "dataset_validation": {
+          "collector": {
+            "user_references": {
+              "sources": [
+                {
+                  "file": "emails.config.json",
+                  "fields": [
+                    "Sender",
+                    "ToRecipients.*.Recipient",
+                    "CcRecipients.*.Recipient",
+                    "BccRecipients.*.Recipient",
+                    "From.Recipient"
+                  ]
+                },
+                {
+                  "file": "files.config.json",
+                  "fields": [
+                    "Owner",
+                    "SharedWith.*.User"
+                  ]
+                },
+                {
+                  "file": "chats.config.json",
+                  "fields": [
+                    "Members.*"
+                  ]
+                },
+                {
+                  "file": "events.config.json",
+                  "fields": [
+                    "Organizer",
+                    "Attendees.*.Email"
+                  ]
+                },
+                {
+                  "file": "channels.config.json",
+                  "fields": [
+                    "Members.*"
+                  ]
+                },
+                {
+                  "file": "channelmessages.config.json",
+                  "fields": [
+                    "Sender"
+                  ]
+                },
+                {
+                  "file": "channelmessagereplies.config.json",
+                  "fields": [
+                    "Sender"
+                  ]
+                },
+                {
+                  "file": "onlinemeetings.config.json",
+                  "fields": [
+                    "Organizer",
+                    "Attendees.*.Email"
+                  ]
+                },
+                {
+                  "file": "teams.config.json",
+                  "fields": [
+                    "Members.*",
+                    "Owners.*"
+                  ]
+                }
+              ]
+            }
+          },
+          "validator": {
+            "subset": [
+              {
+                "var": "user_references"
+              },
+              {
+                "extract": {
+                  "file": "users.config.json",
+                  "field": "MailNickName"
+                }
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "expression": "All user aliases referenced across all files must exist in users.config.json"
+      },
+      "category": "None",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "0b1c2d3e-4f5a-4b6c-7d8e-9f0a1b2c3d4e",
+      "name": "File References Valid Across Files",
+      "description": "All FileId references in emails, chats, etc. must exist in files.config.json",
+      "severity": "Error",
+      "scope": "Dataset",
+      "logic": {
+        "dataset_validation": {
+          "collector": {
+            "file_references": {
+              "sources": [
+                {
+                  "file": "emails.config.json",
+                  "fields": [
+                    "Placeholders[?(@.Type=='FileSharedLink')].FileId"
+                  ]
+                }
+              ]
+            }
+          },
+          "validator": {
+            "subset": [
+              {
+                "var": "file_references"
+              },
+              {
+                "extract": {
+                  "file": "files.config.json",
+                  "field": "FileId"
+                }
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "expression": "All FileId references must exist in files.config.json"
+      },
+      "category": "None",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "1c2d3e4f-5a6b-4c7d-8e9f-0a1b2c3d4e5f",
+      "name": "All Attachment Files Physically Present",
+      "description": "All attachment file paths referenced in emails.config.json must exist as physical files in the package",
+      "severity": "Error",
+      "scope": "Dataset",
+      "logic": {
+        "if": [
+          {
+            "file_exists": "emails.config.json"
+          },
+          {
+            "forall": {
+              "extract": {
+                "file": "emails.config.json",
+                "field": "Attachments.*"
+              }
+            },
+            "condition": {
+              "file_exists": {
+                "var": "$"
+              }
+            }
+          },
+          true
+        ]
+      },
+      "metadata": {
+        "expression": "Each attachment path in emails.config.json must point to an existing file in the package"
+      },
+      "category": "None",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "2d3e4f5a-6b7c-4d8e-9f0a-1b2c3d4e5f6a",
+      "name": "File Location Paths Valid",
+      "description": "All FileLocation paths in files.config.json must point to existing physical files in the package",
+      "severity": "Error",
+      "scope": "Dataset",
+      "logic": {
+        "if": [
+          {
+            "file_exists": "files.config.json"
+          },
+          {
+            "forall": {
+              "extract": {
+                "file": "files.config.json",
+                "field": "FileLocation"
+              }
+            },
+            "condition": {
+              "file_exists": {
+                "var": "$"
+              }
+            }
+          },
+          true
+        ]
+      },
+      "metadata": {
+        "expression": "Each FileLocation in files.config.json must point to an existing file in the package"
+      },
+      "category": "None",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "3e4f5a6b-7c8d-4e9f-0a1b-2c3d4e5f6a7b",
+      "name": "Each Config File Validates Against Schema",
+      "description": "Each individual .config.json file must validate against its corresponding type schema",
+      "severity": "Error",
+      "scope": "Dataset",
+      "logic": {
+        "dataset_validation": {
+          "files": [
+            {
+              "file": "users.config.json",
+              "type": "user"
+            },
+            {
+              "file": "config.config.json",
+              "type": "config"
+            },
+            {
+              "file": "emails.config.json",
+              "type": "email"
+            },
+            {
+              "file": "files.config.json",
+              "type": "file"
+            },
+            {
+              "file": "chats.config.json",
+              "type": "chat"
+            },
+            {
+              "file": "channels.config.json",
+              "type": "channel"
+            },
+            {
+              "file": "channelmessages.config.json",
+              "type": "channel-message"
+            },
+            {
+              "file": "channelmessagereplies.config.json",
+              "type": "channel-message-reply"
+            },
+            {
+              "file": "teams.config.json",
+              "type": "team"
+            },
+            {
+              "file": "events.config.json",
+              "type": "event"
+            },
+            {
+              "file": "contacts.config.json",
+              "type": "contact"
+            },
+            {
+              "file": "das.config.json",
+              "type": "da"
+            },
+            {
+              "file": "sites.config.json",
+              "type": "site"
+            },
+            {
+              "file": "onlinemeetings.config.json",
+              "type": "online-meeting"
+            }
+          ],
+          "validator": {
+            "forall": {
+              "var": "files"
+            },
+            "condition": {
+              "if": [
+                {
+                  "file_exists": {
+                    "var": "file"
+                  }
+                },
+                {
+                  "and": [
+                    {
+                      "schema_valid": {
+                        "file": {
+                          "var": "file"
+                        },
+                        "type": {
+                          "var": "type"
+                        }
+                      }
+                    },
+                    {
+                      "rules_valid": {
+                        "file": {
+                          "var": "file"
+                        },
+                        "type": {
+                          "var": "type"
+                        },
+                        "scope": "SingleFile"
+                      }
+                    }
+                  ]
+                },
+                true
+              ]
+            }
+          }
+        }
+      },
+      "metadata": {
+        "expression": "Each file must pass both JSON schema validation and single-file rules for its type"
+      },
+      "category": "None",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "4f5a6b7c-8d9e-4f0a-1b2c-3d4e5f6a7b8c",
+      "name": "Email Chain Referential Consistency",
+      "description": "Email chains (via ReferenceEmailId) must form valid directed acyclic graphs with no cycles",
+      "severity": "Warning",
+      "scope": "Dataset",
+      "logic": {
+        "if": [
+          {
+            "file_exists": "emails.config.json"
+          },
+          {
+            "no_cycles": {
+              "file": "emails.config.json",
+              "idField": "EmailId",
+              "referenceField": "ReferenceEmailId"
+            }
+          },
+          true
+        ]
+      },
+      "metadata": {
+        "expression": "Email reference chain must not contain cycles"
+      },
+      "category": "None",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "5a6b7c8d-9e0f-4a1b-2c3d-4e5f6a7b8c9d",
+      "name": "Channel-Team Hierarchy Valid",
+      "description": "All channels must reference existing teams, and team members must include channel members",
+      "severity": "Error",
+      "scope": "Dataset",
+      "logic": {
+        "if": [
+          {
+            "and": [
+              {
+                "file_exists": "channels.config.json"
+              },
+              {
+                "file_exists": "teams.config.json"
+              }
+            ]
+          },
+          {
+            "and": [
+              {
+                "subset": [
+                  {
+                    "extract": {
+                      "file": "channels.config.json",
+                      "field": "TeamId"
+                    }
+                  },
+                  {
+                    "extract": {
+                      "file": "teams.config.json",
+                      "field": "TeamId"
+                    }
+                  }
+                ]
+              },
+              {
+                "forall": {
+                  "extract": {
+                    "file": "channels.config.json",
+                    "fields": [
+                      "ChannelId",
+                      "TeamId",
+                      "Members"
+                    ]
+                  }
+                },
+                "condition": {
+                  "subset": [
+                    {
+                      "var": "Members"
+                    },
+                    {
+                      "lookup": {
+                        "file": "teams.config.json",
+                        "where": {
+                          "TeamId": {
+                            "var": "TeamId"
+                          }
+                        },
+                        "select": "Members"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          true
+        ]
+      },
+      "metadata": {
+        "expression": "All channels must belong to existing teams, and channel members must be team members"
+      },
+      "category": "None",
+      "isEnabled": true
+    }
+  ],
+  "jsonLogicVersion": "2.0"
+}

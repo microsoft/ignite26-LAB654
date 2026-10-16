@@ -1,0 +1,1441 @@
+{
+  "description": "SearchableItem schema for Confluence Cloud pages",
+  "$id": "graph_simulator/3.0.0/confluencecloudpage/schema",
+  "title": "Confluence Cloud Page Schema",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "array",
+  "items": {
+    "$ref": "#/$defs/ConfluenceCloudPage"
+  },
+  "$defs": {
+    "ConfluenceCloudPage": {
+      "description": "SearchableItem for a Confluence Cloud page",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "isContainer": {
+          "description": "Whether this item is a container for other items in the index. Always false for Confluence pages, which are leaf content items.",
+          "default": false,
+          "type": "boolean",
+          "enum": [
+            false
+          ]
+        },
+        "containerId": {
+          "description": "Identifier of the parent container item, if any. Always null for Confluence pages.",
+          "default": null,
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "properties": {
+          "description": "The Confluence page's own fields, covering identity, space context, authorship, lifecycle state, labels, and (via the wrapper) body, comments, and attachments.",
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "Id": {
+              "type": "string",
+              "pattern": "^[0-9]+$",
+              "minLength": 1,
+              "description": "The unique numeric identifier assigned to the Confluence page (Confluence Cloud content id). A long-form numeric string used in Atlassian REST lookups and audit trails; immutable across edits. Equals the wrapper-level 'id' and 'displayName'.",
+              "examples": [
+                "762455471",
+                "463772025",
+                "986308214"
+              ]
+            },
+            "SpaceName": {
+              "type": "string",
+              "minLength": 1,
+              "description": "The name of the Confluence space that contains this page, shown in the UI and navigation. In this corpus space names follow an '<Org>-<Function>' convention (e.g., 'EcoSync-Engineering') and correspond to the space identified by SpaceKey and SpaceId.",
+              "examples": [
+                "EcoSync-Engineering",
+                "EcoSync-Marketing",
+                "EcoSync-DataScience"
+              ]
+            },
+            "SpaceDescription": {
+              "type": "string",
+              "maxLength": 500,
+              "description": "A one-to-three sentence summary of the space's purpose and the material it contains, shown on the space landing page and used for semantic retrieval and classification. Maximum 500 characters.",
+              "examples": [
+                "Engineering team documentation covering software development, architecture decisions, technical specifications, code reviews, and development processes for the EcoSync platform.",
+                "Marketing documentation including campaign strategies, brand guidelines, content calendars, market research, and growth initiatives for EcoSync Solutions."
+              ]
+            },
+            "SpaceURL": {
+              "type": "string",
+              "format": "uri",
+              "minLength": 1,
+              "description": "The Atlassian Cloud REST API URL for the space, of the form 'https://<site>.atlassian.net/wiki/rest/api/space/<SpaceKey>'. The trailing path segment equals SpaceKey.",
+              "examples": [
+                "https://ecosync.atlassian.net/wiki/rest/api/space/ENG",
+                "https://ecosync.atlassian.net/wiki/rest/api/space/MKT"
+              ]
+            },
+            "SpaceLabels": {
+              "type": "array",
+              "minItems": 0,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "description": "High-level labels applied to the space, providing cross-space semantic grouping in enterprise search. Lowercase, hyphenated tokens with no whitespace; typically includes a label derived from the space name (e.g., 'ecosync-engineering'). May be empty.",
+              "examples": [
+                [
+                  "engineering",
+                  "development",
+                  "architecture",
+                  "internal",
+                  "ecosync-engineering"
+                ],
+                [
+                  "marketing",
+                  "campaigns",
+                  "brand",
+                  "internal",
+                  "ecosync-marketing"
+                ]
+              ]
+            },
+            "PageTree": {
+              "type": "string",
+              "minLength": 1,
+              "description": "A human-readable breadcrumb of the page's location within the space hierarchy, using ' > ' separators from the space root down to the page (e.g., 'EcoSync-Engineering > PRDs > <Title>'). Mirrors Confluence's left-hand navigation tree; the final segment equals Title, and it parallels ItemPath (which uses slash separators).",
+              "examples": [
+                "EcoSync-Engineering > PRDs > EcoSync Suite Enhancement PRD",
+                "EcoSync-DataScience > Data Science & ML Lab > Week 1 Onboarding Notes",
+                "EcoSync-Marketing"
+              ]
+            },
+            "ItemPath": {
+              "type": "string",
+              "minLength": 1,
+              "description": "A canonical slash-delimited path of the page's location within the space (e.g., '/EcoSync-Engineering/PRDs/<Title>'), a machine-friendly hierarchy key. Parallels PageTree, which encodes the same hierarchy with ' > ' separators; the final segment corresponds to Title.",
+              "examples": [
+                "/EcoSync-Engineering/PRDs/EcoSync-Suite-Enhancement-PRD",
+                "/EcoSync-DataScience/Data Science & ML Lab/Week 1 Onboarding Notes",
+                "/EcoSync-Marketing"
+              ]
+            },
+            "Title": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 255,
+              "description": "The title of the Confluence page. Concisely summarizes the content and appears in search results, navigation, page listings, link previews, and (URL-encoded) as the trailing slug of Url. A well-formed title improves discoverability and relevance scoring. Maximum 255 characters.",
+              "examples": [
+                "EcoSync Suite Enhancement PRD: Sustainable Usage Insights MVP",
+                "Week 1 Onboarding Notes (Emily Nguyen)",
+                "Q2 PR Narrative & Key Messages (Draft)"
+              ]
+            },
+            "Url": {
+              "type": "string",
+              "format": "uri",
+              "minLength": 1,
+              "description": "The fully qualified Confluence Cloud page URL, of the form 'https://<site>.atlassian.net/wiki/spaces/<space-slug>/pages/<page-number>/<title-slug>'. Used for navigation, previews, and external linking. It contains a space slug, a page-content number, and a slug derived from the Title (approximate URL-encoding; punctuation may be normalized or dropped).",
+              "examples": [
+                "https://smallcorps.atlassian.net/wiki/spaces/EcoSync-Engineering/pages/482913507/EcoSync+Suite+Enhancement+PRD",
+                "https://ecosync.atlassian.net/wiki/spaces/ESE/pages/583274910/Week+1+Onboarding+Notes"
+              ]
+            },
+            "Type": {
+              "type": "string",
+              "enum": [
+                "page",
+                "blogpost"
+              ],
+              "default": "page",
+              "description": "The Confluence content object type. 'page' is structured, persistent documentation and reference content; 'blogpost' is a time-bound announcement or update. Supports filtering and content-based routing.",
+              "examples": [
+                "page",
+                "blogpost"
+              ]
+            },
+            "Status": {
+              "type": "string",
+              "enum": [
+                "draft",
+                "current",
+                "archived",
+                "trashed"
+              ],
+              "default": "current",
+              "description": "The lifecycle state of the page. 'draft' is unpublished work-in-progress; 'current' is active, maintained content; 'archived' is deprecated/legacy material kept for reference; 'trashed' is content pending deletion or removed from standard navigation. Drives lifecycle analysis, cleanup automation, and ranking.",
+              "examples": [
+                "current",
+                "draft",
+                "archived"
+              ]
+            },
+            "Labels": {
+              "type": "array",
+              "minItems": 0,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "description": "Labels applied directly to this page for classification, topic discovery, semantic search, and filtering. Lowercase, hyphenated tokens with no whitespace, expressing themes or domains (e.g., 'incident-management', 'esg-metrics'). May be empty.",
+              "examples": [
+                [],
+                [
+                  "escalation-policy",
+                  "severity-matrix",
+                  "incident-management",
+                  "sla"
+                ],
+                [
+                  "q2-forecast",
+                  "sustainability-budget",
+                  "esg-metrics"
+                ]
+              ]
+            },
+            "Likes": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "description": "Count of user likes/reactions on the page, reflecting engagement and visibility. Non-negative integer; higher counts often correlate with widely referenced or operationally important documentation. New or niche pages are typically 0.",
+              "examples": [
+                0,
+                2,
+                10
+              ]
+            },
+            "IconUrl": {
+              "type": "string",
+              "description": "URL of the page or space icon thumbnail shown throughout the Confluence UI, typically of the form 'https://<site>.atlassian.net/wiki/download/thumbnails/<id>/space-icon.png'. Small PNG/SVG asset used to visually distinguish spaces and content.",
+              "examples": [
+                "https://smallcorps.atlassian.net/wiki/download/thumbnails/482913507/space-icon.png",
+                "https://smallcorps.atlassian.net/wiki/download/thumbnails/583274910/space-icon.png"
+              ],
+              "format": "uri",
+              "minLength": 1
+            },
+            "Authors": {
+              "type": "array",
+              "minItems": 1,
+              "description": "Authors who created or significantly contributed to the page. Each entry is a user identity. The first author corresponds to CreatedByName.",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "Identity of an author who created or significantly contributed to the page.",
+                "properties": {
+                  "ExternalId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Unique identifier of the user in Confluence, a stable account id (GUID-style in this corpus, with hyphens).",
+                    "examples": [
+                      "8a542466-526f-5a5a-ae3a-1b80c10e7808",
+                      "dd31b3e1-cea1-5166-8984-5170e44bf712"
+                    ]
+                  },
+                  "Email": {
+                    "type": "string",
+                    "format": "email",
+                    "minLength": 1,
+                    "description": "Corporate email address of the user. Shares the same domain as every other identity on the page.",
+                    "examples": [
+                      "emilynguyen@smallcorps.com",
+                      "alexkumar@smallcorps.com"
+                    ]
+                  },
+                  "ExternalName": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Full display name of the user as shown in Confluence.",
+                    "examples": [
+                      "Emily Nguyen",
+                      "Alex Kumar"
+                    ]
+                  },
+                  "PrincipalType": {
+                    "type": "string",
+                    "enum": [
+                      "user"
+                    ],
+                    "description": "Always 'user' for individual people, never groups.",
+                    "examples": [
+                      "user"
+                    ]
+                  },
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Identity resolution key. Equals the user's Email exactly.",
+                    "examples": [
+                      "emilynguyen@smallcorps.com",
+                      "alexkumar@smallcorps.com"
+                    ]
+                  }
+                },
+                "required": [
+                  "ExternalId",
+                  "Email",
+                  "ExternalName",
+                  "PrincipalType",
+                  "id"
+                ]
+              }
+            },
+            "CreatedByName": {
+              "type": "object",
+              "additionalProperties": false,
+              "description": "Identity of the user who originally created the page. Its Email equals CreatedByEmail.",
+              "properties": {
+                "ExternalId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Unique identifier of the user in Confluence, a stable account id (GUID-style in this corpus, with hyphens).",
+                  "examples": [
+                    "8a542466-526f-5a5a-ae3a-1b80c10e7808",
+                    "dd31b3e1-cea1-5166-8984-5170e44bf712"
+                  ]
+                },
+                "Email": {
+                  "type": "string",
+                  "format": "email",
+                  "minLength": 1,
+                  "description": "Corporate email address of the user. Shares the same domain as every other identity on the page.",
+                  "examples": [
+                    "emilynguyen@smallcorps.com",
+                    "alexkumar@smallcorps.com"
+                  ]
+                },
+                "ExternalName": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Full display name of the user as shown in Confluence.",
+                  "examples": [
+                    "Emily Nguyen",
+                    "Alex Kumar"
+                  ]
+                },
+                "PrincipalType": {
+                  "type": "string",
+                  "enum": [
+                    "user"
+                  ],
+                  "description": "Always 'user' for individual people, never groups.",
+                  "examples": [
+                    "user"
+                  ]
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Identity resolution key. Equals the user's Email exactly.",
+                  "examples": [
+                    "emilynguyen@smallcorps.com",
+                    "alexkumar@smallcorps.com"
+                  ]
+                }
+              },
+              "required": [
+                "ExternalId",
+                "Email",
+                "ExternalName",
+                "PrincipalType",
+                "id"
+              ]
+            },
+            "CreatedByEmail": {
+              "type": "string",
+              "format": "email",
+              "minLength": 1,
+              "description": "Corporate email address of the user who created the page. A convenience scalar that mirrors CreatedByName.Email exactly, enabling simplified filtering and identity resolution without descending into the identity object.",
+              "examples": [
+                "emilynguyen@smallcorps.com",
+                "alexkumar@smallcorps.com"
+              ]
+            },
+            "CreatedOn": {
+              "type": "string",
+              "format": "date-time",
+              "minLength": 1,
+              "description": "The page's initial creation timestamp in ISO 8601 (UTC) format. Used for chronological ordering, version-history analysis, temporal ranking, and lifecycle governance. Must be less than or equal to UpdatedOn.",
+              "examples": [
+                "2024-12-06T23:20:42Z",
+                "2024-12-11T23:38:05Z"
+              ]
+            },
+            "UpdatedByName": {
+              "type": "object",
+              "additionalProperties": false,
+              "description": "Identity of the user who most recently updated the page. Its Email equals UpdatedByEmail.",
+              "properties": {
+                "ExternalId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Unique identifier of the user in Confluence, a stable account id (GUID-style in this corpus, with hyphens).",
+                  "examples": [
+                    "8a542466-526f-5a5a-ae3a-1b80c10e7808",
+                    "dd31b3e1-cea1-5166-8984-5170e44bf712"
+                  ]
+                },
+                "Email": {
+                  "type": "string",
+                  "format": "email",
+                  "minLength": 1,
+                  "description": "Corporate email address of the user. Shares the same domain as every other identity on the page.",
+                  "examples": [
+                    "emilynguyen@smallcorps.com",
+                    "alexkumar@smallcorps.com"
+                  ]
+                },
+                "ExternalName": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Full display name of the user as shown in Confluence.",
+                  "examples": [
+                    "Emily Nguyen",
+                    "Alex Kumar"
+                  ]
+                },
+                "PrincipalType": {
+                  "type": "string",
+                  "enum": [
+                    "user"
+                  ],
+                  "description": "Always 'user' for individual people, never groups.",
+                  "examples": [
+                    "user"
+                  ]
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Identity resolution key. Equals the user's Email exactly.",
+                  "examples": [
+                    "emilynguyen@smallcorps.com",
+                    "alexkumar@smallcorps.com"
+                  ]
+                }
+              },
+              "required": [
+                "ExternalId",
+                "Email",
+                "ExternalName",
+                "PrincipalType",
+                "id"
+              ]
+            },
+            "UpdatedByEmail": {
+              "type": "string",
+              "format": "email",
+              "minLength": 1,
+              "description": "Corporate email address of the user who most recently updated the page. A convenience scalar that mirrors UpdatedByName.Email exactly, enabling identity resolution across analytics and governance workflows.",
+              "examples": [
+                "alexkumar@smallcorps.com",
+                "emmathompson@smallcorps.com"
+              ]
+            },
+            "UpdatedOn": {
+              "type": "string",
+              "format": "date-time",
+              "minLength": 1,
+              "description": "The page's most recent modification timestamp in ISO 8601 (UTC) format. Used to evaluate freshness, drive change notifications, and inform recency-based ranking. Must be greater than or equal to CreatedOn.",
+              "examples": [
+                "2025-05-05T16:33:21Z",
+                "2025-05-19T23:58:38Z"
+              ]
+            },
+            "SpaceId": {
+              "type": "string",
+              "pattern": "^[0-9]+$",
+              "minLength": 1,
+              "description": "The unique numeric identifier of the Confluence space, used in Atlassian APIs, auditing, and indexing to reference the space across environments. Long-form numeric string; consistent for all pages within the same space.",
+              "examples": [
+                "712020597001",
+                "712020597005"
+              ]
+            },
+            "SpaceKey": {
+              "type": "string",
+              "minLength": 1,
+              "description": "The immutable key of the Confluence space, used in URLs, permission models, and routing; unique within the site. Appears as the trailing segment of SpaceURL. Typically a short uppercase token.",
+              "examples": [
+                "ENG",
+                "MKT",
+                "DS"
+              ]
+            },
+            "SpaceStatus": {
+              "type": "string",
+              "enum": [
+                "current",
+                "archived"
+              ],
+              "default": "current",
+              "description": "Lifecycle state of the Confluence space. 'current' is an active space in normal use; 'archived' is a deprecated or historical space retained for reference and compliance.",
+              "examples": [
+                "current",
+                "archived"
+              ]
+            },
+            "SpaceType": {
+              "type": "string",
+              "enum": [
+                "global",
+                "personal"
+              ],
+              "default": "global",
+              "description": "Type of Confluence space. 'global' spaces are organization-wide content areas for teams or departments; 'personal' spaces are user-owned areas for drafts or private notes.",
+              "examples": [
+                "global",
+                "personal"
+              ]
+            }
+          },
+          "required": [
+            "Id",
+            "SpaceName",
+            "SpaceDescription",
+            "SpaceURL",
+            "SpaceLabels",
+            "PageTree",
+            "ItemPath",
+            "Title",
+            "Url",
+            "Type",
+            "Status",
+            "Labels",
+            "Likes",
+            "IconUrl",
+            "Authors",
+            "CreatedByName",
+            "CreatedByEmail",
+            "CreatedOn",
+            "UpdatedByName",
+            "UpdatedByEmail",
+            "UpdatedOn",
+            "SpaceId",
+            "SpaceKey",
+            "SpaceStatus",
+            "SpaceType"
+          ]
+        },
+        "accessControlList": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "description": "Access-control entries for the page. Exactly one entry granting read access to EVERYONE (all authenticated users in the tenant).",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "principal": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "The access principal for this rule. For EVERYONE grants, applies to all authenticated users in the tenant.",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "everyone"
+                    ],
+                    "default": "everyone",
+                    "description": "Scope of this principal. Always 'everyone' — applies to all authenticated users in the tenant.",
+                    "examples": [
+                      "everyone"
+                    ]
+                  },
+                  "value": {
+                    "type": "string",
+                    "enum": [
+                      "EVERYONE"
+                    ],
+                    "default": "EVERYONE",
+                    "description": "The canonical string value for the everyone principal. Must be the uppercase literal 'EVERYONE'.",
+                    "examples": [
+                      "EVERYONE"
+                    ]
+                  },
+                  "identitySource": {
+                    "type": "null",
+                    "description": "Not applicable for the 'everyone' principal. Always null.",
+                    "examples": [
+                      null
+                    ]
+                  },
+                  "identitySourceEnum": {
+                    "type": "string",
+                    "enum": [
+                      "azureActiveDirectory"
+                    ],
+                    "default": "azureActiveDirectory",
+                    "description": "Identity provider for this tenant. Always 'azureActiveDirectory'.",
+                    "examples": [
+                      "azureActiveDirectory"
+                    ]
+                  },
+                  "identityType": {
+                    "type": "integer",
+                    "enum": [
+                      3
+                    ],
+                    "default": 3,
+                    "description": "Numeric code for the principal category. 3 represents the 'everyone' group type. Always 3 for EVERYONE grants.",
+                    "examples": [
+                      3
+                    ]
+                  },
+                  "identitySourceProperties": {
+                    "type": "null",
+                    "description": "Not applicable for the 'everyone' principal. Always null.",
+                    "examples": [
+                      null
+                    ]
+                  },
+                  "metadata": {
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "default": null,
+                    "description": "Additional principal metadata. Always null for the 'everyone' principal."
+                  },
+                  "displayName": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "default": null,
+                    "description": "Display name override. Always null for the 'everyone' principal."
+                  }
+                },
+                "required": [
+                  "type",
+                  "value",
+                  "identitySource",
+                  "identitySourceEnum",
+                  "identityType",
+                  "identitySourceProperties",
+                  "metadata",
+                  "displayName"
+                ]
+              },
+              "ruleNode": {
+                "type": "null",
+                "description": "Not applicable for simple EVERYONE grant rules. Always null.",
+                "examples": [
+                  null
+                ]
+              },
+              "accessType": {
+                "type": "string",
+                "enum": [
+                  "grant"
+                ],
+                "default": "grant",
+                "description": "Whether this entry grants or denies access. Always 'grant'.",
+                "examples": [
+                  "grant"
+                ]
+              },
+              "transformedIdentity": {
+                "type": "null",
+                "description": "Not applicable for the 'everyone' principal. Always null.",
+                "examples": [
+                  null
+                ]
+              }
+            },
+            "required": [
+              "principal",
+              "ruleNode",
+              "accessType",
+              "transformedIdentity"
+            ]
+          },
+          "examples": [
+            [
+              {
+                "principal": {
+                  "type": "everyone",
+                  "value": "EVERYONE",
+                  "identitySource": null,
+                  "identitySourceEnum": "azureActiveDirectory",
+                  "identityType": 3,
+                  "identitySourceProperties": null,
+                  "metadata": null,
+                  "displayName": null
+                },
+                "ruleNode": null,
+                "accessType": "grant",
+                "transformedIdentity": null
+              }
+            ]
+          ]
+        },
+        "UniversalAccessControlBlock": {
+          "type": "null",
+          "description": "Universal access-control block. Not used for Confluence pages; access is expressed via accessControlList. Always null.",
+          "examples": [
+            null
+          ]
+        },
+        "activityList": {
+          "type": "null",
+          "examples": [
+            null
+          ],
+          "description": "Optional list of page activity events (e.g., created, modified, viewed, commented). Always null for Confluence Cloud pages; page activity is not carried on this envelope."
+        },
+        "contentEnrichmentData": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "EnrichmentTypes": {
+                    "type": "integer",
+                    "enum": [
+                      1
+                    ],
+                    "default": 1,
+                    "description": "Enrichment operation. 1 = OCR.",
+                    "examples": [
+                      1
+                    ]
+                  },
+                  "payload": {
+                    "type": "string",
+                    "description": "Base64-encoded binary content for OCR. Not applicable to Confluence pages (contentEnrichmentData is null).",
+                    "examples": [
+                      "base64-encoded-binary-data"
+                    ]
+                  },
+                  "mimeType": {
+                    "type": "string",
+                    "enum": [
+                      "image/png",
+                      "image/jpg",
+                      "application/pdf"
+                    ],
+                    "description": "MIME type of the payload binary content.",
+                    "examples": [
+                      "image/png",
+                      "image/jpg",
+                      "application/pdf"
+                    ]
+                  }
+                },
+                "required": [
+                  "EnrichmentTypes",
+                  "payload",
+                  "mimeType"
+                ]
+              }
+            }
+          ],
+          "default": null,
+          "description": "Enrichment payload for OCR processing. Null for Confluence Cloud pages.",
+          "examples": [
+            null
+          ]
+        },
+        "content": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "The rendered body of the page. 'parsedData' holds the HTML body; 'type' is always 'html'; 'annotation' and 'semanticContent' are always null.",
+          "properties": {
+            "parsedData": {
+              "type": "string",
+              "description": "The HTML body of the page. Empty string if the page has no body.",
+              "examples": [
+                "<h2>Overview</h2><p>This page documents the EcoSync data ingestion service, covering source connectors, transformation stages, and monitoring.</p><h2>Runbook</h2><ol><li>Check the pipeline dashboard.</li><li>Re-run the failed stage.</li></ol>",
+                "<h2>Week 1 Onboarding</h2><ul><li>Set up your development environment.</li><li>Read the platform architecture overview.</li><li>Join the team standup.</li></ul>"
+              ]
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "markdown",
+                "text",
+                "none",
+                "binary",
+                "bmp",
+                "jpg",
+                "pdf",
+                "png",
+                "tif",
+                "unknownFutureValue",
+                "html"
+              ],
+              "default": "html",
+              "description": "Format of 'parsedData'. Always 'html' for Confluence Cloud pages - 'parsedData' contains the rendered HTML body. All other enum values are reserved and must not be used.",
+              "examples": [
+                "html"
+              ]
+            },
+            "annotation": {
+              "type": "null",
+              "description": "Reserved; always null for Confluence Cloud pages.",
+              "examples": [
+                null
+              ]
+            },
+            "semanticContent": {
+              "type": "null",
+              "description": "Reserved; always null for Confluence Cloud pages.",
+              "examples": [
+                null
+              ]
+            }
+          },
+          "required": [
+            "parsedData",
+            "type",
+            "annotation",
+            "semanticContent"
+          ]
+        },
+        "associatedItemsMetadata": {
+          "type": "null",
+          "description": "Metadata describing associated child items. Null for Confluence pages; associated content is carried by the comments and attachments arrays.",
+          "examples": [
+            null
+          ]
+        },
+        "attachments": {
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "uploadedBy": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "Identity of the user who uploaded this attachment.",
+                "properties": {
+                  "ExternalId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Unique identifier of the user in Confluence, a stable account id (GUID-style in this corpus, with hyphens).",
+                    "examples": [
+                      "8a542466-526f-5a5a-ae3a-1b80c10e7808",
+                      "dd31b3e1-cea1-5166-8984-5170e44bf712"
+                    ]
+                  },
+                  "Email": {
+                    "type": "string",
+                    "format": "email",
+                    "minLength": 1,
+                    "description": "Corporate email address of the user. Shares the same domain as every other identity on the page.",
+                    "examples": [
+                      "emilynguyen@smallcorps.com",
+                      "alexkumar@smallcorps.com"
+                    ]
+                  },
+                  "ExternalName": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Full display name of the user as shown in Confluence.",
+                    "examples": [
+                      "Emily Nguyen",
+                      "Alex Kumar"
+                    ]
+                  },
+                  "PrincipalType": {
+                    "type": "string",
+                    "enum": [
+                      "user"
+                    ],
+                    "description": "Always 'user' for individual people, never groups.",
+                    "examples": [
+                      "user"
+                    ]
+                  },
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Identity resolution key. Equals the user's Email exactly.",
+                    "examples": [
+                      "emilynguyen@smallcorps.com",
+                      "alexkumar@smallcorps.com"
+                    ]
+                  }
+                },
+                "required": [
+                  "ExternalId",
+                  "Email",
+                  "ExternalName",
+                  "PrincipalType",
+                  "id"
+                ]
+              },
+              "uploadedTimestamp": {
+                "type": "string",
+                "format": "date-time",
+                "minLength": 1,
+                "description": "When the file was attached, ISO 8601 (UTC). Between the page CreatedOn and UpdatedOn.",
+                "examples": [
+                  "2025-01-15T10:30:00Z",
+                  "2025-03-22T14:00:00Z",
+                  "2024-11-05T08:15:00Z"
+                ]
+              },
+              "attachmentName": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Filename of the attached file including extension. Confluence attachment types include images (png, jpg), documents (pdf, docx), spreadsheets (xlsx), presentations (pptx), text (txt), and markdown (md).",
+                "examples": [
+                  "architecture_diagram_v2.pdf",
+                  "q2_metrics.xlsx",
+                  "onboarding_checklist.docx",
+                  "dashboard_screenshot.png"
+                ]
+              },
+              "entitySemanticType": {
+                "type": "string",
+                "enum": [
+                  "document"
+                ],
+                "default": "document",
+                "description": "Semantic type of the entity. Always 'document' for attachments.",
+                "examples": [
+                  "document"
+                ]
+              },
+              "entityContent": {
+                "type": "string",
+                "description": "The attachment content, represented per the (entityEncoding, entityFormat) pairing. For new data: raw searchable text for text/HTML/markdown and for image OCR or descriptions; base64 of the original file bytes for PDF and Office documents (entityFormat='unknown'). May be an empty string for some binary documents (observed for a minority of pdf/docx/pptx files) whose bytes were not inlined; the attachment metadata is still present."
+              },
+              "entityEncoding": {
+                "type": "string",
+                "enum": [
+                  "raw",
+                  "b64"
+                ],
+                "default": "b64",
+                "description": "Encoding of entityContent. Use 'raw' for text you want searchable (text/log/CSV, HTML, markdown, and image OCR or descriptions). Use 'b64' for real file binaries (PDF, DOCX/XLSX/PPTX).",
+                "examples": [
+                  "raw",
+                  "b64"
+                ]
+              },
+              "entityFormat": {
+                "type": "string",
+                "enum": [
+                  "txt",
+                  "html",
+                  "markdown",
+                  "unknown",
+                  "png",
+                  "jpg",
+                  "jpeg",
+                  "svg",
+                  "pdf",
+                  "docx",
+                  "pptx",
+                  "xlsx"
+                ],
+                "default": "unknown",
+                "description": "Content representation of the attachment. New data must use one of {txt, html, markdown, unknown} following the recommended pairings: text/log/CSV -> raw+txt; HTML -> raw+html; Markdown -> raw+markdown; PDF and DOCX/XLSX/PPTX -> b64+unknown; images (PNG/JPG) and SVG -> raw+txt (OCR text or a human-readable description). The file-type values (png, jpg, jpeg, svg, pdf, docx, pptx, xlsx) are legacy and retained only so existing data validates; do not emit them for new data.",
+                "examples": [
+                  "txt",
+                  "html",
+                  "markdown",
+                  "unknown"
+                ]
+              }
+            },
+            "required": [
+              "uploadedBy",
+              "uploadedTimestamp",
+              "attachmentName",
+              "entitySemanticType",
+              "entityContent",
+              "entityEncoding",
+              "entityFormat"
+            ]
+          },
+          "type": "array",
+          "minItems": 0
+        },
+        "comments": {
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "entitySemanticType": {
+                "type": "string",
+                "enum": [
+                  "comment"
+                ],
+                "default": "comment",
+                "description": "Always 'comment'.",
+                "examples": [
+                  "comment"
+                ]
+              },
+              "commentId": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Unique numeric string identifier of the comment, unique across all comments in the dataset.",
+                "examples": [
+                  "28381967",
+                  "59112043",
+                  "74830021"
+                ]
+              },
+              "parentCommentId": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "description": "The commentId of the parent comment if this is a reply, or null for a top-level comment.",
+                "examples": [
+                  null,
+                  "28381967"
+                ]
+              },
+              "creator": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "Identity of the user who wrote this comment.",
+                "properties": {
+                  "ExternalId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Unique identifier of the user in Confluence, a stable account id (GUID-style in this corpus, with hyphens).",
+                    "examples": [
+                      "8a542466-526f-5a5a-ae3a-1b80c10e7808",
+                      "dd31b3e1-cea1-5166-8984-5170e44bf712"
+                    ]
+                  },
+                  "Email": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Corporate email address of the user. Shares the same domain as every other identity on the page.",
+                    "examples": [
+                      "emilynguyen@smallcorps.com",
+                      "alexkumar@smallcorps.com"
+                    ],
+                    "pattern": "^[^@]+@[^@\\s]+\\.[^@\\s]+$"
+                  },
+                  "ExternalName": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Full display name of the user as shown in Confluence.",
+                    "examples": [
+                      "Emily Nguyen",
+                      "Alex Kumar"
+                    ]
+                  },
+                  "PrincipalType": {
+                    "type": "string",
+                    "enum": [
+                      "user"
+                    ],
+                    "description": "Always 'user' for individual people, never groups.",
+                    "examples": [
+                      "user"
+                    ]
+                  },
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Identity resolution key. Equals the user's Email exactly.",
+                    "examples": [
+                      "emilynguyen@smallcorps.com",
+                      "alexkumar@smallcorps.com"
+                    ]
+                  }
+                },
+                "required": [
+                  "ExternalId",
+                  "Email",
+                  "ExternalName",
+                  "PrincipalType",
+                  "id"
+                ]
+              },
+              "modifier": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "Identity of the user who last edited this comment; equals creator if never edited.",
+                "properties": {
+                  "ExternalId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Unique identifier of the user in Confluence, a stable account id (GUID-style in this corpus, with hyphens).",
+                    "examples": [
+                      "8a542466-526f-5a5a-ae3a-1b80c10e7808",
+                      "dd31b3e1-cea1-5166-8984-5170e44bf712"
+                    ]
+                  },
+                  "Email": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Corporate email address of the user. Shares the same domain as every other identity on the page.",
+                    "examples": [
+                      "emilynguyen@smallcorps.com",
+                      "alexkumar@smallcorps.com"
+                    ],
+                    "pattern": "^[^@]+@[^@\\s]+\\.[^@\\s]+$"
+                  },
+                  "ExternalName": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Full display name of the user as shown in Confluence.",
+                    "examples": [
+                      "Emily Nguyen",
+                      "Alex Kumar"
+                    ]
+                  },
+                  "PrincipalType": {
+                    "type": "string",
+                    "enum": [
+                      "user"
+                    ],
+                    "description": "Always 'user' for individual people, never groups.",
+                    "examples": [
+                      "user"
+                    ]
+                  },
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Identity resolution key. Equals the user's Email exactly.",
+                    "examples": [
+                      "emilynguyen@smallcorps.com",
+                      "alexkumar@smallcorps.com"
+                    ]
+                  }
+                },
+                "required": [
+                  "ExternalId",
+                  "Email",
+                  "ExternalName",
+                  "PrincipalType",
+                  "id"
+                ]
+              },
+              "createdDateTime": {
+                "type": "string",
+                "format": "date-time",
+                "minLength": 1,
+                "description": "When the comment was created, ISO 8601 (UTC). Between the page CreatedOn and UpdatedOn.",
+                "examples": [
+                  "2025-03-01T10:15:00Z",
+                  "2024-09-10T08:45:00Z"
+                ]
+              },
+              "modifiedDateTime": {
+                "type": "string",
+                "format": "date-time",
+                "minLength": 1,
+                "description": "When the comment was last edited, ISO 8601 (UTC). >= createdDateTime and <= page UpdatedOn; equals createdDateTime if never edited.",
+                "examples": [
+                  "2025-03-01T10:15:00Z",
+                  "2024-09-10T09:00:00Z"
+                ]
+              },
+              "mentionedUsers": {
+                "type": "array",
+                "minItems": 0,
+                "description": "List of users mentioned or tagged in this comment using @mentions. Empty array if no users are mentioned.",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "description": "Identity of a user @mentioned in this comment.",
+                  "properties": {
+                    "ExternalId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Unique identifier of the user in Confluence, a stable account id (GUID-style in this corpus, with hyphens).",
+                      "examples": [
+                        "8a542466-526f-5a5a-ae3a-1b80c10e7808",
+                        "dd31b3e1-cea1-5166-8984-5170e44bf712"
+                      ]
+                    },
+                    "Email": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Corporate email address of the user. Shares the same domain as every other identity on the page.",
+                      "examples": [
+                        "emilynguyen@smallcorps.com",
+                        "alexkumar@smallcorps.com"
+                      ],
+                      "pattern": "^[^@]+@[^@\\s]+\\.[^@\\s]+$"
+                    },
+                    "ExternalName": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Full display name of the user as shown in Confluence.",
+                      "examples": [
+                        "Emily Nguyen",
+                        "Alex Kumar"
+                      ]
+                    },
+                    "PrincipalType": {
+                      "type": "string",
+                      "enum": [
+                        "user"
+                      ],
+                      "description": "Always 'user' for individual people, never groups.",
+                      "examples": [
+                        "user"
+                      ]
+                    },
+                    "id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Identity resolution key. Equals the user's Email exactly.",
+                      "examples": [
+                        "emilynguyen@smallcorps.com",
+                        "alexkumar@smallcorps.com"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "ExternalId",
+                    "Email",
+                    "ExternalName",
+                    "PrincipalType",
+                    "id"
+                  ]
+                }
+              },
+              "reactions": {
+                "type": "array",
+                "minItems": 0,
+                "description": "List of emoji reactions or likes on this comment from other employees. Empty array if no reactions exist.",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "reactionType": {
+                      "type": "string",
+                      "enum": [
+                        "Like",
+                        "Love",
+                        "Celebrate",
+                        "Insightful",
+                        "Curious"
+                      ],
+                      "description": "The emoji reaction type added to the comment. 'Like' is the most common reaction; 'Love', 'Celebrate', 'Insightful', and 'Curious' appear on pages with strong employee engagement.",
+                      "examples": [
+                        "Like",
+                        "Celebrate"
+                      ]
+                    },
+                    "reactionBy": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "description": "Identity of the user who added this reaction.",
+                      "properties": {
+                        "ExternalId": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "Unique identifier of the user in Confluence, a stable account id (GUID-style in this corpus, with hyphens).",
+                          "examples": [
+                            "8a542466-526f-5a5a-ae3a-1b80c10e7808",
+                            "dd31b3e1-cea1-5166-8984-5170e44bf712"
+                          ]
+                        },
+                        "Email": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "Corporate email address of the user. Shares the same domain as every other identity on the page.",
+                          "examples": [
+                            "emilynguyen@smallcorps.com",
+                            "alexkumar@smallcorps.com"
+                          ],
+                          "pattern": "^[^@]+@[^@\\s]+\\.[^@\\s]+$"
+                        },
+                        "ExternalName": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "Full display name of the user as shown in Confluence.",
+                          "examples": [
+                            "Emily Nguyen",
+                            "Alex Kumar"
+                          ]
+                        },
+                        "PrincipalType": {
+                          "type": "string",
+                          "enum": [
+                            "user"
+                          ],
+                          "description": "Always 'user' for individual people, never groups.",
+                          "examples": [
+                            "user"
+                          ]
+                        },
+                        "id": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "Identity resolution key. Equals the user's Email exactly.",
+                          "examples": [
+                            "emilynguyen@smallcorps.com",
+                            "alexkumar@smallcorps.com"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "ExternalId",
+                        "Email",
+                        "ExternalName",
+                        "PrincipalType",
+                        "id"
+                      ]
+                    },
+                    "reactionTimestamp": {
+                      "type": "string",
+                      "format": "date-time",
+                      "minLength": 1,
+                      "description": "When the reaction was added, ISO 8601 (UTC). >= comment createdDateTime and <= page UpdatedOn.",
+                      "examples": [
+                        "2025-03-01T10:30:00Z"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "reactionType",
+                    "reactionBy",
+                    "reactionTimestamp"
+                  ]
+                }
+              },
+              "entityContent": {
+                "type": "string",
+                "description": "The comment body. New data should carry it raw per entityFormat - for example a raw HTML string with entityEncoding='raw', entityFormat='html'. Existing data stores base64-encoded HTML (entityEncoding='b64', entityFormat='html').",
+                "examples": [
+                  "PHA+VGhhbmtzIC0gdGhpcyBhbGlnbnMgd2l0aCB0aGUgbGF0ZXN0IGRyYWZ0LjwvcD4=",
+                  "PHA+Q291bGQgeW91IGV4cGFuZCB0aGUgc2VjdGlvbiBvbiByb2xsb3V0IHJpc2tzPzwvcD4="
+                ]
+              },
+              "entityEncoding": {
+                "type": "string",
+                "enum": [
+                  "raw",
+                  "b64"
+                ],
+                "default": "raw",
+                "description": "Encoding of the comment body in entityContent. Use 'raw' to submit the body as-is (recommended for new data). 'b64' is base64-encoded and is used by existing data.",
+                "examples": [
+                  "raw",
+                  "b64"
+                ]
+              },
+              "entityFormat": {
+                "type": "string",
+                "enum": [
+                  "html",
+                  "txt",
+                  "markdown"
+                ],
+                "default": "html",
+                "description": "Format of the comment body. 'html' for rich-text comments (the norm for Confluence), 'txt' for plain text, 'markdown' for markdown. New data should pair the format with entityEncoding='raw' (raw+html, raw+txt, or raw+markdown).",
+                "examples": [
+                  "html",
+                  "txt",
+                  "markdown"
+                ]
+              }
+            },
+            "required": [
+              "entitySemanticType",
+              "commentId",
+              "parentCommentId",
+              "creator",
+              "modifier",
+              "createdDateTime",
+              "modifiedDateTime",
+              "mentionedUsers",
+              "reactions",
+              "entityContent",
+              "entityEncoding",
+              "entityFormat"
+            ]
+          },
+          "type": "array",
+          "minItems": 0
+        },
+        "itemVersion": {
+          "default": null,
+          "type": [
+            "integer",
+            "null"
+          ],
+          "description": "Integer version stamp used by the indexing layer. Null for Confluence pages."
+        },
+        "contentDomainCategoryName": {
+          "type": "string",
+          "enum": [
+            "wikis"
+          ],
+          "default": "wikis",
+          "description": "Content domain category. Always 'wikis' for Confluence Cloud pages.",
+          "examples": [
+            "wikis"
+          ]
+        },
+        "isAssociatedItem": {
+          "default": false,
+          "type": "boolean",
+          "enum": [
+            false
+          ],
+          "description": "Whether this item is an associated child of another item. Always false - Confluence pages are top-level items."
+        },
+        "dataSourceResponse": {
+          "default": null,
+          "type": [
+            "object",
+            "null"
+          ],
+          "description": "Raw data-source response payload retained by the connector. Null for Confluence pages."
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Display name of the item. For Confluence pages this holds the numeric page id (equals properties.Id).",
+          "minLength": 1
+        },
+        "shouldHashId": {
+          "description": "Whether the item id should be hashed before storage. Always false for Confluence pages.",
+          "default": false,
+          "type": "boolean"
+        },
+        "hashedId": {
+          "default": null,
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The hashed item id when id hashing is applied. Null for Confluence pages."
+        },
+        "id": {
+          "type": "string",
+          "description": "The item's primary identifier. For Confluence pages this is the numeric page id (equals properties.Id and displayName).",
+          "pattern": "^[0-9]+$"
+        }
+      },
+      "required": [
+        "id",
+        "displayName",
+        "contentDomainCategoryName",
+        "isContainer",
+        "containerId",
+        "UniversalAccessControlBlock",
+        "activityList",
+        "contentEnrichmentData",
+        "associatedItemsMetadata",
+        "itemVersion",
+        "isAssociatedItem",
+        "accessControlList",
+        "content",
+        "properties"
+      ]
+    }
+  }
+}

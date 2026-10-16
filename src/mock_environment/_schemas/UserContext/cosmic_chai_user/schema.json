@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "m365-manufactured-data/3.1.0/users/schema",
+  "additionalProperties": false,
+  "description": "Users schema",
+  "title": "Users",
+  "type": "array",
+  "items": {
+    "$ref": "#/$defs/User"
+  },
+  "$defs": {
+    "User": {
+      "description": "The User JSON Schema is designed to capture essential details for creating and managing user accounts within an Azure environment or any enterprise-level system.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "CompanyName": {
+          "description": "The name of the company the user works for, e.g., 'Meinbizchat'.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "Department": {
+          "description": "The department the user belongs to, e.g., 'Engineering'.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "DisplayName": {
+          "description": "The full name displayed in directories and communications, e.g., 'Jennifer Taylor'.",
+          "type": "string",
+          "minLength": 1
+        },
+        "FirstName": {
+          "description": "The user's given name, e.g., 'Jennifer'.",
+          "type": "string",
+          "minLength": 1
+        },
+        "LastName": {
+          "description": "The user's family name, e.g., 'Taylor'.",
+          "type": "string"
+        },
+        "JobTitle": {
+          "description": "The user's position within the company, e.g., 'Software Development Manager'.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "Licenses": {
+          "description": "A list of licenses assigned to the user in Azure.",
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "enum": [
+              "Microsoft 365 Copilot",
+              "Microsoft Teams Enterprise",
+              "Office 365 E5 (no Teams)",
+              "Viva Suite"
+            ]
+          }
+        },
+        "Manager": {
+          "description": "The display name of the user's manager, e.g., 'Robert Scott'.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        }
+      },
+      "required": [
+        "CompanyName",
+        "Department",
+        "DisplayName",
+        "JobTitle"
+      ]
+    }
+  }
+}

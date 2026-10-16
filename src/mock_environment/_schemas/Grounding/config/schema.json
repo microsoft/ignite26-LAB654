@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Manufactured Config schema",
+  "title": "Config",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "Group": {
+      "$ref": "#/$defs/Group"
+    },
+    "Tenant": {
+      "$ref": "#/$defs/Tenant"
+    },
+    "TenantCount": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "SecurityGroupId": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "Tenant"
+  ],
+  "$defs": {
+    "Group": {
+      "description": "Settings to enable Group creations on the Tenant. Group means that the users on the Tenant will be duplicated according to the settings.",
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "Count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "Name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "StartIndex": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "Count",
+        "Name",
+        "StartIndex"
+      ]
+    },
+    "Tenant": {
+      "description": "Virtual Tenant basic settings.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "Ring": {
+          "type": "string"
+        },
+        "VirtualTenantName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "Tags": {
+          "type": "string",
+          "minLength": 1
+        },
+        "IsShared": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "Ring",
+        "VirtualTenantName"
+      ]
+    }
+  }
+}

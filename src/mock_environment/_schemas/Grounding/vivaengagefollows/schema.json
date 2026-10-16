@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "VivaEngageFollows",
+  "description": "Manufactured VivaEngageFollows schema",
+  "type": "array",
+  "uniqueItems": true,
+  "items": {
+    "$ref": "#/$defs/VivaEngageFollow"
+  },
+  "$defs": {
+    "VivaEngageFollow": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "Follower": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "FollowedUser": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "Follower",
+        "FollowedUser"
+      ]
+    }
+  }
+}

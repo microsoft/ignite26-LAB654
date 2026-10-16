@@ -1,0 +1,83 @@
+{
+  "typeName": "contacts",
+  "rules": [
+    {
+      "ruleId": "bcc3c131-a036-4477-a81c-b50ec196ed22",
+      "name": "DisplayName is unique",
+      "description": "DisplayName is unique",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "unique": {
+          "var": "DisplayName",
+          "caseSensitive": true
+        }
+      },
+      "metadata": {
+        "field": "DisplayName",
+        "expression": "All values of 'DisplayName' must be unique"
+      },
+      "category": "Uniqueness",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "9e87b9cc-1d94-4e52-9270-8cb35d3d9140",
+      "name": "Unique Contact IDs",
+      "description": "Each contact must have a unique ContactId within the file",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "unique": {
+          "var": "ContactId",
+          "caseSensitive": true
+        }
+      },
+      "metadata": {
+        "field": "ContactId",
+        "expression": "All values of 'ContactId' must be unique"
+      },
+      "category": "Uniqueness",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "c363e324-c129-42f4-a762-0b6834da8919",
+      "name": "ContactForUsersList should exist in Users",
+      "description": "ContactForUsersList should exist in Users",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "contacts",
+          "sourceField": "ContactForUsersList",
+          "targetType": "users",
+          "targetField": "MailNickName"
+        }
+      },
+      "metadata": {
+        "field": "ContactForUsersList",
+        "expression": "For each 'contacts.ContactForUsersList', a matching 'users.MailNickName' must exist"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "34290cf9-38ac-4380-a02c-cd286e0f8b70",
+      "name": "ContactForUsersList shouldn't be a shared mailbox",
+      "description": "ContactForUsersList shouldn't be a shared mailbox",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "contact-for-users-list-user-reference-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'contact-for-users-list-user-reference-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    }
+  ],
+  "jsonLogicVersion": "2.0"
+}

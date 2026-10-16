@@ -1,0 +1,185 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Manufactured Online Meeting schema",
+  "title": "Online Meeting",
+  "type": "array",
+  "uniqueItems": true,
+  "items": {
+    "$ref": "#/$defs/OnlineMeeting"
+  },
+  "$defs": {
+    "OnlineMeeting": {
+      "description": "The Online Meeting JSON Schema is designed to capture an online meeting, which can be related to a chat, or meeting or channel.",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "OnlineMeetingId": {
+          "description": "An identifier for the online meeting, useful for tracking and reference.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 50
+        },
+        "OnlineMeetingType": {
+          "description": "The type of the online meeting. Possible values are Chat, Event or Channel.",
+          "enum": [
+            "Chat",
+            "Event",
+            "Channel"
+          ]
+        },
+        "ChatId": {
+          "description": "The identifier of the Chat related to this online meeting.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 50
+        },
+        "EventId": {
+          "description": "The identifier of the Calendar Event related to this online meeting.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 50
+        },
+        "ChannelId": {
+          "description": "The identifier of the Channel related to this online meeting.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 50
+        },
+        "StartDateTime": {
+          "description": "Timestamp of when the online meeting started. This follows the ISO 8601 pattern.",
+          "type": "string",
+          "pattern": "^[1-9][0-9]{3}-(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9]|3[0-1])T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+        },
+        "EndDateTime": {
+          "description": "Timestamp of when the online meeting ended. This follows the ISO 8601 pattern.",
+          "type": "string",
+          "pattern": "^[1-9][0-9]{3}-(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9]|3[0-1])T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+        },
+        "Owner": {
+          "description": "Identifier of the owner/organizer of the online meeting. Must be an internal user's MailNickName.",
+          "type": "string",
+          "pattern": "^[\\w\\-\\.]+$",
+          "minLength": 1,
+          "not": {
+            "pattern": "@"
+          },
+          "maxLength": 29
+        },
+        "Participants": {
+          "description": "The participants of the online meeting.",
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 1,
+          "items": {
+            "description": "Identifier of the sender of the message. Usually is the MailNickName of the user.",
+            "$ref": "#/$defs/MailNickNameOrEmail"
+          }
+        },
+        "Transcripts": {
+          "description": "A list of transcript for the online meeting.",
+          "type": [
+            "array",
+            "null"
+          ],
+          "uniqueItems": true,
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/Transcript"
+          }
+        }
+      },
+      "required": [
+        "OnlineMeetingId",
+        "StartDateTime",
+        "EndDateTime",
+        "OnlineMeetingType",
+        "Transcripts",
+        "Owner",
+        "Participants"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "OnlineMeetingType": {
+                "const": "Chat"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "ChatId"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "OnlineMeetingType": {
+                "const": "Event"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "EventId"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "OnlineMeetingType": {
+                "const": "Channel"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "ChannelId"
+            ]
+          }
+        }
+      ]
+    },
+    "Transcript": {
+      "description": "Represents a transcript of an online meeting.",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "LanguageTag": {
+          "description": "Language tag. Example 'en'.",
+          "type": "string",
+          "minLength": 1
+        },
+        "TranscriptFile": {
+          "description": "Name of the vtt file containing the meeting transcript.",
+          "type": "string",
+          "pattern": "^transcripts(/[^\\\\:*?\"<>|\\x00-\\x1f/]+)+\\.vtt$",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "LanguageTag",
+        "TranscriptFile"
+      ]
+    },
+    "MailNickNameOrEmail": {
+      "description": "User MailNickName or external full email address",
+      "type": "string",
+      "minLength": 1,
+      "oneOf": [
+        {
+          "pattern": "^[\\w\\-\\.]+$",
+          "not": {
+            "pattern": "@"
+          }
+        },
+        {
+          "pattern": "^[\\w\\-\\.]+@[\\w\\-\\.]+\\.[a-zA-Z]{2,}$"
+        }
+      ]
+    }
+  }
+}

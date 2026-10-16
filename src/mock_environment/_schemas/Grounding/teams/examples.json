@@ -1,0 +1,10 @@
+[
+  {
+    "name": "1.0.0",
+    "description": "Sample data for teams version 1.0.0",
+    "content": "[\r\n  {\r\n    \"TeamId\": \"team-001\",\r\n    \"Name\": \"Project Alpha Team\",\r\n    \"Description\": \"Team for Project Alpha development\",\r\n    \"CreatedDateTime\": \"2025-01-10T08:00:00Z\",\r\n    \"TeamType\": \"Private\",\r\n    \"Owners\": [\r\n      \"john.doe\"\r\n    ],\r\n    \"Members\": [\r\n      \"jane.smith\",\r\n      \"bob.johnson\"\r\n    ],\r\n    \"TeamEmailAddressLocalPart\": \"projectalpha\"\r\n  }\r\n]",
+    "format": "Json",
+    "jsonContent": "[\r\n  {\r\n    \"TeamId\": \"team-001\",\r\n    \"Name\": \"Project Alpha Team\",\r\n    \"Description\": \"Team for Project Alpha development\",\r\n    \"CreatedDateTime\": \"2025-01-10T08:00:00Z\",\r\n    \"TeamType\": \"Private\",\r\n    \"Owners\": [\r\n      \"john.doe\"\r\n    ],\r\n    \"Members\": [\r\n      \"jane.smith\",\r\n      \"bob.johnson\"\r\n    ],\r\n    \"TeamEmailAddressLocalPart\": \"projectalpha\"\r\n  }\r\n]",
+    "version": "1.0.0"
+  }
+]

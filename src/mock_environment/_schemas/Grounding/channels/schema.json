@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Manufactured Channels schema",
+  "title": "Channels",
+  "type": "array",
+  "uniqueItems": true,
+  "items": {
+    "$ref": "#/$defs/Channel"
+  },
+  "$defs": {
+    "Channel": {
+      "description": "The Channel JSON Schema is designed to represent a Channel within a Team on Teams.",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "ChannelId": {
+          "description": "An identifier for each channel, useful for tracking and reference.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 50,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "TeamId": {
+          "description": "Identifier of the Team that this channel belongs to.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 50,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "Name": {
+          "description": "The name of the Channel.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 50,
+          "pattern": "^(?![_\\.])[^\r\n~#%&*{}+\\\\/:<>?|'\".]+$"
+        },
+        "Description": {
+          "description": "The description of the Channel.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 1024
+        },
+        "CreatedDateTime": {
+          "description": "The date and time of when the Channel was created. This follows the ISO 8601 pattern.",
+          "type": "string",
+          "pattern": "^[1-9][0-9]{3}-(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9]|3[0-1])T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+        },
+        "Members": {
+          "description": "The members of the channel.",
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "description": "Identifier of the members of the channel.",
+            "$ref": "#/$defs/MailNickName"
+          },
+          "minItems": 1
+        },
+        "Creator": {
+          "description": "Identifier of the creator of the channel. Usually is the MailNickName of the user.",
+          "$ref": "#/$defs/MailNickName"
+        },
+        "IsPrivate": {
+          "description": "Indicates whether the Channel is private.",
+          "type": "boolean"
+        },
+        "ChannelType": {
+          "description": "The type of the channel. Possible values are Standard, Private and Shared.",
+          "enum": [
+            "Standard",
+            "Private",
+            "Shared"
+          ]
+        }
+      },
+      "required": [
+        "ChannelId",
+        "TeamId",
+        "Name",
+        "Members"
+      ]
+    },
+    "MailNickName": {
+      "description": "User MailNickName only (full email address is not supported)",
+      "type": "string",
+      "minLength": 1,
+      "allOf": [
+        {
+          "not": {
+            "pattern": ".*'.*"
+          }
+        },
+        {
+          "not": {
+            "pattern": "@"
+          }
+        }
+      ],
+      "pattern": "^(?![.-])[A-Za-z0-9_]+([.-][A-Za-z0-9_]+)*$"
+    }
+  }
+}

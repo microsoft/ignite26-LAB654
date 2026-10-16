@@ -1,0 +1,225 @@
+{
+  "typeName": "customconnectors",
+  "rules": [
+    {
+      "ruleId": "9795088d-ba9c-4087-89a3-a47ccd0d8309",
+      "name": "Connection ID should be unique",
+      "description": "",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "unique": {
+          "var": "ConnectionId",
+          "caseSensitive": false
+        }
+      },
+      "metadata": {
+        "field": "ConnectionId",
+        "expression": "All values of 'ConnectionId' must be unique (case-insensitive)"
+      },
+      "category": "Uniqueness",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "a350f1d7-2d68-4248-be51-804b1350904a",
+      "name": "Item ID Uniqueness Validator V1",
+      "description": "",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "customconnectors-item-id-uniqueness-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'customconnectors-item-id-uniqueness-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "3509f602-531f-4dd3-953c-288e7e52d938",
+      "name": "Item Property Names Defined Validator V1",
+      "description": "",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "customconnectors-item-property-names-defined-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'customconnectors-item-property-names-defined-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "de2215ac-7134-4fd1-bae8-ea8fc1744e89",
+      "name": "Item Property Value Type Validator V1",
+      "description": "",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "customconnectors-item-property-value-type-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'customconnectors-item-property-value-type-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "5ffbe010-d8b2-4a2e-b094-0aaf7c3c8b13",
+      "name": "Label Data Type Validator V1",
+      "description": "",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "customconnectors-label-data-type-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'customconnectors-label-data-type-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "cdce6926-fdcb-49b0-8fa5-8428ae26da96",
+      "name": "Labeled Property Retrievable Validator V1",
+      "description": "",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "customconnectors-labeled-property-retrievable-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'customconnectors-labeled-property-retrievable-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "12f301fc-2a03-4c5d-a5a5-b215d7bd5ba1",
+      "name": "Label Single Property Assignment Validator V1",
+      "description": "",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "customconnectors-label-single-property-assignment-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'customconnectors-label-single-property-assignment-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "a9077fbe-902f-4d62-ae77-57525781c26c",
+      "name": "People PersonAccount Required Validator V1",
+      "description": "",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "customconnectors-people-person-account-required-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'customconnectors-people-person-account-required-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "26cdc405-b9ca-463c-b096-e0ab8c7d018c",
+      "name": "PersonAccount User Reference Validator V1",
+      "description": "",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "customconnectors-person-account-user-reference-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'customconnectors-person-account-user-reference-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "ef37334e-5a2a-4654-bf03-d949508f49ce",
+      "name": "Property annotation isQueryable, isRetrievable, isSearchable should be true on specific labels",
+      "description": "",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "or": [
+              {
+                "field": "labels",
+                "operator": "contains",
+                "valueType": "array",
+                "value": "assignedToPeople"
+              },
+              {
+                "field": "labels",
+                "operator": "contains",
+                "valueType": "array",
+                "value": "secondaryId"
+              }
+            ]
+          },
+          "then": {
+            "and": [
+              {
+                "field": "isQueryable",
+                "operator": "==",
+                "valueType": "boolean",
+                "value": "true"
+              },
+              {
+                "field": "isRetrievable",
+                "operator": "==",
+                "valueType": "boolean",
+                "value": "true"
+              },
+              {
+                "field": "isSearchable",
+                "operator": "==",
+                "valueType": "boolean",
+                "value": "true"
+              }
+            ]
+          },
+          "arrayScope": "Properties"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "For each 'Properties' element: IF ('labels' contains assignedToPeople) OR ('labels' contains secondaryId) THEN ('isQueryable' == true) AND ('isRetrievable' == true) AND ('isSearchable' == true)"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    }
+  ],
+  "jsonLogicVersion": "2.0"
+}

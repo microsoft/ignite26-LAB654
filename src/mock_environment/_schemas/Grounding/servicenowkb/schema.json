@@ -1,0 +1,1954 @@
+{
+  "description": "SearchableItem schema for ServiceNow knowledge base articles",
+  "$id": "graph_simulator/3.0.0/servicenowkbarticle/schema",
+  "title": "ServiceNow Knowledge Article Schema",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "array",
+  "items": {
+    "$ref": "#/$defs/ServiceNowKnowledgeArticle"
+  },
+  "$defs": {
+    "ServiceNowKnowledgeArticle": {
+      "description": "SearchableItem for a ServiceNow knowledge base article",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "isContainer": {
+          "type": "boolean",
+          "enum": [
+            false
+          ],
+          "default": false,
+          "description": "Whether this item is a container for other items in the index. Always false for ServiceNow KB articles, which are leaf content items."
+        },
+        "containerId": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null,
+          "description": "Identifier of the parent container item, if any. Always null for ServiceNow KB articles."
+        },
+        "properties": {
+          "description": "The ServiceNow KB article's own fields, covering identity, knowledge base and category context, authorship, lifecycle state, and usage metrics.",
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "AccessUrl": {
+              "type": "string",
+              "format": "uri",
+              "minLength": 1,
+              "description": "The URL where this article can be accessed in the knowledge portal, of the form 'https://<host>/kb/<Number>', embedding the article Number (for example KB0012345). Used for navigation, deep linking, and external references.",
+              "examples": [
+                "https://help.smallcorps.com/kb/KB0093742",
+                "https://help.smallcorps.com/kb/KB0031286"
+              ]
+            },
+            "Active": {
+              "type": "boolean",
+              "default": true,
+              "description": "Indicates whether the knowledge article is currently active and available to end users in the ServiceNow portal. Active articles appear in search results and can be accessed by users with appropriate permissions. Inactive articles are hidden from search but may still be accessible via direct URL for administrative purposes. For realistic data generation, most published articles should have this set to true.",
+              "examples": [
+                true,
+                false
+              ]
+            },
+            "ArticleType": {
+              "type": "string",
+              "enum": [
+                "HTML",
+                "Text"
+              ],
+              "default": "HTML",
+              "description": "The content format of the article body. 'HTML' is rich text with headings, lists, and tables (the standard for KB articles); 'Text' is plain text without formatting. Most articles are 'HTML'.",
+              "examples": [
+                "HTML",
+                "Text"
+              ]
+            },
+            "Author": {
+              "type": "array",
+              "minItems": 1,
+              "description": "List of authors associated with the creation or major contributions to the knowledge article. In ServiceNow, articles typically have a primary author (the knowledge worker who wrote the content) and may have additional contributors. Each entry contains structured identity metadata including a unique identifier, human-readable display name, and email address. This supports authorship attribution, content ownership workflows, and compliance reporting.",
+              "items": {
+                "description": "Strict user identity for article authorship and audit fields. Requires the ExternalId/Email/ExternalName/PrincipalType/id core; id equals Email. Includes the ServiceNow identity-resolution fields.",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "ExternalId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "The user's stable external identifier. In this ServiceNow corpus it is the user's corporate email address (equal to id and Email); the Microsoft Entra directory GUID is carried separately in EntraId.",
+                    "examples": [
+                      "mayapatel@smallcorps.com",
+                      "juliachen@smallcorps.com"
+                    ]
+                  },
+                  "Email": {
+                    "type": "string",
+                    "format": "email",
+                    "minLength": 1,
+                    "description": "The user's corporate email address, used for notifications, ownership tracking, and identity resolution across systems.",
+                    "examples": [
+                      "mayapatel@smallcorps.com",
+                      "juliachen@smallcorps.com"
+                    ]
+                  },
+                  "ExternalName": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "The user's full display name as shown in ServiceNow user profiles and article attribution.",
+                    "examples": [
+                      "Maya Patel",
+                      "Julia Chen"
+                    ]
+                  },
+                  "PrincipalType": {
+                    "type": "string",
+                    "enum": [
+                      "user"
+                    ],
+                    "default": "user",
+                    "description": "The principal category. Always 'user' for individual people; group principals are not used for article identities.",
+                    "examples": [
+                      "user"
+                    ]
+                  },
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Identity resolution key used to resolve the user across systems. Equals the user's Email exactly.",
+                    "examples": [
+                      "mayapatel@smallcorps.com",
+                      "juliachen@smallcorps.com"
+                    ]
+                  },
+                  "EntraId": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "default": null,
+                    "description": "The user's Microsoft Entra (Azure AD) directory identifier - a GUID that serves as the connector's stable directory key for the user.",
+                    "examples": [
+                      "03f6c286-f35a-5167-9b15-1c055fbb7751",
+                      "57e608f4-1699-5eb4-bf14-585406aebb20"
+                    ]
+                  },
+                  "displayName": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "default": null,
+                    "description": "The user's display name as rendered in the portal, mirroring ExternalName.",
+                    "examples": [
+                      "Maya Patel",
+                      "Julia Chen"
+                    ]
+                  },
+                  "identitySource": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "default": null,
+                    "description": "The source directory or system that resolved this identity. Null when not resolved from an external source.",
+                    "examples": [
+                      null
+                    ]
+                  },
+                  "identityType": {
+                    "type": "integer",
+                    "default": 0,
+                    "description": "Numeric code for the identity category emitted by the identity-resolution layer. 0 for a standard resolved user.",
+                    "examples": [
+                      0
+                    ]
+                  },
+                  "userSyncAction": {
+                    "type": "integer",
+                    "default": 0,
+                    "description": "Sync-action code emitted by the identity-resolution layer for this user. 0 when no sync action applies.",
+                    "examples": [
+                      0
+                    ]
+                  },
+                  "metadata": {
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "default": null,
+                    "description": "Additional identity metadata. Null when none is attached.",
+                    "examples": [
+                      null
+                    ]
+                  },
+                  "identitySourceProperties": {
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "additionalProperties": true,
+                    "default": null,
+                    "description": "Source-specific identity properties such as the resolved display name and email. Null when not resolved from an external source.",
+                    "examples": [
+                      {
+                        "displayName": "Maya Patel",
+                        "email": "mayapatel@smallcorps.com"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "ExternalId",
+                  "Email",
+                  "ExternalName",
+                  "PrincipalType",
+                  "id"
+                ]
+              },
+              "examples": [
+                [
+                  {
+                    "ExternalId": "mayapatel@smallcorps.com",
+                    "Email": "mayapatel@smallcorps.com",
+                    "ExternalName": "Maya Patel",
+                    "PrincipalType": "user",
+                    "id": "mayapatel@smallcorps.com",
+                    "EntraId": "03f6c286-f35a-5167-9b15-1c055fbb7751",
+                    "displayName": "Maya Patel",
+                    "identitySource": null,
+                    "identityType": 0,
+                    "userSyncAction": 0,
+                    "metadata": null,
+                    "identitySourceProperties": {
+                      "displayName": "Maya Patel",
+                      "email": "mayapatel@smallcorps.com"
+                    }
+                  }
+                ]
+              ]
+            },
+            "CanReadUserCriteria": {
+              "type": "array",
+              "minItems": 0,
+              "maxItems": 0,
+              "default": [],
+              "description": "List of ServiceNow user criteria identifiers or names that explicitly grant read access to this article. User criteria in ServiceNow are reusable conditions that define groups of users based on roles, departments, locations, or custom attributes. Common values include 'itil' for IT staff, 'hr_employee' for HR personnel, or department-based criteria like 'engineering_staff'. When empty, the article follows default knowledge base permissions.",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "examples": [
+                []
+              ]
+            },
+            "CannotReadUserCriteria": {
+              "type": "array",
+              "minItems": 0,
+              "maxItems": 0,
+              "default": [],
+              "description": "List of ServiceNow user criteria identifiers or names that explicitly deny read access to this article. This is used to restrict sensitive content from specific user groups, such as excluding contractors from viewing internal HR policies or preventing certain departments from accessing confidential IT procedures. When empty, no explicit denials are applied.",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "examples": [
+                []
+              ]
+            },
+            "CmdbCi": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9 _\\-/]{3,100}$",
+              "description": "The Configuration Management Database (CMDB) Configuration Item (CI) that this knowledge article is associated with. In ServiceNow, linking articles to CIs enables contextual knowledge delivery when users report issues with specific applications, services, or hardware. Use realistic CI names that represent enterprise IT services, applications, or infrastructure components.",
+              "examples": [
+                "VPN Gateway",
+                "Microsoft 365 Suite",
+                "SAP ERP System",
+                "Employee Self-Service Portal",
+                "Cisco AnyConnect Client",
+                "HR Management System",
+                "Salesforce CRM",
+                "Corporate WiFi Network"
+              ]
+            },
+            "Description": {
+              "type": "string",
+              "default": "",
+              "description": "Extended natural-language summary of the knowledge article used for search indexing, previews, and SEO purposes. This field provides more context than ShortDescription and may contain additional keywords to improve discoverability. In ServiceNow, this maps to the 'description' field on kb_knowledge. May be empty when only ShortDescription is maintained.",
+              "examples": [
+                "This article provides step-by-step instructions for resetting your VPN password using the self-service portal. Includes troubleshooting steps for common connection issues.",
+                "Comprehensive guide to configuring multi-factor authentication (MFA) for corporate applications. Covers setup for mobile authenticator apps, hardware tokens, and backup codes.",
+                ""
+              ]
+            },
+            "Direct": {
+              "type": "boolean",
+              "default": false,
+              "description": "Indicates whether this article should be treated as a direct-answer candidate for strongly matching queries in ServiceNow's AI Search or Virtual Agent. Direct articles are typically concise, authoritative answers to frequently asked questions such as 'What is the WiFi password?' or 'How do I reset my password?'. These articles are surfaced prominently in search results and chatbot responses. Use true sparingly for FAQ-style content.",
+              "examples": [
+                true,
+                false
+              ]
+            },
+            "DisableCommenting": {
+              "type": "boolean",
+              "default": false,
+              "description": "When true, end users are prevented from adding new comments or feedback to this knowledge article. This is typically enabled for policy documents, legal content, compliance procedures, or other controlled content where user commentary is not appropriate. Most how-to and troubleshooting articles allow comments to gather user feedback.",
+              "examples": [
+                true,
+                false
+              ]
+            },
+            "DisableSuggesting": {
+              "type": "boolean",
+              "default": false,
+              "description": "When true, end users are prevented from suggesting edits or improvements to this knowledge article through ServiceNow's suggestion workflow. This is typically enabled for highly controlled content such as legal policies, HR procedures, security guidelines, or compliance documentation that requires formal review processes for any changes.",
+              "examples": [
+                true,
+                false
+              ]
+            },
+            "DisplayAttachments": {
+              "type": "boolean",
+              "default": false,
+              "description": "Indicates whether file attachments associated with this article should be displayed to end users in the knowledge portal. When true, attachments such as PDFs, screenshots, or reference documents appear in a dedicated section of the article view. Set to true when the Attachments array contains files that supplement the article content.",
+              "examples": [
+                true,
+                false
+              ]
+            },
+            "EntityType": {
+              "type": "string",
+              "enum": [
+                "Knowledge Article"
+              ],
+              "default": "Knowledge Article",
+              "description": "The ServiceNow entity (table) type for this record. Always 'Knowledge Article' for knowledge base articles, enabling type discrimination when processing mixed ServiceNow content.",
+              "examples": [
+                "Knowledge Article"
+              ]
+            },
+            "Flagged": {
+              "type": "boolean",
+              "default": false,
+              "description": "Indicates whether the knowledge article has been flagged for review due to content issues, accuracy concerns, policy violations, or user-reported problems. Flagged articles may require knowledge manager attention for updates, corrections, or retirement. Use true sparingly to simulate problematic or escalated content in the dataset.",
+              "examples": [
+                true,
+                false
+              ]
+            },
+            "GeneratedWithNowAssist": {
+              "type": "boolean",
+              "default": false,
+              "description": "Indicates whether some or all of the article content was generated or assisted by ServiceNow's Now Assist generative AI capabilities. This includes AI-generated summaries, content suggestions, or fully automated article creation from incident resolutions. Use a mix of true and false values to reflect varied authoring patterns in modern ServiceNow implementations.",
+              "examples": [
+                true,
+                false
+              ]
+            },
+            "HelpfulCount": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "description": "The total number of users who marked this article as helpful using ServiceNow's feedback mechanism. This metric indicates article quality and usefulness, and is used for ranking, reporting, and continuous improvement workflows. Use realistic distributions - 0-5 for new or niche content, 10-50 for moderately useful articles, and higher values (50-200+) for popular, frequently referenced articles.",
+              "examples": [
+                0,
+                7,
+                42,
+                156
+              ]
+            },
+            "IconUrl": {
+              "type": "string",
+              "format": "uri",
+              "minLength": 1,
+              "description": "URL of the icon representing this article or its knowledge base in the portal, typically of the form 'https://<host>/assets/icons/<slug>.png'.",
+              "examples": [
+                "https://help.smallcorps.com/assets/icons/customer-engagement.png",
+                "https://help.smallcorps.com/assets/icons/finance-communication.png"
+              ]
+            },
+            "Image": {
+              "default": "",
+              "oneOf": [
+                {
+                  "type": "string",
+                  "maxLength": 0
+                },
+                {
+                  "type": "string",
+                  "format": "uri",
+                  "minLength": 1
+                }
+              ],
+              "description": "URL of a primary hero image or illustration associated with the article, displayed prominently in the article header or featured content sections. This enhances visual appeal in modern ServiceNow portal experiences. When no image is associated, this field is an empty string.",
+              "examples": [
+                "",
+                "https://help.smallcorps.com/assets/hero/vpn-setup.png"
+              ]
+            },
+            "InstrumentationMetadata": {
+              "type": "string",
+              "default": "",
+              "description": "Key-value metadata string used for telemetry, experimentation, A/B testing, or logging associated with this article. In ServiceNow, this may contain experiment identifiers, cohort assignments, or feature flags in JSON or delimited format. Typically empty for standard articles.",
+              "examples": [
+                "",
+                "{\"experimentId\": \"kb-search-v2\", \"cohort\": \"treatment\"}",
+                "campaign=q4_kb_refresh;variant=a"
+              ]
+            },
+            "ItemPath": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Logical hierarchical path of the article within the knowledge taxonomy, formatted as 'KnowledgeBaseName \\\\ CategoryName'. This path represents the article's position in the knowledge hierarchy and is used for navigation breadcrumbs, faceted search, and content organization. The backslash separator follows ServiceNow's internal path conventions.",
+              "examples": [
+                "IT Support \\\\ Network & Connectivity",
+                "HR Policies \\\\ Benefits & Compensation",
+                "Employee Handbook \\\\ Onboarding \\\\ First Week Checklist",
+                "Security & Compliance \\\\ Password Management"
+              ],
+              "pattern": "^.+\\\\.+$"
+            },
+            "KbCategory": {
+              "type": "string",
+              "description": "The knowledge category or subcategory that this article belongs to within the knowledge base taxonomy. Categories organize articles into logical groupings for browsing and filtering. In ServiceNow, categories are defined in the kb_category table and form a hierarchical structure.",
+              "examples": [
+                "Network & Connectivity",
+                "Password & Account Access",
+                "Hardware Requests",
+                "Benefits & Compensation",
+                "Software Installation",
+                "Security & Compliance",
+                "Onboarding & Offboarding"
+              ]
+            },
+            "KbKnowledgeBase": {
+              "type": "string",
+              "minLength": 1,
+              "description": "The name of the ServiceNow knowledge base that contains this article. Knowledge bases in ServiceNow are top-level containers that organize articles by audience, department, or purpose. Common examples include IT-focused, HR-focused, or department-specific knowledge bases. This maps to the kb_knowledge_base table.",
+              "examples": [
+                "IT Support",
+                "HR Policies",
+                "Employee Handbook",
+                "Security & Compliance",
+                "Facilities Management",
+                "Finance & Procurement",
+                "Engineering Wiki"
+              ]
+            },
+            "KbKnowledgeBaseUrl": {
+              "type": "string",
+              "format": "uri",
+              "minLength": 1,
+              "description": "The URL of the knowledge base that contains this article, of the form 'https://<host>/kb/<slug>' (sometimes '/knowledge/<slug>'), where the slug is derived from the knowledge base name.",
+              "examples": [
+                "https://help.smallcorps.com/kb/customer-experience",
+                "https://help.smallcorps.com/knowledge/finance-planning"
+              ]
+            },
+            "Meta": {
+              "type": "string",
+              "default": "",
+              "description": "Structured metadata string associated with the article for filtering, routing, analytics, or integration purposes. May contain key-value pairs in JSON or delimited format representing attributes like target audience, content tier, region, or custom classification. Typically empty for standard articles.",
+              "examples": [
+                "",
+                "{\"audience\": \"managers\", \"region\": \"APAC\"}",
+                "tier=1;audience=all_employees;language=en"
+              ]
+            },
+            "MetaDescription": {
+              "type": "string",
+              "default": "",
+              "description": "Short description or preview text used by search engines, link previews, and social sharing. Similar to an HTML meta description, this field provides a concise summary (typically 150-160 characters) optimized for discoverability. One or two natural language sentences are ideal. May be empty when not explicitly maintained.",
+              "examples": [
+                "Learn how to reset your VPN password in under 5 minutes using the self-service portal.",
+                "Step-by-step guide for configuring multi-factor authentication on your corporate account.",
+                ""
+              ]
+            },
+            "Number": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^KB\\d{7}$",
+              "description": "Human-readable article number in ServiceNow's standard format. Knowledge article numbers follow the pattern 'KB' followed by seven digits (e.g., KB0012345). This number is displayed prominently in the UI, used in support communications, and referenced in incident resolutions. Numbers are auto-generated by ServiceNow and are unique within the instance.",
+              "examples": [
+                "KB0012345",
+                "KB0098765",
+                "KB0001001",
+                "KB0054321"
+              ]
+            },
+            "PreviewContent": {
+              "type": "string",
+              "default": "",
+              "description": "A short snippet or excerpt of the article content, typically the first paragraph or a curated summary, used in search result previews and knowledge widgets. This gives users a quick preview without loading the full article. Should be extracted or derived from the main Content field.",
+              "examples": [
+                "To reset your VPN password, navigate to the Self-Service Portal and click 'Password Reset'. You will need your employee ID and registered email address...",
+                "This article explains how to request new hardware through the IT Service Catalog. Before submitting a request, please ensure you have manager approval...",
+                ""
+              ]
+            },
+            "Published": {
+              "type": "string",
+              "format": "date-time",
+              "minLength": 1,
+              "description": "The date and time when the article was first published and made visible to end users in the knowledge portal, captured in ISO 8601 format (e.g., '2025-01-15T09:30:00Z'). This timestamp marks when the article transitioned from draft to published state and is used for content freshness calculations, sorting, and lifecycle management.",
+              "examples": [
+                "2024-06-15T09:30:00Z",
+                "2025-01-10T14:22:45Z",
+                "2023-11-01T08:00:00Z"
+              ]
+            },
+            "Rating": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 5,
+              "description": "The average user rating of the article on a 0-5 star scale, calculated from user feedback submissions. In ServiceNow, users can rate articles to indicate quality and usefulness. Use fractional values (e.g., 3.7, 4.2) for realism. Ratings should correlate logically with HelpfulCount and SysViewCount - popular, well-maintained articles typically have higher ratings.",
+              "examples": [
+                0,
+                3.5,
+                4.2,
+                4.8
+              ]
+            },
+            "ReplacementArticle": {
+              "default": "",
+              "oneOf": [
+                {
+                  "type": "string",
+                  "maxLength": 0
+                },
+                {
+                  "type": "string",
+                  "format": "uri",
+                  "minLength": 1
+                }
+              ],
+              "description": "The URL of the article that supersedes or replaces this article when it becomes deprecated or outdated. In ServiceNow's knowledge lifecycle, retired articles can point to their replacement to guide users to current information. When no replacement exists, this field is an empty string. When populated, it must be a valid URL to another knowledge article.",
+              "examples": [
+                "",
+                "https://contoso.service-now.com/sp?id=kb_article&sys_id=a1b2c3d4e5f6789012345678abcdef00",
+                "https://contoso.service-now.com/sp?id=kb_article&sys_id=fedcba9876543210fedcba9876543210"
+              ]
+            },
+            "Retired": {
+              "type": "boolean",
+              "default": false,
+              "description": "Indicates whether the article has been retired from active use in the knowledge base. Retired articles are no longer recommended to users and typically have a ReplacementArticle pointing to updated content. In ServiceNow, retirement is part of the knowledge lifecycle for outdated procedures, deprecated systems, or superseded policies.",
+              "examples": [
+                true,
+                false
+              ]
+            },
+            "Roles": {
+              "type": "array",
+              "minItems": 0,
+              "description": "List of ServiceNow role identifiers that are allowed to access or manage this article. Roles provide granular access control beyond user criteria, specifying which job functions can view, edit, or administer the article. Use realistic ServiceNow role names following the lowercase underscore naming convention.",
+              "items": {
+                "type": "string",
+                "pattern": "^[a-z0-9_\\.]+$"
+              },
+              "examples": [
+                [],
+                [
+                  "itil"
+                ],
+                [
+                  "knowledge_admin",
+                  "knowledge_manager"
+                ],
+                [
+                  "hr_manager",
+                  "hr_admin"
+                ],
+                [
+                  "itil",
+                  "catalog_admin",
+                  "asset_manager"
+                ]
+              ]
+            },
+            "ShortDescription": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Concise, title-like description of the article shown in search results, knowledge lists, and browse views. This maps directly to ServiceNow's 'short_description' field on kb_knowledge and serves as the primary article title. Should be clear, action-oriented, and descriptive (typically 5-15 words). Examples include 'How to reset your VPN password' or 'Request a new laptop'.",
+              "examples": [
+                "How to reset your VPN password",
+                "Request a new laptop or monitor",
+                "Configure multi-factor authentication (MFA)",
+                "Submit a time-off request",
+                "Troubleshoot Outlook connection issues",
+                "Enroll in health benefits",
+                "Access the corporate WiFi network"
+              ]
+            },
+            "Source": {
+              "type": "string",
+              "default": "",
+              "description": "The source system or origin of this knowledge article. For natively authored ServiceNow content, this is typically 'ServiceNow' or empty. For migrated or imported content, this indicates the original system such as 'SharePoint', 'Confluence', or 'Legacy Intranet'. This field supports content provenance tracking and migration analytics.",
+              "examples": [
+                "",
+                "ServiceNow",
+                "Confluence",
+                "SharePoint",
+                "Legacy Intranet",
+                "Zendesk"
+              ]
+            },
+            "SysClassName": {
+              "type": "string",
+              "default": "Knowledge",
+              "description": "The ServiceNow table class that stores this record. For standard knowledge articles this is always 'Knowledge'; extended or custom knowledge types would use subclass names, which do not occur in this corpus.",
+              "examples": [
+                "Knowledge"
+              ],
+              "enum": [
+                "Knowledge"
+              ]
+            },
+            "SysCreatedBy": {
+              "description": "Identity details of the ServiceNow user who initially created the knowledge article record. This captures the original author's system identity for audit trails, ownership tracking, and compliance reporting. Note that SysCreatedBy may differ from Author if an administrator created the record on behalf of a subject matter expert.",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "ExternalId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "The user's stable external identifier. In this ServiceNow corpus it is the user's corporate email address (equal to id and Email); the Microsoft Entra directory GUID is carried separately in EntraId.",
+                  "examples": [
+                    "mayapatel@smallcorps.com",
+                    "juliachen@smallcorps.com"
+                  ]
+                },
+                "Email": {
+                  "type": "string",
+                  "format": "email",
+                  "minLength": 1,
+                  "description": "The user's corporate email address, used for notifications, ownership tracking, and identity resolution across systems.",
+                  "examples": [
+                    "mayapatel@smallcorps.com",
+                    "juliachen@smallcorps.com"
+                  ]
+                },
+                "ExternalName": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "The user's full display name as shown in ServiceNow user profiles and article attribution.",
+                  "examples": [
+                    "Maya Patel",
+                    "Julia Chen"
+                  ]
+                },
+                "PrincipalType": {
+                  "type": "string",
+                  "enum": [
+                    "user"
+                  ],
+                  "default": "user",
+                  "description": "The principal category. Always 'user' for individual people; group principals are not used for article identities.",
+                  "examples": [
+                    "user"
+                  ]
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Identity resolution key used to resolve the user across systems. Equals the user's Email exactly.",
+                  "examples": [
+                    "mayapatel@smallcorps.com",
+                    "juliachen@smallcorps.com"
+                  ]
+                },
+                "EntraId": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "default": null,
+                  "description": "The user's Microsoft Entra (Azure AD) directory identifier - a GUID that serves as the connector's stable directory key for the user.",
+                  "examples": [
+                    "03f6c286-f35a-5167-9b15-1c055fbb7751",
+                    "57e608f4-1699-5eb4-bf14-585406aebb20"
+                  ]
+                },
+                "displayName": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "default": null,
+                  "description": "The user's display name as rendered in the portal, mirroring ExternalName.",
+                  "examples": [
+                    "Maya Patel",
+                    "Julia Chen"
+                  ]
+                },
+                "identitySource": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "default": null,
+                  "description": "The source directory or system that resolved this identity. Null when not resolved from an external source.",
+                  "examples": [
+                    null
+                  ]
+                },
+                "identityType": {
+                  "type": "integer",
+                  "default": 0,
+                  "description": "Numeric code for the identity category emitted by the identity-resolution layer. 0 for a standard resolved user.",
+                  "examples": [
+                    0
+                  ]
+                },
+                "userSyncAction": {
+                  "type": "integer",
+                  "default": 0,
+                  "description": "Sync-action code emitted by the identity-resolution layer for this user. 0 when no sync action applies.",
+                  "examples": [
+                    0
+                  ]
+                },
+                "metadata": {
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "default": null,
+                  "description": "Additional identity metadata. Null when none is attached.",
+                  "examples": [
+                    null
+                  ]
+                },
+                "identitySourceProperties": {
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "additionalProperties": true,
+                  "default": null,
+                  "description": "Source-specific identity properties such as the resolved display name and email. Null when not resolved from an external source.",
+                  "examples": [
+                    {
+                      "displayName": "Maya Patel",
+                      "email": "mayapatel@smallcorps.com"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "ExternalId",
+                "Email",
+                "ExternalName",
+                "PrincipalType",
+                "id"
+              ]
+            },
+            "SysCreatedOn": {
+              "type": "string",
+              "format": "date-time",
+              "minLength": 1,
+              "description": "The timestamp when the knowledge article record was originally created in ServiceNow, captured in ISO 8601 format. This represents when the record was first saved (typically as a draft) and may predate the Published timestamp. Used for audit trails, lifecycle analysis, and record history.",
+              "examples": [
+                "2024-05-01T10:15:30Z",
+                "2025-01-08T08:45:00Z",
+                "2023-09-15T14:22:11Z"
+              ]
+            },
+            "SysDomain": {
+              "type": "string",
+              "default": "",
+              "description": "The domain identifier for the article in ServiceNow's domain separation model. Domain separation allows a single ServiceNow instance to serve multiple tenants or business units with isolated data. For single-tenant instances, this is typically empty or 'global'. For multi-tenant instances, use realistic domain labels.",
+              "examples": [
+                "",
+                "global",
+                "acme_corp",
+                "subsidiary_east"
+              ]
+            },
+            "SysDomainPath": {
+              "type": "string",
+              "default": "",
+              "description": "The full hierarchical domain path representing the article's position in ServiceNow's domain separation hierarchy. This path uses forward slashes to indicate domain nesting (e.g., '/global/emea/uk'). For single-tenant instances, this is typically empty or '/'.",
+              "examples": [
+                "",
+                "/",
+                "/global",
+                "/global/emea/uk",
+                "/global/americas/us_west"
+              ]
+            },
+            "SysId": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[0-9a-fA-F]{32}$",
+              "description": "The unique 32-character hexadecimal system identifier (sys_id) assigned to this record by ServiceNow. Immutable primary key used in URLs, API calls, and references. ServiceNow sys_id uses 32 hexadecimal characters without hyphens.",
+              "examples": [
+                "6816f79cc0a8016401c5a33be04be441",
+                "a1b2c3d4e5f6789012345678abcdef00",
+                "fedcba9876543210fedcba9876543210"
+              ]
+            },
+            "SysModCount": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "description": "The number of times this knowledge article record has been modified in ServiceNow. This counter increments with each save operation and indicates the article's revision history. Use 0 for newly created content, low values (1-5) for stable articles, and higher values (10-50+) for frequently updated articles.",
+              "examples": [
+                0,
+                3,
+                12,
+                47
+              ]
+            },
+            "SysTags": {
+              "type": "array",
+              "minItems": 0,
+              "default": [],
+              "description": "List of tags or keywords associated with this article in ServiceNow. Tags improve searchability and enable tag-based navigation in the knowledge portal. Use short, lowercase, slug-style tags relevant to the article topic. Common patterns include technology names, process types, and audience identifiers.",
+              "items": {
+                "type": "string",
+                "pattern": "^[a-z0-9_\\-]+$"
+              },
+              "examples": [
+                [],
+                [
+                  "vpn"
+                ],
+                [
+                  "password",
+                  "reset",
+                  "self-service"
+                ],
+                [
+                  "hardware",
+                  "laptop",
+                  "request"
+                ],
+                [
+                  "onboarding",
+                  "new-hire",
+                  "day-one"
+                ]
+              ]
+            },
+            "SysUpdatedBy": {
+              "description": "Identity details of the ServiceNow user who most recently modified the knowledge article record. This captures the last editor's identity for audit trails, change tracking, and accountability. Frequent updates by the same user may indicate ongoing content maintenance.",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "ExternalId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "The user's stable external identifier. In this ServiceNow corpus it is the user's corporate email address (equal to id and Email); the Microsoft Entra directory GUID is carried separately in EntraId.",
+                  "examples": [
+                    "mayapatel@smallcorps.com",
+                    "juliachen@smallcorps.com"
+                  ]
+                },
+                "Email": {
+                  "type": "string",
+                  "format": "email",
+                  "minLength": 1,
+                  "description": "The user's corporate email address, used for notifications, ownership tracking, and identity resolution across systems.",
+                  "examples": [
+                    "mayapatel@smallcorps.com",
+                    "juliachen@smallcorps.com"
+                  ]
+                },
+                "ExternalName": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "The user's full display name as shown in ServiceNow user profiles and article attribution.",
+                  "examples": [
+                    "Maya Patel",
+                    "Julia Chen"
+                  ]
+                },
+                "PrincipalType": {
+                  "type": "string",
+                  "enum": [
+                    "user"
+                  ],
+                  "default": "user",
+                  "description": "The principal category. Always 'user' for individual people; group principals are not used for article identities.",
+                  "examples": [
+                    "user"
+                  ]
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Identity resolution key used to resolve the user across systems. Equals the user's Email exactly.",
+                  "examples": [
+                    "mayapatel@smallcorps.com",
+                    "juliachen@smallcorps.com"
+                  ]
+                },
+                "EntraId": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "default": null,
+                  "description": "The user's Microsoft Entra (Azure AD) directory identifier - a GUID that serves as the connector's stable directory key for the user.",
+                  "examples": [
+                    "03f6c286-f35a-5167-9b15-1c055fbb7751",
+                    "57e608f4-1699-5eb4-bf14-585406aebb20"
+                  ]
+                },
+                "displayName": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "default": null,
+                  "description": "The user's display name as rendered in the portal, mirroring ExternalName.",
+                  "examples": [
+                    "Maya Patel",
+                    "Julia Chen"
+                  ]
+                },
+                "identitySource": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "default": null,
+                  "description": "The source directory or system that resolved this identity. Null when not resolved from an external source.",
+                  "examples": [
+                    null
+                  ]
+                },
+                "identityType": {
+                  "type": "integer",
+                  "default": 0,
+                  "description": "Numeric code for the identity category emitted by the identity-resolution layer. 0 for a standard resolved user.",
+                  "examples": [
+                    0
+                  ]
+                },
+                "userSyncAction": {
+                  "type": "integer",
+                  "default": 0,
+                  "description": "Sync-action code emitted by the identity-resolution layer for this user. 0 when no sync action applies.",
+                  "examples": [
+                    0
+                  ]
+                },
+                "metadata": {
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "default": null,
+                  "description": "Additional identity metadata. Null when none is attached.",
+                  "examples": [
+                    null
+                  ]
+                },
+                "identitySourceProperties": {
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "additionalProperties": true,
+                  "default": null,
+                  "description": "Source-specific identity properties such as the resolved display name and email. Null when not resolved from an external source.",
+                  "examples": [
+                    {
+                      "displayName": "Maya Patel",
+                      "email": "mayapatel@smallcorps.com"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "ExternalId",
+                "Email",
+                "ExternalName",
+                "PrincipalType",
+                "id"
+              ]
+            },
+            "SysUpdatedOn": {
+              "type": "string",
+              "format": "date-time",
+              "minLength": 1,
+              "description": "The timestamp when the knowledge article record was last modified in ServiceNow, captured in ISO 8601 format. This value changes with every save operation and is used to evaluate content freshness, trigger review workflows, and drive recency-based ranking in search results.",
+              "examples": [
+                "2024-08-20T16:45:00Z",
+                "2025-02-15T11:30:22Z",
+                "2024-12-01T09:00:00Z"
+              ]
+            },
+            "SysViewCount": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "description": "The total number of times this knowledge article has been viewed by users in the ServiceNow portal. This metric indicates article popularity and reach, and is used for analytics, trending calculations, and content optimization. Use realistic distributions based on article age and topic relevance - 10-100 for niche content, 100-1000 for common topics, and 1000+ for highly referenced articles.",
+              "examples": [
+                0,
+                47,
+                523,
+                3847,
+                12500
+              ]
+            },
+            "TaxonomyTopic": {
+              "type": "string",
+              "default": "",
+              "pattern": "^(|[a-z0-9]+(\\.[a-z0-9]+)*)$",
+              "description": "Machine-oriented taxonomy topic identifier or path used to classify the article within the enterprise taxonomy. This follows a dot-notation hierarchy (e.g., 'it.access.vpn') enabling structured categorization for analytics, routing, and AI-driven recommendations. Should align logically with Topic and KbCategory. May be empty for uncategorized content.",
+              "examples": [
+                "",
+                "it.access.vpn",
+                "it.hardware.laptop",
+                "hr.benefits.health",
+                "hr.policies.leave",
+                "security.compliance.training"
+              ]
+            },
+            "Topic": {
+              "type": "string",
+              "default": "",
+              "pattern": "^[A-Za-z0-9 ,&()\\-]{0,100}$",
+              "description": "Human-readable topic label that represents the article's primary subject matter. This field provides a user-friendly topic name for display in portals, filtering, and navigation. Should align with TaxonomyTopic and KbCategory. May be empty when topic classification is not maintained.",
+              "examples": [
+                "",
+                "VPN Access",
+                "Password Reset",
+                "Hardware Requests",
+                "Health Benefits",
+                "Leave Policy",
+                "Security Training"
+              ]
+            },
+            "UseCount": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "description": "The number of times this article has been used or attached to resolve incidents, problems, or service requests in ServiceNow. This metric indicates operational value - articles with high use counts are proven solutions. Use counts typically correlate with SysViewCount and HelpfulCount but measure actual application rather than just views.",
+              "examples": [
+                0,
+                12,
+                89,
+                234
+              ]
+            },
+            "ValidTo": {
+              "type": "string",
+              "format": "date-time",
+              "minLength": 1,
+              "description": "The date and time until which the article content is considered valid and current, captured in ISO 8601 format. This expiration date triggers review workflows in ServiceNow's knowledge management process. For evergreen content (policies, procedures), set to a far-future date. For time-sensitive content (software versions, campaigns), set realistic near-term expiration dates.",
+              "examples": [
+                "2025-12-31T23:59:59Z",
+                "2026-06-30T00:00:00Z",
+                "2030-01-01T00:00:00Z",
+                "2025-03-15T00:00:00Z"
+              ]
+            },
+            "ViewAsAllowed": {
+              "type": "boolean",
+              "default": true,
+              "description": "Indicates whether the article can be viewed in ServiceNow's 'impersonate user' or 'view as' scenarios where an administrator simulates another user's permissions to verify access controls. Typically true for most articles. Set to false for highly sensitive content that should not be viewable even during impersonation.",
+              "examples": [
+                true,
+                false
+              ]
+            },
+            "WorkflowState": {
+              "type": "string",
+              "enum": [
+                "Published",
+                "review"
+              ],
+              "default": "Published",
+              "minLength": 1,
+              "description": "The workflow lifecycle state of the article. 'Published' is active, approved content available to users; 'review' is content pending knowledge-manager approval. Most articles are 'Published'.",
+              "examples": [
+                "Published",
+                "review"
+              ]
+            }
+          },
+          "required": [
+            "AccessUrl",
+            "Active",
+            "ArticleType",
+            "Author",
+            "Direct",
+            "DisableCommenting",
+            "DisableSuggesting",
+            "DisplayAttachments",
+            "EntityType",
+            "Flagged",
+            "GeneratedWithNowAssist",
+            "HelpfulCount",
+            "IconUrl",
+            "ItemPath",
+            "KbCategory",
+            "KbKnowledgeBase",
+            "KbKnowledgeBaseUrl",
+            "MetaDescription",
+            "Number",
+            "PreviewContent",
+            "Published",
+            "ShortDescription",
+            "SysClassName",
+            "SysCreatedBy",
+            "SysCreatedOn",
+            "SysDomain",
+            "SysDomainPath",
+            "SysId",
+            "SysModCount",
+            "SysUpdatedBy",
+            "SysUpdatedOn",
+            "SysViewCount",
+            "Topic",
+            "UseCount",
+            "ValidTo",
+            "ViewAsAllowed",
+            "WorkflowState"
+          ]
+        },
+        "accessControlList": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "description": "Access-control entries for the article. Always exactly one entry granting read access to EVERYONE (all authenticated users in the tenant).",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "principal": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "everyone"
+                    ],
+                    "default": "everyone",
+                    "description": "Scope of this principal. Always 'everyone' - applies to all authenticated users in the tenant."
+                  },
+                  "value": {
+                    "type": "string",
+                    "enum": [
+                      "EVERYONE"
+                    ],
+                    "default": "EVERYONE",
+                    "description": "The canonical string value for the everyone principal. Always the uppercase literal 'EVERYONE'."
+                  },
+                  "identitySource": {
+                    "type": "null",
+                    "description": "Not applicable for the everyone principal. Always null."
+                  },
+                  "identitySourceEnum": {
+                    "type": "string",
+                    "enum": [
+                      "azureActiveDirectory"
+                    ],
+                    "default": "azureActiveDirectory",
+                    "description": "Identity provider for the tenant. Always 'azureActiveDirectory'."
+                  },
+                  "identityType": {
+                    "type": "integer",
+                    "enum": [
+                      3
+                    ],
+                    "default": 3,
+                    "description": "Numeric code for the principal category. 3 represents the everyone group type."
+                  },
+                  "identitySourceProperties": {
+                    "type": "null",
+                    "description": "Not applicable for the everyone principal. Always null."
+                  },
+                  "metadata": {
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "default": null,
+                    "description": "Additional principal metadata. Always null for the everyone principal."
+                  },
+                  "displayName": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "default": null,
+                    "description": "Display name override. Always null for the everyone principal."
+                  }
+                },
+                "required": [
+                  "type",
+                  "value",
+                  "identitySource",
+                  "identitySourceEnum",
+                  "identityType",
+                  "identitySourceProperties",
+                  "metadata",
+                  "displayName"
+                ]
+              },
+              "ruleNode": {
+                "type": "null",
+                "description": "Not applicable for simple EVERYONE grant rules. Always null."
+              },
+              "accessType": {
+                "type": "string",
+                "enum": [
+                  "grant"
+                ],
+                "default": "grant",
+                "description": "Whether this entry grants or denies access. Always 'grant'."
+              },
+              "transformedIdentity": {
+                "type": "null",
+                "description": "Not applicable for the everyone principal. Always null."
+              }
+            },
+            "required": [
+              "principal",
+              "ruleNode",
+              "accessType",
+              "transformedIdentity"
+            ]
+          }
+        },
+        "UniversalAccessControlBlock": {
+          "type": "null",
+          "description": "Universal access-control block. Not used for ServiceNow KB articles; access is expressed via accessControlList. Always null."
+        },
+        "activityList": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "minItems": 0,
+          "description": "Optional list of article activity events such as created, modified, viewed, and commented. Null when no activity data is attached."
+        },
+        "contentEnrichmentData": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "EnrichmentTypes": {
+                    "type": "integer",
+                    "enum": [
+                      1
+                    ],
+                    "default": 1,
+                    "description": "The enrichment operation applied to the payload. 1 indicates OCR (optical character recognition).",
+                    "examples": [
+                      1
+                    ]
+                  },
+                  "payload": {
+                    "type": "string",
+                    "description": "Base64-encoded binary content for OCR. Not applicable for ServiceNow KB articles; the outer contentEnrichmentData is always null.",
+                    "examples": [
+                      "base64-encoded-binary-data"
+                    ]
+                  },
+                  "mimeType": {
+                    "type": "string",
+                    "enum": [
+                      "image/png",
+                      "image/jpg",
+                      "application/pdf"
+                    ],
+                    "description": "MIME type of the base64 payload that was submitted for OCR enrichment.",
+                    "examples": [
+                      "image/png",
+                      "image/jpg",
+                      "application/pdf"
+                    ]
+                  }
+                },
+                "required": [
+                  "EnrichmentTypes",
+                  "payload",
+                  "mimeType"
+                ]
+              }
+            }
+          ],
+          "default": null,
+          "description": "Enrichment payload for OCR processing. Null for ServiceNow KB articles.",
+          "examples": [
+            null
+          ]
+        },
+        "content": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "The rendered article body. 'parsedData' holds the HTML body; 'type' is always 'html'; 'annotation' and 'semanticContent' are reserved and always null.",
+          "properties": {
+            "parsedData": {
+              "type": "string",
+              "minLength": 200,
+              "description": "The HTML body of the article. Empty string if the article has no body."
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "markdown",
+                "text",
+                "none",
+                "binary",
+                "bmp",
+                "jpg",
+                "pdf",
+                "png",
+                "tif",
+                "unknownFutureValue",
+                "html"
+              ],
+              "default": "html",
+              "description": "Format of parsedData. Always 'html' for ServiceNow KB articles; parsedData holds the rendered HTML body."
+            },
+            "annotation": {
+              "type": "null",
+              "description": "Reserved. Always null for ServiceNow KB articles."
+            },
+            "semanticContent": {
+              "type": "null",
+              "description": "Reserved. Always null for ServiceNow KB articles."
+            }
+          },
+          "required": [
+            "parsedData",
+            "type",
+            "annotation",
+            "semanticContent"
+          ]
+        },
+        "associatedItemsMetadata": {
+          "type": "null",
+          "description": "Metadata describing associated child items. Null for ServiceNow KB articles; associated content is carried by the comments and attachments arrays."
+        },
+        "attachments": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "uploadedBy": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "Identity of the user who uploaded this attachment.",
+                "properties": {
+                  "ExternalId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "The user's stable external identifier. New data should use the user's Microsoft Entra directory GUID; existing comment data carries varied handles such as usernames or employee codes.",
+                    "examples": [
+                      "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                      "b2c3d4e5-f6a7-8901-bcde-f23456789012"
+                    ]
+                  },
+                  "Email": {
+                    "type": "string",
+                    "format": "email",
+                    "minLength": 1,
+                    "description": "The user's corporate email address, used for notifications and identity resolution.",
+                    "examples": [
+                      "jordan.lee@ecosync.com",
+                      "mia.lee@ecosync.com"
+                    ]
+                  },
+                  "ExternalName": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "The user's full display name as shown in ServiceNow.",
+                    "examples": [
+                      "Jordan Lee",
+                      "Mia Lee"
+                    ]
+                  },
+                  "PrincipalType": {
+                    "type": "string",
+                    "enum": [
+                      "user"
+                    ],
+                    "description": "The principal category. Always 'user' for individual people, never groups.",
+                    "examples": [
+                      "user"
+                    ]
+                  },
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Identity resolution key used to resolve the user across systems. Equals the user's Email exactly.",
+                    "examples": [
+                      "jordan.lee@ecosync.com",
+                      "mia.lee@ecosync.com"
+                    ]
+                  }
+                },
+                "required": [
+                  "ExternalId",
+                  "Email",
+                  "ExternalName",
+                  "PrincipalType",
+                  "id"
+                ]
+              },
+              "uploadedTimestamp": {
+                "type": "string",
+                "format": "date-time",
+                "minLength": 1,
+                "description": "When the file was attached, in ISO 8601 format. Between the article SysCreatedOn and SysUpdatedOn.",
+                "examples": [
+                  "2025-01-15T10:30:00Z",
+                  "2025-03-22T14:00:00Z",
+                  "2024-11-05T08:15:00Z"
+                ]
+              },
+              "attachmentName": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Filename of the attached file including its extension. ServiceNow attachment types include screenshots (png, jpg), logs (txt), documents (pdf, docx), spreadsheets (xlsx, csv), and presentations (pptx).",
+                "examples": [
+                  "vpn_setup_guide.pdf",
+                  "screenshot_step1.png",
+                  "policy_document_v2.docx",
+                  "network_diagram.png"
+                ]
+              },
+              "entitySemanticType": {
+                "type": "string",
+                "enum": [
+                  "document"
+                ],
+                "default": "document",
+                "description": "Semantic type of the entity. Always 'document' for attachment records.",
+                "examples": [
+                  "document"
+                ]
+              },
+              "entityContent": {
+                "type": "string",
+                "description": "The attachment content, represented per the entityEncoding and entityFormat pairing - raw searchable text for text, HTML, markdown, and image OCR or descriptions; base64 of the original file bytes for PDF and Office documents (entityFormat='unknown')."
+              },
+              "entityEncoding": {
+                "type": "string",
+                "enum": [
+                  "raw",
+                  "b64"
+                ],
+                "default": "b64",
+                "description": "Encoding of entityContent. Use 'raw' for searchable text (text/log/CSV, HTML, markdown, and image OCR or descriptions). Use 'b64' for real file binaries (PDF, DOCX/XLSX/PPTX).",
+                "examples": [
+                  "b64",
+                  "raw"
+                ]
+              },
+              "entityFormat": {
+                "type": "string",
+                "enum": [
+                  "txt",
+                  "html",
+                  "markdown",
+                  "unknown"
+                ],
+                "default": "unknown",
+                "description": "Content representation of the attachment following the recommended pairings - text and CSV use raw+txt; HTML uses raw+html; markdown uses raw+markdown; PDF and Office documents (DOCX/XLSX/PPTX) use b64+unknown; images use raw+txt with OCR text or a description.",
+                "examples": [
+                  "txt",
+                  "html",
+                  "unknown"
+                ]
+              }
+            },
+            "required": [
+              "uploadedBy",
+              "uploadedTimestamp",
+              "attachmentName",
+              "entitySemanticType",
+              "entityContent",
+              "entityEncoding",
+              "entityFormat"
+            ]
+          },
+          "description": "File attachments on the article. Each entry carries the file content, its representation, the uploader, and the upload timestamp."
+        },
+        "comments": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "description": "A user comment attached to the knowledge article (wrapper-level comments array).",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "commentId": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Unique identifier of the comment within the dataset, stable across versions of the same comment."
+              },
+              "parentCommentId": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "default": null,
+                "description": "The commentId of the parent comment when this is a reply, or null for a top-level comment."
+              },
+              "creator": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "Identity of the user who wrote this comment.",
+                "properties": {
+                  "ExternalId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "The user's stable external identifier. New data should use the user's Microsoft Entra directory GUID; existing comment data carries varied handles such as usernames or employee codes.",
+                    "examples": [
+                      "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                      "b2c3d4e5-f6a7-8901-bcde-f23456789012"
+                    ]
+                  },
+                  "Email": {
+                    "type": "string",
+                    "format": "email",
+                    "minLength": 1,
+                    "description": "The user's corporate email address, used for notifications and identity resolution.",
+                    "examples": [
+                      "jordan.lee@ecosync.com",
+                      "mia.lee@ecosync.com"
+                    ]
+                  },
+                  "ExternalName": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "The user's full display name as shown in ServiceNow.",
+                    "examples": [
+                      "Jordan Lee",
+                      "Mia Lee"
+                    ]
+                  },
+                  "PrincipalType": {
+                    "type": "string",
+                    "enum": [
+                      "user"
+                    ],
+                    "description": "The principal category. Always 'user' for individual people, never groups.",
+                    "examples": [
+                      "user"
+                    ]
+                  },
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Identity resolution key used to resolve the user across systems. Equals the user's Email exactly.",
+                    "examples": [
+                      "jordan.lee@ecosync.com",
+                      "mia.lee@ecosync.com"
+                    ]
+                  }
+                },
+                "required": [
+                  "ExternalId",
+                  "Email",
+                  "ExternalName",
+                  "PrincipalType",
+                  "id"
+                ]
+              },
+              "modifier": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "Identity of the user who last edited this comment; equals creator if never edited.",
+                "properties": {
+                  "ExternalId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "The user's stable external identifier. New data should use the user's Microsoft Entra directory GUID; existing comment data carries varied handles such as usernames or employee codes.",
+                    "examples": [
+                      "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                      "b2c3d4e5-f6a7-8901-bcde-f23456789012"
+                    ]
+                  },
+                  "Email": {
+                    "type": "string",
+                    "format": "email",
+                    "minLength": 1,
+                    "description": "The user's corporate email address, used for notifications and identity resolution.",
+                    "examples": [
+                      "jordan.lee@ecosync.com",
+                      "mia.lee@ecosync.com"
+                    ]
+                  },
+                  "ExternalName": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "The user's full display name as shown in ServiceNow.",
+                    "examples": [
+                      "Jordan Lee",
+                      "Mia Lee"
+                    ]
+                  },
+                  "PrincipalType": {
+                    "type": "string",
+                    "enum": [
+                      "user"
+                    ],
+                    "description": "The principal category. Always 'user' for individual people, never groups.",
+                    "examples": [
+                      "user"
+                    ]
+                  },
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Identity resolution key used to resolve the user across systems. Equals the user's Email exactly.",
+                    "examples": [
+                      "jordan.lee@ecosync.com",
+                      "mia.lee@ecosync.com"
+                    ]
+                  }
+                },
+                "required": [
+                  "ExternalId",
+                  "Email",
+                  "ExternalName",
+                  "PrincipalType",
+                  "id"
+                ]
+              },
+              "createdDateTime": {
+                "type": "string",
+                "format": "date-time",
+                "minLength": 1,
+                "description": "Timestamp when the comment was created, in ISO 8601 format. Falls between the article SysCreatedOn and SysUpdatedOn."
+              },
+              "modifiedDateTime": {
+                "type": "string",
+                "format": "date-time",
+                "minLength": 1,
+                "description": "Timestamp when the comment was last modified, in ISO 8601 format. Greater than or equal to createdDateTime."
+              },
+              "CommentText": {
+                "type": "string",
+                "description": "Optional plain-text rendering of the comment body, mirroring entityContent."
+              },
+              "entityContent": {
+                "type": "string",
+                "description": "The comment body. New data should carry it raw per entityFormat, for example plain text with entityEncoding='raw' and entityFormat='txt'. Existing data stores base64-encoded plain text (entityEncoding='b64', entityFormat='txt'), mirrored by CommentText."
+              },
+              "entityEncoding": {
+                "type": "string",
+                "enum": [
+                  "raw",
+                  "b64"
+                ],
+                "description": "Encoding of the comment body in entityContent. Use 'raw' to submit the body as-is (recommended for new data). 'b64' is base64-encoded and is used by existing data.",
+                "default": "raw"
+              },
+              "entityFormat": {
+                "type": "string",
+                "enum": [
+                  "txt",
+                  "html",
+                  "markdown"
+                ],
+                "description": "Format of the comment body. 'txt' for plain text (the norm for ServiceNow KB comments), 'html' for rich text, 'markdown' for markdown. New data should pair the format with entityEncoding='raw'.",
+                "default": "txt"
+              },
+              "entitySemanticType": {
+                "type": "string",
+                "enum": [
+                  "comment"
+                ],
+                "description": "Semantic type of the entity. Always 'comment' for comment records."
+              },
+              "mentionedUsers": {
+                "type": "array",
+                "minItems": 0,
+                "description": "Users mentioned via @mention in the comment. Empty when no users are mentioned.",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "description": "Identity of a user mentioned via @mention in this comment.",
+                  "properties": {
+                    "ExternalId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "The user's stable external identifier. New data should use the user's Microsoft Entra directory GUID; existing comment data carries varied handles such as usernames or employee codes.",
+                      "examples": [
+                        "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                        "b2c3d4e5-f6a7-8901-bcde-f23456789012"
+                      ]
+                    },
+                    "Email": {
+                      "type": "string",
+                      "format": "email",
+                      "minLength": 1,
+                      "description": "The user's corporate email address, used for notifications and identity resolution.",
+                      "examples": [
+                        "jordan.lee@ecosync.com",
+                        "mia.lee@ecosync.com"
+                      ]
+                    },
+                    "ExternalName": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "The user's full display name as shown in ServiceNow.",
+                      "examples": [
+                        "Jordan Lee",
+                        "Mia Lee"
+                      ]
+                    },
+                    "PrincipalType": {
+                      "type": "string",
+                      "enum": [
+                        "user"
+                      ],
+                      "description": "The principal category. Always 'user' for individual people, never groups.",
+                      "examples": [
+                        "user"
+                      ]
+                    },
+                    "id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Identity resolution key used to resolve the user across systems. Equals the user's Email exactly.",
+                      "examples": [
+                        "jordan.lee@ecosync.com",
+                        "mia.lee@ecosync.com"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "ExternalId",
+                    "Email",
+                    "ExternalName",
+                    "PrincipalType",
+                    "id"
+                  ]
+                }
+              },
+              "reactions": {
+                "type": "array",
+                "minItems": 0,
+                "description": "Reactions on the comment from other users. Empty when there are no reactions.",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "description": "A single reaction on the comment, capturing the reaction type, the user who added it, and when it was added.",
+                  "properties": {
+                    "reactionType": {
+                      "type": "string",
+                      "enum": [
+                        "Like",
+                        "Love",
+                        "Celebrate",
+                        "Insightful",
+                        "Curious"
+                      ],
+                      "description": "The reaction type. 'Like' is the most common; the others appear on strongly engaged articles.",
+                      "examples": [
+                        "Like",
+                        "Celebrate"
+                      ]
+                    },
+                    "reactionBy": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "description": "Identity of the user who added this reaction.",
+                      "properties": {
+                        "ExternalId": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "The user's stable external identifier. New data should use the user's Microsoft Entra directory GUID; existing comment data carries varied handles such as usernames or employee codes.",
+                          "examples": [
+                            "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                            "b2c3d4e5-f6a7-8901-bcde-f23456789012"
+                          ]
+                        },
+                        "Email": {
+                          "type": "string",
+                          "format": "email",
+                          "minLength": 1,
+                          "description": "The user's corporate email address, used for notifications and identity resolution.",
+                          "examples": [
+                            "jordan.lee@ecosync.com",
+                            "mia.lee@ecosync.com"
+                          ]
+                        },
+                        "ExternalName": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "The user's full display name as shown in ServiceNow.",
+                          "examples": [
+                            "Jordan Lee",
+                            "Mia Lee"
+                          ]
+                        },
+                        "PrincipalType": {
+                          "type": "string",
+                          "enum": [
+                            "user"
+                          ],
+                          "description": "The principal category. Always 'user' for individual people, never groups.",
+                          "examples": [
+                            "user"
+                          ]
+                        },
+                        "id": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "Identity resolution key used to resolve the user across systems. Equals the user's Email exactly.",
+                          "examples": [
+                            "jordan.lee@ecosync.com",
+                            "mia.lee@ecosync.com"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "ExternalId",
+                        "Email",
+                        "ExternalName",
+                        "PrincipalType",
+                        "id"
+                      ]
+                    },
+                    "reactionTimestamp": {
+                      "type": "string",
+                      "format": "date-time",
+                      "minLength": 1,
+                      "description": "When the reaction was added, in ISO 8601 format.",
+                      "examples": [
+                        "2025-03-01T10:30:00Z"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "reactionType",
+                    "reactionBy",
+                    "reactionTimestamp"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "commentId",
+              "parentCommentId",
+              "creator",
+              "modifier",
+              "createdDateTime",
+              "modifiedDateTime",
+              "entityContent",
+              "entityEncoding",
+              "entityFormat",
+              "entitySemanticType",
+              "mentionedUsers",
+              "reactions"
+            ]
+          },
+          "description": "User comments and feedback on the article. Each entry carries the author and last editor, timestamps, the comment body, and any @mentions and reactions."
+        },
+        "itemVersion": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "default": null,
+          "description": "Integer version stamp used by the indexing layer. Null for ServiceNow KB articles."
+        },
+        "contentDomainCategoryName": {
+          "type": "string",
+          "enum": [
+            "knowledgeBase"
+          ],
+          "default": "knowledgeBase",
+          "description": "Content domain category for the index. Always 'knowledgeBase' for ServiceNow KB articles."
+        },
+        "isAssociatedItem": {
+          "type": "boolean",
+          "enum": [
+            false
+          ],
+          "default": false,
+          "description": "Whether this item is an associated child of another item. Always false - ServiceNow KB articles are top-level items."
+        },
+        "hasAssociatedContent": {
+          "type": "boolean",
+          "default": false,
+          "description": "Whether the article has associated child content such as comments or attachments."
+        },
+        "dataSourceResponse": {
+          "type": "null",
+          "examples": [
+            null
+          ],
+          "description": "Raw data-source response payload retained by the connector. Always null for ServiceNow KB articles."
+        },
+        "displayName": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null,
+          "description": "Display name of the item. Existing ServiceNow KB data leaves this null - the title is carried by ShortDescription. New data should set displayName to the article's ShortDescription."
+        },
+        "shouldHashId": {
+          "type": "boolean",
+          "default": false,
+          "description": "Whether the item id should be hashed before storage. Always false for ServiceNow KB articles."
+        },
+        "hashedId": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null,
+          "description": "The hashed item id when id hashing is applied. Null for ServiceNow KB articles."
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{32}$",
+          "minLength": 1,
+          "description": "The item's primary identifier. For ServiceNow KB articles this is the 32-character hexadecimal sys_id (equals properties.SysId)."
+        }
+      },
+      "required": [
+        "id",
+        "displayName",
+        "contentDomainCategoryName",
+        "isContainer",
+        "containerId",
+        "UniversalAccessControlBlock",
+        "activityList",
+        "contentEnrichmentData",
+        "associatedItemsMetadata",
+        "itemVersion",
+        "isAssociatedItem",
+        "accessControlList",
+        "content",
+        "properties",
+        "hasAssociatedContent",
+        "shouldHashId",
+        "dataSourceResponse",
+        "hashedId",
+        "comments",
+        "attachments"
+      ]
+    }
+  }
+}

@@ -1,0 +1,1488 @@
+{
+  "$id": "graph_simulator/2.1.0/enterprisewebsite/schema",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Enterprise Website Page SearchableItem Schema",
+  "description": "Schema for manufacturing synthetic enterprise intranet pages in SearchableItem format for evaluating chat, search, and deep reasoning scenarios over an enterprise knowledge base. All fields are required to support deterministic LLM-driven simulation and indexing; examples assist the LLM in producing high-quality, realistic output.",
+  "type": "array",
+  "items": {
+    "$ref": "#/$defs/EnterpriseWebsitePage"
+  },
+  "$defs": {
+    "EnterpriseWebsitePage": {
+      "description": "A synthetic page representing a single crawled page from an enterprise intranet website. The schema enforces strict structural, semantic, and descriptive standards to ensure that generated pages follow the conventions of real enterprise intranet portals across domains such as HR, Finance, Legal, Facilities, Corporate Communications, Learning & Development, and more. CRITICAL CROSS-FIELD CONSISTENCY RULES: 1. Temporal Ordering: properties.CreatedDateTime must always be <= properties.LastModifiedDateTime. All activity, comment, and attachment timestamps must be >= CreatedDateTime and <= LastModifiedDateTime. Reaction timestamps must be >= the parent comment's createdDateTime and <= LastModifiedDateTime. The 'created' activity (when present in activityList) must be the earliest entry in activityList by ActivityDateTime, and its ActivityDateTime must equal properties.CreatedDateTime exactly. 2. Identity Consistency: All UserIdentity objects for the same person must share identical ExternalId, Email, ExternalName, and id values throughout the entire item. Email domains must be consistent across all user identities within a single item (e.g., all @ecosync.com). The id field in every UserIdentity must match its Email field exactly. 3. URL and Identifier Consistency: properties.URL must be a valid HTTPS URL on an enterprise intranet domain. The top-level displayName must equal properties.URL exactly. The top-level id must be the SHA-512 hash of properties.URL encoded as UTF-16 little-endian, output as uppercase hex (exactly 128 characters): id = SHA512(URL.encode('utf-16-le')).hexdigest().upper(). UTF-16-LE is the .NET default string encoding (System.Text.Encoding.Unicode); UTF-8 will not match. The shouldHashId flag is false on every record, signalling to the ingestion pipeline that id is already in final hashed form and must not be re-hashed. The hashedId field is always null. 4. Content Consistency: content.parsedData must contain rich, topic-relevant body text consistent with the page Title. The Description property must be a concise 1–3 sentence summary of that content. Keywords must reflect the actual subject matter of the page. 5. Author Consistency: properties.LastModifiedBy must be one of the display-name strings in properties.Authors. The same person must have a corresponding UserIdentity present elsewhere in the item (e.g., as an ActivityPerformer for the modified/created activity that aligns with LastModifiedDateTime / CreatedDateTime) so that the modifier resolves to a known identity. 6. FileType must reflect the actual file format of the crawled page. 7. accessControlList must always use the EVERYONE grant structure shown in the example.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 128,
+          "maxLength": 128,
+          "pattern": "^[0-9A-F]{128}$",
+          "description": "Final ingestion identifier in pre-hashed form. Must be exactly 128 uppercase hex characters: the SHA-512 of properties.URL encoded as UTF-16 little-endian, formatted as uppercase hex. Reference implementation:\n  Python:  hashlib.sha512(url.encode('utf-16-le')).hexdigest().upper()\n  C#/.NET: Convert.ToHexString(SHA512.HashData(Encoding.Unicode.GetBytes(url)))\nUTF-16-LE is the .NET default string encoding (System.Text.Encoding.Unicode); UTF-8 will produce a different hash and break ingestion. Generators that emit a raw URL here must also set shouldHashId=true to instruct the pipeline to hash; this schema requires shouldHashId=false, so id must already be the hash.",
+          "examples": [
+            "871EBC1EA44D652EC418E7EA15E6947B0B8E8C0864A08E4421160B40D60384B966DFC9D09553F6E5709AFA70482C278AC06D5B32586D7EDD20B8B9AC50B92D47",
+            "D1B0DCE5D98262C8B1A563B0A7FD01F291A962760E3ECCB98E5CC8BEA7945AE636FA3F390C7D1288292FF7405C04B1E6449B3DD0715A1C4C2784E9DC6AAEE843",
+            "A9BC218C562D3906C0DC0FA40D6D225BBC18544572B5358512C1C9DDA3B4EFC236F68214A2DE24FAA34616B7E339865B75D5EEBE03F277F1711ADB68540A8E91"
+          ]
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The display name for this item as used by the ingestion pipeline. Must always equal the URL property value exactly (not the page title).",
+          "examples": [
+            "https://intranet.ecosync.com/hr/benefits/employee-benefits-overview",
+            "https://portal.ecosync.com/legal/policies/data-privacy-gdpr-ccpa",
+            "https://mysite.ecosync.com/onboarding/new-hire-roadmap-30-60-90"
+          ]
+        },
+        "properties": {
+          "type": "object",
+          "additionalProperties": true,
+          "description": "Typed properties for this enterprise website page.",
+          "properties": {
+            "Title": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120,
+              "description": "The title of the intranet page. Should be concise, descriptive, and written in title case with no trailing punctuation. Titles should clearly reflect the page's subject matter, scope, and purpose. A well-formed title is specific enough to be distinguishable from other pages in the same domain, aligns with the intranet category it belongs to, supports navigation and search discoverability, and gives readers an immediate sense of what the page covers.",
+              "examples": [
+                "Employee Benefits Overview",
+                "Remote Work and Flexible Work Arrangements Policy",
+                "New Hire 30-60-90 Day Roadmap",
+                "Data Privacy Policy — GDPR and CCPA Employee Guide",
+                "Corporate Credit Card Usage Guidelines"
+              ]
+            },
+            "URL": {
+              "type": "string",
+              "format": "uri",
+              "minLength": 1,
+              "description": "Fully qualified HTTPS URL of the intranet page. Must follow realistic enterprise intranet URL patterns with subdomain, path hierarchy, and page slug.",
+              "examples": [
+                "https://intranet.ecosync.com/hr/benefits/employee-benefits-overview",
+                "https://portal.ecosync.com/legal/policies/data-privacy-gdpr-ccpa",
+                "https://mysite.ecosync.com/onboarding/new-hire-roadmap-30-60-90"
+              ]
+            },
+            "Description": {
+              "type": "string",
+              "minLength": 150,
+              "description": "A 2–4 sentence plain-text summary of the page. Must reflect the subject matter, target audience, and key points. No HTML tags. For grade-level variant pages, mention the audience grade (IC / Manager / Executive).",
+              "examples": [
+                "This page provides an overview of the employee benefits program at EcoSync, including health insurance options, retirement savings plans, and wellness programs available to all full-time employees. Employees can use this page to review their current elections and navigate to enrollment guides.",
+                "The Data Privacy Policy outlines employee obligations under GDPR and CCPA, covering data handling responsibilities, subject access requests, and record retention requirements. All employees are required to review and acknowledge this policy annually.",
+                "This guide helps new hires navigate their first 30, 60, and 90 days at EcoSync, covering key milestones, team introductions, and role-specific onboarding goals. It is intended for all new full-time employees joining any department."
+              ]
+            },
+            "FileType": {
+              "type": "string",
+              "enum": [
+                "html",
+                "htm",
+                "aspx",
+                "php",
+                "jsp"
+              ],
+              "default": "html",
+              "description": "File format of the crawled page. Use 'html' for standard pages, 'aspx' for SharePoint-served pages, 'php' or 'jsp' for custom web application pages, 'htm' for static site generators.",
+              "examples": [
+                "html",
+                "aspx",
+                "htm"
+              ]
+            },
+            "IconUrl": {
+              "type": "string",
+              "minLength": 1,
+              "description": "URL of the icon or favicon for this page. Conventional pattern is the relative path '/intranet/assets/icons/{category}/{icon}.svg' (e.g., '/intranet/assets/icons/hr/page-icon.svg'). The pattern is not strictly enforced by the schema. Some pages may instead use an absolute URL to the company favicon (e.g., 'https://intranet.ecosync.com/favicon.ico').",
+              "examples": [
+                "/intranet/assets/icons/hr/page-icon.svg",
+                "/intranet/assets/icons/finance/page-icon.svg",
+                "/intranet/assets/icons/learning/page-icon.svg",
+                "https://intranet.ecosync.com/favicon.ico"
+              ]
+            },
+            "Keywords": {
+              "type": "array",
+              "description": "Topic keywords for this page. Values should reflect the intranet domain (e.g., 'HR', 'Benefits'), the specific topic (e.g., 'Health Insurance', '401k'), and the target audience where relevant.",
+              "minItems": 3,
+              "maxItems": 8,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "examples": [
+                [
+                  "HR",
+                  "Benefits",
+                  "Health Insurance",
+                  "401k",
+                  "Employee Wellness"
+                ],
+                [
+                  "Legal",
+                  "Compliance",
+                  "Data Privacy",
+                  "GDPR",
+                  "CCPA"
+                ],
+                [
+                  "Onboarding",
+                  "New Hire",
+                  "Career Development",
+                  "30-60-90 Plan"
+                ],
+                [
+                  "Finance",
+                  "Expense",
+                  "Corporate Card",
+                  "Travel Policy"
+                ]
+              ]
+            },
+            "Authors": {
+              "type": "array",
+              "minItems": 1,
+              "description": "Display names of the authors of this intranet page. Authors are typically HR business partners, department leads, legal counsel, or communications managers. The first entry should be the primary content owner.",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "examples": [
+                [
+                  "Sarah Chen"
+                ],
+                [
+                  "Sarah Chen",
+                  "James Patel"
+                ]
+              ]
+            },
+            "LastModifiedBy": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Display name of the person who most recently updated this page. May be the same as an author or a different editor.",
+              "examples": [
+                "James Patel",
+                "Priya Sharma"
+              ]
+            },
+            "CreatedDateTime": {
+              "type": "string",
+              "format": "date-time",
+              "minLength": 1,
+              "description": "When this page was originally created. Must follow 'yyyy-MM-ddTHH:mm:ssZ' format (UTC). Must be <= LastModifiedDateTime.",
+              "examples": [
+                "2024-03-15T09:00:00Z",
+                "2023-11-01T14:30:00Z",
+                "2025-01-08T08:45:00Z"
+              ]
+            },
+            "LastModifiedDateTime": {
+              "type": "string",
+              "format": "date-time",
+              "minLength": 1,
+              "description": "When this page was most recently updated. Must follow 'yyyy-MM-ddTHH:mm:ssZ' format (UTC). Must be >= CreatedDateTime.",
+              "examples": [
+                "2025-02-10T16:20:00Z",
+                "2024-08-22T11:05:00Z",
+                "2026-01-15T09:30:00Z"
+              ]
+            }
+          },
+          "required": [
+            "Title",
+            "URL",
+            "Description",
+            "FileType",
+            "IconUrl",
+            "Keywords",
+            "Authors",
+            "LastModifiedBy",
+            "CreatedDateTime",
+            "LastModifiedDateTime"
+          ]
+        },
+        "accessControlList": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "description": "Access control permissions for this item. Always generate exactly one entry using the EVERYONE grant structure shown in the example. Do not deviate from this structure.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "principal": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "The access principal for this rule. For EVERYONE grants, applies to all authenticated users in the tenant.",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "everyone"
+                    ],
+                    "default": "everyone",
+                    "description": "Scope of this principal. Always 'everyone' — applies to all authenticated users in the tenant.",
+                    "examples": [
+                      "everyone"
+                    ]
+                  },
+                  "value": {
+                    "type": "string",
+                    "enum": [
+                      "EVERYONE"
+                    ],
+                    "default": "EVERYONE",
+                    "description": "The canonical string value for the everyone principal. Must be the uppercase literal 'EVERYONE'.",
+                    "examples": [
+                      "EVERYONE"
+                    ]
+                  },
+                  "identitySource": {
+                    "type": "null",
+                    "description": "Not applicable for the 'everyone' principal. Always null.",
+                    "examples": [
+                      null
+                    ]
+                  },
+                  "identitySourceEnum": {
+                    "type": "string",
+                    "enum": [
+                      "azureActiveDirectory"
+                    ],
+                    "default": "azureActiveDirectory",
+                    "description": "Identity provider for this tenant. Always 'azureActiveDirectory'.",
+                    "examples": [
+                      "azureActiveDirectory"
+                    ]
+                  },
+                  "identityType": {
+                    "type": "integer",
+                    "enum": [
+                      3
+                    ],
+                    "default": 3,
+                    "description": "Numeric code for the principal category. 3 represents the 'everyone' group type in the identity system. Always 3 for EVERYONE grants.",
+                    "examples": [
+                      3
+                    ]
+                  },
+                  "identitySourceProperties": {
+                    "type": "null",
+                    "description": "Not applicable for the 'everyone' principal. Always null.",
+                    "examples": [
+                      null
+                    ]
+                  },
+                  "metadata": {
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "default": null,
+                    "description": "Additional principal metadata. Always null for the 'everyone' principal.",
+                    "examples": [
+                      null
+                    ]
+                  },
+                  "displayName": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "default": null,
+                    "description": "Display name override. Always null for the 'everyone' principal.",
+                    "examples": [
+                      null
+                    ]
+                  }
+                },
+                "required": [
+                  "type",
+                  "value",
+                  "identitySource",
+                  "identitySourceEnum",
+                  "identityType",
+                  "identitySourceProperties",
+                  "metadata",
+                  "displayName"
+                ]
+              },
+              "ruleNode": {
+                "type": "null",
+                "description": "Used for compound ACL expressions with logical operators (AND/OR conditions across multiple principals). Not applicable for simple EVERYONE grant rules. Always null.",
+                "examples": [
+                  null
+                ]
+              },
+              "accessType": {
+                "type": "string",
+                "enum": [
+                  "grant"
+                ],
+                "default": "grant",
+                "description": "Whether this entry grants or denies access. Always 'grant'.",
+                "examples": [
+                  "grant"
+                ]
+              },
+              "transformedIdentity": {
+                "type": "null",
+                "description": "Not applicable for the 'everyone' principal. Always null.",
+                "examples": [
+                  null
+                ]
+              }
+            },
+            "required": [
+              "principal",
+              "ruleNode",
+              "accessType",
+              "transformedIdentity"
+            ]
+          },
+          "examples": [
+            [
+              {
+                "principal": {
+                  "type": "everyone",
+                  "value": "EVERYONE",
+                  "identitySource": null,
+                  "identitySourceEnum": "azureActiveDirectory",
+                  "identityType": 3,
+                  "identitySourceProperties": null,
+                  "metadata": null,
+                  "displayName": null
+                },
+                "ruleNode": null,
+                "accessType": "grant",
+                "transformedIdentity": null
+              }
+            ]
+          ]
+        },
+        "content": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "The content body for this page. Most pages are HTML — set type to 'html' and parsedData to the full HTML body. Leaf file pages (PDF, DOCX, PPTX, XLSX) use type 'text' with parsedData as extracted plain text. annotation and semanticContent must always be null.",
+          "properties": {
+            "parsedData": {
+              "type": "string",
+              "minLength": 2000,
+              "description": "The full body of the page. For HTML pages, generate well-formed HTML using semantic tags: headings (<h1>–<h3>), paragraphs (<p>), lists (<ul>/<ol>/<li>), tables (<table>/<thead>/<tbody>/<tr>/<th>/<td>), note/tip/caution callouts, and internal anchor links (<a href=\"/intranet/...\">). For leaf file pages, generate rich extracted plain text. Content must be topic-relevant, enterprise-quality, and consistent with the page Title and Description. Apply the following enrichment rules based on page type: Location-specific pages (regional or country-level policies) should prominently reference the applicable geography — region, country, or office name — in headings, introductory paragraphs, and relevant sections. Audience-specific pages (role or grade-level guides) should reflect the target audience in the opening paragraph and section headings. Time-sensitive pages (open enrollment, compliance cycles, deadlines) should state effective dates, deadlines, and review periods prominently in the opening section. Regulatory or compliance pages should cite applicable laws, standards, or frameworks by name (e.g., GDPR, CCPA, SOX, HIPAA) and describe employee obligations clearly. Process or instructional pages should use numbered steps, name the relevant systems or tools (e.g., Workday, ServiceNow), and include links to forms or request portals. Policy reference pages should include the policy owner, version or effective date, and review cycle. FAQ or Q&A pages should use a definition list (<dl>/<dt>/<dd>) or headed question blocks to structure questions and answers.",
+              "examples": [
+                "<h1>Employee Benefits Overview</h1>\n<nav aria-label=\"Breadcrumb\"><ol><li><a href=\"/intranet/home\">Home</a></li><li><a href=\"/intranet/hr\">HR Policies &amp; Benefits</a></li><li>Employee Benefits Overview</li></ol></nav>\n<p>At EcoSync, we are committed to the well-being and financial security of every employee. This page provides a complete overview of the benefits available to all full-time employees. Use the section links below to explore each benefit area.</p>\n<h2>Health Benefits</h2>\n<h3>Medical Insurance</h3>\n<p>EcoSync offers two medical plan options through BlueCross BlueShield: the Preferred Provider Organization (PPO) and the Health Maintenance Organization (HMO). Both plans cover preventative care, specialist visits, hospital stays, prescription drugs, and mental health services. Telehealth appointments are available 24/7 through the Teladoc platform at no additional cost.</p>\n<table><thead><tr><th>Plan</th><th>Monthly Premium (Employee Only)</th><th>Deductible</th><th>Out-of-Pocket Max</th></tr></thead><tbody><tr><td>PPO</td><td>$180</td><td>$500</td><td>$3,000</td></tr><tr><td>HMO</td><td>$120</td><td>$250</td><td>$2,500</td></tr></tbody></table>\n<h3>Dental &amp; Vision</h3>\n<p>Dental coverage includes preventative, basic, and major services. Vision coverage includes annual eye exams, frames or contact lenses, and discounts on LASIK procedures.</p>\n<h2>Financial Benefits</h2>\n<h3>401(k) Retirement Plan</h3>\n<p>EcoSync matches 50% of your contributions up to 4% of salary in your first two years, increasing to a 100% match up to 6% after five years of service. Vesting is immediate on employee contributions; company match vests over three years.</p>\n<h3>Employee Stock Purchase Plan (ESPP)</h3>\n<p>Eligible employees may purchase EcoSync stock at a 15% discount during two annual enrollment windows: January 1–15 and July 1–15. Shares are purchased at the lower of the opening or closing price of the enrollment period.</p>\n<h2>Work-Life Balance</h2>\n<h3>Paid Time Off</h3>\n<ul><li>Years 1–2: 15 days PTO per year</li><li>Years 3–5: 20 days PTO per year</li><li>Year 6+: 25 days PTO per year</li></ul>\n<h3>Parental Leave</h3>\n<p>Primary caregivers receive 16 weeks of fully paid parental leave. Secondary caregivers receive 4 weeks of fully paid leave. Leave may be taken continuously or intermittently within 12 months of the qualifying event.</p>\n<blockquote><strong>Note:</strong> Benefits enrollment is annual. Changes outside open enrollment are only permitted following a qualifying life event (marriage, birth, adoption, loss of other coverage). Contact <a href=\"/intranet/hr/benefits/contact\">HR Benefits</a> for assistance.</blockquote>\n<h2>Frequently Asked Questions</h2>\n<dl><dt>When does my coverage begin?</dt><dd>Coverage begins on your first day of employment if you enroll within 30 days of your start date.</dd><dt>Can I add dependents mid-year?</dt><dd>Dependents may only be added during open enrollment or following a qualifying life event such as marriage or the birth of a child.</dd><dt>Where do I enroll?</dt><dd>Log in to <a href=\"/intranet/tools/workday\">Workday</a> and navigate to Benefits &gt; Open Enrollment.</dd></dl>",
+                "<h1>Remote Work and Flexible Work Arrangements Policy</h1>\n<nav aria-label=\"Breadcrumb\"><ol><li><a href=\"/intranet/home\">Home</a></li><li><a href=\"/intranet/hr\">HR Policies &amp; Benefits</a></li><li>Remote Work Policy</li></ol></nav>\n<p>This policy establishes guidelines and expectations for employees at EcoSync who work remotely or on a flexible schedule. It applies to all full-time and part-time employees in roles eligible for remote work arrangements, effective January 1, 2025.</p>\n<h2>Eligibility</h2>\n<p>Eligibility for remote work is determined jointly by role classification, individual performance standing, and manager approval. Roles that require physical presence — including facilities management, lab operations, and on-site client services — are not eligible.</p>\n<table><thead><tr><th>Eligibility Criteria</th><th>Requirement</th></tr></thead><tbody><tr><td>Performance rating</td><td>Meets Expectations or above in last review cycle</td></tr><tr><td>Tenure</td><td>Minimum 3 months with EcoSync</td></tr><tr><td>Manager approval</td><td>Required — submit via <a href=\"/intranet/hr/remote-work/request\">Remote Work Request Form</a></td></tr><tr><td>Role classification</td><td>Remote-eligible role (see <a href=\"/intranet/hr/remote-work/eligible-roles\">eligible roles list</a>)</td></tr></tbody></table>\n<h2>Working Hours and Availability</h2>\n<p>Remote employees must maintain their contracted working hours and be reachable during core hours of 10:00 AM – 3:00 PM in their local time zone. All team meetings must be attended via video unless prior notice is given to the manager.</p>\n<blockquote><strong>Tip:</strong> Use the <a href=\"/intranet/tools/calendar\">shared team calendar</a> to mark your remote days so colleagues know when to expect you online.</blockquote>\n<h2>Equipment and Expenses</h2>\n<p>EcoSync provides a laptop, headset, and necessary licensed software for all remote employees. Home office setup costs are the employee's responsibility unless pre-approved under the Remote Work Stipend Program (up to $500 one-time per employee). Submit reimbursement via <a href=\"/intranet/finance/expense\">Expense Portal</a>.</p>\n<h2>Security Requirements</h2>\n<ul><li>Use the company VPN at all times when accessing internal systems</li><li>Enable full-disk encryption on your device</li><li>Lock your screen when stepping away from your workspace</li><li>Complete the annual <a href=\"/intranet/compliance/security-training\">Remote Work Security Training</a> by March 31 each year</li></ul>\n<h2>Frequently Asked Questions</h2>\n<dl><dt>Can I work remotely from another country?</dt><dd>International remote work requires advance approval from HR and Legal. Submit a request at least 4 weeks before the planned travel date.</dd><dt>What if my internet goes down during work hours?</dt><dd>Notify your manager immediately. Persistent connectivity issues must be resolved within 5 business days or remote work eligibility may be reviewed.</dd></dl>"
+              ]
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "html",
+                "text"
+              ],
+              "default": "html",
+              "description": "Format of the content in parsedData. Use 'html' when parsedData contains HTML markup. Use 'text' when parsedData contains plain extracted text — regardless of source format (HTML page, PDF, DOCX, etc.).",
+              "examples": [
+                "html",
+                "text"
+              ]
+            },
+            "annotation": {
+              "type": "null",
+              "description": "Populated by the data pipeline. Always generate null.",
+              "examples": [
+                null
+              ]
+            },
+            "semanticContent": {
+              "type": "null",
+              "description": "Reserved for future semantic content classification signals. Not populated for enterprise website pages. Always generate null.",
+              "examples": [
+                null
+              ]
+            }
+          },
+          "required": [
+            "parsedData",
+            "type",
+            "annotation",
+            "semanticContent"
+          ]
+        },
+        "attachments": {
+          "type": "array",
+          "minItems": 0,
+          "description": "Optional list of file attachments linked to this intranet page — policy PDFs, downloadable forms, templates, infographics, or slide decks. Omit this field entirely if the page has no attachments. Attachment uploads must be after the page CreatedDateTime. Uploaders can be any employee, not only the page authors.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "uploadedBy": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "The UserIdentity of the employee who uploaded this file. Can be any employee — not limited to page authors.",
+                "properties": {
+                  "ExternalId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Unique identifier of the uploader.",
+                    "examples": [
+                      "7b000c46-a94e-6b7b-b8f5-003bd8df7536"
+                    ]
+                  },
+                  "Email": {
+                    "type": "string",
+                    "format": "email",
+                    "minLength": 1,
+                    "description": "Corporate email of the uploader. Must share the same domain as all other user identities in this item.",
+                    "x-pipeline": {
+                      "transforms": [
+                        {
+                          "type": "trim"
+                        },
+                        {
+                          "type": "lowercase"
+                        }
+                      ]
+                    },
+                    "examples": [
+                      "sarah.chen@ecosync.com",
+                      "raj.kumar@ecosync.com"
+                    ]
+                  },
+                  "ExternalName": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Full display name of the uploader.",
+                    "examples": [
+                      "Sarah Chen",
+                      "Raj Kumar"
+                    ]
+                  },
+                  "PrincipalType": {
+                    "type": "string",
+                    "enum": [
+                      "user"
+                    ],
+                    "default": "user",
+                    "description": "Always 'user' — attachments are uploaded by individual employees, never by groups.",
+                    "examples": [
+                      "user"
+                    ]
+                  },
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Identity resolution key. Must match the Email field exactly.",
+                    "examples": [
+                      "sarah.chen@ecosync.com",
+                      "raj.kumar@ecosync.com"
+                    ],
+                    "x-pipeline": {
+                      "transforms": [
+                        {
+                          "type": "trim"
+                        },
+                        {
+                          "type": "lowercase"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "ExternalId",
+                  "Email",
+                  "ExternalName",
+                  "PrincipalType",
+                  "id"
+                ]
+              },
+              "uploadedTimestamp": {
+                "type": "string",
+                "format": "date-time",
+                "minLength": 1,
+                "description": "When the file was attached. Must be >= page CreatedDateTime and <= page LastModifiedDateTime. Format: 'yyyy-MM-ddTHH:mm:ssZ'.",
+                "examples": [
+                  "2024-06-15T10:30:00Z",
+                  "2025-01-20T14:00:00Z",
+                  "2023-09-05T08:15:00Z"
+                ]
+              },
+              "attachmentName": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Filename of the attached file including extension. Use enterprise naming conventions: PascalCase or underscore-separated words, include version or year where relevant (e.g., '_v2', '_2025'). Extension must match the actual file format (pdf, docx, png, pptx, xlsx, svg).",
+                "examples": [
+                  "Benefits_Enrollment_Guide_2025.pdf",
+                  "Remote_Work_Policy_v3.pdf",
+                  "New_Hire_Checklist.docx",
+                  "Leave_Types_Summary.xlsx",
+                  "Onboarding_Journey_Overview.pptx",
+                  "Org_Chart_Q1_2025.png"
+                ]
+              },
+              "entitySemanticType": {
+                "type": "string",
+                "enum": [
+                  "document"
+                ],
+                "default": "document",
+                "description": "Always 'document'.",
+                "examples": [
+                  "document"
+                ]
+              },
+              "entityContent": {
+                "type": "string",
+                "minLength": 100,
+                "description": "Content of the attachment. The exact representation depends on the (entityEncoding, entityFormat) pair used for each file type:\n- Text-based files (.txt, .csv, .json, .yaml, .log): raw text in entityContent (entityEncoding='raw', entityFormat='txt').\n- Markdown (.md): raw markdown text (entityEncoding='raw', entityFormat='markdown').\n- HTML (.html, .htm): raw HTML text (entityEncoding='raw', entityFormat='html').\n- Office documents (.pdf, .docx, .xlsx, .pptx): base64-encoded RAW FILE BYTES (entityEncoding='b64', entityFormat='unknown'). Do not pre-extract text; the parser handles extraction downstream.\n- Raster images (.png, .jpg, .jpeg): OCR text or a human-readable image description (entityEncoding='raw', entityFormat='txt').\n- Vector images (.svg): human-readable description of the diagram content (entityEncoding='raw', entityFormat='txt').\n- Other binary files: base64-encoded raw file bytes (entityEncoding='b64', entityFormat='unknown').",
+                "examples": [
+                  "Organizational chart depicting the HR department structure as of Q1 2025. The chart shows the Chief People Officer (CPO) at the top, with four direct reports: VP of Talent Acquisition, VP of Total Rewards, VP of HR Business Partners, and VP of Learning & Development. Each VP leads a team of 3–6 HR managers covering distinct regions or functional areas.",
+                  "Remote Work Policy — Version 3\n\nEffective Date: January 1, 2025\n\nSection 1: Eligibility\nAll full-time employees in remote-eligible roles with a performance rating of Meets Expectations or above are eligible. Eligibility requires manager approval submitted via the HR portal.\n\nSection 2: Working Hours\nRemote employees must maintain contracted hours and be available during core hours (10 AM–3 PM local time). Video attendance is required for all team meetings.\n\nSection 3: Equipment\nEcoSync provides a laptop, headset, and licensed software. The Remote Work Stipend (up to $500 one-time) is available for pre-approved home office expenses.\n\nSection 4: Security\nEmployees must use the company VPN, enable full-disk encryption, and complete annual security training by March 31.",
+                  "JVBERi0xLjQKJZ7e3p4KMSAwIG9iaiA8PC9UeXBlIC9DYXRhbG9nIC9QYWdlcyAyIDAgUj4+CmVuZG9iagoyIDAgb2JqIDw8L1R5cGUgL1BhZ2VzIC9LaWRzIFszIDAgUl0gL0NvdW50IDE+PgplbmRvYmoK ... (base64-encoded raw bytes of the PDF/DOCX/XLSX/PPTX file)"
+                ]
+              },
+              "entityEncoding": {
+                "type": "string",
+                "enum": [
+                  "raw",
+                  "b64"
+                ],
+                "default": "b64",
+                "description": "Encoding of the entityContent value. 'b64' (default) — the post-processor base64-encodes the readable content you generate. 'raw' — the value is submitted exactly as generated, no transformation applied. Always generate readable text in entityContent regardless of this value.",
+                "examples": [
+                  "b64",
+                  "raw"
+                ]
+              },
+              "entityFormat": {
+                "type": "string",
+                "enum": [
+                  "txt",
+                  "html",
+                  "markdown",
+                  "unknown"
+                ],
+                "default": "txt",
+                "description": "The format of the source content in entityContent. 'txt' is the default — use it for plain text document bodies and image captions. Use 'html' if the attachment body is authored as HTML. Use 'markdown' for Markdown-formatted content. Use 'unknown' only when the format cannot be determined.",
+                "examples": [
+                  "txt",
+                  "html",
+                  "unknown"
+                ]
+              }
+            },
+            "required": [
+              "uploadedBy",
+              "uploadedTimestamp",
+              "attachmentName",
+              "entitySemanticType",
+              "entityContent",
+              "entityEncoding",
+              "entityFormat"
+            ]
+          }
+        },
+        "comments": {
+          "type": "array",
+          "minItems": 0,
+          "description": "Optional list of user comments or feedback entries associated with this intranet page. Only include if the crawled page has a comments or feedback section. Omit entirely if no comments exist. Enterprise intranet comments are typically short feedback, questions, or acknowledgements from employees reading the page.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "entitySemanticType": {
+                "type": "string",
+                "enum": [
+                  "comment"
+                ],
+                "default": "comment",
+                "description": "Always 'comment'.",
+                "examples": [
+                  "comment"
+                ]
+              },
+              "commentId": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Unique identifier for this comment.",
+                "examples": [
+                  "comment-001",
+                  "28381967",
+                  "c-99112"
+                ]
+              },
+              "parentCommentId": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "description": "The commentId of the parent comment if this is a reply, or null if this is a top-level comment.",
+                "examples": [
+                  null,
+                  "comment-001"
+                ]
+              },
+              "creator": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "Employee who wrote this comment. Can be any employee.",
+                "properties": {
+                  "ExternalId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Unique identifier of the comment author.",
+                    "examples": [
+                      "7b000c46-a94e-6b7b-b8f5-003bd8df7536"
+                    ]
+                  },
+                  "Email": {
+                    "type": "string",
+                    "format": "email",
+                    "minLength": 1,
+                    "description": "Corporate email of the comment author. Must share the same domain as all other user identities in this item.",
+                    "x-pipeline": {
+                      "transforms": [
+                        {
+                          "type": "trim"
+                        },
+                        {
+                          "type": "lowercase"
+                        }
+                      ]
+                    },
+                    "examples": [
+                      "emily.wong@ecosync.com",
+                      "arjun.mehta@ecosync.com"
+                    ]
+                  },
+                  "ExternalName": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Full display name of the comment author.",
+                    "examples": [
+                      "Emily Wong",
+                      "Arjun Mehta"
+                    ]
+                  },
+                  "PrincipalType": {
+                    "type": "string",
+                    "enum": [
+                      "user"
+                    ],
+                    "default": "user",
+                    "description": "Always 'user' — comments are written by individual employees, never groups.",
+                    "examples": [
+                      "user"
+                    ]
+                  },
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Identity resolution key. Must match the Email field exactly.",
+                    "examples": [
+                      "emily.wong@ecosync.com",
+                      "arjun.mehta@ecosync.com"
+                    ],
+                    "x-pipeline": {
+                      "transforms": [
+                        {
+                          "type": "trim"
+                        },
+                        {
+                          "type": "lowercase"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "ExternalId",
+                  "Email",
+                  "ExternalName",
+                  "PrincipalType",
+                  "id"
+                ],
+                "examples": [
+                  {
+                    "ExternalId": "7b000c46-a94e-6b7b-b8f5-003bd8df7536",
+                    "Email": "emily.wong@ecosync.com",
+                    "ExternalName": "Emily Wong",
+                    "PrincipalType": "user",
+                    "id": "emily.wong@ecosync.com"
+                  }
+                ]
+              },
+              "modifier": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "Person who last edited this comment. If never edited, must be identical to creator.",
+                "properties": {
+                  "ExternalId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Unique identifier of the comment modifier.",
+                    "examples": [
+                      "dc28c604-50c6-6bbb-8e01-43d850607160"
+                    ]
+                  },
+                  "Email": {
+                    "type": "string",
+                    "format": "email",
+                    "minLength": 1,
+                    "description": "Corporate email of the comment modifier. Must share the same domain as all other user identities in this item.",
+                    "x-pipeline": {
+                      "transforms": [
+                        {
+                          "type": "trim"
+                        },
+                        {
+                          "type": "lowercase"
+                        }
+                      ]
+                    },
+                    "examples": [
+                      "arjun.mehta@ecosync.com",
+                      "priya.sharma@ecosync.com"
+                    ]
+                  },
+                  "ExternalName": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Full display name of the comment modifier.",
+                    "examples": [
+                      "Arjun Mehta",
+                      "Priya Sharma"
+                    ]
+                  },
+                  "PrincipalType": {
+                    "type": "string",
+                    "enum": [
+                      "user"
+                    ],
+                    "default": "user",
+                    "description": "Always 'user' — comments are edited by individual employees, never groups.",
+                    "examples": [
+                      "user"
+                    ]
+                  },
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Identity resolution key. Must match the Email field exactly.",
+                    "examples": [
+                      "arjun.mehta@ecosync.com",
+                      "priya.sharma@ecosync.com"
+                    ],
+                    "x-pipeline": {
+                      "transforms": [
+                        {
+                          "type": "trim"
+                        },
+                        {
+                          "type": "lowercase"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "ExternalId",
+                  "Email",
+                  "ExternalName",
+                  "PrincipalType",
+                  "id"
+                ],
+                "examples": [
+                  {
+                    "ExternalId": "dc28c604-50c6-6bbb-8e01-43d850607160",
+                    "Email": "arjun.mehta@ecosync.com",
+                    "ExternalName": "Arjun Mehta",
+                    "PrincipalType": "user",
+                    "id": "arjun.mehta@ecosync.com"
+                  }
+                ]
+              },
+              "createdDateTime": {
+                "type": "string",
+                "format": "date-time",
+                "minLength": 1,
+                "description": "When the comment was created. Must be >= page CreatedDateTime and <= page LastModifiedDateTime.",
+                "examples": [
+                  "2025-03-01T10:15:00Z",
+                  "2024-09-10T08:45:00Z"
+                ]
+              },
+              "modifiedDateTime": {
+                "type": "string",
+                "format": "date-time",
+                "minLength": 1,
+                "description": "When the comment was last edited. Must be >= createdDateTime and <= page LastModifiedDateTime. Equals createdDateTime if never edited.",
+                "examples": [
+                  "2025-03-01T10:15:00Z",
+                  "2024-09-10T09:00:00Z"
+                ]
+              },
+              "mentionedUsers": {
+                "type": "array",
+                "minItems": 0,
+                "description": "List of UserIdentity objects for users mentioned or tagged in this comment. Empty array if no users are mentioned.",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "ExternalId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Unique identifier of the mentioned user.",
+                      "examples": [
+                        "7b000c46-a94e-6b7b-b8f5-003bd8df7536"
+                      ]
+                    },
+                    "Email": {
+                      "type": "string",
+                      "format": "email",
+                      "minLength": 1,
+                      "description": "Corporate email of the mentioned user. Must share the same domain as all other user identities in this item.",
+                      "x-pipeline": {
+                        "transforms": [
+                          {
+                            "type": "trim"
+                          },
+                          {
+                            "type": "lowercase"
+                          }
+                        ]
+                      },
+                      "examples": [
+                        "emily.wong@ecosync.com",
+                        "arjun.mehta@ecosync.com"
+                      ]
+                    },
+                    "ExternalName": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Full display name of the mentioned user.",
+                      "examples": [
+                        "Emily Wong",
+                        "Arjun Mehta"
+                      ]
+                    },
+                    "PrincipalType": {
+                      "type": "string",
+                      "enum": [
+                        "user"
+                      ],
+                      "default": "user",
+                      "description": "Always 'user' — mentioned users are individual employees, never groups.",
+                      "examples": [
+                        "user"
+                      ]
+                    },
+                    "id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Identity resolution key. Must match the Email field exactly.",
+                      "examples": [
+                        "emily.wong@ecosync.com",
+                        "arjun.mehta@ecosync.com"
+                      ],
+                      "x-pipeline": {
+                        "transforms": [
+                          {
+                            "type": "trim"
+                          },
+                          {
+                            "type": "lowercase"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "ExternalId",
+                    "Email",
+                    "ExternalName",
+                    "PrincipalType",
+                    "id"
+                  ]
+                }
+              },
+              "reactions": {
+                "type": "array",
+                "minItems": 0,
+                "description": "List of emoji reactions or likes on this comment from other employees. Empty array if no reactions exist.",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "reactionType": {
+                      "type": "string",
+                      "enum": [
+                        "Like",
+                        "Love",
+                        "Celebrate",
+                        "Insightful",
+                        "Curious"
+                      ],
+                      "description": "The emoji reaction type added to the comment. 'Like' is the most common reaction; 'Love', 'Celebrate', 'Insightful', and 'Curious' appear on pages with strong employee engagement.",
+                      "examples": [
+                        "Like",
+                        "Celebrate"
+                      ]
+                    },
+                    "reactionBy": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "description": "The UserIdentity of the person who reacted.",
+                      "properties": {
+                        "ExternalId": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "Unique identifier of the reacting user.",
+                          "examples": [
+                            "7b000c46-a94e-6b7b-b8f5-003bd8df7536"
+                          ]
+                        },
+                        "Email": {
+                          "type": "string",
+                          "format": "email",
+                          "minLength": 1,
+                          "description": "Corporate email of the reacting user. Must share the same domain as all other user identities in this item.",
+                          "x-pipeline": {
+                            "transforms": [
+                              {
+                                "type": "trim"
+                              },
+                              {
+                                "type": "lowercase"
+                              }
+                            ]
+                          },
+                          "examples": [
+                            "emily.wong@ecosync.com",
+                            "arjun.mehta@ecosync.com"
+                          ]
+                        },
+                        "ExternalName": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "Full display name of the reacting user.",
+                          "examples": [
+                            "Emily Wong",
+                            "Arjun Mehta"
+                          ]
+                        },
+                        "PrincipalType": {
+                          "type": "string",
+                          "enum": [
+                            "user"
+                          ],
+                          "default": "user",
+                          "description": "Always 'user' — reactions are added by individual employees, never groups.",
+                          "examples": [
+                            "user"
+                          ]
+                        },
+                        "id": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "Identity resolution key. Must match the Email field exactly.",
+                          "examples": [
+                            "emily.wong@ecosync.com",
+                            "arjun.mehta@ecosync.com"
+                          ],
+                          "x-pipeline": {
+                            "transforms": [
+                              {
+                                "type": "trim"
+                              },
+                              {
+                                "type": "lowercase"
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "ExternalId",
+                        "Email",
+                        "ExternalName",
+                        "PrincipalType",
+                        "id"
+                      ]
+                    },
+                    "reactionTimestamp": {
+                      "type": "string",
+                      "format": "date-time",
+                      "minLength": 1,
+                      "description": "When the reaction was added. Must be >= comment createdDateTime and <= page LastModifiedDateTime.",
+                      "examples": [
+                        "2025-03-01T10:30:00Z"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "reactionType",
+                    "reactionBy",
+                    "reactionTimestamp"
+                  ]
+                }
+              },
+              "entityContent": {
+                "type": "string",
+                "minLength": 50,
+                "description": "The plain text body of the comment. Generate realistic, topic-relevant employee feedback, questions, or discussion — relevant to the specific page content. Always generate readable plain text. If entityEncoding is 'b64', the post-processor encodes this value automatically. If entityEncoding is 'raw', the value is submitted as-is.",
+                "examples": [
+                  "I found this page very helpful when navigating the open enrollment process for the first time. One thing I was unsure about — does the 30-day enrollment window apply to new hires who start mid-month, or does it count from the first of the following month? Would be great to add a clarification on that.",
+                  "Quick question on the internal transfer cooling period: the policy says 6 months, but my manager mentioned it might be waived for critical role moves. Is there a formal exception process? If so, who approves it — the current manager, the receiving manager, or HR? A link to the exception request form would be really useful here.",
+                  "We recently went through the exit and offboarding process for a team member and this page was our go-to reference. One gap I noticed — it doesn't mention what happens to open PTO balance if the exit is voluntary vs. involuntary. Could the HR team add a section on that? We had to escalate to get an answer and it would save others time.",
+                  "The 401(k) match structure after year 5 is really competitive compared to industry benchmarks I have seen. Appreciate that it is documented clearly here. Just confirming — the match percentage applies to the gross contribution before tax, correct? Worth spelling that out explicitly for employees who are new to 401k planning."
+                ]
+              },
+              "entityEncoding": {
+                "type": "string",
+                "enum": [
+                  "raw",
+                  "b64"
+                ],
+                "default": "b64",
+                "description": "Encoding of the entityContent value. 'b64' (default) — the post-processor base64-encodes the readable text you generate. 'raw' — the value is submitted exactly as generated, no transformation applied. Always generate readable plain text in entityContent regardless of this value.",
+                "examples": [
+                  "b64",
+                  "raw"
+                ]
+              },
+              "entityFormat": {
+                "type": "string",
+                "enum": [
+                  "txt",
+                  "markdown"
+                ],
+                "default": "txt",
+                "description": "Format of the comment content. 'txt' for plain text (default). 'markdown' for Markdown-formatted comments.",
+                "examples": [
+                  "txt",
+                  "markdown"
+                ]
+              }
+            },
+            "required": [
+              "entitySemanticType",
+              "commentId",
+              "parentCommentId",
+              "creator",
+              "modifier",
+              "createdDateTime",
+              "modifiedDateTime",
+              "mentionedUsers",
+              "reactions",
+              "entityContent",
+              "entityEncoding",
+              "entityFormat"
+            ]
+          }
+        },
+        "activityList": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "minItems": 0,
+          "description": "Optional list of activity events for this page. Omit if no activity data. Typical activities: 'created' (initial publication), 'modified' (content update), 'viewed' (employee page view).",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "ActivityType": {
+                "type": "string",
+                "enum": [
+                  "created",
+                  "modified",
+                  "viewed",
+                  "commented"
+                ],
+                "description": "The type of activity performed on the intranet page. 'created' marks the initial publication, 'modified' marks a content update, 'viewed' marks an employee page view, 'commented' marks when a comment was added.",
+                "examples": [
+                  "created",
+                  "modified",
+                  "viewed",
+                  "commented"
+                ]
+              },
+              "ActivityPerformer": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "The UserIdentity of the employee who performed this activity. For 'created' and 'modified' activities, this is typically the page author or editor. For 'viewed' activities, this is any employee who accessed the page.",
+                "properties": {
+                  "ExternalId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Unique identifier of the activity performer.",
+                    "examples": [
+                      "dc28c604-50c6-6bbb-8e01-43d850607160"
+                    ]
+                  },
+                  "Email": {
+                    "type": "string",
+                    "format": "email",
+                    "minLength": 1,
+                    "description": "Corporate email of the activity performer. Must share the same domain as all other user identities in this item.",
+                    "x-pipeline": {
+                      "transforms": [
+                        {
+                          "type": "trim"
+                        },
+                        {
+                          "type": "lowercase"
+                        }
+                      ]
+                    },
+                    "examples": [
+                      "john.smith@ecosync.com"
+                    ]
+                  },
+                  "ExternalName": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Full display name of the activity performer.",
+                    "examples": [
+                      "John Smith"
+                    ]
+                  },
+                  "PrincipalType": {
+                    "type": "string",
+                    "enum": [
+                      "user"
+                    ],
+                    "default": "user",
+                    "description": "Always 'user' — activities are performed by individual employees, never groups.",
+                    "examples": [
+                      "user"
+                    ]
+                  },
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Identity resolution key. Must match the Email field exactly.",
+                    "examples": [
+                      "john.smith@ecosync.com"
+                    ],
+                    "x-pipeline": {
+                      "transforms": [
+                        {
+                          "type": "trim"
+                        },
+                        {
+                          "type": "lowercase"
+                        }
+                      ]
+                    }
+                  },
+                  "identitySourceProperties": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "description": "Additional identity source properties for the activity performer.",
+                    "properties": {
+                      "email": {
+                        "type": "string",
+                        "format": "email",
+                        "description": "Email address of the activity performer. Must match the Email field.",
+                        "examples": [
+                          "john.smith@ecosync.com"
+                        ],
+                        "x-pipeline": {
+                          "transforms": [
+                            {
+                              "type": "trim"
+                            },
+                            {
+                              "type": "lowercase"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "required": [
+                      "email"
+                    ],
+                    "examples": [
+                      {
+                        "email": "john.smith@ecosync.com"
+                      }
+                    ]
+                  },
+                  "identitySource": {
+                    "type": "string",
+                    "enum": [
+                      "azureActiveDirectory",
+                      "external"
+                    ],
+                    "default": "azureActiveDirectory",
+                    "description": "Identity source provider for the activity performer. Use 'azureActiveDirectory' for Azure AD users; 'external' for external identity sources.",
+                    "examples": [
+                      "azureActiveDirectory"
+                    ]
+                  }
+                },
+                "required": [
+                  "ExternalId",
+                  "Email",
+                  "ExternalName",
+                  "PrincipalType",
+                  "id",
+                  "identitySourceProperties",
+                  "identitySource"
+                ],
+                "examples": [
+                  {
+                    "ExternalId": "dc28c604-50c6-6bbb-8e01-43d850607160",
+                    "Email": "john.smith@ecosync.com",
+                    "ExternalName": "John Smith",
+                    "PrincipalType": "user",
+                    "id": "john.smith@ecosync.com",
+                    "identitySourceProperties": {
+                      "email": "john.smith@ecosync.com"
+                    },
+                    "identitySource": "azureActiveDirectory"
+                  }
+                ]
+              },
+              "ActivityDateTime": {
+                "type": "string",
+                "format": "date-time",
+                "minLength": 1,
+                "description": "When this activity occurred. Must be >= page CreatedDateTime and <= page LastModifiedDateTime. The 'created' activity timestamp must equal page CreatedDateTime.",
+                "examples": [
+                  "2024-03-15T09:00:00Z",
+                  "2025-02-10T16:20:00Z",
+                  "2025-03-05T11:00:00Z"
+                ]
+              },
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Unique identifier for this activity entry.",
+                "examples": [
+                  "activity-1",
+                  "activity-created-001",
+                  "activity-view-2025-03-05"
+                ]
+              }
+            },
+            "required": [
+              "ActivityType",
+              "ActivityPerformer",
+              "ActivityDateTime",
+              "id"
+            ]
+          }
+        },
+        "isContainer": {
+          "type": "boolean",
+          "enum": [
+            false
+          ],
+          "default": false,
+          "description": "Whether this item is a container for other items. Always false for enterprise website pages — individual crawled pages are leaf content items, not containers.",
+          "examples": [
+            false
+          ]
+        },
+        "containerId": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null,
+          "description": "The identifier of the parent container item, if this item belongs to a container hierarchy. Always null for enterprise website pages.",
+          "examples": [
+            null
+          ]
+        },
+        "itemVersion": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "default": null,
+          "description": "Integer version stamp. Always null for enterprise website pages.",
+          "examples": [
+            null
+          ]
+        },
+        "contentDomainCategoryName": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "uncategorized",
+            "knowledgeBase",
+            "wikis",
+            "fileRepository",
+            "qna",
+            "crm",
+            "dashboard",
+            "people",
+            "media",
+            "email",
+            "messaging",
+            "meetingTranscripts",
+            "taskManagement",
+            "learningManagement",
+            "unknownFutureValue",
+            null
+          ],
+          "default": null,
+          "description": "Categorizes the content domain of this item for search classification. Use 'knowledgeBase' for HR, Finance, Legal, and policy reference pages. Use 'wikis' for informational and organizational reference pages. Use 'learningManagement' for training, L&D, and certification pages. Use 'people' for employee directory and org chart pages. Use 'media' for pages anchored to video or rich media. Use 'taskManagement' for workflow, approval, and process pages. Set to null if no category is a clear fit. Do not use 'uncategorized' or 'unknownFutureValue' — these are reserved values.",
+          "examples": [
+            null
+          ]
+        },
+        "skipAssociatedItems": {
+          "type": "boolean",
+          "enum": [
+            false
+          ],
+          "default": false,
+          "description": "Always false — attachments, comments, and activities should be included normally.",
+          "examples": [
+            false
+          ]
+        },
+        "isAssociatedItem": {
+          "type": "boolean",
+          "enum": [
+            false
+          ],
+          "default": false,
+          "description": "Whether this item is itself an associated entity (attachment or comment) of a parent item. Always false — enterprise website pages are top-level items, not associated entities.",
+          "examples": [
+            false
+          ]
+        },
+        "UniversalAccessControlBlock": {
+          "type": "null",
+          "description": "Not applicable for enterprise website pages. Always null.",
+          "examples": [
+            null
+          ]
+        },
+        "contentEnrichmentData": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "EnrichmentTypes": {
+                    "type": "integer",
+                    "enum": [
+                      1
+                    ],
+                    "default": 1,
+                    "description": "Enrichment operation. 1 = OCR.",
+                    "examples": [
+                      1
+                    ]
+                  },
+                  "payload": {
+                    "type": "string",
+                    "description": "Base64-encoded binary content of the file to be processed (e.g., the actual bytes of a PNG screenshot or PDF page). This field requires real binary file data and cannot be synthesized by an LLM. Always generate null for the outer contentEnrichmentData field.",
+                    "examples": [
+                      "base64-encoded-binary-data"
+                    ]
+                  },
+                  "mimeType": {
+                    "type": "string",
+                    "enum": [
+                      "image/png",
+                      "image/jpg",
+                      "application/pdf"
+                    ],
+                    "description": "MIME type of the payload binary content.",
+                    "examples": [
+                      "image/png",
+                      "image/jpg",
+                      "application/pdf"
+                    ]
+                  }
+                },
+                "required": [
+                  "EnrichmentTypes",
+                  "payload",
+                  "mimeType"
+                ]
+              }
+            }
+          ],
+          "default": null,
+          "description": "Enrichment payload for OCR processing. Always generate null — HTML and plain-text pages do not require binary enrichment.",
+          "examples": [
+            null
+          ]
+        },
+        "associatedItemsMetadata": {
+          "type": "null",
+          "description": "Always null — associated item details are in the attachments and comments arrays.",
+          "examples": [
+            null
+          ]
+        },
+        "shouldHashId": {
+          "type": "boolean",
+          "enum": [
+            false
+          ],
+          "default": false,
+          "description": "Always false — the id is already SHA-512 hashed by the post-processor.",
+          "examples": [
+            false
+          ]
+        },
+        "hashedId": {
+          "type": "null",
+          "description": "Always null — shouldHashId is always false.",
+          "examples": [
+            null
+          ]
+        },
+        "dataSourceResponse": {
+          "type": "null",
+          "description": "Always null.",
+          "examples": [
+            null
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "displayName",
+        "properties",
+        "accessControlList",
+        "content",
+        "activityList",
+        "isContainer",
+        "containerId",
+        "itemVersion",
+        "contentDomainCategoryName",
+        "skipAssociatedItems",
+        "isAssociatedItem",
+        "UniversalAccessControlBlock",
+        "contentEnrichmentData",
+        "associatedItemsMetadata",
+        "shouldHashId",
+        "hashedId",
+        "dataSourceResponse"
+      ]
+    }
+  }
+}

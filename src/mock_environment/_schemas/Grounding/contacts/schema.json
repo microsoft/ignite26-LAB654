@@ -1,0 +1,392 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Manufactured Contacts schema",
+  "title": "Contacts",
+  "type": "array",
+  "uniqueItems": true,
+  "items": {
+    "$ref": "#/$defs/Contact"
+  },
+  "$defs": {
+    "PhysicalAddress": {
+      "description": "An object that encapsulates a contact's physical address details.",
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "Street": {
+          "description": "The street address.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 0
+        },
+        "City": {
+          "description": "The city.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 0
+        },
+        "State": {
+          "description": "The state or province.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 0
+        },
+        "CountryOrRegion": {
+          "description": "The country or region.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 0
+        },
+        "PostalCode": {
+          "description": "The postal code.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 0
+        }
+      }
+    },
+    "EmailAddress": {
+      "description": "Email address with an optional display name.",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "Name": {
+          "description": "The display name associated with the email address.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 0
+        },
+        "Address": {
+          "description": "The email address.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 0,
+          "anyOf": [
+            {
+              "format": "idn-email"
+            },
+            {
+              "minLength": 0
+            }
+          ]
+        }
+      },
+      "required": [
+        "Address"
+      ]
+    },
+    "Contact": {
+      "description": "The Contact JSON Schema is structured to represent a contact, capturing key information required for managing it.",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "ContactId": {
+          "description": "The contact's unique identifier for ingestion.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "DisplayName": {
+          "description": "The contact's display name. May be overwritten by system updates.",
+          "type": "string",
+          "minLength": 1
+        },
+        "GivenName": {
+          "description": "The contact's given name.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 0
+        },
+        "MiddleName": {
+          "description": "The contact's middle name.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 0
+        },
+        "Surname": {
+          "description": "The contact's surname.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 0
+        },
+        "NickName": {
+          "description": "The contact's nickname.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 0
+        },
+        "Title": {
+          "description": "The contact's title.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 0
+        },
+        "Generation": {
+          "description": "The contact's suffix (e.g., Jr., Sr.).",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 0
+        },
+        "Initials": {
+          "description": "The contact's initials.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 0
+        },
+        "FileAs": {
+          "description": "The name the contact is filed under.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 0
+        },
+        "CompanyName": {
+          "description": "The contact's company name.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 0
+        },
+        "Department": {
+          "description": "The contact's department.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 0
+        },
+        "JobTitle": {
+          "description": "The contact's job title.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 0
+        },
+        "Profession": {
+          "description": "The contact's profession.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 0
+        },
+        "Manager": {
+          "description": "The contact's manager.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 0
+        },
+        "AssistantName": {
+          "description": "The name of the contact's assistant.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 0
+        },
+        "OfficeLocation": {
+          "description": "The contact's office location.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 0
+        },
+        "BusinessHomePage": {
+          "description": "The contact's business home page.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 0
+        },
+        "BusinessAddress": {
+          "description": "The contact's business address.",
+          "$ref": "#/$defs/PhysicalAddress"
+        },
+        "BusinessPhones": {
+          "description": "The contact's business phone numbers.",
+          "type": [
+            "array",
+            "null"
+          ],
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^\\+?[1-9]\\d{0,2}[\\s\\-]?\\(?\\d{1,4}\\)?[\\s\\-]?\\d{1,4}[\\s\\-]?\\d{1,9}$"
+          }
+        },
+        "HomeAddress": {
+          "description": "The contact's home address.",
+          "$ref": "#/$defs/PhysicalAddress"
+        },
+        "HomePhones": {
+          "description": "The contact's home phone numbers.",
+          "type": [
+            "array",
+            "null"
+          ],
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^\\+?[1-9]\\d{0,2}[\\s\\-]?\\(?\\d{1,4}\\)?[\\s\\-]?\\d{1,4}[\\s\\-]?\\d{1,9}$"
+          }
+        },
+        "MobilePhone": {
+          "description": "The contact's mobile phone number.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "pattern": "^\\+?[1-9]\\d{0,2}[\\s\\-]?\\(?\\d{1,4}\\)?[\\s\\-]?\\d{1,4}[\\s\\-]?\\d{1,9}$"
+        },
+        "Children": {
+          "description": "Names of the contact's children.",
+          "type": [
+            "array",
+            "null"
+          ],
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "SpouseName": {
+          "description": "The contact's spouse or partner.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 0
+        },
+        "PersonalNotes": {
+          "description": "Personal notes about the contact.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 0
+        },
+        "Birthday": {
+          "description": "The contact's birthday in ISO 8601 UTC format (e.g., '2014-01-01T00:00:00Z').",
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[1-9][0-9]{3}-(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9]|3[0-1])T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+        },
+        "EmailAddresses": {
+          "description": "The contact's email addresses.",
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/EmailAddress"
+          }
+        },
+        "ImAddresses": {
+          "description": "The contact's instant messaging addresses.",
+          "type": [
+            "array",
+            "null"
+          ],
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "OtherAddress": {
+          "description": "The contact's other address.",
+          "$ref": "#/$defs/PhysicalAddress"
+        },
+        "YomiGivenName": {
+          "description": "Phonetic Japanese given name.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 0
+        },
+        "YomiSurname": {
+          "description": "Phonetic Japanese surname.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 0
+        },
+        "YomiCompanyName": {
+          "description": "Phonetic Japanese company name.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 0
+        },
+        "ContactForUsersList": {
+          "description": "List of users (MailNickName) that marked this contact definition as a contact.",
+          "type": [
+            "array",
+            "null"
+          ],
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/MailNickName"
+          }
+        }
+      },
+      "required": [
+        "ContactId",
+        "ContactForUsersList",
+        "DisplayName"
+      ]
+    },
+    "MailNickName": {
+      "description": "User MailNickName (no @, space, or #)",
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[\\w\\-\\.]+$"
+    }
+  }
+}

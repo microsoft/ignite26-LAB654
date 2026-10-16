@@ -1,0 +1,10 @@
+[
+  {
+    "name": "example_afa3ba47-7a3c-4e4e-9fa6-c0314d2b7548_0",
+    "description": "Sample data for checklistleo version 1.0.0",
+    "content": "query\tmetadata\n[{\"text\":\"Who was the first president of the United States?\",\"author\":\"user\",\"checks\":[\"The response should say that the first president was George Washington.\",\"The response should mention that he was a general in the American Revolutionary War.\"]}]\t{\"segment\":\"All\"}",
+    "format": "Tsv",
+    "jsonContent": "[\r\n  {\r\n    \"query\": [\r\n      {\r\n        \"text\": \"Who was the first president of the United States?\",\r\n        \"author\": \"user\",\r\n        \"checks\": [\r\n          \"The response should say that the first president was George Washington.\",\r\n          \"The response should mention that he was a general in the American Revolutionary War.\"\r\n        ]\r\n      }\r\n    ],\r\n    \"metadata\": {\r\n      \"segment\": \"All\"\r\n    }\r\n  }\r\n]",
+    "version": "1.0.0"
+  }
+]

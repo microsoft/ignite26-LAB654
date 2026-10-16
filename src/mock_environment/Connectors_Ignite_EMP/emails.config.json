@@ -1,0 +1,117 @@
+[
+  {
+    "EmailId": "legal-email-001",
+    "EmailAction": "Send",
+    "Sender": "radhika.sengupta",
+    "ToRecipients": [
+      {
+        "Recipient": "marcus.hollowell"
+      }
+    ],
+    "CcRecipients": [
+      {
+        "Recipient": "tomas.aguilar"
+      }
+    ],
+    "Subject": "Cognivault Nexus: what the business needs from the contract (ranked)",
+    "Body": "Hi Marcus,\n\nAhead of Cognivault sending over their paper, here is what the business needs from the Nexus contract, in priority order. Tomás and I are aligned on this list.\n\n1. We own the fine-tuned model. Nexus will be fine-tuned on our claims and underwriting data. Whatever gets built from our data (the fine-tuned model and its outputs) has to belong to Verdantis. This one is not negotiable.\n\n2. Control over model changes. We need real advance notice, and a say, before Cognivault changes or retires the model that prices our policies.\n\n3. Explainability for regulators. Colorado and New York examiners are scrutinising AI underwriting. We have to be able to explain how Nexus reaches a decision and show that we are overseeing the vendor.\n\n4. A clean exit. If this doesn't work out, we need our data back in a usable format and enough runway to transition without a gap in quoting.\n\n5. Liability that matches the deal size. This is $14.75M over five years ($2.95M a year), with up to 4 million underwriting decisions a month. The cap has to reflect that.\n\n6. Delaware law and Delaware courts, not the vendor's arbitration.\n\nOn timing: the session on the 12th is a negotiation session with Cognivault's counsel, not a signing. Tomás would like to go live on the 15th, but nothing gets signed until you've been through their contract against the playbook.\n\nShout if any of this conflicts with the AI procurement playbook.\n\nThanks,\nRadhika\n\nRadhika Sengupta\nSVP, Procurement | Verdantis",
+    "BodyType": "text",
+    "Importance": "High",
+    "Timestamp": "2026-09-21T14:12:00Z"
+  },
+  {
+    "EmailId": "legal-email-002",
+    "ReferenceEmailId": "legal-email-001",
+    "EmailAction": "ReplyAll",
+    "Sender": "tomas.aguilar",
+    "ToRecipients": [
+      {
+        "Recipient": "radhika.sengupta"
+      },
+      {
+        "Recipient": "marcus.hollowell"
+      }
+    ],
+    "Subject": "RE: Cognivault Nexus: what the business needs from the contract (ranked)",
+    "Body": "Thanks Radhika, agree with the order.\n\nMarcus, #2 is the one I care about most from the underwriting side. Let me know what you need from my team.\n\nTomás",
+    "BodyType": "text",
+    "Timestamp": "2026-09-21T15:40:00Z"
+  },
+  {
+    "EmailId": "legal-email-003",
+    "ReferenceEmailId": "legal-email-002",
+    "EmailAction": "ReplyAll",
+    "Sender": "marcus.hollowell",
+    "ToRecipients": [
+      {
+        "Recipient": "tomas.aguilar"
+      },
+      {
+        "Recipient": "radhika.sengupta"
+      }
+    ],
+    "Subject": "RE: Cognivault Nexus: what the business needs from the contract (ranked)",
+    "Body": "Thanks both, this is helpful.\n\nThese line up with our AI procurement playbook. I'll review Cognivault's contract against the playbook and this list as soon as their paper lands, and flag anything that needs a business call.\n\nMarcus\n\nMarcus Hollowell\nAssociate General Counsel, Technology | Verdantis Legal",
+    "BodyType": "text",
+    "Timestamp": "2026-09-22T13:05:00Z"
+  },
+  {
+    "EmailId": "legal-email-004",
+    "EmailAction": "Send",
+    "Sender": "eleanor.vance",
+    "ToRecipients": [
+      {
+        "Recipient": "marcus.hollowell"
+      },
+      {
+        "Recipient": "nathan.osei"
+      },
+      {
+        "Recipient": "grace.lindqvist"
+      }
+    ],
+    "Subject": "Legal ops: Q4 matter intake and outside counsel budgets",
+    "Body": "Team,\n\nQuick reminder that Q4 outside counsel budget requests are due Friday. Please make sure every open matter has a current status and owner in the matter list, and that any matter expected to exceed its budget is flagged.\n\nThanks,\nEleanor",
+    "BodyType": "text",
+    "Timestamp": "2026-09-25T20:20:00Z"
+  },
+  {
+    "EmailId": "legal-email-005",
+    "EmailAction": "Send",
+    "Sender": "olivia.park",
+    "ToRecipients": [
+      {
+        "Recipient": "marcus.hollowell"
+      }
+    ],
+    "CcRecipients": [
+      {
+        "Recipient": "grace.lindqvist"
+      }
+    ],
+    "Subject": "NDA review: Halvorsen Telematics data pilot",
+    "Body": "Hi Marcus,\n\nHalvorsen Telematics sent their mutual NDA for the 90-day telematics data pilot with Personal Auto. It's their standard form. Could someone on your team take a look this week? No rush beyond that.\n\nThanks,\nOlivia",
+    "BodyType": "text",
+    "Timestamp": "2026-09-29T18:03:00Z"
+  },
+  {
+    "EmailId": "legal-email-006",
+    "ReferenceEmailId": "legal-email-005",
+    "EmailAction": "ReplyAll",
+    "Sender": "grace.lindqvist",
+    "ToRecipients": [
+      {
+        "Recipient": "olivia.park"
+      }
+    ],
+    "CcRecipients": [
+      {
+        "Recipient": "marcus.hollowell"
+      }
+    ],
+    "Subject": "RE: NDA review: Halvorsen Telematics data pilot",
+    "Body": "Hi Olivia,\n\nI'll pick this up and run it against our NDA checklist. I'll come back to you by Thursday.\n\nGrace",
+    "BodyType": "text",
+    "Timestamp": "2026-09-29T19:30:00Z"
+  }
+]

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "VivaEngageBestAnswers",
+  "description": "Manufactured VivaEngageBestAnswers schema",
+  "type": "array",
+  "uniqueItems": true,
+  "items": {
+    "$ref": "#/$defs/VivaEngageBestAnswer"
+  },
+  "$defs": {
+    "VivaEngageBestAnswer": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ConversationId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "ReplyId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        }
+      },
+      "required": [
+        "ConversationId",
+        "ReplyId"
+      ]
+    }
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "VivaEngageCommunities",
+  "description": "Manufactured VivaEngageCommunities schema",
+  "type": "array",
+  "uniqueItems": true,
+  "items": {
+    "$ref": "#/$defs/VivaEngageCommunity"
+  },
+  "$defs": {
+    "VivaEngageCommunity": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "VivaEngageCommunityId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "DisplayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "Description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "CommunityType": {
+          "type": "string",
+          "enum": [
+            "qa",
+            "corp_comms",
+            "social",
+            "work",
+            "support",
+            "leadership"
+          ]
+        },
+        "TopicThemes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "TargetMemberCount": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "Privacy": {
+          "enum": [
+            "public",
+            "private"
+          ]
+        },
+        "CreatedDateTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "Owner": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?![.-])[A-Za-z0-9_]+([.-][A-Za-z0-9_]+)*$"
+        },
+        "Members": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^(?![.-])[A-Za-z0-9_]+([.-][A-Za-z0-9_]+)*$"
+          }
+        }
+      },
+      "required": [
+        "VivaEngageCommunityId",
+        "DisplayName",
+        "Description",
+        "CommunityType",
+        "TopicThemes",
+        "Privacy",
+        "CreatedDateTime",
+        "Owner",
+        "Members"
+      ]
+    }
+  }
+}

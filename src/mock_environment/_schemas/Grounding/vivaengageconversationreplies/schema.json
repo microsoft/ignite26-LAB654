@@ -1,0 +1,225 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "VivaEngageConversationReplies",
+  "description": "Manufactured VivaEngageConversationReplies schema",
+  "type": "array",
+  "uniqueItems": true,
+  "items": {
+    "$ref": "#/$defs/VivaEngageConversationReply"
+  },
+  "$defs": {
+    "VivaEngageAttachment": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "Id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ContentId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Stable source identifier replaced by the tenant-issued content id during ingestion."
+        },
+        "ContentType": {
+          "enum": [
+            "file",
+            "videoFile",
+            "imageFile",
+            "message",
+            "webLink",
+            "webImage",
+            "webVideo",
+            "unknownFutureValue"
+          ]
+        },
+        "FilePath": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Generation-root-relative path published as FileContent for file-backed attachments."
+        },
+        "ContentUrl": {
+          "type": "string",
+          "minLength": 1,
+          "format": "uri"
+        },
+        "Name": {
+          "type": "string"
+        },
+        "Description": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "Id",
+        "ContentId",
+        "ContentType"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "ContentType": {
+                "enum": [
+                  "file",
+                  "videoFile",
+                  "imageFile"
+                ]
+              }
+            },
+            "required": [
+              "ContentType"
+            ]
+          },
+          "then": {
+            "required": [
+              "FilePath"
+            ],
+            "not": {
+              "required": [
+                "ContentUrl"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "ContentType": {
+                "enum": [
+                  "webLink",
+                  "webImage",
+                  "webVideo"
+                ]
+              }
+            },
+            "required": [
+              "ContentType"
+            ]
+          },
+          "then": {
+            "required": [
+              "ContentUrl"
+            ],
+            "not": {
+              "required": [
+                "FilePath"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "ContentType": {
+                "const": "message"
+              }
+            },
+            "required": [
+              "ContentType"
+            ]
+          },
+          "then": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "FilePath"
+                  ]
+                },
+                {
+                  "required": [
+                    "ContentUrl"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "VivaEngageConversationReply": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "VivaEngageConversationReplyId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "VivaEngageConversationId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "ReplyToId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "CreationMode": {
+          "const": "migration"
+        },
+        "From": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?![.-])[A-Za-z0-9_]+([.-][A-Za-z0-9_]+)*$"
+        },
+        "ContentType": {
+          "enum": [
+            "html",
+            "text"
+          ]
+        },
+        "Content": {
+          "type": "string",
+          "minLength": 1
+        },
+        "CreatedDateTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "Mentions": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "MentionId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "MentionIdentifier": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "MentionId",
+              "MentionIdentifier"
+            ]
+          }
+        },
+        "Attachments": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/VivaEngageAttachment"
+          }
+        }
+      },
+      "required": [
+        "VivaEngageConversationReplyId",
+        "VivaEngageConversationId",
+        "ReplyToId",
+        "CreationMode",
+        "From",
+        "ContentType",
+        "Content",
+        "CreatedDateTime",
+        "Mentions"
+      ]
+    }
+  }
+}

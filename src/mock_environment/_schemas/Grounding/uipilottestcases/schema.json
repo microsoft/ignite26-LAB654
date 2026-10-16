@@ -1,0 +1,214 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "UIPilotTestcaseUserInput",
+  "description": "Raw user-input shape for UIPilot testcases. The top-level value is either a UIPilotTestcaseUserInputList object (with ParallelDegree + UIPilotTestcaseConfigs) or a bare UIPilotTestcaseUserInput[] array. The converter rewrites every Parameters[*].User alias into a UPN (alias@tenantName) before writing the per-group job-input config.",
+  "if": {
+    "type": "array"
+  },
+  "then": {
+    "description": "Bare array form: a list of UIPilotTestcaseUserInput entries with no group-level ParallelDegree.",
+    "type": "array",
+    "items": {
+      "$ref": "#/$defs/UIPilotTestcaseUserInput"
+    }
+  },
+  "else": {
+    "$ref": "#/$defs/UIPilotTestcaseUserInputList"
+  },
+  "$defs": {
+    "UIPilotTestcaseUserInputList": {
+      "description": "Top-level group of testcases plus the group-level ParallelDegree.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ParallelDegree": {
+          "description": "Max number of in-flight testcases sharing any one LockResourceKey. Defaults to 1 when omitted.",
+          "type": "integer",
+          "minimum": 1,
+          "default": 1
+        },
+        "UIPilotTestcaseConfigs": {
+          "description": "The testcases in this group.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/UIPilotTestcaseUserInput"
+          }
+        }
+      },
+      "required": [
+        "UIPilotTestcaseConfigs"
+      ]
+    },
+    "UIPilotTestcaseUserInput": {
+      "description": "A single UIPilot testcase. TestcaseId becomes the entity id.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "TestcaseId": {
+          "description": "Unique testcase id (becomes the entity id).",
+          "type": "string",
+          "minLength": 1
+        },
+        "TemplateId": {
+          "description": "UIPilot source case template id.",
+          "type": "integer"
+        },
+        "IsHeadless": {
+          "description": "Whether the testcase should be dispatched headless. Persisted; queue routing is a follow-up PR.",
+          "type": "boolean"
+        },
+        "ReferencedTestCaseId": {
+          "description": "Prerequisite testcase id that must SUCCEED before this one runs. Null means no dependency; otherwise set to another entry's TestcaseId to enforce ordering.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "LockResourceKeys": {
+          "description": "Lock-resource keys this testcase holds while running. At most ParallelDegree in-flight testcases may share any one key (typically the meeting participant aliases).",
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "description": "A single lock-resource key (e.g. a participant alias).",
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "Parameters": {
+          "description": "Per-step parameters (pass-through to the executor; aliases resolved to UPN in conversion).",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/UIPilotTestcaseUserInputParameter"
+          }
+        }
+      },
+      "required": [
+        "TestcaseId",
+        "TemplateId",
+        "IsHeadless",
+        "LockResourceKeys",
+        "Parameters"
+      ]
+    },
+    "UIPilotTestcaseUserInputParameter": {
+      "description": "One Task performed by one User, carrying one or more Assignments. The converter rewrites User from alias to UPN; it does NOT resolve ReferencedType / ReferencedId / ReferencedProperty — the executor does that at run time.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "Task": {
+          "description": "The task name (the operation this parameter drives).",
+          "type": "string",
+          "minLength": 1
+        },
+        "User": {
+          "description": "The actor — alias before ConvertJobInput, UPN after. One task is performed by one user.",
+          "type": "string",
+          "minLength": 1
+        },
+        "Assignments": {
+          "description": "One entry per parameter name produced for this task. Empty array when the task takes no parameters.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/UIPilotTestcaseUserInputAssignment"
+          }
+        }
+      },
+      "required": [
+        "Task",
+        "User",
+        "Assignments"
+      ]
+    },
+    "UIPilotTestcaseUserInputAssignment": {
+      "description": "A single parameter-name slot. Either a literal value (ParameterValue) or a (ReferencedType, ReferencedId, ReferencedProperty) triple resolved against a trace row at run time.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ParameterName": {
+          "description": "The parameter name.",
+          "type": "string",
+          "minLength": 1
+        },
+        "ParameterValue": {
+          "description": "Literal value when the assignment is not a reference. Mutually exclusive with the Referenced* triple.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "ReferencedType": {
+          "description": "Referenced entity type when this assignment is resolved from another trace (e.g. 'Event').",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "ReferencedId": {
+          "description": "Referenced entity id (e.g. the event id to read from).",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "ReferencedProperty": {
+          "description": "Referenced entity property name to read (e.g. 'JoinWebUrl').",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "ParameterName"
+      ],
+      "oneOf": [
+        {
+          "description": "Literal-value assignment: ParameterValue is set and the Referenced* triple is absent/null.",
+          "required": [
+            "ParameterValue"
+          ],
+          "properties": {
+            "ParameterValue": {
+              "type": "string",
+              "minLength": 1
+            },
+            "ReferencedType": {
+              "type": "null"
+            },
+            "ReferencedId": {
+              "type": "null"
+            },
+            "ReferencedProperty": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "description": "Reference-triple assignment: all three Referenced* fields are set and ParameterValue is absent/null.",
+          "required": [
+            "ReferencedType",
+            "ReferencedId",
+            "ReferencedProperty"
+          ],
+          "properties": {
+            "ParameterValue": {
+              "type": "null"
+            },
+            "ReferencedType": {
+              "type": "string",
+              "minLength": 1
+            },
+            "ReferencedId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "ReferencedProperty": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      ]
+    }
+  }
+}

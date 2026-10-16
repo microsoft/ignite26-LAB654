@@ -1,0 +1,1534 @@
+{
+  "$id": "graph_simulator/2.1.0/azuredevopswikipage/schema",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AzureDevOpsWikiPage SearchableItem Schema",
+  "description": "Schema for manufacturing synthetic Azure DevOps wiki pages in SearchableItem format for evaluating search, chat, and deep reasoning scenarios over an engineering SaaS knowledge base. All fields are required to support deterministic simulation. Examples assist the LLM in producing high-quality, realistic output.",
+  "type": "array",
+  "items": {
+    "$ref": "#/$defs/AzureDevOpsWikiPage"
+  },
+  "$defs": {
+    "AzureDevOpsWikiPage": {
+      "description": "A synthetic wiki page representing a single Azure DevOps wiki entry in the PTC engineering organization — a mid-to-large global SaaS company specializing in PLM software, manufacturing technology, medical devices, and cloud operations (5,000–25,000 employees). Pages are distributed across 5 ADO projects (Platform, Infrastructure, Product, Security, CustomerSuccess), each with 2 wikis (projectWiki and codeWiki). Page types include: runbooks/SOPs, architecture decision records (ADRs), how-to and setup guides, API and SDK references, PRDs and feature specs, migration and onboarding guides, incident postmortems, and policy/compliance documents. CRITICAL CROSS-FIELD CONSISTENCY RULES: 1. Temporal Ordering: properties.LastPublishedDate must be <= current date. All activity, comment, and attachment timestamps must be <= properties.LastPublishedDate. The 'created' activity must be the earliest entry in activityList. 2. Identity Consistency: All UserIdentity objects for the same person must share identical ExternalId, Email, ExternalName, and id values throughout the entire item. All email addresses must share the same domain (e.g., all @ptc.com). The id field in every UserIdentity must match its Email field exactly. 3. URL Consistency: displayName must equal properties.RemoteURL exactly. id must be the SHA-512 of properties.RemoteURL encoded as UTF-16 little-endian, formatted as 128 uppercase hex characters. shouldHashId is set to false to tell the pipeline the id is already hashed. 4. Author Consistency: properties.Authors (semicolon-separated) must include properties.LastPublishedAuthorName. properties.LastPublishedAuthorEmail must be the email corresponding to properties.LastPublishedAuthorName. 5. Path Consistency: properties.Project must equal '{Organization}/{ProjectName}/{WikiIdentifier}[/{Section}[/{SubSection}]]/{PageName}'. properties.GitItemPath must equal properties.Path + '.md'. properties.Path must start with '/' and match the wiki-relative portion of the Project field after the WikiIdentifier. 6. Content Consistency: content.parsedData must be rich, topic-relevant Markdown consistent with the page Title. 7. Wiki Identity: All pages in the same wiki must share the same WikiId and WikiIdentifier. All pages in the same ADO project must share the same ProjectId. 8. accessControlList must always use the EVERYONE grant structure shown in the example.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 128,
+          "maxLength": 128,
+          "pattern": "^[0-9A-F]{128}$",
+          "description": "Final ingestion identifier in pre-hashed form. Must be exactly 128 uppercase hex characters: the SHA-512 of properties.RemoteURL encoded as UTF-16 little-endian, formatted as uppercase hex. Reference implementation:\n  Python:  hashlib.sha512(url.encode('utf-16-le')).hexdigest().upper()\n  C#/.NET: Convert.ToHexString(SHA512.HashData(Encoding.Unicode.GetBytes(url)))\nUTF-16-LE is the .NET default string encoding (System.Text.Encoding.Unicode); UTF-8 will produce a different hash and break ingestion. Generators that emit a raw URL here must also set shouldHashId=true to instruct the pipeline to hash; this schema requires shouldHashId=false, so id must already be the hash.",
+          "examples": [
+            "871EBC1EA44D652EC418E7EA15E6947B0B8E8C0864A08E4421160B40D60384B966DFC9D09553F6E5709AFA70482C278AC06D5B32586D7EDD20B8B9AC50B92D47",
+            "D1B0DCE5D98262C8B1A563B0A7FD01F291A962760E3ECCB98E5CC8BEA7945AE636FA3F390C7D1288292FF7405C04B1E6449B3DD0715A1C4C2784E9DC6AAEE843",
+            "A9BC218C562D3906C0DC0FA40D6D225BBC18544572B5358512C1C9DDA3B4EFC236F68214A2DE24FAA34616B7E339865B75D5EEBE03F277F1711ADB68540A8E91"
+          ]
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The display name for this item as used by the ingestion pipeline. Must always equal the properties.RemoteURL value exactly (not the page title).",
+          "examples": [
+            "https://dev.azure.com/ptc/Infrastructure/_wiki/wikis/Infra-Wiki/123/AKS-Node-Pool-Setup",
+            "https://dev.azure.com/ptc/Platform/_wiki/wikis/Platform-Wiki/45/Developer-Onboarding-Guide",
+            "https://dev.azure.com/ptc/Security/_wiki/wikis/Security-Wiki/78/Incident-Response-Playbook"
+          ]
+        },
+        "properties": {
+          "type": "object",
+          "additionalProperties": true,
+          "description": "Typed schema properties for this Azure DevOps wiki page.",
+          "properties": {
+            "Title": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200,
+              "description": "Title of the wiki page. Use concise, intent-driven titles that reflect the primary action or concept. Follow page-type conventions: runbooks use imperative gerund titles ('AKS Node Pool Setup Guide'), ADRs use 'ADR-{number}: {Decision}' format, feature specs and PRDs use noun phrases ('Customer Migration Onboarding Spec'). Do not include trailing punctuation.",
+              "examples": [
+                "AKS Node Pool Setup Guide",
+                "ADR-014: Migrate from RabbitMQ to Azure Service Bus",
+                "PostgreSQL Backup and Restore Runbook",
+                "Developer Onboarding Guide",
+                "Incident Response Playbook — Tier 1 P1/P2 Incidents",
+                "Azure Monitor Alerting Configuration",
+                "Customer Migration Cutover Checklist"
+              ]
+            },
+            "Project": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Hierarchical path identifying this wiki page within the organization. Format: '{Organization}/{ProjectName}/{WikiIdentifier}[/{Section}[/{SubSection}]]/{PageName}'. Must be consistent with the Organization, WikiIdentifier, and Path fields.",
+              "examples": [
+                "ptc/Infrastructure/Infra-Wiki/AKS/NodePoolSetup",
+                "ptc/Platform/Platform-Wiki/Developer-Onboarding",
+                "ptc/Platform/Code-Wiki/ADRs/ADR-014-RabbitMQ-to-Service-Bus",
+                "ptc/Security/Security-Wiki/Compliance/GDPR-Data-Residency-Requirements",
+                "ptc/CustomerSuccess/CS-Wiki/Migration/Customer-Cutover-Checklist"
+              ]
+            },
+            "EntityType": {
+              "type": "string",
+              "enum": [
+                "Wiki"
+              ],
+              "default": "Wiki",
+              "description": "Always 'Wiki' — the only valid entity type for Azure DevOps wiki pages.",
+              "examples": [
+                "Wiki"
+              ]
+            },
+            "LastPublishedAuthorName": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Display name of the person who last published or modified this wiki page. Must be one of the names listed in the Authors field. Use realistic diverse engineering names consistent across the item.",
+              "examples": [
+                "Sarah Chen",
+                "Mike Jasperson",
+                "Ravi Kumar",
+                "Emily Wong",
+                "Arjun Mehta"
+              ]
+            },
+            "LastPublishedAuthorEmail": {
+              "type": "string",
+              "format": "email",
+              "minLength": 1,
+              "description": "Email address of the last publisher. Must correspond to LastPublishedAuthorName — the name and email must identify the same person. Must share the same domain as all other user identities in this item.",
+              "x-pipeline": {
+                "transforms": [
+                  {
+                    "type": "trim"
+                  },
+                  {
+                    "type": "lowercase"
+                  }
+                ]
+              },
+              "examples": [
+                "sarah.chen@ptc.com",
+                "mike.jasperson@ptc.com",
+                "ravi.kumar@ptc.com",
+                "emily.wong@ptc.com",
+                "arjun.mehta@ptc.com"
+              ]
+            },
+            "Authors": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Semicolon-separated list of display names of all contributors to this wiki page. Must be a superset of LastPublishedAuthorName — the last modifier must be present in this list. For single-author pages, use only that name with no semicolons.",
+              "examples": [
+                "Sarah Chen",
+                "Sarah Chen; Mike Jasperson",
+                "Sarah Chen; Mike Jasperson; Ravi Kumar",
+                "Arjun Mehta; Emily Wong; James Patel; Priya Sharma"
+              ]
+            },
+            "LastPublishedDate": {
+              "type": "string",
+              "format": "date-time",
+              "minLength": 1,
+              "description": "When this wiki page was last published or modified. Must follow 'yyyy-MM-ddTHH:mm:ssZ' format (UTC). Must be <= current date and time.",
+              "examples": [
+                "2025-11-14T10:30:00Z",
+                "2025-08-22T14:15:00Z",
+                "2026-01-10T09:00:00Z"
+              ]
+            },
+            "RemoteURL": {
+              "type": "string",
+              "format": "uri",
+              "minLength": 1,
+              "description": "Fully qualified HTTPS URL of the wiki page in Azure DevOps. Format: 'https://dev.azure.com/{org}/{project}/_wiki/wikis/{wikiIdentifier}/{pageId}/{page-slug}'. Must equal the top-level id and displayName fields. The page slug is a hyphen-separated version of the Title.",
+              "examples": [
+                "https://dev.azure.com/ptc/Infrastructure/_wiki/wikis/Infra-Wiki/123/AKS-Node-Pool-Setup",
+                "https://dev.azure.com/ptc/Platform/_wiki/wikis/Platform-Wiki/45/Developer-Onboarding-Guide",
+                "https://dev.azure.com/ptc/Security/_wiki/wikis/Security-Wiki/78/Incident-Response-Playbook"
+              ]
+            },
+            "WikiIdentifier": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Name of the wiki this page belongs to. Must match the WikiIdentifier segment in the Project path and RemoteURL. All pages in the same wiki must share the same WikiIdentifier.",
+              "examples": [
+                "Infra-Wiki",
+                "Platform-Wiki",
+                "Security-Wiki",
+                "CS-Wiki",
+                "Product-Wiki",
+                "Code-Wiki"
+              ]
+            },
+            "WikiId": {
+              "type": "string",
+              "minLength": 1,
+              "description": "UUID uniquely identifying the wiki. All pages in the same wiki must share the same WikiId. Generate one UUID per wiki and use it consistently across all pages of that wiki.",
+              "examples": [
+                "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                "b2c3d4e5-f6a7-8901-bcde-f01234567891",
+                "c3d4e5f6-a7b8-9012-cdef-012345678912"
+              ]
+            },
+            "Organization": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Azure DevOps organization name. Must match the organization segment in RemoteURL and Project. Must be consistent across all pages.",
+              "examples": [
+                "ptc"
+              ]
+            },
+            "Version": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Git branch version descriptor for this page. Azure DevOps encodes branch references as 'GB{branchName}' (e.g., 'GBmain' for the main branch).",
+              "examples": [
+                "GBmain",
+                "GBdevelop",
+                "GBrelease/v4.2"
+              ]
+            },
+            "IconUrl": {
+              "type": "string",
+              "minLength": 1,
+              "description": "URL of the icon representing this wiki page type in Azure DevOps. Use the standard ADO wiki page icon.",
+              "examples": [
+                "https://cdn.vsassets.io/v/M183/_content/icon-wiki-page.png"
+              ]
+            },
+            "GitItemPath": {
+              "type": "string",
+              "minLength": 1,
+              "description": "File path of this wiki page within the Git repository. Always equals properties.Path with '.md' appended. Must start with '/'.",
+              "examples": [
+                "/AKS/NodePoolSetup.md",
+                "/Developer-Onboarding.md",
+                "/ADRs/ADR-014-RabbitMQ-to-Service-Bus.md",
+                "/Compliance/GDPR-Data-Residency-Requirements.md"
+              ]
+            },
+            "Path": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Page path within the wiki starting with '/'. Represents the wiki-relative location of this page. Must match the tail of the Project field after the WikiIdentifier segment. GitItemPath must equal Path + '.md'.",
+              "examples": [
+                "/AKS/NodePoolSetup",
+                "/Developer-Onboarding",
+                "/ADRs/ADR-014-RabbitMQ-to-Service-Bus",
+                "/Compliance/GDPR-Data-Residency-Requirements"
+              ]
+            },
+            "ProjectId": {
+              "type": "string",
+              "minLength": 1,
+              "description": "UUID uniquely identifying the ADO project. All pages within the same ADO project must share the same ProjectId. Generate one UUID per project and use it consistently.",
+              "examples": [
+                "f1e2d3c4-b5a6-7890-abcd-ef1234567890",
+                "a1b2c3d4-e5f6-4321-dcba-987654321012",
+                "d4e5f6a7-b8c9-0123-efab-234567890123"
+              ]
+            },
+            "WikiType": {
+              "type": "string",
+              "enum": [
+                "projectWiki",
+                "codeWiki"
+              ],
+              "description": "Whether this wiki is a project wiki or a code wiki. projectWiki: documentation wiki attached to an ADO project — contains team docs, process guides, onboarding materials, PRDs, and runbooks. codeWiki: wiki published from a Git repository — contains code-linked docs such as ADRs, API references, CI/CD runbooks, and branching strategy.",
+              "examples": [
+                "projectWiki",
+                "codeWiki"
+              ]
+            },
+            "CommitId": {
+              "type": "string",
+              "minLength": 40,
+              "maxLength": 40,
+              "pattern": "^[0-9a-f]{40}$",
+              "description": "Git commit SHA-1 hash identifying the exact version of this page. Always exactly 40 lowercase hexadecimal characters. Generate realistic-looking 40-char hex strings — do not use all-zero or sequential values.",
+              "examples": [
+                "a1b2c3d4e5f6789012345678901234567890abcd",
+                "deadbeef0123456789abcdef0123456789012345",
+                "f3e2d1c0b9a8765432109876543210fedcba9876"
+              ]
+            },
+            "IsParentPage": {
+              "type": "boolean",
+              "description": "Whether this page has child pages in the wiki hierarchy. True for section index pages that link to sub-pages. False for leaf content pages. Parent pages typically contain a brief overview and a list of links to child topics rather than deep technical content.",
+              "examples": [
+                false,
+                true
+              ]
+            }
+          },
+          "required": [
+            "Title",
+            "Project",
+            "EntityType",
+            "LastPublishedAuthorName",
+            "LastPublishedAuthorEmail",
+            "Authors",
+            "LastPublishedDate",
+            "RemoteURL",
+            "WikiIdentifier",
+            "WikiId",
+            "Organization",
+            "Version",
+            "IconUrl",
+            "GitItemPath",
+            "Path",
+            "ProjectId",
+            "WikiType",
+            "CommitId",
+            "IsParentPage"
+          ]
+        },
+        "accessControlList": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "description": "Access control permissions for this item. Always generate exactly one entry using the EVERYONE grant structure shown in the example. Do not deviate from this structure.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "principal": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "The access principal for this rule. For EVERYONE grants, applies to all authenticated users in the tenant.",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "everyone"
+                    ],
+                    "default": "everyone",
+                    "description": "Scope of this principal. Always 'everyone' — applies to all authenticated users in the tenant.",
+                    "examples": [
+                      "everyone"
+                    ]
+                  },
+                  "value": {
+                    "type": "string",
+                    "enum": [
+                      "EVERYONE"
+                    ],
+                    "default": "EVERYONE",
+                    "description": "The canonical string value for the everyone principal. Must be the uppercase literal 'EVERYONE'.",
+                    "examples": [
+                      "EVERYONE"
+                    ]
+                  },
+                  "identitySource": {
+                    "type": "null",
+                    "description": "Not applicable for the 'everyone' principal. Always null.",
+                    "examples": [
+                      null
+                    ]
+                  },
+                  "identitySourceEnum": {
+                    "type": "string",
+                    "enum": [
+                      "azureActiveDirectory"
+                    ],
+                    "default": "azureActiveDirectory",
+                    "description": "Identity provider for this tenant. Always 'azureActiveDirectory'.",
+                    "examples": [
+                      "azureActiveDirectory"
+                    ]
+                  },
+                  "identityType": {
+                    "type": "integer",
+                    "enum": [
+                      3
+                    ],
+                    "default": 3,
+                    "description": "Numeric code for the principal category. 3 represents the 'everyone' group type. Always 3 for EVERYONE grants.",
+                    "examples": [
+                      3
+                    ]
+                  },
+                  "identitySourceProperties": {
+                    "type": "null",
+                    "description": "Not applicable for the 'everyone' principal. Always null.",
+                    "examples": [
+                      null
+                    ]
+                  },
+                  "metadata": {
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "default": null,
+                    "description": "Additional principal metadata. Always null for the 'everyone' principal."
+                  },
+                  "displayName": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "default": null,
+                    "description": "Display name override. Always null for the 'everyone' principal."
+                  }
+                },
+                "required": [
+                  "type",
+                  "value",
+                  "identitySource",
+                  "identitySourceEnum",
+                  "identityType",
+                  "identitySourceProperties",
+                  "metadata",
+                  "displayName"
+                ]
+              },
+              "ruleNode": {
+                "type": "null",
+                "description": "Not applicable for simple EVERYONE grant rules. Always null.",
+                "examples": [
+                  null
+                ]
+              },
+              "accessType": {
+                "type": "string",
+                "enum": [
+                  "grant"
+                ],
+                "default": "grant",
+                "description": "Whether this entry grants or denies access. Always 'grant'.",
+                "examples": [
+                  "grant"
+                ]
+              },
+              "transformedIdentity": {
+                "type": "null",
+                "description": "Not applicable for the 'everyone' principal. Always null.",
+                "examples": [
+                  null
+                ]
+              }
+            },
+            "required": [
+              "principal",
+              "ruleNode",
+              "accessType",
+              "transformedIdentity"
+            ]
+          },
+          "examples": [
+            [
+              {
+                "principal": {
+                  "type": "everyone",
+                  "value": "EVERYONE",
+                  "identitySource": null,
+                  "identitySourceEnum": "azureActiveDirectory",
+                  "identityType": 3,
+                  "identitySourceProperties": null,
+                  "metadata": null,
+                  "displayName": null
+                },
+                "ruleNode": null,
+                "accessType": "grant",
+                "transformedIdentity": null
+              }
+            ]
+          ]
+        },
+        "content": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "The content body for this wiki page. Wiki pages are authored in Markdown — always generate Markdown in parsedData and set type to 'markdown'. annotation and semanticContent must always be null.",
+          "properties": {
+            "parsedData": {
+              "type": "string",
+              "minLength": 200,
+              "description": "The full Markdown body of the wiki page. Generate rich, syntactically correct Markdown: headings (#, ##, ###), bullet lists (- item), numbered lists (1. step), code blocks (```language), inline code (`command`), tables (| col | col |), hyperlinks ([text](url)), bold (**text**) and italic (*text*) emphasis, blockquotes (> Note:), and horizontal rules (---). Content must be technically accurate and consistent with the Title.",
+              "examples": [
+                "# AKS Node Pool Setup Guide\n\n## Overview\n\nThis runbook covers the end-to-end procedure for adding a user node pool to the PTC AKS cluster. Follow these steps to provision a new pool for workload isolation or horizontal scaling.\n\n**Intended audience:** SREs and platform engineers with Azure CLI access and `kubectl` configured for the target cluster.\n\n**Prerequisites:**\n- Azure CLI 2.47 or later (`az --version` to verify)\n- `kubectl` connected to `ptc-aks-prod` (`kubectl config current-context`)\n- Contributor role on `ptc-infra-rg`\n\n---\n\n## Step 1 — Plan the Node Pool\n\nConfirm the following parameters with the requesting team before execution:\n\n| Parameter | Default | Options |\n|---|---|---|\n| VM size | Standard_D4s_v5 (4 vCPU, 16 GB) | D4s_v5, D8s_v5, E4s_v5 |\n| Initial node count | 3 | 1–10 |\n| OS type | Linux | Linux, Windows |\n| Availability zones | 1 2 3 | Any subset |\n\n> **Note:** Always prefer multi-zone pools unless the workload has explicit single-zone affinity requirements. Single-zone pools cannot be converted to multi-zone without recreation.\n\n---\n\n## Step 2 — Create the Node Pool\n\n```bash\naz aks nodepool add \\\n  --resource-group ptc-infra-rg \\\n  --cluster-name ptc-aks-prod \\\n  --name <pool-name> \\\n  --node-count 3 \\\n  --node-vm-size Standard_D4s_v5 \\\n  --os-type Linux \\\n  --mode User \\\n  --zones 1 2 3 \\\n  --max-surge 33%\n```\n\nReplace `<pool-name>` with a lowercase alphanumeric name up to 12 characters (e.g., `computepool`, `mlpool`).\n\n---\n\n## Step 3 — Verify Node Health\n\nAllow 5–10 minutes for provisioning, then verify all nodes are `Ready`:\n\n```bash\nkubectl get nodes -l agentpool=<pool-name> -o wide\n```\n\nExpected: all nodes show `STATUS=Ready`. If any node shows `NotReady` after 15 minutes, run `kubectl describe node <node-name>` and inspect the Conditions section.\n\n---\n\n## Troubleshooting\n\n**Node stuck in Provisioning:** Check the Azure Activity Log for quota exceeded or SKU unavailability errors. Contact the Cloud team if a quota increase is needed.\n\n**NotReady after 15 minutes:** Common causes: NSG rules blocking port 10250 (kubelet), failed image pulls, or kubelet certificate errors.\n\n---\n\n## Related Pages\n\n- [AKS Cluster Upgrade Runbook](./AKS-Cluster-Upgrade-Runbook)\n- [AKS Autoscaler Configuration](./AKS-Autoscaler-Configuration)\n- [Cluster Cost Optimization Guidelines](../Infra-Wiki/Cost-Management)",
+                "# ADR-014: Migrate from RabbitMQ to Azure Service Bus\n\n**Status:** Accepted  \n**Date:** 2025-03-12  \n**Deciders:** Platform Architects, Infrastructure Team\n\n---\n\n## Context\n\nPTC's PLM platform uses a self-managed RabbitMQ broker VM for inter-service messaging between the License Manager, CAD Integration service, and the Notification microservice. This deployment requires manual patching and has caused three P2 incidents in the past six months. The infrastructure team spends approximately 8 hours per month on patching and incident response for this component.\n\n---\n\n## Decision\n\nMigrate all internal message queues from self-managed RabbitMQ to **Azure Service Bus Standard tier**, using topic-subscription model for fan-out messaging patterns and direct queues for point-to-point communication.\n\n---\n\n## Rationale\n\n| Criterion | RabbitMQ (current) | Azure Service Bus |\n|---|---|---|\n| Ops overhead | High — manual VM patching | Low — managed PaaS |\n| Uptime SLA | None (best-effort) | 99.9% |\n| Dead-letter queue | Manual setup required | Native support |\n| Azure AD integration | Third-party plugin required | Native RBAC |\n\n---\n\n## Migration Plan\n\n1. **Weeks 1–2:** Provision Service Bus namespace in `ptc-platform-rg`. Create shadow queues.\n2. **Weeks 3–4:** Update License Manager to dual-publish. Validate message parity.\n3. **Weeks 5–6:** Migrate consumers to Service Bus. Keep RabbitMQ as passive fallback.\n4. **Week 7:** Decommission RabbitMQ VM after 72-hour clean monitoring window.\n\n---\n\n## Consequences\n\n**Positive:**\n- Eliminates ~8 hours/month of maintenance overhead\n- Native Azure Monitor integration for PagerDuty alerting\n\n**Negative:**\n- Standard tier 256 KB message size limit requires Claim-Check pattern for large CAD payloads\n- Additional Azure spend of ~$180/month at current volume\n\n---\n\n## Alternatives Considered\n\n- **Azure Event Hubs:** Rejected — optimized for streaming, lacks transactional queuing and DLQ semantics.\n- **RabbitMQ on AKS:** Rejected — moves, not eliminates, operational burden."
+              ]
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "markdown",
+                "text",
+                "none",
+                "binary",
+                "bmp",
+                "jpg",
+                "pdf",
+                "png",
+                "tif",
+                "unknownFutureValue"
+              ],
+              "default": "markdown",
+              "description": "Format of the content in parsedData. Always 'markdown' for Azure DevOps wiki pages — parsedData contains the Markdown source body. All other values are reserved — do not use.",
+              "examples": [
+                "markdown"
+              ]
+            },
+            "annotation": {
+              "type": "null",
+              "description": "Populated by the data pipeline. Always generate null.",
+              "examples": [
+                null
+              ]
+            },
+            "semanticContent": {
+              "type": "null",
+              "description": "Reserved for future semantic content classification signals. Always generate null.",
+              "examples": [
+                null
+              ]
+            }
+          },
+          "required": [
+            "parsedData",
+            "type",
+            "annotation",
+            "semanticContent"
+          ]
+        },
+        "attachments": {
+          "type": "array",
+          "minItems": 0,
+          "description": "Optional list of file attachments linked to this wiki page — architecture diagrams, screenshots, exported PDFs, or reference documents embedded in the page. Omit this field entirely if the page has no attachments. Attachment upload timestamps must be <= LastPublishedDate.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "uploadedBy": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "The UserIdentity of the engineer who uploaded this file. Can be any contributor — not limited to the last author.",
+                "properties": {
+                  "ExternalId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Unique identifier of the uploader.",
+                    "examples": [
+                      "7b000c46-a94e-6b7b-b8f5-003bd8df7536",
+                      "dc28c604-50c6-6bbb-8e01-43d850607160"
+                    ]
+                  },
+                  "Email": {
+                    "type": "string",
+                    "format": "email",
+                    "minLength": 1,
+                    "description": "Corporate email of the uploader. Must share the same domain as all other user identities in this item.",
+                    "x-pipeline": {
+                      "transforms": [
+                        {
+                          "type": "trim"
+                        },
+                        {
+                          "type": "lowercase"
+                        }
+                      ]
+                    },
+                    "examples": [
+                      "sarah.chen@ptc.com",
+                      "ravi.kumar@ptc.com"
+                    ]
+                  },
+                  "ExternalName": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Full display name of the uploader.",
+                    "examples": [
+                      "Sarah Chen",
+                      "Ravi Kumar"
+                    ]
+                  },
+                  "PrincipalType": {
+                    "type": "string",
+                    "enum": [
+                      "user"
+                    ],
+                    "default": "user",
+                    "description": "Always 'user' — attachments are uploaded by individual engineers, never groups.",
+                    "examples": [
+                      "user"
+                    ]
+                  },
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Identity resolution key. Must match the Email field exactly.",
+                    "examples": [
+                      "sarah.chen@ptc.com",
+                      "ravi.kumar@ptc.com"
+                    ],
+                    "x-pipeline": {
+                      "transforms": [
+                        {
+                          "type": "trim"
+                        },
+                        {
+                          "type": "lowercase"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "ExternalId",
+                  "Email",
+                  "ExternalName",
+                  "PrincipalType",
+                  "id"
+                ]
+              },
+              "uploadedTimestamp": {
+                "type": "string",
+                "format": "date-time",
+                "minLength": 1,
+                "description": "When the file was attached. Must be <= page LastPublishedDate. Format: 'yyyy-MM-ddTHH:mm:ssZ'.",
+                "examples": [
+                  "2025-06-15T10:30:00Z",
+                  "2025-10-20T14:00:00Z"
+                ]
+              },
+              "attachmentName": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Filename of the attached file including extension. Use kebab-case or PascalCase names reflecting the content. Extensions must match the actual file type (png, jpg, svg, pdf, docx, xlsx).",
+                "examples": [
+                  "aks-cluster-topology-diagram.png",
+                  "Service-Bus-Migration-Plan.pdf",
+                  "PostgreSQL-Backup-Restore-Runbook.pdf",
+                  "API-Reference-v3.docx",
+                  "Load-Testing-Results-Q3-2025.xlsx"
+                ]
+              },
+              "entitySemanticType": {
+                "type": "string",
+                "enum": [
+                  "document"
+                ],
+                "default": "document",
+                "description": "Always 'document'.",
+                "examples": [
+                  "document"
+                ]
+              },
+              "entityContent": {
+                "type": "string",
+                "description": "Content of the attachment. The exact representation depends on the (entityEncoding, entityFormat) pair used for each file type:\n- Text-based files (.txt, .csv, .json, .yaml, .log): raw text in entityContent (entityEncoding='raw', entityFormat='txt').\n- Markdown (.md): raw markdown text (entityEncoding='raw', entityFormat='markdown').\n- HTML (.html, .htm): raw HTML text (entityEncoding='raw', entityFormat='html').\n- Office documents (.pdf, .docx, .xlsx, .pptx): base64-encoded RAW FILE BYTES (entityEncoding='b64', entityFormat='unknown'). Do not pre-extract text; the parser handles extraction downstream.\n- Raster images (.png, .jpg, .jpeg): OCR text or a human-readable image description (entityEncoding='raw', entityFormat='txt').\n- Vector images (.svg): human-readable description of the diagram content (entityEncoding='raw', entityFormat='txt').\n- Other binary files: base64-encoded raw file bytes (entityEncoding='b64', entityFormat='unknown').",
+                "examples": [
+                  "Architecture diagram showing the PTC AKS cluster topology. The diagram depicts three node pools: system pool (2 nodes, Standard_D2s_v5), compute pool (3 nodes, Standard_D4s_v5), and GPU pool (1 node, Standard_NC6s_v3). An NGINX ingress controller sits in front of the compute pool routing traffic from Azure Application Gateway. Azure Service Bus connects License Manager, CAD Integration, and Notification Service via topic-subscription messaging. PostgreSQL Flexible Server is shown as the persistence layer with read replicas in East US 2.",
+                  "Service Bus Migration Plan\n\nPhase 1: Namespace Provisioning\n- Create ptc-platform-sb namespace in ptc-platform-rg (East US)\n- Enable geo-redundancy to West US 2\n- Configure RBAC: License Manager → Sender role, CAD Integration → Receiver role\n\nPhase 2: Shadow Queue Setup\n- Mirror existing RabbitMQ exchanges as Service Bus topics\n- Configure dead-letter queue retention to 14 days\n- Set message lock duration to 60 seconds\n\nPhase 3: Consumer Migration\n- Update License Manager SDK: amqp-client 0.9.1 → azure-servicebus 7.x\n- Update CAD Integration: implement Claim-Check pattern for payloads > 256 KB\n- Update Notification service: switch from exchange binding to topic subscription filter\n\nPhase 4: Cutover and Decommission\n- Enable dual-publish for 48-hour validation window\n- Monitor dead-letter queue rates and consumer lag\n- Decommission RabbitMQ VM after 72-hour clean window"
+                ],
+                "minLength": 1
+              },
+              "entityEncoding": {
+                "type": "string",
+                "enum": [
+                  "raw",
+                  "b64"
+                ],
+                "default": "b64",
+                "description": "Encoding of the entityContent value. 'raw' — entityContent is submitted as-is; use for text files (.txt, .csv, .json, .yaml, .md, .html) and for image OCR or descriptions (.png, .jpg, .svg). 'b64' — entityContent is base64-encoded raw file bytes; use for office documents (.pdf, .docx, .xlsx, .pptx) and other binary files.",
+                "examples": [
+                  "b64",
+                  "raw"
+                ]
+              },
+              "entityFormat": {
+                "type": "string",
+                "enum": [
+                  "txt",
+                  "html",
+                  "markdown",
+                  "unknown"
+                ],
+                "default": "txt",
+                "description": "Format of the content represented in entityContent. 'txt' for plain text, logs, structured data files (.txt, .csv, .json, .yaml), and image OCR or descriptions (.png, .jpg, .svg). 'html' for HTML content. 'markdown' for Markdown (.md). 'unknown' for office documents and other binary files (.pdf, .docx, .xlsx, .pptx) where entityContent is base64 of raw file bytes and there is no plain-text format.",
+                "examples": [
+                  "txt",
+                  "markdown",
+                  "unknown"
+                ]
+              }
+            },
+            "required": [
+              "uploadedBy",
+              "uploadedTimestamp",
+              "attachmentName",
+              "entitySemanticType",
+              "entityContent",
+              "entityEncoding",
+              "entityFormat"
+            ]
+          }
+        },
+        "comments": {
+          "type": "array",
+          "minItems": 0,
+          "description": "Optional list of comments on this wiki page from engineers who have read it. Omit this field entirely if no comments exist. Wiki page comments are typically technical — questions about procedures, corrections to content, notes on edge cases, or requests for clarification.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "entitySemanticType": {
+                "type": "string",
+                "enum": [
+                  "comment"
+                ],
+                "default": "comment",
+                "description": "Always 'comment'.",
+                "examples": [
+                  "comment"
+                ]
+              },
+              "commentId": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Unique identifier for this comment.",
+                "examples": [
+                  "comment-001",
+                  "28381967",
+                  "c-99112"
+                ]
+              },
+              "parentCommentId": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "description": "The commentId of the parent comment if this is a reply, or null if this is a top-level comment.",
+                "examples": [
+                  null,
+                  "comment-001"
+                ],
+                "minLength": 1
+              },
+              "creator": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "Engineer who wrote this comment. Can be any team member who has access to the wiki.",
+                "properties": {
+                  "ExternalId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Unique identifier of the comment author.",
+                    "examples": [
+                      "7b000c46-a94e-6b7b-b8f5-003bd8df7536"
+                    ]
+                  },
+                  "Email": {
+                    "type": "string",
+                    "format": "email",
+                    "minLength": 1,
+                    "description": "Corporate email of the comment author. Must share the same domain as all other user identities in this item.",
+                    "x-pipeline": {
+                      "transforms": [
+                        {
+                          "type": "trim"
+                        },
+                        {
+                          "type": "lowercase"
+                        }
+                      ]
+                    },
+                    "examples": [
+                      "emily.wong@ptc.com",
+                      "arjun.mehta@ptc.com"
+                    ]
+                  },
+                  "ExternalName": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Full display name of the comment author.",
+                    "examples": [
+                      "Emily Wong",
+                      "Arjun Mehta"
+                    ]
+                  },
+                  "PrincipalType": {
+                    "type": "string",
+                    "enum": [
+                      "user"
+                    ],
+                    "default": "user",
+                    "description": "Always 'user' — comments are written by individual engineers, never groups.",
+                    "examples": [
+                      "user"
+                    ]
+                  },
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Identity resolution key. Must match the Email field exactly.",
+                    "examples": [
+                      "emily.wong@ptc.com",
+                      "arjun.mehta@ptc.com"
+                    ],
+                    "x-pipeline": {
+                      "transforms": [
+                        {
+                          "type": "trim"
+                        },
+                        {
+                          "type": "lowercase"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "ExternalId",
+                  "Email",
+                  "ExternalName",
+                  "PrincipalType",
+                  "id"
+                ],
+                "examples": [
+                  {
+                    "ExternalId": "7b000c46-a94e-6b7b-b8f5-003bd8df7536",
+                    "Email": "emily.wong@ptc.com",
+                    "ExternalName": "Emily Wong",
+                    "PrincipalType": "user",
+                    "id": "emily.wong@ptc.com"
+                  }
+                ]
+              },
+              "modifier": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "Person who last edited this comment. If never edited, must be identical to creator.",
+                "properties": {
+                  "ExternalId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Unique identifier of the comment modifier.",
+                    "examples": [
+                      "dc28c604-50c6-6bbb-8e01-43d850607160"
+                    ]
+                  },
+                  "Email": {
+                    "type": "string",
+                    "format": "email",
+                    "minLength": 1,
+                    "description": "Corporate email of the comment modifier. Must share the same domain as all other user identities in this item.",
+                    "x-pipeline": {
+                      "transforms": [
+                        {
+                          "type": "trim"
+                        },
+                        {
+                          "type": "lowercase"
+                        }
+                      ]
+                    },
+                    "examples": [
+                      "arjun.mehta@ptc.com",
+                      "james.patel@ptc.com"
+                    ]
+                  },
+                  "ExternalName": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Full display name of the comment modifier.",
+                    "examples": [
+                      "Arjun Mehta",
+                      "James Patel"
+                    ]
+                  },
+                  "PrincipalType": {
+                    "type": "string",
+                    "enum": [
+                      "user"
+                    ],
+                    "default": "user",
+                    "description": "Always 'user' — comments are edited by individual engineers, never groups.",
+                    "examples": [
+                      "user"
+                    ]
+                  },
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Identity resolution key. Must match the Email field exactly.",
+                    "examples": [
+                      "arjun.mehta@ptc.com",
+                      "james.patel@ptc.com"
+                    ],
+                    "x-pipeline": {
+                      "transforms": [
+                        {
+                          "type": "trim"
+                        },
+                        {
+                          "type": "lowercase"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "ExternalId",
+                  "Email",
+                  "ExternalName",
+                  "PrincipalType",
+                  "id"
+                ],
+                "examples": [
+                  {
+                    "ExternalId": "dc28c604-50c6-6bbb-8e01-43d850607160",
+                    "Email": "arjun.mehta@ptc.com",
+                    "ExternalName": "Arjun Mehta",
+                    "PrincipalType": "user",
+                    "id": "arjun.mehta@ptc.com"
+                  }
+                ]
+              },
+              "createdDateTime": {
+                "type": "string",
+                "format": "date-time",
+                "minLength": 1,
+                "description": "When the comment was created. Must be <= page LastPublishedDate.",
+                "examples": [
+                  "2025-11-15T10:15:00Z",
+                  "2025-09-10T08:45:00Z"
+                ]
+              },
+              "modifiedDateTime": {
+                "type": "string",
+                "format": "date-time",
+                "minLength": 1,
+                "description": "When the comment was last edited. Must be >= createdDateTime and <= page LastPublishedDate. Equals createdDateTime if never edited.",
+                "examples": [
+                  "2025-11-15T10:15:00Z",
+                  "2025-09-10T09:00:00Z"
+                ]
+              },
+              "mentionedUsers": {
+                "type": "array",
+                "minItems": 0,
+                "description": "List of UserIdentity objects for engineers @mentioned in this comment. Empty array if no users are mentioned.",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "ExternalId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Unique identifier of the mentioned user.",
+                      "examples": [
+                        "7b000c46-a94e-6b7b-b8f5-003bd8df7536"
+                      ]
+                    },
+                    "Email": {
+                      "type": "string",
+                      "format": "email",
+                      "minLength": 1,
+                      "description": "Corporate email of the mentioned user. Must share the same domain as all other user identities in this item.",
+                      "x-pipeline": {
+                        "transforms": [
+                          {
+                            "type": "trim"
+                          },
+                          {
+                            "type": "lowercase"
+                          }
+                        ]
+                      },
+                      "examples": [
+                        "sarah.chen@ptc.com",
+                        "mike.jasperson@ptc.com"
+                      ]
+                    },
+                    "ExternalName": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Full display name of the mentioned user.",
+                      "examples": [
+                        "Sarah Chen",
+                        "Mike Jasperson"
+                      ]
+                    },
+                    "PrincipalType": {
+                      "type": "string",
+                      "enum": [
+                        "user"
+                      ],
+                      "default": "user",
+                      "description": "Always 'user' — mentioned users are individual engineers, never groups.",
+                      "examples": [
+                        "user"
+                      ]
+                    },
+                    "id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Identity resolution key. Must match the Email field exactly.",
+                      "examples": [
+                        "sarah.chen@ptc.com",
+                        "mike.jasperson@ptc.com"
+                      ],
+                      "x-pipeline": {
+                        "transforms": [
+                          {
+                            "type": "trim"
+                          },
+                          {
+                            "type": "lowercase"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "ExternalId",
+                    "Email",
+                    "ExternalName",
+                    "PrincipalType",
+                    "id"
+                  ]
+                }
+              },
+              "reactions": {
+                "type": "array",
+                "minItems": 0,
+                "description": "List of reactions on this comment from other engineers. Empty array if no reactions exist.",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "reactionType": {
+                      "type": "string",
+                      "enum": [
+                        "Like",
+                        "Love",
+                        "Celebrate",
+                        "Insightful",
+                        "Curious"
+                      ],
+                      "description": "The reaction type. 'Like' is most common on wiki comments.",
+                      "examples": [
+                        "Like",
+                        "Insightful"
+                      ]
+                    },
+                    "reactionBy": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "description": "The UserIdentity of the person who reacted.",
+                      "properties": {
+                        "ExternalId": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "Unique identifier of the reacting user.",
+                          "examples": [
+                            "7b000c46-a94e-6b7b-b8f5-003bd8df7536"
+                          ]
+                        },
+                        "Email": {
+                          "type": "string",
+                          "format": "email",
+                          "minLength": 1,
+                          "description": "Corporate email of the reacting user. Must share the same domain as all other user identities in this item.",
+                          "x-pipeline": {
+                            "transforms": [
+                              {
+                                "type": "trim"
+                              },
+                              {
+                                "type": "lowercase"
+                              }
+                            ]
+                          },
+                          "examples": [
+                            "emily.wong@ptc.com",
+                            "james.patel@ptc.com"
+                          ]
+                        },
+                        "ExternalName": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "Full display name of the reacting user.",
+                          "examples": [
+                            "Emily Wong",
+                            "James Patel"
+                          ]
+                        },
+                        "PrincipalType": {
+                          "type": "string",
+                          "enum": [
+                            "user"
+                          ],
+                          "default": "user",
+                          "description": "Always 'user' — reactions are added by individual engineers, never groups.",
+                          "examples": [
+                            "user"
+                          ]
+                        },
+                        "id": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "Identity resolution key. Must match the Email field exactly.",
+                          "examples": [
+                            "emily.wong@ptc.com",
+                            "james.patel@ptc.com"
+                          ],
+                          "x-pipeline": {
+                            "transforms": [
+                              {
+                                "type": "trim"
+                              },
+                              {
+                                "type": "lowercase"
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "ExternalId",
+                        "Email",
+                        "ExternalName",
+                        "PrincipalType",
+                        "id"
+                      ]
+                    },
+                    "reactionTimestamp": {
+                      "type": "string",
+                      "format": "date-time",
+                      "minLength": 1,
+                      "description": "When the reaction was added. Must be >= comment createdDateTime and <= page LastPublishedDate.",
+                      "examples": [
+                        "2025-11-15T11:00:00Z"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "reactionType",
+                    "reactionBy",
+                    "reactionTimestamp"
+                  ]
+                }
+              },
+              "entityContent": {
+                "type": "string",
+                "minLength": 50,
+                "description": "The body of the comment. Generate realistic, technical engineer feedback: questions about procedure steps, corrections to content, edge case notes, requests for clarification, or confirmation that a procedure worked. Comments should be specific to the page content, not generic. For 'raw' encoding (recommended for wiki comments): generate readable plain text or Markdown directly. For 'b64' encoding: provide base64-encoded text — the post-processor does not encode for you.",
+                "examples": [
+                  "The troubleshooting section saved me significant time — our node was stuck at NotReady because the NSG was blocking port 10250 (kubelet health checks). Worth adding that as the first item to check under troubleshooting, since it is one of the more common culprits in our environment.",
+                  "Quick correction on Phase 2 of the migration plan: the License Manager SDK currently uses AMQP 0.9.1 which RabbitMQ supports but Azure Service Bus Standard does not (Standard only supports AMQP 1.0). We will need to upgrade the client library before we can dual-publish. Flagging this for the deciders before Phase 2 begins.",
+                  "Confirmed this runbook works end-to-end on ptc-aks-staging. One note: the --max-surge flag requires the cluster to have autoscaler enabled. If autoscaler is off, omit that flag or the command will error out. Might be worth adding a prerequisite check for that.",
+                  "The rationale table is helpful but missing the message ordering guarantee comparison. RabbitMQ guarantees FIFO per queue; Service Bus Standard only guarantees FIFO within a session. For License Manager this is fine since we do not use ordered consumers, but wanted to flag it as a future consideration if the Notification service ever needs strict ordering."
+                ]
+              },
+              "entityEncoding": {
+                "type": "string",
+                "enum": [
+                  "raw",
+                  "b64"
+                ],
+                "default": "raw",
+                "description": "Encoding of the entityContent value. 'raw' (default) — entityContent is submitted as-is; use this for ADO wiki comments since they are text-based. 'b64' — entityContent must already be base64-encoded by the generator (no automatic encoding).",
+                "examples": [
+                  "b64",
+                  "raw"
+                ]
+              },
+              "entityFormat": {
+                "type": "string",
+                "enum": [
+                  "txt",
+                  "markdown"
+                ],
+                "default": "txt",
+                "description": "Format of the comment content. 'txt' for plain text (default). 'markdown' for Markdown-formatted comments.",
+                "examples": [
+                  "txt",
+                  "markdown"
+                ]
+              }
+            },
+            "required": [
+              "entitySemanticType",
+              "commentId",
+              "parentCommentId",
+              "creator",
+              "modifier",
+              "createdDateTime",
+              "modifiedDateTime",
+              "mentionedUsers",
+              "reactions",
+              "entityContent",
+              "entityEncoding",
+              "entityFormat"
+            ]
+          }
+        },
+        "activityList": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "minItems": 0,
+          "description": "List of activity events for this wiki page. Set to null if no activity data; otherwise an array of activity entries. Typical activities: 'created' (initial commit of the page), 'modified' (subsequent content updates), 'viewed' (engineer page view), 'commented' (comment added). The 'created' activity must be the earliest entry in the list. All activity timestamps must be <= LastPublishedDate.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "ActivityType": {
+                "type": "string",
+                "enum": [
+                  "created",
+                  "modified",
+                  "viewed",
+                  "commented",
+                  "none"
+                ],
+                "description": "Type of activity performed on this wiki page. 'created' marks initial page creation, 'modified' marks a content commit, 'viewed' marks an engineer page view, 'commented' marks when a comment was added. Do not use 'none' — it is invalid in practice.",
+                "examples": [
+                  "created",
+                  "modified",
+                  "viewed",
+                  "commented"
+                ]
+              },
+              "ActivityPerformer": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "The UserIdentity of the engineer who performed this activity. For 'created' and 'modified', this is typically the page author or a contributor. For 'viewed', this is any engineer who accessed the page.",
+                "properties": {
+                  "ExternalId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Unique identifier of the activity performer.",
+                    "examples": [
+                      "dc28c604-50c6-6bbb-8e01-43d850607160"
+                    ]
+                  },
+                  "Email": {
+                    "type": "string",
+                    "format": "email",
+                    "minLength": 1,
+                    "description": "Corporate email of the activity performer. Must share the same domain as all other user identities in this item.",
+                    "x-pipeline": {
+                      "transforms": [
+                        {
+                          "type": "trim"
+                        },
+                        {
+                          "type": "lowercase"
+                        }
+                      ]
+                    },
+                    "examples": [
+                      "sarah.chen@ptc.com",
+                      "mike.jasperson@ptc.com"
+                    ]
+                  },
+                  "ExternalName": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Full display name of the activity performer.",
+                    "examples": [
+                      "Sarah Chen",
+                      "Mike Jasperson"
+                    ]
+                  },
+                  "PrincipalType": {
+                    "type": "string",
+                    "enum": [
+                      "user"
+                    ],
+                    "default": "user",
+                    "description": "Always 'user' — activities are performed by individual engineers, never groups.",
+                    "examples": [
+                      "user"
+                    ]
+                  },
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Identity resolution key. Must match the Email field exactly.",
+                    "examples": [
+                      "sarah.chen@ptc.com",
+                      "mike.jasperson@ptc.com"
+                    ],
+                    "x-pipeline": {
+                      "transforms": [
+                        {
+                          "type": "trim"
+                        },
+                        {
+                          "type": "lowercase"
+                        }
+                      ]
+                    }
+                  },
+                  "identitySourceProperties": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "description": "Additional identity source properties for the activity performer.",
+                    "properties": {
+                      "email": {
+                        "type": "string",
+                        "format": "email",
+                        "description": "Email address of the activity performer. Must match the Email field.",
+                        "examples": [
+                          "sarah.chen@ptc.com"
+                        ],
+                        "x-pipeline": {
+                          "transforms": [
+                            {
+                              "type": "trim"
+                            },
+                            {
+                              "type": "lowercase"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "required": [
+                      "email"
+                    ],
+                    "examples": [
+                      {
+                        "email": "sarah.chen@ptc.com"
+                      }
+                    ]
+                  },
+                  "identitySource": {
+                    "type": "string",
+                    "enum": [
+                      "azureActiveDirectory",
+                      "external"
+                    ],
+                    "default": "azureActiveDirectory",
+                    "description": "Identity source provider for the activity performer. Use 'azureActiveDirectory' for Azure AD users; 'external' for external identity sources.",
+                    "examples": [
+                      "azureActiveDirectory"
+                    ]
+                  }
+                },
+                "required": [
+                  "ExternalId",
+                  "Email",
+                  "ExternalName",
+                  "PrincipalType",
+                  "id",
+                  "identitySourceProperties",
+                  "identitySource"
+                ],
+                "examples": [
+                  {
+                    "ExternalId": "dc28c604-50c6-6bbb-8e01-43d850607160",
+                    "Email": "sarah.chen@ptc.com",
+                    "ExternalName": "Sarah Chen",
+                    "PrincipalType": "user",
+                    "id": "sarah.chen@ptc.com",
+                    "identitySourceProperties": {
+                      "email": "sarah.chen@ptc.com"
+                    },
+                    "identitySource": "azureActiveDirectory"
+                  }
+                ]
+              },
+              "ActivityDateTime": {
+                "type": "string",
+                "format": "date-time",
+                "minLength": 1,
+                "description": "When this activity occurred. Must be <= page LastPublishedDate. The 'created' activity timestamp must equal the earliest date for this page.",
+                "examples": [
+                  "2025-06-01T09:00:00Z",
+                  "2025-09-15T14:30:00Z",
+                  "2025-11-14T10:30:00Z"
+                ]
+              },
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Unique identifier for this activity entry.",
+                "examples": [
+                  "activity-1",
+                  "activity-created-001",
+                  "activity-view-2025-09-15"
+                ]
+              }
+            },
+            "required": [
+              "ActivityType",
+              "ActivityPerformer",
+              "ActivityDateTime",
+              "id"
+            ]
+          }
+        },
+        "isContainer": {
+          "type": "boolean",
+          "enum": [
+            false
+          ],
+          "default": false,
+          "description": "Whether this item is a container for other items. Always false for Azure DevOps wiki pages — individual wiki pages are leaf content items in the ingestion model. Use properties.IsParentPage to indicate wiki hierarchy.",
+          "examples": [
+            false
+          ]
+        },
+        "containerId": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null,
+          "description": "The identifier of the parent container item. Always null for Azure DevOps wiki pages.",
+          "examples": [
+            null
+          ]
+        },
+        "itemVersion": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "default": null,
+          "description": "Integer version stamp. Always null for Azure DevOps wiki pages.",
+          "examples": [
+            null
+          ]
+        },
+        "contentDomainCategoryName": {
+          "type": "string",
+          "enum": [
+            "wikis"
+          ],
+          "default": "wikis",
+          "description": "Content domain category. Always 'wikis' for Azure DevOps wiki pages.",
+          "examples": [
+            "wikis"
+          ]
+        },
+        "isAssociatedItem": {
+          "type": "boolean",
+          "enum": [
+            false
+          ],
+          "default": false,
+          "description": "Whether this item is itself an associated entity of a parent item. Always false — wiki pages are top-level items, not associated entities.",
+          "examples": [
+            false
+          ]
+        },
+        "UniversalAccessControlBlock": {
+          "type": "null",
+          "description": "Not applicable for Azure DevOps wiki pages. Always null.",
+          "examples": [
+            null
+          ]
+        },
+        "contentEnrichmentData": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "EnrichmentTypes": {
+                    "type": "integer",
+                    "enum": [
+                      1
+                    ],
+                    "default": 1,
+                    "description": "Enrichment operation. 1 = OCR.",
+                    "examples": [
+                      1
+                    ]
+                  },
+                  "payload": {
+                    "type": "string",
+                    "description": "Base64-encoded binary content for OCR processing. Cannot be synthesized by an LLM. Always generate null for the outer contentEnrichmentData field.",
+                    "examples": [
+                      "base64-encoded-binary-data"
+                    ]
+                  },
+                  "mimeType": {
+                    "type": "string",
+                    "enum": [
+                      "image/png",
+                      "image/jpg",
+                      "application/pdf"
+                    ],
+                    "description": "MIME type of the payload binary content.",
+                    "examples": [
+                      "image/png",
+                      "image/jpg",
+                      "application/pdf"
+                    ]
+                  }
+                },
+                "required": [
+                  "EnrichmentTypes",
+                  "payload",
+                  "mimeType"
+                ]
+              }
+            }
+          ],
+          "default": null,
+          "description": "Enrichment payload for OCR processing. Always generate null — Markdown pages do not require binary enrichment.",
+          "examples": [
+            null
+          ]
+        },
+        "associatedItemsMetadata": {
+          "type": "null",
+          "description": "Always null — associated item details are in the attachments and comments arrays.",
+          "examples": [
+            null
+          ]
+        },
+        "shouldHashId": {
+          "type": "boolean",
+          "enum": [
+            false
+          ],
+          "default": false,
+          "description": "Always false — the id is already SHA-512 hashed by the generator. Tells the ingestion pipeline not to hash again.",
+          "examples": [
+            false
+          ]
+        },
+        "hashedId": {
+          "type": "null",
+          "default": null,
+          "description": "Always null — shouldHashId is always false.",
+          "examples": [
+            null
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "displayName",
+        "properties",
+        "accessControlList",
+        "content",
+        "isContainer",
+        "containerId",
+        "itemVersion",
+        "contentDomainCategoryName",
+        "isAssociatedItem",
+        "UniversalAccessControlBlock",
+        "contentEnrichmentData",
+        "associatedItemsMetadata",
+        "activityList",
+        "shouldHashId",
+        "hashedId"
+      ]
+    }
+  }
+}

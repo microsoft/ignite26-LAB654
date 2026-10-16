@@ -1,0 +1,2140 @@
+{
+  "$id": "graph_simulator/3.0.0/azuredevopsworkitem/schema",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AzureDevOpsWorkItem SearchableItem Schema",
+  "description": "SearchableItem schema for Azure DevOps work items",
+  "type": "array",
+  "items": {
+    "$ref": "#/$defs/AzureDevOpsWorkItem"
+  },
+  "$defs": {
+    "AzureDevOpsWorkItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "SearchableItem for an Azure DevOps work item",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]{7}$",
+          "description": "Same as properties.Id. A unique numeric identifier for the work item, assigned sequentially by Azure DevOps within the organization. Stored as an 8-digit numeric string (no leading zeros). Used in URLs, queries, links, and references. Immutable once assigned.",
+          "examples": [
+            "62005701",
+            "27809083",
+            "85285696",
+            "59565922"
+          ]
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Same as properties.Title. The title of the work item, displayed prominently in lists, boards, and search results. This field is required and must always have a non-empty value. Titles should be concise yet descriptive (typically 5-15 words). For User Stories, follow patterns like 'As a user, I want...' or action-oriented titles. For Bugs, describe the problem briefly.",
+          "examples": [
+            "Implement password reset via email",
+            "Checkout fails with more than 10 items in cart",
+            "Add dark mode support to settings page",
+            "Optimize database queries for user search",
+            "Update documentation for API v2 endpoints"
+          ]
+        },
+        "contentDomainCategoryName": {
+          "type": "string",
+          "enum": [
+            "taskManagement"
+          ],
+          "default": "taskManagement",
+          "description": "Content domain category. Always 'taskManagement' for Azure DevOps work items.",
+          "examples": [
+            "taskManagement"
+          ]
+        },
+        "isContainer": {
+          "type": "boolean",
+          "enum": [
+            false
+          ],
+          "default": false,
+          "description": "Whether this item is a container for other items. Always false for ADO work items.",
+          "examples": [
+            false
+          ]
+        },
+        "containerId": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null,
+          "description": "The identifier of the parent container item. Always null for ADO work items.",
+          "examples": [
+            null
+          ]
+        },
+        "UniversalAccessControlBlock": {
+          "type": "null",
+          "description": "Not applicable for ADO work items. Always null.",
+          "examples": [
+            null
+          ]
+        },
+        "activityList": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "minItems": 0,
+          "description": "Optional list of activity events for this work item. Omit or set to null if no activity data. Typical activities: 'created' (work item created), 'modified' (work item updated), 'viewed' (work item viewed), 'commented' (comment added). The 'created' activity must be the earliest entry in the list. All activity timestamps must be <= work item ChangedDate.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "ActivityType": {
+                "type": "string",
+                "enum": [
+                  "created",
+                  "modified",
+                  "viewed",
+                  "commented",
+                  "none"
+                ],
+                "description": "Type of activity performed on this work item. 'created' marks initial work item creation, 'modified' marks an update, 'viewed' marks a view, 'commented' marks when a comment was added. Do not use 'none' — it is invalid in practice.",
+                "examples": [
+                  "created",
+                  "modified",
+                  "viewed",
+                  "commented"
+                ]
+              },
+              "ActivityPerformer": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "The UserIdentity of the team member who performed this activity. For 'created' and 'modified', this is typically the work item author or a contributor. For 'viewed', this is any team member who accessed the work item.",
+                "properties": {
+                  "ExternalId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Unique identifier of the activity performer.",
+                    "examples": [
+                      "dc28c604-50c6-6bbb-8e01-43d850607160"
+                    ]
+                  },
+                  "Email": {
+                    "type": "string",
+                    "format": "email",
+                    "minLength": 1,
+                    "description": "Corporate email of the activity performer. Must share the same domain as all other user identities in this item.",
+                    "examples": [
+                      "sarah.johnson@company.com",
+                      "michael.chen@company.com"
+                    ]
+                  },
+                  "ExternalName": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Full display name of the activity performer.",
+                    "examples": [
+                      "Sarah Johnson",
+                      "Michael Chen"
+                    ]
+                  },
+                  "PrincipalType": {
+                    "type": "string",
+                    "enum": [
+                      "user"
+                    ],
+                    "default": "user",
+                    "description": "Always 'user' for individual employees, never groups.",
+                    "examples": [
+                      "user"
+                    ]
+                  },
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Identity resolution key. Must match the Email field exactly.",
+                    "examples": [
+                      "sarah.johnson@company.com",
+                      "michael.chen@company.com"
+                    ]
+                  },
+                  "identitySourceProperties": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "description": "Additional identity source properties for the activity performer.",
+                    "properties": {
+                      "email": {
+                        "type": "string",
+                        "format": "email",
+                        "description": "Email address of the activity performer. Must match the Email field.",
+                        "examples": [
+                          "sarah.johnson@company.com"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "email"
+                    ],
+                    "examples": [
+                      {
+                        "email": "sarah.johnson@company.com"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "ExternalId",
+                  "Email",
+                  "ExternalName",
+                  "PrincipalType",
+                  "id",
+                  "identitySourceProperties"
+                ],
+                "examples": [
+                  {
+                    "ExternalId": "dc28c604-50c6-6bbb-8e01-43d850607160",
+                    "Email": "sarah.johnson@company.com",
+                    "ExternalName": "Sarah Johnson",
+                    "PrincipalType": "user",
+                    "id": "sarah.johnson@company.com",
+                    "identitySourceProperties": {
+                      "email": "sarah.johnson@company.com"
+                    }
+                  }
+                ]
+              },
+              "ActivityDateTime": {
+                "type": "string",
+                "format": "date-time",
+                "minLength": 1,
+                "description": "When this activity occurred. Must be <= work item ChangedDate. The 'created' activity timestamp must equal the earliest date for this work item.",
+                "examples": [
+                  "2025-06-01T09:00:00Z",
+                  "2025-09-15T14:30:00Z",
+                  "2025-11-14T10:30:00Z"
+                ]
+              },
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Unique identifier for this activity entry.",
+                "examples": [
+                  "activity-1",
+                  "activity-created-001",
+                  "activity-view-2025-09-15"
+                ]
+              }
+            },
+            "required": [
+              "ActivityType",
+              "ActivityPerformer",
+              "ActivityDateTime",
+              "id"
+            ]
+          }
+        },
+        "contentEnrichmentData": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "EnrichmentTypes": {
+                    "type": "integer",
+                    "enum": [
+                      1
+                    ],
+                    "default": 1,
+                    "description": "Enrichment operation. 1 = OCR.",
+                    "examples": [
+                      1
+                    ]
+                  },
+                  "payload": {
+                    "type": "string",
+                    "description": "Base64-encoded binary content for OCR processing. Cannot be synthesized by an LLM. Always generate null for the outer contentEnrichmentData field.",
+                    "examples": [
+                      "base64-encoded-binary-data"
+                    ]
+                  },
+                  "mimeType": {
+                    "type": "string",
+                    "enum": [
+                      "image/png",
+                      "image/jpg",
+                      "application/pdf"
+                    ],
+                    "description": "MIME type of the payload binary content.",
+                    "examples": [
+                      "image/png",
+                      "image/jpg",
+                      "application/pdf"
+                    ]
+                  }
+                },
+                "required": [
+                  "EnrichmentTypes",
+                  "payload",
+                  "mimeType"
+                ]
+              }
+            }
+          ],
+          "default": null,
+          "description": "Enrichment payload for OCR processing. Always generate null — ADO work items do not require binary enrichment.",
+          "examples": [
+            null
+          ]
+        },
+        "associatedItemsMetadata": {
+          "type": "null",
+          "description": "Always null — associated item details are in the attachments and comments arrays.",
+          "examples": [
+            null
+          ]
+        },
+        "itemVersion": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "default": null,
+          "description": "Integer version stamp. Always null for ADO work items.",
+          "examples": [
+            null
+          ]
+        },
+        "isAssociatedItem": {
+          "type": "boolean",
+          "enum": [
+            false
+          ],
+          "default": false,
+          "description": "Whether this item is itself an associated entity of a parent item. Always false — ADO work items are top-level items, not associated entities.",
+          "examples": [
+            false
+          ]
+        },
+        "accessControlList": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "description": "Access control permissions for this item. Always generate exactly one entry using the EVERYONE grant structure shown in the example. Do not deviate from this structure.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "principal": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "The access principal for this rule. For EVERYONE grants, applies to all authenticated users in the tenant.",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "everyone"
+                    ],
+                    "default": "everyone",
+                    "description": "Scope of this principal. Always 'everyone' — applies to all authenticated users in the tenant.",
+                    "examples": [
+                      "everyone"
+                    ]
+                  },
+                  "value": {
+                    "type": "string",
+                    "enum": [
+                      "EVERYONE"
+                    ],
+                    "default": "EVERYONE",
+                    "description": "The canonical string value for the everyone principal. Must be the uppercase literal 'EVERYONE'.",
+                    "examples": [
+                      "EVERYONE"
+                    ]
+                  },
+                  "identitySource": {
+                    "type": "null",
+                    "description": "Not applicable for the 'everyone' principal. Always null.",
+                    "examples": [
+                      null
+                    ]
+                  },
+                  "identitySourceEnum": {
+                    "type": "string",
+                    "enum": [
+                      "azureActiveDirectory"
+                    ],
+                    "default": "azureActiveDirectory",
+                    "description": "Identity provider for this tenant. Always 'azureActiveDirectory'.",
+                    "examples": [
+                      "azureActiveDirectory"
+                    ]
+                  },
+                  "identityType": {
+                    "type": "integer",
+                    "enum": [
+                      3
+                    ],
+                    "default": 3,
+                    "description": "Numeric code for the principal category. 3 represents the 'everyone' group type. Always 3 for EVERYONE grants.",
+                    "examples": [
+                      3
+                    ]
+                  },
+                  "identitySourceProperties": {
+                    "type": "null",
+                    "description": "Not applicable for the 'everyone' principal. Always null.",
+                    "examples": [
+                      null
+                    ]
+                  },
+                  "metadata": {
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "default": null,
+                    "description": "Additional principal metadata. Always null for the 'everyone' principal."
+                  },
+                  "displayName": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "default": null,
+                    "description": "Display name override. Always null for the 'everyone' principal."
+                  }
+                },
+                "required": [
+                  "type",
+                  "value",
+                  "identitySource",
+                  "identitySourceEnum",
+                  "identityType",
+                  "identitySourceProperties",
+                  "metadata",
+                  "displayName"
+                ]
+              },
+              "ruleNode": {
+                "type": "null",
+                "description": "Not applicable for simple EVERYONE grant rules. Always null.",
+                "examples": [
+                  null
+                ]
+              },
+              "accessType": {
+                "type": "string",
+                "enum": [
+                  "grant"
+                ],
+                "default": "grant",
+                "description": "Whether this entry grants or denies access. Always 'grant'.",
+                "examples": [
+                  "grant"
+                ]
+              },
+              "transformedIdentity": {
+                "type": "null",
+                "description": "Not applicable for the 'everyone' principal. Always null.",
+                "examples": [
+                  null
+                ]
+              }
+            },
+            "required": [
+              "principal",
+              "ruleNode",
+              "accessType",
+              "transformedIdentity"
+            ]
+          },
+          "examples": [
+            [
+              {
+                "principal": {
+                  "type": "everyone",
+                  "value": "EVERYONE",
+                  "identitySource": null,
+                  "identitySourceEnum": "azureActiveDirectory",
+                  "identityType": 3,
+                  "identitySourceProperties": null,
+                  "metadata": null,
+                  "displayName": null
+                },
+                "ruleNode": null,
+                "accessType": "grant",
+                "transformedIdentity": null
+              }
+            ]
+          ]
+        },
+        "content": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "The content body for this work item. Work items have an HTML body — always set type to 'html'. annotation and semanticContent must always be null.",
+          "properties": {
+            "parsedData": {
+              "type": "string",
+              "description": "The HTML body of the work item. Empty string if there is no body.",
+              "examples": [
+                "<div>As a registered user, I want to reset my password via email so that I can regain access when I forget my credentials.</div>",
+                "<div>When clicking the Submit button on the checkout page, the application throws a 500 error. This occurs consistently for users with more than 10 items in cart.</div>"
+              ]
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "markdown",
+                "text",
+                "none",
+                "binary",
+                "bmp",
+                "jpg",
+                "pdf",
+                "png",
+                "tif",
+                "unknownFutureValue",
+                "html"
+              ],
+              "default": "html",
+              "description": "Format of the content in parsedData. Always 'html' for Azure DevOps work items — parsedData contains the HTML body. All other values are reserved — do not use.",
+              "examples": [
+                "html"
+              ]
+            },
+            "annotation": {
+              "type": "null",
+              "description": "Populated by the data pipeline. Always generate null.",
+              "examples": [
+                null
+              ]
+            },
+            "semanticContent": {
+              "type": "null",
+              "description": "Reserved for future semantic content classification signals. Always generate null.",
+              "examples": [
+                null
+              ]
+            }
+          },
+          "required": [
+            "parsedData",
+            "type",
+            "annotation",
+            "semanticContent"
+          ]
+        },
+        "properties": {
+          "type": "object",
+          "additionalProperties": true,
+          "description": "ADO work item properties.",
+          "properties": {
+            "AreaPath": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9\\-_]+(?:\\\\[A-Za-z0-9\\-_]+)+$",
+              "description": "The hierarchical area path that classifies the work item within the project's organizational structure. This field is required and must always have a non-empty value. Format: '<OrganizationName>\\<TeamProject>' or deeper: '<OrganizationName>\\<TeamProject>\\<SubArea>\\<SubSubArea>'. Most work items (80%+) should have at least 3 segments (i.e. include a sub-area below the team project). Only a small minority should be flat (2 segments). Area paths represent team ownership, product components, or functional areas. Must not contain spaces; use hyphens or underscores for multi-word names.",
+              "examples": [
+                "company\\WebPlatform\\Backend\\API",
+                "company\\WebPlatform\\Frontend\\UI",
+                "company\\WebPlatform\\Infrastructure",
+                "company\\MobileApp\\iOS",
+                "company\\MobileApp\\Android\\Payments",
+                "fabrikam\\ECommerce\\Checkout",
+                "company\\WebPlatform"
+              ]
+            },
+            "AssignedTo": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "additionalProperties": false,
+              "default": null,
+              "description": "The user currently assigned to work on this work item. Null if unassigned. When populated, all sub-fields (ExternalId, ExternalName, Email) must have valid non-empty values. Partial assignment is not allowed. AssignedTo is independent of State — work items in any state can be assigned or unassigned.",
+              "properties": {
+                "ExternalId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Unique identifier (GUID) of the assigned user within Azure DevOps, in standard GUID format with hyphens.",
+                  "examples": [
+                    "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                    "b2c3d4e5-f6a7-8901-bcde-f23456789012"
+                  ]
+                },
+                "Email": {
+                  "type": "string",
+                  "format": "email",
+                  "minLength": 1,
+                  "description": "Email address of the assigned user.",
+                  "examples": [
+                    "sarah.johnson@company.com",
+                    "michael.chen@company.com"
+                  ]
+                },
+                "ExternalName": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Full display name of the assigned user as shown in Azure DevOps.",
+                  "examples": [
+                    "Sarah Johnson",
+                    "Michael Chen",
+                    "Alex Rodriguez"
+                  ]
+                },
+                "PrincipalType": {
+                  "type": "string",
+                  "enum": [
+                    "user"
+                  ],
+                  "default": "user",
+                  "description": "Always 'user' for individual employees, never groups.",
+                  "examples": [
+                    "user"
+                  ]
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Identity resolution key. Must match the Email field exactly.",
+                  "examples": [
+                    "sarah.johnson@company.com",
+                    "michael.chen@company.com"
+                  ]
+                }
+              },
+              "required": [
+                "ExternalId",
+                "Email",
+                "ExternalName",
+                "PrincipalType",
+                "id"
+              ]
+            },
+            "Authors": {
+              "type": "array",
+              "minItems": 1,
+              "description": "List of users who have authored or significantly contributed to this work item. This field is required and must always have at least one author. The first author must be the same person as CreatedBy (same ExternalId, ExternalName, Email). Additional contributors may be added for collaborative work items. Each entry contains structured identity metadata.",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "ExternalId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Unique identifier (GUID) of the author within Azure DevOps.",
+                    "examples": [
+                      "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+                    ]
+                  },
+                  "Email": {
+                    "type": "string",
+                    "format": "email",
+                    "minLength": 1,
+                    "description": "Email address of the author.",
+                    "examples": [
+                      "sarah.johnson@company.com"
+                    ]
+                  },
+                  "ExternalName": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Full display name of the author.",
+                    "examples": [
+                      "Sarah Johnson",
+                      "Michael Chen"
+                    ]
+                  },
+                  "PrincipalType": {
+                    "type": "string",
+                    "enum": [
+                      "user"
+                    ],
+                    "default": "user",
+                    "description": "Always 'user' for individual employees, never groups.",
+                    "examples": [
+                      "user"
+                    ]
+                  },
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Identity resolution key. Must match the Email field exactly.",
+                    "examples": [
+                      "sarah.johnson@company.com",
+                      "michael.chen@company.com"
+                    ]
+                  }
+                },
+                "required": [
+                  "ExternalId",
+                  "Email",
+                  "ExternalName",
+                  "PrincipalType",
+                  "id"
+                ]
+              },
+              "examples": [
+                [
+                  {
+                    "ExternalId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                    "Email": "sarah.johnson@company.com",
+                    "ExternalName": "Sarah Johnson",
+                    "PrincipalType": "user",
+                    "id": "sarah.johnson@company.com"
+                  }
+                ],
+                [
+                  {
+                    "ExternalId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                    "Email": "sarah.johnson@company.com",
+                    "ExternalName": "Sarah Johnson",
+                    "PrincipalType": "user",
+                    "id": "sarah.johnson@company.com"
+                  },
+                  {
+                    "ExternalId": "b2c3d4e5-f6a7-8901-bcde-f23456789012",
+                    "Email": "michael.chen@company.com",
+                    "ExternalName": "Michael Chen",
+                    "PrincipalType": "user",
+                    "id": "michael.chen@company.com"
+                  }
+                ]
+              ]
+            },
+            "ChangedBy": {
+              "type": "object",
+              "additionalProperties": false,
+              "description": "The user who most recently modified this work item. This field is required and must always have non-empty values. This captures the last editor's identity for audit trails, change tracking, and accountability. In Azure DevOps, this is updated automatically with each save operation.",
+              "properties": {
+                "ExternalId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Unique identifier (GUID) of the user who last modified the work item.",
+                  "examples": [
+                    "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+                  ]
+                },
+                "Email": {
+                  "type": "string",
+                  "format": "email",
+                  "minLength": 1,
+                  "description": "Email address of the last modifier.",
+                  "examples": [
+                    "michael.chen@company.com"
+                  ]
+                },
+                "ExternalName": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Full display name of the last modifier.",
+                  "examples": [
+                    "Michael Chen",
+                    "Sarah Johnson"
+                  ]
+                },
+                "PrincipalType": {
+                  "type": "string",
+                  "enum": [
+                    "user"
+                  ],
+                  "default": "user",
+                  "description": "Always 'user' for individual employees, never groups.",
+                  "examples": [
+                    "user"
+                  ]
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Identity resolution key. Must match the Email field exactly.",
+                  "examples": [
+                    "sarah.johnson@company.com",
+                    "michael.chen@company.com"
+                  ]
+                }
+              },
+              "required": [
+                "ExternalId",
+                "Email",
+                "ExternalName",
+                "PrincipalType",
+                "id"
+              ]
+            },
+            "ChangedDate": {
+              "type": "string",
+              "format": "date-time",
+              "minLength": 1,
+              "description": "The timestamp when the work item was last modified, captured in ISO 8601 format. This field is required and must always have a non-empty value. This value changes with every save operation and is used for sync operations, conflict detection, and recency-based queries.",
+              "examples": [
+                "2025-01-15T14:30:00Z",
+                "2024-12-20T09:15:22Z",
+                "2025-02-10T16:45:00Z"
+              ]
+            },
+            "ClosedBy": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "additionalProperties": false,
+              "default": null,
+              "description": "The user who closed or resolved this work item. Null if not closed. When populated, all sub-fields (ExternalId, ExternalName, Email) must have valid non-empty values. Must be consistent with State: if State is Closed/Resolved/Done, ClosedBy must be populated; if State is New/Active/Open or any other open state, ClosedBy must be null.",
+              "properties": {
+                "ExternalId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Unique identifier (GUID) of the user who closed the work item.",
+                  "examples": [
+                    "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+                  ]
+                },
+                "Email": {
+                  "type": "string",
+                  "format": "email",
+                  "minLength": 1,
+                  "description": "Email address of the user who closed the work item.",
+                  "examples": [
+                    "sarah.johnson@company.com"
+                  ]
+                },
+                "ExternalName": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Full display name of the user who closed the work item.",
+                  "examples": [
+                    "Sarah Johnson"
+                  ]
+                },
+                "PrincipalType": {
+                  "type": "string",
+                  "enum": [
+                    "user"
+                  ],
+                  "default": "user",
+                  "description": "Always 'user' for individual employees, never groups.",
+                  "examples": [
+                    "user"
+                  ]
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Identity resolution key. Must match the Email field exactly.",
+                  "examples": [
+                    "sarah.johnson@company.com",
+                    "michael.chen@company.com"
+                  ]
+                }
+              },
+              "required": [
+                "ExternalId",
+                "Email",
+                "ExternalName",
+                "PrincipalType",
+                "id"
+              ]
+            },
+            "ClosedDate": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "default": null,
+              "description": "The timestamp when the work item was closed or resolved, captured in ISO 8601 format. Null if the work item is still active. Must be consistent with State: populated when State is Closed, Resolved, or Done; null when State is New, Active, In Progress, or any other open state. Must be <= ChangedDate. This field is used for cycle time calculations, velocity metrics, and completion reporting.",
+              "examples": [
+                null,
+                "2025-01-20T11:00:00Z",
+                "2024-12-25T17:30:00Z"
+              ],
+              "format": "date-time"
+            },
+            "CompletedWork": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0,
+              "default": null,
+              "description": "Hours of work completed on this work item. For Task and Bug: null if not yet recorded, or a non-negative integer when tracked. For all other work item types (Epic, Feature, User Story, Issue, Objective, Key Result): must be null — effort tracking does not apply. Relationship constraint: CompletedWork + RemainingWork should approximate EstimatedWork for well-tracked items.",
+              "examples": [
+                null,
+                0,
+                2,
+                4,
+                8,
+                16,
+                40
+              ]
+            },
+            "CreatedBy": {
+              "type": "object",
+              "additionalProperties": false,
+              "description": "The user who originally created this work item. This field is required and must always have non-empty values. This captures the original creator's identity for audit trails and ownership tracking. In Azure DevOps, this field is immutable once set.",
+              "properties": {
+                "ExternalId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Unique identifier (GUID) of the user who created the work item.",
+                  "examples": [
+                    "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+                  ]
+                },
+                "Email": {
+                  "type": "string",
+                  "format": "email",
+                  "minLength": 1,
+                  "description": "Email address of the creator.",
+                  "examples": [
+                    "sarah.johnson@company.com"
+                  ]
+                },
+                "ExternalName": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Full display name of the creator.",
+                  "examples": [
+                    "Sarah Johnson",
+                    "Michael Chen"
+                  ]
+                },
+                "PrincipalType": {
+                  "type": "string",
+                  "enum": [
+                    "user"
+                  ],
+                  "default": "user",
+                  "description": "Always 'user' for individual employees, never groups.",
+                  "examples": [
+                    "user"
+                  ]
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Identity resolution key. Must match the Email field exactly.",
+                  "examples": [
+                    "sarah.johnson@company.com",
+                    "michael.chen@company.com"
+                  ]
+                }
+              },
+              "required": [
+                "ExternalId",
+                "Email",
+                "ExternalName",
+                "PrincipalType",
+                "id"
+              ]
+            },
+            "CreatedDate": {
+              "type": "string",
+              "format": "date-time",
+              "minLength": 1,
+              "description": "The timestamp when the work item was originally created in Azure DevOps, captured in ISO 8601 format. This field is required and must always have a non-empty value. This field is immutable and used for age calculations, lead time metrics, and historical reporting.",
+              "examples": [
+                "2025-01-10T08:00:00Z",
+                "2024-11-15T14:22:45Z",
+                "2024-12-01T09:30:00Z"
+              ]
+            },
+            "DueDate": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "default": null,
+              "description": "The target date by which this work item should be completed, in ISO 8601 format. Null if no due date is set. Used for deadline tracking, SLA compliance, and priority calculations. When set, must fall within the work item's iteration window: >= IterationStartDate and <= IterationEndDate. Must be null if the work item is a backlog item (IterationStartDate and IterationEndDate are null).",
+              "examples": [
+                null,
+                "2025-02-15T00:00:00Z",
+                "2025-03-01T00:00:00Z"
+              ],
+              "format": "date-time"
+            },
+            "EstimatedWork": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0,
+              "default": null,
+              "description": "Original estimate of hours required to complete this work item. For Task and Bug: null if no estimate has been set, or a non-negative integer set during sprint planning. For all other work item types (Epic, Feature, User Story, Issue, Objective, Key Result): must be null — effort tracking does not apply.",
+              "examples": [
+                null,
+                0,
+                2,
+                4,
+                8,
+                16,
+                40
+              ]
+            },
+            "ExecutionStage": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "default": null,
+              "description": "The current execution stage or phase of the work item in the development lifecycle. Common values include 'Design', 'Development', 'Testing', 'Review', or 'Deployment'. Null if not tracked or not applicable to the work item type.",
+              "examples": [
+                null,
+                "Design",
+                "Development",
+                "Code Review",
+                "Testing",
+                "UAT",
+                "Deployment"
+              ]
+            },
+            "IconUrl": {
+              "type": "string",
+              "format": "uri",
+              "minLength": 1,
+              "description": "URL of the icon that represents this work item type in Azure DevOps. This field is required and must always have a non-empty value. Different work item types have distinct icons. The URL must use the same OrganizationName as other fields. Icon mappings: Epic=icon_crown, Feature=icon_trophy, User Story=icon_book, Task=icon_clipboard, Bug=icon_insect, Issue=icon_flame, Objective=icon_goal, Key Result=icon_key.",
+              "examples": [
+                "https://dev.azure.com/company/_apis/wit/workItemIcons/icon_crown?color=773B93",
+                "https://dev.azure.com/company/_apis/wit/workItemIcons/icon_trophy?color=773B93",
+                "https://dev.azure.com/company/_apis/wit/workItemIcons/icon_book?color=009CCC",
+                "https://dev.azure.com/company/_apis/wit/workItemIcons/icon_clipboard?color=F2CB1D",
+                "https://dev.azure.com/company/_apis/wit/workItemIcons/icon_insect?color=CC293D"
+              ]
+            },
+            "Id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]{7}$",
+              "description": "A unique numeric identifier for the work item, assigned sequentially by Azure DevOps within the organization. Stored as an 8-digit numeric string (no leading zeros). Used in URLs, queries, links, and references. Immutable once assigned.",
+              "examples": [
+                "62005701",
+                "27809083",
+                "85285696",
+                "59565922"
+              ]
+            },
+            "IterationEndDate": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "default": null,
+              "description": "The end date of the iteration (sprint) that this work item is assigned to, in ISO 8601 format. Null for backlog items (IterationPath is just '<OrganizationName>'). For sprint items, this must be the last day of the month specified in IterationPath. Examples: if IterationPath ends with '2025\\Q1\\Jan', IterationEndDate should be '2025-01-31T00:00:00Z'; if '2025\\Q1\\Feb', should be '2025-02-28T00:00:00Z' (or 2/29 for leap years); if '2025\\Q2\\Apr', should be '2025-04-30T00:00:00Z'.",
+              "examples": [
+                null,
+                "2025-01-31T00:00:00Z",
+                "2025-02-28T00:00:00Z",
+                "2025-04-30T00:00:00Z",
+                "2025-07-31T00:00:00Z"
+              ],
+              "format": "date-time"
+            },
+            "IterationPath": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9\\-_]+(?:\\\\[A-Za-z0-9\\-_]+)*$",
+              "description": "The hierarchical iteration path that associates the work item with a specific sprint or release. This field is required and must always have a non-empty value. Two formats based on work item assignment: 1) Backlog items: '<OrganizationName>' only (e.g., 'company') - no iteration dates are needed, IterationStartDate and IterationEndDate must be null; 2) Sprint items: '<OrganizationName>\\<TeamProject>\\<YYYY>\\<Quarter>\\<Month>' (e.g., 'company\\WebPlatform\\2025\\Q1\\Jan') - iteration dates must correspond to the month specified (Jan = 1/1-1/31, Feb = 2/1-2/28, etc.). Must not contain spaces; use hyphens or underscores for multi-word names.",
+              "examples": [
+                "company",
+                "company\\WebPlatform\\2025\\Q1\\Jan",
+                "company\\WebPlatform\\2025\\Q1\\Feb",
+                "company\\WebPlatform\\2025\\Q2\\Apr",
+                "fabrikam\\E-Commerce\\2025\\Q3\\Jul"
+              ]
+            },
+            "IterationStartDate": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "default": null,
+              "description": "The start date of the iteration (sprint) that this work item is assigned to, in ISO 8601 format. Null for backlog items (IterationPath is just '<OrganizationName>'). For sprint items, this must be the first day of the month specified in IterationPath. Examples: if IterationPath ends with '2025\\Q1\\Jan', IterationStartDate should be '2025-01-01T00:00:00Z'; if '2025\\Q2\\Apr', should be '2025-04-01T00:00:00Z'.",
+              "examples": [
+                null,
+                "2025-01-01T00:00:00Z",
+                "2025-02-01T00:00:00Z",
+                "2025-04-01T00:00:00Z",
+                "2025-07-01T00:00:00Z"
+              ],
+              "format": "date-time"
+            },
+            "OrganizationName": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9\\-_]+$",
+              "description": "The name of the Azure DevOps organization that contains this work item. This field is required and must always have a non-empty value. Organizations are the top-level container in Azure DevOps and typically represent a company or major division. Must not contain spaces; use hyphens or underscores for multi-word names.",
+              "examples": [
+                "company",
+                "fabrikam",
+                "adventure-works",
+                "northwind_traders"
+              ]
+            },
+            "OrganizationUrl": {
+              "type": "string",
+              "format": "uri",
+              "minLength": 1,
+              "description": "The base URL of the Azure DevOps organization. This field is required and must always have a non-empty value. This URL is used as the root for all API calls and navigation within the organization. Format: 'https://dev.azure.com/<OrganizationName>'. Must use the same OrganizationName as other fields.",
+              "examples": [
+                "https://dev.azure.com/company",
+                "https://dev.azure.com/fabrikam",
+                "https://dev.azure.com/adventure-works"
+              ]
+            },
+            "ParentId": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "pattern": "^[1-9][0-9]{7}$",
+              "default": null,
+              "description": "The numeric ID of the parent work item in the hierarchy, stored as an 8-digit numeric string (same format as Id). Null when there is no parent (top-level item such as Epic or Objective). When set, must match the Id of an existing work item in the dataset and ParentURL must be populated consistently. ADO hierarchy: Epic > Feature > User Story > Task/Bug; Objective > Key Result.",
+              "examples": [
+                null,
+                "62005701",
+                "27809083",
+                "85285696"
+              ]
+            },
+            "ParentURL": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "format": "uri",
+              "minLength": 1,
+              "default": null,
+              "description": "The URL to the parent work item's detail page in Azure DevOps. Null if no parent exists (ParentId is null). Must be consistent with ParentId: if ParentId is null, ParentURL must be null; if ParentId is a valid numeric ID, ParentURL must be the full URL to that work item.",
+              "examples": [
+                null,
+                "https://dev.azure.com/company/WebPlatform/_workitems/edit/56934",
+                "https://dev.azure.com/company/WebPlatform/_workitems/edit/12087"
+              ]
+            },
+            "Priority": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0,
+              "default": null,
+              "description": "The priority level of the work item. Applicable to Bug, Epic, Feature, Issue, Task, and User Story work item types. Values: 0 (critical), 1 (highest), 2 (high), 3 (medium), 4 (lowest). Null when not set or for work item types where priority is not tracked (Objective, Key Result, etc.).",
+              "examples": [
+                0,
+                1,
+                2,
+                3,
+                4
+              ]
+            },
+            "PriorityNormalized": {
+              "type": "string",
+              "enum": [
+                "High",
+                "Medium",
+                "Low"
+              ],
+              "default": "Medium",
+              "description": "Normalized priority value for cross-system compatibility and reporting. Derived using a 4-case rule: (A) Both Priority and Severity set — use the higher of the two signals on a High/Medium/Low scale; (B) Priority set, Severity null — Priority 0 or 1 → 'High', Priority 2 → 'Medium', Priority 3+ → 'Low'; (C) Severity set, Priority null — '1 - Critical' or '2 - High' → 'High', '3 - Medium' → 'Medium', '4 - Low' → 'Low'; (D) Both null — default to 'Medium'.",
+              "examples": [
+                "High",
+                "Medium",
+                "Low"
+              ]
+            },
+            "ProjectURL": {
+              "type": "string",
+              "format": "uri",
+              "minLength": 1,
+              "description": "The URL to the Azure DevOps project that contains this work item. This field is required and must always have a non-empty value. This URL provides access to the project's boards, backlogs, repos, and pipelines.",
+              "examples": [
+                "https://dev.azure.com/company/WebPlatform",
+                "https://dev.azure.com/company/MobileApp",
+                "https://dev.azure.com/fabrikam/ECommerce"
+              ]
+            },
+            "RemainingWork": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0,
+              "default": null,
+              "description": "Hours of work remaining to complete this work item. For Task and Bug: null if not yet estimated, or a non-negative integer updated as work progresses. For all other work item types (Epic, Feature, User Story, Issue, Objective, Key Result): must be null — effort tracking does not apply. Should decrease as CompletedWork increases.",
+              "examples": [
+                null,
+                0,
+                2,
+                4,
+                8,
+                16,
+                40
+              ]
+            },
+            "Reason": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Explains why the work item was created or why it transitioned to its current state. In ADO, Reason is a system-tracked field that records the cause of the last state change. Must be logically consistent with State: New/Open items should have reasons like 'New work item created' or 'Approved for development' — never reasons implying work is in progress or complete; Active/In Progress items should have reasons like 'Work started' or 'Approved for development'; Resolved/Done items should have reasons like 'Resolved by fix' or 'Fixed and verified'; Closed items should have reasons like 'Closed as completed', 'Closed as not a bug', or 'Closed as duplicate'. Written as a short plain-text phrase.",
+              "examples": [
+                "New work item created",
+                "Approved for development",
+                "Work started",
+                "Resolved by fix",
+                "Closed as completed",
+                "Closed as not a bug",
+                "Blocked by dependency",
+                "Moved to next sprint"
+              ]
+            },
+            "ReproSteps": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "default": null,
+              "description": "Step-by-step instructions to reproduce a bug or issue. Applicable to Bug work item type only. Written in HTML format with numbered steps, expected results, and actual results. Must be null for all other work item types (Epic, Feature, User Story, Task, Issue, etc.).",
+              "examples": [
+                null,
+                "<div><h3>Steps to Reproduce</h3><ol><li>Navigate to the checkout page</li><li>Add more than 10 items to cart</li><li>Click the Submit button</li></ol><h3>Expected Result</h3><p>Order is processed successfully</p><h3>Actual Result</h3><p>500 Internal Server Error is displayed</p></div>",
+                "<div><ol><li>Login as admin user</li><li>Go to Settings > Users</li><li>Click 'Add User'</li><li>Leave email field empty and click Save</li></ol><p>Expected: Validation error. Actual: Application crashes.</p></div>"
+              ]
+            },
+            "Severity": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "default": null,
+              "description": "The severity level indicating the impact on the system. Applicable to Bug and Issue work item types only. Standard values are '1 - Critical' (system unusable), '2 - High' (major feature broken), '3 - Medium' (feature works with workaround), and '4 - Low' (minor cosmetic issue). Must be null for all other work item types (Epic, Feature, User Story, Task, etc.).",
+              "examples": [
+                null,
+                "1 - Critical",
+                "2 - High",
+                "3 - Medium",
+                "4 - Low"
+              ]
+            },
+            "StackRank": {
+              "type": "number",
+              "minimum": 0,
+              "default": 1000000000,
+              "description": "A numeric value used to order work items in the backlog. This field is required and must always have a value (0 or greater). Lower values appear higher in the backlog. Stack rank is used for prioritization and can be a decimal to allow insertion between existing items. Automatically managed when items are reordered via drag-and-drop. Default value is 1000000000 (middle of typical range).",
+              "examples": [
+                0,
+                1000000000,
+                1500000000,
+                1999999999.5,
+                2000000000
+              ]
+            },
+            "State": {
+              "type": "string",
+              "minLength": 1,
+              "description": "The current workflow state of the work item. This field is required and must always have a non-empty value. Standard values are 'New', 'Active', 'Resolved', and 'Closed'. States vary by work item type and process template (Agile, Scrum, CMMI). Organizations may define custom states to match their specific workflows (e.g., 'In Review', 'Blocked', 'Ready for QA').",
+              "examples": [
+                "New",
+                "Active",
+                "Resolved",
+                "Closed",
+                "In Progress",
+                "In Review",
+                "Blocked",
+                "Ready for QA",
+                "Done"
+              ]
+            },
+            "StateNormalized": {
+              "type": "string",
+              "enum": [
+                "Open",
+                "Closed"
+              ],
+              "default": "Open",
+              "description": "A normalized state value for cross-system compatibility and reporting. Calculated from the State field using the following mapping: 'Open' for states New, Open, Active, In Progress, In Review, Proposed, Ready for QA, Pending, Blocked; 'Closed' for states Resolved, Done, Closed, Archived, Canceled, Removed. This enables consistent state comparison across different ADO process templates and external systems.",
+              "examples": [
+                "Open",
+                "Closed"
+              ]
+            },
+            "Tags": {
+              "type": "array",
+              "minItems": 0,
+              "default": [],
+              "description": "List of tags associated with this work item for categorization and filtering. Tags are user-defined labels that enable ad-hoc grouping and queries. Common tags include team names, feature areas, release targets, or custom classifications.",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "examples": [
+                [],
+                [
+                  "frontend"
+                ],
+                [
+                  "api",
+                  "performance",
+                  "high-priority"
+                ],
+                [
+                  "tech-debt",
+                  "security",
+                  "Q1-2025"
+                ]
+              ]
+            },
+            "TeamProject": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9\\-_]+$",
+              "description": "The name of the Azure DevOps project that contains this work item. This field is required and must always have a non-empty value. Projects are containers for related work items, repositories, pipelines, and artifacts. Project names are unique within an organization. Must not contain spaces; use hyphens or underscores for multi-word names.",
+              "examples": [
+                "WebPlatform",
+                "MobileApp",
+                "E-Commerce",
+                "Infrastructure",
+                "Data_Platform"
+              ]
+            },
+            "Title": {
+              "type": "string",
+              "minLength": 1,
+              "description": "The title of the work item, displayed prominently in lists, boards, and search results. This field is required and must always have a non-empty value. Titles should be concise yet descriptive (typically 5-15 words). For User Stories, follow patterns like 'As a user, I want...' or action-oriented titles. For Bugs, describe the problem briefly.",
+              "examples": [
+                "Implement password reset via email",
+                "Checkout fails with more than 10 items in cart",
+                "Add dark mode support to settings page",
+                "Optimize database queries for user search",
+                "Update documentation for API v2 endpoints"
+              ]
+            },
+            "URL": {
+              "type": "string",
+              "format": "uri",
+              "minLength": 1,
+              "description": "The fully qualified URL to access this work item's detail page in Azure DevOps. This field is required and must always have a non-empty value. This URL follows Azure DevOps routing conventions and is used for navigation, deep linking, and external references.",
+              "examples": [
+                "https://dev.azure.com/company/WebPlatform/_workitems/edit/12345",
+                "https://dev.azure.com/company/MobileApp/_workitems/edit/98765",
+                "https://dev.azure.com/fabrikam/ECommerce/_workitems/edit/54321"
+              ]
+            },
+            "WorkItemType": {
+              "type": "string",
+              "minLength": 1,
+              "description": "The type of work item, which determines its available fields, workflow states, and behavior. This field is required and must always have a non-empty value. Standard values are 'Epic', 'Feature', 'User Story', 'Issue', 'Task', 'Bug', 'Objective', and 'Key Result'. Note: WorkItemType may contain spaces (unlike OrganizationName, TeamProject, AreaPath, IterationPath which cannot). Organizations may define custom work item types. Common parent-child hierarchy relationships: Epic has no parent; Feature parent is Epic; User Story parent is Feature; Task parent is User Story or Bug; Bug parent is Feature or User Story; Issue has no parent or parent is Epic/Feature; Objective has no parent; Key Result parent is Objective.",
+              "examples": [
+                "Epic",
+                "Feature",
+                "User Story",
+                "Issue",
+                "Task",
+                "Bug",
+                "Objective",
+                "Key Result",
+                "Spike",
+                "Technical Debt",
+                "Change Request"
+              ]
+            },
+            "AcceptanceCriteria": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "default": null,
+              "description": "The conditions that must be met for a work item to be considered complete. Applicable to Bug, Epic and Feature work item types. Written in HTML format, often as a checklist or Given-When-Then scenarios. Used by teams to define 'done' and validate completion. Must be null for work item types where acceptance criteria is not tracked (Task, Issue, Objective, Key Result, etc.).",
+              "examples": [
+                null,
+                "<div><ul><li>User receives password reset email within 2 minutes</li><li>Reset link expires after 24 hours</li><li>User can set new password meeting complexity requirements</li><li>User is notified of successful password change</li></ul></div>",
+                "<div><p>Given a user is logged in</p><p>When they navigate to Settings</p><p>Then they should see a Dark Mode toggle</p><p>And selecting it should immediately change the theme</p></div>"
+              ]
+            },
+            "SystemInfo": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "default": null,
+              "description": "System information captured when a bug was created, such as browser version, operating system, device type, or environment details. Applicable to Bug work item type only. Helps with reproduction and debugging. Must be null for all other work item types (Epic, Feature, User Story, Task, Issue, etc.).",
+              "examples": [
+                null,
+                "Browser: Chrome 120.0.6099.130\nOS: Windows 11\nDevice: Desktop\nEnvironment: Production",
+                "iOS 17.2, iPhone 15 Pro, App Version 2.3.1",
+                "Firefox 121.0, macOS Sonoma 14.2, Staging environment"
+              ]
+            },
+            "DeploySiteID": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 1000,
+              "maximum": 9999,
+              "default": null,
+              "description": "Unique numeric identifier of the customer deployment site this work item is linked to. This is the anchor field for all Deploy_ fields: if DeploySiteID is null, then DeployStatus, DeploySiteNotes, DeployGoLiveDate, DeployFieldEngineer, and DeployRegion must all be null. If DeploySiteID is set, all other Deploy_ fields must also be populated. Multiple work items may share the same DeploySiteID (same site, different work items). Applicable to Task, Bug, User Story, and Feature work item types involved in delivery work. Must be null for Objective, Key Result, and top-level Epic items.",
+              "examples": [
+                null,
+                1042,
+                2371,
+                5819,
+                7203
+              ]
+            },
+            "DeployStatus": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "enum": [
+                "Planned",
+                "In Progress",
+                "UAT",
+                "Live",
+                "Suspended",
+                null
+              ],
+              "default": null,
+              "description": "Current status of the customer site deployment linked to this work item. Null if DeploySiteID is null. Must be consistent with the work item State: a Closed or Resolved work item should not have DeployStatus of Planned or In Progress. Values: Planned (deployment scheduled, not started), In Progress (actively deploying), UAT (deployed, under customer acceptance testing), Live (successfully deployed and in production), Suspended (deployment paused due to issues or decision).",
+              "examples": [
+                null,
+                "Planned",
+                "In Progress",
+                "UAT",
+                "Live",
+                "Suspended"
+              ]
+            },
+            "DeploySiteNotes": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "default": null,
+              "description": "Free-text notes capturing site-specific deployment context not captured in the work item title or description. Null if DeploySiteID is null. Should include relevant details such as site infrastructure constraints, hardware configuration requirements, network limitations, or customer-specific integration considerations. Typically 1-3 sentences.",
+              "examples": [
+                null,
+                "Site requires air-gapped deployment with no external network access. All dependencies must be bundled.",
+                "Customer is running legacy firmware on grid controllers; compatibility layer needed before go-live.",
+                "Dual-region failover required per customer SLA. Primary region NA-West, failover to NA-East."
+              ]
+            },
+            "DeployGoLiveDate": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "format": "date-time",
+              "default": null,
+              "description": "Customer-committed go-live date for this site deployment, in ISO 8601 format. Null if DeploySiteID is null. Separate from ADO iteration dates - reflects the contractual or operational deadline agreed with the customer. Consistency rule: if DeployStatus is Live, DeployGoLiveDate must be in the past (deployment already completed). If DeployStatus is Planned, In Progress, or UAT, DeployGoLiveDate must be in the future.",
+              "examples": [
+                null,
+                "2025-03-31T00:00:00Z",
+                "2025-06-30T00:00:00Z",
+                "2024-11-15T00:00:00Z"
+              ]
+            },
+            "DeployFieldEngineer": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "additionalProperties": false,
+              "description": "Identity of the field engineer assigned to oversee this customer site deployment. Null if DeploySiteID is null. Field engineers are a distinct identity pool from developers (AssignedTo, CreatedBy) - they are operations and deployment specialists, not the engineering team authoring the work item. When populated, all sub-fields (ExternalId, ExternalName, Email) must have valid non-empty values. The same field engineer may appear across multiple work items for the same or different sites.",
+              "properties": {
+                "ExternalId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Unique identifier (GUID) of the field engineer.",
+                  "examples": [
+                    "c3d4e5f6-a7b8-9012-cdef-345678901234"
+                  ]
+                },
+                "Email": {
+                  "type": "string",
+                  "format": "email",
+                  "minLength": 1,
+                  "description": "Email address of the field engineer. Must use the same org domain as other identity fields.",
+                  "examples": [
+                    "james.miller@ecosync.com",
+                    "priya.patel@ecosync.com",
+                    "carlos.mendez@ecosync.com"
+                  ]
+                },
+                "ExternalName": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Full display name of the field engineer.",
+                  "examples": [
+                    "James Miller",
+                    "Priya Patel",
+                    "Carlos Mendez",
+                    "Aisha Okonkwo"
+                  ]
+                },
+                "PrincipalType": {
+                  "type": "string",
+                  "enum": [
+                    "user"
+                  ],
+                  "default": "user",
+                  "description": "Always 'user' for individual employees, never groups.",
+                  "examples": [
+                    "user"
+                  ]
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Identity resolution key. Must match the Email field exactly.",
+                  "examples": [
+                    "sarah.johnson@company.com",
+                    "michael.chen@company.com"
+                  ]
+                }
+              },
+              "required": [
+                "ExternalId",
+                "Email",
+                "ExternalName",
+                "PrincipalType",
+                "id"
+              ]
+            },
+            "DeployRegion": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "default": null,
+              "description": "Geographic region of the customer deployment site, as a short compound label. Null if DeploySiteID is null. Format: <Region>-<Subregion> using standard geographic codes. Must be consistent with DeploySiteID - the same site ID must always map to the same region. Used for filtering and capacity planning across field operations.",
+              "examples": [
+                null,
+                "EMEA-DE",
+                "EMEA-UK",
+                "NA-West",
+                "NA-East",
+                "APAC-AU",
+                "APAC-SG"
+              ]
+            }
+          },
+          "required": [
+            "AreaPath",
+            "AssignedTo",
+            "Authors",
+            "ChangedBy",
+            "ChangedDate",
+            "ClosedBy",
+            "ClosedDate",
+            "CreatedBy",
+            "CreatedDate",
+            "DueDate",
+            "ExecutionStage",
+            "IconUrl",
+            "Id",
+            "IterationEndDate",
+            "IterationPath",
+            "IterationStartDate",
+            "OrganizationName",
+            "OrganizationUrl",
+            "ParentId",
+            "ParentURL",
+            "Priority",
+            "PriorityNormalized",
+            "ProjectURL",
+            "Reason",
+            "ReproSteps",
+            "Severity",
+            "StackRank",
+            "State",
+            "StateNormalized",
+            "Tags",
+            "TeamProject",
+            "Title",
+            "URL",
+            "WorkItemType",
+            "AcceptanceCriteria",
+            "SystemInfo",
+            "CompletedWork",
+            "EstimatedWork",
+            "RemainingWork"
+          ]
+        },
+        "comments": {
+          "type": "array",
+          "minItems": 0,
+          "description": "Optional list of comments on this work item from team members. Omit this field entirely if no comments exist.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "entitySemanticType": {
+                "type": "string",
+                "enum": [
+                  "comment"
+                ],
+                "default": "comment",
+                "description": "Always 'comment'.",
+                "examples": [
+                  "comment"
+                ]
+              },
+              "commentId": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Unique string identifier for this comment within the dataset. Must be globally unique across all comments in the dataset (not just within a work item).",
+                "examples": [
+                  "28381967",
+                  "59112043",
+                  "74830021",
+                  "c-10042"
+                ]
+              },
+              "parentCommentId": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "description": "The commentId of the parent comment if this is a reply, or null if this is a top-level comment.",
+                "examples": [
+                  null,
+                  "comment-001"
+                ]
+              },
+              "creator": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "Identity of the user who wrote this comment. Must share the same email domain as other identities in this work item.",
+                "properties": {
+                  "ExternalId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Unique identifier (GUID) of the user within Azure DevOps.",
+                    "examples": [
+                      "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+                    ]
+                  },
+                  "Email": {
+                    "type": "string",
+                    "format": "email",
+                    "minLength": 1,
+                    "description": "Corporate email of the user. Must share the same domain as all other user identities in this work item.",
+                    "examples": [
+                      "sarah.johnson@company.com",
+                      "michael.chen@company.com"
+                    ]
+                  },
+                  "ExternalName": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Full display name of the user.",
+                    "examples": [
+                      "Sarah Johnson",
+                      "Michael Chen",
+                      "Priya Patel"
+                    ]
+                  },
+                  "PrincipalType": {
+                    "type": "string",
+                    "enum": [
+                      "user"
+                    ],
+                    "default": "user",
+                    "description": "Always 'user' for individual employees, never groups.",
+                    "examples": [
+                      "user"
+                    ]
+                  },
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Identity resolution key. Must match the Email field exactly.",
+                    "examples": [
+                      "sarah.johnson@company.com",
+                      "michael.chen@company.com"
+                    ]
+                  }
+                },
+                "required": [
+                  "ExternalId",
+                  "Email",
+                  "ExternalName",
+                  "PrincipalType",
+                  "id"
+                ]
+              },
+              "modifier": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "Identity of the user who last edited this comment. If never edited, must be identical to creator.",
+                "properties": {
+                  "ExternalId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Unique identifier (GUID) of the user within Azure DevOps.",
+                    "examples": [
+                      "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+                    ]
+                  },
+                  "Email": {
+                    "type": "string",
+                    "format": "email",
+                    "minLength": 1,
+                    "description": "Corporate email of the user. Must share the same domain as all other user identities in this work item.",
+                    "examples": [
+                      "sarah.johnson@company.com",
+                      "michael.chen@company.com"
+                    ]
+                  },
+                  "ExternalName": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Full display name of the user.",
+                    "examples": [
+                      "Sarah Johnson",
+                      "Michael Chen",
+                      "Priya Patel"
+                    ]
+                  },
+                  "PrincipalType": {
+                    "type": "string",
+                    "enum": [
+                      "user"
+                    ],
+                    "default": "user",
+                    "description": "Always 'user' for individual employees, never groups.",
+                    "examples": [
+                      "user"
+                    ]
+                  },
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Identity resolution key. Must match the Email field exactly.",
+                    "examples": [
+                      "sarah.johnson@company.com",
+                      "michael.chen@company.com"
+                    ]
+                  }
+                },
+                "required": [
+                  "ExternalId",
+                  "Email",
+                  "ExternalName",
+                  "PrincipalType",
+                  "id"
+                ]
+              },
+              "createdDateTime": {
+                "type": "string",
+                "format": "date-time",
+                "minLength": 1,
+                "description": "When the comment was created, in ISO 8601 format. Must be >= work item CreatedDate and <= work item ChangedDate.",
+                "examples": [
+                  "2025-03-01T10:15:00Z",
+                  "2024-09-10T08:45:00Z"
+                ]
+              },
+              "modifiedDateTime": {
+                "type": "string",
+                "format": "date-time",
+                "minLength": 1,
+                "description": "When the comment was last edited, in ISO 8601 format. Must be >= createdDateTime and <= work item ChangedDate. Equals createdDateTime if the comment was never edited.",
+                "examples": [
+                  "2025-03-01T10:15:00Z",
+                  "2024-09-10T09:00:00Z"
+                ]
+              },
+              "mentionedUsers": {
+                "type": "array",
+                "minItems": 0,
+                "description": "List of users mentioned or tagged in this comment using @mentions. Empty array if no users are mentioned.",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "ExternalId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Unique identifier (GUID) of the user within Azure DevOps.",
+                      "examples": [
+                        "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+                      ]
+                    },
+                    "Email": {
+                      "type": "string",
+                      "format": "email",
+                      "minLength": 1,
+                      "description": "Corporate email of the user. Must share the same domain as all other user identities in this work item.",
+                      "examples": [
+                        "sarah.johnson@company.com",
+                        "michael.chen@company.com"
+                      ]
+                    },
+                    "ExternalName": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Full display name of the user.",
+                      "examples": [
+                        "Sarah Johnson",
+                        "Michael Chen",
+                        "Priya Patel"
+                      ]
+                    },
+                    "PrincipalType": {
+                      "type": "string",
+                      "enum": [
+                        "user"
+                      ],
+                      "default": "user",
+                      "description": "Always 'user' for individual employees, never groups.",
+                      "examples": [
+                        "user"
+                      ]
+                    },
+                    "id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Identity resolution key. Must match the Email field exactly.",
+                      "examples": [
+                        "sarah.johnson@company.com",
+                        "michael.chen@company.com"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "ExternalId",
+                    "Email",
+                    "ExternalName",
+                    "PrincipalType",
+                    "id"
+                  ],
+                  "description": "Identity of a user mentioned via @mention in this comment."
+                }
+              },
+              "reactions": {
+                "type": "array",
+                "minItems": 0,
+                "description": "List of emoji reactions or likes on this comment from other employees. Empty array if no reactions exist.",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "reactionType": {
+                      "type": "string",
+                      "enum": [
+                        "Like",
+                        "Love",
+                        "Celebrate",
+                        "Insightful",
+                        "Curious"
+                      ],
+                      "description": "The emoji reaction type added to the comment. 'Like' is the most common reaction; 'Love', 'Celebrate', 'Insightful', and 'Curious' appear on pages with strong employee engagement.",
+                      "examples": [
+                        "Like",
+                        "Celebrate"
+                      ]
+                    },
+                    "reactionBy": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "description": "Identity of the user who added this reaction.",
+                      "properties": {
+                        "ExternalId": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "Unique identifier (GUID) of the user within Azure DevOps.",
+                          "examples": [
+                            "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+                          ]
+                        },
+                        "Email": {
+                          "type": "string",
+                          "format": "email",
+                          "minLength": 1,
+                          "description": "Corporate email of the user. Must share the same domain as all other user identities in this work item.",
+                          "examples": [
+                            "sarah.johnson@company.com",
+                            "michael.chen@company.com"
+                          ]
+                        },
+                        "ExternalName": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "Full display name of the user.",
+                          "examples": [
+                            "Sarah Johnson",
+                            "Michael Chen",
+                            "Priya Patel"
+                          ]
+                        },
+                        "PrincipalType": {
+                          "type": "string",
+                          "enum": [
+                            "user"
+                          ],
+                          "default": "user",
+                          "description": "Always 'user' for individual employees, never groups.",
+                          "examples": [
+                            "user"
+                          ]
+                        },
+                        "id": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "Identity resolution key. Must match the Email field exactly.",
+                          "examples": [
+                            "sarah.johnson@company.com",
+                            "michael.chen@company.com"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "ExternalId",
+                        "Email",
+                        "ExternalName",
+                        "PrincipalType",
+                        "id"
+                      ]
+                    },
+                    "reactionTimestamp": {
+                      "type": "string",
+                      "format": "date-time",
+                      "minLength": 1,
+                      "description": "When the reaction was added, in ISO 8601 format. Must be >= comment createdDateTime and <= work item ChangedDate.",
+                      "examples": [
+                        "2025-03-01T10:30:00Z"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "reactionType",
+                    "reactionBy",
+                    "reactionTimestamp"
+                  ]
+                }
+              },
+              "entityContent": {
+                "type": "string",
+                "description": "The HTML body of the comment. Contains the comment text with formatting, @mentions, and embedded links. Generate realistic, work-item-relevant content — status updates, questions, review feedback, or decisions. Per current guidance, generate as raw HTML with entityEncoding='raw' and entityFormat='html'.",
+                "examples": [
+                  "<div>I've started working on this. Should have a PR ready by end of day.</div>",
+                  "<div><a href=\"#\" data-vss-mention=\"version:2.0,a1b2c3d4-e5f6-7890-abcd-ef1234567890\">@Sarah Johnson</a> - Can you review the acceptance criteria?</div>",
+                  "<div>Fixed in PR <a href=\"https://dev.azure.com/company/WebPlatform/_git/WebPlatform/pullrequest/1234\">#1234</a>. Ready for testing.</div>",
+                  "<div>Blocked on infra provisioning — escalated to the platform team. ETA is end of week.</div>"
+                ]
+              },
+              "entityEncoding": {
+                "type": "string",
+                "enum": [
+                  "raw",
+                  "b64"
+                ],
+                "default": "b64",
+                "description": "Encoding of the entityContent value. 'raw' — entityContent is submitted as-is (recommended for ADO comments). 'b64' — entityContent is base64-encoded.",
+                "examples": [
+                  "b64",
+                  "raw"
+                ]
+              },
+              "entityFormat": {
+                "type": "string",
+                "enum": [
+                  "html"
+                ],
+                "default": "html",
+                "description": "Format of the comment content. Always 'html' for Azure DevOps comments.",
+                "examples": [
+                  "html"
+                ]
+              }
+            },
+            "required": [
+              "entitySemanticType",
+              "commentId",
+              "parentCommentId",
+              "creator",
+              "modifier",
+              "createdDateTime",
+              "modifiedDateTime",
+              "mentionedUsers",
+              "reactions",
+              "entityContent",
+              "entityEncoding",
+              "entityFormat"
+            ]
+          }
+        },
+        "attachments": {
+          "type": "array",
+          "minItems": 0,
+          "description": "Optional list of file attachments associated with this work item. Omit this field entirely if no attachments exist.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "uploadedBy": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "Identity of the user who uploaded this attachment. Can be any member of the work item's team — not limited to the work item author. Must share the same email domain as other identities in this work item.",
+                "properties": {
+                  "ExternalId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Unique identifier (GUID) of the user within Azure DevOps.",
+                    "examples": [
+                      "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+                    ]
+                  },
+                  "Email": {
+                    "type": "string",
+                    "format": "email",
+                    "minLength": 1,
+                    "description": "Corporate email of the user. Must share the same domain as all other user identities in this work item.",
+                    "examples": [
+                      "sarah.johnson@company.com",
+                      "michael.chen@company.com"
+                    ]
+                  },
+                  "ExternalName": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Full display name of the user.",
+                    "examples": [
+                      "Sarah Johnson",
+                      "Michael Chen",
+                      "Priya Patel"
+                    ]
+                  },
+                  "PrincipalType": {
+                    "type": "string",
+                    "enum": [
+                      "user"
+                    ],
+                    "default": "user",
+                    "description": "Always 'user' for individual employees, never groups.",
+                    "examples": [
+                      "user"
+                    ]
+                  },
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Identity resolution key. Must match the Email field exactly.",
+                    "examples": [
+                      "sarah.johnson@company.com",
+                      "michael.chen@company.com"
+                    ]
+                  }
+                },
+                "required": [
+                  "ExternalId",
+                  "Email",
+                  "ExternalName",
+                  "PrincipalType",
+                  "id"
+                ]
+              },
+              "uploadedTimestamp": {
+                "type": "string",
+                "format": "date-time",
+                "minLength": 1,
+                "description": "When the file was attached, in ISO 8601 format. Must be >= work item CreatedDate and <= work item ChangedDate.",
+                "examples": [
+                  "2025-01-15T10:30:00Z",
+                  "2025-03-22T14:00:00Z",
+                  "2024-11-05T08:15:00Z"
+                ]
+              },
+              "attachmentName": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Filename of the attached file including extension. Used by the post-processor to locate the physical file on disk. Use underscore-separated words. Common ADO attachment types: screenshots (png, jpg), logs (txt), design files (pdf, fig), documents (docx), data files (xlsx, csv), presentations (pptx).",
+                "examples": [
+                  "screenshot_error_checkout.png",
+                  "error_log_2025_01_15.txt",
+                  "architecture_diagram_v2.pdf",
+                  "api_test_results.xlsx",
+                  "design_mockup_login.fig",
+                  "sprint_retrospective_notes.docx"
+                ]
+              },
+              "entitySemanticType": {
+                "type": "string",
+                "enum": [
+                  "document"
+                ],
+                "default": "document",
+                "description": "Always 'document'.",
+                "examples": [
+                  "document"
+                ]
+              },
+              "entityContent": {
+                "type": "string",
+                "description": "Content of the attachment. The exact representation depends on the (entityEncoding, entityFormat) pair used for each file type:\n- Text-based files (.txt, .csv, .json, .yaml): raw text in entityContent (entityEncoding='raw', entityFormat='txt').\n- Markdown (.md): raw markdown text (entityEncoding='raw', entityFormat='markdown').\n- HTML (.html, .htm): raw HTML text (entityEncoding='raw', entityFormat='html').\n- Office documents (.pdf, .docx, .xlsx, .pptx): base64-encoded RAW FILE BYTES (entityEncoding='b64', entityFormat='unknown'). Do not pre-extract text; the parser handles extraction downstream.\n- Images (.png, .jpg, .jpeg): OCR text or a human-readable image description (entityEncoding='raw', entityFormat='txt').\n- Other binary files (.fig and similar): base64-encoded raw file bytes (entityEncoding='b64', entityFormat='unknown')."
+              },
+              "entityEncoding": {
+                "type": "string",
+                "enum": [
+                  "raw",
+                  "b64"
+                ],
+                "default": "b64",
+                "description": "Encoding of the entityContent value. 'raw' — entityContent is submitted as-is; use for text files (.txt, .csv, .json, .yaml, .md, .html) and for image OCR/descriptions (.png, .jpg). 'b64' — entityContent is base64-encoded; use for office documents (.pdf, .docx, .xlsx, .pptx) carrying raw file bytes, and for other binary files (.fig).",
+                "examples": [
+                  "b64",
+                  "raw"
+                ]
+              },
+              "entityFormat": {
+                "type": "string",
+                "enum": [
+                  "txt",
+                  "html",
+                  "markdown",
+                  "unknown"
+                ],
+                "default": "txt",
+                "description": "Format of the content represented in entityContent. Use 'txt' for plain text, logs, structured data files (.txt, .csv, .json, .yaml), and for image OCR/descriptions (.png, .jpg). Use 'html' for HTML content. Use 'markdown' for Markdown (.md). Use 'unknown' for office documents and other binary files (.pdf, .docx, .xlsx, .pptx, .fig) where entityContent is base64 of raw file bytes and there is no plain-text format.",
+                "examples": [
+                  "txt",
+                  "html",
+                  "unknown"
+                ]
+              }
+            },
+            "required": [
+              "uploadedBy",
+              "uploadedTimestamp",
+              "attachmentName",
+              "entitySemanticType",
+              "entityContent",
+              "entityEncoding",
+              "entityFormat"
+            ]
+          }
+        }
+      },
+      "required": [
+        "id",
+        "displayName",
+        "contentDomainCategoryName",
+        "isContainer",
+        "containerId",
+        "UniversalAccessControlBlock",
+        "activityList",
+        "contentEnrichmentData",
+        "associatedItemsMetadata",
+        "itemVersion",
+        "isAssociatedItem",
+        "accessControlList",
+        "content",
+        "properties"
+      ]
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "typeName": "azuredevopsworkitems",
+  "rules": [
+    {
+      "ruleId": "164f91af-9022-41e4-848a-1e0950ab60d7",
+      "name": "Unique Searchable Item ID",
+      "description": "Each searchable item must have a unique id in the file",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "unique": {
+          "var": "id",
+          "caseSensitive": true
+        }
+      },
+      "metadata": {
+        "field": "id",
+        "expression": "All values of 'id' must be unique"
+      },
+      "category": "Uniqueness",
+      "isEnabled": true
+    }
+  ],
+  "jsonLogicVersion": "2.0"
+}

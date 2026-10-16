@@ -1,0 +1,710 @@
+{
+  "typeName": "files",
+  "rules": [
+    {
+      "ruleId": "d4e5f6a7-b8c9-4d0e-1f2a-3b4c5d6e7f8a",
+      "name": "Unique File IDs",
+      "description": "Each file must have a unique FileId within the file",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "unique": {
+          "var": "FileId",
+          "caseSensitive": true
+        }
+      },
+      "metadata": {
+        "field": "FileId",
+        "expression": "all FileId values must be unique"
+      },
+      "category": "Uniqueness",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "4e830e2a-4003-4ff5-9bc2-1d029d66e3e8",
+      "name": "Past CreatedDate",
+      "description": "CreatedDate must be in the past.",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "CreatedDate",
+            "operator": "is_not_null",
+            "valueType": "datetime"
+          },
+          "then": {
+            "field": "CreatedDate",
+            "operator": "is_past",
+            "valueType": "datetime"
+          }
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "IF 'CreatedDate' is_not_null THEN 'CreatedDate' is_past"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "48941b49-66a8-42bd-bf6d-f19a0083a6c0",
+      "name": "Past LastModifiedDate",
+      "description": "LastModifiedDate must be in the past.",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "LastModifiedDate",
+            "operator": "is_not_null",
+            "valueType": "datetime"
+          },
+          "then": {
+            "field": "LastModifiedDate",
+            "operator": "is_past",
+            "valueType": "datetime"
+          }
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "IF 'LastModifiedDate' is_not_null THEN 'LastModifiedDate' is_past"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "f217b852-040c-456b-b0fa-7ff9a88d2e47",
+      "name": "LastModifiedDate should later than CreatedDate",
+      "description": "LastModifiedDate must be later than CreatedDate",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "and": [
+              {
+                "field": "CreatedDate",
+                "operator": "is_not_null",
+                "valueType": "datetime"
+              },
+              {
+                "field": "LastModifiedDate",
+                "operator": "is_not_null",
+                "valueType": "datetime"
+              }
+            ]
+          },
+          "then": {
+            "field": "LastModifiedDate",
+            "operator": ">=",
+            "valueType": "datetime",
+            "compareField": "CreatedDate"
+          }
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "IF ('CreatedDate' is_not_null) AND ('LastModifiedDate' is_not_null) THEN 'LastModifiedDate' >= 'CreatedDate'"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "bf9552f7-5723-44e3-8e1b-63a41f4bd044",
+      "name": "Unique SharedLinkId per file",
+      "description": "SharedLinkId must be unique within each file's SharedLinks array.",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "unique_by_group": {
+          "var": "FileSharedLinks.SharedLinkId",
+          "groupBy": "FileId",
+          "caseSensitive": true
+        }
+      },
+      "metadata": {
+        "field": "FileSharedLinks.SharedLinkId",
+        "expression": "All values of 'FileSharedLinks.SharedLinkId' must be unique within each 'FileId'"
+      },
+      "category": "Uniqueness",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "a93bb262-d068-4cb5-9df4-6d11440c2831",
+      "name": "Valid file extension for actions",
+      "description": "Actions can only be performed on files with extensions: docx, xlsx, pptx.",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "Actions",
+            "operator": "has_value",
+            "valueType": "array"
+          },
+          "then": {
+            "or": [
+              {
+                "field": "FileName",
+                "operator": "ends_with",
+                "valueType": "string",
+                "value": ".docx"
+              },
+              {
+                "field": "FileName",
+                "operator": "ends_with",
+                "valueType": "string",
+                "value": ".xlsx"
+              },
+              {
+                "field": "FileName",
+                "operator": "ends_with",
+                "valueType": "string",
+                "value": ".pptx"
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "IF 'Actions' has_value THEN ('FileName' ends_with .docx) OR ('FileName' ends_with .xlsx) OR ('FileName' ends_with .pptx)"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "2d5801f3-4ca3-4a90-920b-63936287080a",
+      "name": "Action operator must exist in SharedWith with view permissions or be the Owner",
+      "description": "The Operator performing a view action must be in the file's SharedWith list with valid permissions or be the Owner.",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "integrityCheck": {
+          "source": {
+            "arrayField": "Actions",
+            "keyField": "Operator",
+            "filterConditions": [
+              {
+                "field": "Operation",
+                "operator": "in",
+                "value": [
+                  "Open",
+                  "View"
+                ]
+              }
+            ]
+          },
+          "target": {
+            "logicType": "or",
+            "conditions": [
+              {
+                "type": "field-match",
+                "field": "Owner"
+              },
+              {
+                "type": "array-exists",
+                "arrayField": "SharedWith",
+                "keyField": "Email",
+                "additionalConditions": [
+                  {
+                    "field": "PermissionLevel",
+                    "operator": "in",
+                    "value": [
+                      "edit",
+                      "view"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "field": "Actions.Operator",
+        "expression": "Each value from 'Actions.Operator' (where Operationin[Open,View]) must equals 'Owner' OR exists in 'SharedWith' with matching 'Email' and PermissionLevelin[edit,view]"
+      },
+      "category": "IntegrityCheck",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "6230a1c3-ec83-4dd3-8fee-02d21cc3ab90",
+      "name": "Action operator must exist in SharedWith with edit permissions or be the Owner",
+      "description": "The Operator performing a edit action must be in the file's SharedWith list with valid permissions or be the Owner.",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "integrityCheck": {
+          "source": {
+            "arrayField": "Actions",
+            "keyField": "Operator",
+            "filterConditions": [
+              {
+                "field": "Operation",
+                "operator": "in",
+                "value": [
+                  "edit",
+                  "comment"
+                ]
+              }
+            ]
+          },
+          "target": {
+            "logicType": "or",
+            "conditions": [
+              {
+                "type": "field-match",
+                "field": "Owner"
+              },
+              {
+                "type": "array-exists",
+                "arrayField": "SharedWith",
+                "keyField": "Email",
+                "additionalConditions": [
+                  {
+                    "field": "PermissionLevel",
+                    "operator": "==",
+                    "value": "edit"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "field": "Actions.Operator",
+        "expression": "Each value from 'Actions.Operator' (where Operationin[edit,comment]) must equals 'Owner' OR exists in 'SharedWith' with matching 'Email' and PermissionLevel==edit"
+      },
+      "category": "IntegrityCheck",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "31d52509-4dd1-490d-9909-ce2410620ea1",
+      "name": "File should exist",
+      "description": "The FileLocation must exists in current folder",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "fileExistence": {
+          "field": "FileLocation",
+          "caseSensitive": true
+        }
+      },
+      "metadata": {
+        "field": "FileLocation",
+        "expression": "All file paths in 'FileLocation' must exist in the ZIP archive (case-sensitive)"
+      },
+      "category": "FileExistence",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "15a2e87a-5fa6-4639-a338-7b84f450e9b5",
+      "name": "All file Owner must be in Users",
+      "description": "File Owner must be in Users MailNickName",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "files",
+          "sourceField": "Owner",
+          "targetType": "users",
+          "targetField": "MailNickName"
+        }
+      },
+      "metadata": {
+        "field": "Owner",
+        "expression": "For each 'files.Owner', a matching 'users.MailNickName' must exist"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "67234b6e-a4bc-4b1a-bbb5-dc6e58334cc7",
+      "name": "Internal Email in SharedWith must exist in Users",
+      "description": "The internal receivers of the file share must be in Users",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "files",
+          "sourceField": "SharedWith.Email",
+          "targetType": "users",
+          "targetField": "MailNickName"
+        }
+      },
+      "metadata": {
+        "field": "SharedWith.Email",
+        "expression": "For each 'files.SharedWith.Email', a matching 'users.MailNickName' must exist"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "8d4ff9e5-f748-42a0-b445-19595ccdadcb",
+      "name": "Future ExpirationDateTime for shared links",
+      "description": "ExpirationDateTime in SharedLinks must be in the future.\n",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "integrityCheck": {
+          "source": {
+            "arrayField": "FileSharedLinks",
+            "keyField": "SharedLinkId"
+          },
+          "target": {
+            "logicType": "or",
+            "conditions": [
+              {
+                "type": "array-exists",
+                "arrayField": "FileSharedLinks",
+                "keyField": "SharedLinkId",
+                "additionalConditions": [
+                  {
+                    "field": "ExpirationDateTime",
+                    "operator": "is_future",
+                    "value": "",
+                    "valueType": "datetime"
+                  }
+                ]
+              },
+              {
+                "type": "array-exists",
+                "arrayField": "FileSharedLinks",
+                "keyField": "SharedLinkId",
+                "additionalConditions": [
+                  {
+                    "field": "ExpirationDateTime",
+                    "operator": "is_null",
+                    "value": ""
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "field": "FileSharedLinks.SharedLinkId",
+        "expression": "Each value from 'FileSharedLinks.SharedLinkId' must exists in 'FileSharedLinks' with matching 'SharedLinkId' and ExpirationDateTimeis_future OR exists in 'FileSharedLinks' with matching 'SharedLinkId' and ExpirationDateTimeis_null"
+      },
+      "category": "IntegrityCheck",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "3c9b2a7e-5d41-4f8a-9e6c-8a1b2c3d4e5f",
+      "name": "DestinationSiteName required when DestinationType is site",
+      "description": "When DestinationType is 'site', DestinationSiteName must be specified.",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "DestinationType",
+            "operator": "==",
+            "valueType": "string",
+            "value": "site"
+          },
+          "then": {
+            "field": "DestinationSiteName",
+            "operator": "is_not_null",
+            "valueType": "string"
+          }
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "IF 'DestinationType' == site THEN 'DestinationSiteName' is_not_null"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "810ad243-5906-4e31-b6bc-341dcfe0e451",
+      "name": "DestinationSiteName must be defined in sites.config",
+      "description": "DestinationSiteName must be defined in sites.config's corrosponding MailNickName",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "files",
+          "sourceField": "DestinationSiteName",
+          "targetType": "sites",
+          "targetField": "MailNickname"
+        }
+      },
+      "metadata": {
+        "field": "DestinationSiteName",
+        "expression": "For each 'files.DestinationSiteName', a matching 'sites.MailNickname' must exist"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "e9ad136a-4532-45f8-9da7-fb42809e4697",
+      "name": "Unique FileName of the same FileOwner",
+      "description": "The FileName must be unique of the same FileOwner (FileName including path, this field will decide where the file is uploaded) and Site",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "unique-file-checker-for-same-fileowner-and-destination-type-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'unique-file-checker-for-same-fileowner-and-destination-type-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "77e28f64-c6b9-4b39-8601-4f83d3c681ca",
+      "name": "FileOwner membership check when uploading file to site",
+      "description": "FileOwner membership check when uploading file to site",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "integrityCheck": {
+          "source": {
+            "keyField": "DestinationSiteName",
+            "filterConditions": [
+              {
+                "field": "DestinationSiteName",
+                "operator": "is_not_null",
+                "value": ""
+              }
+            ]
+          },
+          "target": {
+            "logicType": "or",
+            "conditions": [
+              {
+                "type": "array-exists",
+                "targetType": "sites",
+                "keyField": "MailNickname",
+                "additionalConditions": [
+                  {
+                    "field": "Owners",
+                    "operator": "contains",
+                    "isSourceFieldRef": true,
+                    "sourceField": "Owner"
+                  }
+                ]
+              },
+              {
+                "type": "array-exists",
+                "targetType": "sites",
+                "keyField": "MailNickname",
+                "additionalConditions": [
+                  {
+                    "field": "Members",
+                    "operator": "contains",
+                    "isSourceFieldRef": true,
+                    "sourceField": "Owner"
+                  }
+                ]
+              },
+              {
+                "type": "array-exists",
+                "targetType": "sites",
+                "keyField": "MailNickname",
+                "additionalConditions": [
+                  {
+                    "field": "Visibility",
+                    "operator": "==",
+                    "value": "Public"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "field": "DestinationSiteName",
+        "expression": "Each value from 'DestinationSiteName' (where DestinationSiteNameis_not_null) must exists in '' with matching 'MailNickname' and Ownerscontainssource.Owner OR exists in '' with matching 'MailNickname' and Memberscontainssource.Owner OR exists in '' with matching 'MailNickname' and Visibility==Public"
+      },
+      "category": "IntegrityCheck",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "7b9c4e21-1f6a-4d3c-9e87-a2f1d6c4b8a9",
+      "name": "Action Id should exist",
+      "description": "The action id is strongly recommended to exist in the current folder",
+      "severity": "Info",
+      "scope": "SingleFile",
+      "logic": {
+        "fileExistence": {
+          "field": "Actions.ActionId",
+          "caseSensitive": false
+        }
+      },
+      "metadata": {
+        "field": "Actions.ActionId",
+        "expression": "All file paths in 'Actions.ActionId' must exist in the ZIP archive (case-insensitive)"
+      },
+      "category": "FileExistence",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "ea9c5a7b-4120-430d-8291-841e43839fa7",
+      "name": "FileName and FileLocation's file name should match",
+      "description": "The the string after last \"\\\" (which is the real file name without path) of  FileLocation and FileName should match.\ne.g.: \"FileLocation\": \"files/Q3_Sustainability_Impact_and_Budgeting_Strategies.docx\",\n\"FileName\": \"folder1/foulder2/Q3_Sustainability_Impact_and_Budgeting_Strategies.docx\"",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "file-name-location-consistency-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'file-name-location-consistency-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "3ef4c3d4-934a-4106-8a0b-7b62f8c22af0",
+      "name": "File with sensitivity label may cause the file not searchable by Copilot.",
+      "description": "File with sensitivity label may cause the file not searchable by Copilot.",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "file-sensitivity-label-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'file-sensitivity-label-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "38f3be0b-f0d7-4aaa-be90-f03559f9a419",
+      "name": "Unique FileName within the same DestinationSiteName",
+      "description": "When DestinationType is 'site', FileName must be unique among files sharing the same DestinationSiteName. OneDrive files (DestinationType != 'site') are ignored.",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "file-name-unique-within-destination-site-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'file-name-unique-within-destination-site-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "8d81bad1-e2f9-49a7-9da0-06b3c48b50f4",
+      "name": "File must not be empty",
+      "description": "Every file referenced under the files/ folder must have a non-zero byte size. Empty (zero-byte) files are not allowed.",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "file-empty-content-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'file-empty-content-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "ebef387b-ebbd-47cf-b73e-b2461bc091ac",
+      "name": "RequireSignIn and SendInvitation cannot both be false",
+      "description": "RequireSignIn and SendInvitation cannot both be false",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "FileSharedConfig.RequireSignIn",
+            "operator": "==",
+            "valueType": "boolean",
+            "value": "false"
+          },
+          "then": {
+            "field": "FileSharedConfig.SendInvitation",
+            "operator": "!=",
+            "valueType": "boolean",
+            "value": "false"
+          }
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "IF 'FileSharedConfig.RequireSignIn' == false THEN 'FileSharedConfig.SendInvitation' != false"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "154bc918-b82c-4533-81b4-f00d783fca02",
+      "name": "MSA-owned files must target OneDrive",
+      "description": "Files owned by users with IdentityType 'MSA' must have DestinationType 'onedrive'. SharePoint site destinations are not supported for MSA-owned files.",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "users-msa-files-onedrive-only-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'users-msa-files-onedrive-only-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "7d0a07f4-7fe8-454e-aacf-df178eb405f2",
+      "name": "File OpenXML Schema Validator",
+      "description": "This validator checks whether a file conforms to the OpenXML schema to prevent file corruption issues and verifies that the file is readable. It also detects cases where sensitivity labels or other protections make the file inaccessible for processing.",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "file-openxml-schema-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'file-openxml-schema-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "50b42d5a-3075-4a06-954e-3082cf686b73",
+      "name": "File participants (Owner and SharedWith) shouldn't be a shared mailbox",
+      "description": "File participants (Owner and SharedWith) shouldn't be a shared mailbox",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "file-participants-user-reference-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'file-participants-user-reference-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    }
+  ],
+  "jsonLogicVersion": "2.0"
+}

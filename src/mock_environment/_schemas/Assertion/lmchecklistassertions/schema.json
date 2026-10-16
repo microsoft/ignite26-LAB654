@@ -1,0 +1,193 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "LM Checklist Assertions (YAML)",
+  "description": "Upload format: YAML file (matches SEVAL's AssertionSet.fromYAML). The JSON Schema below describes the in-memory shape after YamlValidator converts the YAML into a JSON object — it is NOT the upload format. Each item is either a QueryElement (has `query` + `assertions`) or a TagElement (has `tag`), mirroring SEVAL's AssertionSet discriminator. Required-field set for QueryElement aligned with SEVAL's LMChecklistCreateDataSchema: only `query` and `assertions` are mandatory; everything else (`id`, `segmentOne`, `segmentTwo`, `queryOwner`, `environment`, `term`, `sets`, `label`) is optional.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string",
+        "description": "Unique identifier for the checklist item"
+      },
+      "query": {
+        "type": "string",
+        "description": "The query/prompt text to evaluate",
+        "minLength": 1
+      },
+      "tag": {
+        "type": "string",
+        "description": "TagElement name. Items with a non-empty `tag` (and no `query`) are TagElements — group markers referenced by QueryElement.tags[]. Mirrors SEVAL's AssertionSet TagElement branch.",
+        "minLength": 1
+      },
+      "tags": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Tag references — used by both QueryElement (tagging a query) and TagElement (hierarchical tag composition)."
+      },
+      "description": {
+        "type": "string",
+        "description": "Optional human-readable description (commonly used on TagElements)."
+      },
+      "segmentOne": {
+        "type": "string",
+        "description": "Primary segment classification"
+      },
+      "segmentTwo": {
+        "type": "string",
+        "description": "Secondary segment classification"
+      },
+      "queryOwner": {
+        "type": "string",
+        "description": "Owner of the query"
+      },
+      "environment": {
+        "type": "string",
+        "enum": [
+          "MSIT",
+          "Test Tenant"
+        ],
+        "description": "Target environment. SEVAL enforces an enum of exactly 'MSIT' or 'Test Tenant' (LMChecklistCreateDataSchema rule 1.A.4 in docs/SchemaService/SEVAL-Validation-Rules-And-Coverage-Gap.md). Any other value — e.g. 'SEVAL' or 'Production' — causes SEVAL to fail the job with LMchecklistInputFileError-BadData (see bug 7360037 / ICM 796617307)."
+      },
+      "term": {
+        "type": "string",
+        "description": "Term classification (e.g., Short Term, Medium Term, Long Term)"
+      },
+      "sets": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Set categories (e.g., Core, Full, Canary)"
+      },
+      "label": {
+        "type": "string",
+        "description": "JSON string with tool configurations (avalon_tools, sydcomp_tools)"
+      },
+      "assertions": {
+        "type": "array",
+        "minItems": 1,
+        "description": "List of assertion checks",
+        "items": {
+          "type": "object",
+          "required": [
+            "level"
+          ],
+          "properties": {
+            "text": {
+              "type": "string",
+              "minLength": 1,
+              "description": "LLMAssertion text — natural-language statement evaluated by an LLM judge. SEVAL requires it to be a non-empty string."
+            },
+            "test": {
+              "type": "string",
+              "minLength": 1,
+              "description": "PythonAssertion path — Pythonic test function path (e.g. citations_test.test_citation). SEVAL requires it to be a non-empty string."
+            },
+            "args": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Arguments for pythonic test assertions"
+            },
+            "level": {
+              "type": "string",
+              "enum": [
+                "critical",
+                "expected",
+                "aspirational"
+              ],
+              "description": "Assertion severity level"
+            },
+            "owner": {
+              "type": "string",
+              "description": "Owner of the assertion"
+            },
+            "examples": {
+              "type": "array",
+              "description": "Few-shot examples to ground the LLM judge. SEVAL's AssertionSet parser enforces per-Example constraints (Example.fromDict — rules 1.A.8 / 1.A.9 / 1.A.10 in docs/SchemaService/SEVAL-Validation-Rules-And-Coverage-Gap.md).",
+              "items": {
+                "type": "object",
+                "required": [
+                  "rationale",
+                  "score"
+                ],
+                "properties": {
+                  "rationale": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Human-readable explanation for the score. SEVAL: 'The value for rationale should be a non-empty str.'"
+                  },
+                  "score": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 2,
+                    "description": "Example score. SEVAL: 'score should be an integer between 0 and 2.'"
+                  },
+                  "response": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Optional sample response. When present, SEVAL requires it to be non-empty."
+                  }
+                }
+              }
+            },
+            "calibrationEntities": {
+              "type": "array",
+              "description": "Calibration ground truth used to score the assertion. SEVAL's CalibrationObj parser enforces the humanLabel range (rule 1.A.11).",
+              "items": {
+                "type": "object",
+                "required": [
+                  "humanLabel"
+                ],
+                "properties": {
+                  "humanLabel": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 2,
+                    "description": "Human-assigned calibration label. SEVAL: 'humanLabel should be an integer between 0 and 2.'"
+                  }
+                }
+              }
+            }
+          },
+          "oneOf": [
+            {
+              "required": [
+                "text"
+              ]
+            },
+            {
+              "required": [
+                "test"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "oneOf": [
+      {
+        "title": "QueryElement",
+        "required": [
+          "query",
+          "assertions"
+        ]
+      },
+      {
+        "title": "TagElement",
+        "required": [
+          "tag"
+        ],
+        "not": {
+          "required": [
+            "query"
+          ]
+        }
+      }
+    ]
+  }
+}

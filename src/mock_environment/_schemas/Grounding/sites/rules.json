@@ -1,0 +1,234 @@
+{
+  "typeName": "sites",
+  "rules": [
+    {
+      "ruleId": "80473e2f-9a08-4443-86fa-6893eb677870",
+      "name": "Unique MailNickname",
+      "description": "Each site must have a unique MailNickname across all sites.",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "unique": {
+          "var": "MailNickname",
+          "caseSensitive": true
+        }
+      },
+      "metadata": {
+        "field": "MailNickname",
+        "expression": "All values of 'MailNickname' must be unique"
+      },
+      "category": "Uniqueness",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "50730faf-be15-4d3f-970b-37ad7b8138e3",
+      "name": "No overlap between Owners and Members",
+      "description": "A user cannot be both an Owner and a Member of the same site.",
+      "severity": "Info",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "and": [
+              {
+                "field": "Owners",
+                "operator": "has_value",
+                "valueType": "array"
+              },
+              {
+                "field": "Members",
+                "operator": "has_value",
+                "valueType": "array"
+              }
+            ]
+          },
+          "then": {
+            "field": "Members",
+            "operator": "no_overlap",
+            "valueType": "array",
+            "compareField": "Owners"
+          }
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "IF ('Owners' has_value) AND ('Members' has_value) THEN 'Members' no_overlap 'Owners'"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "38f5ce23-3cc8-4001-9c3a-e7918ddf50d7",
+      "name": "Owners should exist in Users",
+      "description": "Owners should exist in Users",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "sites",
+          "sourceField": "Owners",
+          "targetType": "users",
+          "targetField": "MailNickName"
+        }
+      },
+      "metadata": {
+        "field": "Owners",
+        "expression": "For each 'sites.Owners', a matching 'users.MailNickName' must exist"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "2719f5fc-ee5c-42f9-a281-5f5f0da539c0",
+      "name": "Members should exist in Users",
+      "description": "Members should exist in Users",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "sites",
+          "sourceField": "Members",
+          "targetType": "users",
+          "targetField": "MailNickName"
+        }
+      },
+      "metadata": {
+        "field": "Members",
+        "expression": "For each 'sites.Members', a matching 'users.MailNickName' must exist"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "568cfded-11f5-4be3-a9d6-6b39f7766c97",
+      "name": "All Owners and Members within a site share the same CompanyName",
+      "description": "All Owners and Members within a site share the same CompanyName in users.config.json",
+      "severity": "Warning",
+      "scope": "CrossFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "site-owners-members-same-companyname-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'site-owners-members-same-companyname-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "3796d710-63c5-f497-f22d-a8116362f59b",
+      "name": "Unsupported properties are detected in grounding data",
+      "description": "Report unsupported properties that are not declared by the schema definition used for validation",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {},
+      "metadata": {
+        "expression": "All properties must be declared by the selected schema version",
+        "field": ""
+      },
+      "category": "UnsupportedProperty",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "0392d2dd-cbc6-4c8a-85d9-b8124966ceeb",
+      "name": "Sites Owners shouldn't be a shared mailbox",
+      "description": "Sites Owners shouldn't be a shared mailbox",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "integrityCheck": {
+          "source": {
+            "field": "Owners"
+          },
+          "target": {
+            "logicType": "or",
+            "conditions": [
+              {
+                "type": "array-exists",
+                "targetType": "users",
+                "keyField": "MailNickName",
+                "additionalConditions": [
+                  {
+                    "field": "IsSharedMailbox",
+                    "operator": "is_null",
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "type": "array-exists",
+                "targetType": "users",
+                "keyField": "MailNickName",
+                "additionalConditions": [
+                  {
+                    "field": "IsSharedMailbox",
+                    "operator": "!=",
+                    "value": "true"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "field": "Owners",
+        "expression": "Each value from 'Owners' must exists in 'undefined' with matching 'MailNickName' and IsSharedMailboxis_null OR exists in 'undefined' with matching 'MailNickName' and IsSharedMailbox!=true"
+      },
+      "category": "IntegrityCheck",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "2ac50acb-6205-476c-b599-a8054de4653f",
+      "name": "Site Members shouldn't be a shared mailbox",
+      "description": "Site Members shouldn't be a shared mailbox",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "integrityCheck": {
+          "source": {
+            "field": "Members"
+          },
+          "target": {
+            "logicType": "or",
+            "conditions": [
+              {
+                "type": "array-exists",
+                "targetType": "users",
+                "keyField": "MailNickName",
+                "additionalConditions": [
+                  {
+                    "field": "IsSharedMailbox",
+                    "operator": "is_null",
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "type": "array-exists",
+                "targetType": "users",
+                "keyField": "MailNickName",
+                "additionalConditions": [
+                  {
+                    "field": "IsSharedMailbox",
+                    "operator": "!=",
+                    "value": "true"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "field": "Members",
+        "expression": "Each value from 'Members' must exists in '' with matching 'MailNickName' and IsSharedMailboxis_null OR exists in '' with matching 'MailNickName' and IsSharedMailbox!=true"
+      },
+      "category": "IntegrityCheck",
+      "isEnabled": true
+    }
+  ],
+  "jsonLogicVersion": "2.0"
+}

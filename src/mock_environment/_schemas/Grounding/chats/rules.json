@@ -1,0 +1,766 @@
+{
+  "typeName": "chats",
+  "rules": [
+    {
+      "ruleId": "2f3a4b5c-6d7e-4f8a-9b0c-1d2e3f4a5b6d",
+      "name": "Unique Chat IDs",
+      "description": "Each chat must have a unique ChatId within the file",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "unique": {
+          "var": "ChatId",
+          "caseSensitive": true
+        }
+      },
+      "metadata": {
+        "field": "ChatId",
+        "expression": "all ChatId values must be unique"
+      },
+      "category": "Uniqueness",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "8b00f381-2757-4abe-b3d7-dcc35f1d144f",
+      "name": "Unique Message IDs per Chat",
+      "description": "Within each chat, ChatMessageId must be unique.",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "unique_by_group": {
+          "var": "ChatMessages.ChatMessageId",
+          "groupBy": "ChatId",
+          "caseSensitive": true
+        }
+      },
+      "metadata": {
+        "field": "ChatMessages.ChatMessageId",
+        "expression": "All values of 'ChatMessages.ChatMessageId' must be unique within each 'ChatId'"
+      },
+      "category": "Uniqueness",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "2bb29928-5be4-4d93-85e8-86c42a214881",
+      "name": "Message Sender in Members",
+      "description": "Message From field must exist in chat Members array",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "chats",
+          "sourceField": "ChatMessages.From",
+          "targetType": "chats",
+          "targetField": "Members",
+          "sameItemLookup": true
+        }
+      },
+      "metadata": {
+        "field": "ChatMessages.From",
+        "expression": "For each 'ChatMessages.From', a matching value must exist in 'Members' within the same item"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "ce397e78-b228-477e-a525-dec315a05d16",
+      "name": "Placeholder Unique IDs",
+      "description": "PlaceholderId must be unique within each message",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "unique_by_group": {
+          "var": "ChatMessages.Placeholders.PlaceholderId",
+          "groupBy": "ChatMessages.ChatMessageId",
+          "scopePath": "ChatMessages",
+          "caseSensitive": true
+        }
+      },
+      "metadata": {
+        "field": "ChatMessages.Placeholders.PlaceholderId",
+        "expression": "All values of 'ChatMessages.Placeholders.PlaceholderId' must be unique within each 'ChatMessages.ChatMessageId' within each 'ChatMessages'"
+      },
+      "category": "Uniqueness",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "5303437f-4379-421f-af29-8af937393c23",
+      "name": "Placeholder MentionId Unique",
+      "description": "MentionId must be unique within each message",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "unique_by_group": {
+          "var": "ChatMessages.Placeholders.HyperLinkContent.MentionId",
+          "groupBy": "ChatMessages.ChatMessageId",
+          "scopePath": "ChatMessages",
+          "caseSensitive": true
+        }
+      },
+      "metadata": {
+        "field": "ChatMessages.Placeholders.HyperLinkContent.MentionId",
+        "expression": "All values of 'ChatMessages.Placeholders.HyperLinkContent.MentionId' must be unique within each 'ChatMessages.ChatMessageId' within each 'ChatMessages'"
+      },
+      "category": "Uniqueness",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "e7ea3a51-99ac-418a-bc5b-166c56f0b0dc",
+      "name": "Placeholder HostedContentId Unique",
+      "description": "HostedContentId must be unique within each message",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "unique_by_group": {
+          "var": "ChatMessages.Placeholders.HyperLinkContent.HostedContentId",
+          "groupBy": "ChatMessages.ChatMessageId",
+          "scopePath": "ChatMessages",
+          "caseSensitive": true
+        }
+      },
+      "metadata": {
+        "field": "ChatMessages.Placeholders.HyperLinkContent.HostedContentId",
+        "expression": "All values of 'ChatMessages.Placeholders.HyperLinkContent.HostedContentId' must be unique within each 'ChatMessages.ChatMessageId' within each 'ChatMessages'"
+      },
+      "category": "Uniqueness",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "61b81477-4ca2-4d26-aaa3-de6fe6e75b0e",
+      "name": "Placeholder Consistency",
+      "description": "Placeholders used in Body must be defined in Placeholders array",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "chats",
+          "sourceField": "ChatMessages.Content",
+          "targetType": "chats",
+          "targetField": "ChatMessages.Placeholders.PlaceholderId",
+          "sourceExtractPattern": "\\{placeholder:([^}]+)\\}",
+          "sameItemLookup": true,
+          "scopePath": "ChatMessages"
+        }
+      },
+      "metadata": {
+        "field": "ChatMessages.Content",
+        "expression": "For each 'ChatMessages.Content' (extracted via pattern: \\{placeholder:([^}]+)\\}), a matching value must exist in 'ChatMessages.Placeholders.PlaceholderId' within the same item within each 'ChatMessages'"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "e0271a45-8104-4ec9-8ce6-1898bb3a9714",
+      "name": "Internal chat members must in users",
+      "description": "Internal chat members must in users",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "chats",
+          "sourceField": "Members",
+          "targetType": "users",
+          "targetField": "MailNickName",
+          "sourceExtractPattern": "^([^@]+)$"
+        }
+      },
+      "metadata": {
+        "field": "Members",
+        "expression": "For each 'chats.Members' (extracted via pattern: ^([^@]+)$), a matching 'users.MailNickName' must exist"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "f8a9b3c4-d5e6-47f8-89a0-1b2c3d4e5f6a",
+      "name": "Chat members must have Microsoft Teams Enterprise license",
+      "description": "Every chat member must have 'Microsoft Teams Enterprise' license assigned in users",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "integrityCheck": {
+          "source": {
+            "field": "Members"
+          },
+          "target": {
+            "logicType": "or",
+            "conditions": [
+              {
+                "type": "array-exists",
+                "targetType": "users",
+                "keyField": "MailNickName",
+                "additionalConditions": [
+                  {
+                    "field": "Licenses",
+                    "operator": "contains",
+                    "value": "Microsoft Teams Enterprise"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "field": "Members",
+        "expression": "Each value from 'Members' must exist in users with matching 'MailNickName' and Licenses contains 'Microsoft Teams Enterprise'"
+      },
+      "category": "IntegrityCheck",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "cac7f61b-df1f-4e5e-a9a4-9a63b0a6a262",
+      "name": "File share integrity check.",
+      "description": "Test if file share links are valid. The FileId must exist in the files, and the Owner and SharedLinkId must match.",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "integrityCheck": {
+          "source": {
+            "arrayField": "ChatMessages.Placeholders.HyperLinkContent",
+            "keyField": "FileId"
+          },
+          "target": {
+            "logicType": "or",
+            "conditions": [
+              {
+                "type": "array-exists",
+                "targetType": "files",
+                "keyField": "FileId",
+                "additionalConditions": [
+                  {
+                    "field": "FileSharedLinks.SharedLinkId",
+                    "operator": "contains",
+                    "isSourceFieldRef": true,
+                    "sourceField": "SharedLinkId",
+                    "useCurrentSourceItem": true
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "field": "ChatMessages.Placeholders.HyperLinkContent.FileId",
+        "expression": "Each value from 'ChatMessages.Placeholders.HyperLinkContent.FileId' must exists in '' with matching 'FileId' and FileSharedLinks.SharedLinkIdcontainscurrentItem.SharedLinkId"
+      },
+      "category": "IntegrityCheck",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "db8e6c52-0f64-49b3-ac28-fc7b812872ce",
+      "name": "CreatedDateTime should be earlier than SentDateTime",
+      "description": "CreatedDateTime should be earlier than SentDateTime",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "CreatedDateTime",
+            "operator": "is_not_null",
+            "valueType": "string"
+          },
+          "then": {
+            "field": "ChatMessages.SentDateTime",
+            "operator": ">",
+            "valueType": "datetime",
+            "compareField": "CreatedDateTime",
+            "isArrayField": true,
+            "arrayMatchMode": "all"
+          }
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "IF 'CreatedDateTime' is_not_null THEN 'ChatMessages.SentDateTime' > 'CreatedDateTime'"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "3865722d-dc75-489b-a96c-b3ef0d74bde4",
+      "name": "Meeting Chat should exist in Events and should be OnlineMeeting",
+      "description": "Meeting Chat should exist in Events and should be OnlineMeeting",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "integrityCheck": {
+          "source": {
+            "keyField": "EventId",
+            "filterConditions": [
+              {
+                "field": "ChatType",
+                "operator": "==",
+                "value": "Meeting"
+              }
+            ]
+          },
+          "target": {
+            "logicType": "or",
+            "conditions": [
+              {
+                "type": "array-exists",
+                "targetType": "events",
+                "keyField": "EventId",
+                "additionalConditions": [
+                  {
+                    "field": "IsOnlineMeeting",
+                    "operator": "==",
+                    "value": "true"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "field": "EventId",
+        "expression": "Each value from 'EventId' (where ChatType==Meeting) must exists in '' with matching 'EventId' and IsOnlineMeeting==true"
+      },
+      "category": "IntegrityCheck",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "326fa682-70f8-4a70-ad46-58c15fe6d0ef",
+      "name": "SentDateTime should be unique in each ChatMessage when CreatedDateTime is not null",
+      "description": "SentDateTime should be unique in each ChatMessage when CreatedDateTime is not null",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "back-in-time-sent-datetime-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'back-in-time-sent-datetime-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "7072df75-56c3-4714-85aa-71beba5ff082",
+      "name": "Meeting ChatMessages Members and Senders must be in Event participants and Sender",
+      "description": "ChatMessage Members and Senders must be in Event participants and Sender",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "chat-members-in-event-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'chat-members-in-event-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "83cf4b62-3977-4093-8b43-79b6ceef495a",
+      "name": "Chat Message Reaction Sender in Members",
+      "description": "Reaction sender must be the alias defined in Members",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "chats",
+          "sourceField": "ChatMessages.Reactions.Sender",
+          "targetType": "chats",
+          "targetField": "Members",
+          "sameItemLookup": true
+        }
+      },
+      "metadata": {
+        "field": "ChatMessages.Reactions.Sender",
+        "expression": "For each 'ChatMessages.Reactions.Sender', a matching value must exist in 'Members' within the same item"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "22f19841-0582-4f48-bc77-2a0c66ad78de",
+      "name": "Chat Message ReadBy in Members",
+      "description": "Chat Message Readby must be the alias defined in Members",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "chats",
+          "sourceField": "ChatMessages.ReadBy",
+          "targetType": "chats",
+          "targetField": "Members",
+          "sameItemLookup": true
+        }
+      },
+      "metadata": {
+        "field": "ChatMessages.ReadBy",
+        "expression": "For each 'ChatMessages.Readby', a matching value must exist in 'Members' within the same item"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "a932ce4f-9d9d-42a7-8453-35d985060e59",
+      "name": "Image File should exist",
+      "description": "Image file should exist.",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "fileExistence": {
+          "field": "ChatMessages.Placeholders.HyperLinkContent.ImageFullPath",
+          "caseSensitive": false
+        }
+      },
+      "metadata": {
+        "field": "ChatMessages.Placeholders.HyperLinkContent.ImageFullPath",
+        "expression": "All file paths in 'ChatMessages.Placeholders.HyperLinkContent.ImageFullPath' must exist in the ZIP archive (case-insensitive)"
+      },
+      "category": "FileExistence",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "bfe3a7c8-6d6d-4078-bc36-4576d290a1b9",
+      "name": "Quote Message Order",
+      "description": "QuoteChatMessageId must point to a message that precedes the current message in the chat message list",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "quote-chat-message-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'quote-chat-message-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "e7783cd9-6e8d-4f83-9326-78fd9ef0316e",
+      "name": "Unique Referenced Event Id",
+      "description": "Referenced Event Id should be unique",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "unique": {
+          "var": "EventId",
+          "caseSensitive": true
+        }
+      },
+      "metadata": {
+        "field": "EventId",
+        "expression": "All values of 'EventId' must be unique"
+      },
+      "category": "Uniqueness",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "122a3c2a-5b74-4419-ab45-a5cbd0e417a1",
+      "name": "Back in time unsupported feature",
+      "description": "Back‑in‑time chat currently does not support “Reply with Quote” feature.",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "back-in-time-feature-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'back-in-time-feature-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": false
+    },
+    {
+      "ruleId": "d47b47c3-198e-4caf-bcdb-f05907c0a0ca",
+      "name": "Placeholder Consistency 2",
+      "description": "Placeholder must be used in chat content",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "chats",
+          "sourceField": "ChatMessages.Placeholders.PlaceholderId",
+          "targetType": "chats",
+          "targetField": "ChatMessages.Content",
+          "targetExtractPattern": "\\{placeholder:([^}]+)\\}",
+          "sameItemLookup": true,
+          "scopePath": "ChatMessages"
+        }
+      },
+      "metadata": {
+        "field": "ChatMessages.Placeholders.PlaceholderId",
+        "expression": "For each 'ChatMessages.Placeholders.PlaceholderId', a matching value must exist in 'ChatMessages.Content' (extracted via pattern: \\{placeholder:([^}]+)\\}) within the same item within each 'ChatMessages'"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "5664358c-2679-40c3-83d3-f23c1bd9e5de",
+      "name": "Mention Identifier must in Members",
+      "description": "Mention Identifier must in Members",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "chats",
+          "sourceField": "ChatMessages.Placeholders.HyperLinkContent.MentionIdentifier",
+          "targetType": "chats",
+          "targetField": "Members",
+          "sameItemLookup": true
+        }
+      },
+      "metadata": {
+        "field": "ChatMessages.Placeholders.HyperLinkContent.MentionIdentifier",
+        "expression": "For each 'ChatMessages.Placeholders.HyperLinkContent.MentionIdentifier', a matching value must exist in 'Members' within the same item"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "ac49262e-a4da-4f74-9a43-d666e0ea0044",
+      "name": "OneOnOne Chat Members ValidatorV1",
+      "description": "Ensures that the member combination in a OneOnOne chat is unique across all one on one chats.",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "one-on-one-chat-members-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'one-on-one-chat-members-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "f1efa0e3-5723-4b1b-aa54-d337598e19eb",
+      "name": "No Urgent Chat Message for chats with more than 20 members",
+      "description": "Chats with more than 20 members should not contain any ChatMessage with Importance set to 'urgent'",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "urgent-chat-message-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'urgent-chat-message-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "7e2a26e9-2747-4587-9c70-0707d7b68a64",
+      "name": "HTML content should be well-formed with tags match and closed",
+      "description": "HTML content should be well-formed with tags match and closed",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "chat-message-html-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'chat-message-html-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "15a01b18-8d77-46e1-8b1e-b4224ed6681b",
+      "name": "BackInTime OneOnOne Chat Members ValidatorV1",
+      "description": "Ensures that the member combination in a back-in-time OneOnOne chat is unique across all such chats.",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "back-in-time-one-on-one-chat-members-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'back-in-time-one-on-one-chat-members-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "bbe3210a-5656-445d-a8a9-51f6ac17160e",
+      "name": "Back-in-time chat should have past CreatedDateTime and past message SentDateTime",
+      "description": "",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "CreatedDateTime",
+            "operator": "is_not_null",
+            "valueType": "datetime"
+          },
+          "then": {
+            "and": [
+              {
+                "field": "CreatedDateTime",
+                "operator": "is_past",
+                "valueType": "datetime"
+              },
+              {
+                "field": "ChatMessages.SentDateTime",
+                "operator": "is_past",
+                "valueType": "datetime",
+                "isArrayField": true,
+                "arrayMatchMode": "all"
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "IF 'CreatedDateTime' is_not_null THEN ('CreatedDateTime' is_past) AND ('ChatMessages.SentDateTime' is_past)"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "fcede802-d553-407e-afc1-06db83f6cb22",
+      "name": "LoopId existence integrity check",
+      "description": "LoopId should exist in loops.config",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "integrityCheck": {
+          "source": {
+            "arrayField": "ChatMessages.Placeholders.HyperLinkContent",
+            "keyField": "LoopId"
+          },
+          "target": {
+            "logicType": "or",
+            "conditions": [
+              {
+                "type": "array-exists",
+                "targetType": "loops",
+                "keyField": "LoopId"
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "field": "ChatMessages.Placeholders.HyperLinkContent.LoopId",
+        "expression": "Each value from 'ChatMessages.Placeholders.HyperLinkContent.LoopId' must exists in '' with matching 'LoopId'"
+      },
+      "category": "IntegrityCheck",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "cf9847c4-a398-45cb-bfe8-acf5d6e9d625",
+      "name": "Chat members shouldn't be a shared mailbox",
+      "description": "Chat members shouldn't be a shared mailbox",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "integrityCheck": {
+          "source": {
+            "field": "Members"
+          },
+          "target": {
+            "logicType": "or",
+            "conditions": [
+              {
+                "type": "array-exists",
+                "targetType": "users",
+                "keyField": "MailNickName",
+                "additionalConditions": [
+                  {
+                    "field": "IsSharedMailbox",
+                    "operator": "is_null",
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "type": "array-exists",
+                "targetType": "users",
+                "keyField": "MailNickName",
+                "additionalConditions": [
+                  {
+                    "field": "IsSharedMailbox",
+                    "operator": "!=",
+                    "value": "true"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "field": "Members",
+        "expression": "Each value from 'Members' must exists in '' with matching 'MailNickName' and IsSharedMailboxis_null OR exists in '' with matching 'MailNickName' and IsSharedMailbox!=true"
+      },
+      "category": "IntegrityCheck",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "c69630d9-903d-4360-b9d1-424db0b47ce3",
+      "name": "Placeholder mention identifier shouldn't be a shared mailbox",
+      "description": "Placeholder mention identifier shouldn't be a shared mailbox",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "integrityCheck": {
+          "source": {
+            "field": "ChatMessages.Placeholders.HyperLinkContent.MentionIdentifier"
+          },
+          "target": {
+            "logicType": "or",
+            "conditions": [
+              {
+                "type": "array-exists",
+                "targetType": "users",
+                "keyField": "MailNickName",
+                "additionalConditions": [
+                  {
+                    "field": "IsSharedMailbox",
+                    "operator": "is_null",
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "type": "array-exists",
+                "targetType": "users",
+                "keyField": "MailNickName",
+                "additionalConditions": [
+                  {
+                    "field": "IsSharedMailbox",
+                    "operator": "!=",
+                    "value": "true"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "field": "ChatMessages.Placeholders.HyperLinkContent.MentionIdentifier",
+        "expression": "Each value from 'ChatMessages.Placeholders.HyperLinkContent.MentionIdentifier' must exists in '' with matching 'MailNickName' and IsSharedMailboxis_null OR exists in '' with matching 'MailNickName' and IsSharedMailbox!=true"
+      },
+      "category": "IntegrityCheck",
+      "isEnabled": true
+    }
+  ],
+  "jsonLogicVersion": "2.0"
+}

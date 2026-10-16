@@ -1,0 +1,237 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "copilotchats/1.0.0/schema",
+  "additionalProperties": false,
+  "description": "Manufactured CopilotChats schema. A CopilotChat is a single BizChat / Microsoft 365 Copilot conversation owned by one user, made up of alternating user prompts and Copilot answers. This is the persisted chat-history entity that Copilot's left-rail (GetChats) lists. Distinct from the Teams 'chats' entity.",
+  "title": "CopilotChats",
+  "type": "array",
+  "items": {
+    "$ref": "#/$defs/CopilotChat"
+  },
+  "$defs": {
+    "CopilotChat": {
+      "description": "A single Microsoft 365 Copilot conversation owned by one user.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ConversationId": {
+          "description": "An identifier for the conversation, useful for tracking and reference.",
+          "type": "string",
+          "minLength": 1
+        },
+        "Title": {
+          "description": "The conversation title shown in the Copilot chat list (the left-rail history entry).",
+          "type": "string",
+          "minLength": 1
+        },
+        "Owner": {
+          "description": "The user who owns the conversation. Usually the MailNickName of the user.",
+          "$ref": "#/$defs/MailNickNameOrEmail"
+        },
+        "CreatedDateTime": {
+          "description": "Timestamp of when the conversation was created. This follows the ISO 8601 pattern.",
+          "type": "string",
+          "pattern": "^[1-9][0-9]{3}-(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9]|3[0-1])T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+        },
+        "LastModifiedDateTime": {
+          "description": "Timestamp of when the conversation was last modified. This follows the ISO 8601 pattern.",
+          "type": "string",
+          "pattern": "^[1-9][0-9]{3}-(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9]|3[0-1])T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+        },
+        "Messages": {
+          "description": "The ordered list of turns in the conversation, alternating user prompts and Copilot answers.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CopilotChatMessage"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "ConversationId",
+        "Title",
+        "Owner",
+        "Messages"
+      ]
+    },
+    "CopilotChatMessage": {
+      "description": "Represents an individual turn within a Copilot conversation.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "MessageId": {
+          "description": "An identifier for each message, useful for tracking and reference.",
+          "type": "string",
+          "minLength": 1
+        },
+        "Author": {
+          "description": "Who authored the turn. 'user' is the tenant user; 'copilot' is the Copilot assistant answer.",
+          "enum": [
+            "user",
+            "copilot"
+          ]
+        },
+        "ContentType": {
+          "description": "The type of the content. Possible values are text and html.",
+          "enum": [
+            "html",
+            "text"
+          ]
+        },
+        "Content": {
+          "description": "The content of the turn.",
+          "type": "string",
+          "minLength": 1
+        },
+        "CreatedDateTime": {
+          "description": "Timestamp of when the turn was created. This follows the ISO 8601 pattern.",
+          "type": "string",
+          "pattern": "^[1-9][0-9]{3}-(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9]|3[0-1])T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+        },
+        "GroundingReferences": {
+          "description": "Optional list of tenant grounding entities this turn is grounded in (e.g. the email or file the prompt refers to). Mirrors Sydney's sourceAttributions.",
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/$defs/GroundingReference"
+          }
+        },
+        "MessageType": {
+          "description": "Optional Sydney message classification, e.g. 'Answer', 'Progress', 'Context'. Mirrors Sydney's messageType. Optional — not required for replay.",
+          "type": "string"
+        },
+        "RequestId": {
+          "description": "Optional Sydney request correlation id (GUID) for the turn. Mirrors Sydney's requestId. Optional — traceability only.",
+          "type": "string"
+        },
+        "ResponseIdentifier": {
+          "description": "Optional Sydney response identifier for the turn. Mirrors Sydney's responseIdentifier. Optional — traceability only.",
+          "type": "string"
+        },
+        "ContentOrigin": {
+          "description": "Optional origin of the answer content, e.g. 'DeepLeo'. Mirrors Sydney's contentOrigin. Optional.",
+          "type": "string"
+        },
+        "SuggestedResponses": {
+          "description": "Optional list of Copilot follow-up suggestion strings shown beneath an answer. Mirrors Sydney's suggestedResponses. Optional.",
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "AdaptiveCards": {
+          "description": "Optional rendered Adaptive Card payload(s) for the turn as produced by Sydney (adaptiveCards). Shape is intentionally open so card variations validate without a schema change. Optional.",
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "object"
+          }
+        },
+        "Scores": {
+          "description": "Optional per-component scores Sydney attaches to an answer (e.g. relevance). Mirrors Sydney's scores. Optional.",
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/$defs/MessageScore"
+          }
+        }
+      },
+      "required": [
+        "Author",
+        "ContentType",
+        "Content"
+      ]
+    },
+    "GroundingReference": {
+      "description": "A reference to a tenant grounding entity that a Copilot turn draws on. Mirrors a single Sydney sourceAttribution: Type/Id identify the entity; the remaining optional fields carry Sydney's citation metadata so a full source attribution can be represented without a schema change.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "Type": {
+          "description": "The grounding entity type, e.g. Email, File, Event, Meeting, ChatMessage, People. Mirrors sourceAttribution.type.",
+          "type": "string",
+          "minLength": 1
+        },
+        "Id": {
+          "description": "The identifier of the referenced grounding entity (e.g. EmailId, FileId). Typically the EntityRepresentationId Sydney carries in seeMoreUrl.",
+          "type": "string",
+          "minLength": 1
+        },
+        "SourceType": {
+          "description": "Optional Sydney attribution source class, e.g. 'ANNOTATION'. Mirrors sourceAttribution.sourceType. Optional.",
+          "type": "string"
+        },
+        "DisplayName": {
+          "description": "Optional human-readable name of the referenced entity (extracted from sourceAttribution.metadata). Optional.",
+          "type": "string"
+        },
+        "SeeMoreUrl": {
+          "description": "Optional deep link to the entity (carries the EntityRepresentationId). Mirrors sourceAttribution.seeMoreUrl. Optional.",
+          "type": "string"
+        },
+        "Metadata": {
+          "description": "Optional raw metadata payload as Sydney serializes it (JSON string). Mirrors sourceAttribution.metadata. Optional.",
+          "type": "string"
+        },
+        "MetadataState": {
+          "description": "Optional metadata state flag from Sydney. Mirrors sourceAttribution.metadataState. Optional.",
+          "type": "string"
+        },
+        "IsHeroEntity": {
+          "description": "Optional flag: whether Sydney marked this as the hero (primary) entity. Mirrors sourceAttribution.isHeroEntity. Optional.",
+          "type": "boolean"
+        },
+        "IsCitedInResponse": {
+          "description": "Optional flag: whether this attribution is actually cited in the answer text. Mirrors sourceAttribution.isCitedInResponse. Optional.",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "Type",
+        "Id"
+      ]
+    },
+    "MessageScore": {
+      "description": "A single component score Sydney attaches to an answer. Mirrors an entry in Sydney's scores array.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "Component": {
+          "description": "The scoring component name.",
+          "type": "string",
+          "minLength": 1
+        },
+        "Score": {
+          "description": "The numeric score value.",
+          "type": "number"
+        }
+      },
+      "required": [
+        "Component",
+        "Score"
+      ]
+    },
+    "MailNickNameOrEmail": {
+      "description": "User MailNickName or external full email address",
+      "type": "string",
+      "minLength": 1,
+      "anyOf": [
+        {
+          "pattern": "^[\\w\\-\\.]+"
+        },
+        {
+          "format": "idn-email"
+        }
+      ]
+    }
+  }
+}

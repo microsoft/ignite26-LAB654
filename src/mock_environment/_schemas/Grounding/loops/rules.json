@@ -1,0 +1,46 @@
+{
+  "typeName": "loops",
+  "rules": [
+    {
+      "ruleId": "de4586da-cd54-487d-af60-1a7971cabd2e",
+      "name": "Unique Loop Id",
+      "description": "Loop Id needs to be unique",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "unique": {
+          "var": "LoopId",
+          "caseSensitive": false
+        }
+      },
+      "metadata": {
+        "field": "LoopId",
+        "expression": "All values of 'LoopId' must be unique (case-insensitive)"
+      },
+      "category": "Uniqueness",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "07b93bd0-944e-4952-b6d9-25de9b191171",
+      "name": "User Existence",
+      "description": "User need to exist in users.config.json",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "loops",
+          "sourceField": "User",
+          "targetType": "users",
+          "targetField": "MailNickName"
+        }
+      },
+      "metadata": {
+        "field": "User",
+        "expression": "For each 'loops.User', a matching 'users.MailNickName' must exist"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    }
+  ],
+  "jsonLogicVersion": "2.0"
+}

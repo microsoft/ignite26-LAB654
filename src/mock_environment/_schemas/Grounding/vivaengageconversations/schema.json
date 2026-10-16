@@ -1,0 +1,552 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "VivaEngageConversations",
+  "description": "Manufactured VivaEngageConversations schema",
+  "type": "array",
+  "uniqueItems": true,
+  "items": {
+    "$ref": "#/$defs/VivaEngageConversation"
+  },
+  "$defs": {
+    "VivaEngageAttachment": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "Id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ContentId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Stable source identifier replaced by the tenant-issued content id during ingestion."
+        },
+        "ContentType": {
+          "enum": [
+            "file",
+            "videoFile",
+            "imageFile",
+            "message",
+            "webLink",
+            "webImage",
+            "webVideo",
+            "unknownFutureValue"
+          ]
+        },
+        "FilePath": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Generation-root-relative path published as FileContent for file-backed attachments."
+        },
+        "ContentUrl": {
+          "type": "string",
+          "minLength": 1,
+          "format": "uri"
+        },
+        "Name": {
+          "type": "string"
+        },
+        "Description": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "Id",
+        "ContentId",
+        "ContentType"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "ContentType": {
+                "enum": [
+                  "file",
+                  "videoFile",
+                  "imageFile"
+                ]
+              }
+            },
+            "required": [
+              "ContentType"
+            ]
+          },
+          "then": {
+            "required": [
+              "FilePath"
+            ],
+            "not": {
+              "required": [
+                "ContentUrl"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "ContentType": {
+                "enum": [
+                  "webLink",
+                  "webImage",
+                  "webVideo"
+                ]
+              }
+            },
+            "required": [
+              "ContentType"
+            ]
+          },
+          "then": {
+            "required": [
+              "ContentUrl"
+            ],
+            "not": {
+              "required": [
+                "FilePath"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "ContentType": {
+                "const": "message"
+              }
+            },
+            "required": [
+              "ContentType"
+            ]
+          },
+          "then": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "FilePath"
+                  ]
+                },
+                {
+                  "required": [
+                    "ContentUrl"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "VivaEngageConversation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "VivaEngageConversationId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "VivaEngageCommunityId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "Scope": {
+          "enum": [
+            "community",
+            "storyline"
+          ],
+          "default": "community"
+        },
+        "StorylineOwner": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?![.-])[A-Za-z0-9_]+([.-][A-Za-z0-9_]+)*$"
+        },
+        "Topic": {
+          "type": "string",
+          "minLength": 1
+        },
+        "StarterId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "PostType": {
+          "enum": [
+            "discussion",
+            "question",
+            "praise",
+            "poll",
+            "article",
+            "media"
+          ]
+        },
+        "CreationMode": {
+          "const": "migration"
+        },
+        "Title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "Praises": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^(?![.-])[A-Za-z0-9_]+([.-][A-Za-z0-9_]+)*$"
+          }
+        },
+        "PollOptions": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "Index": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "DisplayName": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "Index",
+              "DisplayName"
+            ]
+          }
+        },
+        "IsPollClosed": {
+          "type": "boolean"
+        },
+        "PollClosedDateTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "From": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?![.-])[A-Za-z0-9_]+([.-][A-Za-z0-9_]+)*$"
+        },
+        "ContentType": {
+          "enum": [
+            "html",
+            "text"
+          ]
+        },
+        "Content": {
+          "type": "string",
+          "minLength": 1
+        },
+        "CreatedDateTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "Mentions": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "MentionId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "MentionIdentifier": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "MentionId",
+              "MentionIdentifier"
+            ]
+          }
+        },
+        "Attachments": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/VivaEngageAttachment"
+          }
+        }
+      },
+      "required": [
+        "VivaEngageConversationId",
+        "StarterId",
+        "PostType",
+        "CreationMode",
+        "From",
+        "ContentType",
+        "Content",
+        "CreatedDateTime",
+        "Mentions",
+        "Topic"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "Scope": {
+                "const": "storyline"
+              }
+            },
+            "required": [
+              "Scope"
+            ]
+          },
+          "then": {
+            "required": [
+              "StorylineOwner"
+            ],
+            "not": {
+              "required": [
+                "VivaEngageCommunityId"
+              ]
+            }
+          },
+          "else": {
+            "required": [
+              "VivaEngageCommunityId"
+            ],
+            "not": {
+              "required": [
+                "StorylineOwner"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "PostType": {
+                "const": "article"
+              }
+            },
+            "required": [
+              "PostType"
+            ]
+          },
+          "then": {
+            "required": [
+              "Title"
+            ],
+            "not": {
+              "required": [
+                "Praises"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "PostType": {
+                "const": "media"
+              }
+            },
+            "required": [
+              "PostType"
+            ]
+          },
+          "then": {
+            "required": [
+              "Attachments"
+            ],
+            "properties": {
+              "Attachments": {
+                "contains": {
+                  "properties": {
+                    "ContentType": {
+                      "enum": [
+                        "imageFile",
+                        "videoFile"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "ContentType"
+                  ]
+                },
+                "minContains": 1
+              }
+            },
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "Title"
+                  ]
+                },
+                {
+                  "required": [
+                    "Praises"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "PostType": {
+                "const": "discussion"
+              }
+            },
+            "required": [
+              "PostType"
+            ]
+          },
+          "then": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "Title"
+                  ]
+                },
+                {
+                  "required": [
+                    "Praises"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "PostType": {
+                "const": "question"
+              }
+            },
+            "required": [
+              "PostType"
+            ]
+          },
+          "then": {
+            "required": [
+              "Title"
+            ],
+            "not": {
+              "required": [
+                "Praises"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "PostType": {
+                "const": "praise"
+              }
+            },
+            "required": [
+              "PostType"
+            ]
+          },
+          "then": {
+            "required": [
+              "Praises"
+            ],
+            "not": {
+              "required": [
+                "Title"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "PostType": {
+                "const": "poll"
+              }
+            },
+            "required": [
+              "PostType"
+            ]
+          },
+          "then": {
+            "required": [
+              "PollOptions",
+              "IsPollClosed"
+            ],
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "Title"
+                  ]
+                },
+                {
+                  "required": [
+                    "Praises"
+                  ]
+                }
+              ]
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "IsPollClosed": {
+                      "const": true
+                    }
+                  },
+                  "required": [
+                    "IsPollClosed"
+                  ]
+                },
+                "then": {
+                  "required": [
+                    "PollClosedDateTime"
+                  ]
+                },
+                "else": {
+                  "not": {
+                    "required": [
+                      "PollClosedDateTime"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          "else": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "PollOptions"
+                  ]
+                },
+                {
+                  "required": [
+                    "IsPollClosed"
+                  ]
+                },
+                {
+                  "required": [
+                    "PollClosedDateTime"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}

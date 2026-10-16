@@ -1,0 +1,376 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "EvalEnv",
+  "description": "EvalEnv configuration document (composed): product-agnostic base config plus optional capability blocks. Single source of truth for tenant configuration, stored in CStore.",
+  "type": "object",
+  "additionalProperties": false,
+  "x-mutability": {
+    "description": "Update semantics for this entity. Only the fields listed in x-mutableFields may change on UpdateEvalEnv; all other fields are immutable after create and an attempt to change them must be rejected (HTTP 400). Enforced by CIIL/EMP at update time (JSON Schema does not express update semantics).",
+    "x-mutableFields": [
+      "name",
+      "description",
+      "serviceTreeId",
+      "evalsetVersion",
+      "evalTarget.config.capabilities.m365TenantConfig.tenantScale",
+      "evalTarget.config.capabilities.m365TenantConfig.ficApplications"
+    ]
+  },
+  "properties": {
+    "objectId": {
+      "description": "Stable identity across versions. Immutable.",
+      "type": "string",
+      "format": "uuid"
+    },
+    "name": {
+      "description": "Display name. Mutable.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "x-mutable": true
+    },
+    "version": {
+      "description": "Logical EvalEnv version (x.y).",
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+$"
+    },
+    "description": {
+      "description": "Free-text description. Mutable.",
+      "type": [
+        "string",
+        "null"
+      ],
+      "x-mutable": true
+    },
+    "evalsetId": {
+      "description": "CStore evalset reference. Immutable.",
+      "type": "string",
+      "minLength": 1
+    },
+    "evalsetVersion": {
+      "description": "CStore evalset version. Mutable (triggers data re-ingestion).",
+      "type": "string",
+      "minLength": 1,
+      "x-mutable": true
+    },
+    "serviceTreeId": {
+      "description": "Owning service (Modern Commerce + RBAC). Mutable.",
+      "type": "string",
+      "format": "uuid",
+      "x-mutable": true
+    },
+    "createdBy": {
+      "description": "Creator UPN.",
+      "type": "string",
+      "minLength": 1
+    },
+    "createdOn": {
+      "description": "Creation timestamp (ISO-8601).",
+      "type": "string",
+      "format": "date-time"
+    },
+    "evalTarget": {
+      "description": "Composed evaluation target: capability list plus the composed config (base + capability blocks).",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "capabilities": {
+          "description": "Composed capability blocks present on this environment.",
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "pooling",
+              "semanticSearch",
+              "m365TenantConfig"
+            ]
+          }
+        },
+        "config": {
+          "$ref": "#/$defs/EvalEnvConfig"
+        }
+      },
+      "required": [
+        "capabilities",
+        "config"
+      ],
+      "allOf": [
+        {
+          "$comment": "Capability/config alignment: if m365TenantConfig is declared in capabilities, its config block must be present.",
+          "if": {
+            "properties": {
+              "capabilities": {
+                "contains": {
+                  "const": "m365TenantConfig"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "config": {
+                "properties": {
+                  "capabilities": {
+                    "required": [
+                      "m365TenantConfig"
+                    ]
+                  }
+                },
+                "required": [
+                  "capabilities"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "required": [
+    "objectId",
+    "name",
+    "version",
+    "evalsetId",
+    "evalsetVersion",
+    "serviceTreeId",
+    "createdBy",
+    "createdOn",
+    "evalTarget"
+  ],
+  "$defs": {
+    "EvalEnvConfig": {
+      "description": "Composed tenant configuration: optional, composed capability blocks. Environment identity/intent (name, description, evalsetId, evalsetVersion) lives at the root EvalEnv document and is NOT repeated here. M365TenantConfig is an M365 (XAM/TRIPS) specialization; non-M365 providers compose their own capabilities.",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "capabilities": {
+          "$ref": "#/$defs/Capabilities"
+        }
+      }
+    },
+    "Capabilities": {
+      "description": "Optional, composed capability blocks. Each is independent and additive. NOTE: v1 covers the M365/TRIPS path only (m365TenantConfig). The userProvisioning (XAM) capability is intentionally deferred; XAM environments continue to use the existing VirtualTenant + TenantProfile (VT+TP) path until the XAM contract is finalized.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "m365TenantConfig": {
+          "$ref": "#/$defs/M365TenantConfig"
+        }
+      }
+    },
+    "M365TenantConfig": {
+      "description": "M365 provisioning capability (TPS-aligned, XAM/TRIPS only). Fields map to TPS POST /api/tenants. Does NOT apply to non-M365 scenarios. Mutability: only tenantScale and ficApplications are mutable on update; all other fields here are immutable after create.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "virtualTenantName": {
+          "description": "EMP internal virtual tenant name (not in TPS).",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "tenantScale": {
+          "description": "EMP duplicate count (not in TPS). Mutable.",
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10,
+          "x-mutable": true
+        },
+        "region": {
+          "description": "EMP pool selection (not in TPS). Accepted values mirror the EMPTenant entity region enum (empTenant.yaml).",
+          "type": "string",
+          "enum": [
+            "Unknown",
+            "APC",
+            "EUR",
+            "NAM"
+          ]
+        },
+        "ring": {
+          "description": "EMP deploy ring (not in TPS). Accepted values mirror the EMPTenant entity deployRing enum (empTenant.yaml).",
+          "type": "string",
+          "enum": [
+            "Unknown",
+            "TDF",
+            "SDFV2",
+            "SIP",
+            "MSIT",
+            "WW"
+          ]
+        },
+        "commerceTenantType": {
+          "description": "TPS.TenantType. Accepted values mirror the ControlPlane CommerceTenantType enum (LegacyCommerce/ModernCommerce) plus TSE for XAM.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "LegacyCommerce",
+            "ModernCommerce",
+            "TSE",
+            null
+          ]
+        },
+        "isTseTenant": {
+          "description": "TPS.TestSandboxEnvironment.",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "billingPartnerId": {
+          "description": "TPS.BillingPartnerId.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "registeredClientId": {
+          "description": "TPS.RegisteredClientId.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "licenseDetails": {
+          "description": "TPS.Subscriptions[].",
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/$defs/LicenseDetail"
+          }
+        },
+        "spoServiceInstance": {
+          "description": "TPS.TenantServiceInstances.SharepointSI.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "exchangeServiceInstance": {
+          "description": "TPS.TenantServiceInstances.ExchangeSI.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "ficApplications": {
+          "description": "FIC (Federated Identity Credential) applications to install (per-user / app FIC configuration). Single source for FIC config — maps to TPS (AppsToInstall / UserFicConfiguration). Mirrors the EMPTenant entity's ficApplications (tenant.yaml#/AppsToInstall) so this payload can replace it on create/update. Mutable (triggers TenantFicWorkflow).",
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/$defs/FicApplication"
+          },
+          "x-mutable": true
+        },
+        "usageLocation": {
+          "description": "TPS.UsageLocation (ISO 3166-1 alpha-2).",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 2,
+          "maxLength": 2
+        },
+        "tags": {
+          "description": "TPS.Tags.",
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "description": {
+          "description": "Tenant description.",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "virtualTenantName",
+        "tenantScale",
+        "region",
+        "ring"
+      ]
+    },
+    "LicenseDetail": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "skuType": {
+          "description": "TPS.Subscriptions[].SkuType.",
+          "type": "string",
+          "minLength": 1
+        },
+        "licenseCount": {
+          "description": "TPS.Subscriptions[].LicenseCount.",
+          "type": "integer",
+          "minimum": 0
+        },
+        "applyTo": {
+          "description": "TPS.Subscriptions[].ApplyTo.",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "skuType",
+        "licenseCount"
+      ]
+    },
+    "FicApplication": {
+      "description": "A FIC (Federated Identity Credential) application to install. Mirrors the EMPTenant entity's ficApplications items (ControlPlane tenant.yaml#/AppsToInstall): applicationId plus its required appPermissions.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "applicationId": {
+          "description": "The application ID of the FIC app to install.",
+          "type": "string",
+          "format": "uuid"
+        },
+        "appPermissions": {
+          "description": "The permissions required by the application.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/AppPermission"
+          }
+        }
+      },
+      "required": [
+        "applicationId"
+      ]
+    },
+    "AppPermission": {
+      "description": "A resource app permission grant for a FIC application (mirrors ControlPlane tenant.yaml#/AppPermission).",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "resourceAppId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "permissionType": {
+          "type": "string"
+        },
+        "scopes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "resourceAppId",
+        "permissionType",
+        "scopes"
+      ]
+    }
+  }
+}

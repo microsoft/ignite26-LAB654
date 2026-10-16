@@ -1,0 +1,10 @@
+[
+  {
+    "name": "1.0.0",
+    "description": "Sample data for channels version 1.0.0",
+    "content": "[\r\n  {\r\n    \"ChannelId\": \"channel-001\",\r\n    \"TeamId\": \"team-001\",\r\n    \"Name\": \"General\",\r\n    \"Description\": \"General discussion channel\",\r\n    \"CreatedDateTime\": \"2025-01-10T08:30:00Z\",\r\n    \"ChannelType\": \"Standard\",\r\n    \"Members\": [\r\n      \"john.doe\",\r\n      \"jane.smith\",\r\n      \"bob.johnson\"\r\n    ],\r\n    \"Creator\": \"john.doe\",\r\n    \"IsPrivate\": false\r\n  }\r\n]",
+    "format": "Json",
+    "jsonContent": "[\r\n  {\r\n    \"ChannelId\": \"channel-001\",\r\n    \"TeamId\": \"team-001\",\r\n    \"Name\": \"General\",\r\n    \"Description\": \"General discussion channel\",\r\n    \"CreatedDateTime\": \"2025-01-10T08:30:00Z\",\r\n    \"ChannelType\": \"Standard\",\r\n    \"Members\": [\r\n      \"john.doe\",\r\n      \"jane.smith\",\r\n      \"bob.johnson\"\r\n    ],\r\n    \"Creator\": \"john.doe\",\r\n    \"IsPrivate\": false\r\n  }\r\n]",
+    "version": "1.0.0"
+  }
+]

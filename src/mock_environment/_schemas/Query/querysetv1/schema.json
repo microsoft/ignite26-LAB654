@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SEVAL Query Set v1 (TSV)",
+  "description": "Upload format: TSV file (matches SEVAL's QuerySet.fromTsv). The JSON Schema below describes the in-memory shape after CsvValidator converts each TSV row into a JSON object (the full file becomes a JSON array) — it is NOT the upload format. V1 query is a plain text utterance.",
+  "type": "array",
+  "minItems": 1,
+  "items": {
+    "type": "object",
+    "required": [
+      "query",
+      "segment"
+    ],
+    "properties": {
+      "query": {
+        "type": "string",
+        "minLength": 1,
+        "description": "Plain text utterance (V1 query schema). Also accepted as column name 'utterance'."
+      },
+      "segment": {
+        "type": "string",
+        "minLength": 1,
+        "description": "Segment classification (maps to 'segment' or 'segment 2' TSV column)."
+      },
+      "annotation": {
+        "type": "string",
+        "description": "CIQ annotation JSON associated with the utterance, used to compose the Sydney request during scraping."
+      },
+      "tags": {
+        "type": "string",
+        "description": "Comma-separated feature tags (e.g., CIQ, FRE, Sparkle prompt)."
+      },
+      "pluginOptions": {
+        "type": "string",
+        "description": "Meeting IDs information, required for meeting copilot."
+      },
+      "plugins": {
+        "type": "string",
+        "description": "Optional plugin configuration for Meeting Copilot."
+      },
+      "locationInfo": {
+        "type": "string",
+        "description": "User location JSON for MChat localization."
+      },
+      "market": {
+        "type": "string",
+        "description": "Market/region identifier (e.g., en-us)."
+      },
+      "user_id": {
+        "type": "string",
+        "description": "User email for per-query user override in MChat scraping."
+      },
+      "chat_request_override": {
+        "type": "string",
+        "description": "JSON string for extending new columns (e.g., clientContexts)."
+      },
+      "plugin_response_overrides": {
+        "type": "string",
+        "description": "JSON string for adding plugin responses into scraping options."
+      }
+    }
+  }
+}

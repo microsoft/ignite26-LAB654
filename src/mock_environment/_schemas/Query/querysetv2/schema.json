@@ -1,0 +1,109 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SEVAL Query Set V2 (TSV)",
+  "description": "Upload format: TSV file (matches SEVAL's QuerySet.fromTsv). The JSON Schema below describes the in-memory shape after CsvValidator converts each TSV row into a JSON object (the full file becomes a JSON array) — it is NOT the upload format. The 'query' TSV column contains a JSON-encoded array of user/bot message turns (multi-turn).",
+  "type": "array",
+  "minItems": 1,
+  "items": {
+    "type": "object",
+    "required": [
+      "query",
+      "segment"
+    ],
+    "properties": {
+      "query": {
+        "description": "JSON array of user/bot message turns (V2 query schema, parsed from JSON in TSV column)",
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "type": "object",
+          "required": [
+            "text",
+            "author"
+          ],
+          "properties": {
+            "text": {
+              "type": "string",
+              "minLength": 1
+            },
+            "author": {
+              "type": "string",
+              "enum": [
+                "user",
+                "bot"
+              ]
+            },
+            "location": {
+              "type": "object",
+              "description": "User location info (country, state, city, sourceType)"
+            },
+            "location_hints": {
+              "type": "array",
+              "description": "Array of location hint objects with confidence scores and coordinates"
+            },
+            "ip_address": {
+              "type": "string",
+              "description": "User IP address"
+            },
+            "market": {
+              "type": "string",
+              "description": "Market/locale identifier (e.g., en-US)"
+            },
+            "upload_file_payloads": {
+              "type": "array"
+            },
+            "chat_request_override": {
+              "type": "object",
+              "description": "Override object for extending request fields (e.g., client_contexts)"
+            },
+            "botConversationId": {
+              "type": "string",
+              "description": "Bot conversation identifier for multi-turn context"
+            }
+          }
+        }
+      },
+      "segment": {
+        "type": "string",
+        "minLength": 1,
+        "description": "Segment classification (maps to 'segment' or 'segment 2' TSV column)"
+      },
+      "annotation": {
+        "type": "string",
+        "description": "CIQ annotation JSON associated with the utterance"
+      },
+      "tags": {
+        "type": "string",
+        "description": "Comma-separated feature tags (e.g., CIQ, FRE, Sparkle prompt)"
+      },
+      "pluginOptions": {
+        "type": "string",
+        "description": "Meeting IDs information, required for meeting copilot"
+      },
+      "plugins": {
+        "type": "string",
+        "description": "Optional plugin configuration for Meeting Copilot"
+      },
+      "locationInfo": {
+        "type": "string",
+        "description": "User location JSON for MChat localization"
+      },
+      "market": {
+        "type": "string",
+        "description": "Market/region identifier (e.g., en-us) for MChat"
+      },
+      "user_id": {
+        "type": "string",
+        "description": "User email for per-query user override in MChat scraping"
+      },
+      "chat_request_override": {
+        "type": "string",
+        "description": "JSON string for extending new columns (e.g., clientContexts)"
+      },
+      "plugin_response_overrides": {
+        "type": "string",
+        "description": "JSON string for adding plugin responses into scraping options"
+      }
+    }
+  }
+}

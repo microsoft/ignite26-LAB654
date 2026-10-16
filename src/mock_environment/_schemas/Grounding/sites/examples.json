@@ -1,0 +1,10 @@
+[
+  {
+    "name": "1.0.0",
+    "description": "Sample data for sites version 1.0.0",
+    "content": "[\r\n  {\r\n    \"DisplayName\": \"Project Alpha Site\",\r\n    \"MailNickname\": \"projectalpha\",\r\n    \"Visibility\": \"Private\",\r\n    \"Owners\": [\r\n      \"john.doe\"\r\n    ],\r\n    \"Members\": [\r\n      \"jane.smith\",\r\n      \"bob.johnson\"\r\n    ]\r\n  }\r\n]",
+    "format": "Json",
+    "jsonContent": "[\r\n  {\r\n    \"DisplayName\": \"Project Alpha Site\",\r\n    \"MailNickname\": \"projectalpha\",\r\n    \"Visibility\": \"Private\",\r\n    \"Owners\": [\r\n      \"john.doe\"\r\n    ],\r\n    \"Members\": [\r\n      \"jane.smith\",\r\n      \"bob.johnson\"\r\n    ]\r\n  }\r\n]",
+    "version": "1.0.0"
+  }
+]

@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Calendar Query Pattern",
+  "description": "Schema for calendar meeting query patterns in CSV format",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "PatternId",
+      "query_pattern",
+      "segment_1",
+      "segment_2"
+    ],
+    "properties": {
+      "PatternId": {
+        "type": [
+          "integer",
+          "string"
+        ],
+        "description": "Unique identifier for the query pattern"
+      },
+      "query_pattern": {
+        "type": "string",
+        "description": "The query pattern template with placeholders for dynamic values (e.g., <subject_1>, <body>, <timeSpan>)"
+      },
+      "segment_1": {
+        "type": "string",
+        "description": "Primary category or classification of the query pattern"
+      },
+      "segment_2": {
+        "type": "string",
+        "description": "Secondary category or subcategory of the query pattern"
+      }
+    }
+  }
+}

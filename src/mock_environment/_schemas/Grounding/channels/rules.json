@@ -1,0 +1,529 @@
+{
+  "typeName": "channels",
+  "rules": [
+    {
+      "ruleId": "f40986cf-d33f-4a10-b5f3-fee8b6460e7e",
+      "name": "Unique Channel IDs",
+      "description": "Each channel must have a unique ChannelId within the file",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "unique": {
+          "var": "ChannelId",
+          "caseSensitive": true
+        }
+      },
+      "metadata": {
+        "field": "ChannelId",
+        "expression": "All values of 'ChannelId' must be unique"
+      },
+      "category": "Uniqueness",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "adc34b6d-cc7c-4e6b-8d27-9ad418e673a7",
+      "name": "Past CreatedDateTime",
+      "description": "CreatedDateTime must be in the past",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "CreatedDateTime",
+            "operator": "is_not_null",
+            "valueType": "string"
+          },
+          "then": {
+            "field": "CreatedDateTime",
+            "operator": "is_past",
+            "valueType": "datetime"
+          }
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "IF 'CreatedDateTime' is_not_null THEN 'CreatedDateTime' is_past"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "e221b624-9967-48ef-9d0f-f4dab0ef8b7b",
+      "name": "Unique Channel Name per Team",
+      "description": "Each channel must have a unique Name within the same TeamId",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "unique_by_group": {
+          "var": "Name",
+          "groupBy": "TeamId",
+          "caseSensitive": true
+        }
+      },
+      "metadata": {
+        "field": "Name",
+        "expression": "All values of 'Name' must be unique within each 'TeamId'"
+      },
+      "category": "Uniqueness",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "ec3289ca-e961-4188-8064-e408f786a07d",
+      "name": "Check if channel name is General",
+      "description": "Check if channel name is General",
+      "severity": "Info",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "Name",
+            "operator": "is_not_null",
+            "valueType": "string"
+          },
+          "then": {
+            "field": "Name",
+            "operator": "!=",
+            "valueType": "string",
+            "value": "General"
+          }
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "IF 'Name' is_not_null THEN 'Name' != General"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "6a169a33-fb33-4ded-a126-2bf44f7db4b1",
+      "name": "channel creator exist in user list",
+      "description": "channel creator exist in user list",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "channels",
+          "sourceField": "Creator",
+          "targetType": "users",
+          "targetField": "MailNickName",
+          "sourceExtractPattern": "^([^@]+)$"
+        }
+      },
+      "metadata": {
+        "field": "Creator",
+        "expression": "For each 'channels.Creator' (extracted via pattern: ^([^@]+)$), a matching 'users.MailNickName' must exist"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "8938c277-79fd-450b-97e6-eab724d951b9",
+      "name": "channel members exist in user list",
+      "description": "channel members exist in user list",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "channels",
+          "sourceField": "Members",
+          "targetType": "users",
+          "targetField": "MailNickName",
+          "sourceExtractPattern": "^([^@]+)$"
+        }
+      },
+      "metadata": {
+        "field": "Members",
+        "expression": "For each 'channels.Members' (extracted via pattern: ^([^@]+)$), a matching 'users.MailNickName' must exist"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "407f8b06-a79f-4bbd-8bd9-4348b238a309",
+      "name": "channel created time is not earlier than team created time when channel name is General",
+      "description": "channel created time is not earlier than team created time when channel name is General",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "integrityCheck": {
+          "source": {
+            "keyField": "TeamId",
+            "filterConditions": [
+              {
+                "field": "Name",
+                "operator": "==",
+                "value": "General"
+              }
+            ]
+          },
+          "target": {
+            "logicType": "or",
+            "conditions": [
+              {
+                "type": "array-exists",
+                "targetType": "teams",
+                "keyField": "TeamId",
+                "additionalConditions": [
+                  {
+                    "field": "CreatedDateTime",
+                    "operator": "<=",
+                    "isSourceFieldRef": true,
+                    "sourceField": "CreatedDateTime",
+                    "useCurrentSourceItem": true,
+                    "valueType": "datetime"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "field": "TeamId",
+        "expression": "Each value from 'TeamId' (where Name==General) must exists in '' with matching 'TeamId' and CreatedDateTime<=currentItem.CreatedDateTime"
+      },
+      "category": "IntegrityCheck",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "0c7d85d4-7610-4ad5-95dc-6d728ffcbeca",
+      "name": "channel created time is not earlier than team created time when channel name is not General",
+      "description": "",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "integrityCheck": {
+          "source": {
+            "keyField": "TeamId",
+            "filterConditions": [
+              {
+                "field": "Name",
+                "operator": "!=",
+                "value": "General"
+              }
+            ]
+          },
+          "target": {
+            "logicType": "or",
+            "conditions": [
+              {
+                "type": "array-exists",
+                "targetType": "teams",
+                "keyField": "TeamId",
+                "additionalConditions": [
+                  {
+                    "field": "CreatedDateTime",
+                    "operator": "<",
+                    "isSourceFieldRef": true,
+                    "sourceField": "CreatedDateTime",
+                    "useCurrentSourceItem": true,
+                    "valueType": "datetime"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "field": "TeamId",
+        "expression": "Each value from 'TeamId' (where Name!=General) must exists in '' with matching 'TeamId' and CreatedDateTime<currentItem.CreatedDateTime"
+      },
+      "category": "IntegrityCheck",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "9777dbbc-6d29-417b-9f94-1ed096034e78",
+      "name": "channel team id exist in team list",
+      "description": "channel team id exist in team list",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "channels",
+          "sourceField": "TeamId",
+          "targetType": "teams",
+          "targetField": "TeamId"
+        }
+      },
+      "metadata": {
+        "field": "TeamId",
+        "expression": "For each 'channels.TeamId', a matching 'teams.TeamId' must exist"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "0fbee880-d6f1-4b67-aa48-e5deb5e1d037",
+      "name": "Shared channel type is valid",
+      "description": "Creator is not team owner could not create a channel with 'Shared' type.",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "integrityCheck": {
+          "source": {
+            "keyField": "TeamId",
+            "filterConditions": [
+              {
+                "field": "ChannelType",
+                "operator": "==",
+                "value": "Shared"
+              }
+            ]
+          },
+          "target": {
+            "logicType": "or",
+            "conditions": [
+              {
+                "type": "array-exists",
+                "targetType": "teams",
+                "keyField": "TeamId",
+                "additionalConditions": [
+                  {
+                    "field": "Owners",
+                    "operator": "contains",
+                    "isSourceFieldRef": true,
+                    "sourceField": "Creator",
+                    "useCurrentSourceItem": true
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "field": "TeamId",
+        "expression": "Each value from 'TeamId' (where ChannelType==Shared) must exists in '' with matching 'TeamId' and OwnerscontainscurrentItem.Creator"
+      },
+      "category": "IntegrityCheck",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "c5e8f2a1-4b3d-4e9f-8c7a-2d1b9e0f3c8a",
+      "name": "Channel members must exist in team member list",
+      "description": "Validates that all channel members (including creator) exist in the corresponding team's member list (Owners and Members).",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "channel-members-in-team-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "Members",
+        "expression": "All channel members and creator must exist in team Owners or Members"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "262ed128-467d-4f78-a68a-53ff2fe219a8",
+      "name": "Standard is the only supported type in migration mode",
+      "description": "Standard is the only supported type in migration mode",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "ChannelType",
+            "operator": "is_not_null",
+            "valueType": "string"
+          },
+          "then": {
+            "field": "ChannelType",
+            "operator": "==",
+            "valueType": "string",
+            "value": "Standard"
+          }
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "IF 'ChannelType' is_not_null THEN 'ChannelType' == Standard"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "7ae7909d-22a7-4390-b487-b46f109cddf2",
+      "name": "Standard is the only supported type in migration mode, Private is not supported",
+      "description": "Standard is the only supported type in migration mode, Private is not supported",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "IsPrivate",
+            "operator": "is_not_null",
+            "valueType": "boolean",
+            "value": ""
+          },
+          "then": {
+            "field": "IsPrivate",
+            "operator": "!=",
+            "valueType": "boolean",
+            "value": "true"
+          }
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "IF 'IsPrivate' is_not_null THEN 'IsPrivate' != true"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "a3b4c5d6-e7f8-49a0-b1c2-3d4e5f6a7b8c",
+      "name": "Channel members must have Microsoft Teams Enterprise license",
+      "description": "Every channel member must have 'Microsoft Teams Enterprise' license assigned in users",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "integrityCheck": {
+          "source": {
+            "field": "Members"
+          },
+          "target": {
+            "logicType": "or",
+            "conditions": [
+              {
+                "type": "array-exists",
+                "targetType": "users",
+                "keyField": "MailNickName",
+                "additionalConditions": [
+                  {
+                    "field": "Licenses",
+                    "operator": "contains",
+                    "value": "Microsoft Teams Enterprise"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "field": "Members",
+        "expression": "Each value from 'Members' must exist in users with matching 'MailNickName' and Licenses contains 'Microsoft Teams Enterprise'"
+      },
+      "category": "IntegrityCheck",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "9deb86b3-46fa-aaea-4cc6-a61beb8110a0",
+      "name": "Unsupported properties are detected in grounding data",
+      "description": "Report unsupported properties that are not declared by the schema definition used for validation",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {},
+      "metadata": {
+        "expression": "All properties must be declared by the selected schema version",
+        "field": ""
+      },
+      "category": "UnsupportedProperty",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "e9fdc176-152c-4c5e-8f65-c90c42be019a",
+      "name": "Channel Creator shouldn't be a shared mailbox",
+      "description": "Channel Creator shouldn't be a shared mailbox",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "integrityCheck": {
+          "source": {
+            "field": "Creator"
+          },
+          "target": {
+            "logicType": "or",
+            "conditions": [
+              {
+                "type": "array-exists",
+                "targetType": "users",
+                "keyField": "MailNickName",
+                "additionalConditions": [
+                  {
+                    "field": "IsSharedMailbox",
+                    "operator": "is_null",
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "type": "array-exists",
+                "targetType": "users",
+                "keyField": "MailNickName",
+                "additionalConditions": [
+                  {
+                    "field": "IsSharedMailbox",
+                    "operator": "!=",
+                    "value": "true"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "field": "Creator",
+        "expression": "Each value from 'Creator' must exists in '' with matching 'MailNickName' and IsSharedMailboxis_null OR exists in '' with matching 'MailNickName' and IsSharedMailbox!=true"
+      },
+      "category": "IntegrityCheck",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "32bc084c-3f23-4c34-8284-f2c28bc7bfea",
+      "name": "Channel Members shouldn't be a shared mailbox",
+      "description": "Channel Members shouldn't be a shared mailbox",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "integrityCheck": {
+          "source": {
+            "field": "Members"
+          },
+          "target": {
+            "logicType": "or",
+            "conditions": [
+              {
+                "type": "array-exists",
+                "targetType": "users",
+                "keyField": "MailNickName",
+                "additionalConditions": [
+                  {
+                    "field": "IsSharedMailbox",
+                    "operator": "is_null",
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "type": "array-exists",
+                "targetType": "users",
+                "keyField": "MailNickName",
+                "additionalConditions": [
+                  {
+                    "field": "IsSharedMailbox",
+                    "operator": "!=",
+                    "value": "true"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "field": "Members",
+        "expression": "Each value from 'Members' must exists in '' with matching 'MailNickName' and IsSharedMailboxis_null OR exists in '' with matching 'MailNickName' and IsSharedMailbox!=true"
+      },
+      "category": "IntegrityCheck",
+      "isEnabled": true
+    }
+  ],
+  "jsonLogicVersion": "2.0"
+}

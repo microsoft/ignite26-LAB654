@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "VivaEngageReactions",
+  "description": "Manufactured VivaEngageReactions schema",
+  "type": "array",
+  "uniqueItems": true,
+  "items": {
+    "$ref": "#/$defs/VivaEngageReaction"
+  },
+  "$defs": {
+    "VivaEngageReaction": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "VivaEngageReactionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "VivaEngageConversationId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "From": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?![.-])[A-Za-z0-9_]+([.-][A-Za-z0-9_]+)*$"
+        },
+        "ReactionType": {
+          "enum": [
+            "like",
+            "love",
+            "celebrate",
+            "thank",
+            "laugh",
+            "sad",
+            "happy",
+            "excited",
+            "smile",
+            "silly",
+            "intenseLaugh",
+            "starStruck",
+            "goofy",
+            "thinking",
+            "surprised",
+            "mindBlown",
+            "scared",
+            "crying",
+            "shocked",
+            "angry",
+            "agree",
+            "praise",
+            "takingNotes",
+            "heartBroken",
+            "support",
+            "confirmed",
+            "watching",
+            "brain",
+            "medal",
+            "bullseye"
+          ]
+        },
+        "CreatedDateTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "CreationMode": {
+          "const": "migration"
+        },
+        "TargetMessageId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        }
+      },
+      "required": [
+        "VivaEngageReactionId",
+        "VivaEngageConversationId",
+        "TargetMessageId",
+        "From",
+        "ReactionType",
+        "CreatedDateTime",
+        "CreationMode"
+      ]
+    }
+  }
+}

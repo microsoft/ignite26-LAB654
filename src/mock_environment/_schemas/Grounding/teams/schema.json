@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Manufactured Teams schema",
+  "title": "Teams",
+  "type": "array",
+  "uniqueItems": true,
+  "items": {
+    "$ref": "#/$defs/Team"
+  },
+  "$defs": {
+    "Team": {
+      "description": "The Team JSON Schema is designed to represent an entire Team in Teams.",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "TeamId": {
+          "description": "An identifier for each Team, useful for tracking and reference.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 50,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "Name": {
+          "description": "The name of the Team.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "not": {
+            "pattern": "[\\\\/:*?\"<>|]"
+          }
+        },
+        "Description": {
+          "description": "The description of the Team.",
+          "type": "string",
+          "maxLength": 1024
+        },
+        "CreatedDateTime": {
+          "description": "The date and time of when the Team was created. This follows the ISO 8601 pattern.",
+          "type": "string",
+          "pattern": "^[1-9][0-9]{3}-(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9]|3[0-1])T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+        },
+        "Owners": {
+          "description": "The owners of the Team.",
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 1,
+          "items": {
+            "description": "Identifier of the owners of the Team.",
+            "$ref": "#/$defs/MailNickName"
+          }
+        },
+        "Members": {
+          "description": "The members of the Team.",
+          "type": [
+            "array",
+            "null"
+          ],
+          "uniqueItems": true,
+          "items": {
+            "description": "Identifier of the members of the Team.",
+            "$ref": "#/$defs/MailNickName"
+          }
+        }
+      },
+      "required": [
+        "TeamId",
+        "Name",
+        "CreatedDateTime"
+      ],
+      "anyOf": [
+        {
+          "required": [
+            "Owners"
+          ]
+        },
+        {
+          "required": [
+            "Members"
+          ]
+        }
+      ]
+    },
+    "MailNickName": {
+      "description": "User MailNickName only (full email address is not supported)",
+      "type": "string",
+      "minLength": 1,
+      "allOf": [
+        {
+          "not": {
+            "pattern": ".*'.*"
+          }
+        },
+        {
+          "not": {
+            "pattern": "@"
+          }
+        }
+      ],
+      "pattern": "^(?![.-])[A-Za-z0-9_]+([.-][A-Za-z0-9_]+)*$"
+    }
+  }
+}

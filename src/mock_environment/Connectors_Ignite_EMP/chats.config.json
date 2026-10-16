@@ -1,0 +1,67 @@
+[
+  {
+    "ChatId": "legal-chat-001",
+    "ChatType": "Group",
+    "ChatName": "Cognivault Nexus deal",
+    "Members": [
+      "marcus.hollowell",
+      "tomas.aguilar",
+      "radhika.sengupta"
+    ],
+    "CreatedDateTime": "2026-09-22T17:00:00Z",
+    "ChatMessages": [
+      {
+        "ChatMessageId": "1",
+        "From": "tomas.aguilar",
+        "ContentType": "text",
+        "Content": "Our last vendor retired its model on 2 weeks' notice and we couldn't quote for a week. Can't happen again.",
+        "SentDateTime": "2026-09-30T19:02:00Z"
+      },
+      {
+        "ChatMessageId": "2",
+        "From": "radhika.sengupta",
+        "ContentType": "text",
+        "Content": "Agreed. And we don't go to the table without owning the fine-tuned model.",
+        "SentDateTime": "2026-09-30T19:06:00Z"
+      },
+      {
+        "ChatMessageId": "3",
+        "From": "marcus.hollowell",
+        "ContentType": "text",
+        "Content": "Understood. I'll review Cognivault's paper against the playbook as soon as it lands.",
+        "SentDateTime": "2026-09-30T19:11:00Z"
+      }
+    ]
+  },
+  {
+    "ChatId": "legal-chat-002",
+    "ChatType": "OneOnOne",
+    "Members": [
+      "tomas.aguilar",
+      "marcus.hollowell"
+    ],
+    "CreatedDateTime": "2026-10-05T12:45:00Z",
+    "ChatMessages": [
+      {
+        "ChatMessageId": "1",
+        "From": "tomas.aguilar",
+        "ContentType": "html",
+        "Content": "<p>Marcus, Cognivault sent over their contract (attached). We'd like to sign at the session with them on the 12th so we can go live on the 15th. Anything you need from me?</p><p>{placeholder:1}</p>",
+        "SentDateTime": "2026-10-05T12:47:00Z",
+        "Importance": "normal",
+        "Placeholders": [
+          {
+            "PlaceholderId": "1",
+            "Type": "attachment",
+            "HyperLinkContent": {
+              "DisplayText": "Cognivault AI Vendor Agreement v4.2.docx",
+              "FileId": "legal-file-001",
+              "SharedLinkId": "legal-link-001",
+              "FileOwner": "tomas.aguilar"
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

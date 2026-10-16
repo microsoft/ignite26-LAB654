@@ -1,0 +1,610 @@
+{
+  "source": "https://coep.microsoft.com/schema/portal",
+  "api": "https://coep.microsoft.com/schema/api/v1",
+  "fetchedAt": "2026-10-16T09:30:51.446Z",
+  "types": [
+    {
+      "typeName": "channelmessagereplies",
+      "displayName": "ChannelMessageReplies",
+      "category": "Grounding",
+      "dataFormat": "Json",
+      "dataSourceType": "FirstParty",
+      "version": "1.0.0",
+      "tags": {
+        "Latest": "1.0.0"
+      },
+      "description": "Replies to messages in Microsoft Teams channels",
+      "path": "Grounding/channelmessagereplies"
+    },
+    {
+      "typeName": "channelmessages",
+      "displayName": "ChannelMessages",
+      "category": "Grounding",
+      "dataFormat": "Json",
+      "dataSourceType": "FirstParty",
+      "version": "1.0.0",
+      "tags": {
+        "Latest": "1.0.0"
+      },
+      "description": "Messages posted in Microsoft Teams channels",
+      "path": "Grounding/channelmessages"
+    },
+    {
+      "typeName": "channels",
+      "displayName": "Channels",
+      "category": "Grounding",
+      "dataFormat": "Json",
+      "dataSourceType": "FirstParty",
+      "version": "1.0.0",
+      "tags": {
+        "Latest": "1.0.0"
+      },
+      "description": "Microsoft Teams channel information within teams",
+      "path": "Grounding/channels"
+    },
+    {
+      "typeName": "chats",
+      "displayName": "Chats",
+      "category": "Grounding",
+      "dataFormat": "Json",
+      "dataSourceType": "FirstParty",
+      "version": "1.0.0",
+      "tags": {
+        "Latest": "1.0.0"
+      },
+      "description": "Chat conversations including group and direct messages with support for message threads, participants, and various content types",
+      "path": "Grounding/chats"
+    },
+    {
+      "typeName": "config",
+      "displayName": "Config",
+      "category": "Grounding",
+      "dataFormat": "Json",
+      "dataSourceType": "FirstParty",
+      "version": "1.0.0",
+      "tags": {
+        "Latest": "1.0.0"
+      },
+      "description": "Configuration schema for tenant and group settings",
+      "path": "Grounding/config"
+    },
+    {
+      "typeName": "contacts",
+      "displayName": "Contacts",
+      "category": "Grounding",
+      "dataFormat": "Json",
+      "dataSourceType": "FirstParty",
+      "version": "1.0.0",
+      "tags": {
+        "Latest": "1.0.0"
+      },
+      "description": "Contact information for personal and organizational contacts",
+      "path": "Grounding/contacts"
+    },
+    {
+      "typeName": "das",
+      "displayName": "DAs",
+      "category": "Grounding",
+      "dataFormat": "Json",
+      "dataSourceType": "FirstParty",
+      "version": "1.0.0",
+      "tags": {
+        "Latest": "1.0.0"
+      },
+      "description": "Declarative Agent requests and manifest information",
+      "path": "Grounding/das"
+    },
+    {
+      "typeName": "emails",
+      "displayName": "Emails",
+      "category": "Grounding",
+      "dataFormat": "Json",
+      "dataSourceType": "FirstParty",
+      "version": "1.0.0",
+      "tags": {
+        "Latest": "1.0.0"
+      },
+      "description": "Email messages including sent, received, and draft emails with support for attachments, recipients, and various email properties",
+      "path": "Grounding/emails"
+    },
+    {
+      "typeName": "events",
+      "displayName": "Events",
+      "category": "Grounding",
+      "dataFormat": "Json",
+      "dataSourceType": "FirstParty",
+      "version": "1.0.0",
+      "tags": {
+        "Latest": "1.0.0"
+      },
+      "description": "Calendar events and meetings including scheduling information, attendees, locations, and recurrence patterns",
+      "path": "Grounding/events"
+    },
+    {
+      "typeName": "files",
+      "displayName": "Files",
+      "category": "Grounding",
+      "dataFormat": "Json",
+      "dataSourceType": "FirstParty",
+      "version": "1.0.0",
+      "tags": {
+        "Latest": "1.0.0"
+      },
+      "description": "File metadata and sharing information for OneDrive and SharePoint files",
+      "path": "Grounding/files"
+    },
+    {
+      "typeName": "grounding-data",
+      "displayName": "Grounding Data Package",
+      "category": "Grounding",
+      "dataFormat": "Json",
+      "dataSourceType": "FirstParty",
+      "version": "1.0.0",
+      "tags": {
+        "Latest": "1.0.0"
+      },
+      "description": "A composite type representing a complete grounding data package. Contains multiple related configuration files (users, emails, files, etc.) packaged as a zip archive or folder structure. Includes cross-file validation rules to ensure referential integrity across all data files.",
+      "path": "Grounding/grounding-data"
+    },
+    {
+      "typeName": "onlinemeetings",
+      "displayName": "OnlineMeetings",
+      "category": "Grounding",
+      "dataFormat": "Json",
+      "dataSourceType": "FirstParty",
+      "version": "1.0.0",
+      "tags": {
+        "Latest": "1.0.0",
+        "Preview": "2.0.0"
+      },
+      "description": "Online meeting information including participants and transcripts",
+      "path": "Grounding/onlinemeetings"
+    },
+    {
+      "typeName": "sites",
+      "displayName": "Sites",
+      "category": "Grounding",
+      "dataFormat": "Json",
+      "dataSourceType": "FirstParty",
+      "version": "1.0.0",
+      "tags": {
+        "Latest": "1.0.0"
+      },
+      "description": "SharePoint site configuration and membership information",
+      "path": "Grounding/sites"
+    },
+    {
+      "typeName": "teams",
+      "displayName": "Teams",
+      "category": "Grounding",
+      "dataFormat": "Json",
+      "dataSourceType": "FirstParty",
+      "version": "1.0.0",
+      "tags": {
+        "Latest": "1.0.0"
+      },
+      "description": "Microsoft Teams team information including members, owners, and team settings",
+      "path": "Grounding/teams"
+    },
+    {
+      "typeName": "users",
+      "displayName": "Users",
+      "category": "Grounding",
+      "dataFormat": "Json",
+      "dataSourceType": "FirstParty",
+      "version": "1.0.0",
+      "tags": {
+        "Latest": "1.0.0"
+      },
+      "description": "Represents a user with contact and organizational information",
+      "path": "Grounding/users"
+    },
+    {
+      "typeName": "azuredevopsworkitems",
+      "displayName": "Azure DevOps Work Item",
+      "category": "Grounding",
+      "dataFormat": "Json",
+      "dataSourceType": "ThirdParty",
+      "version": "3.0.0",
+      "tags": {
+        "Latest": "3.0.0",
+        "Legacy": "2.1.0"
+      },
+      "description": "Schema of the manufactured Azure DevOps work item",
+      "path": "Grounding/azuredevopsworkitems"
+    },
+    {
+      "typeName": "confluence",
+      "displayName": "Confluence Cloud Page",
+      "category": "Grounding",
+      "dataFormat": "Json",
+      "dataSourceType": "ThirdParty",
+      "version": "3.0.0",
+      "tags": {
+        "Latest": "3.0.0",
+        "Legacy": "2.1.0"
+      },
+      "description": "Schema of the manufactured Confluence Cloud page",
+      "path": "Grounding/confluence"
+    },
+    {
+      "typeName": "servicenowkb",
+      "displayName": "ServiceNow Knowledge Article",
+      "category": "Grounding",
+      "dataFormat": "Json",
+      "dataSourceType": "ThirdParty",
+      "version": "3.0.0",
+      "tags": {
+        "Latest": "3.0.0",
+        "Legacy": "2.1.0"
+      },
+      "description": "Schema of the manufactured ServiceNow knowledge base article",
+      "path": "Grounding/servicenowkb"
+    },
+    {
+      "typeName": "cosmic_chai_user",
+      "displayName": "cosmic_chai_user",
+      "category": "UserContext",
+      "dataFormat": "Json",
+      "dataSourceType": "FirstParty",
+      "version": "1.0.0",
+      "tags": {
+        "Latest": "1.0.0",
+        "Preview": "1.0.1"
+      },
+      "description": "Type for Cosmic Chai tenant",
+      "path": "UserContext/cosmic_chai_user"
+    },
+    {
+      "typeName": "cosmic_grounding",
+      "displayName": "cosmic_grounding",
+      "category": "Grounding",
+      "dataFormat": "Json",
+      "dataSourceType": "FirstParty",
+      "version": "1.0.0",
+      "tags": {
+        "Latest": "1.0.0"
+      },
+      "description": "",
+      "path": "Grounding/cosmic_grounding"
+    },
+    {
+      "typeName": "lmchecklistassertions",
+      "displayName": "LM Checklist Assertions",
+      "category": "Assertion",
+      "dataFormat": "Yaml",
+      "dataSourceType": "FirstParty",
+      "version": "1.0.0",
+      "tags": {
+        "Latest": "1.0.0"
+      },
+      "description": "SEVAL LMChecklist assertions — upload format: YAML file. Mirrors SEVAL's AssertionSet.fromYAML.",
+      "path": "Assertion/lmchecklistassertions"
+    },
+    {
+      "typeName": "querysetv1",
+      "displayName": "Query Set V1",
+      "category": "Query",
+      "dataFormat": "Tsv",
+      "dataSourceType": "FirstParty",
+      "version": "1.0.0",
+      "tags": {
+        "Latest": "1.0.0"
+      },
+      "description": "SEVAL V1 query set — upload format: TSV file (plain text utterance + segment columns). Mirrors SEVAL's QuerySet.fromTsv.",
+      "path": "Query/querysetv1"
+    },
+    {
+      "typeName": "querysetv2",
+      "displayName": "Query Set V2",
+      "category": "Query",
+      "dataFormat": "Tsv",
+      "dataSourceType": "FirstParty",
+      "version": "1.0.0",
+      "tags": {
+        "Latest": "1.0.0"
+      },
+      "description": "SEVAL V2 query set — upload format: TSV file (the 'query' column carries a JSON-encoded array of message turns for multi-turn). Mirrors SEVAL's QuerySet.fromTsv.",
+      "path": "Query/querysetv2"
+    },
+    {
+      "typeName": "calendar",
+      "displayName": "Calendar Query Pattern",
+      "category": "QueryPattern",
+      "dataFormat": "Csv",
+      "dataSourceType": "FirstParty",
+      "version": "1.0.0",
+      "tags": {
+        "Latest": "1.0.0"
+      },
+      "description": "Query patterns for calendar and meeting-related searches with dynamic placeholders",
+      "path": "QueryPattern/calendar"
+    },
+    {
+      "typeName": "connectors",
+      "displayName": "Connectors Query Pattern",
+      "category": "QueryPattern",
+      "dataFormat": "Csv",
+      "dataSourceType": "FirstParty",
+      "version": "1.0.0",
+      "tags": {
+        "Latest": "1.0.0"
+      },
+      "description": "Query patterns for connector work item management with field-based queries",
+      "path": "QueryPattern/connectors"
+    },
+    {
+      "typeName": "orgStructure",
+      "displayName": "Organization Structure",
+      "category": "UserContext",
+      "dataFormat": "Json",
+      "dataSourceType": "FirstParty",
+      "version": "1.0.0",
+      "tags": {
+        "Latest": "1.0.0"
+      },
+      "description": "Organizational structure including company information, hierarchical teams, and employee relationships",
+      "path": "UserContext/orgStructure"
+    },
+    {
+      "typeName": "user",
+      "displayName": "User",
+      "category": "UserContext",
+      "dataFormat": "Json",
+      "dataSourceType": "FirstParty",
+      "version": "1.0.0",
+      "tags": {
+        "Latest": "1.0.0"
+      },
+      "description": "User profile information including contact details, job title, department, and location",
+      "path": "UserContext/user"
+    },
+    {
+      "typeName": "onenotes",
+      "displayName": "OneNotes",
+      "category": "Grounding",
+      "dataFormat": "Json",
+      "dataSourceType": "FirstParty",
+      "version": "1.0.0",
+      "tags": {
+        "Latest": "1.0.0"
+      },
+      "description": "OneNote page metadata including notebook and section information",
+      "path": "Grounding/onenotes"
+    },
+    {
+      "typeName": "checklistleo",
+      "displayName": "ChecklistLeo",
+      "category": "Assertion",
+      "dataFormat": "Tsv",
+      "dataSourceType": "FirstParty",
+      "version": "1.0.0",
+      "tags": {
+        "Latest": "1.0.0"
+      },
+      "description": "ChecklistLeo (CLL) - next-gen combined Query + Check SEVAL metric (RuleLeo + LMChecklist). Upload format: Bizchat Converged (CWC) TSV with two columns: 'query' (JSON array of conversation turns) and 'metadata' (JSON object with a segment and optional cascading checklistleo checks).",
+      "path": "Assertion/checklistleo"
+    },
+    {
+      "typeName": "evalenv",
+      "displayName": "EvalEnv",
+      "category": "Grounding",
+      "dataFormat": "Json",
+      "dataSourceType": "FirstParty",
+      "version": "1.0.0",
+      "tags": {
+        "Latest": "1.0.0"
+      },
+      "description": "EMP eval environment, containing evaluation environment configurations and provisioning details",
+      "path": "Grounding/evalenv"
+    },
+    {
+      "typeName": "customconnectors",
+      "displayName": "Custom Connectors",
+      "category": "Grounding",
+      "dataFormat": "Json",
+      "dataSourceType": "CustomThirdParty",
+      "version": "1.0.0",
+      "tags": {
+        "Latest": "1.0.0"
+      },
+      "description": "Schema of custom connector metadata. It supports customized connectors which are out of the scope of GCS-compatible connectors (i.e. out-of-box connectors). It includes the connection metadata, the schema of indexed properties, and the items to ingest.",
+      "path": "Grounding/customconnectors"
+    },
+    {
+      "typeName": "azuredevopswiki",
+      "displayName": "Azure DevOps Wiki Page",
+      "category": "Grounding",
+      "dataFormat": "Json",
+      "dataSourceType": "ThirdParty",
+      "version": "2.1.0",
+      "tags": {
+        "Latest": "2.1.0"
+      },
+      "description": "Schema of the manufactured Azure DevOps wiki page",
+      "path": "Grounding/azuredevopswiki"
+    },
+    {
+      "typeName": "intranetwebsite",
+      "displayName": "Enterprise WebSite aka Intranet Page",
+      "category": "Grounding",
+      "dataFormat": "Json",
+      "dataSourceType": "ThirdParty",
+      "version": "2.1.0",
+      "tags": {
+        "Latest": "2.1.0"
+      },
+      "description": "Schema of the manufactured Enterprise Websites aka Intranet Pages",
+      "path": "Grounding/intranetwebsite"
+    },
+    {
+      "typeName": "uipilottestcases",
+      "displayName": "UIPilotTestCases",
+      "category": "Grounding",
+      "dataFormat": "Json",
+      "dataSourceType": "FirstParty",
+      "version": "1.0.0",
+      "tags": {
+        "Latest": "1.0.0"
+      },
+      "description": "This is for the self-serve functionality, which allows customers to run their own defined cases in EMP.",
+      "path": "Grounding/uipilottestcases"
+    },
+    {
+      "typeName": "loops",
+      "displayName": "Loops",
+      "category": "Grounding",
+      "dataFormat": "Json",
+      "dataSourceType": "FirstParty",
+      "version": "1.0.0",
+      "tags": {
+        "Latest": "1.0.0"
+      },
+      "description": "This schema defines the structure of Loop page.",
+      "path": "Grounding/loops"
+    },
+    {
+      "typeName": "googledrive",
+      "displayName": "Google Drive File",
+      "category": "Grounding",
+      "dataFormat": "Json",
+      "dataSourceType": "ThirdParty",
+      "version": "2.1.0",
+      "tags": {
+        "Latest": "2.1.0"
+      },
+      "description": "Schema of the manufactured Google Drive file\n",
+      "path": "Grounding/googledrive"
+    },
+    {
+      "typeName": "vivaengagecommunities",
+      "displayName": "VivaEngageCommunities",
+      "category": "Grounding",
+      "dataFormat": "Json",
+      "dataSourceType": "FirstParty",
+      "version": "2.0.0",
+      "tags": {
+        "Latest": "2.0.0"
+      },
+      "description": "VivaEngageCommunities for Viva Engage migration scenarios",
+      "path": "Grounding/vivaengagecommunities"
+    },
+    {
+      "typeName": "vivaengageconversations",
+      "displayName": "VivaEngageConversations",
+      "category": "Grounding",
+      "dataFormat": "Json",
+      "dataSourceType": "FirstParty",
+      "version": "2.0.0",
+      "tags": {
+        "Latest": "2.0.0"
+      },
+      "description": "VivaEngageConversations for Viva Engage migration scenarios",
+      "path": "Grounding/vivaengageconversations"
+    },
+    {
+      "typeName": "vivaengageconversationreplies",
+      "displayName": "VivaEngageConversationReplies",
+      "category": "Grounding",
+      "dataFormat": "Json",
+      "dataSourceType": "FirstParty",
+      "version": "2.0.0",
+      "tags": {
+        "Latest": "2.0.0"
+      },
+      "description": "VivaEngageConversationReplies for Viva Engage migration scenarios",
+      "path": "Grounding/vivaengageconversationreplies"
+    },
+    {
+      "typeName": "vivaengagereactions",
+      "displayName": "VivaEngageReactions",
+      "category": "Grounding",
+      "dataFormat": "Json",
+      "dataSourceType": "FirstParty",
+      "version": "2.0.0",
+      "tags": {
+        "Latest": "2.0.0"
+      },
+      "description": "VivaEngageReactions for Viva Engage migration scenarios",
+      "path": "Grounding/vivaengagereactions"
+    },
+    {
+      "typeName": "vivaengagevotes",
+      "displayName": "VivaEngageVotes",
+      "category": "Grounding",
+      "dataFormat": "Json",
+      "dataSourceType": "FirstParty",
+      "version": "2.0.0",
+      "tags": {
+        "Latest": "2.0.0"
+      },
+      "description": "VivaEngageVotes for Viva Engage migration scenarios",
+      "path": "Grounding/vivaengagevotes"
+    },
+    {
+      "typeName": "vivaengagebestanswers",
+      "displayName": "VivaEngageBestAnswers",
+      "category": "Grounding",
+      "dataFormat": "Json",
+      "dataSourceType": "FirstParty",
+      "version": "2.0.0",
+      "tags": {
+        "Latest": "2.0.0"
+      },
+      "description": "VivaEngageBestAnswers for Viva Engage grounding scenarios",
+      "path": "Grounding/vivaengagebestanswers"
+    },
+    {
+      "typeName": "vivaengagepins",
+      "displayName": "VivaEngagePins",
+      "category": "Grounding",
+      "dataFormat": "Json",
+      "dataSourceType": "FirstParty",
+      "version": "2.0.0",
+      "tags": {
+        "Latest": "2.0.0"
+      },
+      "description": "VivaEngagePins for Viva Engage grounding scenarios",
+      "path": "Grounding/vivaengagepins"
+    },
+    {
+      "typeName": "vivaengagefollows",
+      "displayName": "VivaEngageFollows",
+      "category": "Grounding",
+      "dataFormat": "Json",
+      "dataSourceType": "FirstParty",
+      "version": "2.0.0",
+      "tags": {
+        "Latest": "2.0.0"
+      },
+      "description": "Directed user-follow relationships for Viva Engage grounding scenarios",
+      "path": "Grounding/vivaengagefollows"
+    },
+    {
+      "typeName": "copilotchats",
+      "displayName": "Copilot Chats",
+      "category": "Grounding",
+      "dataFormat": "Json",
+      "dataSourceType": "FirstParty",
+      "version": "1.0.0",
+      "tags": {
+        "Latest": "1.0.0"
+      },
+      "description": "Synthetic Copilot chat conversations (multi-turn) for evaluation grounding.",
+      "path": "Grounding/copilotchats"
+    },
+    {
+      "typeName": "copilotmemories",
+      "displayName": "Copilot Memories",
+      "category": "Grounding",
+      "dataFormat": "Json",
+      "dataSourceType": "FirstParty",
+      "version": "1.0.0",
+      "tags": {
+        "Latest": "1.0.0"
+      },
+      "description": "Saved Microsoft 365 Copilot memories owned by tenant users and published to Annotation Store.",
+      "path": "Grounding/copilotmemories"
+    }
+  ]
+}

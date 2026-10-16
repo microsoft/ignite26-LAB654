@@ -1,0 +1,220 @@
+{
+  "typeName": "onenotes",
+  "rules": [
+    {
+      "ruleId": "f6dbd756-813b-4a5b-8c9d-0e1f2a3b4c01",
+      "name": "Unique PageId",
+      "description": "Each page must have a unique PageId across all notebooks",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "unique": {
+          "var": "Sections.Pages.PageId",
+          "caseSensitive": true
+        }
+      },
+      "metadata": {
+        "field": "Sections.Pages.PageId",
+        "expression": "All values of 'PageId' must be unique across all notebooks"
+      },
+      "category": "Uniqueness",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "f6dbd756-813b-4a5b-8c9d-0e1f2a3b4c02",
+      "name": "Unique NotebookName",
+      "description": "Each notebook must have a unique NotebookName",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "unique": {
+          "var": "NotebookName",
+          "caseSensitive": false
+        }
+      },
+      "metadata": {
+        "field": "NotebookName",
+        "expression": "All values of 'NotebookName' must be unique"
+      },
+      "category": "Uniqueness",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "f6dbd756-813b-4a5b-8c9d-0e1f2a3b4c03",
+      "name": "Unique SectionName per Notebook",
+      "description": "Each section must have a unique SectionName within the same notebook",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "unique": {
+          "var": "SectionName",
+          "scopePath": "Sections",
+          "caseSensitive": false
+        }
+      },
+      "metadata": {
+        "field": "Sections.SectionName",
+        "expression": "All values of 'SectionName' must be unique within each notebook"
+      },
+      "category": "Uniqueness",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "f6dbd756-813b-4a5b-8c9d-0e1f2a3b4c04",
+      "name": "Owner must exist in users",
+      "description": "Owner must be defined in users.config's MailNickName",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "onenotes",
+          "sourceField": "Owner",
+          "targetType": "users",
+          "targetField": "MailNickName"
+        }
+      },
+      "metadata": {
+        "field": "Owner",
+        "expression": "For each 'onenotes.Owner', a matching 'users.MailNickName' must exist"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "f6dbd756-813b-4a5b-8c9d-0e1f2a3b4c05",
+      "name": "DestinationSiteName required when DestinationType is site",
+      "description": "When DestinationType is 'site', DestinationSiteName must be specified",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "DestinationType",
+            "operator": "==",
+            "value": "site"
+          },
+          "then": {
+            "field": "DestinationSiteName",
+            "operator": "is_not_null"
+          }
+        }
+      },
+      "metadata": {
+        "field": "DestinationSiteName",
+        "expression": "If DestinationType == 'site', then DestinationSiteName must not be null"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "f6dbd756-813b-4a5b-8c9d-0e1f2a3b4c06",
+      "name": "DestinationSiteName must be defined in sites.config",
+      "description": "DestinationSiteName must be defined in sites.config's corresponding MailNickName",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "onenotes",
+          "sourceField": "DestinationSiteName",
+          "targetType": "sites",
+          "targetField": "MailNickname"
+        }
+      },
+      "metadata": {
+        "field": "DestinationSiteName",
+        "expression": "For each 'onenotes.DestinationSiteName', a matching 'sites.MailNickname' must exist"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "f6dbd756-813b-4a5b-8c9d-0e1f2a3b4c07",
+      "name": "Site membership check on notebook owner",
+      "description": "When DestinationSiteName is specified, the notebook owner must be an owner or member of that site, or the site must be Public",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "integrityCheck": {
+          "source": {
+            "keyField": "DestinationSiteName",
+            "filterConditions": [
+              {
+                "field": "DestinationSiteName",
+                "operator": "is_not_null",
+                "value": ""
+              }
+            ]
+          },
+          "target": {
+            "logicType": "or",
+            "conditions": [
+              {
+                "type": "array-exists",
+                "targetType": "sites",
+                "keyField": "MailNickname",
+                "additionalConditions": [
+                  {
+                    "field": "Owners",
+                    "operator": "contains",
+                    "isSourceFieldRef": true,
+                    "sourceField": "Owner"
+                  }
+                ]
+              },
+              {
+                "type": "array-exists",
+                "targetType": "sites",
+                "keyField": "MailNickname",
+                "additionalConditions": [
+                  {
+                    "field": "Members",
+                    "operator": "contains",
+                    "isSourceFieldRef": true,
+                    "sourceField": "Owner"
+                  }
+                ]
+              },
+              {
+                "type": "array-exists",
+                "targetType": "sites",
+                "keyField": "MailNickname",
+                "additionalConditions": [
+                  {
+                    "field": "Visibility",
+                    "operator": "==",
+                    "value": "Public"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "field": "DestinationSiteName",
+        "expression": "Each value from 'DestinationSiteName' (where DestinationSiteName is_not_null) must exist in 'sites' with matching 'MailNickname' and (Owners contains source.Owner OR Members contains source.Owner OR Visibility == Public)"
+      },
+      "category": "IntegrityCheck",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "fd7f1a1f-427f-40db-971b-df42fee51fed",
+      "name": "Owner shouldn't be a shared mailbox",
+      "description": "Owner shouldn't be a shared mailbox",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "onenote-owner-user-reference-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'onenote-owner-user-reference-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    }
+  ],
+  "jsonLogicVersion": "2.0"
+}

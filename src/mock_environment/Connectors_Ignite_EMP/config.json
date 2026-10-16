@@ -1,0 +1,9 @@
+{
+  "Tenant": {
+    "Ring": "Production",
+    "VirtualTenantName": "Connectors_Ignite_EMP",
+    "Tags": "Ignite2026,LAB654",
+    "IsShared": false
+  },
+  "TenantCount": 1
+}

@@ -1,0 +1,153 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OrgStructure",
+  "description": "Schema for organizational structure including company information and hierarchical team organization",
+  "type": "object",
+  "required": [
+    "CompanyName",
+    "ObjectId",
+    "ObjectType",
+    "Hierarchy"
+  ],
+  "properties": {
+    "CompanyName": {
+      "type": "string",
+      "description": "Name of the company or organization"
+    },
+    "ObjectId": {
+      "type": "string",
+      "description": "Unique identifier for the organization",
+      "format": "uuid"
+    },
+    "ObjectType": {
+      "type": "string",
+      "description": "Type of the object",
+      "enum": [
+        "OrgStructure"
+      ]
+    },
+    "Area": {
+      "type": "string",
+      "description": "Primary business area or industry sector"
+    },
+    "Description": {
+      "type": "string",
+      "description": "Detailed description of the company's business and mission"
+    },
+    "Hierarchy": {
+      "type": "array",
+      "description": "Hierarchical structure of organizational units and teams",
+      "items": {
+        "type": "object",
+        "required": [
+          "OrganizationName",
+          "Responsibilities",
+          "Users"
+        ],
+        "properties": {
+          "OrganizationName": {
+            "type": "string",
+            "description": "Name of the organizational unit or team"
+          },
+          "Responsibilities": {
+            "type": "string",
+            "description": "Description of the unit's responsibilities and objectives"
+          },
+          "Users": {
+            "type": "array",
+            "description": "List of users within this organizational unit",
+            "items": {
+              "type": "object",
+              "required": [
+                "UserId",
+                "Name",
+                "Role",
+                "Email"
+              ],
+              "properties": {
+                "UserId": {
+                  "type": "string",
+                  "description": "Unique identifier for the user",
+                  "format": "uuid"
+                },
+                "Name": {
+                  "type": "string",
+                  "description": "Full name of the user"
+                },
+                "Role": {
+                  "type": "string",
+                  "description": "Job title or role of the user"
+                },
+                "Responsibilities": {
+                  "type": "string",
+                  "description": "Description of the user's responsibilities"
+                },
+                "UserInfo": {
+                  "type": "string",
+                  "description": "Additional information about the user's background or expertise"
+                },
+                "Email": {
+                  "type": "string",
+                  "description": "Email address or email identifier of the user"
+                },
+                "Manager": {
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "description": "Information about the user's manager",
+                  "properties": {
+                    "Id": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "description": "User ID of the manager",
+                      "format": "uuid"
+                    },
+                    "DisplayName": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "description": "Display name of the manager"
+                    },
+                    "Email": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "description": "Email address or identifier of the manager"
+                    }
+                  }
+                },
+                "RelatedUsers": {
+                  "type": "array",
+                  "description": "List of users related to this user (e.g., direct reports, collaborators)",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "Id": {
+                        "type": "string",
+                        "description": "User ID of the related user",
+                        "format": "uuid"
+                      },
+                      "DisplayName": {
+                        "type": "string",
+                        "description": "Display name of the related user"
+                      },
+                      "Email": {
+                        "type": "string",
+                        "description": "Email address or identifier of the related user"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

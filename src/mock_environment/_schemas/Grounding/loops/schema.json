@@ -1,0 +1,198 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cuttle/1.0/loops/schema",
+  "additionalProperties": false,
+  "description": "Manufactured Loop entities schema",
+  "title": "Loops",
+  "type": "array",
+  "uniqueItems": true,
+  "items": {
+    "$ref": "#/$defs/Loop"
+  },
+  "$defs": {
+    "Loop": {
+      "description": "Represents a Loop entity that EMP transforms into a UIPilot testcase.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "LoopId": {
+          "description": "Unique identifier for the Loop entity. It becomes the generated UIPilot testcase ID.",
+          "type": "string",
+          "minLength": 1
+        },
+        "User": {
+          "description": "MailNickName of the user who owns the generated UIPilot tasks.",
+          "$ref": "#/$defs/MailNickName"
+        },
+        "LoginAccount": {
+          "description": "Reference to the user account used to sign in to Loop.",
+          "$ref": "#/$defs/UserReference"
+        },
+        "LoopTitle": {
+          "description": "Title of the Loop page.",
+          "type": "string",
+          "minLength": 1
+        },
+        "LoopContent": {
+          "description": "Loop page content. Plain text, HTML, or text containing one declared {placeholder:<id>} reference is supported.",
+          "type": "string",
+          "minLength": 1
+        },
+        "Placeholders": {
+          "description": "Reference placeholders used by LoopContent. Only reference placeholders are supported.",
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/ReferencePlaceholder"
+          }
+        }
+      },
+      "required": [
+        "LoopId",
+        "User",
+        "LoginAccount",
+        "LoopTitle",
+        "LoopContent"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "LoopContent": {
+                "pattern": "\\{placeholder:[^}]+\\}"
+              }
+            },
+            "required": [
+              "LoopContent"
+            ]
+          },
+          "then": {
+            "required": [
+              "Placeholders"
+            ]
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "Placeholders"
+            ]
+          },
+          "then": {
+            "properties": {
+              "LoopContent": {
+                "pattern": "\\{placeholder:[^}]+\\}"
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "LoopContent": {
+              "not": {
+                "pattern": "\\{placeholder:[^}]+\\}[\\s\\S]*\\{placeholder:[^}]+\\}"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "UserReference": {
+      "description": "Reference to a user identity resolved by the base converter.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ReferencedType": {
+          "const": "User"
+        },
+        "ReferencedId": {
+          "$ref": "#/$defs/MailNickName"
+        },
+        "ReferencedProperty": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "ReferencedType",
+        "ReferencedId",
+        "ReferencedProperty"
+      ]
+    },
+    "ReferencePlaceholder": {
+      "description": "The only supported Loop placeholder shape.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "PlaceholderId": {
+          "description": "Identifier referenced by a matching {placeholder:<id>} token in LoopContent.",
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^}\\r\\n]+$"
+        },
+        "Type": {
+          "const": "reference"
+        },
+        "HyperLinkContent": {
+          "$ref": "#/$defs/EntityReference"
+        }
+      },
+      "required": [
+        "PlaceholderId",
+        "Type",
+        "HyperLinkContent"
+      ]
+    },
+    "EntityReference": {
+      "description": "Reference resolved from an existing entity trace when the generated testcase executes.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ReferenceType": {
+          "type": "string",
+          "enum": [
+            "User",
+            "Email",
+            "Event",
+            "OnlineMeeting",
+            "File",
+            "Chat",
+            "UIPilotTestcase"
+          ]
+        },
+        "ReferencedId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ReferencedProperty": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "ReferenceType",
+        "ReferencedId",
+        "ReferencedProperty"
+      ]
+    },
+    "MailNickName": {
+      "description": "User MailNickName only; full email addresses are not supported.",
+      "type": "string",
+      "minLength": 1,
+      "allOf": [
+        {
+          "not": {
+            "pattern": ".*'.*"
+          }
+        },
+        {
+          "not": {
+            "pattern": "@"
+          }
+        }
+      ],
+      "pattern": "^(?![.-])[A-Za-z0-9_]+([.-][A-Za-z0-9_]+)*$"
+    }
+  }
+}

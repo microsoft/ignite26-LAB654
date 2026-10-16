@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "User",
+  "description": "Schema for user profile information including organizational context",
+  "type": "object",
+  "required": [
+    "ObjectType",
+    "ObjectId",
+    "DisplayName"
+  ],
+  "properties": {
+    "ObjectType": {
+      "type": "string",
+      "description": "Type of the object",
+      "enum": [
+        "User"
+      ]
+    },
+    "ObjectId": {
+      "type": "string",
+      "description": "Unique identifier for the user",
+      "format": "uuid"
+    },
+    "FirstName": {
+      "type": "string",
+      "description": "First name of the user"
+    },
+    "LastName": {
+      "type": "string",
+      "description": "Last name of the user"
+    },
+    "DisplayName": {
+      "type": "string",
+      "description": "Full display name of the user"
+    },
+    "Mail": {
+      "type": "string",
+      "description": "Email address of the user",
+      "format": "email"
+    },
+    "JobTitle": {
+      "type": "string",
+      "description": "Job title or position of the user"
+    },
+    "CompanyName": {
+      "type": "string",
+      "description": "Name of the company the user works for"
+    },
+    "Department": {
+      "type": "string",
+      "description": "Department the user belongs to"
+    },
+    "City": {
+      "type": "string",
+      "description": "City where the user is located"
+    },
+    "OfficeLocation": {
+      "type": "string",
+      "description": "Office location or building identifier"
+    }
+  }
+}

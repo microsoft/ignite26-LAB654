@@ -1,0 +1,10 @@
+[
+  {
+    "name": "1.0.0",
+    "description": "Sample data for files version 1.0.0",
+    "content": "[\r\n  {\r\n    \"FileId\": \"file-001\",\r\n    \"FileName\": \"Shared Documents/General/Project_Plan.docx\",\r\n    \"FileLocation\": \"files/Project_Plan.docx\",\r\n    \"Owner\": \"john.doe\",\r\n    \"CreatedDate\": \"2025-01-12T10:00:00Z\",\r\n    \"LastModifiedDate\": \"2025-01-15T14:30:00Z\",\r\n    \"DestinationType\": \"site\",\r\n    \"DestinationSiteName\": \"ProjectAlpha\",\r\n    \"SharedWith\": [\r\n      {\r\n        \"Email\": \"jane.smith\",\r\n        \"PermissionLevel\": \"edit\"\r\n      },\r\n      {\r\n        \"Email\": \"bob.johnson\",\r\n        \"PermissionLevel\": \"view\"\r\n      }\r\n    ]\r\n  }\r\n]",
+    "format": "Json",
+    "jsonContent": "[\r\n  {\r\n    \"FileId\": \"file-001\",\r\n    \"FileName\": \"Shared Documents/General/Project_Plan.docx\",\r\n    \"FileLocation\": \"files/Project_Plan.docx\",\r\n    \"Owner\": \"john.doe\",\r\n    \"CreatedDate\": \"2025-01-12T10:00:00Z\",\r\n    \"LastModifiedDate\": \"2025-01-15T14:30:00Z\",\r\n    \"DestinationType\": \"site\",\r\n    \"DestinationSiteName\": \"ProjectAlpha\",\r\n    \"SharedWith\": [\r\n      {\r\n        \"Email\": \"jane.smith\",\r\n        \"PermissionLevel\": \"edit\"\r\n      },\r\n      {\r\n        \"Email\": \"bob.johnson\",\r\n        \"PermissionLevel\": \"view\"\r\n      }\r\n    ]\r\n  }\r\n]",
+    "version": "1.0.0"
+  }
+]
