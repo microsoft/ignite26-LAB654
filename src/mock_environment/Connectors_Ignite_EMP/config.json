@@ -1,6 +1,6 @@
 {
   "Tenant": {
-    "Ring": "Production",
+    "Ring": "SDFv2",
     "VirtualTenantName": "Connectors_Ignite_EMP",
     "Tags": "Ignite2026,LAB654",
     "IsShared": false

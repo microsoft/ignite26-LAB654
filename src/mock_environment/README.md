@@ -7,35 +7,23 @@ Synthetic tenant data for testing the LAB654 scenarios (legal, finance and produ
 | Path | Purpose |
 |------|---------|
 | `_schemas/` | The latest COEP schemas, rules and examples for every type, laid out as `<Category>/<type>/`. `manifest.json` records the version and fetch date. |
-| `Connectors_Ignite_EMP/` | The COEP package for the virtual tenant: `config.json`, `users.config.json`, `emails.config.json`, `chats.config.json`, `events.config.json`, `files.config.json`. |
-| `Connectors_Ignite_EMP/files/` | Enterprise documents referenced by `files.config.json`, one subfolder per scenario. |
-| `mock_mcp_servers/` | Mock MCP servers for third-party connectors (to come). |
+| `Connectors_Ignite_EMP/` | The COEP package for the virtual tenant: `config.json` plus a `<type>.config.json` for each type that has data (currently users, emails and chats). |
+| `Connectors_Ignite_EMP/files/` | Enterprise documents for `files.config.json`. Created only when a scenario puts files in the tenant. The legal scenario has none. |
+| `mock_mcp_servers/` | Mock MCP servers for third-party connectors, each with a `seed_files/` folder. See [its README](mock_mcp_servers/README.md). |
 | `tools/` | The generator, validator and schema refresh scripts. |
-| `tools/scenarios/` | One module per scenario holding its seed data. |
+| `tools/scenarios/` | One module per scenario holding its tenant seed data, plus `<scenario>_content/` for source content such as email bodies. |
 
 The package files are generated, so make changes in `tools/scenarios/<scenario>.py` and rebuild rather than editing the JSON directly.
 
 ## Build and validate
 
-Requires Python 3.10 or later with `python-docx` and `jsonschema` installed.
+Requires Python 3.10 or later with `jsonschema` installed.
 
 ```powershell
-pip install python-docx jsonschema
-python src/mock_environment/tools/build_tenant.py            # default anchor 2026-10-05
+pip install jsonschema
+python src/mock_environment/tools/build_tenant.py
 python src/mock_environment/tools/validate_package.py
 ```
-
-`--anchor YYYY-MM-DD` (which must be a Monday) sets the scenario's "today". All dates move with it:
-
-| Item | Date |
-|------|------|
-| Tomás's Teams message | Anchor date, 08:47 ET |
-| Deal group chat | Anchor date minus 5 days |
-| Radhika's email thread | Anchor date minus 14 days |
-| Negotiation session | Anchor date plus 7 days |
-| Go-live | Anchor date plus 10 days |
-
-COEP rejects timestamps in the future, so pick an anchor that keeps every sent message in the past at ingestion time.
 
 The validator checks the package against `_schemas` (JSON Schema 2020-12). It also applies the main COEP cross-file rules:
 
@@ -44,7 +32,14 @@ The validator checks the package against `_schemas` (JSON Schema 2020-12). It al
 - shared links and placeholders
 - email reply chains
 - chat membership
-- that timestamps are in the past
+- that timestamps are before `--as-of` (the planned provisioning time; defaults to now)
+
+COEP rejects timestamps in the future. The legal story is pinned to a Monday lab date (`LAB_DATE` in `tools/scenarios/legal/__init__.py`, currently Mon Oct 12, 2026). The email is 14 days earlier, the group chat 6 days earlier, and the trigger message is at 8:07 AM ET on the lab date. The kit's original lab date was Mon Nov 9, 2026; every date in the seed data, the iManage documents and the scenario docs was moved back 28 days so everything is in the past, keeping weekdays and the contract's anniversary and payment schedule intact. To move the story again (for example, closer to the event), run:
+
+```powershell
+python src/mock_environment/tools/scenarios/legal/redate.py --lab-date 2026-11-02
+python src/mock_environment/tools/build_tenant.py
+```
 
 ## Refresh the schemas
 
@@ -57,19 +52,15 @@ To get a token, sign in to the portal and copy the `Authorization` bearer value 
 
 ## Scenarios
 
-| Scenario | Source | Seed module | Status |
-|----------|--------|-------------|--------|
-| Legal | [legal.md](../scenarios/legal.md) | `tools/scenarios/legal.py` | Seeded |
-| Finance | Pending | Pending | Not started |
-| Productivity | Pending | Pending | Not started |
+| Scenario | Source | Tenant seed | Connector seed |
+|----------|--------|-------------|----------------|
+| Legal | [scenario](../scenarios/legal/scenario.md), [seed kit](../scenarios/legal/seed_kit.md) | `tools/scenarios/legal/`: 3 users, 1 email, 2 chats | `mock_mcp_servers/imanage/seed_files/` |
+| Finance | Pending | Pending | Pending |
+| Productivity | Pending | Pending | Pending |
 
-To add a scenario, create a module under `tools/scenarios/` that exposes `users()`, `emails(anchor)`, `chats(anchor)`, `events(anchor)`, `files(anchor)` and `build_documents(files_dir)`. Then add it to `SCENARIOS` in `build_tenant.py`.
+To add a scenario, create a module or package under `tools/scenarios/` that exposes `users()`, `emails()`, `chats()`, `events()` and `files()`, and optionally `build_documents(files_dir)`. Then add it to `SCENARIOS` in `build_tenant.py`.
 
 ## Assumptions to review
 
-- `config.json` uses `Ring: "Production"`, taken from the COEP example. Confirm the correct ring.
-- `Cognivault AI Vendor Agreement v4.2.docx` is a synthetic stand-in generated by `tools/scenarios/legal_docs.py`. Its terms match the problems listed in the scenario doc. Replace it with the HLAB file if one exists.
-- Radhika's ranked-needs email body is written from the scenario doc's description.
-- A few unrelated emails and events are included as background noise.
-- External people (for example Priya at Cognivault) can't be recipients or attendees in COEP, so they appear only in message bodies.
-- The iManage matter, playbook and Harvey content belong to the future mock MCP servers, not the tenant.
+- User aliases (`mhollowell`, `rsengupta`, `taguilar`) follow the kit's .eml addresses. Marcus has the Microsoft 365 Copilot license; Radhika and Tomás have mailbox and Teams only, as the kit specifies.
+- External people (Diane Xu and Priya Ramasubramanian at Cognivault) have no accounts and appear only in documents.

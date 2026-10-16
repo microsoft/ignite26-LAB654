@@ -1,20 +1,18 @@
 """Build the Connectors_Ignite_EMP COEP grounding-data package.
 
 Usage (from repo root):
-    python src/mock_environment/tools/build_tenant.py [--anchor 2026-10-05]
+    python src/mock_environment/tools/build_tenant.py
 
-``--anchor`` is the scenario's "today" (a Monday). Email and file timestamps
-must be in the past when the package is provisioned, so pick an anchor on or
-before the provisioning date. Re-run after changing any scenario module, then
-run validate_package.py.
+Each scenario module in tools/scenarios exposes users(), emails(), chats(),
+events() and files(), and optionally build_documents(files_dir) for documents
+that must be generated into Connectors_Ignite_EMP/files. The package is
+rebuilt from scratch on every run. Then run validate_package.py.
 """
 
 from __future__ import annotations
 
-import argparse
 import json
 import sys
-from datetime import date
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -23,14 +21,13 @@ sys.path.insert(0, str(HERE))
 from scenarios import legal  # noqa: E402
 
 PACKAGE_DIR = HERE.parent / "Connectors_Ignite_EMP"
-DEFAULT_ANCHOR = "2026-10-05"
 
 # Add finance / productivity modules here as they're authored.
 SCENARIOS = [legal]
 
 CONFIG = {
     "Tenant": {
-        "Ring": "Production",
+        "Ring": "SDFv2",
         "VirtualTenantName": "Connectors_Ignite_EMP",
         "Tags": "Ignite2026,LAB654",
         "IsShared": False,
@@ -62,22 +59,16 @@ def _write(path: Path, data) -> None:
 
 
 def main() -> None:
-    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--anchor", default=DEFAULT_ANCHOR, help="Scenario 'today' (YYYY-MM-DD, a Monday)")
-    args = ap.parse_args()
-    anchor = date.fromisoformat(args.anchor)
-    if anchor.weekday() != 0:
-        ap.error(f"--anchor {anchor} is not a Monday")
-
     PACKAGE_DIR.mkdir(parents=True, exist_ok=True)
-    files_dir = PACKAGE_DIR / "files"
+    for p in PACKAGE_DIR.glob("*.config.json"):
+        p.unlink()
 
     data = {
         "users": _merge_users(s.users() for s in SCENARIOS),
-        "emails": [e for s in SCENARIOS for e in s.emails(anchor)],
-        "chats": [c for s in SCENARIOS for c in s.chats(anchor)],
-        "events": [e for s in SCENARIOS for e in s.events(anchor)],
-        "files": [f for s in SCENARIOS for f in s.files(anchor)],
+        "emails": [e for s in SCENARIOS for e in s.emails()],
+        "chats": [c for s in SCENARIOS for c in s.chats()],
+        "events": [e for s in SCENARIOS for e in s.events()],
+        "files": [f for s in SCENARIOS for f in s.files()],
     }
 
     _write(PACKAGE_DIR / "config.json", CONFIG)
@@ -85,12 +76,13 @@ def main() -> None:
         if data[key]:
             _write(PACKAGE_DIR / name, data[key])
 
+    files_dir = PACKAGE_DIR / "files"
     for s in SCENARIOS:
-        for p in s.build_documents(files_dir):
+        build = getattr(s, "build_documents", None)
+        for p in build(files_dir) if build else []:
             print(f"wrote {p.relative_to(PACKAGE_DIR)}")
     for key in ENTITY_FILES:
         print(f"{key}: {len(data[key])}")
-    print(f"anchor (scenario 'today'): {anchor}")
 
 
 if __name__ == "__main__":

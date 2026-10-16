@@ -1,7 +1,7 @@
 """Validate a COEP grounding-data package against the local _schemas.
 
 Usage (from repo root):
-    python src/mock_environment/tools/validate_package.py [package_dir]
+    python src/mock_environment/tools/validate_package.py [package_dir] [--as-of 2026-11-09T14:00Z]
 
 Checks each *.config.json (and config.json) against its JSON schema, then a
 subset of the COEP cross-file rules (user references, file references, shared
@@ -11,6 +11,7 @@ COEP's own validation; it catches the common mistakes before upload.
 
 from __future__ import annotations
 
+import argparse
 import json
 import re
 import sys
@@ -25,6 +26,7 @@ DEFAULT_PACKAGE = HERE.parent / "Connectors_Ignite_EMP"
 PLACEHOLDER = re.compile(r"\{placeholder:([^}]+)\}")
 
 errors: list[str] = []
+AS_OF = datetime.now(timezone.utc)
 
 
 def err(msg: str) -> None:
@@ -57,8 +59,8 @@ def schema_check(pkg: Path) -> dict[str, list | dict]:
 
 def past(ts: str, what: str) -> None:
     dt = datetime.fromisoformat(ts.replace("Z", "+00:00"))
-    if dt > datetime.now(timezone.utc):
-        err(f"{what}: timestamp {ts} is in the future (COEP requires past timestamps)")
+    if dt > AS_OF:
+        err(f"{what}: timestamp {ts} is after {AS_OF:%Y-%m-%dT%H:%MZ} (COEP requires past timestamps)")
 
 
 def cross_checks(pkg: Path, data: dict) -> None:
@@ -199,7 +201,16 @@ def cross_checks(pkg: Path, data: dict) -> None:
 
 
 def main() -> int:
-    pkg = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else DEFAULT_PACKAGE
+    global AS_OF
+    ap = argparse.ArgumentParser(description="Validate a COEP grounding-data package.")
+    ap.add_argument("package", nargs="?", default=str(DEFAULT_PACKAGE))
+    ap.add_argument("--as-of", help="Planned provisioning time (ISO, e.g. 2026-11-09T14:00Z) for the past-timestamp check; default now")
+    args = ap.parse_args()
+    if args.as_of:
+        AS_OF = datetime.fromisoformat(args.as_of.replace("Z", "+00:00"))
+        if AS_OF.tzinfo is None:
+            AS_OF = AS_OF.replace(tzinfo=timezone.utc)
+    pkg = Path(args.package).resolve()
     if not (pkg / "config.json").exists():
         err("config.json is required")
     data = schema_check(pkg)

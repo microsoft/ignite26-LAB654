@@ -1,314 +1,69 @@
 [
   {
-    "MailNickName": "eleanor.vance",
-    "DisplayName": "Eleanor Vance",
-    "FirstName": "Eleanor",
-    "LastName": "Vance",
-    "JobTitle": "General Counsel",
-    "Department": "Legal",
-    "CompanyName": "Verdantis",
-    "Manager": null,
-    "PhoneNumber": "+1 203 555 0101",
-    "UsageLocation": "US",
-    "OfficeLocation": "Stamford, CT",
-    "Address": {
-      "Street": "400 Atlantic St",
-      "City": "Stamford",
-      "State": "CT",
-      "PostalCode": "06901",
-      "Country": "USA"
-    },
-    "Licenses": [
-      "Microsoft 365 Copilot",
-      "Microsoft Teams Enterprise",
-      "Office 365 E5 (no Teams)"
-    ],
-    "MailboxSettings": {
-      "WorkingHours": {
-        "DaysOfWeek": [
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday"
-        ],
-        "StartTime": "08:30",
-        "EndTime": "17:30",
-        "TimeZone": "America/New_York"
-      }
-    }
-  },
-  {
-    "MailNickName": "marcus.hollowell",
+    "MailNickName": "mhollowell",
     "DisplayName": "Marcus Hollowell",
     "FirstName": "Marcus",
     "LastName": "Hollowell",
-    "JobTitle": "Associate General Counsel, Technology",
-    "Department": "Legal - Technology Transactions",
-    "CompanyName": "Verdantis",
-    "Manager": "eleanor.vance",
-    "PhoneNumber": "+1 203 555 0102",
+    "JobTitle": "Associate General Counsel, Technology Transactions",
+    "Department": "Legal",
+    "CompanyName": "Verdantis Technologies, Inc.",
     "UsageLocation": "US",
     "OfficeLocation": "Stamford, CT",
     "Address": {
-      "Street": "400 Atlantic St",
+      "Street": "200 Harborview Drive, Suite 1400",
       "City": "Stamford",
       "State": "CT",
-      "PostalCode": "06901",
+      "PostalCode": "06902",
       "Country": "USA"
     },
     "Licenses": [
       "Microsoft 365 Copilot",
       "Microsoft Teams Enterprise",
       "Office 365 E5 (no Teams)"
-    ],
-    "MailboxSettings": {
-      "WorkingHours": {
-        "DaysOfWeek": [
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday"
-        ],
-        "StartTime": "08:30",
-        "EndTime": "17:30",
-        "TimeZone": "America/New_York"
-      }
-    }
+    ]
   },
   {
-    "MailNickName": "grace.lindqvist",
-    "DisplayName": "Grace Lindqvist",
-    "FirstName": "Grace",
-    "LastName": "Lindqvist",
-    "JobTitle": "Senior Paralegal, Technology Transactions",
-    "Department": "Legal - Technology Transactions",
-    "CompanyName": "Verdantis",
-    "Manager": "marcus.hollowell",
-    "PhoneNumber": "+1 203 555 0103",
+    "MailNickName": "rsengupta",
+    "DisplayName": "Radhika Sengupta",
+    "FirstName": "Radhika",
+    "LastName": "Sengupta",
+    "JobTitle": "SVP, Strategic Procurement & Vendor Management",
+    "Department": "Procurement",
+    "CompanyName": "Verdantis Technologies, Inc.",
     "UsageLocation": "US",
     "OfficeLocation": "Stamford, CT",
     "Address": {
-      "Street": "400 Atlantic St",
+      "Street": "200 Harborview Drive, Suite 1400",
       "City": "Stamford",
       "State": "CT",
-      "PostalCode": "06901",
+      "PostalCode": "06902",
       "Country": "USA"
     },
     "Licenses": [
-      "Microsoft 365 Copilot",
       "Microsoft Teams Enterprise",
       "Office 365 E5 (no Teams)"
-    ],
-    "MailboxSettings": {
-      "WorkingHours": {
-        "DaysOfWeek": [
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday"
-        ],
-        "StartTime": "08:30",
-        "EndTime": "17:30",
-        "TimeZone": "America/New_York"
-      }
-    }
+    ]
   },
   {
-    "MailNickName": "nathan.osei",
-    "DisplayName": "Nathan Osei",
-    "FirstName": "Nathan",
-    "LastName": "Osei",
-    "JobTitle": "Senior Counsel, Legal Knowledge and Innovation",
-    "Department": "Legal - Knowledge and Innovation",
-    "CompanyName": "Verdantis",
-    "Manager": "eleanor.vance",
-    "PhoneNumber": "+1 203 555 0104",
-    "UsageLocation": "US",
-    "OfficeLocation": "Stamford, CT",
-    "Address": {
-      "Street": "400 Atlantic St",
-      "City": "Stamford",
-      "State": "CT",
-      "PostalCode": "06901",
-      "Country": "USA"
-    },
-    "Licenses": [
-      "Microsoft 365 Copilot",
-      "Microsoft Teams Enterprise",
-      "Office 365 E5 (no Teams)"
-    ],
-    "MailboxSettings": {
-      "WorkingHours": {
-        "DaysOfWeek": [
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday"
-        ],
-        "StartTime": "08:30",
-        "EndTime": "17:30",
-        "TimeZone": "America/New_York"
-      }
-    }
-  },
-  {
-    "MailNickName": "tomas.aguilar",
+    "MailNickName": "taguilar",
     "DisplayName": "Tomás Aguilar",
     "FirstName": "Tomás",
     "LastName": "Aguilar",
     "JobTitle": "Chief Underwriting Officer",
     "Department": "Underwriting",
-    "CompanyName": "Verdantis",
-    "Manager": null,
-    "PhoneNumber": "+1 203 555 0105",
+    "CompanyName": "Verdantis Technologies, Inc.",
     "UsageLocation": "US",
     "OfficeLocation": "Stamford, CT",
     "Address": {
-      "Street": "400 Atlantic St",
+      "Street": "200 Harborview Drive, Suite 1400",
       "City": "Stamford",
       "State": "CT",
-      "PostalCode": "06901",
+      "PostalCode": "06902",
       "Country": "USA"
     },
     "Licenses": [
-      "Microsoft 365 Copilot",
       "Microsoft Teams Enterprise",
       "Office 365 E5 (no Teams)"
-    ],
-    "MailboxSettings": {
-      "WorkingHours": {
-        "DaysOfWeek": [
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday"
-        ],
-        "StartTime": "08:30",
-        "EndTime": "17:30",
-        "TimeZone": "America/New_York"
-      }
-    }
-  },
-  {
-    "MailNickName": "daniel.brandt",
-    "DisplayName": "Daniel Brandt",
-    "FirstName": "Daniel",
-    "LastName": "Brandt",
-    "JobTitle": "Director, Underwriting Analytics",
-    "Department": "Underwriting",
-    "CompanyName": "Verdantis",
-    "Manager": "tomas.aguilar",
-    "PhoneNumber": "+1 203 555 0106",
-    "UsageLocation": "US",
-    "OfficeLocation": "Stamford, CT",
-    "Address": {
-      "Street": "400 Atlantic St",
-      "City": "Stamford",
-      "State": "CT",
-      "PostalCode": "06901",
-      "Country": "USA"
-    },
-    "Licenses": [
-      "Microsoft 365 Copilot",
-      "Microsoft Teams Enterprise",
-      "Office 365 E5 (no Teams)"
-    ],
-    "MailboxSettings": {
-      "WorkingHours": {
-        "DaysOfWeek": [
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday"
-        ],
-        "StartTime": "08:30",
-        "EndTime": "17:30",
-        "TimeZone": "America/New_York"
-      }
-    }
-  },
-  {
-    "MailNickName": "radhika.sengupta",
-    "DisplayName": "Radhika Sengupta",
-    "FirstName": "Radhika",
-    "LastName": "Sengupta",
-    "JobTitle": "SVP, Procurement",
-    "Department": "Procurement",
-    "CompanyName": "Verdantis",
-    "Manager": null,
-    "PhoneNumber": "+1 203 555 0107",
-    "UsageLocation": "US",
-    "OfficeLocation": "Stamford, CT",
-    "Address": {
-      "Street": "400 Atlantic St",
-      "City": "Stamford",
-      "State": "CT",
-      "PostalCode": "06901",
-      "Country": "USA"
-    },
-    "Licenses": [
-      "Microsoft 365 Copilot",
-      "Microsoft Teams Enterprise",
-      "Office 365 E5 (no Teams)"
-    ],
-    "MailboxSettings": {
-      "WorkingHours": {
-        "DaysOfWeek": [
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday"
-        ],
-        "StartTime": "08:30",
-        "EndTime": "17:30",
-        "TimeZone": "America/New_York"
-      }
-    }
-  },
-  {
-    "MailNickName": "olivia.park",
-    "DisplayName": "Olivia Park",
-    "FirstName": "Olivia",
-    "LastName": "Park",
-    "JobTitle": "Procurement Manager, Technology Sourcing",
-    "Department": "Procurement",
-    "CompanyName": "Verdantis",
-    "Manager": "radhika.sengupta",
-    "PhoneNumber": "+1 203 555 0108",
-    "UsageLocation": "US",
-    "OfficeLocation": "Stamford, CT",
-    "Address": {
-      "Street": "400 Atlantic St",
-      "City": "Stamford",
-      "State": "CT",
-      "PostalCode": "06901",
-      "Country": "USA"
-    },
-    "Licenses": [
-      "Microsoft 365 Copilot",
-      "Microsoft Teams Enterprise",
-      "Office 365 E5 (no Teams)"
-    ],
-    "MailboxSettings": {
-      "WorkingHours": {
-        "DaysOfWeek": [
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday"
-        ],
-        "StartTime": "08:30",
-        "EndTime": "17:30",
-        "TimeZone": "America/New_York"
-      }
-    }
+    ]
   }
 ]
