@@ -32,10 +32,12 @@ Fill in the sections below yourself, then:
 
 # [Microsoft Ignite 2026](https://ignite.microsoft.com)
 
-## 🔥LAB654: Connect Business Data to Copilot with Custom Connectors
+## 🔥LAB654: Copilot Connectors: Connect once and bring your enterprise knowledge to every workflow
 ### Session description
 
-Add your session description here. Keep it concise — 2-3 sentences about what attendees will learn and why it matters.
+AI is only as powerful as the knowledge it can access. Copilot Connectors securely bring your enterprise data into Copilot, grounding experiences in the information that matters most to your organization. In this hands-on lab, you'll discover and acquire connectors, connect trusted data sources, and use interactive experiences, skills, and actions to make informed decisions and complete real-world workflows. Explore these end-to-end scenarios across finance, legal, and productivity.
+
+**Level:** 200 · **Duration:** 75 minutes
 
 ### 🚀 Getting started
 
@@ -43,10 +45,9 @@ Add your session description here. Keep it concise — 2-3 sentences about what 
 
 If you're following along during a live session:
 
-1. Step 1
-2. Step 2
-3. Open [`instructions/`](instructions/README.md) when this session includes
-   attendee step-by-step guidance
+1. Sign in to Microsoft 365 Copilot with the credentials on your seat card
+2. Open the [lab manual](instructions/README.md) and complete the introduction and getting started modules
+3. Pick two of the three tracks (finance, legal, productivity) and follow the steps
 
 #### On your own
 
@@ -61,9 +62,9 @@ If you're learning at your own pace:
 
 By the end of this session, you will be able to:
 
-- Outcome 1
-- Outcome 2
-- Outcome 3
+- Discover and connect Copilot connectors, and use connected data across Microsoft 365 experiences
+- Ground Copilot in trusted enterprise and partner data with citations, using synced, federated, and hybrid connectors
+- Complete end-to-end workflows with connector skills, plugins, and write actions that you approve
 
 ### 💻 Technologies used
 
