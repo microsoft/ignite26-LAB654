@@ -76,4 +76,4 @@ docker run -p 8000:8000 mock-lseg:latest
 
 Each image runs one server over stateless streamable HTTP on port 8000, which suits Azure Container Apps (ingress to port 8000, health probe `/healthz`, any number of replicas).
 
-See [DEPLOYMENT.md](DEPLOYMENT.md) for the Azure setup, update steps, troubleshooting and the live server URLs.
+See [DEPLOYMENT.md](DEPLOYMENT.md) for the Azure setup, update steps, troubleshooting and the live server URLs. See [COST_ESTIMATE.md](COST_ESTIMATE.md) for hosting costs and capacity during the lab.

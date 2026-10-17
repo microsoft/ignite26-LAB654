@@ -10,7 +10,7 @@ Each mock MCP server runs as its own Azure Container App. All of them share one 
 | FactSet | `mock-factset` | `mock-factset:v1` | `https://mock-factset.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` |
 | Moody's | `mock-moodys` | `mock-moodys:v1` | `https://mock-moodys.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` |
 
-Health checks are at the same host with `/healthz` instead of `/mcp`. Every app runs 0.5 vCPU and 1 GiB, with 1 to 3 replicas.
+Health checks are at the same host with `/healthz` instead of `/mcp`. Every app runs 0.5 vCPU and 1 GiB, with 0 to 3 replicas (scale to zero when idle).
 
 ## Azure resources
 
@@ -87,13 +87,13 @@ az containerapp create -n "mock-$S" -g $RG --environment $ENV `
   --image "$ACR.azurecr.io/mock-${S}:$TAG" `
   --target-port 8000 --ingress external `
   --registry-server "$ACR.azurecr.io" --registry-username $USER --registry-password $PASS `
-  --min-replicas 1 --max-replicas 3 --cpu 0.5 --memory 1Gi `
+  --min-replicas 0 --max-replicas 3 --cpu 0.5 --memory 1Gi `
   --query properties.configuration.ingress.fqdn -o tsv
 ```
 
 The command prints the FQDN. The MCP endpoint is `https://<fqdn>/mcp`.
 
-- `--min-replicas 1` keeps one instance warm, so lab attendees never hit a cold start.
+- `--min-replicas 0` scales to zero when idle, so an unused server costs nothing. The first call after an idle spell takes 5 to 15 seconds. Use `--min-replicas 1` to keep a server warm, for example during lab week.
 - The servers are stateless, so they scale out freely across replicas.
 - Optional settings go in `--env-vars`, for example `--env-vars LOG_LEVEL=DEBUG MOCK_NOW=2026-11-18T09:00:00Z`. See the settings table in [README.md](README.md#run-locally).
 
@@ -129,7 +129,8 @@ az containerapp update -n "mock-$S" -g $RG --image "$ACR.azurecr.io/mock-${S}:$T
 | Change | Command |
 |---|---|
 | Change a setting only | `az containerapp update -n mock-$S -g $RG --set-env-vars MOCK_NOW=2026-11-18T09:00:00Z` |
-| Scale for the live lab | `az containerapp update -n mock-$S -g $RG --min-replicas 2 --max-replicas 5` |
+| Keep warm for the live lab | `az containerapp update -n mock-$S -g $RG --min-replicas 1` |
+| Back to scale to zero | `az containerapp update -n mock-$S -g $RG --min-replicas 0` |
 | Roll back | `az containerapp update -n mock-$S -g $RG --image $ACR.azurecr.io/mock-${S}:v1` |
 
 Changes to `_framework/` or `_domains/finance/` affect every finance server. Rebuild and update all of them.
@@ -178,4 +179,4 @@ az group delete -n $RG --yes --no-wait
 | `/mcp` returns `404` or `405` | Wrong path or method | POST to `https://<fqdn>/mcp`. `GET /` and `GET /mcp` are not MCP calls |
 | `update` ran but the old code is still served | The image tag was reused | Push a new tag and update to it |
 | Server starts then exits, revision unhealthy | Import error or bad setting | `az containerapp logs show -n mock-$S -g $RG --type console`; reproduce with `docker run` locally |
-| First call after a long idle is slow | Scaled to zero | Keep `--min-replicas 1` or more |
+| First call after an idle spell takes 5 to 15 seconds | The app scaled to zero | Expected. Set `--min-replicas 1` when you need it warm |
