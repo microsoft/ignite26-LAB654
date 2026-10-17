@@ -1,0 +1,37 @@
+# Mock plugins
+
+Microsoft 365 app packages for the lab's third-party connectors. Each package is a copy of the real connector package, pointed at the matching [mock MCP server](../mock_mcp_servers/DEPLOYMENT.md).
+
+## Packages
+
+| Folder | Name | Skills | Mock MCP server | Source |
+|---|---|---|---|---|
+| `lseg/` | Test_LSEG | 8 | `https://mock-lseg.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` | `gim-home/skill-studio`: `connector-skills-packages/lseg/MOSified/v0_20260918/basic` |
+| `moodys/` | Test_Moodys | 7 | `https://mock-moodys.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` | `gim-home/skill-studio`: `connector-skills-packages/moodys/MOSified/v0_20260918/withConstraints` |
+| `factset/` | Test_FactSet | None | `https://mock-factset.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` | `gim-home/M365FCCMOSPackages`: `mos-packages/factset/inDev/factset.zip` |
+
+## Changes from the source packages
+
+Icons and `skills/` are copied unchanged. `addendum.json` (internal publishing rules for which audiences see the connector) is left out because tenant uploads don't use it. `manifest.json` changes:
+
+| Field | Change | Why |
+|---|---|---|
+| `name`, `agentConnectors[].displayName` | `Test_<connector>` | Shows it is a test server |
+| `id`, `agentConnectors[].id` | New GUIDs | Avoids clashing with the real package in the same tenant |
+| `developer` | Tezan Sahu, with this repo's URL for the website, privacy and terms links | Not published by Microsoft or the data provider |
+| `mcpServerUrl` | Mock server URL | Serves mock data |
+| `authorization` | Removed | Mock servers need no sign-in |
+
+## Build packages
+
+The ready-to-upload packages are `test_lseg.zip`, `test_moodys.zip` and `test_factset.zip` in this folder. After changing a plugin, rebuild them:
+
+```powershell
+python infra\mock_environment\mock_plugins\build_plugins.py              # all plugins
+python infra\mock_environment\mock_plugins\build_plugins.py lseg moodys  # selected plugins
+python infra\mock_environment\mock_plugins\build_plugins.py --list       # list plugins
+```
+
+Any subfolder with a `manifest.json` counts as a plugin. The script checks the manifest, icons and skill folders before building `test_<folder>.zip`, with `manifest.json` at the root.
+
+If a mock server URL changes, update `mcpServerUrl` in that package's `manifest.json` and bump `version`.

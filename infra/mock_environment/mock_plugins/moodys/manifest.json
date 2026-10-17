@@ -1,0 +1,60 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.29/MicrosoftTeams.schema.json",
+    "manifestVersion": "1.29",
+    "version": "1.1.0",
+    "id": "ea229aee-a8ce-4b50-aeb8-91b7fc5e8510",
+    "developer": {
+        "name": "Tezan Sahu",
+        "websiteUrl": "https://github.com/microsoft/ignite26-LAB654",
+        "privacyUrl": "https://github.com/microsoft/ignite26-LAB654",
+        "termsOfUseUrl": "https://github.com/microsoft/ignite26-LAB654"
+    },
+    "name": {
+        "short": "Test_Moodys",
+        "full": "Test_Moodys"
+    },
+    "description": {
+        "short": "Get credit ratings, rating actions, outlooks, and risk research.",
+        "full": "Moody's is a leading global credit ratings, research, and financial risk analytics firm. It provides credit ratings and outlooks for thousands of corporate, sovereign, and structured finance entities worldwide. Moody's research includes credit opinions, SWOT analyses, ESG and governance assessments, executive profiles, and board composition. The platform also covers earnings call transcripts, SEC filings, and proprietary risk research. Financial professionals rely on Moody's for independent credit risk assessment and fixed-income research. To sign up, visit https://www.moodys.com."
+    },
+    "icons": {
+        "color": "color.png",
+        "outline": "outline.png"
+    },
+    "accentColor": "#002F6C",
+    "agentConnectors": [
+        {
+            "id": "50beb2de-a197-472b-aa4b-677e4eea3a2e",
+            "displayName": "Test_Moodys",
+            "description": "Use this tool to retrieve Moody's-sourced credit ratings, outlook, upgrades/downgrades, credit opinions, SWOT, ESG/governance, executives, board, ownership, subsidiaries, and Moody's research, filings, and earnings calls for a named company.\nKeywords: rating, credit, entity, ESG, outlook, scorecard, sector, earnings, SWOT, peers",
+            "toolSource": {
+                "remoteMcpServer": {
+                    "mcpServerUrl": "https://mock-moodys.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp"
+                }
+            }
+        }
+    ],
+    "agentSkills": [
+        {
+            "folder": "./skills/moody-s-company-analysis"
+        },
+        {
+            "folder": "./skills/moody-s-earnings-brief"
+        },
+        {
+            "folder": "./skills/moody-s-explore-mcp"
+        },
+        {
+            "folder": "./skills/moody-s-issuer-brief"
+        },
+        {
+            "folder": "./skills/moody-s-peer-analysis"
+        },
+        {
+            "folder": "./skills/moody-s-rating-analysis"
+        },
+        {
+            "folder": "./skills/moody-s-sector-brief"
+        }
+    ]
+}

@@ -10,6 +10,7 @@ Synthetic tenant data for testing the LAB654 scenarios (legal, finance and produ
 | `Connectors_Ignite_EMP/` | The COEP package for the virtual tenant: `config.json` plus a `<type>.config.json` for each Microsoft 365 type that has data (currently users, emails and chats). Connector types use a `<type>/` folder of `<type>_<scenario>.jsonl` files, one item per line (currently `intranetwebsite/`), as COEP's Connector Entity Guide requires. |
 | `Connectors_Ignite_EMP/files/` | Enterprise documents for `files.config.json`. Created only when a scenario puts files in the tenant. The legal scenario has none. |
 | `mock_mcp_servers/` | Mock MCP servers for third-party connectors, each with a `seed_files/` folder. See [its README](mock_mcp_servers/README.md). |
+| `mock_plugins/` | Microsoft 365 app packages for the connectors, pointed at the mock MCP servers. See [its README](mock_plugins/README.md). |
 | `tools/` | The generator, validator and schema refresh scripts. |
 | `tools/scenarios/` | One module per scenario holding its tenant seed data, plus `<scenario>_content/` for source content such as email bodies. |
 

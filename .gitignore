@@ -430,3 +430,4 @@ FodyWeavers.xsd
 
 # COEP upload archives (built manually, never tracked)
 infra/mock_environment/**/*.zip
+!infra/mock_environment/mock_plugins/*.zip

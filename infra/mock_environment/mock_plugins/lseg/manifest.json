@@ -1,0 +1,63 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.29/MicrosoftTeams.schema.json",
+    "manifestVersion": "1.29",
+    "version": "1.1.0",
+    "id": "fa0fce5b-9586-4440-8e49-887c79cf3496",
+    "developer": {
+        "name": "Tezan Sahu",
+        "websiteUrl": "https://github.com/microsoft/ignite26-LAB654",
+        "privacyUrl": "https://github.com/microsoft/ignite26-LAB654",
+        "termsOfUseUrl": "https://github.com/microsoft/ignite26-LAB654"
+    },
+    "name": {
+        "short": "Test_LSEG",
+        "full": "Test_LSEG"
+    },
+    "description": {
+        "short": "Get real-time market data, fundamentals, estimates, and pricing.",
+        "full": "LSEG (London Stock Exchange Group) is a global financial markets infrastructure and data provider. It delivers real-time and historical market data, analytics, and trading solutions across equities, fixed income, FX, commodities, and derivatives. LSEG's data products include pricing, fundamentals, analyst estimates, economic indicators, and risk analytics for institutional investors, banks, and financial professionals. Its Refinitiv-lineage data covers over 450 exchanges and 180 countries. To sign up, visit https://www.lseg.com."
+    },
+    "icons": {
+        "color": "color.png",
+        "outline": "outline.png"
+    },
+    "accentColor": "#001489",
+    "agentConnectors": [
+        {
+            "id": "0857ab4d-f242-43a4-92b0-2df4f9d17d4f",
+            "displayName": "Test_LSEG",
+            "description": "Use this LSEG connector to retrieve data for a company, ticker, or instrument: FX spot/forward, bond/future/option/swap pricing, interest-rate/credit/inflation/FX curves, volatility surfaces, analyst estimates, fundamentals, macro and financial news.\nKeywords: LSEG, market data, FX, bonds, equities, interest rate, credit, inflation, Refinitiv, Thomson Reuters, Eikon, IBES, Wall Street expectations, Street consensus, Broker estimates, Analyst estimates, Volatility Surface, Reuters headlines",
+            "toolSource": {
+                "remoteMcpServer": {
+                    "mcpServerUrl": "https://mock-lseg.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp"
+                }
+            }
+        }
+    ],
+    "agentSkills": [
+        {
+            "folder": "./skills/bond-futures-basis"
+        },
+        {
+            "folder": "./skills/bond-relative-value"
+        },
+        {
+            "folder": "./skills/equity-research"
+        },
+        {
+            "folder": "./skills/fixed-income-portfolio"
+        },
+        {
+            "folder": "./skills/fx-carry-trade"
+        },
+        {
+            "folder": "./skills/macro-rates-monitor"
+        },
+        {
+            "folder": "./skills/option-vol-analysis"
+        },
+        {
+            "folder": "./skills/swap-curve-strategy"
+        }
+    ]
+}

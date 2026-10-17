@@ -1,0 +1,37 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.29/MicrosoftTeams.schema.json",
+    "manifestVersion": "1.29",
+    "version": "1.1.0",
+    "id": "46928d76-7a18-4dc6-b4dd-1c734a20a937",
+    "developer": {
+        "name": "Tezan Sahu",
+        "websiteUrl": "https://github.com/microsoft/ignite26-LAB654",
+        "privacyUrl": "https://github.com/microsoft/ignite26-LAB654",
+        "termsOfUseUrl": "https://github.com/microsoft/ignite26-LAB654"
+    },
+    "name": {
+        "short": "Test_FactSet",
+        "full": "Test_FactSet"
+    },
+    "description": {
+        "short": "Get company fundamentals, estimates, ownership, and market data.",
+        "full": "FactSet is a financial data and technology company serving investment professionals across the buy side and sell side. It delivers company fundamentals, analyst consensus estimates, ownership data, M&A deal information, executive profiles, and market pricing. FactSet's data products cover public and private companies, private equity, venture capital, ETFs, and fixed income. Portfolio managers, research analysts, and investment bankers use FactSet to build financial models, conduct due diligence, and monitor markets. Available in Microsoft 365 Copilot. A FactSet Research Systems account is required. To sign up, visit https://www.factset.com."
+    },
+    "icons": {
+        "color": "color.png",
+        "outline": "outline.png"
+    },
+    "accentColor": "#003DA5",
+    "agentConnectors": [
+        {
+            "id": "bda35d23-7a9c-41cd-9abb-64710aa452cf",
+            "displayName": "Test_FactSet",
+            "description": "Use this tool to retrieve FactSet data: analyst estimates, consensus, fundamentals, prices, M&A deals, ownership, executives, events, RBICS industry, private equity, venture capital, funds, ETFs, fixed-income terms, filings search.\nKeywords: FactSet, analyst estimates, analyst ratings, earnings surprise, fundamentals, free cash flow, stock prices, dividends, M&A deals, institutional holders, insider transactions, mutual funds, executive compensation, leadership team, ETFs, expense ratios, fixed income",
+            "toolSource": {
+                "remoteMcpServer": {
+                    "mcpServerUrl": "https://mock-factset.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp"
+                }
+            }
+        }
+    ]
+}
