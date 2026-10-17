@@ -1,0 +1,43 @@
+{
+ "_about": "Recorded from a live session on 2026-10-16 (session-trajectory-20261016T085346Z). NVDA is verbatim. Other companies' histories are synthetic (see companies.json moodys.synthetic).",
+ "ratings": {
+  "600053279": {
+   "rating_class": "Senior Unsecured - Dom Curr",
+   "current": {
+    "rating": "Aa1",
+    "date": "2026-08-18",
+    "action": "Affirmation",
+    "outlook": "Positive"
+   },
+   "history": [
+    [
+     "2023-06-20",
+     "A1",
+     "Upgrade"
+    ],
+    [
+     "2024-03-06",
+     "Aa3",
+     "Upgrade"
+    ],
+    [
+     "2025-03-26",
+     "Aa2",
+     "Upgrade"
+    ],
+    [
+     "2026-01-20",
+     "Aa1",
+     "Upgrade"
+    ],
+    [
+     "2026-08-18",
+     "Aa1",
+     "Affirmation"
+    ]
+   ],
+   "analyst": "Raj Joshi",
+   "recorded_text": "MIS\n\nCurrent Rating: Aa1 (Senior Unsecured - Dom Curr) - 2026-08-18 Affirmation - Outlook: Positive\n\nDate\tRating\tRating Action\n2023-06-20\tA1\tUpgrade\n2024-03-06\tAa3\tUpgrade\n2025-03-26\tAa2\tUpgrade\n2026-01-20\tAa1\tUpgrade\n2026-08-18\tAa1\tAffirmation\n\nAnalyst: Raj Joshi"
+  }
+ }
+}

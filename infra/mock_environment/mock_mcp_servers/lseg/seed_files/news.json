@@ -1,0 +1,107 @@
+{
+ "_about": "Recorded from a live session on 2026-10-16 (session-trajectory-20261016T085346Z). NVDA headlines are verbatim. Other companies get templated, clearly generic headlines (see mock_lseg/news.py).",
+ "headlines": {
+  "NVDA": [
+   {
+    "source": "RTRS",
+    "language": "en",
+    "headlineText": "EXCLUSIVE-Chip startup Bolt Graphics seeking to raise $100 million at about a $700 million valuation, sources say",
+    "story": "",
+    "firstCreated": "2026-10-15T21:21:44Z",
+    "versionCreated": "2026-10-15T21:22:11Z",
+    "urgency": 0,
+    "ldpStoryUrl": "https://api.refinitiv.com/data/news/v1/stories/urn:newsml:reuters.com:20261015:nL6N46119S:2"
+   },
+   {
+    "source": "RTRS",
+    "language": "en",
+    "headlineText": "BRIEF-Adobe & NVIDIA Expand Collaboration To Speed Agentic Creation",
+    "story": "",
+    "firstCreated": "2026-10-15T18:17:18Z",
+    "versionCreated": "2026-10-15T18:17:18Z",
+    "urgency": 0,
+    "ldpStoryUrl": "https://api.refinitiv.com/data/news/v1/stories/urn:newsml:reuters.com:20261015:nTUA78NDTT:1"
+   },
+   {
+    "source": "RTRS",
+    "language": "en",
+    "headlineText": "FACTBOX-CoreWeave's AI contracts and the lenders financing its build-out",
+    "story": "",
+    "firstCreated": "2026-10-15T17:42:14Z",
+    "versionCreated": "2026-10-15T17:42:14Z",
+    "urgency": 0,
+    "ldpStoryUrl": "https://api.refinitiv.com/data/news/v1/stories/urn:newsml:reuters.com:20261015:nL4N461177:5"
+   },
+   {
+    "source": "RTRS",
+    "language": "en",
+    "headlineText": "BRIEF-Nvidia CEO Huang Says Coreweave Improving, No Backstop Needed- Bloomberg News",
+    "story": "",
+    "firstCreated": "2026-10-15T15:38:47Z",
+    "versionCreated": "2026-10-15T15:38:47Z",
+    "urgency": 0,
+    "ldpStoryUrl": "https://api.refinitiv.com/data/news/v1/stories/urn:newsml:reuters.com:20261015:nFWN4611GE:1"
+   },
+   {
+    "source": "RTRS",
+    "language": "en",
+    "headlineText": "BRIEF-Multiverse Computing Launches Comet 60B In Collaboration With NVIDIA",
+    "story": "",
+    "firstCreated": "2026-10-15T15:37:27Z",
+    "versionCreated": "2026-10-15T15:37:27Z",
+    "urgency": 0,
+    "ldpStoryUrl": "https://api.refinitiv.com/data/news/v1/stories/urn:newsml:reuters.com:20261015:nFWN4611AT:1"
+   },
+   {
+    "source": "RTRS",
+    "language": "en",
+    "headlineText": "BRIEF-German Government Plans Partnership With Nvidia on AI, Handelsblatt Reports",
+    "story": "",
+    "firstCreated": "2026-10-15T14:48:37Z",
+    "versionCreated": "2026-10-15T15:05:09Z",
+    "urgency": 0,
+    "ldpStoryUrl": "https://api.refinitiv.com/data/news/v1/stories/urn:newsml:reuters.com:20261015:nS8N43B03L:2"
+   },
+   {
+    "source": "RTRS",
+    "language": "en",
+    "headlineText": "Nvidia, Apple each gave $25 million for Trump's ballroom, Washington Post reports",
+    "story": "",
+    "firstCreated": "2026-10-15T13:50:17Z",
+    "versionCreated": "2026-10-15T14:03:07Z",
+    "urgency": 0,
+    "ldpStoryUrl": "https://api.refinitiv.com/data/news/v1/stories/urn:newsml:reuters.com:20261015:nFWN4611RX:5"
+   },
+   {
+    "source": "RTRS",
+    "language": "en",
+    "headlineText": "TSMC Q3 profit jumps 69% to record, beating expectations",
+    "story": "",
+    "firstCreated": "2026-10-15T05:30:10Z",
+    "versionCreated": "2026-10-15T05:34:15Z",
+    "urgency": 0,
+    "ldpStoryUrl": "https://api.refinitiv.com/data/news/v1/stories/urn:newsml:reuters.com:20261015:nP8N3NB03T:4"
+   },
+   {
+    "source": "RTRS",
+    "language": "en",
+    "headlineText": "BRIEF-NVIDIA Introduces Cupotential CUDA-X Library, Accelerates GPU Workflows By 2-3x In Early Access",
+    "story": "",
+    "firstCreated": "2026-10-14T16:15:17Z",
+    "versionCreated": "2026-10-14T16:15:17Z",
+    "urgency": 0,
+    "ldpStoryUrl": "https://api.refinitiv.com/data/news/v1/stories/urn:newsml:reuters.com:20261014:nTUABPNWRJ:1"
+   },
+   {
+    "source": "RTRS",
+    "language": "en",
+    "headlineText": "BRIEF-ChipAgents Collaborates With NVIDIA To Launch Build-A-Chip-Bench For Autonomous Chip Design & Implementation",
+    "story": "",
+    "firstCreated": "2026-10-14T16:14:22Z",
+    "versionCreated": "2026-10-14T16:14:22Z",
+    "urgency": 0,
+    "ldpStoryUrl": "https://api.refinitiv.com/data/news/v1/stories/urn:newsml:reuters.com:20261014:nFWN4601VU:1"
+   }
+  ]
+ }
+}

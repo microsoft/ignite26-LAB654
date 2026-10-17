@@ -1,0 +1,144 @@
+{
+ "_about": "Recorded from a live session on 2026-10-16 (session-trajectory-20261016T085346Z). Verbatim metric properties returned by FactSet_Metrics for 'gross margin' and 'return on invested capital'.",
+ "observed_queries": {
+  "gross margin": [
+   [
+    1.0,
+    "FF_GROSS_MGN"
+   ],
+   [
+    0.7244384,
+    "FF_GROSS_INC"
+   ],
+   [
+    0.59075177,
+    "FF_OPER_MGN"
+   ],
+   [
+    0.49276417,
+    "FF_EBITDA_OPER_MGN"
+   ],
+   [
+    0.49208537,
+    "FF_FOR_NET_MGN"
+   ]
+  ],
+  "return on invested capital": [
+   [
+    1.0,
+    "FF_ROIC"
+   ],
+   [
+    0.84004545,
+    "FF_CF_ROIC"
+   ],
+   [
+    0.58924574,
+    "FF_ROTC"
+   ],
+   [
+    0.57335067,
+    "FF_ROCE"
+   ],
+   [
+    0.5302952,
+    "FF_INVEST_CAP"
+   ]
+  ]
+ },
+ "metrics": {
+  "FF_GROSS_MGN": {
+   "category": "RATIOS",
+   "description": "Gross Income Margin measures the percentage of net sales or revenue that remains after covering the direct cost of goods or services sold. It is calculated as gross income divided by net sales or revenue, expressed as a percentage, and shows the fundamental profitability of a company’s core offering before operating expenses, interest, and taxes. Analysts use this Ratios/Profitability metric to assess pricing power, product mix, input cost pressure, and the sustainability of unit economics. Changes in gross margin can be an early signal of competitive shifts, cost inflation, or improvements in operational execution.",
+   "metric": "FF_GROSS_MGN",
+   "name": "Gross Income Margin",
+   "subcategory": "PROFITABILITY",
+   "type": "metric",
+   "dataProduct": "fundamentals"
+  },
+  "FF_GROSS_INC": {
+   "category": "FINANCIAL_SERVICES",
+   "description": "Gross Income measures the profit remaining after direct production, merchandise, or service delivery costs have been deducted from sales or revenue, effectively showing the economic value created before operating overhead and other expenses. In this income statement context, it is commonly calculated as net sales or revenue minus cost of goods sold, making it a foundational measure of gross profitability and pricing power. Analysts use Gross Income to evaluate product mix, cost control, margin trends, and the efficiency with which a company turns revenue into profit at the most direct level of operations.",
+   "metric": "FF_GROSS_INC",
+   "name": "Gross Income",
+   "subcategory": "INCOME_STATEMENT",
+   "type": "metric",
+   "dataProduct": "fundamentals",
+   "factor": "1000000"
+  },
+  "FF_OPER_MGN": {
+   "category": "RATIOS",
+   "description": "Operating Margin measures operating income as a percentage of net sales or revenue, showing how much profit a company generates from its core operations before interest and taxes. It is one of the most widely used profitability ratios for evaluating operating efficiency, cost control, and the quality of the top line. Analysts use operating margin to compare business models across companies, monitor margin expansion or compression over time, and assess whether revenue growth is translating into stronger operating performance.",
+   "metric": "FF_OPER_MGN",
+   "name": "Operating Margin",
+   "subcategory": "PROFITABILITY",
+   "type": "metric",
+   "dataProduct": "fundamentals"
+  },
+  "FF_EBITDA_OPER_MGN": {
+   "category": "RATIOS",
+   "description": "EBITDA Margin measures EBITDA as a percentage of net sales, showing how much operating cash-style earnings a company generates from each dollar of revenue before interest, taxes, depreciation, and amortization. As a core profitability ratio, it helps analysts evaluate operating efficiency, pricing power, and margin structure across companies and reporting periods. This metric is commonly used in peer comparisons, trend analysis, and valuation work because it reduces the impact of capital structure and non-cash accounting charges.",
+   "metric": "FF_EBITDA_OPER_MGN",
+   "name": "EBITDA Margin",
+   "subcategory": "PROFITABILITY",
+   "type": "metric",
+   "dataProduct": "fundamentals"
+  },
+  "FF_FOR_NET_MGN": {
+   "category": "RATIOS",
+   "description": "Foreign Income Margin measures international operating income as a percentage of international sales, showing the profitability of a company’s foreign or cross-border operations. This ratio helps analysts isolate how efficiently the business converts overseas revenue into operating profit, separate from domestic performance. It is particularly relevant for multinational companies assessing regional strategy, geographic mix, and the margin quality of international expansion.",
+   "metric": "FF_FOR_NET_MGN",
+   "name": "Foreign Income Margin",
+   "subcategory": "PROFITABILITY",
+   "type": "metric",
+   "dataProduct": "fundamentals"
+  },
+  "FF_ROIC": {
+   "category": "RATIOS",
+   "description": "Return on Average Invested Capital is a profitability ratio that measures how efficiently a company generates net income from the capital invested in the business over the period. It is calculated as net income divided by the two-period average of total invested capital, with last-twelve-month net income used for quarterly or semiannual analysis. Analysts use this metric to evaluate management’s effectiveness in deploying debt and equity capital and to compare capital efficiency across companies, business units, or time periods within the Ratios/Profitability framework.",
+   "metric": "FF_ROIC",
+   "name": "Return on Average Invested Capital",
+   "subcategory": "PROFITABILITY",
+   "type": "metric",
+   "dataProduct": "fundamentals"
+  },
+  "FF_CF_ROIC": {
+   "category": "RATIOS",
+   "description": "Cash Flow Return on Average Invested Capital is a profitability ratio that measures how efficiently a company converts the capital invested in the business into operating cash flow. It is calculated as net cash from operating activities divided by average total invested capital, expressed as a percentage; for quarterly or semiannual analysis, the numerator typically uses last-twelve-month operating cash flow. Analysts use this metric to evaluate capital efficiency from a cash-generation perspective, especially when comparing companies with different non-cash expenses, accounting policies, or capital intensity. Within Ratios/Profitability, it is particularly useful for assessing whether management is producing strong cash returns on the funds committed to the business.",
+   "metric": "FF_CF_ROIC",
+   "name": "Cash Flow Return on Average Invested Capital",
+   "subcategory": "PROFITABILITY",
+   "type": "metric",
+   "dataProduct": "fundamentals",
+   "factor": "True"
+  },
+  "FF_ROTC": {
+   "category": "RATIOS",
+   "description": "Return on Average Total Capital measures how effectively a company earns operating income from the capital invested in the business, using an average capital base across two fiscal periods. It is calculated as Operating Income divided by average Total Capital including short-term debt plus average accumulated minority interest, multiplied by 100. As a Ratios > Profitability metric, it is commonly used to evaluate operating performance independent of financing structure and to compare how efficiently companies deploy debt and equity capital to generate returns. Analysts often use this measure in trend analysis, peer comparisons, and capital allocation reviews; for quarterly or semiannual requests, the calculation uses last-twelve-month operating income.",
+   "metric": "FF_ROTC",
+   "name": "Return on Average Total Capital",
+   "subcategory": "PROFITABILITY",
+   "type": "metric",
+   "dataProduct": "fundamentals"
+  },
+  "FF_ROCE": {
+   "category": "RATIOS",
+   "description": "Return on Common Equity measures the return generated for common shareholders by comparing income available to common equity with the average common equity base, expressed as a percentage. As a profitability ratio, it indicates how effectively management is using common shareholders’ capital to produce earnings. Analysts use it to assess shareholder value creation, compare capital efficiency across companies, and track whether returns are improving or deteriorating over time; for interim analysis, the income component is typically evaluated on a last-twelve-month basis.",
+   "metric": "FF_ROCE",
+   "name": "Return on Common Equity",
+   "subcategory": "PROFITABILITY",
+   "type": "metric",
+   "dataProduct": "fundamentals"
+  },
+  "FF_INVEST_CAP": {
+   "category": "FINANCIAL_SERVICES",
+   "description": "Total Invested Capital measures the long-term capital committed to the business, calculated as total shareholders’ equity plus long-term debt. Within balance sheet supplemental analysis, it is commonly used to evaluate how a company is financed and to support return-based metrics such as ROIC and economic profit analysis. Analysts rely on this measure when comparing capital structures, assessing funding intensity, and understanding the total permanent capital available to support operations and growth.",
+   "metric": "FF_INVEST_CAP",
+   "name": "Total Invested Capital",
+   "subcategory": "SUPPLEMENTAL",
+   "type": "metric",
+   "dataProduct": "fundamentals",
+   "factor": "1000000"
+  }
+ }
+}

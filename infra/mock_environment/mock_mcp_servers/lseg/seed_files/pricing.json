@@ -1,0 +1,306 @@
+{
+ "_about": "Recorded from a live session on 2026-10-16 (session-trajectory-20261016T085346Z). Header lists (and their order) are verbatim per interval. 'monthly_observed' rows replay verbatim; daily bars come from the shared finance price model, which pins the recorded daily rows.",
+ "envelope": {
+  "summaryTimestampLabel": "endPeriod",
+  "adjustments": [
+   "exchangeCorrection",
+   "manualCorrection",
+   "CCH",
+   "CRE",
+   "RTS",
+   "RPO"
+  ],
+  "defaultPricingField": "TRDPRC_1"
+ },
+ "headers": {
+  "daily": [
+   {
+    "name": "DATE",
+    "type": "string"
+   },
+   {
+    "name": "TRDPRC_1",
+    "type": "number",
+    "decimalChar": "."
+   },
+   {
+    "name": "HIGH_1",
+    "type": "number",
+    "decimalChar": "."
+   },
+   {
+    "name": "LOW_1",
+    "type": "number",
+    "decimalChar": "."
+   },
+   {
+    "name": "ACVOL_UNS",
+    "type": "number",
+    "decimalChar": "."
+   },
+   {
+    "name": "OPEN_PRC",
+    "type": "number",
+    "decimalChar": "."
+   },
+   {
+    "name": "BID",
+    "type": "number",
+    "decimalChar": "."
+   },
+   {
+    "name": "ASK",
+    "type": "number",
+    "decimalChar": "."
+   },
+   {
+    "name": "TRNOVR_UNS",
+    "type": "number",
+    "decimalChar": "."
+   },
+   {
+    "name": "VWAP",
+    "type": "number",
+    "decimalChar": "."
+   },
+   {
+    "name": "BLKCOUNT",
+    "type": "number",
+    "decimalChar": "."
+   },
+   {
+    "name": "BLKVOLUM",
+    "type": "number",
+    "decimalChar": "."
+   },
+   {
+    "name": "NUM_MOVES",
+    "type": "number",
+    "decimalChar": "."
+   },
+   {
+    "name": "TRD_STATUS",
+    "type": "number",
+    "decimalChar": "."
+   },
+   {
+    "name": "SALTIM",
+    "type": "number",
+    "decimalChar": "."
+   },
+   {
+    "name": "NAVALUE",
+    "type": "number",
+    "decimalChar": "."
+   },
+   {
+    "name": "VWAP_VOL",
+    "type": "number",
+    "decimalChar": "."
+   },
+   {
+    "name": "ACVOL_DEC",
+    "type": "number",
+    "decimalChar": "."
+   }
+  ],
+  "monthly": [
+   {
+    "name": "DATE",
+    "type": "string"
+   },
+   {
+    "name": "VWAP_VOL",
+    "type": "number",
+    "decimalChar": "."
+   },
+   {
+    "name": "TRNOVR_UNS",
+    "type": "number",
+    "decimalChar": "."
+   },
+   {
+    "name": "NAVALUE",
+    "type": "number",
+    "decimalChar": "."
+   },
+   {
+    "name": "NUM_MOVES",
+    "type": "number",
+    "decimalChar": "."
+   },
+   {
+    "name": "TRDPRC_1",
+    "type": "number",
+    "decimalChar": "."
+   },
+   {
+    "name": "HIGH_1",
+    "type": "number",
+    "decimalChar": "."
+   },
+   {
+    "name": "VWAP",
+    "type": "number",
+    "decimalChar": "."
+   },
+   {
+    "name": "ASK",
+    "type": "number",
+    "decimalChar": "."
+   },
+   {
+    "name": "BID",
+    "type": "number",
+    "decimalChar": "."
+   },
+   {
+    "name": "SALTIM",
+    "type": "number",
+    "decimalChar": "."
+   },
+   {
+    "name": "ACVOL_DEC",
+    "type": "number",
+    "decimalChar": "."
+   },
+   {
+    "name": "BLKVOLUM",
+    "type": "number",
+    "decimalChar": "."
+   },
+   {
+    "name": "OPEN_PRC",
+    "type": "number",
+    "decimalChar": "."
+   },
+   {
+    "name": "TRD_STATUS",
+    "type": "number",
+    "decimalChar": "."
+   },
+   {
+    "name": "LOW_1",
+    "type": "number",
+    "decimalChar": "."
+   },
+   {
+    "name": "BLKCOUNT",
+    "type": "number",
+    "decimalChar": "."
+   },
+   {
+    "name": "ACVOL_UNS",
+    "type": "number",
+    "decimalChar": "."
+   },
+   {
+    "name": "VWAP_OPEN",
+    "type": "number",
+    "decimalChar": "."
+   },
+   {
+    "name": "VWAP_HIGH",
+    "type": "number",
+    "decimalChar": "."
+   },
+   {
+    "name": "VWAP_LOW",
+    "type": "number",
+    "decimalChar": "."
+   },
+   {
+    "name": "OPEN_BID",
+    "type": "number",
+    "decimalChar": "."
+   },
+   {
+    "name": "BID_HIGH_1",
+    "type": "number",
+    "decimalChar": "."
+   },
+   {
+    "name": "BID_LOW_1",
+    "type": "number",
+    "decimalChar": "."
+   },
+   {
+    "name": "OPEN_ASK",
+    "type": "number",
+    "decimalChar": "."
+   },
+   {
+    "name": "ASK_HIGH_1",
+    "type": "number",
+    "decimalChar": "."
+   },
+   {
+    "name": "ASK_LOW_1",
+    "type": "number",
+    "decimalChar": "."
+   }
+  ]
+ },
+ "monthly_observed": {
+  "NVDA.O": [
+   {
+    "DATE": "2026-10-31",
+    "VWAP_VOL": 1016898719,
+    "TRNOVR_UNS": 264807210182,
+    "NAVALUE": null,
+    "NUM_MOVES": 21644121,
+    "TRDPRC_1": 217.23,
+    "HIGH_1": 243.37,
+    "VWAP": 216.3986,
+    "ASK": 217.24,
+    "BID": 217.22,
+    "SALTIM": 72000,
+    "ACVOL_DEC": 1148293137.256759,
+    "BLKVOLUM": 251146617,
+    "OPEN_PRC": 229.975,
+    "TRD_STATUS": 1,
+    "LOW_1": 212.85,
+    "BLKCOUNT": 1940,
+    "ACVOL_UNS": 1148293132,
+    "VWAP_OPEN": 230.5943,
+    "VWAP_HIGH": 240.9093,
+    "VWAP_LOW": 216.3986,
+    "OPEN_BID": 230.94,
+    "BID_HIGH_1": 239.12,
+    "BID_LOW_1": 217.22,
+    "OPEN_ASK": 231,
+    "ASK_HIGH_1": 239.19,
+    "ASK_LOW_1": 217.24
+   },
+   {
+    "DATE": "2026-09-30",
+    "VWAP_VOL": 2044142673,
+    "TRNOVR_UNS": 529000771048,
+    "NAVALUE": null,
+    "NUM_MOVES": 54319565,
+    "TRDPRC_1": 228.38,
+    "HIGH_1": 234.76,
+    "VWAP": 229.9648,
+    "ASK": 228.29,
+    "BID": 228.28,
+    "SALTIM": 72000,
+    "ACVOL_DEC": 2367102375.68717,
+    "BLKVOLUM": 633439585,
+    "OPEN_PRC": 216.75,
+    "TRD_STATUS": 1,
+    "LOW_1": 208.93,
+    "BLKCOUNT": 3511,
+    "ACVOL_UNS": 2367102366,
+    "VWAP_OPEN": 217.7692,
+    "VWAP_HIGH": 231.9093,
+    "VWAP_LOW": 211.2181,
+    "OPEN_BID": 217.53,
+    "BID_HIGH_1": 230.28,
+    "BID_LOW_1": 210.89,
+    "OPEN_ASK": 217.54,
+    "ASK_HIGH_1": 230.41,
+    "ASK_LOW_1": 210.93
+   }
+  ]
+ }
+}

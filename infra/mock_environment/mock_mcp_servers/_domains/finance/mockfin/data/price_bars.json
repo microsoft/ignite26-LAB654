@@ -1,0 +1,87 @@
+{
+ "_about": "Recorded from a live session on 2026-10-16 (session-trajectory-20261016T085346Z). Exact daily bars that override generated ones (LSEG historical_pricing_summaries, NVDA.O, P1D).",
+ "daily": {
+  "NVDA": {
+   "2026-10-09": {
+    "open": 233.835,
+    "high": 233.92,
+    "low": 229.11,
+    "close": 229.28,
+    "volume": 84645559,
+    "vwap": 230.2135,
+    "bid": 229.33,
+    "ask": 229.36,
+    "turnover": 19491940512.0,
+    "num_moves": 1562804,
+    "blk_count": 124,
+    "blk_volume": 20509729,
+    "vwap_vol": 74503569,
+    "acvol_dec": 84645559.605683
+   },
+   "2026-10-12": {
+    "open": 228.73,
+    "high": 228.86,
+    "low": 224.9,
+    "close": 226.32,
+    "volume": 70690254,
+    "vwap": 226.4497,
+    "bid": 226.42,
+    "ask": 226.44,
+    "turnover": 16011166048.0,
+    "num_moves": 1765744,
+    "blk_count": 124,
+    "blk_volume": 14585074,
+    "vwap_vol": 63144773,
+    "acvol_dec": 70690254.26127
+   },
+   "2026-10-13": {
+    "open": 224.34,
+    "high": 228.64,
+    "low": 223.0602,
+    "close": 228.52,
+    "volume": 84036941,
+    "vwap": 226.5735,
+    "bid": 228.51,
+    "ask": 228.53,
+    "turnover": 19047315321.0,
+    "num_moves": 1578086,
+    "blk_count": 160,
+    "blk_volume": 20191824,
+    "vwap_vol": 73354069,
+    "acvol_dec": 84036941.512546
+   },
+   "2026-10-14": {
+    "open": 225.53,
+    "high": 226,
+    "low": 219.64,
+    "close": 221.3,
+    "volume": 118730083,
+    "vwap": 222.1919,
+    "bid": 221.5,
+    "ask": 221.51,
+    "turnover": 26384648024.0,
+    "num_moves": 2022889,
+    "blk_count": 204,
+    "blk_volume": 26382661,
+    "vwap_vol": 107489366,
+    "acvol_dec": 118730083.541466
+   },
+   "2026-10-15": {
+    "open": 215.3,
+    "high": 218.4692,
+    "low": 212.85,
+    "close": 217.23,
+    "volume": 127087854,
+    "vwap": 216.3986,
+    "bid": 217.22,
+    "ask": 217.24,
+    "turnover": 27535679421.0,
+    "num_moves": 2154526,
+    "blk_count": 246,
+    "blk_volume": 26157003,
+    "vwap_vol": 113249666,
+    "acvol_dec": 127087854.073346
+   }
+  }
+ }
+}

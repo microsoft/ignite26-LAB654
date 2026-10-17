@@ -1,0 +1,810 @@
+{
+ "_about": "Authored. Maps FactSet metric codes to the shared finance model. 'field' is a mockfin metric used for ANN/QTR values; 'expr' is an arithmetic formula over mockfin metrics (used when there's no field, and for LTM). 'kind' is flow (summed for LTM) or stock (period-end). Properties for codes seen live are in metrics_catalog_observed.json and take precedence.",
+ "metrics": {
+  "FF_GROSS_MGN": {
+   "model": {
+    "field": "gross_margin",
+    "expr": "100 * gross_income / revenue"
+   },
+   "aliases": [
+    "gross margin",
+    "gross profit margin"
+   ]
+  },
+  "FF_GROSS_INC": {
+   "model": {
+    "field": "gross_income",
+    "kind": "flow"
+   },
+   "aliases": [
+    "gross profit"
+   ]
+  },
+  "FF_OPER_MGN": {
+   "model": {
+    "field": "oper_margin",
+    "expr": "100 * oper_income / revenue"
+   },
+   "aliases": [
+    "operating margin",
+    "ebit margin"
+   ]
+  },
+  "FF_EBITDA_OPER_MGN": {
+   "model": {
+    "field": "ebitda_margin",
+    "expr": "100 * ebitda / revenue"
+   },
+   "aliases": [
+    "ebitda margin"
+   ]
+  },
+  "FF_FOR_NET_MGN": {
+   "model": {
+    "expr": "0.58 * net_margin_rep"
+   },
+   "aliases": [
+    "foreign income margin"
+   ]
+  },
+  "FF_ROIC": {
+   "model": {
+    "field": "roic"
+   },
+   "aliases": [
+    "roic",
+    "return on invested capital"
+   ]
+  },
+  "FF_CF_ROIC": {
+   "model": {
+    "expr": "100 * cfo / invested_capital"
+   },
+   "aliases": [
+    "cash flow roic"
+   ]
+  },
+  "FF_ROTC": {
+   "model": {
+    "expr": "100 * net_income_rep / (equity + total_debt)"
+   },
+   "aliases": [
+    "return on total capital"
+   ]
+  },
+  "FF_ROCE": {
+   "model": {
+    "field": "roe"
+   },
+   "aliases": [
+    "return on common equity"
+   ]
+  },
+  "FF_INVEST_CAP": {
+   "model": {
+    "field": "invested_capital",
+    "kind": "stock"
+   },
+   "aliases": [
+    "invested capital"
+   ]
+  },
+  "FF_SALES": {
+   "properties": {
+    "category": "INCOME_STATEMENT",
+    "description": "Net Sales or Revenues represents gross sales and other operating revenue less discounts, returns and allowances. It is the top line of the income statement and the base for margin and growth analysis.",
+    "metric": "FF_SALES",
+    "name": "Net Sales or Revenues",
+    "subcategory": "REVENUE",
+    "type": "metric",
+    "dataProduct": "fundamentals",
+    "factor": "1000000"
+   },
+   "model": {
+    "field": "revenue",
+    "kind": "flow"
+   },
+   "aliases": [
+    "revenue",
+    "sales",
+    "net sales",
+    "total revenue",
+    "top line"
+   ]
+  },
+  "FF_COGS": {
+   "properties": {
+    "category": "INCOME_STATEMENT",
+    "description": "Cost of Goods Sold excluding depreciation represents the direct costs attributable to producing the goods or services sold during the period.",
+    "metric": "FF_COGS",
+    "name": "Cost of Goods Sold",
+    "subcategory": "EXPENSES",
+    "type": "metric",
+    "dataProduct": "fundamentals",
+    "factor": "1000000"
+   },
+   "model": {
+    "field": "cogs",
+    "kind": "flow"
+   },
+   "aliases": [
+    "cogs",
+    "cost of sales"
+   ]
+  },
+  "FF_OPER_INC": {
+   "properties": {
+    "category": "INCOME_STATEMENT",
+    "description": "Operating Income represents revenue less cost of goods sold, selling, general and administrative expense, research and development and depreciation. It measures profit from core operations before interest and taxes.",
+    "metric": "FF_OPER_INC",
+    "name": "Operating Income",
+    "subcategory": "OPERATING_INCOME",
+    "type": "metric",
+    "dataProduct": "fundamentals",
+    "factor": "1000000"
+   },
+   "model": {
+    "field": "oper_income",
+    "kind": "flow"
+   },
+   "aliases": [
+    "operating income",
+    "ebit",
+    "operating profit"
+   ]
+  },
+  "FF_EBITDA_OPER": {
+   "properties": {
+    "category": "INCOME_STATEMENT",
+    "description": "EBITDA (Operating) is operating income plus depreciation and amortization. It approximates cash operating profit and is the usual denominator for EV/EBITDA.",
+    "metric": "FF_EBITDA_OPER",
+    "name": "EBITDA (Operating)",
+    "subcategory": "OPERATING_INCOME",
+    "type": "metric",
+    "dataProduct": "fundamentals",
+    "factor": "1000000"
+   },
+   "model": {
+    "field": "ebitda",
+    "kind": "flow"
+   },
+   "aliases": [
+    "ebitda",
+    "operating ebitda"
+   ]
+  },
+  "FF_DEP_AMORT_EXP": {
+   "properties": {
+    "category": "INCOME_STATEMENT",
+    "description": "Depreciation, Depletion and Amortization represents the non-cash allocation of the cost of tangible and intangible assets over their useful lives.",
+    "metric": "FF_DEP_AMORT_EXP",
+    "name": "Depreciation, Depletion and Amortization",
+    "subcategory": "EXPENSES",
+    "type": "metric",
+    "dataProduct": "fundamentals",
+    "factor": "1000000"
+   },
+   "model": {
+    "field": "dda",
+    "kind": "flow"
+   },
+   "aliases": [
+    "depreciation",
+    "amortization",
+    "d&a"
+   ]
+  },
+  "FF_NET_INC": {
+   "properties": {
+    "category": "INCOME_STATEMENT",
+    "description": "Net Income represents income after all operating and non-operating income and expenses, reserves, income taxes, minority interest and extraordinary items, as reported.",
+    "metric": "FF_NET_INC",
+    "name": "Net Income",
+    "subcategory": "NET_INCOME",
+    "type": "metric",
+    "dataProduct": "fundamentals",
+    "factor": "1000000"
+   },
+   "model": {
+    "field": "net_income_rep",
+    "kind": "flow"
+   },
+   "aliases": [
+    "net income",
+    "net profit",
+    "earnings"
+   ]
+  },
+  "FF_NET_MGN": {
+   "properties": {
+    "category": "RATIOS",
+    "description": "Net Margin is reported net income as a percentage of net sales or revenues. It shows how much of each unit of revenue becomes profit for shareholders.",
+    "metric": "FF_NET_MGN",
+    "name": "Net Margin",
+    "subcategory": "PROFITABILITY",
+    "type": "metric",
+    "dataProduct": "fundamentals"
+   },
+   "model": {
+    "field": "net_margin_rep",
+    "expr": "100 * net_income_rep / revenue"
+   },
+   "aliases": [
+    "net margin",
+    "net profit margin"
+   ]
+  },
+  "FF_EPS_DIL": {
+   "properties": {
+    "category": "INCOME_STATEMENT",
+    "description": "Diluted Earnings per Share is reported net income divided by diluted weighted average shares outstanding.",
+    "metric": "FF_EPS_DIL",
+    "name": "EPS - Diluted",
+    "subcategory": "PER_SHARE",
+    "type": "metric",
+    "dataProduct": "fundamentals"
+   },
+   "model": {
+    "field": "eps_rep",
+    "kind": "flow"
+   },
+   "aliases": [
+    "eps",
+    "diluted eps",
+    "earnings per share"
+   ]
+  },
+  "FF_DPS": {
+   "properties": {
+    "category": "INCOME_STATEMENT",
+    "description": "Dividends per Share represents the total dividends declared per common share during the period.",
+    "metric": "FF_DPS",
+    "name": "Dividends per Share",
+    "subcategory": "PER_SHARE",
+    "type": "metric",
+    "dataProduct": "fundamentals"
+   },
+   "model": {
+    "field": "dps",
+    "kind": "flow"
+   },
+   "aliases": [
+    "dividend per share",
+    "dps",
+    "dividends"
+   ]
+  },
+  "FF_COM_SHS_OUT_EPS_DIL": {
+   "properties": {
+    "category": "INCOME_STATEMENT",
+    "description": "Diluted weighted average common shares outstanding used to compute diluted EPS, in millions.",
+    "metric": "FF_COM_SHS_OUT_EPS_DIL",
+    "name": "Shares Outstanding - Diluted",
+    "subcategory": "PER_SHARE",
+    "type": "metric",
+    "dataProduct": "fundamentals",
+    "factor": "1000000"
+   },
+   "model": {
+    "field": "shares",
+    "kind": "stock"
+   },
+   "aliases": [
+    "diluted shares",
+    "shares outstanding",
+    "share count"
+   ]
+  },
+  "FF_CASH_ST": {
+   "properties": {
+    "category": "BALANCE_SHEET",
+    "description": "Cash and Short Term Investments represents cash on hand, deposits and marketable securities readily convertible to cash.",
+    "metric": "FF_CASH_ST",
+    "name": "Cash and Short Term Investments",
+    "subcategory": "ASSETS",
+    "type": "metric",
+    "dataProduct": "fundamentals",
+    "factor": "1000000"
+   },
+   "model": {
+    "field": "cash",
+    "kind": "stock"
+   },
+   "aliases": [
+    "cash",
+    "cash and equivalents",
+    "liquidity"
+   ]
+  },
+  "FF_DEBT": {
+   "properties": {
+    "category": "BALANCE_SHEET",
+    "description": "Total Debt represents all interest-bearing and capitalized lease obligations, short and long term.",
+    "metric": "FF_DEBT",
+    "name": "Total Debt",
+    "subcategory": "LIABILITIES",
+    "type": "metric",
+    "dataProduct": "fundamentals",
+    "factor": "1000000"
+   },
+   "model": {
+    "field": "total_debt",
+    "kind": "stock"
+   },
+   "aliases": [
+    "debt",
+    "total debt",
+    "borrowings"
+   ]
+  },
+  "FF_NET_DEBT": {
+   "properties": {
+    "category": "BALANCE_SHEET",
+    "description": "Net Debt is total debt less cash and short term investments. A negative value indicates a net cash position.",
+    "metric": "FF_NET_DEBT",
+    "name": "Net Debt",
+    "subcategory": "LIABILITIES",
+    "type": "metric",
+    "dataProduct": "fundamentals",
+    "factor": "1000000"
+   },
+   "model": {
+    "field": "net_debt",
+    "kind": "stock"
+   },
+   "aliases": [
+    "net debt",
+    "net cash"
+   ]
+  },
+  "FF_COM_EQ": {
+   "properties": {
+    "category": "BALANCE_SHEET",
+    "description": "Common Equity represents common shareholders' investment in the company, including retained earnings.",
+    "metric": "FF_COM_EQ",
+    "name": "Common Equity",
+    "subcategory": "EQUITY",
+    "type": "metric",
+    "dataProduct": "fundamentals",
+    "factor": "1000000"
+   },
+   "model": {
+    "field": "equity",
+    "kind": "stock"
+   },
+   "aliases": [
+    "shareholders equity",
+    "book value",
+    "equity"
+   ]
+  },
+  "FF_ASSETS": {
+   "properties": {
+    "category": "BALANCE_SHEET",
+    "description": "Total Assets represents the sum of current and long term assets owned by the company.",
+    "metric": "FF_ASSETS",
+    "name": "Total Assets",
+    "subcategory": "ASSETS",
+    "type": "metric",
+    "dataProduct": "fundamentals",
+    "factor": "1000000"
+   },
+   "model": {
+    "field": "total_assets",
+    "kind": "stock"
+   },
+   "aliases": [
+    "total assets",
+    "assets"
+   ]
+  },
+  "FF_BPS": {
+   "properties": {
+    "category": "BALANCE_SHEET",
+    "description": "Book Value per Share is common equity divided by shares outstanding.",
+    "metric": "FF_BPS",
+    "name": "Book Value per Share",
+    "subcategory": "PER_SHARE",
+    "type": "metric",
+    "dataProduct": "fundamentals"
+   },
+   "model": {
+    "field": "bvps",
+    "kind": "stock"
+   },
+   "aliases": [
+    "book value per share",
+    "bvps"
+   ]
+  },
+  "FF_ROE": {
+   "properties": {
+    "category": "RATIOS",
+    "description": "Return on Average Common Equity is reported net income as a percentage of average common equity. It measures profitability relative to shareholder capital.",
+    "metric": "FF_ROE",
+    "name": "Return on Average Common Equity",
+    "subcategory": "PROFITABILITY",
+    "type": "metric",
+    "dataProduct": "fundamentals"
+   },
+   "model": {
+    "field": "roe"
+   },
+   "aliases": [
+    "roe",
+    "return on equity"
+   ]
+  },
+  "FF_ROA": {
+   "properties": {
+    "category": "RATIOS",
+    "description": "Return on Average Assets is reported net income as a percentage of average total assets.",
+    "metric": "FF_ROA",
+    "name": "Return on Average Assets",
+    "subcategory": "PROFITABILITY",
+    "type": "metric",
+    "dataProduct": "fundamentals"
+   },
+   "model": {
+    "field": "roa"
+   },
+   "aliases": [
+    "roa",
+    "return on assets"
+   ]
+  },
+  "FF_CAPEX": {
+   "properties": {
+    "category": "CASH_FLOW",
+    "description": "Capital Expenditures represents funds used to acquire or upgrade fixed assets such as property, plant and equipment.",
+    "metric": "FF_CAPEX",
+    "name": "Capital Expenditures",
+    "subcategory": "INVESTING",
+    "type": "metric",
+    "dataProduct": "fundamentals",
+    "factor": "1000000"
+   },
+   "model": {
+    "field": "capex",
+    "kind": "flow"
+   },
+   "aliases": [
+    "capex",
+    "capital expenditure",
+    "capital spending"
+   ]
+  },
+  "FF_OPER_CF": {
+   "properties": {
+    "category": "CASH_FLOW",
+    "description": "Net Operating Cash Flow represents cash generated by operating activities after working capital changes.",
+    "metric": "FF_OPER_CF",
+    "name": "Net Operating Cash Flow",
+    "subcategory": "OPERATING",
+    "type": "metric",
+    "dataProduct": "fundamentals",
+    "factor": "1000000"
+   },
+   "model": {
+    "field": "cfo",
+    "kind": "flow"
+   },
+   "aliases": [
+    "operating cash flow",
+    "cash from operations",
+    "cfo"
+   ]
+  },
+  "FF_FREE_CF": {
+   "properties": {
+    "category": "CASH_FLOW",
+    "description": "Free Cash Flow is net operating cash flow less capital expenditures. It is the cash available to providers of capital.",
+    "metric": "FF_FREE_CF",
+    "name": "Free Cash Flow",
+    "subcategory": "FREE_CASH_FLOW",
+    "type": "metric",
+    "dataProduct": "fundamentals",
+    "factor": "1000000"
+   },
+   "model": {
+    "field": "fcf",
+    "kind": "flow"
+   },
+   "aliases": [
+    "free cash flow",
+    "fcf"
+   ]
+  },
+  "FF_DEBT_EQ": {
+   "properties": {
+    "category": "RATIOS",
+    "description": "Total Debt to Common Equity is total debt as a percentage of common equity. It measures financial leverage.",
+    "metric": "FF_DEBT_EQ",
+    "name": "Total Debt to Common Equity",
+    "subcategory": "LEVERAGE",
+    "type": "metric",
+    "dataProduct": "fundamentals"
+   },
+   "model": {
+    "expr": "100 * total_debt / equity"
+   },
+   "aliases": [
+    "debt to equity",
+    "leverage",
+    "gearing"
+   ]
+  },
+  "FF_NET_DEBT_EBITDA": {
+   "properties": {
+    "category": "RATIOS",
+    "description": "Net Debt to EBITDA is net debt divided by operating EBITDA, a common credit leverage multiple.",
+    "metric": "FF_NET_DEBT_EBITDA",
+    "name": "Net Debt to EBITDA",
+    "subcategory": "LEVERAGE",
+    "type": "metric",
+    "dataProduct": "fundamentals"
+   },
+   "model": {
+    "expr": "net_debt / ebitda"
+   },
+   "aliases": [
+    "net debt to ebitda",
+    "leverage multiple"
+   ]
+  },
+  "FF_FCF_MGN": {
+   "properties": {
+    "category": "RATIOS",
+    "description": "Free Cash Flow Margin is free cash flow as a percentage of net sales or revenues.",
+    "metric": "FF_FCF_MGN",
+    "name": "Free Cash Flow Margin",
+    "subcategory": "PROFITABILITY",
+    "type": "metric",
+    "dataProduct": "fundamentals"
+   },
+   "model": {
+    "expr": "100 * fcf / revenue"
+   },
+   "aliases": [
+    "fcf margin",
+    "free cash flow margin"
+   ]
+  },
+  "EPS": {
+   "properties": {
+    "category": "INCOME_STATEMENT",
+    "description": "Consensus earnings per share on the broker-preferred (typically adjusted, diluted) basis.",
+    "metric": "EPS",
+    "name": "Earnings Per Share",
+    "subcategory": "PER_SHARE",
+    "type": "metric",
+    "dataProduct": "estimates"
+   },
+   "model": {
+    "field": "eps",
+    "kind": "flow"
+   },
+   "aliases": [
+    "eps",
+    "earnings per share",
+    "adjusted eps"
+   ]
+  },
+  "SALES": {
+   "properties": {
+    "category": "INCOME_STATEMENT",
+    "description": "Consensus net sales or revenues, in millions of the estimate currency.",
+    "metric": "SALES",
+    "name": "Sales",
+    "subcategory": "REVENUE",
+    "type": "metric",
+    "dataProduct": "estimates",
+    "factor": "1000000"
+   },
+   "model": {
+    "field": "revenue",
+    "kind": "flow"
+   },
+   "aliases": [
+    "revenue",
+    "sales",
+    "top line"
+   ]
+  },
+  "EBITDA": {
+   "properties": {
+    "category": "INCOME_STATEMENT",
+    "description": "Consensus earnings before interest, taxes, depreciation and amortization, in millions.",
+    "metric": "EBITDA",
+    "name": "EBITDA",
+    "subcategory": "OPERATING_INCOME",
+    "type": "metric",
+    "dataProduct": "estimates",
+    "factor": "1000000"
+   },
+   "model": {
+    "field": "ebitda",
+    "kind": "flow"
+   },
+   "aliases": [
+    "ebitda"
+   ]
+  },
+  "EBIT": {
+   "properties": {
+    "category": "INCOME_STATEMENT",
+    "description": "Consensus earnings before interest and taxes (operating income), in millions.",
+    "metric": "EBIT",
+    "name": "EBIT",
+    "subcategory": "OPERATING_INCOME",
+    "type": "metric",
+    "dataProduct": "estimates",
+    "factor": "1000000"
+   },
+   "model": {
+    "field": "oper_income",
+    "kind": "flow"
+   },
+   "aliases": [
+    "ebit",
+    "operating income",
+    "operating profit"
+   ]
+  },
+  "NET_INC": {
+   "properties": {
+    "category": "INCOME_STATEMENT",
+    "description": "Consensus net income on the broker-preferred basis, in millions.",
+    "metric": "NET_INC",
+    "name": "Net Income",
+    "subcategory": "NET_INCOME",
+    "type": "metric",
+    "dataProduct": "estimates",
+    "factor": "1000000"
+   },
+   "model": {
+    "field": "net_income",
+    "kind": "flow"
+   },
+   "aliases": [
+    "net income",
+    "net profit",
+    "earnings"
+   ]
+  },
+  "GROSS_MARGIN": {
+   "properties": {
+    "category": "RATIOS",
+    "description": "Consensus gross margin as a percentage of sales.",
+    "metric": "GROSS_MARGIN",
+    "name": "Gross Margin",
+    "subcategory": "PROFITABILITY",
+    "type": "metric",
+    "dataProduct": "estimates"
+   },
+   "model": {
+    "field": "gross_margin"
+   },
+   "aliases": [
+    "gross margin"
+   ]
+  },
+  "DPS": {
+   "properties": {
+    "category": "INCOME_STATEMENT",
+    "description": "Consensus dividends per share.",
+    "metric": "DPS",
+    "name": "Dividends Per Share",
+    "subcategory": "PER_SHARE",
+    "type": "metric",
+    "dataProduct": "estimates"
+   },
+   "model": {
+    "field": "dps",
+    "kind": "flow"
+   },
+   "aliases": [
+    "dividend",
+    "dps",
+    "dividends per share"
+   ]
+  },
+  "CAPEX": {
+   "properties": {
+    "category": "CASH_FLOW",
+    "description": "Consensus capital expenditure, in millions.",
+    "metric": "CAPEX",
+    "name": "Capital Expenditure",
+    "subcategory": "INVESTING",
+    "type": "metric",
+    "dataProduct": "estimates",
+    "factor": "1000000"
+   },
+   "model": {
+    "field": "capex",
+    "kind": "flow"
+   },
+   "aliases": [
+    "capex",
+    "capital expenditure"
+   ]
+  },
+  "CFO": {
+   "properties": {
+    "category": "CASH_FLOW",
+    "description": "Consensus cash flow from operations, in millions.",
+    "metric": "CFO",
+    "name": "Cash Flow From Operations",
+    "subcategory": "OPERATING",
+    "type": "metric",
+    "dataProduct": "estimates",
+    "factor": "1000000"
+   },
+   "model": {
+    "field": "cfo",
+    "kind": "flow"
+   },
+   "aliases": [
+    "operating cash flow",
+    "cfo"
+   ]
+  },
+  "FCF": {
+   "properties": {
+    "category": "CASH_FLOW",
+    "description": "Consensus free cash flow, in millions.",
+    "metric": "FCF",
+    "name": "Free Cash Flow",
+    "subcategory": "FREE_CASH_FLOW",
+    "type": "metric",
+    "dataProduct": "estimates",
+    "factor": "1000000"
+   },
+   "model": {
+    "field": "fcf",
+    "kind": "flow"
+   },
+   "aliases": [
+    "free cash flow",
+    "fcf"
+   ]
+  },
+  "NET_DEBT": {
+   "properties": {
+    "category": "BALANCE_SHEET",
+    "description": "Consensus net debt at fiscal period end, in millions.",
+    "metric": "NET_DEBT",
+    "name": "Net Debt",
+    "subcategory": "LIABILITIES",
+    "type": "metric",
+    "dataProduct": "estimates",
+    "factor": "1000000"
+   },
+   "model": {
+    "field": "net_debt",
+    "kind": "stock"
+   },
+   "aliases": [
+    "net debt"
+   ]
+  },
+  "ROE": {
+   "properties": {
+    "category": "RATIOS",
+    "description": "Consensus return on equity, percent.",
+    "metric": "ROE",
+    "name": "Return on Equity",
+    "subcategory": "PROFITABILITY",
+    "type": "metric",
+    "dataProduct": "estimates"
+   },
+   "model": {
+    "field": "roe"
+   },
+   "aliases": [
+    "roe",
+    "return on equity"
+   ]
+  }
+ }
+}

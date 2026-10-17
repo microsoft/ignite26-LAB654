@@ -1,45 +1,34 @@
 # FactSet mock server
 
-Mock of the FactSet MCP server for the [finance scenario](../../../../docs/scenarios/finance/scenario.md). The server isn't built yet. This README specifies the data it must serve; `seed_files/` will hold that data.
-
-Match tool names, descriptions and input schemas to the real FactSet MCP server when the server is built. The groupings below describe data, not tool names.
+Mock of the FactSet MCP server for the [finance scenario](../../../../docs/scenarios/finance/scenario.md). See the [mock servers README](../README.md) for the shared architecture and how to run, test and deploy.
 
 ## Prompts it powers
 
 | Prompt | What Copilot asks FactSet for |
 |--------|-------------------------------|
-| 1b | How profitable NVIDIA, AMD and Broadcom have been over the past 5 years, using gross margin and return on invested capital (ROIC) |
+| 1b | 5-year gross margin and ROIC for NVIDIA, AMD and Broadcom |
 | 1c | Indirectly: the one-line verdict draws on 1b |
 
-## Data required
+## Tools
 
-Company coverage: **NVIDIA (NVDA), AMD (AMD), Broadcom (AVGO)**.
+| Tool | Serves | In the trace |
+|------|--------|--------------|
+| `FactSet_Metrics` | Metric-code search for natural-language concepts | Yes |
+| `FactSet_EntityReference` | Entity and security ids, profile, headquarters, classification | Yes |
+| `FactSet_Fundamentals` | Reported fundamentals by fiscal period (`ANN`, `QTR`, `LTM`, …) | Yes |
+| `FactSet_RBICS` | Industry classification and revenue focus | No |
+| `FactSet_EstimatesConsensus` | Broker consensus for one metric per call | No |
+| `FactSet_GlobalPrices` | End-of-day prices and volume, with split adjustment and currency conversion | No |
+| `FactSet_CompanyScreener` | Always returns the "not entitled" error, as an unentitled real account does | No |
 
-### Company identifiers
+## Data
 
-Name, ticker, exchange and FactSet identifier for each company, so a request by name or ticker resolves.
+- `seed_files/`: the metric catalogue, entity reference records, RBICS classifications and corporate actions, plus the fundamentals and metric search results recorded in the trace.
+- `_domains/finance`: the shared company model, so FactSet figures agree with LSEG and Moody's.
 
-### Profitability history (1b)
+## Known differences from the live server
 
-Five fiscal years per company, annual values:
-
-| Field | Notes |
-|-------|-------|
-| Fiscal year label and end date | The three companies have different year-ends (NVIDIA late January, AMD December, Broadcom early November). Keep each company's own fiscal years and label them. |
-| Revenue | USD, for context |
-| Gross margin % | Gross profit ÷ revenue |
-| ROIC % | State the definition used (e.g. NOPAT ÷ average invested capital) and use it for all three companies |
-| Inputs behind the ratios | Optional: gross profit, NOPAT, invested capital, so the ratios can be checked |
-
-Optional: a 5-year average or median per company, which lets Copilot rank them in one step.
-
-## Consistency rules
-
-- One **as-of date** for all FactSet data, on or before `ASK_DATE` in `tools/scenarios/finance/__init__.py`.
-- The same five-year window and the same ROIC definition for every company.
-- NVIDIA revenue here should match LSEG's historical revenue for the same fiscal years, so answers don't contradict each other.
-- Every record carries a source label and as-of date for citations.
-
-## Open questions
-
-- Real published figures or clearly synthetic ones? Real figures need a licensing check; synthetic ones should be labelled as such.
+- Tools not called in the trace follow FactSet's public descriptions; their schemas and output may differ from the live server.
+- Currency conversion uses a fixed FX table.
+- On weekly or monthly price bars, `UNSPLIT` adjustment uses the bar's end date.
+- Data outside what the trace recorded is synthetic.

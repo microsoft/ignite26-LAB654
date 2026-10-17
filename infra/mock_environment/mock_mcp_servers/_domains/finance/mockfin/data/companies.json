@@ -1,0 +1,1276 @@
+{
+ "_about": "Company universe shared by the LSEG, FactSet and Moody's mock servers. Identifiers listed in each company's 'synthetic' array are made up for the lab; everything else is the public identifier. 'model' and 'price' parameters drive deterministic generation when a request goes beyond the seeded data. 'financials.anchors' are keyed by fiscal-year label (the calendar year most of the fiscal year falls in; NVDA 2025 = FYE Jan 2026). Revenue/EBITDA/net income/net debt are USD millions; margins and ROIC are percentages. NVDA values and the AMD/AVGO gross-margin and ROIC values come from the recorded trace; other history is approximate public data; FY2025+ values for non-NVDA companies and all 'moodys' ratings except NVDA's are synthetic.",
+ "companies": [
+  {
+   "ticker": "NVDA",
+   "name": "NVIDIA Corporation",
+   "short_name": "Nvidia",
+   "aliases": [
+    "nvidia",
+    "nvidia corp",
+    "nvidia corporation"
+   ],
+   "exchange": "NASDAQ",
+   "ric": "NVDA.O",
+   "factset_id": "NVDA-US",
+   "fsym_security_id": "K7TPSX-R",
+   "fsym_entity_id": "00208X-E",
+   "isin": "US67066G1040",
+   "cusip": "67066G104",
+   "sedol": "2379504",
+   "org_permid": 4295914405,
+   "ibes_estpermid": 30064850531,
+   "qa_code": 38665,
+   "synthetic": [],
+   "fiscal": {
+    "fye_month": 1,
+    "rule": "last_weekday",
+    "weekday": "SUN"
+   },
+   "coverage": {
+    "analysts": 64,
+    "dispersion": 1.0
+   },
+   "model": {
+    "rev_growth": [
+     0.04,
+     0.18
+    ],
+    "dda_ratio": 0.012,
+    "capex_ratio": 0.018,
+    "cfo_margin": 0.48,
+    "debt_ratio": 0.04,
+    "capital_intensity": 0.42,
+    "tax_rate": 0.15,
+    "rep_gap": [
+     0.0,
+     0.06
+    ],
+    "cash_ratio": 0.35
+   },
+   "price": {
+    "vol": 0.029,
+    "volume": 180000000,
+    "anchors": {
+     "2019-12-31": 5.88,
+     "2020-12-31": 13.05,
+     "2021-12-31": 29.41,
+     "2022-12-30": 14.61,
+     "2023-12-29": 49.52,
+     "2024-12-31": 134.29,
+     "2025-06-30": 157.99,
+     "2025-12-31": 186.5,
+     "2026-06-30": 205.0,
+     "2026-08-31": 216.4,
+     "2026-09-03": 210.5,
+     "2026-09-24": 233.1,
+     "2026-09-30": 228.38,
+     "2026-10-02": 236.8,
+     "2026-10-06": 240.9,
+     "2026-10-09": 229.28,
+     "2026-10-12": 226.32,
+     "2026-10-13": 228.52,
+     "2026-10-14": 221.3,
+     "2026-10-15": 217.23
+    }
+   },
+   "financials": {
+    "anchors": {
+     "revenue": {
+      "2019": 10918,
+      "2020": 16675,
+      "2021": 26914,
+      "2022": 26974,
+      "2023": 60922,
+      "2024": 130497,
+      "2025": 215938,
+      "2026": 410612.21616,
+      "2027": 698339.76635
+     },
+     "gross_margin": {
+      "2019": 62.0,
+      "2020": 62.3448275862069,
+      "2021": 64.9290332169131,
+      "2022": 56.9288944909913,
+      "2023": 72.717573290437,
+      "2024": 74.9886970581699,
+      "2025": 71.0680843575471,
+      "2026": 73.5,
+      "2027": 74.0
+     },
+     "oper_margin": {
+      "2019": 25.9,
+      "2020": 27.2,
+      "2021": 37.3,
+      "2022": 15.7,
+      "2023": 54.1,
+      "2024": 62.4,
+      "2025": 60.4,
+      "2026": 62.0,
+      "2027": 62.5
+     },
+     "net_margin": {
+      "2019": 35.0,
+      "2020": 38.5,
+      "2021": 41.83,
+      "2022": 31.01,
+      "2023": 53.04,
+      "2024": 56.91,
+      "2025": 54.18,
+      "2026": 54.96,
+      "2027": 54.79
+     },
+     "shares": {
+      "2019": 24900,
+      "2020": 25100,
+      "2021": 25358,
+      "2022": 25048,
+      "2023": 24932,
+      "2024": 24838,
+      "2025": 24528,
+      "2026": 24292,
+      "2027": 24168
+     },
+     "dps": {
+      "2019": 0.016,
+      "2020": 0.016,
+      "2021": 0.016,
+      "2022": 0.016,
+      "2023": 0.016,
+      "2024": 0.034,
+      "2025": 0.04,
+      "2026": 0.76133,
+      "2027": 1.07194
+     },
+     "roic": {
+      "2020": 22.6527570789866,
+      "2021": 31.5649781518045,
+      "2022": 12.303358918386,
+      "2023": 69.8083554221107,
+      "2024": 102.745567969549,
+      "2025": 93.5673289355252,
+      "2026": 95.0,
+      "2027": 92.0
+     },
+     "ebitda": {
+      "2021": 13864,
+      "2022": 10584,
+      "2023": 38642,
+      "2024": 88653,
+      "2025": 140143,
+      "2026": 274845.08956,
+      "2027": 462443.83919
+     },
+     "eps": {
+      "2021": 0.444,
+      "2022": 0.334,
+      "2023": 1.296,
+      "2024": 2.99,
+      "2025": 4.77,
+      "2026": 9.28925,
+      "2027": 15.83176
+     },
+     "eps_rep": {
+      "2021": 0.385,
+      "2022": 0.174,
+      "2023": 1.193,
+      "2024": 2.94,
+      "2025": 4.9
+     },
+     "net_income": {
+      "2021": 11259,
+      "2022": 8366,
+      "2023": 32312,
+      "2024": 74265,
+      "2025": 116997,
+      "2026": 225654.41082,
+      "2027": 382614.38033
+     },
+     "net_debt": {
+      "2021": -10262,
+      "2022": -2343,
+      "2023": 2429,
+      "2024": -34747,
+      "2025": -54088,
+      "2026": -102521.74477,
+      "2027": -302894.38114
+     },
+     "oper_income": {
+      "2026": 150600
+     }
+    },
+    "quarterly": {
+     "2026Q1": {
+      "revenue": 81615,
+      "eps": 1.87
+     },
+     "2026Q2": {
+      "revenue": 96221,
+      "eps": 2.22
+     },
+     "2026Q3": {
+      "revenue": 109172.7704,
+      "eps": 2.47681
+     },
+     "2026Q4": {
+      "revenue": 124943.4041,
+      "eps": 2.74893
+     }
+    },
+    "consensus": {
+     "FY2026": {
+      "eps": 9.28925,
+      "revenue": 410612.21616,
+      "ebitda": 274845.08956,
+      "dps": 0.76133,
+      "net_debt": -102521.74477,
+      "net_income": 225654.41082,
+      "oper_income": 150600
+     },
+     "FY2027": {
+      "eps": 15.83176,
+      "revenue": 698339.76635,
+      "ebitda": 462443.83919,
+      "dps": 1.07194,
+      "net_debt": -302894.38114,
+      "net_income": 382614.38033
+     },
+     "2026Q2": {
+      "eps": 2.09644,
+      "revenue": 92165.33828
+     },
+     "2026Q3": {
+      "eps": 2.47681,
+      "revenue": 109172.7704
+     },
+     "2026Q4": {
+      "eps": 2.74893,
+      "revenue": 124943.4041
+     }
+    },
+    "report_dates": {
+     "annual": {
+      "2020": "2021-02-24T16:20",
+      "2021": "2022-02-16T16:24",
+      "2022": "2023-02-22T16:50",
+      "2023": "2024-02-21T16:22",
+      "2024": "2025-02-26T16:20",
+      "2025": "2026-02-25T16:32"
+     },
+     "quarterly": {
+      "2026Q1": "2026-05-20T16:20",
+      "2026Q2": "2026-08-26T16:22"
+     }
+    }
+   },
+   "rbics": {
+    "economy": "Technology",
+    "sector": "Electronic Components and Manufacturing",
+    "subsector": "Semiconductor Manufacturing",
+    "industry_group": "Specialized Semiconductors"
+   },
+   "moodys": {
+    "org_id": 600053279,
+    "orbis_id": "001736166",
+    "bvd_id": "US943177549",
+    "rating": "Aa1",
+    "outlook": "Positive",
+    "synthetic": false
+   }
+  },
+  {
+   "ticker": "AMD",
+   "name": "Advanced Micro Devices, Inc.",
+   "short_name": "AMD",
+   "aliases": [
+    "amd",
+    "advanced micro devices"
+   ],
+   "exchange": "NASDAQ",
+   "ric": "AMD.O",
+   "factset_id": "AMD-US",
+   "fsym_security_id": "RT66YK-R",
+   "fsym_entity_id": "000BK7-E",
+   "isin": "US0079031078",
+   "cusip": "007903107",
+   "sedol": "2007849",
+   "org_permid": 4295903297,
+   "ibes_estpermid": 30064817421,
+   "qa_code": 1204,
+   "synthetic": [
+    "ibes_estpermid",
+    "qa_code"
+   ],
+   "fiscal": {
+    "fye_month": 12,
+    "rule": "last_weekday",
+    "weekday": "SAT"
+   },
+   "coverage": {
+    "analysts": 48,
+    "dispersion": 1.15
+   },
+   "model": {
+    "rev_growth": [
+     0.06,
+     0.2
+    ],
+    "dda_ratio": 0.11,
+    "capex_ratio": 0.03,
+    "cfo_margin": 0.2,
+    "debt_ratio": 0.06,
+    "capital_intensity": 1.95,
+    "tax_rate": 0.13,
+    "rep_gap": [
+     0.25,
+     0.55
+    ],
+    "cash_ratio": 0.2
+   },
+   "price": {
+    "vol": 0.032,
+    "volume": 52000000,
+    "anchors": {
+     "2019-12-31": 45.86,
+     "2020-12-31": 91.71,
+     "2021-12-31": 143.9,
+     "2022-12-30": 64.77,
+     "2023-12-29": 147.41,
+     "2024-12-31": 120.79,
+     "2025-06-30": 141.9,
+     "2025-12-31": 178.0,
+     "2026-06-30": 172.0,
+     "2026-10-15": 168.4
+    }
+   },
+   "financials": {
+    "anchors": {
+     "revenue": {
+      "2021": 16434,
+      "2022": 23601,
+      "2023": 22680,
+      "2024": 25785,
+      "2025": 33500
+     },
+     "gross_margin": {
+      "2021": 48.2475355969332,
+      "2022": 36.0281344010847,
+      "2023": 37.879188712522,
+      "2024": 43.7347294938918,
+      "2025": 45.9915124570571
+     },
+     "oper_margin": {
+      "2021": 22.2,
+      "2022": 5.4,
+      "2023": 1.8,
+      "2024": 7.4,
+      "2025": 10.0
+     },
+     "net_margin": {
+      "2021": 20.9,
+      "2022": 24.2,
+      "2023": 19.0,
+      "2024": 21.1,
+      "2025": 20.0
+     },
+     "shares": {
+      "2021": 1229,
+      "2022": 1571,
+      "2023": 1625,
+      "2024": 1637,
+      "2025": 1640
+     },
+     "dps": {
+      "2021": 0.0,
+      "2022": 0.0,
+      "2023": 0.0,
+      "2024": 0.0,
+      "2025": 0.0
+     },
+     "roic": {
+      "2021": 44.4913465597298,
+      "2022": 4.03305886127194,
+      "2023": 1.47550472109678,
+      "2024": 2.78314846850514,
+      "2025": 6.78955404287805
+     }
+    },
+    "quarterly": {},
+    "consensus": {},
+    "report_dates": {
+     "annual": {
+      "2021": "2022-02-01T16:15",
+      "2022": "2023-01-31T16:15",
+      "2023": "2024-01-30T16:15",
+      "2024": "2025-02-04T16:15",
+      "2025": "2026-02-03T16:15"
+     }
+    }
+   },
+   "rbics": {
+    "economy": "Technology",
+    "sector": "Electronic Components and Manufacturing",
+    "subsector": "Semiconductor Manufacturing",
+    "industry_group": "Specialized Semiconductors"
+   },
+   "moodys": {
+    "org_id": 600011093,
+    "orbis_id": "001510118",
+    "bvd_id": "US941692300",
+    "rating": "A1",
+    "outlook": "Stable",
+    "synthetic": true
+   }
+  },
+  {
+   "ticker": "AVGO",
+   "name": "Broadcom Inc.",
+   "short_name": "Broadcom",
+   "aliases": [
+    "broadcom",
+    "broadcom inc"
+   ],
+   "exchange": "NASDAQ",
+   "ric": "AVGO.O",
+   "factset_id": "AVGO-US",
+   "fsym_security_id": "B81TLL-R",
+   "fsym_entity_id": "0JCLYY-E",
+   "isin": "US11135F1012",
+   "cusip": "11135F101",
+   "sedol": "BDZ78H9",
+   "org_permid": 5060689053,
+   "ibes_estpermid": 30064839970,
+   "qa_code": 302511,
+   "synthetic": [
+    "ibes_estpermid",
+    "qa_code"
+   ],
+   "fiscal": {
+    "fye_month": 10,
+    "rule": "nearest_weekday",
+    "weekday": "SUN"
+   },
+   "coverage": {
+    "analysts": 42,
+    "dispersion": 0.9
+   },
+   "model": {
+    "rev_growth": [
+     0.06,
+     0.18
+    ],
+    "dda_ratio": 0.13,
+    "capex_ratio": 0.01,
+    "cfo_margin": 0.4,
+    "debt_ratio": 1.1,
+    "capital_intensity": 2.4,
+    "tax_rate": 0.14,
+    "rep_gap": [
+     0.3,
+     0.55
+    ],
+    "cash_ratio": 0.15
+   },
+   "price": {
+    "vol": 0.027,
+    "volume": 24000000,
+    "anchors": {
+     "2019-12-31": 31.6,
+     "2020-12-31": 43.78,
+     "2021-12-31": 66.54,
+     "2022-12-30": 55.91,
+     "2023-12-29": 111.6,
+     "2024-12-31": 231.84,
+     "2025-06-30": 275.65,
+     "2025-12-31": 352.0,
+     "2026-06-30": 338.0,
+     "2026-10-15": 346.2
+    }
+   },
+   "financials": {
+    "anchors": {
+     "revenue": {
+      "2021": 27450,
+      "2022": 33203,
+      "2023": 35819,
+      "2024": 51574,
+      "2025": 63900
+     },
+     "gross_margin": {
+      "2021": 54.2258652094718,
+      "2022": 62.0064452007349,
+      "2023": 65.0492755241631,
+      "2024": 57.2362042889828,
+      "2025": 64.7064347989419
+     },
+     "oper_margin": {
+      "2021": 31.0,
+      "2022": 42.8,
+      "2023": 45.2,
+      "2024": 26.1,
+      "2025": 38.0
+     },
+     "net_margin": {
+      "2021": 40.3,
+      "2022": 41.5,
+      "2023": 50.9,
+      "2024": 46.1,
+      "2025": 52.0
+     },
+     "shares": {
+      "2021": 4370,
+      "2022": 4330,
+      "2023": 4320,
+      "2024": 4880,
+      "2025": 4920
+     },
+     "dps": {
+      "2021": 1.44,
+      "2022": 1.64,
+      "2023": 1.84,
+      "2024": 2.1,
+      "2025": 2.36
+     },
+     "roic": {
+      "2021": 10.3989131777201,
+      "2022": 18.0935291432529,
+      "2023": 22.6871057909957,
+      "2024": 6.25926001095979,
+      "2025": 16.5438007246766
+     }
+    },
+    "quarterly": {},
+    "consensus": {},
+    "report_dates": {
+     "annual": {
+      "2021": "2021-12-09T16:15",
+      "2022": "2022-12-08T16:15",
+      "2023": "2023-12-07T16:15",
+      "2024": "2024-12-12T16:15",
+      "2025": "2025-12-11T16:15"
+     }
+    }
+   },
+   "rbics": {
+    "economy": "Technology",
+    "sector": "Electronic Components and Manufacturing",
+    "subsector": "Semiconductor Manufacturing",
+    "industry_group": "Analog and Mixed Signal Semiconductors"
+   },
+   "moodys": {
+    "org_id": 822937808,
+    "orbis_id": "030411892",
+    "bvd_id": "US352376590",
+    "rating": "A3",
+    "outlook": "Positive",
+    "synthetic": true
+   }
+  },
+  {
+   "ticker": "INTC",
+   "name": "Intel Corporation",
+   "short_name": "Intel",
+   "aliases": [
+    "intel",
+    "intel corp"
+   ],
+   "exchange": "NASDAQ",
+   "ric": "INTC.O",
+   "factset_id": "INTC-US",
+   "fsym_security_id": "H3PJ7P-R",
+   "fsym_entity_id": "000F4Q-E",
+   "isin": "US4581401001",
+   "cusip": "458140100",
+   "sedol": "2463247",
+   "org_permid": 4295906830,
+   "ibes_estpermid": 30064811105,
+   "qa_code": 1918,
+   "synthetic": [
+    "fsym_security_id",
+    "fsym_entity_id",
+    "ibes_estpermid",
+    "qa_code"
+   ],
+   "fiscal": {
+    "fye_month": 12,
+    "rule": "last_weekday",
+    "weekday": "SAT"
+   },
+   "coverage": {
+    "analysts": 38,
+    "dispersion": 1.6
+   },
+   "model": {
+    "rev_growth": [
+     -0.02,
+     0.06
+    ],
+    "dda_ratio": 0.2,
+    "capex_ratio": 0.35,
+    "cfo_margin": 0.18,
+    "debt_ratio": 0.9,
+    "capital_intensity": 2.1,
+    "tax_rate": 0.12,
+    "rep_gap": [
+     0.2,
+     0.6
+    ],
+    "cash_ratio": 0.4
+   },
+   "price": {
+    "vol": 0.03,
+    "volume": 70000000,
+    "anchors": {
+     "2019-12-31": 59.85,
+     "2020-12-31": 49.82,
+     "2021-12-31": 51.5,
+     "2022-12-30": 26.43,
+     "2023-12-29": 50.25,
+     "2024-12-31": 20.05,
+     "2025-06-30": 22.4,
+     "2025-12-31": 36.5,
+     "2026-06-30": 31.0,
+     "2026-10-15": 33.6
+    }
+   },
+   "financials": {
+    "anchors": {
+     "revenue": {
+      "2021": 79024,
+      "2022": 63054,
+      "2023": 54228,
+      "2024": 53101,
+      "2025": 53000
+     },
+     "gross_margin": {
+      "2021": 55.4,
+      "2022": 42.6,
+      "2023": 40.0,
+      "2024": 32.7,
+      "2025": 35.0
+     },
+     "oper_margin": {
+      "2021": 24.6,
+      "2022": 3.7,
+      "2023": 0.2,
+      "2024": -22.0,
+      "2025": -2.0
+     },
+     "net_margin": {
+      "2021": 28.4,
+      "2022": 12.0,
+      "2023": 8.2,
+      "2024": -1.1,
+      "2025": 2.5
+     },
+     "shares": {
+      "2021": 4090,
+      "2022": 4123,
+      "2023": 4228,
+      "2024": 4330,
+      "2025": 4400
+     },
+     "dps": {
+      "2021": 1.39,
+      "2022": 1.46,
+      "2023": 0.74,
+      "2024": 0.375,
+      "2025": 0.0
+     },
+     "roic": {
+      "2021": 18.0,
+      "2022": 3.5,
+      "2023": 0.9,
+      "2024": -10.0,
+      "2025": -1.0
+     }
+    },
+    "quarterly": {},
+    "consensus": {},
+    "report_dates": {
+     "annual": {},
+     "quarterly": {}
+    }
+   },
+   "rbics": {
+    "economy": "Technology",
+    "sector": "Electronic Components and Manufacturing",
+    "subsector": "Semiconductor Manufacturing",
+    "industry_group": "Processors"
+   },
+   "moodys": {
+    "org_id": 600044717,
+    "orbis_id": "001510255",
+    "bvd_id": "US941672743",
+    "rating": "Baa1",
+    "outlook": "Negative",
+    "synthetic": true
+   }
+  },
+  {
+   "ticker": "QCOM",
+   "name": "QUALCOMM Incorporated",
+   "short_name": "Qualcomm",
+   "aliases": [
+    "qualcomm",
+    "qualcomm inc",
+    "qualcomm incorporated"
+   ],
+   "exchange": "NASDAQ",
+   "ric": "QCOM.O",
+   "factset_id": "QCOM-US",
+   "fsym_security_id": "W7MD4S-R",
+   "fsym_entity_id": "000HNK-E",
+   "isin": "US7475251036",
+   "cusip": "747525103",
+   "sedol": "2714923",
+   "org_permid": 4295907706,
+   "ibes_estpermid": 30064812230,
+   "qa_code": 7417,
+   "synthetic": [
+    "fsym_security_id",
+    "fsym_entity_id",
+    "ibes_estpermid",
+    "qa_code"
+   ],
+   "fiscal": {
+    "fye_month": 9,
+    "rule": "last_weekday",
+    "weekday": "SUN"
+   },
+   "coverage": {
+    "analysts": 34,
+    "dispersion": 0.85
+   },
+   "model": {
+    "rev_growth": [
+     0.02,
+     0.07
+    ],
+    "dda_ratio": 0.04,
+    "capex_ratio": 0.03,
+    "cfo_margin": 0.3,
+    "debt_ratio": 0.38,
+    "capital_intensity": 0.9,
+    "tax_rate": 0.13,
+    "rep_gap": [
+     0.1,
+     0.3
+    ],
+    "cash_ratio": 0.3
+   },
+   "price": {
+    "vol": 0.022,
+    "volume": 9000000,
+    "anchors": {
+     "2019-12-31": 88.23,
+     "2020-12-31": 152.34,
+     "2021-12-31": 182.87,
+     "2022-12-30": 109.94,
+     "2023-12-29": 144.63,
+     "2024-12-31": 153.62,
+     "2025-06-30": 159.3,
+     "2025-12-31": 171.0,
+     "2026-06-30": 164.0,
+     "2026-10-15": 168.9
+    }
+   },
+   "financials": {
+    "anchors": {
+     "revenue": {
+      "2021": 33566,
+      "2022": 44200,
+      "2023": 35820,
+      "2024": 38962,
+      "2025": 44000
+     },
+     "gross_margin": {
+      "2021": 57.5,
+      "2022": 57.9,
+      "2023": 55.7,
+      "2024": 56.2,
+      "2025": 55.8
+     },
+     "oper_margin": {
+      "2021": 28.7,
+      "2022": 34.7,
+      "2023": 21.0,
+      "2024": 26.0,
+      "2025": 28.0
+     },
+     "net_margin": {
+      "2021": 29.0,
+      "2022": 32.0,
+      "2023": 26.6,
+      "2024": 29.4,
+      "2025": 29.5
+     },
+     "shares": {
+      "2021": 1137,
+      "2022": 1137,
+      "2023": 1126,
+      "2024": 1124,
+      "2025": 1100
+     },
+     "dps": {
+      "2021": 2.66,
+      "2022": 2.86,
+      "2023": 3.1,
+      "2024": 3.3,
+      "2025": 3.48
+     },
+     "roic": {
+      "2021": 38.0,
+      "2022": 45.0,
+      "2023": 22.0,
+      "2024": 25.0,
+      "2025": 27.0
+     }
+    },
+    "quarterly": {},
+    "consensus": {},
+    "report_dates": {
+     "annual": {},
+     "quarterly": {}
+    }
+   },
+   "rbics": {
+    "economy": "Technology",
+    "sector": "Electronic Components and Manufacturing",
+    "subsector": "Semiconductor Manufacturing",
+    "industry_group": "Communications Semiconductors"
+   },
+   "moodys": {
+    "org_id": 600038290,
+    "orbis_id": "001507441",
+    "bvd_id": "US953685934",
+    "rating": "A2",
+    "outlook": "Stable",
+    "synthetic": true
+   }
+  },
+  {
+   "ticker": "MU",
+   "name": "Micron Technology, Inc.",
+   "short_name": "Micron",
+   "aliases": [
+    "micron",
+    "micron technology"
+   ],
+   "exchange": "NASDAQ",
+   "ric": "MU.O",
+   "factset_id": "MU-US",
+   "fsym_security_id": "V3J0XM-R",
+   "fsym_entity_id": "000GMZ-E",
+   "isin": "US5951121038",
+   "cusip": "595112103",
+   "sedol": "2588184",
+   "org_permid": 4295904863,
+   "ibes_estpermid": 30064814311,
+   "qa_code": 5638,
+   "synthetic": [
+    "fsym_security_id",
+    "fsym_entity_id",
+    "ibes_estpermid",
+    "qa_code"
+   ],
+   "fiscal": {
+    "fye_month": 8,
+    "rule": "nearest_weekday",
+    "weekday": "THU"
+   },
+   "coverage": {
+    "analysts": 36,
+    "dispersion": 1.3
+   },
+   "model": {
+    "rev_growth": [
+     -0.05,
+     0.15
+    ],
+    "dda_ratio": 0.3,
+    "capex_ratio": 0.35,
+    "cfo_margin": 0.42,
+    "debt_ratio": 0.4,
+    "capital_intensity": 1.8,
+    "tax_rate": 0.12,
+    "rep_gap": [
+     0.05,
+     0.2
+    ],
+    "cash_ratio": 0.3
+   },
+   "price": {
+    "vol": 0.031,
+    "volume": 22000000,
+    "anchors": {
+     "2019-12-31": 53.78,
+     "2020-12-31": 75.18,
+     "2021-12-31": 93.15,
+     "2022-12-30": 49.98,
+     "2023-12-29": 85.34,
+     "2024-12-31": 84.16,
+     "2025-06-30": 123.3,
+     "2025-12-31": 205.0,
+     "2026-06-30": 188.0,
+     "2026-10-15": 196.5
+    }
+   },
+   "financials": {
+    "anchors": {
+     "revenue": {
+      "2021": 27705,
+      "2022": 30758,
+      "2023": 15540,
+      "2024": 25111,
+      "2025": 37400
+     },
+     "gross_margin": {
+      "2021": 37.6,
+      "2022": 45.2,
+      "2023": -9.1,
+      "2024": 22.4,
+      "2025": 39.8
+     },
+     "oper_margin": {
+      "2021": 29.4,
+      "2022": 31.5,
+      "2023": -37.0,
+      "2024": 5.2,
+      "2025": 26.0
+     },
+     "net_margin": {
+      "2021": 26.0,
+      "2022": 30.0,
+      "2023": -31.0,
+      "2024": 5.8,
+      "2025": 25.0
+     },
+     "shares": {
+      "2021": 1143,
+      "2022": 1121,
+      "2023": 1094,
+      "2024": 1109,
+      "2025": 1130
+     },
+     "dps": {
+      "2021": 0.1,
+      "2022": 0.4,
+      "2023": 0.46,
+      "2024": 0.46,
+      "2025": 0.46
+     },
+     "roic": {
+      "2021": 14.0,
+      "2022": 15.0,
+      "2023": -10.0,
+      "2024": 1.5,
+      "2025": 12.0
+     }
+    },
+    "quarterly": {},
+    "consensus": {},
+    "report_dates": {
+     "annual": {},
+     "quarterly": {}
+    }
+   },
+   "rbics": {
+    "economy": "Technology",
+    "sector": "Electronic Components and Manufacturing",
+    "subsector": "Semiconductor Manufacturing",
+    "industry_group": "Memory Semiconductors"
+   },
+   "moodys": {
+    "org_id": 600022460,
+    "orbis_id": "001510602",
+    "bvd_id": "US751618546",
+    "rating": "Baa2",
+    "outlook": "Positive",
+    "synthetic": true
+   }
+  },
+  {
+   "ticker": "TXN",
+   "name": "Texas Instruments Incorporated",
+   "short_name": "Texas Instruments",
+   "aliases": [
+    "texas instruments",
+    "ti"
+   ],
+   "exchange": "NASDAQ",
+   "ric": "TXN.O",
+   "factset_id": "TXN-US",
+   "fsym_security_id": "R6CHVV-R",
+   "fsym_entity_id": "000J1S-E",
+   "isin": "US8825081040",
+   "cusip": "882508104",
+   "sedol": "2885409",
+   "org_permid": 4295908420,
+   "ibes_estpermid": 30064815207,
+   "qa_code": 8460,
+   "synthetic": [
+    "fsym_security_id",
+    "fsym_entity_id",
+    "ibes_estpermid",
+    "qa_code"
+   ],
+   "fiscal": {
+    "fye_month": 12,
+    "rule": "month_end"
+   },
+   "coverage": {
+    "analysts": 30,
+    "dispersion": 0.8
+   },
+   "model": {
+    "rev_growth": [
+     0.02,
+     0.08
+    ],
+    "dda_ratio": 0.09,
+    "capex_ratio": 0.25,
+    "cfo_margin": 0.38,
+    "debt_ratio": 0.75,
+    "capital_intensity": 1.1,
+    "tax_rate": 0.13,
+    "rep_gap": [
+     0.0,
+     0.03
+    ],
+    "cash_ratio": 0.5
+   },
+   "price": {
+    "vol": 0.017,
+    "volume": 6000000,
+    "anchors": {
+     "2019-12-31": 128.29,
+     "2020-12-31": 164.13,
+     "2021-12-31": 188.47,
+     "2022-12-30": 165.22,
+     "2023-12-29": 170.46,
+     "2024-12-31": 187.51,
+     "2025-06-30": 207.6,
+     "2025-12-31": 178.0,
+     "2026-06-30": 186.0,
+     "2026-10-15": 181.3
+    }
+   },
+   "financials": {
+    "anchors": {
+     "revenue": {
+      "2021": 18344,
+      "2022": 20028,
+      "2023": 17519,
+      "2024": 15641,
+      "2025": 17600
+     },
+     "gross_margin": {
+      "2021": 67.5,
+      "2022": 68.8,
+      "2023": 62.9,
+      "2024": 58.1,
+      "2025": 57.0
+     },
+     "oper_margin": {
+      "2021": 48.8,
+      "2022": 50.6,
+      "2023": 41.1,
+      "2024": 34.9,
+      "2025": 35.0
+     },
+     "net_margin": {
+      "2021": 41.9,
+      "2022": 43.7,
+      "2023": 37.2,
+      "2024": 30.7,
+      "2025": 29.0
+     },
+     "shares": {
+      "2021": 939,
+      "2022": 921,
+      "2023": 915,
+      "2024": 917,
+      "2025": 913
+     },
+     "dps": {
+      "2021": 4.21,
+      "2022": 4.69,
+      "2023": 5.02,
+      "2024": 5.26,
+      "2025": 5.44
+     },
+     "roic": {
+      "2021": 45.0,
+      "2022": 46.0,
+      "2023": 30.0,
+      "2024": 18.0,
+      "2025": 17.0
+     }
+    },
+    "quarterly": {},
+    "consensus": {},
+    "report_dates": {
+     "annual": {},
+     "quarterly": {}
+    }
+   },
+   "rbics": {
+    "economy": "Technology",
+    "sector": "Electronic Components and Manufacturing",
+    "subsector": "Semiconductor Manufacturing",
+    "industry_group": "Analog and Mixed Signal Semiconductors"
+   },
+   "moodys": {
+    "org_id": 600048570,
+    "orbis_id": "001510873",
+    "bvd_id": "US750289970",
+    "rating": "Aa3",
+    "outlook": "Stable",
+    "synthetic": true
+   }
+  },
+  {
+   "ticker": "MRVL",
+   "name": "Marvell Technology, Inc.",
+   "short_name": "Marvell",
+   "aliases": [
+    "marvell",
+    "marvell technology"
+   ],
+   "exchange": "NASDAQ",
+   "ric": "MRVL.O",
+   "factset_id": "MRVL-US",
+   "fsym_security_id": "B6WRM2-R",
+   "fsym_entity_id": "0FKRK9-E",
+   "isin": "US5738741041",
+   "cusip": "573874104",
+   "sedol": "BNKJSM5",
+   "org_permid": 5079168212,
+   "ibes_estpermid": 30064833804,
+   "qa_code": 290177,
+   "synthetic": [
+    "fsym_security_id",
+    "fsym_entity_id",
+    "ibes_estpermid",
+    "qa_code",
+    "org_permid"
+   ],
+   "fiscal": {
+    "fye_month": 1,
+    "rule": "nearest_weekday",
+    "weekday": "SAT"
+   },
+   "coverage": {
+    "analysts": 33,
+    "dispersion": 1.1
+   },
+   "model": {
+    "rev_growth": [
+     0.05,
+     0.18
+    ],
+    "dda_ratio": 0.15,
+    "capex_ratio": 0.04,
+    "cfo_margin": 0.24,
+    "debt_ratio": 0.5,
+    "capital_intensity": 2.6,
+    "tax_rate": 0.1,
+    "rep_gap": [
+     0.6,
+     1.2
+    ],
+    "cash_ratio": 0.15
+   },
+   "price": {
+    "vol": 0.035,
+    "volume": 14000000,
+    "anchors": {
+     "2019-12-31": 26.56,
+     "2020-12-31": 47.54,
+     "2021-12-31": 87.49,
+     "2022-12-30": 37.04,
+     "2023-12-29": 60.31,
+     "2024-12-31": 110.45,
+     "2025-06-30": 77.4,
+     "2025-12-31": 88.0,
+     "2026-06-30": 81.0,
+     "2026-10-15": 86.7
+    }
+   },
+   "financials": {
+    "anchors": {
+     "revenue": {
+      "2021": 4462,
+      "2022": 5920,
+      "2023": 5508,
+      "2024": 5767,
+      "2025": 8195
+     },
+     "gross_margin": {
+      "2021": 44.3,
+      "2022": 50.5,
+      "2023": 41.8,
+      "2024": 41.3,
+      "2025": 50.0
+     },
+     "oper_margin": {
+      "2021": -8.6,
+      "2022": -1.0,
+      "2023": -21.0,
+      "2024": -15.5,
+      "2025": 8.0
+     },
+     "net_margin": {
+      "2021": 29.9,
+      "2022": 31.1,
+      "2023": 24.2,
+      "2024": 23.6,
+      "2025": 30.0
+     },
+     "shares": {
+      "2021": 852,
+      "2022": 862,
+      "2023": 866,
+      "2024": 870,
+      "2025": 870
+     },
+     "dps": {
+      "2021": 0.24,
+      "2022": 0.24,
+      "2023": 0.24,
+      "2024": 0.24,
+      "2025": 0.24
+     },
+     "roic": {
+      "2021": -1.5,
+      "2022": 0.3,
+      "2023": -2.5,
+      "2024": -2.0,
+      "2025": 2.0
+     }
+    },
+    "quarterly": {},
+    "consensus": {},
+    "report_dates": {
+     "annual": {},
+     "quarterly": {}
+    }
+   },
+   "rbics": {
+    "economy": "Technology",
+    "sector": "Electronic Components and Manufacturing",
+    "subsector": "Semiconductor Manufacturing",
+    "industry_group": "Communications Semiconductors"
+   },
+   "moodys": {
+    "org_id": 822904356,
+    "orbis_id": "046210877",
+    "bvd_id": "US861732456",
+    "rating": "Baa3",
+    "outlook": "Stable",
+    "synthetic": true
+   }
+  }
+ ]
+}

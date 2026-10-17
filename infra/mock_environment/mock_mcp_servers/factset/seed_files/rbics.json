@@ -1,0 +1,209 @@
+{
+ "_about": "Authored. Level 1-4 focus comes from the shared company universe; this file adds the level 5-6 focus and revenue segments (full six-level paths, shares of revenue in the latest fiscal year). Other years drift deterministically around these shares.",
+ "companies": {
+  "NVDA": {
+   "focus": [
+    "Graphics and AI Processors",
+    "Data Center AI Accelerators"
+   ],
+   "segments": [
+    {
+     "path": "Technology > Electronic Components and Manufacturing > Semiconductor Manufacturing > Specialized Semiconductors > Graphics and AI Processors > Data Center AI Accelerators",
+     "share": 0.775
+    },
+    {
+     "path": "Technology > Computer Hardware > Networking Equipment > Data Center Networking > Data Center Switching > InfiniBand and Ethernet Switches",
+     "share": 0.12
+    },
+    {
+     "path": "Technology > Electronic Components and Manufacturing > Semiconductor Manufacturing > Specialized Semiconductors > Graphics and AI Processors > Consumer Graphics Processors",
+     "share": 0.075
+    },
+    {
+     "path": "Technology > Electronic Components and Manufacturing > Semiconductor Manufacturing > Specialized Semiconductors > Graphics and AI Processors > Professional Visualization Processors",
+     "share": 0.015
+    },
+    {
+     "path": "Technology > Electronic Components and Manufacturing > Semiconductor Manufacturing > Specialized Semiconductors > Automotive Semiconductors > Autonomous Driving Processors",
+     "share": 0.015
+    }
+   ]
+  },
+  "AMD": {
+   "focus": [
+    "Graphics and AI Processors",
+    "Data Center AI Accelerators"
+   ],
+   "segments": [
+    {
+     "path": "Technology > Electronic Components and Manufacturing > Semiconductor Manufacturing > Specialized Semiconductors > Graphics and AI Processors > Data Center AI Accelerators",
+     "share": 0.24
+    },
+    {
+     "path": "Technology > Electronic Components and Manufacturing > Semiconductor Manufacturing > Processors > Microprocessors > Server CPUs",
+     "share": 0.25
+    },
+    {
+     "path": "Technology > Electronic Components and Manufacturing > Semiconductor Manufacturing > Processors > Microprocessors > PC CPUs",
+     "share": 0.27
+    },
+    {
+     "path": "Technology > Electronic Components and Manufacturing > Semiconductor Manufacturing > Specialized Semiconductors > Graphics and AI Processors > Consumer Graphics Processors",
+     "share": 0.11
+    },
+    {
+     "path": "Technology > Electronic Components and Manufacturing > Semiconductor Manufacturing > Specialized Semiconductors > Programmable Logic > FPGAs and Adaptive SoCs",
+     "share": 0.13
+    }
+   ]
+  },
+  "AVGO": {
+   "focus": [
+    "Networking Semiconductors",
+    "Custom AI Accelerators (ASICs)"
+   ],
+   "segments": [
+    {
+     "path": "Technology > Electronic Components and Manufacturing > Semiconductor Manufacturing > Analog and Mixed Signal Semiconductors > Networking Semiconductors > Custom AI Accelerators (ASICs)",
+     "share": 0.3
+    },
+    {
+     "path": "Technology > Electronic Components and Manufacturing > Semiconductor Manufacturing > Analog and Mixed Signal Semiconductors > Networking Semiconductors > Ethernet Switch Silicon",
+     "share": 0.13
+    },
+    {
+     "path": "Technology > Electronic Components and Manufacturing > Semiconductor Manufacturing > Communications Semiconductors > Wireless Semiconductors > RF Front End Modules",
+     "share": 0.1
+    },
+    {
+     "path": "Technology > Electronic Components and Manufacturing > Semiconductor Manufacturing > Analog and Mixed Signal Semiconductors > Storage and Broadband Semiconductors > Storage Controllers",
+     "share": 0.05
+    },
+    {
+     "path": "Technology > Software and Consulting > Software > Infrastructure Software > Virtualization Software > Private Cloud Platforms",
+     "share": 0.42
+    }
+   ]
+  },
+  "INTC": {
+   "focus": [
+    "Microprocessors",
+    "PC CPUs"
+   ],
+   "segments": [
+    {
+     "path": "Technology > Electronic Components and Manufacturing > Semiconductor Manufacturing > Processors > Microprocessors > PC CPUs",
+     "share": 0.54
+    },
+    {
+     "path": "Technology > Electronic Components and Manufacturing > Semiconductor Manufacturing > Processors > Microprocessors > Server CPUs",
+     "share": 0.31
+    },
+    {
+     "path": "Technology > Electronic Components and Manufacturing > Semiconductor Manufacturing > Processors > Network and Edge Processors > Network and Edge SoCs",
+     "share": 0.11
+    },
+    {
+     "path": "Technology > Electronic Components and Manufacturing > Semiconductor Manufacturing > Semiconductor Foundry > Contract Foundry > Leading Edge Foundry Services",
+     "share": 0.04
+    }
+   ]
+  },
+  "QCOM": {
+   "focus": [
+    "Wireless Semiconductors",
+    "Mobile Application Processors"
+   ],
+   "segments": [
+    {
+     "path": "Technology > Electronic Components and Manufacturing > Semiconductor Manufacturing > Communications Semiconductors > Wireless Semiconductors > Mobile Application Processors",
+     "share": 0.63
+    },
+    {
+     "path": "Technology > Electronic Components and Manufacturing > Semiconductor Manufacturing > Specialized Semiconductors > Automotive Semiconductors > Automotive Infotainment SoCs",
+     "share": 0.08
+    },
+    {
+     "path": "Technology > Electronic Components and Manufacturing > Semiconductor Manufacturing > Communications Semiconductors > Wireless Semiconductors > IoT Connectivity Chips",
+     "share": 0.14
+    },
+    {
+     "path": "Technology > Software and Consulting > Intellectual Property > Technology Licensing > Wireless Technology Licensing > Cellular Patent Licensing",
+     "share": 0.15
+    }
+   ]
+  },
+  "MU": {
+   "focus": [
+    "DRAM",
+    "High Bandwidth Memory"
+   ],
+   "segments": [
+    {
+     "path": "Technology > Electronic Components and Manufacturing > Semiconductor Manufacturing > Memory Semiconductors > DRAM > High Bandwidth Memory",
+     "share": 0.24
+    },
+    {
+     "path": "Technology > Electronic Components and Manufacturing > Semiconductor Manufacturing > Memory Semiconductors > DRAM > Standard DRAM",
+     "share": 0.52
+    },
+    {
+     "path": "Technology > Electronic Components and Manufacturing > Semiconductor Manufacturing > Memory Semiconductors > NAND Flash > Solid State Drives",
+     "share": 0.24
+    }
+   ]
+  },
+  "TXN": {
+   "focus": [
+    "Analog Semiconductors",
+    "Power Management ICs"
+   ],
+   "segments": [
+    {
+     "path": "Technology > Electronic Components and Manufacturing > Semiconductor Manufacturing > Analog and Mixed Signal Semiconductors > Analog Semiconductors > Power Management ICs",
+     "share": 0.46
+    },
+    {
+     "path": "Technology > Electronic Components and Manufacturing > Semiconductor Manufacturing > Analog and Mixed Signal Semiconductors > Analog Semiconductors > Signal Chain ICs",
+     "share": 0.32
+    },
+    {
+     "path": "Technology > Electronic Components and Manufacturing > Semiconductor Manufacturing > Processors > Embedded Processors > Microcontrollers",
+     "share": 0.17
+    },
+    {
+     "path": "Technology > Electronic Components and Manufacturing > Semiconductor Manufacturing > Processors > Embedded Processors > Digital Signal Processors",
+     "share": 0.05
+    }
+   ]
+  },
+  "MRVL": {
+   "focus": [
+    "Networking Semiconductors",
+    "Electro-Optics"
+   ],
+   "segments": [
+    {
+     "path": "Technology > Electronic Components and Manufacturing > Semiconductor Manufacturing > Communications Semiconductors > Networking Semiconductors > Electro-Optics",
+     "share": 0.42
+    },
+    {
+     "path": "Technology > Electronic Components and Manufacturing > Semiconductor Manufacturing > Analog and Mixed Signal Semiconductors > Networking Semiconductors > Custom AI Accelerators (ASICs)",
+     "share": 0.33
+    },
+    {
+     "path": "Technology > Electronic Components and Manufacturing > Semiconductor Manufacturing > Communications Semiconductors > Networking Semiconductors > Ethernet Switch Silicon",
+     "share": 0.13
+    },
+    {
+     "path": "Technology > Electronic Components and Manufacturing > Semiconductor Manufacturing > Analog and Mixed Signal Semiconductors > Storage and Broadband Semiconductors > Storage Controllers",
+     "share": 0.07
+    },
+    {
+     "path": "Technology > Electronic Components and Manufacturing > Semiconductor Manufacturing > Specialized Semiconductors > Automotive Semiconductors > Automotive Ethernet",
+     "share": 0.05
+    }
+   ]
+  }
+ }
+}

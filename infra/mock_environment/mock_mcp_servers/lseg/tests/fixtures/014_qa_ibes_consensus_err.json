@@ -1,0 +1,5 @@
+{
+ "name": "mcp__lseg__qa_ibes_consensus",
+ "input": "{\n  \"requests\": [\n    {\n      \"dataType\": \"qa_ibes_measures\",\n      \"options\": {\n        \"search\": \"*analyst*\",\n        \"limit\": 50\n      }\n    }\n  ]\n}",
+ "result": "{\n  \"message\": \"Error: mcp__lseg__qa_ibes_consensus failed: 🔧 **Technical Error**\\nRequest failed with status code 404\",\n  \"code\": \"failure\"\n}"
+}
