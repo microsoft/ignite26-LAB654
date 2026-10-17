@@ -1,6 +1,6 @@
 # Smartsheet mock server
 
-Mock of the Smartsheet MCP server for the [productivity scenario](../../../scenarios/productivity/scenario.md). The server isn't built yet. This README specifies the data it must serve; `seed_files/` will hold that data.
+Mock of the Smartsheet MCP server for the [productivity scenario](../../../../docs/scenarios/productivity/scenario.md). The server isn't built yet. This README specifies the data it must serve; `seed_files/` will hold that data.
 
 Smartsheet is the **hybrid** connector in this scenario: an admin-configured synced index (semantic search over sheets, rows and comments) plus live MCP tools that read and write as the user. The mock covers the live MCP side. See [open questions](#open-questions) for the index.
 
@@ -92,7 +92,7 @@ Decoys need only enough rows to be plausible. None should mention Aurora POS kit
 
 ## Consistency rules
 
-- Dates match the shifted timeline in the [scenario doc](../../../scenarios/productivity/scenario.md); weekdays must be right.
+- Dates match the shifted timeline in the [scenario doc](../../../../docs/scenarios/productivity/scenario.md); weekdays must be right.
 - Owner names match the tenant and other sources: Marcus is the seat user; "Contoso Retail" and "Northwind Print" are organization names, not users.
 - The Step 2 answer depends on these dates: signage must be in stores by Sat Oct 24 (3 days before training on Oct 27), so Northwind's signage ships express Oct 23.
 

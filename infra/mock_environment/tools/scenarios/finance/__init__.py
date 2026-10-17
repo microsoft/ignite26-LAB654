@@ -1,6 +1,6 @@
 """Finance scenario tenant seed data (NVIDIA investment committee).
 
-Source: src/scenarios/finance/scenario.md (LAB654_Finance_Track_OnePager.docx).
+Source: docs/scenarios/finance/scenario.md (LAB654_Finance_Track_OnePager.docx).
 The one-pager asks for only one piece of M365 data:
 
 - Trigger 1:1 chat, Jordan to Marcus, Friday 4:00 PM: "Committee wants a view

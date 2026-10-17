@@ -21,8 +21,8 @@ Requires Python 3.10 or later with `jsonschema` installed.
 
 ```powershell
 pip install jsonschema
-python src/mock_environment/tools/build_tenant.py
-python src/mock_environment/tools/validate_package.py
+python infra/mock_environment/tools/build_tenant.py
+python infra/mock_environment/tools/validate_package.py
 ```
 
 The validator checks the package against `_schemas` (JSON Schema 2020-12). It also applies the main COEP cross-file rules:
@@ -37,15 +37,15 @@ The validator checks the package against `_schemas` (JSON Schema 2020-12). It al
 COEP rejects timestamps in the future. The legal story is pinned to a Monday lab date (`LAB_DATE` in `tools/scenarios/legal/__init__.py`, currently Mon Oct 12, 2026). The email is 14 days earlier, the group chat 6 days earlier, and the trigger message is at 8:07 AM ET on the lab date. The kit's original lab date was Mon Nov 9, 2026; every date in the seed data, the iManage documents and the scenario docs was moved back 28 days so everything is in the past, keeping weekdays and the contract's anniversary and payment schedule intact. To move the story again (for example, closer to the event), run:
 
 ```powershell
-python src/mock_environment/tools/scenarios/legal/redate.py --lab-date 2026-11-02
-python src/mock_environment/tools/build_tenant.py
+python infra/mock_environment/tools/scenarios/legal/redate.py --lab-date 2026-11-02
+python infra/mock_environment/tools/build_tenant.py
 ```
 
 ## Refresh the schemas
 
 ```powershell
 $env:COEP_TOKEN = "<bearer token from the COEP portal>"
-python src/mock_environment/tools/refresh_schemas.py
+python infra/mock_environment/tools/refresh_schemas.py
 ```
 
 To get a token, sign in to the portal and copy the `Authorization` bearer value from any `/schema/api/v1` request in the browser dev tools. After refreshing, run the validator again.
@@ -54,9 +54,9 @@ To get a token, sign in to the portal and copy the `Authorization` bearer value 
 
 | Scenario | Source | Tenant seed | Connector seed |
 |----------|--------|-------------|----------------|
-| Legal | [scenario](../scenarios/legal/scenario.md), [seed kit](../scenarios/legal/seed_kit.md) | `tools/scenarios/legal/`: 3 users, 1 email, 2 chats | `mock_mcp_servers/imanage/seed_files/` |
-| Finance | [scenario](../scenarios/finance/scenario.md) | `tools/scenarios/finance/`: 1 user (+ Marcus), 1 chat | Pending: data specs in `mock_mcp_servers/lseg/`, `factset/`, `moodys/` |
-| Productivity | [scenario](../scenarios/productivity/scenario.md) | `tools/scenarios/productivity/`: 2 users (+ Marcus), 1 email, 7 intranet pages (Verdantis Hub) | Pending: data specs in `mock_mcp_servers/smartsheet/`, `notion/` |
+| Legal | [scenario](../../docs/scenarios/legal/scenario.md), [seed kit](../../docs/scenarios/legal/seed_kit.md) | `tools/scenarios/legal/`: 3 users, 1 email, 2 chats | `mock_mcp_servers/imanage/seed_files/` |
+| Finance | [scenario](../../docs/scenarios/finance/scenario.md) | `tools/scenarios/finance/`: 1 user (+ Marcus), 1 chat | Pending: data specs in `mock_mcp_servers/lseg/`, `factset/`, `moodys/` |
+| Productivity | [scenario](../../docs/scenarios/productivity/scenario.md) | `tools/scenarios/productivity/`: 2 users (+ Marcus), 1 email, 7 intranet pages (Verdantis Hub) | Pending: data specs in `mock_mcp_servers/smartsheet/`, `notion/` |
 
 To add a scenario, create a module or package under `tools/scenarios/` that exposes `users()`, `emails()`, `chats()`, `events()` and `files()`, and optionally `intranetpages()` and `build_documents(files_dir)`. Then add it to `SCENARIOS` in `build_tenant.py`.
 

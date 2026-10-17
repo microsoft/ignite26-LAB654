@@ -1,6 +1,6 @@
 """Productivity scenario tenant seed data (Verdantis Aurora launch, vendor slip).
 
-Source: src/scenarios/productivity/scenario.md
+Source: docs/scenarios/productivity/scenario.md
 (Ignite_Lab_Productivity_Module_Smartsheet_Notion_Intranet.docx).
 
 The doc asks the M365 tenant for:

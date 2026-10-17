@@ -1,7 +1,7 @@
 """Build the Connectors_Ignite_EMP COEP grounding-data package.
 
 Usage (from repo root):
-    python src/mock_environment/tools/build_tenant.py
+    python infra/mock_environment/tools/build_tenant.py
 
 Each scenario module in tools/scenarios exposes users(), emails(), chats(),
 events() and files(), and optionally build_documents(files_dir) for documents

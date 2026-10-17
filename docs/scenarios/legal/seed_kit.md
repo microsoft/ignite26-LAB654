@@ -1,6 +1,6 @@
 # Lab seed kit: scenario #1, Verdantis × Cognivault
 
-> Converted from `00_Seed_Kit_Guide.docx` in the "legal v1 seed kit". The seed data built from it lives in `src/mock_environment` (tenant: `tools/scenarios/legal/`; iManage: `mock_mcp_servers/imanage/seed_files`). All dates here, in the seed data and in the iManage documents have been moved from the kit's original lab date so that every seeded item is in the past. The current lab date is `LAB_DATE` in `tools/scenarios/legal/__init__.py`; to move it again, run `tools/scenarios/legal/redate.py`.
+> Converted from `00_Seed_Kit_Guide.docx` in the "legal v1 seed kit". The seed data built from it lives in `infra/mock_environment` (tenant: `tools/scenarios/legal/`; iManage: `mock_mcp_servers/imanage/seed_files`). All dates here, in the seed data and in the iManage documents have been moved from the kit's original lab date so that every seeded item is in the past. The current lab date is `LAB_DATE` in `tools/scenarios/legal/__init__.py`; to move it again, run `tools/scenarios/legal/redate.py`.
 
 *AI underwriting platform contract  |  US  |  Data adapted from Harvey LAB (MIT License)*
 

@@ -1,6 +1,6 @@
 # Verdantis Hub intranet
 
-Verdantis Hub is the company intranet in the [productivity scenario](../../../scenarios/productivity/scenario.md). It's the **synced** connector: Microsoft's Enterprise Websites cloud connector crawls it and indexes it for everyone in the tenant. It has no live tools and no write actions, so **it isn't an MCP server**. This folder documents the site so it sits next to the other connectors.
+Verdantis Hub is the company intranet in the [productivity scenario](../../../../docs/scenarios/productivity/scenario.md). It's the **synced** connector: Microsoft's Enterprise Websites cloud connector crawls it and indexes it for everyone in the tenant. It has no live tools and no write actions, so **it isn't an MCP server**. This folder documents the site so it sits next to the other connectors.
 
 ## Where the data lives
 

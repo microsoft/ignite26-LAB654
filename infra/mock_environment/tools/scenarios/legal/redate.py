@@ -6,7 +6,7 @@ mention dates relative to it, and COEP rejects seed items dated in the future.
 This script rewrites every one of those dates in place so the story keeps the
 same shape around a new Monday:
 
-    python tools/scenarios/legal/redate.py --lab-date 2026-10-12
+    python infra/mock_environment/tools/scenarios/legal/redate.py --lab-date 2026-10-12
 
 Rules:
 - Dates before the contract effective date (lab date + 6) move by the same
@@ -38,7 +38,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 ENV = HERE.parents[2]
-REPO_SRC = ENV.parent
+REPO_ROOT = ENV.parents[1]
 LEGAL_PY = HERE / "__init__.py"
 MATTER = ENV / "mock_mcp_servers" / "imanage" / "seed_files" / "Cognivault-Nexus_matter"
 TEXT_FILES = [
@@ -46,8 +46,8 @@ TEXT_FILES = [
     HERE / "content" / "radhika_email_body.html",
 ]
 MARKDOWN_FILES = [
-    REPO_SRC / "scenarios" / "legal" / "scenario.md",
-    REPO_SRC / "scenarios" / "legal" / "seed_kit.md",
+    REPO_ROOT / "docs" / "scenarios" / "legal" / "scenario.md",
+    REPO_ROOT / "docs" / "scenarios" / "legal" / "seed_kit.md",
 ]
 GO_LIVE_OFFSET = 6
 STORY_OFFSETS = (0, 3, GO_LIVE_OFFSET)
@@ -199,7 +199,7 @@ def main() -> int:
         if p in MARKDOWN_FILES:
             s = sh.ordinals(s)
         p.write_text(s, encoding="utf-8", newline="")
-        print(f"{sh.count - before:4d}  {p.relative_to(REPO_SRC)}")
+        print(f"{sh.count - before:4d}  {p.relative_to(REPO_ROOT)}")
 
     LEGAL_PY.write_text(
         LAB_RE.sub(f"LAB_DATE = date({new_lab.year}, {new_lab.month}, {new_lab.day})", src, count=1),

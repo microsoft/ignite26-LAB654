@@ -1,6 +1,6 @@
 """Legal scenario tenant seed data (Verdantis x Cognivault).
 
-Source: the "legal v1 seed kit" (see src/scenarios/legal/seed_kit.md). Only
+Source: the "legal v1 seed kit" (see docs/scenarios/legal/seed_kit.md). Only
 what the kit asks to load into Outlook and Teams goes into the tenant:
 
 - Radhika's business-priorities email to Marcus, cc Tomás (lab date - 14 days)

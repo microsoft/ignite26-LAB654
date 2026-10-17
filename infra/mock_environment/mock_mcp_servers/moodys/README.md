@@ -1,6 +1,6 @@
 # Moody's mock server
 
-Mock of the Moody's MCP server for the [finance scenario](../../../scenarios/finance/scenario.md). The server isn't built yet. This README specifies the data it must serve; `seed_files/` will hold that data.
+Mock of the Moody's MCP server for the [finance scenario](../../../../docs/scenarios/finance/scenario.md). The server isn't built yet. This README specifies the data it must serve; `seed_files/` will hold that data.
 
 Match tool names, descriptions and input schemas to the real Moody's MCP server when the server is built. The groupings below describe data, not tool names.
 

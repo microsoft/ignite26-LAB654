@@ -1,8 +1,8 @@
-"""Refresh src/mock_environment/_schemas from the COEP Schema Master API.
+"""Refresh infra/mock_environment/_schemas from the COEP Schema Master API.
 
 Usage (from repo root):
     $env:COEP_TOKEN = "<bearer token>"
-    python src/mock_environment/tools/refresh_schemas.py
+    python infra/mock_environment/tools/refresh_schemas.py
 
 Getting a token: sign in to https://coep.microsoft.com/schema/portal, open the
 browser dev tools, and copy the ``Authorization: Bearer ...`` value from any

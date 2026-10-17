@@ -1,7 +1,7 @@
 """Validate a COEP grounding-data package against the local _schemas.
 
 Usage (from repo root):
-    python src/mock_environment/tools/validate_package.py [package_dir] [--as-of 2026-11-09T14:00Z]
+    python infra/mock_environment/tools/validate_package.py [package_dir] [--as-of 2026-11-09T14:00Z]
 
 Checks each *.config.json (and config.json), and each connector folder's
 <type>/<type>_*.jsonl, against its JSON schema, then a

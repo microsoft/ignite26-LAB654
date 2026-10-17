@@ -114,9 +114,9 @@ This section isn't part of the original document. It records where each piece of
 
 | Seed data | Where it lives | Notes |
 |---|---|---|
-| Radhika's business-priorities email (Sep 28) | `src/mock_environment/Connectors_Ignite_EMP/emails.config.json` | Tenant (COEP) |
-| Teams group chat "Cognivault deal" (Oct 6) | `src/mock_environment/Connectors_Ignite_EMP/chats.config.json` | Tenant (COEP) |
-| Tomás's trigger Teams message (Oct 12, 8:07 AM) | `src/mock_environment/Connectors_Ignite_EMP/chats.config.json` | Tenant (COEP). No attachment: the contract lives only in iManage. |
-| iManage matter "Cognivault – Nexus AI Platform Agreement" (agreement, Exhibits A–D, playbook) | `src/mock_environment/mock_mcp_servers/imanage/seed_files/` | Connector, not tenant |
-| Harvey regulatory research | `src/mock_environment/mock_mcp_servers/harvey/` | Connector. No seed files; answers from public law. |
+| Radhika's business-priorities email (Sep 28) | `infra/mock_environment/Connectors_Ignite_EMP/emails.config.json` | Tenant (COEP) |
+| Teams group chat "Cognivault deal" (Oct 6) | `infra/mock_environment/Connectors_Ignite_EMP/chats.config.json` | Tenant (COEP) |
+| Tomás's trigger Teams message (Oct 12, 8:07 AM) | `infra/mock_environment/Connectors_Ignite_EMP/chats.config.json` | Tenant (COEP). No attachment: the contract lives only in iManage. |
+| iManage matter "Cognivault – Nexus AI Platform Agreement" (agreement, Exhibits A–D, playbook) | `infra/mock_environment/mock_mcp_servers/imanage/seed_files/` | Connector, not tenant |
+| Harvey regulatory research | `infra/mock_environment/mock_mcp_servers/harvey/` | Connector. No seed files; answers from public law. |
 | Negotiation session on the 15th | None | The kit says no calendar item is needed. |

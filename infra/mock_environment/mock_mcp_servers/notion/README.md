@@ -1,6 +1,6 @@
 # Notion mock server
 
-Mock of the Notion MCP server for the [productivity scenario](../../../scenarios/productivity/scenario.md). The server isn't built yet. This README specifies the data it must serve; `seed_files/` will hold that data.
+Mock of the Notion MCP server for the [productivity scenario](../../../../docs/scenarios/productivity/scenario.md). The server isn't built yet. This README specifies the data it must serve; `seed_files/` will hold that data.
 
 Notion is the **federated** connector in this scenario: nothing is indexed, and Copilot reads and writes live as the user.
 
