@@ -181,13 +181,13 @@ morning. Show me both before sending.
 | Area | Requirement |
 |---|---|
 | ☐ **M365 seats** | One Marcus Hollowell account per seat (mhollowell01…mhollowellNN) with Copilot and Cowork. Riley Blake and Sam Patel exist as lab users (done). |
-| ☐ **Notion** | Microsoft-published federated connector enabled, write tools rolled out. One Notion member per lab account (e.g. mhollowell01@…), each with its own copy of the seed pages so writes don't collide. |
-| ☐ **Pre-connect** | Sign each seat in to Notion (Settings › Sources) before the event; the scheduled prompt can't run without it. |
+| ☐ **Notion** | Test_Notion (mock Notion MCP server, no sign-in) uploaded and enabled for every seat. All seats share one server; write changes are kept per Cowork conversation (keyed on the `x-microsoft-ai-conversationid` header), so seats never collide. See `infra/mock_environment/mock_mcp_servers/notion/README.md`. |
+| ☐ **Pre-connect** | Check that Test_Notion shows as Connected in each seat (Settings › Sources) before the event; the scheduled prompt can't run without it. |
 | ☐ **Scheduled prompt** | Per seat: create "Aurora morning catch-up" (Step 1 prompt), weekdays at 8:00 AM event-local time. Check that it ran before doors open. |
 | ☐ **Verdantis Hub** | Enterprise Websites cloud connection to hub.verdantis.com, display name "Verdantis Hub". Re-crawl after the Zava → Verdantis edit and spot-check that the old Zava text is gone. |
 | ☐ **Outlook** | Riley's POS-kit ETA email in each Marcus inbox, 7:40 AM Eastern (done). |
 
-### 6.2 Notion seed (one copy per seat)
+### 6.2 Notion seed (shared, read-only baseline)
 
 | Item | Type | Contents |
 |---|---|---|
@@ -219,6 +219,6 @@ Bold rows are the ones the story turns on.
 
 ### 6.4 Reset between sessions
 
-- **Notion:** restore the brochure row and delete lab-created decision log entries (Notion API script).
+- **Notion:** nothing to reset. Each conversation's changes expire after 2 hours idle, and a new conversation always starts from the seed. Restarting the `mock-notion` container clears everything at once.
 - **M365:** clear sent mail and meetings; re-seed Riley's email if it was moved or deleted.
 - **Copilot:** revoke "Always allow" if participants set it. The scheduled prompt and Verdantis Hub need no reset.

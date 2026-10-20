@@ -112,7 +112,7 @@ class ServerSpec:
             for r in self.resources
         ]
 
-    def dispatch(self, name: str, arguments: dict | None) -> types.CallToolResult:
+    def dispatch(self, name: str, arguments: dict | None, conversation_id: str | None = None) -> types.CallToolResult:
         """Run one tool call and return the exact MCP result. Never raises."""
         started = time.perf_counter()
         args = arguments or {}
@@ -120,7 +120,7 @@ class ServerSpec:
         if tool is None:
             result = _error(f"Unknown tool: {name}")
         else:
-            ctx = CallContext(tool=name, clock=self.clock_factory())
+            ctx = CallContext(tool=name, clock=self.clock_factory(), conversation_id=conversation_id)
             try:
                 if tool.validate_args:
                     validate(args, tool.input_schema)
@@ -131,8 +131,9 @@ class ServerSpec:
                 log.exception("Unhandled error in %s", name)
                 result = _error(self.render_error(UpstreamError("Internal server error", 500), name))
         log.info(
-            "tool=%s ok=%s ms=%.1f args=%s",
+            "tool=%s conv=%s ok=%s ms=%.1f args=%s",
             name,
+            conversation_id[:8] if conversation_id else "-",
             not result.isError,
             (time.perf_counter() - started) * 1000,
             dumps(args)[:500],
@@ -153,6 +154,20 @@ def _error(text: str) -> types.CallToolResult:
     return types.CallToolResult(content=[types.TextContent(type="text", text=text)], isError=True)
 
 
+CONVERSATION_HEADER = "x-microsoft-ai-conversationid"
+
+
+def _conversation_id(server: Server) -> str | None:
+    """The host's conversation key from the HTTP request, if any (M365 Copilot and Cowork send it)."""
+    try:
+        request = server.request_context.request
+    except LookupError:
+        return None
+    headers = getattr(request, "headers", None)
+    value = headers.get(CONVERSATION_HEADER) if headers is not None else None
+    return (value.strip() or None) if value else None
+
+
 def build_server(spec: ServerSpec) -> Server:
     server: Server = Server(spec.name, version=spec.version, instructions=spec.instructions)
 
@@ -163,7 +178,7 @@ def build_server(spec: ServerSpec) -> Server:
     # Validation happens in dispatch() so error text matches the upstream server.
     @server.call_tool(validate_input=False)
     async def _call_tool(name: str, arguments: dict) -> types.CallToolResult:
-        return spec.dispatch(name, arguments)
+        return spec.dispatch(name, arguments, _conversation_id(server))
 
     if spec.resources:
 

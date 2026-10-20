@@ -35,8 +35,8 @@ class ToolCall:
         return self.result.structuredContent
 
 
-def call(spec: ServerSpec, tool: str, args: dict | None = None) -> ToolCall:
-    return ToolCall(spec.dispatch(tool, args or {}))
+def call(spec: ServerSpec, tool: str, args: dict | None = None, conversation_id: str | None = None) -> ToolCall:
+    return ToolCall(spec.dispatch(tool, args or {}, conversation_id))
 
 
 def assert_deterministic(spec_factory, tool: str, args: dict) -> ToolCall:

@@ -1,0 +1,37 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.29/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.29",
+  "version": "1.0.0",
+  "id": "67a65af7-b4ee-46f7-9dfa-add3b4f2c68f",
+  "developer": {
+    "name": "Tezan Sahu",
+    "websiteUrl": "https://github.com/microsoft/ignite26-LAB654",
+    "privacyUrl": "https://github.com/microsoft/ignite26-LAB654",
+    "termsOfUseUrl": "https://github.com/microsoft/ignite26-LAB654"
+  },
+  "name": {
+    "short": "Test_Notion",
+    "full": "Test_Notion"
+  },
+  "description": {
+    "short": "Search, read and update pages and databases in Notion.",
+    "full": "Notion is a connected workspace for docs, wikis, projects and databases. Use this connector to search the Verdantis Notion workspace, read launch plans, query launch trackers and decision logs, and update task status, dates and notes. This is a mock version of the Notion connector built for the LAB654 Ignite lab; changes are kept only within the current conversation and reset after about 2 hours."
+  },
+  "icons": {
+    "color": "color.png",
+    "outline": "outline.png"
+  },
+  "accentColor": "#191919",
+  "agentConnectors": [
+    {
+      "id": "b4153df7-dadd-43f1-b7de-cf117c43b640",
+      "displayName": "Test_Notion",
+      "description": "Use this tool to search, read and update the Notion workspace: pages, databases, data sources and database rows (for example launch plans, launch trackers and decision logs).\nKeywords: Notion, page, database, tracker, decision log, launch plan, task status, due date, owner, workspace",
+      "toolSource": {
+        "remoteMcpServer": {
+          "mcpServerUrl": "https://mock-notion.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp"
+        }
+      }
+    }
+  ]
+}

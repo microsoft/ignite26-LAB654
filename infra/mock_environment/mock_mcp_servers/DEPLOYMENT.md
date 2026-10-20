@@ -9,8 +9,9 @@ Each mock MCP server runs as its own Azure Container App. All of them share one 
 | LSEG | `mock-lseg` | `mock-lseg:v1` | `https://mock-lseg.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` |
 | FactSet | `mock-factset` | `mock-factset:v1` | `https://mock-factset.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` |
 | Moody's | `mock-moodys` | `mock-moodys:v1` | `https://mock-moodys.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` |
+| Notion | `mock-notion` | Not deployed yet | `https://mock-notion.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` (expected) |
 
-Health checks are at the same host with `/healthz` instead of `/mcp`. Every app runs 0.5 vCPU and 1 GiB, with 0 to 3 replicas (scale to zero when idle).
+Health checks are at the same host with `/healthz` instead of `/mcp`. Every app runs 0.5 vCPU and 1 GiB. The finance apps run 0 to 3 replicas (scale to zero when idle). Notion runs 0 to 1 replica, because it keeps each conversation's write changes in memory.
 
 ## Azure resources
 
@@ -59,7 +60,7 @@ The environment takes a few minutes to create. It also creates a Log Analytics w
 ## 3. Build and push an image
 
 ```powershell
-$S   = "lseg"   # lseg | factset | moodys
+$S   = "lseg"   # lseg | factset | moodys | notion
 $TAG = "v1"
 
 az acr login -n $ACR
@@ -94,7 +95,8 @@ az containerapp create -n "mock-$S" -g $RG --environment $ENV `
 The command prints the FQDN. The MCP endpoint is `https://<fqdn>/mcp`.
 
 - `--min-replicas 0` scales to zero when idle, so an unused server costs nothing. The first call after an idle spell takes 5 to 15 seconds. Use `--min-replicas 1` to keep a server warm, for example during lab week.
-- The servers are stateless, so they scale out freely across replicas.
+- The finance servers are stateless, so they scale out freely across replicas.
+- **Notion:** use `--max-replicas 1`. It keeps each conversation's write changes in memory, so a second replica would serve a different copy. Scaling to zero or restarting clears those changes, which is fine: each lab conversation starts from the seed. During the lab, set `--min-replicas 1` so changes aren't lost mid-session.
 - Optional settings go in `--env-vars`, for example `--env-vars LOG_LEVEL=DEBUG MOCK_NOW=2026-11-18T09:00:00Z`. See the settings table in [README.md](README.md#run-locally).
 
 ## 5. Verify

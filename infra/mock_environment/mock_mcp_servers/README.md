@@ -9,7 +9,7 @@ Mock MCP servers for the third-party connectors used in the scenarios. Each serv
 | [`lseg/`](lseg/README.md) | Finance | **Built.** I/B/E/S estimates and actuals, Worldscope fundamentals, pricing, news, symbology |
 | [`factset/`](factset/README.md) | Finance | **Built.** Metrics search, entity reference, RBICS, fundamentals, consensus, prices |
 | [`moodys/`](moodys/README.md) | Finance | **Built.** Entity search, ratings and history, credit opinions |
-| [`notion/`](notion/README.md) | Productivity | Data spec: Verdantis Aurora Launch Tracker (7 rows), Aurora Launch Plan, Launch Decision Log with 2 prior decisions, 2 decoy trackers |
+| [`notion/`](notion/README.md) | Productivity | **Built.** Search, fetch, query, and page and data-source writes kept per conversation. Aurora launch tracker, launch plan, decision log, 2 decoy trackers |
 | [`verdantis_hub/`](verdantis_hub/README.md) | Productivity | Not an MCP server. Intranet pages are seeded in the tenant (`intranetwebsite`); README documents them |
 
 ## How the built servers work
@@ -22,7 +22,7 @@ Every server has the same three layers:
 | Logic | `<server>/mock_<server>/` | One class per tool: name, description, JSON input schema, extra validation and `run()`. Errors use the real server's wording and shape. |
 | Fallback | `mockmcp.Seeded` | When a request goes beyond the recorded data (another quarter, peer or date window), values are generated from the company model with a seed derived from the inputs. The same request always gets the same answer. |
 
-Read-only tools are marked with the MCP `readOnlyHint` annotation. Write tools (planned for legal) will need per-session state; the framework doesn't provide that yet.
+Read-only tools are marked with the MCP `readOnlyHint` annotation. Each tool call receives the host's `x-microsoft-ai-conversationid` header as `ctx.conversation_id`. Notion uses it to keep write changes per conversation (see [notion/README.md](notion/README.md#how-writes-work)).
 
 ## Layout
 
@@ -30,7 +30,7 @@ Read-only tools are marked with the MCP `readOnlyHint` annotation. Write tools (
 mock_mcp_servers/
 ├── _framework/mockmcp/     # Shared: Tool base class, server spec, HTTP/stdio app, errors, seeded RNG, test helpers
 ├── _domains/finance/       # Shared finance model (mockfin): 8 semiconductor companies, calendars, financials, prices
-├── lseg/  factset/  moodys/
+├── lseg/  factset/  moodys/  notion/
 │   ├── mock_<server>/      # Tools and server spec (python -m mock_<server>)
 │   ├── seed_files/         # Server-specific data
 │   ├── tests/              # Trace replay and behaviour tests; tests/fixtures holds the recorded calls
@@ -84,6 +84,6 @@ docker build -f lseg/Dockerfile -t mock-lseg:latest .
 docker run -p 8000:8000 mock-lseg:latest
 ```
 
-Each image runs one server over stateless streamable HTTP on port 8000, which suits Azure Container Apps (ingress to port 8000, health probe `/healthz`, any number of replicas).
+Each image runs one server over stateless streamable HTTP on port 8000, which suits Azure Container Apps (ingress to port 8000, health probe `/healthz`). The finance servers can run any number of replicas. Notion keeps write state in memory, so it must run exactly one.
 
 See [DEPLOYMENT.md](DEPLOYMENT.md) for the Azure setup, update steps, troubleshooting and the live server URLs. See [COST_ESTIMATE.md](COST_ESTIMATE.md) for hosting costs and capacity during the lab.

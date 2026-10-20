@@ -9,6 +9,7 @@ Microsoft 365 app packages for the lab's third-party connectors. Each package is
 | `lseg/` | Test_LSEG | 8 | `https://mock-lseg.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` | `gim-home/skill-studio`: `connector-skills-packages/lseg/MOSified/v0_20260918/basic` |
 | `moodys/` | Test_Moodys | 7 | `https://mock-moodys.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` | `gim-home/skill-studio`: `connector-skills-packages/moodys/MOSified/v0_20260918/withConstraints` |
 | `factset/` | Test_FactSet | None | `https://mock-factset.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` | `gim-home/M365FCCMOSPackages`: `mos-packages/factset/inDev/factset.zip` |
+| `notion/` | Test_Notion | None | `https://mock-notion.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` | Written for this lab, no source package. Uses the same manifest layout |
 
 ## Changes from the source packages
 
@@ -24,7 +25,7 @@ Icons and `skills/` are copied unchanged. `addendum.json` (internal publishing r
 
 ## Build packages
 
-The ready-to-upload packages are `test_lseg.zip`, `test_moodys.zip` and `test_factset.zip` in this folder. After changing a plugin, rebuild them:
+The ready-to-upload packages are `test_lseg.zip`, `test_moodys.zip`, `test_factset.zip` and `test_notion.zip` in this folder. After changing a plugin, rebuild them:
 
 ```powershell
 python infra\mock_environment\mock_plugins\build_plugins.py              # all plugins

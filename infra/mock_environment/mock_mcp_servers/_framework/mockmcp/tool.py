@@ -40,6 +40,8 @@ class Clock:
 class CallContext:
     tool: str
     clock: Clock
+    # Host-supplied conversation key (x-microsoft-ai-conversationid); None on stdio or when absent.
+    conversation_id: str | None = None
 
 
 @dataclass(frozen=True)

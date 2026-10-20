@@ -106,6 +106,9 @@ Northwind delay and link the playbook page.
 > [!NOTE]
 > Write actions run in Notion as you, with your permissions, and only after you approve. The card offers **Allow once**, **Allow for conversation** or **Always allow**. The choice applies per tool. You can reset it in **Settings › Sources › Test_Notion**.
 
+> [!IMPORTANT]
+> Test_Notion is shared by everyone in the lab, so your changes are kept only **in this conversation**. Ask Copilot to show the tracker here and you'll see them. A new conversation, or this one after about 2 hours, shows the original data.
+
 The playbook said split shipments must be logged, and now this one is.
 
 ## Step 4: Email the partner and book the approval
@@ -146,6 +149,7 @@ Build me an interactive dashboard app from the Aurora launch tracker.
 | Copilot picks the wrong tracker | "Use the Verdantis Aurora Launch Tracker database." |
 | The policy answer comes from general knowledge | "Search Verdantis Hub for the Retail Partner Launch Playbook." |
 | A connector shows as not connected | Ask a proctor. The `Test_…` connectors are pre-configured. |
+| Your Notion changes are gone | They're kept only in the conversation that made them. Go back to that conversation, or redo Step 3. |
 
 ## Checkpoint
 
