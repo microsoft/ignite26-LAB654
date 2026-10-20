@@ -57,7 +57,7 @@ To get a token, sign in to the portal and copy the `Authorization` bearer value 
 |----------|--------|-------------|----------------|
 | Legal | [scenario](../../docs/scenarios/legal/scenario.md), [seed kit](../../docs/scenarios/legal/seed_kit.md) | `tools/scenarios/legal/`: 3 users, 1 email, 2 chats | `mock_mcp_servers/imanage/seed_files/` |
 | Finance | [scenario](../../docs/scenarios/finance/scenario.md) | `tools/scenarios/finance/`: 1 user (+ Marcus), 1 chat | Pending: data specs in `mock_mcp_servers/lseg/`, `factset/`, `moodys/` |
-| Productivity | [scenario](../../docs/scenarios/productivity/scenario.md) | `tools/scenarios/productivity/`: 2 users (+ Marcus), 1 email, 7 intranet pages (Verdantis Hub) | Pending: data specs in `mock_mcp_servers/smartsheet/`, `notion/` |
+| Productivity | [scenario](../../docs/scenarios/productivity/scenario.md) | `tools/scenarios/productivity/`: 2 users (+ Marcus), 1 email, 7 intranet pages (Verdantis Hub) | Pending: data spec in `mock_mcp_servers/notion/` |
 
 To add a scenario, create a module or package under `tools/scenarios/` that exposes `users()`, `emails()`, `chats()`, `events()` and `files()`, and optionally `intranetpages()` and `build_documents(files_dir)`. Then add it to `SCENARIOS` in `build_tenant.py`.
 

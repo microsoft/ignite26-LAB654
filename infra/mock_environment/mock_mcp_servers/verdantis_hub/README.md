@@ -10,8 +10,8 @@ The pages are seeded straight into the COEP tenant as `intranetwebsite` items, b
 
 | Step | What Copilot asks Verdantis Hub for |
 |------|--------------------------------|
-| 2 | Is shipping signage on Oct 27 allowed? Who approves a split? Is there a backup print vendor? Answer must cite the current playbook, not the archived one |
-| 5 | The partner communication structure for the email to Riley |
+| 2 | Is shipping signage on Oct 27 allowed? Who approves a split? Answer must cite the current playbook, not the archived one |
+| 4 | The partner communication structure for the email to Riley |
 
 ## Pages
 

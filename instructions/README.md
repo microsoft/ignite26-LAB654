@@ -14,11 +14,11 @@ Welcome! In this hands-on lab you'll connect trusted data sources to Microsoft 3
 
 | # | Module | What you'll do | Time |
 |---|---|---|---|
-| 1 | [Introduction](01-introduction.md) | Meet Marcus at Verdantis; learn the synced, federated and hybrid connector models | ~5 min |
+| 1 | [Introduction](01-introduction.md) | Meet Marcus at Verdantis; learn the synced and federated connector models | ~5 min |
 | 2 | [Getting started with connectors](02-getting-started.md) | Find, connect and try your connectors | ~10 min |
 | 3 | [Finance track](03-finance.md) | Build an NVIDIA investment committee pack with LSEG, FactSet and Moody's | ~18 min |
 | 4 | [Legal track](04-legal.md) | Review and redline an AI vendor contract with Work IQ, Harvey and iManage | ~15 min |
-| 5 | [Productivity track](05-productivity.md) | Fix a slipped launch plan across Smartsheet, Notion and the intranet | ~10 min (+3) |
+| 5 | [Productivity track](05-productivity.md) | Fix a slipped launch plan across Notion and the intranet | ~10 min (+3) |
 | 6 | [Summary](06-summary.md) | Recap and next steps | ~2 min |
 
 ## Before you begin

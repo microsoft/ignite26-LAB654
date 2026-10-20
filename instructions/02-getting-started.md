@@ -25,8 +25,7 @@ Sign in as Marcus, find the connectors this lab uses, check they're ready, and a
     | Test_LSEG | Finance | Federated | Pre-configured for the lab |
     | Test_FactSet | Finance | Federated | Pre-configured for the lab |
     | Test_Moodys | Finance | Federated | Pre-configured for the lab |
-    | Test_iManage | Legal | Federated | Pre-configured for the lab |
-    | Test_Smartsheet | Productivity | Hybrid | Pre-configured for the lab |
+    | Test_iManage | Legal | Federated | Pre-configured for the lab |
     | Test_Notion | Productivity | Federated | Pre-configured for the lab |
     | Verdantis Hub (Test_Intranet) | Productivity | Synced | Pre-configured for the lab |
 

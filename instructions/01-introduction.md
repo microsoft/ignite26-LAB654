@@ -26,25 +26,24 @@ By the end of this lab, you'll be able to:
 |---|---|---|---|
 | [Finance](03-finance.md) | Jordan, who runs the Verdantis investment portfolio: "Should we buy more NVIDIA? Bring a recommendation to Monday's investment committee." | LSEG, FactSet, Moody's · equity research and company analysis skills · Excel, Word | ~18 min |
 | [Legal](04-legal.md) | Tomás, Chief Underwriting Officer: "Can we sign Cognivault's $14.75M AI underwriting contract on the 15th?" | Work IQ (email and Teams), Harvey, Test_iManage · Word Legal Agent · Copilot Cowork | ~15 min |
-| [Productivity](05-productivity.md) | A print vendor just slipped, putting the Aurora smart-home hub's retail launch at risk. Fix the plan before standup. | Test_Smartsheet, Test_Notion, Verdantis Hub (Test_Intranet) · Email and Scheduling skills · Copilot Cowork | ~10 min (+3 stretch) |
+| [Productivity](05-productivity.md) | A print vendor just slipped, putting the Aurora smart-home hub's retail launch at risk. Fix the plan before standup. | Test_Notion, Verdantis Hub (Test_Intranet) · Email and Scheduling skills · Copilot Cowork | ~10 min (+3 stretch) |
 
 Everyone completes [Getting started with connectors](02-getting-started.md) first. Then **pick two tracks**. If you finish early, try the third on your own.
 
 ## Key ideas
 
-### Three ways a connector brings data to Copilot
+### Two ways a connector brings data to Copilot
 
 | Model | How it works | Example in this lab |
 |---|---|---|
 | **Synced** | An admin indexes the content once into Microsoft Graph, so everyone's Copilot can search it. Read-only. | Verdantis Hub (Test_Intranet) |
-| **Federated** | Copilot calls the source live through an MCP server, signed in as you. Can read and write. | Test_Notion, Test_iManage, Test_LSEG, Test_FactSet, Test_Moodys |
-| **Hybrid** | Both: an index helps Copilot find the right item fast, and live tools read the latest values and make changes. | Test_Smartsheet |
+| **Federated** | Copilot calls the source live through an MCP server, signed in as you. Can read and write. | Test_Notion, Test_iManage, Test_LSEG, Test_FactSet, Test_Moodys |
 
 ### Skills, plugins and write actions
 
 - **Connector skills** package a partner's expertise, such as an analyst playbook. Copilot loads a skill when your request needs it, so you get the partner's method as well as their data.
 - **Plugins** bundle a connector and its skills into one package that an admin deploys once. After that, the connector and skills work across the Copilot experiences that support them.
-- **Write actions** let Copilot change things in the source system, such as updating a Smartsheet row or creating a Notion page. You see a confirmation card first, and nothing changes until you approve it.
+- **Write actions** let Copilot change things in the source system, such as updating a Notion tracker row or adding a decision log entry. You see a confirmation card first, and nothing changes until you approve it.
 
 > [!NOTE]
 > This lab runs in a demo tenant with fictional people and companies. Financial and legal outputs are for the exercise only. They aren't investment or legal advice.

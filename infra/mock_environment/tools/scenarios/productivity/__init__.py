@@ -9,10 +9,10 @@ The doc asks the M365 tenant for:
   Retail). The unnamed "Aurora core team" is not seeded.
 - Riley's email to the launch lead asking for the POS kit ETA (doc 6.1). The
   doc gives only its gist; the wording here is authored.
-- Verdantis Hub intranet pages (doc 6.4), seeded as COEP intranetwebsite items
+- Verdantis Hub intranet pages (doc 6.3), seeded as COEP intranetwebsite items
   so the synced Enterprise Websites connector has content to ground on.
 
-Smartsheet and Notion data are served by the mock MCP servers, not the tenant.
+Notion data is served by the mock MCP server, not the tenant.
 
 One lab account plays every domain, so the launch lead is Marcus Hollowell
 (defined by the legal module, which is already in the tenant) instead of the
@@ -326,7 +326,7 @@ PAGES = [
 <h2>Who owns the Verdantis Lumen launch?</h2>
 <p>The Lumen launch team in Product Marketing owns the launch plan, partner communication and launch event.</p>
 <h2>Where is the launch tracker?</h2>
-<p>In Smartsheet, under "Verdantis Lumen Launch Tracker". Ask the Lumen launch team for access.</p>
+<p>In Notion, under "Verdantis Lumen Launch Tracker". Ask the Lumen launch team for access.</p>
 <h2>Which retail partners are carrying Lumen?</h2>
 <p>Lumen launches online first. Retail partners will be confirmed later; until then, don't commit dates or materials to any partner.</p>
 <h2>Are there POS kits for Lumen?</h2>

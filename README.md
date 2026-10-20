@@ -63,7 +63,7 @@ If you're learning at your own pace:
 By the end of this session, you will be able to:
 
 - Discover and connect Copilot connectors, and use connected data across Microsoft 365 experiences
-- Ground Copilot in trusted enterprise and partner data with citations, using synced, federated, and hybrid connectors
+- Ground Copilot in trusted enterprise and partner data with citations, using synced and federated connectors
 - Complete end-to-end workflows with connector skills, plugins, and write actions that you approve
 
 ### 💻 Technologies used

@@ -9,8 +9,7 @@ Mock MCP servers for the third-party connectors used in the scenarios. Each serv
 | [`lseg/`](lseg/README.md) | Finance | **Built.** I/B/E/S estimates and actuals, Worldscope fundamentals, pricing, news, symbology |
 | [`factset/`](factset/README.md) | Finance | **Built.** Metrics search, entity reference, RBICS, fundamentals, consensus, prices |
 | [`moodys/`](moodys/README.md) | Finance | **Built.** Entity search, ratings and history, credit opinions |
-| [`smartsheet/`](smartsheet/README.md) | Productivity | Data spec: Verdantis Aurora Launch Tracker (11 rows, 3 comments), 3 decoy sheets, per-seat copies |
-| [`notion/`](notion/README.md) | Productivity | Data spec: Aurora Launch Plan, Weekly Sync – Oct 6, Launch Decision Log with 3 prior decisions |
+| [`notion/`](notion/README.md) | Productivity | Data spec: Verdantis Aurora Launch Tracker (7 rows), Aurora Launch Plan, Launch Decision Log with 2 prior decisions, 2 decoy trackers |
 | [`verdantis_hub/`](verdantis_hub/README.md) | Productivity | Not an MCP server. Intranet pages are seeded in the tenant (`intranetwebsite`); README documents them |
 
 ## How the built servers work
