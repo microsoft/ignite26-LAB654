@@ -9,7 +9,7 @@ Each mock MCP server runs as its own Azure Container App. All of them share one 
 | LSEG | `mock-lseg` | `mock-lseg:v1` | `https://mock-lseg.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` |
 | FactSet | `mock-factset` | `mock-factset:v1` | `https://mock-factset.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` |
 | Moody's | `mock-moodys` | `mock-moodys:v1` | `https://mock-moodys.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` |
-| Notion | `mock-notion` | Not deployed yet | `https://mock-notion.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` (expected) |
+| Notion | `mock-notion` | `mock-notion:v1` | `https://mock-notion.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` |
 
 Health checks are at the same host with `/healthz` instead of `/mcp`. Every app runs 0.5 vCPU and 1 GiB. The finance apps run 0 to 3 replicas (scale to zero when idle). Notion runs 0 to 1 replica, because it keeps each conversation's write changes in memory.
 
