@@ -9,7 +9,7 @@ Microsoft 365 app packages for the lab's third-party connectors. Each package is
 | `lseg/` | Test_LSEG | 8 | `https://mock-lseg.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` | `gim-home/skill-studio`: `connector-skills-packages/lseg/MOSified/v0_20260918/basic` |
 | `moodys/` | Test_Moodys | 7 | `https://mock-moodys.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` | `gim-home/skill-studio`: `connector-skills-packages/moodys/MOSified/v0_20260918/withConstraints` |
 | `factset/` | Test_FactSet | None | `https://mock-factset.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` | `gim-home/M365FCCMOSPackages`: `mos-packages/factset/inDev/factset.zip` |
-| `notion/` | Test_Notion | None | `https://mock-notion.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` | Written for this lab, no source package. Uses the same manifest layout |
+| `notion/` | Test_Notion | 4 | `https://mock-notion.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` | `gim-home/skill-studio`: `connector-skills-packages/notion/MOSified/v0_20260902/basic` |
 
 ## Changes from the source packages
 
@@ -22,6 +22,7 @@ Icons and `skills/` are copied unchanged. `addendum.json` (internal publishing r
 | `developer` | Tezan Sahu, with this repo's URL for the website, privacy and terms links | Not published by Microsoft or the data provider |
 | `mcpServerUrl` | Mock server URL | Serves mock data |
 | `authorization` | Removed | Mock servers need no sign-in |
+| `description.full` (Notion only) | "Does not create or edit" sentence replaced with one saying it can create pages and update properties | The lab's productivity flow updates tracker rows |
 
 ## Build packages
 

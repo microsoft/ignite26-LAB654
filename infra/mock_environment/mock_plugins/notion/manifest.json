@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.29/MicrosoftTeams.schema.json",
   "manifestVersion": "1.29",
-  "version": "1.0.0",
+  "version": "1.3.0",
   "id": "67a65af7-b4ee-46f7-9dfa-add3b4f2c68f",
   "developer": {
     "name": "Tezan Sahu",
@@ -14,24 +14,38 @@
     "full": "Test_Notion"
   },
   "description": {
-    "short": "Search, read and update pages and databases in Notion.",
-    "full": "Notion is a connected workspace for docs, wikis, projects and databases. Use this connector to search the Verdantis Notion workspace, read launch plans, query launch trackers and decision logs, and update task status, dates and notes. This is a mock version of the Notion connector built for the LAB654 Ignite lab; changes are kept only within the current conversation and reset after about 2 hours."
+    "short": "Search your docs, wikis, notes, tasks, and databases.",
+    "full": "Find what your team already wrote down, without leaving your work. Notion brings your connected Notion workspace into Microsoft 365 Copilot, so you can ask for a page, a project or a set of tasks in plain language and get the content back in the answer.\n\nWho it's for: teams who keep their docs, wikis, project trackers and meeting notes in Notion and need that context while working in Microsoft 365.\n\nWhat you can do:\n\n- Search your workspace for pages, docs, notes and boards by keyword.\n- Search databases, projects and tasks, and read their properties.\n- Open a specific page or database from its URL or ID.\n- Look up people in the workspace.\n- Pull roadmap, project and task context into an answer alongside your other work.\n\nGood to know: this connector can also create pages and update page properties, such as task status, dates and notes. Results reflect only the workspace and pages your Notion account can already access.\n\nAvailable in Microsoft 365 Copilot. A Notion account is required. To sign up, visit https://www.notion.com."
   },
   "icons": {
     "color": "color.png",
     "outline": "outline.png"
   },
-  "accentColor": "#191919",
+  "accentColor": "#000000",
   "agentConnectors": [
     {
       "id": "b4153df7-dadd-43f1-b7de-cf117c43b640",
       "displayName": "Test_Notion",
-      "description": "Use this tool to search, read and update the Notion workspace: pages, databases, data sources and database rows (for example launch plans, launch trackers and decision logs).\nKeywords: Notion, page, database, tracker, decision log, launch plan, task status, due date, owner, workspace",
+      "description": "Search and retrieve content from the user's Notion workspace, including pages, databases, projects, tasks, notes, docs, and boards. Use notion-search to find content by query or look up workspace users. Use notion-fetch when the user references a specific page or database by URL or ID.\nKeywords: workspace, project, database, page, table, task, note, doc, board, roadmap",
       "toolSource": {
         "remoteMcpServer": {
           "mcpServerUrl": "https://mock-notion.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp"
         }
       }
+    }
+  ],
+  "agentSkills": [
+    {
+      "folder": "./skills/notion-knowledge-capture"
+    },
+    {
+      "folder": "./skills/notion-meeting-intelligence"
+    },
+    {
+      "folder": "./skills/notion-research-documentation"
+    },
+    {
+      "folder": "./skills/notion-spec-to-implementation"
     }
   ]
 }
