@@ -9,7 +9,7 @@ Mock MCP servers for the third-party connectors used in the scenarios. Each serv
 | [`lseg/`](lseg/README.md) | Finance | **Built.** I/B/E/S estimates and actuals, Worldscope fundamentals, pricing, news, symbology |
 | [`factset/`](factset/README.md) | Finance | **Built.** Metrics search, entity reference, RBICS, fundamentals, consensus, prices |
 | [`moodys/`](moodys/README.md) | Finance | **Built.** Entity search, ratings and history, credit opinions |
-| [`notion/`](notion/README.md) | Productivity | **Built.** Search, fetch, query, and page and data-source writes kept per conversation. Aurora launch tracker, launch plan, decision log, 2 decoy trackers |
+| [`notion/`](notion/README.md) | Productivity | **Built.** Search, fetch, query, and page and data-source writes kept per conversation, and a Notion-style page viewer so returned links open. Aurora launch tracker, launch plan, decision log, 2 decoy trackers |
 | [`verdantis_hub/`](verdantis_hub/README.md) | Productivity | Not an MCP server. Intranet pages are seeded in the tenant (`intranetwebsite`); README documents them |
 
 ## How the built servers work
@@ -55,6 +55,8 @@ python -m mock_moodys --transport stdio   # for a local MCP client
 | `HOST`, `PORT` | `0.0.0.0`, `8000` | HTTP bind address |
 | `LOG_LEVEL` | `INFO` | Logs go to stderr |
 | `MOCK_NOW` | `2026-10-16T09:00:00Z` | The server's "now". All "latest", "last quarter" and date-window answers are relative to it. |
+| `PUBLIC_BASE_URL` | unset | Notion only: public address of the server. When set, tool results link to its page viewer instead of `app.notion.com`. See [notion/README.md](notion/README.md#page-viewer). |
+| `NOTION_VIEW_SECRET` | random per process | Notion only: key for the page viewer's link tokens. Set it to keep links stable across restarts. |
 | `CORS_ORIGIN_REGEX` | Copilot's widget renderer, plus `localhost` | Regex of browser origins allowed to call the server. Microsoft 365 Copilot renders MCP Apps widgets on `*.widget-renderer.usercontent.microsoft.com`. |
 
 ### MCP Apps widgets

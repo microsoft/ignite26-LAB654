@@ -9,9 +9,9 @@ Each mock MCP server runs as its own Azure Container App. All of them share one 
 | LSEG | `mock-lseg` | `mock-lseg:v1` | `https://mock-lseg.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` |
 | FactSet | `mock-factset` | `mock-factset:v1` | `https://mock-factset.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` |
 | Moody's | `mock-moodys` | `mock-moodys:v1` | `https://mock-moodys.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` |
-| Notion | `mock-notion` | `mock-notion:v1` | `https://mock-notion.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` |
+| Notion | `mock-notion` | `mock-notion:v2` | `https://mock-notion.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` |
 
-Health checks are at the same host with `/healthz` instead of `/mcp`. Every app runs 0.5 vCPU and 1 GiB. The finance apps run 0 to 3 replicas (scale to zero when idle). Notion runs 0 to 1 replica, because it keeps each conversation's write changes in memory.
+Health checks are at the same host with `/healthz` instead of `/mcp`. Every app runs 0.5 vCPU and 1 GiB. The finance apps run 0 to 3 replicas (scale to zero when idle). Notion runs 0 to 1 replica, because it keeps each conversation's write changes in memory. Its page viewer is at the same host under `/p/...` (for example, the root URL opens the workspace).
 
 ## Azure resources
 
@@ -96,7 +96,7 @@ The command prints the FQDN. The MCP endpoint is `https://<fqdn>/mcp`.
 
 - `--min-replicas 0` scales to zero when idle, so an unused server costs nothing. The first call after an idle spell takes 5 to 15 seconds. Use `--min-replicas 1` to keep a server warm, for example during lab week.
 - The finance servers are stateless, so they scale out freely across replicas.
-- **Notion:** use `--max-replicas 1`. It keeps each conversation's write changes in memory, so a second replica would serve a different copy. Scaling to zero or restarting clears those changes, which is fine: each lab conversation starts from the seed. During the lab, set `--min-replicas 1` so changes aren't lost mid-session.
+- **Notion:** use `--max-replicas 1`. It keeps each conversation's write changes in memory, so a second replica would serve a different copy. Scaling to zero or restarting clears those changes, which is fine: each lab conversation starts from the seed. During the lab, set `--min-replicas 1` so changes aren't lost mid-session. Also set `--env-vars PUBLIC_BASE_URL=https://<app FQDN>` (create the app first, read its FQDN, then `az containerapp update --set-env-vars ...`) so links in tool results open its page viewer.
 - Optional settings go in `--env-vars`, for example `--env-vars LOG_LEVEL=DEBUG MOCK_NOW=2026-11-18T09:00:00Z`. See the settings table in [README.md](README.md#run-locally).
 
 ## 5. Verify

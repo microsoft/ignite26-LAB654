@@ -102,12 +102,13 @@ Northwind delay and link the playbook page.
 1. Expand the card and review the parameters: which row or page, and which values.
 2. Select **Allow once**.
 3. Copilot confirms both changes.
+4. Optional: select a Notion link in the answer. It opens a mock Notion page that shows your changes.
 
 > [!NOTE]
 > Write actions run in Notion as you, with your permissions, and only after you approve. The card offers **Allow once**, **Allow for conversation** or **Always allow**. The choice applies per tool. You can reset it in **Settings › Sources › Test_Notion**.
 
 > [!IMPORTANT]
-> Test_Notion is shared by everyone in the lab, so your changes are kept only **in this conversation**. Ask Copilot to show the tracker here and you'll see them. A new conversation, or this one after about 2 hours, shows the original data.
+> Test_Notion is shared by everyone in the lab, so your changes are kept only **in this conversation**. Ask Copilot to show the tracker here, or open the Notion links from this conversation, and you'll see them. A new conversation, or this one after about 2 hours, shows the original data.
 
 The playbook said split shipments must be logged, and now this one is.
 

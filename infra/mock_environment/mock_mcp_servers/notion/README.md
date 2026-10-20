@@ -33,6 +33,20 @@ The server has no sign-in, so it can't tell lab seats apart. Microsoft 365 Copil
 
 State lives in memory, so run **one replica** (`--max-replicas 1`). A restart or redeploy clears every conversation's changes.
 
+## Page viewer
+
+The server also serves browsable, read-only HTML pages in Notion's light theme, so the links in tool results open. Each page has a sidebar, breadcrumbs, and a red **Mock Notion · LAB654** badge saying whether it shows a conversation's changes or the original data. Pages, databases (table view with coloured select pills) and database rows (properties, then content) all render. Content is escaped, so nothing in a page can run script.
+
+| Route | Shows |
+|-------|-------|
+| `/` | Redirects to the workspace's top page |
+| `/p/{id}` | The original (seed) data |
+| `/v/{token}/p/{id}` | One conversation's data: its edits and the pages it created |
+
+Set `PUBLIC_BASE_URL` to the server's public address (no trailing slash) to turn this on. Tool results then link to `{base}/v/{token}/p/{id}` when the call has a conversation ID, and `{base}/p/{id}` otherwise. Without it, links stay `https://app.notion.com/p/{id}`. The tools also accept the viewer URLs as page IDs.
+
+The token is the first 20 hex characters of an HMAC-SHA256 of the conversation ID, so a link reveals neither the ID nor any other conversation's data. It's the same before and after the first write, so earlier links keep working. When the conversation's state has expired, or the server restarted, the page shows the original data with a notice. The HMAC key is random per process; set `NOTION_VIEW_SECRET` to keep links stable across restarts (the changes themselves are still lost).
+
 ## Run locally
 
 From `infra/mock_environment/mock_mcp_servers`:
@@ -40,6 +54,7 @@ From `infra/mock_environment/mock_mcp_servers`:
 ```powershell
 $env:PYTHONPATH = "_framework;notion"
 python -m mock_notion            # streamable HTTP on :8000/mcp
+$env:PUBLIC_BASE_URL = "http://127.0.0.1:8000"   # optional: links open the local page viewer
 python -m pytest notion          # tests
 ```
 

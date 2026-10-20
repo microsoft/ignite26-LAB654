@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import json
 
-from .common import page_url
+from .common import page_url, rewrite_links
 from .store import Workspace
 
 SQL_COMMENTS = {
@@ -198,7 +198,7 @@ def page_fetch(ws: Workspace, page: dict, db: dict | None, as_of: str) -> dict:
         title = next((page["properties"].get(p["name"]) for p in db["schema"] if p["type"] == "title"), "") or ""
         ancestors = ancestor_path(ws, None, data_source=db)
         path = " / ".join(filter(None, [ws.path(db.get("parent_id")), db["title"]]))
-    content = page.get("content", "")
+    content = rewrite_links(page.get("content", ""))
     refs = child_refs(ws, page["id"]) if db is None else []
     if refs:
         content = (content + "\n" if content else "") + "\n".join(refs)

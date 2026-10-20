@@ -10,7 +10,10 @@ evicted). One conversation never sees another's overlay.
 from __future__ import annotations
 
 import copy
+import hashlib
+import hmac
 import json
+import os
 import threading
 import time
 from collections import OrderedDict
@@ -89,6 +92,7 @@ class StateStore:
         ttl_seconds: float = 2 * 3600,
         max_entries: int = 5000,
         monotonic: Callable[[], float] = time.monotonic,
+        secret: bytes | None = None,
     ) -> None:
         self._seed = Workspace(seed)
         self._ttl = ttl_seconds
@@ -96,6 +100,12 @@ class StateStore:
         self._now = monotonic
         self._lock = threading.RLock()
         self._overlays: "OrderedDict[str, tuple[float, Workspace]]" = OrderedDict()
+        # View tokens let a browser open a conversation's pages without knowing its ID. They are an
+        # HMAC of the conversation ID, so they can't be guessed or reversed; the secret is per process
+        # unless NOTION_VIEW_SECRET is set (overlays don't survive a restart either).
+        env_secret = os.environ.get("NOTION_VIEW_SECRET")
+        self._secret = secret or (env_secret.encode() if env_secret else os.urandom(32))
+        self._tokens: dict[str, str] = {}
 
     @classmethod
     def from_file(cls, path: Path = SEED_PATH, **kwargs) -> "StateStore":
@@ -108,6 +118,7 @@ class StateStore:
             if touched >= cutoff:
                 break
             del self._overlays[key]
+            self._tokens.pop(self.view_token(key), None)
 
     def _touch(self, key: str) -> Workspace | None:
         entry = self._overlays.get(key)
@@ -138,12 +149,29 @@ class StateStore:
             if ws is None:
                 ws = Workspace(copy.deepcopy(self._seed.data))
                 self._overlays[conversation_id] = (self._now(), ws)
+                self._tokens[self.view_token(conversation_id)] = conversation_id
                 while len(self._overlays) > self._max:
-                    self._overlays.popitem(last=False)
+                    evicted, _ = self._overlays.popitem(last=False)
+                    self._tokens.pop(self.view_token(evicted), None)
             # Apply to a scratch copy so a failed write leaves the overlay untouched.
             scratch = Workspace(copy.deepcopy(ws.data))
             yield scratch
             ws.data = scratch.data
+
+    def view_token(self, conversation_id: str) -> str:
+        """20 hex chars: short enough never to look like a 32-hex Notion ID inside a URL."""
+        return hmac.new(self._secret, conversation_id.encode(), hashlib.sha256).hexdigest()[:20]
+
+    def read_by_token(self, token: str | None) -> tuple[Workspace, bool]:
+        """(workspace, True) for a live conversation's overlay; otherwise (seed, False)."""
+        with self._lock:
+            self._purge()
+            conversation_id = self._tokens.get(token or "")
+            if conversation_id:
+                found = self._touch(conversation_id)
+                if found is not None:
+                    return found, True
+            return self._seed, False
 
     def __len__(self) -> int:
         with self._lock:

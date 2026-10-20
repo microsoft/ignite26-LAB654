@@ -151,3 +151,82 @@ def test_deterministic():
 def test_healthz():
     client = StarletteClient(build_asgi_app(build_spec()))
     assert client.get("/healthz").status_code == 200
+
+
+# --- page viewer --------------------------------------------------------------------------------------------------
+
+BASE = "https://mock.example"
+
+
+@pytest.fixture
+def web():
+    store = StateStore.from_file(secret=b"test")
+    spec = build_spec(store, public_base_url=BASE)
+    return spec, store, StarletteClient(build_asgi_app(spec))
+
+
+def local(url):
+    assert url.startswith(BASE)
+    return url[len(BASE):]
+
+
+def test_links_stay_app_notion_without_base_url(spec):
+    assert print_row(spec, "conv-a")["url"].startswith("https://app.notion.com/p/")
+
+
+def test_links_point_at_viewer_with_view_token(web):
+    spec, store, _ = web
+    assert print_row(spec)["url"].startswith(f"{BASE}/p/")
+    assert print_row(spec, "conv-a")["url"].startswith(f"{BASE}/v/{store.view_token('conv-a')}/p/")
+    text = call(spec, "notion-fetch", {"id": TRACKER["id"]}, "conv-a").json["text"]
+    assert "app.notion.com" not in text
+
+
+def test_viewer_urls_round_trip_into_tools(web):
+    spec, _, _ = web
+    url = print_row(spec, "conv-a")["url"]
+    assert call(spec, "notion-fetch", {"id": url}, "conv-a").ok
+    assert call(spec, "notion-update-page", {"page_id": url, "command": "update_properties",
+                                             "properties": {"Status": "At Risk"}}, "conv-a").ok
+
+
+def test_database_and_row_pages_render(web):
+    spec, _, client = web
+    db = client.get(f"/p/{TRACKER['id'].replace('-', '')}")
+    assert db.status_code == 200
+    assert "Verdantis Aurora Launch Tracker" in db.text and "Print brochures" in db.text
+    assert "MOCK NOTION" in db.text and "original workspace" in db.text
+    row = client.get(local(print_row(spec)["url"]))
+    assert row.status_code == 200 and "In Progress" in row.text and "October 16, 2026" in row.text
+
+
+def test_viewer_shows_conversation_changes_only_with_its_token(web):
+    spec, _, client = web
+    url = print_row(spec, "conv-a")["url"]
+    call(spec, "notion-update-page", {"page_id": url, "command": "update_properties",
+                                      "properties": {"Status": "At Risk"}}, "conv-a")
+    scoped = client.get(local(url))
+    assert "At Risk" in scoped.text and "this conversation" in scoped.text
+    plain = client.get(local(print_row(spec)["url"]))
+    assert "At Risk" not in plain.text.split('<div class="props">')[1].split("</div></div></div>")[0]
+    other = client.get(local(print_row(spec, "conv-b")["url"]))
+    assert "No saved changes" in other.text
+
+
+def test_created_page_opens_in_viewer(web):
+    spec, _, client = web
+    created = call(spec, "notion-create-pages", {"pages": [{"properties": {"title": "Retro <notes>"},
+                                                            "content": "## Wins\n- [x] **Shipped** <script>x</script>"}]},
+                   "conv-a").json
+    url = created["pages"][0]["url"]
+    page = client.get(local(url))
+    assert page.status_code == 200
+    assert "Retro &lt;notes&gt;" in page.text and "&lt;script&gt;" in page.text and "<script>" not in page.text
+    assert client.get(local(url.replace(url.split("/v/")[1].split("/")[0], "0" * 20))).status_code == 404
+
+
+def test_viewer_not_found_and_bad_token(web):
+    _, _, client = web
+    assert client.get("/p/deadbeef").status_code == 404
+    assert client.get("/v/not-a-token/p/x").status_code == 404
+    assert client.get("/", follow_redirects=False).headers["location"].startswith("/p/")

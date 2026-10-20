@@ -8,7 +8,7 @@ from typing import Any
 
 from mockmcp import CallContext, Tool
 
-from .common import NotionError, dashed, not_found, page_url, parse_ref, stable_uuid
+from .common import APP, NotionError, dashed, link_prefix, not_found, page_url, parse_ref, stable_uuid
 from .render import (
     collection_url,
     compact,
@@ -35,8 +35,20 @@ def option_id(*parts: str) -> str:
 
 
 class NotionTool(Tool):
-    def __init__(self, store: StateStore) -> None:
+    def __init__(self, store: StateStore, public_base_url: str | None = None) -> None:
         self.store = store
+        self.public_base_url = (public_base_url or "").rstrip("/") or None
+
+    def run(self, args: dict, ctx: CallContext) -> Any:
+        prefix = APP
+        if self.public_base_url:
+            scope = f"/v/{self.store.view_token(ctx.conversation_id)}" if ctx.conversation_id else ""
+            prefix = f"{self.public_base_url}{scope}/p/"
+        with link_prefix(prefix):
+            return self.handle(args, ctx)
+
+    def handle(self, args: dict, ctx: CallContext) -> Any:
+        raise NotImplementedError
 
 
 # --- notion-search ----------------------------------------------------------------------------------------------
@@ -93,7 +105,7 @@ class Search(NotionTool):
         "required": ["query"],
     }
 
-    def run(self, args: dict, ctx: CallContext) -> Any:
+    def handle(self, args: dict, ctx: CallContext) -> Any:
         ws = self.store.read(ctx.conversation_id)
         query = args["query"]
         if args.get("query_type") == "user":
@@ -181,7 +193,7 @@ class Fetch(NotionTool):
         "required": ["id"],
     }
 
-    def run(self, args: dict, ctx: CallContext) -> Any:
+    def handle(self, args: dict, ctx: CallContext) -> Any:
         ws = self.store.read(ctx.conversation_id)
         ref = parse_ref(args["id"])
         if not ref:
@@ -304,7 +316,7 @@ class QueryDataSources(NotionTool):
             raise not_found(url)
         return db
 
-    def run(self, args: dict, ctx: CallContext) -> Any:
+    def handle(self, args: dict, ctx: CallContext) -> Any:
         ws = self.store.read(ctx.conversation_id)
         data = args["data"]
         urls = data.get("data_source_urls") or ([data["data_source_url"]] if data.get("data_source_url") else [])
@@ -443,7 +455,7 @@ class UpdatePage(NotionTool):
         "required": ["page_id", "command"],
     }
 
-    def run(self, args: dict, ctx: CallContext) -> Any:
+    def handle(self, args: dict, ctx: CallContext) -> Any:
         ref = parse_ref(args["page_id"])
         if not ref:
             raise NotionError(f"Invalid page ID: {args['page_id']}")
@@ -529,7 +541,7 @@ class CreatePages(NotionTool):
         "required": ["pages"],
     }
 
-    def run(self, args: dict, ctx: CallContext) -> Any:
+    def handle(self, args: dict, ctx: CallContext) -> Any:
         parent = args.get("parent") or {}
         created = []
         with self.store.write(ctx.conversation_id) as ws:
@@ -670,7 +682,7 @@ class UpdateDataSource(NotionTool):
         "required": ["data_source_id"],
     }
 
-    def run(self, args: dict, ctx: CallContext) -> Any:
+    def handle(self, args: dict, ctx: CallContext) -> Any:
         ref = parse_ref(args["data_source_id"])
         with self.store.write(ctx.conversation_id) as ws:
             db = ref and (ws.data_source(ref[1]) or ws.database(ref[1]))

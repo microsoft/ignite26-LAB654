@@ -2,10 +2,13 @@
 
 from __future__ import annotations
 
+import contextlib
+import contextvars
 import hashlib
 import json
 import re
 import uuid
+from typing import Iterator
 
 from mockmcp import InvalidParams, ToolError, UpstreamError, dumps
 
@@ -19,9 +22,32 @@ def dashed(hex_or_uuid: str) -> str:
     return f"{h[0:8]}-{h[8:12]}-{h[12:16]}-{h[16:20]}-{h[20:32]}"
 
 
+_APP_LINK = re.compile(r"https://(?:app\.notion\.com/p/|(?:www\.)?notion\.so/(?:[\w-]+/)?)(?:[\w-]*?-)?([0-9a-f]{32})")
+# Where page links point for the current tool call: the real Notion domain, or this server's own
+# page viewer (with the conversation's view token) when PUBLIC_BASE_URL is set.
+_LINK_PREFIX: contextvars.ContextVar[str] = contextvars.ContextVar("notion_link_prefix", default=APP)
+
+
+@contextlib.contextmanager
+def link_prefix(prefix: str) -> Iterator[None]:
+    token = _LINK_PREFIX.set(prefix)
+    try:
+        yield
+    finally:
+        _LINK_PREFIX.reset(token)
+
+
 def page_url(object_id: str, pvs: bool = False) -> str:
-    url = APP + object_id.replace("-", "")
+    url = _LINK_PREFIX.get() + object_id.replace("-", "")
     return url + "?pvs=204" if pvs else url
+
+
+def rewrite_links(text: str, prefix: str | None = None) -> str:
+    """Point app.notion.com / notion.so page links in stored content at the current link prefix."""
+    target = prefix if prefix is not None else _LINK_PREFIX.get()
+    if target == APP:
+        return text
+    return _APP_LINK.sub(lambda m: target + m.group(1), text)
 
 
 def parse_ref(ref: str) -> tuple[str, str] | None:

@@ -63,6 +63,8 @@ class ServerSpec:
     render_error: ErrorRenderer = default_renderer
     clock_factory: Callable[[], Clock] = Clock.from_env
     resources: list[UiResource] = field(default_factory=list)
+    # Extra Starlette routes served next to /mcp (for example browsable pages); HTTP transport only.
+    routes: list[Any] = field(default_factory=list)
     _by_name: dict[str, Tool] = field(init=False, repr=False)
     _by_uri: dict[str, UiResource] = field(init=False, repr=False)
 
@@ -220,7 +222,8 @@ def build_asgi_app(spec: ServerSpec, path: str = "/mcp"):
             yield
 
     return Starlette(
-        routes=[Route(path, endpoint=_McpEndpoint(), methods=["GET", "POST", "DELETE"]), Route("/healthz", healthz)],
+        routes=[Route(path, endpoint=_McpEndpoint(), methods=["GET", "POST", "DELETE"]), Route("/healthz", healthz),
+                *spec.routes],
         middleware=[
             # M365 Copilot renders MCP Apps on {hash}.widget-renderer.usercontent.microsoft.com and
             # may call the server from that origin; localhost covers local MCP Apps hosts.

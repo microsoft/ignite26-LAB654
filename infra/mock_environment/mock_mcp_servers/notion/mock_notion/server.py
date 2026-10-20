@@ -2,10 +2,13 @@
 
 from __future__ import annotations
 
+import os
+
 from mockmcp import Clock, ServerSpec
 
 from .common import render_error
 from .store import StateStore
+from .web import build_routes
 from .tools import CreatePages, Fetch, QueryDataSources, Search, UpdateDataSource, UpdatePage
 
 NAME = "notion"
@@ -20,10 +23,13 @@ INSTRUCTIONS = (
 )
 
 
-def build_spec(store: StateStore | None = None) -> ServerSpec:
+def build_spec(store: StateStore | None = None, public_base_url: str | None = None) -> ServerSpec:
+    """``public_base_url`` (or env PUBLIC_BASE_URL) makes tool results link to this server's own page viewer."""
     if store is None:
         store = StateStore.from_file()
-    tools = [Search(store), Fetch(store), QueryDataSources(store), UpdatePage(store), CreatePages(store),
-             UpdateDataSource(store)]
+    if public_base_url is None:
+        public_base_url = os.environ.get("PUBLIC_BASE_URL") or None
+    tools = [cls(store, public_base_url) for cls in
+             (Search, Fetch, QueryDataSources, UpdatePage, CreatePages, UpdateDataSource)]
     return ServerSpec(NAME, VERSION, tools, instructions=INSTRUCTIONS, render_error=render_error,
-                      clock_factory=lambda: Clock.from_env(TODAY))
+                      clock_factory=lambda: Clock.from_env(TODAY), routes=build_routes(store))
