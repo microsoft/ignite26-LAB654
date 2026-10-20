@@ -88,3 +88,57 @@ def test_healthz(spec):
     with TestClient(build_asgi_app(spec)) as client:
         body = client.get("/healthz").json()
     assert body["status"] == "ok" and body["server"] == spec.name and body["tools"] == len(spec.tools)
+
+WIDGETS = {
+    "qa_ibes_consensus": "ui://lseg/ibes",
+    "historical_pricing_summaries": "ui://lseg/pricing",
+    "qa_company_fundamentals": "ui://lseg/fundamentals",
+}
+
+
+def test_widget_tools_declare_their_ui_resource(spec):
+    meta = {t.name: (t.meta or {}) for t in spec.list_tools()}
+    for tool, uri in WIDGETS.items():
+        assert meta[tool]["ui"]["resourceUri"] == uri
+        assert meta[tool]["ui/resourceUri"] == uri
+    assert "ui" not in meta["important_company_news"] and "ui" not in meta["symbology_lookup"]
+
+
+def test_widgets_are_served_as_self_contained_mcp_apps(spec):
+    import asyncio
+    import re
+
+    from mcp import types
+    from mockmcp import UI_MIME_TYPE
+    from mockmcp.app import build_server
+
+    listed = {str(r.uri): r for r in spec.list_resources()}
+    assert set(listed) == set(WIDGETS.values())
+    assert all(r.mimeType == UI_MIME_TYPE for r in listed.values())
+
+    handler = build_server(spec).request_handlers[types.ReadResourceRequest]
+    for uri in WIDGETS.values():
+        req = types.ReadResourceRequest(method="resources/read", params=types.ReadResourceRequestParams(uri=uri))
+        contents = asyncio.run(handler(req)).root.contents
+        assert len(contents) == 1 and contents[0].mimeType == UI_MIME_TYPE
+        html = contents[0].text
+        assert html.startswith("<!doctype html>") and "window.Kit" in html and "ui/initialize" in html
+        assert "include:" not in html
+        assert not re.search(r"""(src|href)\s*=\s*["']?(https?:)?//""", html), uri
+
+
+def test_fundamentals_return_structured_content(spec):
+    out = call(spec, "qa_company_fundamentals", {"requests": [{"dataType": "qa_company_fundamentals", "options": {
+        "identifier": "NVDA", "type": "Ticker", "measures": "1001,5201", "year": "2024,2025", "freq": "A"}}]})
+    assert out.ok, out.text
+    assert out.result.structuredContent["data"] == out.json
+
+
+def test_cors_allows_the_m365_widget_renderer(spec):
+    origin = "https://abc123.widget-renderer.usercontent.microsoft.com"
+    with TestClient(build_asgi_app(spec)) as client:
+        ok = client.options("/mcp", headers={"Origin": origin, "Access-Control-Request-Method": "POST",
+                                             "Access-Control-Request-Headers": "content-type,mcp-session-id"})
+        bad = client.options("/mcp", headers={"Origin": "https://evil.example.com", "Access-Control-Request-Method": "POST"})
+    assert ok.status_code == 200 and ok.headers["access-control-allow-origin"] == origin
+    assert "access-control-allow-origin" not in bad.headers

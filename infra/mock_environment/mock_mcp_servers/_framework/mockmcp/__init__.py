@@ -13,6 +13,7 @@ from .formatting import iso_z, tidy, us_datetime
 from .schema import collect_issues, validate
 from .seeded import AnchoredSeries, Seeded, bounded, round_sig, split_weights, stable_hash
 from .tool import READ_ONLY, CallContext, Clock, Tool, ToolOutput
+from .ui import UI_MIME_TYPE, UiResource, load_html
 
 __all__ = [
     "AnchoredSeries",
@@ -27,6 +28,8 @@ __all__ = [
     "Tool",
     "ToolError",
     "ToolOutput",
+    "UI_MIME_TYPE",
+    "UiResource",
     "UpstreamError",
     "bounded",
     "build_asgi_app",
@@ -35,6 +38,7 @@ __all__ = [
     "default_renderer",
     "dumps",
     "iso_z",
+    "load_html",
     "main",
     "round_sig",
     "split_weights",

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QA Company Fundamentals</title>
+<!-- include:_kit.css.html -->
+<style>.tbl td.strong { white-space: normal; min-width: 200px; max-width: 300px; }</style>
+</head>
+<body>
+<div id="app"><div class="card"><div class="empty">Waiting for LSEG fundamentals…</div></div></div>
+<!-- include:_kit.js.html -->
+<script>
+(function () {
+  "use strict";
+  var K = window.Kit, h = K.h;
+  var app = document.getElementById("app");
+  var FREQ = { A: "Annual", Q: "Quarterly", S: "Semi-annual" };
+
+  function card(title, body) {
+    return h("div", { class: "card" }, h("div", { class: "card-head" }, h("h2", { class: "card-title" }, title)), body);
+  }
+
+  function render(result) {
+    app.innerHTML = "";
+    if (result.isError) {
+      var t = (result.content || []).map(function (c) { return c.text || ""; }).join("");
+      app.appendChild(card("QA Company Fundamentals", h("div", { class: "error" }, t)));
+      return;
+    }
+    var p = K.payload(result) || {};
+    var items = Array.isArray(p.data) ? p.data : [];
+    var rows = [], ids = {};
+    items.forEach(function (it) {
+      var resp = it.response || {}, data = resp.data || {}, opts = it.options || {};
+      if (resp.success === false || it.error) { app.appendChild(card("QA Company Fundamentals", h("div", { class: "error" }, resp.message || it.error))); return; }
+      var id = opts.identifier || data.qaCode || "";
+      ids[id] = 1;
+      (data.fundamentals || []).forEach(function (f) { rows.push(Object.assign({ _id: id, _end: K.parseDate(f.fiscalPeriodEndDate) }, f)); });
+    });
+    if (!rows.length) {
+      if (!app.firstChild) app.appendChild(card("QA Company Fundamentals", h("div", { class: "empty" }, "No fundamentals returned.")));
+      return;
+    }
+    var cols = [];
+    if (Object.keys(ids).length > 1) cols.push({ key: "_id", label: "Identifier", cls: "strong" });
+    cols = cols.concat([
+      { key: "item", label: "Code", align: "right" },
+      { key: "itemName", label: "Description", cls: "strong" },
+      { key: "year", label: "Year", align: "right" },
+      { key: "freq", label: "Freq", render: function (r) { return FREQ[r.freq] || r.freq; } },
+      { key: "value", label: "Value", align: "right", render: function (r) { return K.num(r.value, 4); } },
+      { key: "currencyOfDocument", label: "Currency" },
+      { key: "itemUnits", label: "Unit Type" },
+      { key: "seq", label: "Seq", align: "right" },
+      { key: "_end", label: "Fiscal Period End", render: function (r) { return K.isoDate(r._end); } },
+      { key: "periodUpdateDescription", label: "Status" }
+    ]);
+    rows.sort(function (a, b) { return a.item - b.item || a.year - b.year || a.seq - b.seq; });
+    app.appendChild(card("QA Company Fundamentals", K.table(cols, rows)));
+  }
+
+  K.start({ result: render });
+})();
+</script>
+</body>
+</html>

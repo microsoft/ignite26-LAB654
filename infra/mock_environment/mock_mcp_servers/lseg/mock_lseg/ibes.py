@@ -80,6 +80,7 @@ class MeasureCatalog:
 
 class QaIbesConsensus(Tool):
     name = "qa_ibes_consensus"
+    ui_resource = "ui://lseg/ibes"
     title = "LSEG I/B/E/S estimates and actuals"
     description = (
         "Query LSEG I/B/E/S (QA Direct) data in a batch. Each request has a dataType and options:\n"

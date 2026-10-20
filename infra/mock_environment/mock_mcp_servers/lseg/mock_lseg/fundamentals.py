@@ -21,6 +21,7 @@ UNIT_DIGITS = {"USD": 0, "SHARES": 0, "USD/SHARE": 4, "PERCENT": 2}
 
 class QaCompanyFundamentals(Tool):
     name = "qa_company_fundamentals"
+    ui_resource = "ui://lseg/fundamentals"
     title = "LSEG Worldscope company fundamentals"
     description = (
         "Retrieve Worldscope company fundamentals (QA Direct) by item code. Each request: "
@@ -73,12 +74,13 @@ class QaCompanyFundamentals(Tool):
     def observed(self) -> dict[tuple, dict]:
         return {(r["qaCode"], r["item"], r["freq"], r["year"], r["seq"]): r for r in self.worldscope["observed"]}
 
-    def run(self, args: dict, ctx: CallContext) -> list:
+    def run(self, args: dict, ctx: CallContext) -> ToolOutput:
         requests = self._validate(args)
-        return [
+        out = [
             {"dataType": r["dataType"], "options": _echo(r["options"]), "response": self._handle(r["options"], ctx)}
             for r in requests
         ]
+        return ToolOutput(out, {"data": out})
 
     def _validate(self, args: dict) -> list[dict]:
         issues = Issues()

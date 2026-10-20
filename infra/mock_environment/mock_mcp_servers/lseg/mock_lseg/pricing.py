@@ -41,6 +41,7 @@ CONSTANT = {"TRD_STATUS": 1, "SALTIM": 72000, "NAVALUE": None}
 
 class HistoricalPricingSummaries(Tool):
     name = "historical_pricing_summaries"
+    ui_resource = "ui://lseg/pricing"
     title = "LSEG historical pricing summaries"
     description = (
         "Interday pricing summaries (OHLC, volume, VWAP, bid/ask, turnover) for one or more instruments. "

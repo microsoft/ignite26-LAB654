@@ -1,0 +1,232 @@
+<script>
+/* Shared kit for LSEG mock widgets: MCP Apps bridge, DOM helpers, formatters and a data table. */
+(function () {
+  "use strict";
+  var NS = "http://www.w3.org/2000/svg";
+
+  function h(tag, attrs) {
+    var el = document.createElement(tag);
+    setAttrs(el, attrs);
+    for (var i = 2; i < arguments.length; i++) append(el, arguments[i]);
+    return el;
+  }
+  function s(tag, attrs) {
+    var el = document.createElementNS(NS, tag);
+    for (var k in attrs || {}) if (attrs[k] != null) el.setAttribute(k, attrs[k]);
+    for (var i = 2; i < arguments.length; i++) append(el, arguments[i]);
+    return el;
+  }
+  function setAttrs(el, attrs) {
+    for (var k in attrs || {}) {
+      var v = attrs[k];
+      if (v == null || v === false) continue;
+      if (k === "class") el.className = v;
+      else if (k === "html") el.innerHTML = v;
+      else if (k.slice(0, 2) === "on") el.addEventListener(k.slice(2), v);
+      else el.setAttribute(k, v === true ? "" : v);
+    }
+  }
+  function append(el, child) {
+    if (child == null || child === false) return;
+    if (Array.isArray(child)) { child.forEach(function (c) { append(el, c); }); return; }
+    el.appendChild(typeof child === "object" ? child : document.createTextNode(String(child)));
+  }
+
+  var I = {
+    sliders: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M2 4h7M12 4h2M2 12h2M7 12h7"/><circle cx="10.5" cy="4" r="1.6"/><circle cx="5.5" cy="12" r="1.6"/></svg>',
+    funnel: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><path d="M2.5 3.5h11l-4.2 5v4l-2.6 1v-5z"/></svg>',
+    chart: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M2 13.5h12M4.5 11V7M8 11V4M11.5 11V8.5"/></svg>',
+    table: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="2" y="2.5" width="12" height="11" rx="1.5"/><path d="M2 6.2h12M2 9.8h12M6.5 2.5v11"/></svg>',
+    close: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg>',
+    chevron: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>'
+  };
+  function iconBtn(name, title, onclick) {
+    return h("button", { class: "icon-btn", title: title, "aria-label": title, type: "button", html: I[name], onclick: onclick });
+  }
+
+  /* ---------- formatting ---------- */
+  function num(v, digits) {
+    if (v == null || v === "" || isNaN(v)) return "";
+    var d = digits == null ? (Math.abs(v) >= 1000 ? 0 : Math.abs(v) >= 1 ? 2 : 4) : digits;
+    return Number(v).toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: d });
+  }
+  function fixed(v, d) {
+    if (v == null || isNaN(v)) return "";
+    return Number(v).toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d });
+  }
+  function compact(v) {
+    if (v == null || isNaN(v)) return "";
+    var a = Math.abs(v), u = [[1e12, "T"], [1e9, "B"], [1e6, "M"], [1e3, "K"]];
+    for (var i = 0; i < u.length; i++) if (a >= u[i][0]) return (v / u[i][0]).toFixed(1) + u[i][1];
+    return num(v);
+  }
+  function money(v) { return v == null ? "" : (v < 0 ? "-$" : "$") + fixed(Math.abs(v), 2); }
+  /* Accepts "2026-07-31", "2026-07-31T00:00:00Z" and "07/31/2026 00:00:00". Returns a UTC Date. */
+  function parseDate(v) {
+    if (!v) return null;
+    var m = /^(\d{2})\/(\d{2})\/(\d{4})/.exec(v);
+    if (m) return new Date(Date.UTC(+m[3], +m[1] - 1, +m[2]));
+    m = /^(\d{4})-(\d{2})-(\d{2})/.exec(v);
+    if (m) return new Date(Date.UTC(+m[1], +m[2] - 1, +m[3]));
+    var d = new Date(v);
+    return isNaN(d) ? null : d;
+  }
+  function isoDate(d) { return d ? d.toISOString().slice(0, 10) : ""; }
+  function usDate(d) { return d ? d.toLocaleDateString("en-US", { timeZone: "UTC", month: "2-digit", day: "2-digit", year: "numeric" }) : ""; }
+  function fmtDate(d, opts) { return d ? d.toLocaleDateString("en-US", Object.assign({ timeZone: "UTC" }, opts)) : ""; }
+
+  /* ---------- table ---------- */
+  /* columns: [{key, label, align:"right", render(row)->node|string, value(row)->sortable, cls}] */
+  function table(columns, rows, opts) {
+    opts = opts || {};
+    var state = { key: opts.sortKey || null, dir: opts.sortDir || 1, filters: {} };
+    var wrap = h("div", { class: "tbl-wrap" });
+    var foot = h("div", { class: "tbl-foot" });
+    var root = h("div", null, wrap, foot);
+    var pop = null;
+    function val(c, r) { return c.value ? c.value(r) : r[c.key]; }
+    function text(c, r) {
+      var v = c.render ? c.render(r) : val(c, r);
+      return v == null ? "" : (typeof v === "object" ? v.textContent : String(v));
+    }
+    function closePop() { if (pop) { pop.remove(); pop = null; } }
+    function openPop(c, anchor) {
+      closePop();
+      var input = h("input", { placeholder: "Filter " + c.label + "…", value: state.filters[c.key] || "" });
+      input.addEventListener("input", function () { state.filters[c.key] = input.value; draw(true); });
+      input.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === "Escape") closePop(); });
+      var r = anchor.getBoundingClientRect();
+      pop = h("div", { class: "pop", style: "position:fixed;top:" + (r.bottom + 4) + "px;left:" + Math.max(4, Math.min(r.left - 150, window.innerWidth - 210)) + "px" }, input);
+      document.body.appendChild(pop);
+      input.focus();
+    }
+    document.addEventListener("mousedown", function (e) { if (pop && !pop.contains(e.target) && !e.target.closest(".flt")) closePop(); });
+    function draw(keepHead) {
+      var list = rows.filter(function (r) {
+        return columns.every(function (c) {
+          var f = (state.filters[c.key] || "").trim().toLowerCase();
+          return !f || text(c, r).toLowerCase().indexOf(f) >= 0;
+        });
+      });
+      if (state.key) {
+        var col = columns.filter(function (c) { return c.key === state.key; })[0];
+        list.sort(function (a, b) {
+          var x = val(col, a), y = val(col, b);
+          if (x == null) return 1; if (y == null) return -1;
+          return (x < y ? -1 : x > y ? 1 : 0) * state.dir;
+        });
+      }
+      var tbody = h("tbody", null, list.map(function (r) {
+        return h("tr", null, columns.map(function (c) {
+          var v = c.render ? c.render(r) : val(c, r);
+          return h("td", { class: [c.align === "right" ? "num" : "", c.cls || ""].join(" ") }, v == null ? "" : v);
+        }));
+      }));
+      if (!keepHead || !wrap.firstChild) {
+        var thead = h("thead", null, h("tr", null, columns.map(function (c) {
+          var arrow = state.key === c.key ? (state.dir > 0 ? "↑" : "↓") : "";
+          var flt = h("button", { class: "icon-btn flt" + (state.filters[c.key] ? " on" : ""), type: "button", title: "Filter", html: I.funnel,
+            onclick: function (e) { e.stopPropagation(); openPop(c, e.currentTarget); } });
+          return h("th", { class: c.align === "right" ? "num" : "" },
+            h("span", { class: "th", onclick: function () {
+              if (state.key === c.key) state.dir = -state.dir; else { state.key = c.key; state.dir = 1; }
+              draw();
+            } }, c.label, h("span", { class: "sort" }, arrow)), flt);
+        })));
+        wrap.innerHTML = "";
+        wrap.appendChild(h("table", { class: "tbl" }, thead, tbody));
+      } else {
+        var t = wrap.querySelector("table");
+        t.replaceChild(tbody, t.tBodies[0]);
+        wrap.querySelectorAll("th .flt").forEach(function (b, i) { b.classList.toggle("on", !!state.filters[columns[i].key]); });
+      }
+      foot.textContent = list.length === rows.length ? rows.length + " rows" : list.length + " of " + rows.length + " rows";
+    }
+    draw();
+    return root;
+  }
+
+  /* ---------- MCP Apps bridge (io.modelcontextprotocol/ui, 2026-01-26) ---------- */
+  var seq = 0, pending = {}, onResult = null, onInput = null, lastResult = null;
+  function post(msg) { if (window.parent && window.parent !== window) window.parent.postMessage(msg, "*"); }
+  function request(method, params) {
+    var id = ++seq;
+    post({ jsonrpc: "2.0", id: id, method: method, params: params || {} });
+    return new Promise(function (resolve, reject) {
+      pending[id] = { resolve: resolve, reject: reject };
+      setTimeout(function () { if (pending[id]) { delete pending[id]; reject(new Error(method + " timed out")); } }, 15000);
+    });
+  }
+  function notify(method, params) { post({ jsonrpc: "2.0", method: method, params: params || {} }); }
+  function applyContext(ctx) {
+    if (!ctx) return;
+    var root = document.documentElement;
+    if (ctx.theme) root.setAttribute("data-theme", ctx.theme);
+    var vars = ctx.styles && ctx.styles.variables;
+    for (var k in vars || {}) if (vars[k] != null) root.style.setProperty(k, vars[k]);
+  }
+  function deliver(result) {
+    if (!result) return;
+    lastResult = result;
+    if (onResult) onResult(result);
+  }
+  window.addEventListener("message", function (e) {
+    var m = e.data;
+    if (!m || m.jsonrpc !== "2.0") return;
+    if (m.method == null && m.id != null && pending[m.id]) {
+      var p = pending[m.id]; delete pending[m.id];
+      if (m.error) p.reject(m.error); else p.resolve(m.result);
+      return;
+    }
+    switch (m.method) {
+      case "ui/notifications/tool-input": if (onInput) onInput(m.params && m.params.arguments); break;
+      case "ui/notifications/tool-result": deliver(m.params); break;
+      case "ui/notifications/host-context-changed": applyContext(m.params); break;
+      case "ui/resource-teardown": post({ jsonrpc: "2.0", id: m.id, result: {} }); break;
+      default:
+        if (m.id != null && m.method) post({ jsonrpc: "2.0", id: m.id, error: { code: -32601, message: "Method not found" } });
+    }
+  });
+  function reportSize() {
+    /* Measure the body, not the document: the document never shrinks below the iframe's current height. */
+    var r = document.body.getBoundingClientRect();
+    notify("ui/notifications/size-changed", { width: Math.ceil(Math.max(r.width, document.body.scrollWidth)), height: Math.ceil(r.height) });
+  }
+  function start(handlers) {
+    onResult = handlers.result;
+    onInput = handlers.input;
+    if (window.ResizeObserver) new ResizeObserver(reportSize).observe(document.body);
+    /* OpenAI Apps SDK hosts expose the result as window.openai.toolOutput (structured content). */
+    var oa = window.openai;
+    if (oa && oa.toolOutput) deliver({ structuredContent: oa.toolOutput });
+    window.addEventListener("openai:set_globals", function (e) {
+      var g = (e.detail && e.detail.globals) || {};
+      if (g.theme) applyContext({ theme: g.theme });
+      if (g.toolOutput) deliver({ structuredContent: g.toolOutput });
+    });
+    request("ui/initialize", {
+      appCapabilities: { availableDisplayModes: ["inline"] },
+      clientInfo: { name: "lseg-mock-widget", version: "1.0.0" },
+      protocolVersion: "2026-01-26"
+    }).then(function (res) {
+      applyContext(res && res.hostContext);
+      notify("ui/notifications/initialized", {});
+    }).catch(function () { /* Not hosted (e.g. opened directly); nothing to do. */ });
+  }
+  /* structuredContent first; fall back to parsing the text content. */
+  function payload(result) {
+    if (!result) return null;
+    if (result.structuredContent != null) return result.structuredContent;
+    var t = (result.content || []).filter(function (c) { return c.type === "text"; }).map(function (c) { return c.text; }).join("");
+    try { return { data: JSON.parse(t) }; } catch (e) { return { text: t }; }
+  }
+
+  window.Kit = {
+    h: h, s: s, I: I, iconBtn: iconBtn, table: table,
+    num: num, fixed: fixed, compact: compact, money: money,
+    parseDate: parseDate, isoDate: isoDate, usDate: usDate, fmtDate: fmtDate,
+    start: start, payload: payload, request: request, notify: notify,
+    last: function () { return lastResult; }
+  };
+})();
+</script>

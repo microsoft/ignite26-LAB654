@@ -21,6 +21,18 @@ Mock of the LSEG MCP server for the [finance scenario](../../../../docs/scenario
 | `important_company_news` | Reuters headlines for a date window | Yes |
 | `symbology_lookup` | Identifier conversion (ticker, RIC, ISIN, CUSIP, SEDOL, PermID) | No |
 
+## Widgets
+
+Three tools return MCP Apps widgets that mimic the live LSEG widgets in Microsoft 365 Copilot. The HTML is in `mock_lseg/ui/`.
+
+| Tool | Resource | Widget |
+|------|----------|--------|
+| `qa_ibes_consensus` | `ui://lseg/ibes` | Actual vs. consensus chart, filters panel and a Tabulate table view |
+| `historical_pricing_summaries` | `ui://lseg/pricing` | Candlestick chart with hover details, and a table view |
+| `qa_company_fundamentals` | `ui://lseg/fundamentals` | Sortable, filterable table of Worldscope items |
+
+No plugin manifest change is needed: Copilot discovers widgets from the tool's `_meta.ui.resourceUri`.
+
 ## Data
 
 - `seed_files/`: the I/B/E/S measure catalogue, Worldscope item definitions, NVIDIA bars and news recorded in the trace, and the coverage list.

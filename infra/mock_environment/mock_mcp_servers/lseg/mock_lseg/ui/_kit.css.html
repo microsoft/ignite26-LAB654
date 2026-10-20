@@ -1,0 +1,70 @@
+<style>
+  :root {
+    --bg: var(--color-background-primary, #ffffff);
+    --bg-2: var(--color-background-secondary, #f6f7f9);
+    --fg: var(--color-text-primary, #1b1d22);
+    --fg-2: var(--color-text-secondary, #5f6672);
+    --line: var(--color-border-primary, #e3e6eb);
+    --accent: #5b5fe6;
+    --up: #1f9d55;
+    --down: #e0453a;
+    --s1: #6a72f5;
+    --s2: #2fb7a6;
+    --s3: #3d2f86;
+    --s4: #9b8fd6;
+    --radius: var(--border-radius-lg, 10px);
+    font-family: var(--font-sans, "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif);
+    color: var(--fg);
+    background: transparent;
+    font-size: 13px;
+  }
+  :root[data-theme="dark"] {
+    --bg: var(--color-background-primary, #1f2126);
+    --bg-2: var(--color-background-secondary, #2a2d33);
+    --fg: var(--color-text-primary, #eceef2);
+    --fg-2: var(--color-text-secondary, #a5abb6);
+    --line: var(--color-border-primary, #3a3e46);
+    --s3: #8f83e8;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 0; }
+  .card { position: relative; background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; overflow: hidden; }
+  .card + .card { margin-top: 12px; }
+  .card-head { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+  .card-title { font-size: 15px; font-weight: 600; margin: 0; }
+  .spacer { flex: 1; }
+  .icon-btn { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border: 1px solid transparent; border-radius: 6px; background: transparent; color: var(--fg-2); cursor: pointer; padding: 0; }
+  .icon-btn:hover { background: var(--bg-2); color: var(--fg); }
+  .icon-btn.on { background: var(--bg-2); border-color: var(--line); color: var(--fg); }
+  .icon-btn svg { width: 16px; height: 16px; }
+  .muted { color: var(--fg-2); }
+  .empty { padding: 24px; text-align: center; color: var(--fg-2); }
+  .error { padding: 12px 14px; border-radius: 8px; background: rgba(224, 69, 58, .08); color: var(--down); }
+
+  /* Table */
+  .tbl-wrap { overflow: auto; max-height: 420px; border: 1px solid var(--line); border-radius: 8px; }
+  table.tbl { border-collapse: separate; border-spacing: 0; width: max-content; min-width: 100%; font-variant-numeric: tabular-nums; }
+  .tbl th, .tbl td { padding: 9px 14px; border-bottom: 1px solid var(--line); white-space: nowrap; text-align: left; }
+  .tbl th { position: sticky; top: 0; background: var(--bg); font-weight: 600; z-index: 1; }
+  .tbl th .th { display: inline-flex; align-items: center; gap: 4px; cursor: pointer; user-select: none; }
+  .tbl th .sort { width: 12px; color: var(--fg-2); }
+  .tbl th .flt { width: 20px; height: 20px; margin-left: 2px; vertical-align: middle; }
+  .tbl th .flt.on { color: var(--accent); }
+  .tbl td.num, .tbl th.num { text-align: right; }
+  .tbl tr:last-child td { border-bottom: none; }
+  .tbl tbody tr:hover td { background: var(--bg-2); }
+  .tbl td.strong { font-weight: 600; }
+  .badge { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+  .badge.blue { background: rgba(91, 95, 230, .12); color: #4a4fd6; }
+  .badge.green { background: rgba(31, 157, 85, .12); color: var(--up); }
+  .pop { position: absolute; z-index: 5; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 6px 20px rgba(0,0,0,.12); padding: 8px; }
+  .pop input { width: 180px; padding: 6px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--fg); font: inherit; }
+  .tbl-foot { margin-top: 8px; font-size: 12px; color: var(--fg-2); }
+
+  /* Chart tooltip */
+  .tip { position: absolute; pointer-events: none; z-index: 4; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 6px 20px rgba(0,0,0,.12); padding: 8px 10px; font-size: 12px; line-height: 1.55; display: none; white-space: nowrap; }
+  .tip b { font-weight: 600; }
+  .sw { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+  svg text { fill: var(--fg-2); font-size: 11px; }
+  .grid line { stroke: var(--line); }
+</style>

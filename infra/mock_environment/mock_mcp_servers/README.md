@@ -55,6 +55,17 @@ python -m mock_moodys --transport stdio   # for a local MCP client
 | `HOST`, `PORT` | `0.0.0.0`, `8000` | HTTP bind address |
 | `LOG_LEVEL` | `INFO` | Logs go to stderr |
 | `MOCK_NOW` | `2026-10-16T09:00:00Z` | The server's "now". All "latest", "last quarter" and date-window answers are relative to it. |
+| `CORS_ORIGIN_REGEX` | Copilot's widget renderer, plus `localhost` | Regex of browser origins allowed to call the server. Microsoft 365 Copilot renders MCP Apps widgets on `*.widget-renderer.usercontent.microsoft.com`. |
+
+### MCP Apps widgets
+
+A tool can return an interactive widget ([MCP Apps](https://modelcontextprotocol.io/extensions/apps/overview)). To add one:
+
+1. Put a self-contained HTML file in the server's `ui/` folder. No external scripts, styles or fonts: the host blocks network access. `<!-- include:NAME -->` inlines another file from the same folder.
+2. Register it in the server spec with `UiResource(uri="ui://<server>/<name>", ...)` and `load_html(...)` from `mockmcp.ui`.
+3. Set `ui_resource = "ui://<server>/<name>"` on the tool, and return `structuredContent` so the widget gets the data.
+
+The HTML is loaded at startup, so restart the server after editing a widget. Only LSEG has widgets; Moody's and FactSet don't have them on the live servers either.
 
 ## Test
 

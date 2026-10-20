@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QA IBES</title>
+<!-- include:_kit.css.html -->
+<style>
+  .chart-box { position: relative; }
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 18px; justify-content: center; margin-top: 6px; font-size: 12px; color: var(--fg); }
+  .legend span { display: inline-flex; align-items: center; }
+  .bar { cursor: pointer; transition: opacity .12s; }
+  .bars:hover .bar { opacity: .45; }
+  .bars:hover .bar:hover { opacity: 1; }
+  .axis-title { font-size: 12px; }
+  .panel { position: absolute; top: 0; right: 0; bottom: 0; width: 300px; max-width: 100%; background: var(--bg); border-left: 1px solid var(--line); box-shadow: -8px 0 24px rgba(0,0,0,.08); padding: 14px 16px; overflow: auto; z-index: 6; display: none; }
+  .panel.open { display: block; }
+  .card:has(> .panel.open) { min-height: 400px; }
+  .panel h3 { margin: 0; font-size: 15px; font-weight: 600; }
+  .panel .sec { margin-top: 16px; }
+  .panel .lbl { font-size: 12px; font-weight: 600; margin-bottom: 8px; }
+  .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; padding: 2px; background: var(--bg-2); }
+  .seg button { border: 0; background: transparent; padding: 5px 14px; border-radius: 6px; font: inherit; color: var(--fg-2); cursor: pointer; }
+  .seg button.on { background: var(--bg); color: var(--fg); box-shadow: 0 1px 2px rgba(0,0,0,.08); font-weight: 600; }
+  .collapse { display: flex; align-items: center; justify-content: space-between; width: 100%; border: 0; background: transparent; font: inherit; font-weight: 600; font-size: 12px; color: var(--fg); padding: 0; cursor: pointer; }
+  .collapse svg { width: 14px; height: 14px; transition: transform .15s; }
+  .collapse.closed svg { transform: rotate(-90deg); }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { border: 1px solid var(--line); background: var(--bg); color: var(--fg); border-radius: 999px; padding: 4px 10px; font: inherit; font-size: 12px; cursor: pointer; }
+  .chip.on { background: rgba(91,95,230,.12); border-color: var(--accent); color: var(--accent); }
+  .chip .x { margin-left: 6px; }
+  .none { font-size: 12px; color: var(--fg-2); }
+</style>
+</head>
+<body>
+<div id="app"><div class="card"><div class="empty">Waiting for LSEG I/B/E/S data…</div></div></div>
+<!-- include:_kit.js.html -->
+<script>
+(function () {
+  "use strict";
+  var K = window.Kit, h = K.h, s = K.s;
+  var app = document.getElementById("app");
+  var COLORS = ["var(--s1)", "var(--s2)", "var(--s3)", "var(--s4)", "#e39b3b", "#d4577b", "#3b8fe3", "#7aa340"];
+  var TITLES = { qa_ibes_actuals: "QA IBES Actuals", qa_ibes_consensus: "QA IBES Consensus", qa_ibes_measures: "QA IBES Measures" };
+
+  function cap(w) { return w ? w.charAt(0).toUpperCase() + w.slice(1).toLowerCase() : w; }
+  /* "EPS" + "Per Share" -> {key:"eps per share", label:"Eps per Share", series:"eps_per share"} */
+  function measureId(code, scale) {
+    var c = String(code || "").toLowerCase(), sc = String(scale || "").trim();
+    return { key: (c + " " + sc.toLowerCase()).trim(), label: (cap(c) + " " + sc).trim(), series: c + (sc ? "_" + sc.toLowerCase() : "") };
+  }
+  /* consensus keys look like "epsPerShare" / "revMillion" */
+  function splitKey(k) {
+    var m = /^([a-z0-9]+)(PerShare|Million|Thousand|Billion|Percent|Actual)?$/.exec(k);
+    if (!m) return measureId(k, "");
+    var scale = (m[2] || "").replace(/([a-z])([A-Z])/g, "$1 $2");
+    return measureId(m[1], scale);
+  }
+
+  function model(items) {
+    var rows = {}, measures = {}, order = [], catalog = [], errors = [];
+    function row(type, date, ticker, permId, fiscalIndex) {
+      var id = type + "|" + K.isoDate(date) + "|" + ticker;
+      if (!rows[id]) { rows[id] = { type: type, date: date, iso: K.isoDate(date), ticker: ticker, permId: permId, fiscalIndex: fiscalIndex, currency: "", m: {} }; order.push(id); }
+      return rows[id];
+    }
+    function addMeasure(mid) { if (!measures[mid.key]) measures[mid.key] = mid; }
+    items.forEach(function (it) {
+      var resp = it.response || {}, data = resp.data, opts = it.options || {};
+      if (resp.success === false || it.error) { errors.push(resp.message || it.error); return; }
+      if (it.dataType === "qa_ibes_measures") { catalog = catalog.concat(Array.isArray(data) ? data : []); return; }
+      if (!data) return;
+      var ticker = data.ticker || opts.ticker || "";
+      (data.actuals || []).forEach(function (a) {
+        var r = row("Actual", K.parseDate(a.date), a.ibesticker || ticker, a.estpermid, a.fiscalIndex);
+        var mid = measureId(a.measureCode, a.scale); addMeasure(mid);
+        r.m[mid.key] = { value: a.normActValue, unitType: a.unitType };
+        r.currency = r.currency || a.normCurrDesc || "";
+      });
+      (data.estimates || []).forEach(function (e) {
+        var r = row("Estimate", K.parseDate(e.date), ticker, e.estPermID, e.fiscalIndex);
+        Object.keys(e.measures || {}).forEach(function (k) {
+          var v = e.measures[k] || {}, mid = splitKey(k); addMeasure(mid);
+          r.m[mid.key] = { value: v.value, unitType: v.unitType };
+          r.currency = r.currency || v.normCurrDesc || "";
+        });
+      });
+    });
+    return { rows: order.map(function (id) { return rows[id]; }), measures: Object.keys(measures).map(function (k) { return measures[k]; }), catalog: catalog, errors: errors };
+  }
+
+  /* ---------- chart: grouped bars on a log scale ---------- */
+  function chart(m, rows, width) {
+    var dates = [], seen = {};
+    rows.forEach(function (r) { if (!seen[r.iso]) { seen[r.iso] = r.date; dates.push(r.iso); } });
+    dates.sort();
+    var series = [];
+    ["Actual", "Estimate"].forEach(function (type) {
+      m.measures.forEach(function (mm) {
+        var has = rows.some(function (r) { return r.type === type && r.m[mm.key] && r.m[mm.key].value > 0; });
+        if (has) {
+          var tk = (rows.filter(function (r) { return r.type === type; })[0] || {}).ticker || "";
+          series.push({ type: type, mm: mm, name: tk + "_" + mm.series + " (" + type + ")", color: COLORS[series.length % COLORS.length] });
+        }
+      });
+    });
+    var vals = [];
+    rows.forEach(function (r) { m.measures.forEach(function (mm) { var v = r.m[mm.key] && r.m[mm.key].value; if (v > 0) vals.push(v); }); });
+    if (!vals.length) return h("div", { class: "empty" }, "No positive values to plot.");
+    var lo = Math.floor(Math.log10(Math.min.apply(null, vals))), hi = Math.ceil(Math.log10(Math.max.apply(null, vals)));
+    if (hi === lo) hi++;
+    var step = hi - lo > 6 ? 2 : 1;
+    lo = Math.floor(lo / step) * step; hi = Math.ceil(hi / step) * step;
+    var W = Math.max(320, width), H = 300, L = 64, R = 12, T = 12, B = 44;
+    var pw = W - L - R, ph = H - T - B;
+    function y(v) { return T + ph - (Math.log10(v) - lo) / (hi - lo) * ph; }
+    var svg = s("svg", { width: W, height: H, viewBox: "0 0 " + W + " " + H, role: "img", "aria-label": "Grouped bar chart" });
+    var grid = s("g", { class: "grid" });
+    for (var e = lo; e <= hi; e += step) {
+      var v = Math.pow(10, e), yy = y(v);
+      grid.appendChild(s("line", { x1: L, x2: W - R, y1: yy, y2: yy }));
+      grid.appendChild(s("text", { x: L - 8, y: yy + 4, "text-anchor": "end" }, v >= 1e6 ? (v / 1e6).toLocaleString("en-US") + "M" : v.toLocaleString("en-US", { maximumFractionDigits: 4 })));
+    }
+    svg.appendChild(grid);
+    svg.appendChild(s("text", { class: "axis-title", transform: "translate(14," + (T + ph / 2) + ") rotate(-90)", "text-anchor": "middle" }, "Value (USD) - Log Scale"));
+    svg.appendChild(s("text", { class: "axis-title", x: L + pw / 2, y: H - 6, "text-anchor": "middle" }, "Period Date"));
+    var band = pw / dates.length, inner = Math.min(band * 0.7, 36 * series.length), bw = inner / series.length;
+    var bars = s("g", { class: "bars" });
+    var tip = h("div", { class: "tip" });
+    dates.forEach(function (iso, i) {
+      var cx = L + band * i + band / 2;
+      svg.appendChild(s("text", { x: cx, y: T + ph + 18, "text-anchor": "middle" }, K.fmtDate(seen[iso], { month: "short", year: "numeric" })));
+      series.forEach(function (sr, j) {
+        var r = rows.filter(function (x) { return x.iso === iso && x.type === sr.type; })[0];
+        var v = r && r.m[sr.mm.key] && r.m[sr.mm.key].value;
+        if (!(v > 0)) return;
+        var x0 = cx - inner / 2 + j * bw, y0 = y(v);
+        var rect = s("rect", { class: "bar", x: x0 + 1, y: y0, width: Math.max(1, bw - 2), height: T + ph - y0, rx: 2, fill: sr.color });
+        rect.addEventListener("mousemove", function (ev) {
+          tip.innerHTML = "";
+          tip.appendChild(h("div", null, h("b", null, iso)));
+          tip.appendChild(h("div", null, h("span", { class: "sw", style: "background:" + sr.color }), sr.name + ": ", h("b", null, K.num(v))));
+          tip.style.display = "block";
+          var box = tip.parentNode.getBoundingClientRect();
+          var tx = ev.clientX - box.left + 12, ty = ev.clientY - box.top - 10;
+          if (tx + tip.offsetWidth > box.width) tx = ev.clientX - box.left - tip.offsetWidth - 12;
+          tip.style.left = tx + "px"; tip.style.top = ty + "px";
+        });
+        rect.addEventListener("mouseleave", function () { tip.style.display = "none"; });
+        bars.appendChild(rect);
+      });
+    });
+    svg.appendChild(bars);
+    var legend = h("div", { class: "legend" }, series.map(function (sr) { return h("span", null, h("span", { class: "sw", style: "background:" + sr.color }), sr.name); }));
+    return h("div", { class: "chart-box" }, svg, legend, tip);
+  }
+
+  function rowsTable(m, rows) {
+    var cols = [
+      { key: "iso", label: "Period End Date" },
+      { key: "type", label: "Type", render: function (r) { return h("span", { class: "badge " + (r.type === "Actual" ? "green" : "blue") }, r.type); } },
+      { key: "ticker", label: "Ticker", cls: "strong" },
+      { key: "permId", label: "Est Perm ID" },
+      { key: "fiscalIndex", label: "Fiscal Index", align: "right" },
+      { key: "currency", label: "Currency" }
+    ];
+    m.measures.forEach(function (mm) {
+      cols.push({ key: mm.key, label: mm.label, align: "right", value: function (r) { return r.m[mm.key] ? r.m[mm.key].value : null; }, render: function (r) { return r.m[mm.key] ? K.num(r.m[mm.key].value, 5) : ""; } });
+      cols.push({ key: mm.key + "#u", label: mm.label + " UnitType", value: function (r) { return r.m[mm.key] ? r.m[mm.key].unitType : null; } });
+    });
+    return K.table(cols, rows, { sortKey: "iso", sortDir: 1 });
+  }
+
+  function catalogTable(list) {
+    return K.table([
+      { key: "code", label: "Code", value: function (r) { return isNaN(r.code) ? r.code : +r.code; } },
+      { key: "measureCode", label: "Measure Code", cls: "strong" },
+      { key: "measureDescription", label: "Description" },
+      { key: "normScale", label: "Norm Scale", align: "right", render: function (r) { return r.normScale == null ? "" : String(r.normScale); } },
+      { key: "scaleDesc", label: "Scale" },
+      { key: "unitType", label: "Unit Type" }
+    ], list, { sortKey: "code", sortDir: 1 });
+  }
+
+  var state = { view: "visualize", periods: {}, filtersOpen: true };
+
+  function render(result) {
+    app.innerHTML = "";
+    if (result.isError) {
+      var t = (result.content || []).map(function (c) { return c.text || ""; }).join("");
+      app.appendChild(h("div", { class: "card" }, h("div", { class: "card-head" }, h("h2", { class: "card-title" }, "QA IBES")), h("div", { class: "error" }, t)));
+      return;
+    }
+    var p = K.payload(result) || {};
+    var items = Array.isArray(p.data) ? p.data : [];
+    var m = model(items);
+    var title = TITLES[(items[0] || {}).dataType] || "QA IBES";
+
+    if (m.rows.length) app.appendChild(seriesCard(title, m));
+    if (m.catalog.length) {
+      app.appendChild(h("div", { class: "card" },
+        h("div", { class: "card-head" }, h("h2", { class: "card-title" }, "QA IBES Measures")),
+        catalogTable(m.catalog)));
+    }
+    m.errors.forEach(function (e) { app.appendChild(h("div", { class: "card" }, h("div", { class: "error" }, e))); });
+    if (!app.firstChild) app.appendChild(h("div", { class: "card" }, h("div", { class: "empty" }, "No I/B/E/S data returned.")));
+  }
+
+  function seriesCard(title, m) {
+    var body = h("div");
+    var panel = h("div", { class: "panel" });
+    var filterBtn = K.iconBtn("sliders", "Filters", function () { panel.classList.toggle("open"); filterBtn.classList.toggle("on"); });
+    var card = h("div", { class: "card" },
+      h("div", { class: "card-head" }, h("h2", { class: "card-title" }, title), filterBtn, h("span", { class: "spacer" })),
+      body, panel);
+    var dates = [];
+    m.rows.forEach(function (r) { if (dates.indexOf(r.iso) < 0) dates.push(r.iso); });
+    dates.sort();
+
+    function active() { return Object.keys(state.periods).filter(function (k) { return state.periods[k]; }); }
+    function filtered() {
+      var a = active();
+      return a.length ? m.rows.filter(function (r) { return a.indexOf(r.iso) >= 0; }) : m.rows;
+    }
+    function drawBody() {
+      body.innerHTML = "";
+      var rows = filtered();
+      body.appendChild(state.view === "visualize" ? chart(m, rows, (card.clientWidth || 640) - 38) : rowsTable(m, rows));
+    }
+    function drawPanel() {
+      panel.innerHTML = "";
+      var a = active();
+      var seg = h("div", { class: "seg" },
+        ["visualize", "tabulate"].map(function (v) {
+          return h("button", { type: "button", class: state.view === v ? "on" : "", onclick: function () { state.view = v; drawPanel(); drawBody(); } }, v === "visualize" ? "Visualize" : "Tabulate");
+        }));
+      var collapse = h("button", { type: "button", class: "collapse" + (state.filtersOpen ? "" : " closed"), html: "<span>Current filters (" + a.length + ")</span>" + K.I.chevron,
+        onclick: function () { state.filtersOpen = !state.filtersOpen; drawPanel(); } });
+      var current = state.filtersOpen ? h("div", { class: "chips", style: "margin-top:8px" },
+        a.length ? a.map(function (d) {
+          return h("button", { type: "button", class: "chip on", onclick: function () { state.periods[d] = false; drawPanel(); drawBody(); } }, "Period Date: " + d, h("span", { class: "x" }, "×"));
+        }) : h("span", { class: "none" }, "No filters applied")) : null;
+      panel.appendChild(h("div", { class: "card-head", style: "margin:0" }, h("h3", null, "Filters"), h("span", { class: "spacer" }),
+        K.iconBtn("close", "Close filters", function () { panel.classList.remove("open"); filterBtn.classList.remove("on"); })));
+      panel.appendChild(h("div", { class: "sec" }, h("div", { class: "lbl" }, "View mode"), seg));
+      panel.appendChild(h("div", { class: "sec" }, collapse, current));
+      panel.appendChild(h("div", { class: "sec" }, h("div", { class: "lbl" }, "Period Dates"),
+        h("div", { class: "chips" }, dates.map(function (d) {
+          return h("button", { type: "button", class: "chip" + (state.periods[d] ? " on" : ""), onclick: function () { state.periods[d] = !state.periods[d]; drawPanel(); drawBody(); } }, d + ": " + d);
+        }))));
+    }
+    drawPanel();
+    requestAnimationFrame(drawBody);
+    var lastW = 0;
+    if (window.ResizeObserver) new ResizeObserver(function () {
+      var w = card.clientWidth; if (Math.abs(w - lastW) > 4 && state.view === "visualize") { lastW = w; drawBody(); }
+    }).observe(card);
+    return card;
+  }
+
+  K.start({ result: render });
+})();
+</script>
+</body>
+</html>

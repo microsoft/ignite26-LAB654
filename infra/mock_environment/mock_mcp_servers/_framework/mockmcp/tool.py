@@ -70,6 +70,7 @@ class Tool(ABC):
     title: str | None = None
     validate_args: bool = True
     annotations: dict = READ_ONLY
+    ui_resource: str | None = None  # ``ui://`` URI of an MCP Apps widget for this tool's results
 
     @abstractmethod
     def run(self, args: dict, ctx: CallContext) -> Any | ToolOutput: ...

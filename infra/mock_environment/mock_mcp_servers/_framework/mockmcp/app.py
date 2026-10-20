@@ -23,12 +23,16 @@ from typing import Any, Callable, Iterable, Protocol
 
 from mcp import types
 from mcp.server.lowlevel import Server
+from mcp.server.lowlevel.helper_types import ReadResourceContents
 
 from .errors import InvalidParams, NotEntitled, ToolError, UpstreamError
 from .schema import validate
 from .tool import CallContext, Clock, Tool, ToolOutput
+from .ui import UI_MIME_TYPE, UiResource
 
 log = logging.getLogger("mockmcp")
+
+CORS_ORIGIN_REGEX = r"https://[\w-]+\.widget-renderer\.usercontent\.microsoft\.com|https?://(localhost|127\.0\.0\.1)(:\d+)?"
 
 
 class ErrorRenderer(Protocol):
@@ -58,7 +62,9 @@ class ServerSpec:
     instructions: str | None = None
     render_error: ErrorRenderer = default_renderer
     clock_factory: Callable[[], Clock] = Clock.from_env
+    resources: list[UiResource] = field(default_factory=list)
     _by_name: dict[str, Tool] = field(init=False, repr=False)
+    _by_uri: dict[str, UiResource] = field(init=False, repr=False)
 
     def __post_init__(self) -> None:
         self._by_name = {}
@@ -66,9 +72,16 @@ class ServerSpec:
             if tool.name in self._by_name:
                 raise ValueError(f"Duplicate tool name: {tool.name}")
             self._by_name[tool.name] = tool
+        self._by_uri = {r.uri: r for r in self.resources}
+        for tool in self.tools:
+            if tool.ui_resource and tool.ui_resource not in self._by_uri:
+                raise ValueError(f"{tool.name} references unknown UI resource {tool.ui_resource}")
 
     def tool(self, name: str) -> Tool | None:
         return self._by_name.get(name)
+
+    def resource(self, uri: str) -> UiResource | None:
+        return self._by_uri.get(uri)
 
     def list_tools(self) -> list[types.Tool]:
         return [
@@ -78,8 +91,25 @@ class ServerSpec:
                 description=t.description,
                 inputSchema=t.input_schema,
                 annotations=types.ToolAnnotations(**t.annotations),
+                # "ui/resourceUri" is the pre-2026 flat key; some hosts still read it.
+                _meta={"ui": {"resourceUri": t.ui_resource}, "ui/resourceUri": t.ui_resource}
+                if t.ui_resource
+                else None,
             )
             for t in self.tools
+        ]
+
+    def list_resources(self) -> list[types.Resource]:
+        return [
+            types.Resource(
+                uri=r.uri,
+                name=r.name,
+                title=r.title,
+                description=r.description,
+                mimeType=UI_MIME_TYPE,
+                _meta=r.meta,
+            )
+            for r in self.resources
         ]
 
     def dispatch(self, name: str, arguments: dict | None) -> types.CallToolResult:
@@ -135,11 +165,26 @@ def build_server(spec: ServerSpec) -> Server:
     async def _call_tool(name: str, arguments: dict) -> types.CallToolResult:
         return spec.dispatch(name, arguments)
 
+    if spec.resources:
+
+        @server.list_resources()
+        async def _list_resources() -> list[types.Resource]:
+            return spec.list_resources()
+
+        @server.read_resource()
+        async def _read_resource(uri) -> list[ReadResourceContents]:
+            resource = spec.resource(str(uri))
+            if resource is None:
+                raise ValueError(f"Unknown resource: {uri}")
+            return [ReadResourceContents(resource.html, UI_MIME_TYPE, resource.meta)]
+
     return server
 
 
 def build_asgi_app(spec: ServerSpec, path: str = "/mcp"):
     from starlette.applications import Starlette
+    from starlette.middleware import Middleware
+    from starlette.middleware.cors import CORSMiddleware
     from starlette.responses import JSONResponse
     from starlette.routing import Route
 
@@ -161,6 +206,17 @@ def build_asgi_app(spec: ServerSpec, path: str = "/mcp"):
 
     return Starlette(
         routes=[Route(path, endpoint=_McpEndpoint(), methods=["GET", "POST", "DELETE"]), Route("/healthz", healthz)],
+        middleware=[
+            # M365 Copilot renders MCP Apps on {hash}.widget-renderer.usercontent.microsoft.com and
+            # may call the server from that origin; localhost covers local MCP Apps hosts.
+            Middleware(
+                CORSMiddleware,
+                allow_origin_regex=os.environ.get("CORS_ORIGIN_REGEX", CORS_ORIGIN_REGEX),
+                allow_methods=["GET", "POST", "DELETE", "OPTIONS"],
+                allow_headers=["*"],
+                expose_headers=["Mcp-Session-Id"],
+            )
+        ],
         lifespan=lifespan,
     )
 
