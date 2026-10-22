@@ -1,7 +1,8 @@
 """Seed workspace plus copy-on-write state per conversation.
 
 Reads come from the conversation's overlay if it has written anything, otherwise
-from the shared seed. The first write in a conversation deep-copies the seed into
+from the shared seed. The seed's story dates follow the current week (see
+``timeline``); an overlay keeps the dates it was copied with. The first write in a conversation deep-copies the seed into
 an overlay keyed by the host's conversation ID. Overlays expire after ``ttl``
 seconds idle and the store keeps at most ``max_entries`` (least recently used
 evicted). One conversation never sees another's overlay.
@@ -20,6 +21,8 @@ from collections import OrderedDict
 from contextlib import contextmanager
 from pathlib import Path
 from typing import Callable, Iterator
+
+from . import timeline
 
 SEED_PATH = Path(__file__).resolve().parent.parent / "seed_files" / "workspace.json"
 
@@ -94,7 +97,8 @@ class StateStore:
         monotonic: Callable[[], float] = time.monotonic,
         secret: bytes | None = None,
     ) -> None:
-        self._seed = Workspace(seed)
+        self._template = seed
+        self._seeds: dict = {}
         self._ttl = ttl_seconds
         self._max = max_entries
         self._now = monotonic
@@ -110,6 +114,17 @@ class StateStore:
     @classmethod
     def from_file(cls, path: Path = SEED_PATH, **kwargs) -> "StateStore":
         return cls(json.loads(path.read_text(encoding="utf-8")), **kwargs)
+
+    @property
+    def _seed(self) -> Workspace:
+        """The seed for this week, materialized once per anchor date."""
+        now = timeline.now_utc()
+        anchor = timeline.anchor_for(now)
+        ws = self._seeds.get(anchor)
+        if ws is None:
+            ws = Workspace(timeline.materialize(self._template, now))
+            self._seeds = {anchor: ws}
+        return ws
 
     def _purge(self) -> None:
         cutoff = self._now() - self._ttl

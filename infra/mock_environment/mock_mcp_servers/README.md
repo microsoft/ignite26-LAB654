@@ -10,7 +10,7 @@ Mock MCP servers for the third-party connectors used in the scenarios. Each serv
 | [`factset/`](factset/README.md) | Finance | **Built.** Metrics search, entity reference, RBICS, fundamentals, consensus, prices |
 | [`moodys/`](moodys/README.md) | Finance | **Built.** Entity search, ratings and history, credit opinions |
 | [`notion/`](notion/README.md) | Productivity | **Built.** Search, fetch, query, and page and data-source writes kept per conversation, and a Notion-style page viewer so returned links open. Aurora launch tracker, launch plan, decision log, 2 decoy trackers |
-| [`verdantis_hub/`](verdantis_hub/README.md) | Productivity | Not an MCP server. Intranet pages are seeded in the tenant (`intranetwebsite`); README documents them |
+| [`verdantis_hub/`](verdantis_hub/README.md) | Productivity | Not an MCP server. Intranet pages are seeded in the tenant (`intranetwebsite`) and also served as a small mock website so their links open |
 
 ## How the built servers work
 

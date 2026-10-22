@@ -396,7 +396,7 @@ def apply_properties(db: dict, row: dict, props: dict) -> None:
             else:
                 if value is not None and not re.fullmatch(r"\d{4}-\d{2}-\d{2}(T[\d:.]+(Z|[+-]\d{2}:\d{2})?)?", str(value)):
                     raise NotionError(f"Invalid date for property \"{n}\": \"{value}\". Use an ISO-8601 date "
-                                      "such as 2026-10-23.")
+                                      "such as 2026-11-27.")
                 current[part] = value
             staged[n] = current if current.get("start") else None
         elif prop["type"] == "select":

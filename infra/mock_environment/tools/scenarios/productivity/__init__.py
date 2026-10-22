@@ -19,10 +19,14 @@ One lab account plays every domain, so the launch lead is Marcus Hollowell
 doc's Avery, and Zava becomes Verdantis. The doc's Jordan is renamed Riley so
 it doesn't clash with finance's Jordan.
 
-Dates: the doc's Monday "today" (Nov 16, 2026) is shifted back 35 days to
-STORY_DATE so every timestamp is in the past. Surnames, titles,
-hub.verdantis.com host, decoy page paths and the page author identity are
-placeholders; see the README's assumptions.
+Dates: COEP rejects future timestamps, so the email and page stamps sit
+before STORY_DATE. Nothing in the tenant names a story date: the Notion mock
+computes those from the current week, and Riley's email refers only to "store
+staff training". Surnames, titles, decoy page paths and the page author
+identity are placeholders; see the README's assumptions.
+
+The Hub is served by our own mock site (mock_mcp_servers/verdantis_hub), not
+hub.verdantis.com, which belongs to an unrelated real company.
 """
 
 from __future__ import annotations
@@ -36,13 +40,13 @@ from zoneinfo import ZoneInfo
 from ..legal import MARCUS, TEAMS_ONLY
 from ..legal import _user as _verdantis_user
 
-STORY_DATE = date(2026, 10, 12)  # Monday "today"; doc date Nov 16, 2026
+STORY_DATE = date(2026, 10, 12)  # reference for seeded timestamps only; story dates are relative
 
 ET = ZoneInfo("America/New_York")  # Verdantis is in Stamford, CT
 
 SAM, RILEY = "spatel", "rblake"
 
-HUB = "https://hub.verdantis.com"
+HUB = "https://mock-verdantis-hub.yellowsand-9530f5dc.eastus.azurecontainerapps.io"
 HUB_AUTHOR = ("Verdantis Hub Content Team", "hubcontent@verdantis.com")
 
 
@@ -70,7 +74,7 @@ def users():
 
 RILEY_EMAIL = """<p>Hi Marcus,</p>
 <p>Quick check on the Verdantis Aurora POS kits for our stores. What's the current ETA for delivery to Contoso Retail?</p>
-<p>Our store staff training is on Tuesday, Oct 27, and the stores need the complete kits (signage included) on site before then so the teams can set up and train on the real displays.</p>
+<p>The stores need the complete kits (signage included) on site before our store staff training, so the teams can set up and train on the real displays.</p>
 <p>Can you confirm the dates, or let me know if anything has changed?</p>
 <p>Thanks,<br>Riley<br>Contoso Retail</p>"""
 
@@ -465,6 +469,23 @@ def _intranet_item(i: int, p: dict) -> dict:
             "Description": p["description"],
         },
     }
+
+
+def hub_pages():
+    """Page data for the hosted Verdantis Hub site (verdantis_hub/export_pages.py)."""
+    out = []
+    for p in PAGES:
+        updated = STORY_DATE + timedelta(days=p["modified"])
+        out.append({
+            "path": p["path"],
+            "title": p["title"],
+            "crumbs": [[name, href] for name, href in p["crumbs"]],
+            "description": p["description"],
+            "keywords": p["keywords"],
+            "updated": updated.isoformat(),
+            "html": _page_html(p["crumbs"], p["title"], updated, p["body"]),
+        })
+    return out
 
 
 def intranetpages():

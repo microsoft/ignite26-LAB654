@@ -2,16 +2,7 @@
 
 > Converted from `Ignite_Lab_Productivity_Module_Smartsheet_Notion_Intranet.docx` (Ignite Lab200 · Connectors · Productivity module, DRAFT v2). Wording is preserved; layout is simplified to Markdown.
 >
-> **Dates are shifted.** The doc's story runs on a Monday "today" of Nov 16, 2026. COEP needs past timestamps, so every story date here, in the tenant seed and in the connector specs is moved back 35 days (5 weeks), keeping weekdays. "Today" is **Mon Oct 12, 2026**, the same lab date as the legal scenario.
->
-> | Doc date | Shifted | | Doc date | Shifted |
-> |---|---|---|---|---|
-> | Mon Nov 16 (today) | Mon Oct 12 | | Sat Nov 28 | Sat Oct 24 |
-> | Fri Nov 20 | Fri Oct 16 | | Tue Dec 1 | Tue Oct 27 |
-> | Sun Nov 22 | Sun Oct 18 | | Sat Dec 5 | Sat Oct 31 |
-> | Tue Nov 24 | Tue Oct 20 | | Tue Dec 8 | Tue Nov 3 |
-> | Wed Nov 25 | Wed Oct 21 | | | |
-> | Fri Nov 27 | Fri Oct 23 | | | |
+> **Dates follow the doc.** The doc's story runs on a Monday "today" of Nov 16, 2026, and the dates below are the doc's. The mock Notion workspace computes its dates from the Monday of the current week, so during lab week they match this doc exactly, and on any other week they move with it (see the [Notion mock README](../../../infra/mock_environment/mock_mcp_servers/notion/README.md#dates-move-with-the-calendar)). The tenant seed (Riley's email, the intranet pages) names no story dates. The [lab manual](../../../instructions/05-productivity.md) refers to dates relatively.
 
 Scenario design and lab readiness plan for a 10-minute hands-on module.
 
@@ -53,7 +44,7 @@ One connector of each kind keeps the module short: Notion is read and written li
 | Connector | Role in the story | What Copilot uses |
 |---|---|---|
 | **Notion** · FEDERATED · Microsoft-published · on by default | Team workspace: launch tracker, launch plan, decision log | Read: `notion-search`, `notion-fetch`. Write: `notion-update-page`, `notion-create-pages` |
-| **Verdantis Hub** · SYNCED · Enterprise Websites cloud connector | Company policies: retail partner launch playbook, approved print vendors, partner comms guidelines | Index only: semantic search over hub.verdantis.com pages. No live tools, no write, no user sign-in |
+| **Verdantis Hub** · SYNCED · Enterprise Websites cloud connector | Company policies: retail partner launch playbook, approved print vendors, partner comms guidelines | Index only: semantic search over Verdantis Hub pages. No live tools, no write, no user sign-in |
 
 | | Synced · Verdantis Hub | Federated · Notion |
 |---|---|---|
@@ -68,9 +59,9 @@ One connector of each kind keeps the module short: Notion is read and written li
 
 | | |
 |---|---|
-| **Persona** | Marcus, at Verdantis (fictional), coordinating the Verdantis Aurora smart-home hub retail launch. Launch event: Nov 3. |
-| **Trigger** | Northwind Print, the print vendor, updated its row in the Notion launch tracker: brochures and in-store signage slip from Oct 16 to Oct 23, or they can split (brochures Oct 20, signage Oct 23). That collides with the POS kit shipment to Contoso Retail stores on Oct 21. Riley at Contoso Retail emailed Marcus at 7:40 AM asking for the kit ETA. |
-| **Twist** | Marcus's first idea, shipping signage on Oct 27, breaks the Retail Partner Launch Playbook on Verdantis Hub. Copilot catches it and finds an option that complies. |
+| **Persona** | Marcus, at Verdantis (fictional), coordinating the Verdantis Aurora smart-home hub retail launch. Launch event: Dec 8. |
+| **Trigger** | Northwind Print, the print vendor, updated its row in the Notion launch tracker: brochures and in-store signage slip from Nov 20 to Nov 27, or they can split (brochures Nov 24, signage Nov 27). That collides with the POS kit shipment to Contoso Retail stores on Nov 25. Riley at Contoso Retail emailed Marcus at 7:40 AM asking for the kit ETA. |
+| **Twist** | Marcus's first idea, shipping signage on Dec 1, breaks the Retail Partner Launch Playbook on Verdantis Hub. Copilot catches it and finds an option that complies. |
 | **Goal** | Fix the plan, log the decision, tell the partner, and book the approval, without opening Notion or the intranet. |
 
 ## 4. Lab flow at a glance (10 min)
@@ -103,9 +94,9 @@ Flag any conflicts between vendor updates and the plan.
 
 **Expected result:** A short brief with citations to Notion and Outlook:
 
-- (a) Northwind Print slips from Oct 16 to Oct 23, or can split (brochures Oct 20, signage Oct 23);
-- (b) this conflicts with "Ship POS kits to Contoso Retail stores" on Oct 21;
-- (c) Riley asks for the kit ETA, and stores need kits before staff training on Oct 27.
+- (a) Northwind Print slips from Nov 20 to Nov 27, or can split (brochures Nov 24, signage Nov 27);
+- (b) this conflicts with "Ship POS kits to Contoso Retail stores" on Nov 25;
+- (c) Riley asks for the kit ETA, and stores need kits before staff training on Dec 1.
 
 > **SAY THIS:** Copilot did the catch-up before Marcus started his day, from Notion live as Marcus and from his inbox. Any prompt you run every morning can be scheduled.
 
@@ -116,16 +107,16 @@ Flag any conflicts between vendor updates and the plan.
 *2:00 · Verdantis Hub (synced)*
 
 ```text
-My idea: ship the POS kits to Contoso Retail on Oct 21 without signage, and
-send the signage on Oct 27. Check the Retail Partner Launch Playbook on
+My idea: ship the POS kits to Contoso Retail on Nov 25 without signage, and
+send the signage on Dec 1. Check the Retail Partner Launch Playbook on
 Verdantis Hub. Is that allowed? Who has to approve it?
 ```
 
 **Expected result:** Copilot cites the current playbook (not the archived 2025 version):
 
-- (a) No: every POS kit wave must be in partner stores at least 3 days before staff training, so signage must arrive by Oct 24;
+- (a) No: every POS kit wave must be in partner stores at least 3 days before staff training, so signage must arrive by Nov 28;
 - (b) a split shipment is allowed if the Retail Ops lead (Sam) approves and it's logged in the Launch Decision Log;
-- (c) Northwind's split offer works: ship signage express on Oct 23 so it arrives Oct 24.
+- (c) Northwind's split offer works: ship signage express on Nov 27 so it arrives Nov 28.
 
 > **SAY THIS:** An admin indexed the intranet once, and now everyone's Copilot knows the rules. Copilot didn't just answer; it stopped Marcus from breaking a partner commitment.
 
@@ -138,9 +129,9 @@ Verdantis Hub. Is that allowed? Who has to approve it?
 ```text
 In Notion:
 1. In the Aurora launch tracker, set "Print brochures & in-store signage" to
-due Oct 23, status At Risk.
+due Nov 27, status At Risk.
 2. Add an entry to the Launch Decision Log: ship Contoso Retail POS kits in two
-waves (kits + brochures Oct 21; signage express Oct 23, in stores Oct 24).
+waves (kits + brochures Nov 25; signage express Nov 27, in stores Nov 28).
 Owner: me. Approver: Sam Patel. Status: Proposed. In Context, summarize the
 Northwind delay and link the playbook page.
 ```
@@ -184,7 +175,7 @@ morning. Show me both before sending.
 | ☐ **Notion** | Test_Notion (mock Notion MCP server, no sign-in) uploaded and enabled for every seat. All seats share one server; write changes are kept per Cowork conversation (keyed on the `x-microsoft-ai-conversationid` header), so seats never collide. See `infra/mock_environment/mock_mcp_servers/notion/README.md`. |
 | ☐ **Pre-connect** | Check that Test_Notion shows as Connected in each seat (Settings › Sources) before the event; the scheduled prompt can't run without it. |
 | ☐ **Scheduled prompt** | Per seat: create "Aurora morning catch-up" (Step 1 prompt), weekdays at 8:00 AM event-local time. Check that it ran before doors open. |
-| ☐ **Verdantis Hub** | Enterprise Websites cloud connection to hub.verdantis.com, display name "Verdantis Hub". Re-crawl after the Zava → Verdantis edit and spot-check that the old Zava text is gone. |
+| ☐ **Verdantis Hub** | Enterprise Websites cloud connection to the Verdantis Hub site (the lab's mock: `https://mock-verdantis-hub.yellowsand-9530f5dc.eastus.azurecontainerapps.io`), display name "Verdantis Hub". Re-crawl after the Zava → Verdantis edit and spot-check that the old Zava text is gone. |
 | ☐ **Outlook** | Riley's POS-kit ETA email in each Marcus inbox, 7:40 AM Eastern (done). |
 
 ### 6.2 Notion seed (shared, read-only baseline)
@@ -192,23 +183,23 @@ morning. Show me both before sending.
 | Item | Type | Contents |
 |---|---|---|
 | Verdantis Aurora Launch Tracker | Database | Properties: Task, Workstream, Owner, Status, Due, Vendor update. Rows below. |
-| Aurora Launch Plan | Page | Key dates (staff training Oct 27, launch event Nov 3), owners, link to the playbook on Verdantis Hub. Includes "POS kits must include signage before staff training." |
-| Launch Decision Log | Database | Properties: Decision, Owner, Approver, Status (Proposed / Approved / Rejected), Date, Context. Seed 2 prior decisions as examples. |
+| Aurora Launch Plan | Page | Key dates (staff training Dec 1, launch event Dec 8), owners, link to the playbook on Verdantis Hub. Includes "POS kits must include signage before staff training." |
+| Launch Decision Log | Database | Properties: Decision, Owner, Approver, Status (Proposed / Approved / Rejected), Date, Context. Seed 4 prior decisions as examples, covering all three statuses (2 Approved, 1 Rejected: "Add a second Contoso Retail launch city in Q1", 1 Proposed: "Extend launch-week support hours"). |
 | Decoys | Database | "Verdantis Lumen Launch Tracker" (other product); "2025 Holiday Launch Tracker (archived)" with old Northwind rows. |
 
 | Task | Owner | Status | Due | Vendor update |
 |---|---|---|---|---|
-| **Print brochures & in-store signage** | Northwind Print | In Progress | Oct 16 | "Paper stock shortage – brochures and signage now deliver Oct 23 instead of Oct 16. We can split: brochures Oct 20, signage Oct 23." |
-| Assemble POS kits | Ops | Not Started | Oct 18 | |
-| **Ship POS kits to Contoso Retail stores** | Ops | Not Started | Oct 21 | |
-| Store staff training | Contoso Retail | Not Started | Oct 27 | |
-| Press briefing deck | Marcus | In Progress | Oct 24 | |
-| Launch event run-of-show | Events team | In Progress | Oct 31 | |
-| Launch event | All | Not Started | Nov 3 | |
+| **Print brochures & in-store signage** | Northwind Print | In Progress | Nov 20 | "Paper stock shortage – brochures and signage now deliver Nov 27 instead of Nov 20. We can split: brochures Nov 24, signage Nov 27." |
+| Assemble POS kits | Ops | Not Started | Nov 22 | |
+| **Ship POS kits to Contoso Retail stores** | Ops | Not Started | Nov 25 | |
+| Store staff training | Contoso Retail | Not Started | Dec 1 | |
+| Press briefing deck | Marcus | In Progress | Nov 28 | |
+| Launch event run-of-show | Events team | In Progress | Dec 5 | |
+| Launch event | All | Not Started | Dec 8 | |
 
 Bold rows are the ones the story turns on.
 
-### 6.3 Verdantis Hub (hub.verdantis.com, 7 pages, live)
+### 6.3 Verdantis Hub (7 pages, live)
 
 | Page | What the demo relies on |
 |---|---|

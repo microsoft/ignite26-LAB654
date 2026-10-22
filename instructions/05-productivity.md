@@ -4,7 +4,7 @@
 
 ## The story
 
-You're coordinating the retail launch of the **Verdantis Aurora** smart-home hub. The launch event is on **Nov 3**.
+You're coordinating the retail launch of the **Verdantis Aurora** smart-home hub. The launch event is about three weeks away.
 
 | Where it lives | What's there |
 |---|---|
@@ -12,7 +12,7 @@ You're coordinating the retail launch of the **Verdantis Aurora** smart-home hub
 | **Verdantis Hub** (intranet) | Company rules: the Retail Partner Launch Playbook, approved print vendors, partner communication guidelines |
 | **Outlook** | Email from Riley at Contoso Retail, the retail partner |
 
-It's Monday, Oct 12. The print vendor, Northwind Print, updated its row in the Notion launch tracker: brochures and in-store signage will be a week late. That collides with the POS kit shipment to Contoso Retail stores, and Riley has emailed asking for the kit ETA.
+It's Monday morning. The print vendor, Northwind Print, updated its row in the Notion launch tracker: brochures and in-store signage will be a week late. That collides with the POS kit shipment to Contoso Retail stores, and Riley has emailed asking for the kit ETA.
 
 **Your goal:** fix the plan, log the decision, tell the partner and book the approval, all without opening Notion or the intranet.
 
@@ -57,9 +57,12 @@ Flag any conflicts between vendor updates and the plan.
 
 **What to look for:** a short brief with citations to Notion and Outlook that calls out:
 
-- Northwind Print's slip from **Oct 16 → Oct 23**, or a split: brochures Oct 20, signage Oct 23.
-- The conflict with **"Ship POS kits to Contoso Retail stores"**, due **Oct 21**.
-- Riley asking for the kit ETA. Stores need kits before staff training on **Oct 27**.
+- Northwind Print's slip from **this Friday** to **a week later**, or a split: brochures next Tuesday, signage next Friday.
+- The conflict with **"Ship POS kits to Contoso Retail stores"**, due **next Wednesday**.
+- Riley asking for the kit ETA. Stores need kits before **store staff training** (the Tuesday after next).
+
+> [!NOTE]
+> The mock Notion workspace dates its story from the Monday of the current week, so the dates you see depend on when you run the lab. During Ignite week they're: print due Fri Nov 20, now Nov 27 (or brochures Nov 24, signage Nov 27); ship Wed Nov 25; staff training Tue Dec 1; launch Tue Dec 8.
 
 Copilot did the catch-up before you started your day. Any prompt you run every morning can be scheduled.
 
@@ -70,16 +73,17 @@ Copilot did the catch-up before you started your day. Any prompt you run every m
 Your first idea is to ship the kits without signage and send the signage later. Check it:
 
 ```text
-My idea: ship the POS kits to Contoso Retail on Oct 21 without signage, and
-send the signage on Oct 27. Check the Retail Partner Launch Playbook on
-Verdantis Hub. Is that allowed? Who has to approve it?
+My idea: ship the POS kits to Contoso Retail on the planned ship date without
+signage, and send the signage on the day of store staff training. Check the
+Retail Partner Launch Playbook on Verdantis Hub. Is that allowed? Who has to
+approve it?
 ```
 
 **What to look for:** an answer citing the *current* playbook, not the archived 2025 version:
 
-- **No.** Every POS kit wave must be in partner stores at least 3 days before staff training, so signage must arrive by **Oct 24**.
+- **No.** Every POS kit wave must be in partner stores at least 3 days before staff training, so signage must arrive by **the Saturday before training** (Nov 28 in Ignite week).
 - A split shipment **is** allowed, with approval from the Retail Ops lead (**Sam**), and must be logged in the Launch Decision Log.
-- Northwind's split offer works: ship signage express on **Oct 23**, arriving **Oct 24**.
+- Northwind's split offer works: ship signage express on **Northwind's new date** (the Friday), arriving the next day.
 
 Copilot didn't just answer; it stopped you from breaking a partner commitment.
 
@@ -90,9 +94,10 @@ Copilot didn't just answer; it stopped you from breaking a partner commitment.
 ```text
 In Notion:
 1. In the Aurora launch tracker, set "Print brochures & in-store signage" to
-due Oct 23, status At Risk.
+due on Northwind's new signage date, status At Risk.
 2. Add an entry to the Launch Decision Log: ship Contoso Retail POS kits in two
-waves (kits + brochures Oct 21; signage express Oct 23, in stores Oct 24).
+waves (kits + brochures on the planned ship date; signage express on
+Northwind's new date, in stores the next day).
 Owner: me. Approver: Sam Patel. Status: Proposed. In Context, summarize the
 Northwind delay and link the playbook page.
 ```

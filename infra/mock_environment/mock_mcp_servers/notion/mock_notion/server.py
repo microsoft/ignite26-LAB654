@@ -8,12 +8,12 @@ from mockmcp import Clock, ServerSpec
 
 from .common import render_error
 from .store import StateStore
+from .timeline import now_utc
 from .web import build_routes
 from .tools import CreatePages, Fetch, QueryDataSources, Search, UpdateDataSource, UpdatePage
 
 NAME = "notion"
 VERSION = "1.0.0"
-TODAY = "2026-10-12T13:00:00Z"
 INSTRUCTIONS = (
     "Mock of the Notion MCP server for the LAB654 Ignite lab (Verdantis workspace). Use notion-search to find "
     "pages and databases, notion-fetch to read them (databases return their schema and data source URL), and "
@@ -32,4 +32,4 @@ def build_spec(store: StateStore | None = None, public_base_url: str | None = No
     tools = [cls(store, public_base_url) for cls in
              (Search, Fetch, QueryDataSources, UpdatePage, CreatePages, UpdateDataSource)]
     return ServerSpec(NAME, VERSION, tools, instructions=INSTRUCTIONS, render_error=render_error,
-                      clock_factory=lambda: Clock.from_env(TODAY), routes=build_routes(store))
+                      clock_factory=lambda: Clock(now_utc()), routes=build_routes(store))

@@ -9,9 +9,10 @@ Each mock MCP server runs as its own Azure Container App. All of them share one 
 | LSEG | `mock-lseg` | `mock-lseg:v1` | `https://mock-lseg.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` |
 | FactSet | `mock-factset` | `mock-factset:v1` | `https://mock-factset.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` |
 | Moody's | `mock-moodys` | `mock-moodys:v1` | `https://mock-moodys.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` |
-| Notion | `mock-notion` | `mock-notion:v2` | `https://mock-notion.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` |
+| Notion | `mock-notion` | `mock-notion:v3` | `https://mock-notion.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` |
+| Verdantis Hub (website, not MCP) | `mock-verdantis-hub` | `mock-verdantis-hub:v1` | `https://mock-verdantis-hub.yellowsand-9530f5dc.eastus.azurecontainerapps.io/` |
 
-Health checks are at the same host with `/healthz` instead of `/mcp`. Every app runs 0.5 vCPU and 1 GiB. The finance apps run 0 to 3 replicas (scale to zero when idle). Notion runs 0 to 1 replica, because it keeps each conversation's write changes in memory. Its page viewer is at the same host under `/p/...` (for example, the root URL opens the workspace).
+Health checks are at the same host with `/healthz` instead of `/mcp`. Every app runs 0.5 vCPU and 1 GiB. The finance apps run 0 to 3 replicas (scale to zero when idle). Notion runs 0 to 1 replica, because it keeps each conversation's write changes in memory. Its page viewer is at the same host under `/p/...` (for example, the root URL opens the workspace). Don't set `MOCK_NOW` or `STORY_ANCHOR` on Notion: its story dates follow the current week (see its [README](notion/README.md#dates-move-with-the-calendar)). The Verdantis Hub is a plain website (0 to 3 replicas) that serves the intranet pages the tenant links to; it needs no settings.
 
 ## Azure resources
 
@@ -68,6 +69,8 @@ docker build -f "$S/Dockerfile" -t "$ACR.azurecr.io/mock-${S}:$TAG" -t "$ACR.azu
 docker push "$ACR.azurecr.io/mock-${S}:$TAG"
 docker push "$ACR.azurecr.io/mock-${S}:latest"
 ```
+
+For the Verdantis Hub, the folder is `verdantis_hub` but the app and image are `mock-verdantis-hub`, so use `-f verdantis_hub/Dockerfile` with `-t "$ACR.azurecr.io/mock-verdantis-hub:$TAG"`. Run `python verdantis_hub/export_pages.py` first if the pages changed. Without Docker, `az acr build -r $ACR -f <folder>/Dockerfile -t mock-<name>:$TAG .` builds in the registry.
 
 If `pip install` fails inside the build, add `--build-arg PIP_INDEX_URL=<mirror>/simple/`. See [Troubleshooting](#troubleshooting).
 

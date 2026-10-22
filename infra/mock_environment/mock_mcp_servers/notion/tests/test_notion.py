@@ -16,6 +16,15 @@ COLL = "collection://" + TRACKER["data_source_id"]
 DECISIONS = next(d for d in SEED["databases"] if "Decision" in d["title"])
 
 
+LAB_NOW = "2026-11-16T14:00:00Z"  # Mon Nov 16, 9 AM ET: lab week, so the story shows the spec's dates
+
+
+@pytest.fixture(autouse=True)
+def lab_week(monkeypatch):
+    monkeypatch.setenv("MOCK_NOW", LAB_NOW)
+    monkeypatch.delenv("STORY_ANCHOR", raising=False)
+
+
 @pytest.fixture
 def spec():
     return build_spec()
@@ -53,19 +62,19 @@ def test_plan_page_fetch(spec):
 def test_query_sorted_by_due(spec):
     result = rows(spec, sort=[{"property": "Due", "direction": "ascending"}])
     assert result[0]["Task"].startswith("Print brochures")
-    assert result[0]["date:Due:start"] == "2026-10-16"
+    assert result[0]["date:Due:start"] == "2026-11-20"
 
 
 def test_write_visible_only_in_same_conversation(spec):
     page_id = print_row(spec)["url"].rsplit("/", 1)[1]
     update = call(spec, "notion-update-page", {"page_id": page_id, "command": "update_properties",
-                                               "properties": {"Status": "At Risk", "date:Due:start": "2026-10-23"}}, "conv-a")
+                                               "properties": {"Status": "At Risk", "date:Due:start": "2026-11-27"}}, "conv-a")
     assert update.ok
     assert print_row(spec, "conv-a")["Status"] == "At Risk"
-    assert print_row(spec, "conv-a")["date:Due:start"] == "2026-10-23"
+    assert print_row(spec, "conv-a")["date:Due:start"] == "2026-11-27"
     for other in ("conv-b", None):
         assert print_row(spec, other)["Status"] == "In Progress"
-        assert print_row(spec, other)["date:Due:start"] == "2026-10-16"
+        assert print_row(spec, other)["date:Due:start"] == "2026-11-20"
 
 
 def test_write_without_conversation_is_discarded(spec):
@@ -87,7 +96,7 @@ def test_invalid_select_value_errors(spec):
 def test_create_pages_adds_row_in_conversation(spec):
     result = call(spec, "notion-create-pages", {
         "parent": {"data_source_id": TRACKER["data_source_id"]},
-        "pages": [{"properties": {"Task": "Confirm split delivery", "Status": "Not Started", "date:Due:start": "2026-10-20"}}],
+        "pages": [{"properties": {"Task": "Confirm split delivery", "Status": "Not Started", "date:Due:start": "2026-11-24"}}],
     }, "conv-c")
     assert result.ok, result.text
     assert any(r["Task"] == "Confirm split delivery" for r in rows(spec, "conv-c"))
@@ -135,7 +144,7 @@ def test_lru_cap():
 
 def test_decision_log_has_press_move(spec):
     result = rows(spec, data_source_url="collection://" + DECISIONS["data_source_id"])
-    assert any("Oct 24" in r["Decision"] and r["Status"] == "Approved" for r in result)
+    assert any("Nov 21 to Nov 28" in r["Decision"] and r["Status"] == "Approved" for r in result)
 
 
 def test_unknown_id_is_not_found(spec):
@@ -197,7 +206,7 @@ def test_database_and_row_pages_render(web):
     assert "Verdantis Aurora Launch Tracker" in db.text and "Print brochures" in db.text
     assert "MOCK NOTION" in db.text and "original workspace" in db.text
     row = client.get(local(print_row(spec)["url"]))
-    assert row.status_code == 200 and "In Progress" in row.text and "October 16, 2026" in row.text
+    assert row.status_code == 200 and "In Progress" in row.text and "November 20, 2026" in row.text
 
 
 def test_viewer_shows_conversation_changes_only_with_its_token(web):
@@ -230,3 +239,65 @@ def test_viewer_not_found_and_bad_token(web):
     assert client.get("/p/deadbeef").status_code == 404
     assert client.get("/v/not-a-token/p/x").status_code == 404
     assert client.get("/", follow_redirects=False).headers["location"].startswith("/p/")
+
+# --- Week-anchored story dates -------------------------------------------------
+
+from datetime import date, datetime, timezone  # noqa: E402
+
+from mock_notion import timeline  # noqa: E402
+
+
+def _now(text):
+    return datetime.fromisoformat(text.replace("Z", "+00:00"))
+
+
+@pytest.mark.parametrize("now, anchor", [
+    ("2026-11-16T14:00:00Z", "2026-11-16"),  # Monday
+    ("2026-11-20T22:00:00Z", "2026-11-16"),  # Friday evening
+    ("2026-11-17T04:30:00Z", "2026-11-16"),  # Monday 11:30 PM ET, already Tuesday in UTC
+    ("2026-11-21T15:00:00Z", "2026-11-23"),  # Saturday rolls to next Monday
+    ("2026-11-23T03:00:00Z", "2026-11-23"),  # Sunday 10 PM ET
+])
+def test_anchor_is_monday_of_week_in_eastern_time(now, anchor):
+    assert timeline.anchor_for(_now(now)) == date.fromisoformat(anchor)
+
+
+def test_story_anchor_env_pins_dates(monkeypatch):
+    monkeypatch.setenv("STORY_ANCHOR", "2027-03-01")
+    assert print_row(build_spec())["date:Due:start"] == "2027-03-05"
+
+
+def test_no_placeholders_left_and_no_future_timestamps(monkeypatch):
+    for now in ("2026-11-16T05:01:00Z", "2026-11-21T15:00:00Z", "2027-02-07T23:59:00Z"):
+        monkeypatch.setenv("MOCK_NOW", now)
+        text = json.dumps(timeline.materialize(SEED, _now(now)))
+        assert "{{" not in text
+        stamps = [_now(t) for t in __import__("re").findall(r'"(\d{4}-\d\d-\d\dT[\d:.]+Z)"', text)]
+        assert stamps and max(stamps) < _now(now)
+
+
+def test_print_row_is_most_recently_edited_story_row():
+    ws = StateStore(SEED).read(None)
+    tracker = ws.database(TRACKER["id"])
+    newest = max(tracker["rows"], key=lambda r: r["edited"])
+    assert newest["properties"]["Task"].startswith("Print brochures")
+
+
+def test_decision_log_shows_all_three_statuses(spec):
+    result = rows(spec, data_source_url="collection://" + DECISIONS["data_source_id"])
+    assert len(result) == 4
+    assert {r["Status"] for r in result} == {"Approved", "Rejected", "Proposed"}
+    assert all(r["date:Date:start"] < "2026-11-16" for r in result)
+
+
+def test_plan_page_dates_and_playbook_link(spec):
+    text = call(spec, "notion-fetch", {"id": SEED["pages"][1]["id"]}).text
+    assert "Tue Dec 8, 2026" in text and "Nov 25" in text and "Dec 1" in text
+    assert "mock-verdantis-hub" in text and "hub.verdantis.com" not in text
+
+
+def test_created_page_search_timestamp_is_creation_time(spec):
+    call(spec, "notion-create-pages", {"parent": {"data_source_id": TRACKER["data_source_id"]},
+         "pages": [{"properties": {"Task": "Zebra signage reprint", "Status": "Not Started"}}]}, "conv-ts")
+    hits = call(spec, "notion-search", {"query": "Zebra signage reprint"}, "conv-ts").json["results"]
+    assert hits and hits[0]["timestamp"].startswith("2026-11-16T14:00")

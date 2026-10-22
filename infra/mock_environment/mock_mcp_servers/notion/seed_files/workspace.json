@@ -19,17 +19,17 @@
       "id": "3ff6c630-c178-8154-233e-c4b0ae9a5996",
       "title": "Verdantis Launches",
       "parent_id": null,
-      "created": "2025-09-02T14:55:00.000Z",
-      "edited": "2026-10-09T15:25:00.000Z",
+      "created": "{{-405T14:55|ts}}",
+      "edited": "{{-3T15:25|ts}}",
       "content": "Launch plans, trackers and decisions for Verdantis product launches."
     },
     {
       "id": "3ff6c630-c178-81be-001e-a3c291b3785c",
       "title": "Aurora Launch Plan",
       "parent_id": "3ff6c630-c178-8154-233e-c4b0ae9a5996",
-      "created": "2026-09-14T15:05:00.000Z",
-      "edited": "2026-10-09T15:25:00.000Z",
-      "content": "# Aurora Launch Plan\nVerdantis Aurora is a smart-home hub sold through retail partners, starting with Contoso Retail.\n## Goals\n- Launch the Verdantis Aurora smart-home hub in Contoso Retail stores on Tue Nov 3, 2026.\n- Every store has complete POS kits and trained staff before launch day.\n## Key dates\n- Oct 21 – POS kits ship to Contoso Retail stores\n- Oct 27 – Contoso Retail store staff training\n- Nov 3 – Launch event\n## Owners\n- Launch lead: Marcus Hollowell\n- Retail Ops approver: Sam Patel\n- Partner contact: Riley Blake (Contoso Retail)\n- Workstream owners: see the launch tracker\n## Rules\n- POS kits must include signage before staff training.\n- Partner shipment rules: see the [Retail Partner Launch Playbook](https://hub.verdantis.com/retail/launch-playbook) on Verdantis Hub.\n## Links\n- Tracker: [Verdantis Aurora Launch Tracker](https://app.notion.com/p/3ff6c630c17881be58d02194129d9a85)\n- Decisions: [Launch Decision Log](https://app.notion.com/p/3ff6c630c17881af6f79a2640c43c229)"
+      "created": "{{-28T15:05|ts}}",
+      "edited": "{{-3T15:25|ts}}",
+      "content": "# Aurora Launch Plan\nVerdantis Aurora is a smart-home hub sold through retail partners, starting with Contoso Retail.\n## Goals\n- Launch the Verdantis Aurora smart-home hub in Contoso Retail stores on {{+22|long}}.\n- Every store has complete POS kits and trained staff before launch day.\n## Key dates\n- {{+9|md}} – POS kits ship to Contoso Retail stores\n- {{+15|md}} – Contoso Retail store staff training\n- {{+22|md}} – Launch event\n## Owners\n- Launch lead: Marcus Hollowell\n- Retail Ops approver: Sam Patel\n- Partner contact: Riley Blake (Contoso Retail)\n- Workstream owners: see the launch tracker\n## Rules\n- POS kits must include signage before staff training.\n- Partner shipment rules: see the [Retail Partner Launch Playbook](https://mock-verdantis-hub.yellowsand-9530f5dc.eastus.azurecontainerapps.io/retail/launch-playbook) on Verdantis Hub.\n## Links\n- Tracker: [Verdantis Aurora Launch Tracker](https://app.notion.com/p/3ff6c630c17881be58d02194129d9a85)\n- Decisions: [Launch Decision Log](https://app.notion.com/p/3ff6c630c17881af6f79a2640c43c229)"
     }
   ],
   "databases": [
@@ -39,8 +39,8 @@
       "view_id": "3ff6c630-c178-814f-0175-000d77779f6b",
       "title": "Verdantis Aurora Launch Tracker",
       "parent_id": "3ff6c630-c178-8154-233e-c4b0ae9a5996",
-      "created": "2026-09-14T15:10:00.000Z",
-      "edited": "2026-10-12T03:47:00.000Z",
+      "created": "{{-28T15:10|ts}}",
+      "edited": "{{+0T03:47|ts}}",
       "schema": [
         {
           "name": "Vendor update",
@@ -123,33 +123,33 @@
       "rows": [
         {
           "id": "3ff6c630-c178-8100-70c8-a33e8fbdbe5f",
-          "created": "2026-09-14T15:20:00.000Z",
-          "edited": "2026-10-12T03:47:00.000Z",
+          "created": "{{-28T15:20|ts}}",
+          "edited": "{{+0T03:47|ts}}",
           "properties": {
             "Task": "Print brochures & in-store signage",
             "Workstream": "Retail",
             "Owner": "Northwind Print",
             "Status": "In Progress",
             "Due": {
-              "start": "2026-10-16",
+              "start": "{{+4|iso}}",
               "end": null,
               "is_datetime": 0
             },
-            "Vendor update": "Paper stock shortage – brochures and signage now deliver Oct 23 instead of Oct 16. We can split: brochures Oct 20, signage Oct 23."
+            "Vendor update": "Paper stock shortage – brochures and signage now deliver {{+11|md}} instead of {{+4|md}}. We can split: brochures {{+8|md}}, signage {{+11|md}}."
           },
           "content": ""
         },
         {
           "id": "3ff6c630-c178-8123-1d78-a83b6f82397f",
-          "created": "2026-09-14T15:20:00.000Z",
-          "edited": "2026-10-05T14:20:00.000Z",
+          "created": "{{-28T15:20|ts}}",
+          "edited": "{{-7T14:20|ts}}",
           "properties": {
             "Task": "Assemble POS kits",
             "Workstream": "Retail",
             "Owner": "Ops",
             "Status": "Not Started",
             "Due": {
-              "start": "2026-10-18",
+              "start": "{{+6|iso}}",
               "end": null,
               "is_datetime": 0
             },
@@ -159,15 +159,15 @@
         },
         {
           "id": "3ff6c630-c178-8187-5284-a90317560ded",
-          "created": "2026-09-14T15:20:00.000Z",
-          "edited": "2026-10-05T14:22:00.000Z",
+          "created": "{{-28T15:20|ts}}",
+          "edited": "{{-7T14:22|ts}}",
           "properties": {
             "Task": "Ship POS kits to Contoso Retail stores",
             "Workstream": "Retail",
             "Owner": "Ops",
             "Status": "Not Started",
             "Due": {
-              "start": "2026-10-21",
+              "start": "{{+9|iso}}",
               "end": null,
               "is_datetime": 0
             },
@@ -177,15 +177,15 @@
         },
         {
           "id": "3ff6c630-c178-81ad-6442-7af0793ca71e",
-          "created": "2026-09-14T15:20:00.000Z",
-          "edited": "2026-10-06T16:05:00.000Z",
+          "created": "{{-28T15:20|ts}}",
+          "edited": "{{-6T16:05|ts}}",
           "properties": {
             "Task": "Store staff training",
             "Workstream": "Retail",
             "Owner": "Contoso Retail",
             "Status": "Not Started",
             "Due": {
-              "start": "2026-10-27",
+              "start": "{{+15|iso}}",
               "end": null,
               "is_datetime": 0
             },
@@ -195,15 +195,15 @@
         },
         {
           "id": "3ff6c630-c178-81c4-f736-543a3556042f",
-          "created": "2026-09-14T15:20:00.000Z",
-          "edited": "2026-10-07T19:30:00.000Z",
+          "created": "{{-28T15:20|ts}}",
+          "edited": "{{-5T19:30|ts}}",
           "properties": {
             "Task": "Press briefing deck",
             "Workstream": "PR",
             "Owner": "Marcus",
             "Status": "In Progress",
             "Due": {
-              "start": "2026-10-24",
+              "start": "{{+12|iso}}",
               "end": null,
               "is_datetime": 0
             },
@@ -213,15 +213,15 @@
         },
         {
           "id": "3ff6c630-c178-8119-7be0-c936f08a02e3",
-          "created": "2026-09-14T15:20:00.000Z",
-          "edited": "2026-10-08T13:15:00.000Z",
+          "created": "{{-28T15:20|ts}}",
+          "edited": "{{-4T13:15|ts}}",
           "properties": {
             "Task": "Launch event run-of-show",
             "Workstream": "Events",
             "Owner": "Events team",
             "Status": "In Progress",
             "Due": {
-              "start": "2026-10-31",
+              "start": "{{+19|iso}}",
               "end": null,
               "is_datetime": 0
             },
@@ -231,15 +231,15 @@
         },
         {
           "id": "3ff6c630-c178-817a-05f7-a945f3da847d",
-          "created": "2026-09-14T15:20:00.000Z",
-          "edited": "2026-09-14T15:40:00.000Z",
+          "created": "{{-28T15:20|ts}}",
+          "edited": "{{-28T15:40|ts}}",
           "properties": {
             "Task": "Launch event",
             "Workstream": "Events",
             "Owner": "All",
             "Status": "Not Started",
             "Due": {
-              "start": "2026-11-03",
+              "start": "{{+22|iso}}",
               "end": null,
               "is_datetime": 0
             },
@@ -255,8 +255,8 @@
       "view_id": "3ff6c630-c178-81d0-cafd-000c33a19219",
       "title": "Launch Decision Log",
       "parent_id": "3ff6c630-c178-8154-233e-c4b0ae9a5996",
-      "created": "2026-09-14T15:30:00.000Z",
-      "edited": "2026-10-07T20:05:00.000Z",
+      "created": "{{-28T15:30|ts}}",
+      "edited": "{{-3T16:35|ts}}",
       "schema": [
         {
           "name": "Context",
@@ -317,15 +317,15 @@
       "rows": [
         {
           "id": "3ff6c630-c178-8162-da01-0f64bae863c6",
-          "created": "2026-10-02T18:40:00.000Z",
-          "edited": "2026-10-02T18:40:00.000Z",
+          "created": "{{-10T18:40|ts}}",
+          "edited": "{{-10T18:40|ts}}",
           "properties": {
             "Decision": "Launch retail price at $199 with a $20 bundle discount for Verdantis home policyholders",
             "Owner": "Marcus Hollowell",
             "Approver": "Sam Patel",
             "Status": "Approved",
             "Date": {
-              "start": "2026-10-02",
+              "start": "{{-10|iso}}",
               "end": null,
               "is_datetime": 0
             },
@@ -335,19 +335,55 @@
         },
         {
           "id": "3ff6c630-c178-8173-152f-3d6ee06719e3",
-          "created": "2026-10-07T20:05:00.000Z",
-          "edited": "2026-10-07T20:05:00.000Z",
+          "created": "{{-5T20:05|ts}}",
+          "edited": "{{-5T20:05|ts}}",
           "properties": {
-            "Decision": "Move press briefing from Oct 17 to Oct 24 and hold it in person",
+            "Decision": "Move press briefing from {{+5|md}} to {{+12|md}} and hold it in person",
             "Owner": "Marcus Hollowell",
             "Approver": "Sam Patel",
             "Status": "Approved",
             "Date": {
-              "start": "2026-10-07",
+              "start": "{{-5|iso}}",
               "end": null,
               "is_datetime": 0
             },
-            "Context": "More time to add final retail pricing and Contoso Retail partner quotes to the deck. Press briefing deck due date moved to Oct 24 in the launch tracker."
+            "Context": "More time to add final retail pricing and Contoso Retail partner quotes to the deck. Press briefing deck due date moved to {{+12|md}} in the launch tracker."
+          },
+          "content": ""
+        },
+        {
+          "id": "3ff6c630-c178-81e4-9a37-5c12d08b47a1",
+          "created": "{{-4T21:10|ts}}",
+          "edited": "{{-4T21:10|ts}}",
+          "properties": {
+            "Decision": "Add a second Contoso Retail launch city in Q1",
+            "Owner": "Marcus Hollowell",
+            "Approver": "Sam Patel",
+            "Status": "Rejected",
+            "Date": {
+              "start": "{{-4|iso}}",
+              "end": null,
+              "is_datetime": 0
+            },
+            "Context": "Contoso Retail asked to open a second launch city in Q1. Rejected: POS kit stock and store staff training capacity cover only the launch-city stores. Revisit after the launch review."
+          },
+          "content": ""
+        },
+        {
+          "id": "3ff6c630-c178-81f2-6b58-e3a97c0d2f64",
+          "created": "{{-3T16:35|ts}}",
+          "edited": "{{-3T16:35|ts}}",
+          "properties": {
+            "Decision": "Extend launch-week support hours",
+            "Owner": "Marcus Hollowell",
+            "Approver": "Sam Patel",
+            "Status": "Proposed",
+            "Date": {
+              "start": "{{-3|iso}}",
+              "end": null,
+              "is_datetime": 0
+            },
+            "Context": "Extend Verdantis support hours to 8 AM–10 PM ET during launch week so Contoso Retail store staff and early buyers can reach us. Waiting on the Support staffing plan."
           },
           "content": ""
         }
