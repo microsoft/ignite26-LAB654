@@ -1,16 +1,23 @@
-# Finance track: Friday ask, Monday investment committee
+# Finance track: Should we buy more NVIDIA?
 
 > **Duration:** ~18 minutes | **Connectors:** Test_LSEG, Test_FactSet, Test_Moodys | **Surfaces:** Microsoft 365 Copilot app, Excel, Word
+
+## What you'll take away
+
+- **Trusted data where you work.** LSEG, FactSet and Moody's answer inside Copilot, Excel and Word, with every number cited and dated.
+- **Connect once, use everywhere.** The same three connectors work in the Copilot app and in Excel, with no extra setup.
+- **Partner expertise, not just data.** LSEG and Moody's skills apply their analysts' methods, in the Copilot app and in Excel.
+- **A case that holds up.** Real Excel formulas you can check, and Copilot challenges your view before the committee does.
 
 ## The story
 
 Verdantis invests the insurance premiums it holds so it can pay future claims. One of the portfolio's biggest holdings is NVIDIA, the company behind most AI chips.
 
-It's Friday at 4 PM. Jordan Reyes, who runs the portfolio, messages you on Teams:
+Jordan Reyes, who runs the portfolio, messages you on Teams:
 
 > "Committee wants a view on NVIDIA Monday. Should we add more? Bring a short memo."
 
-The investment committee is the weekly meeting where senior people approve big investments, and they will challenge the case. Normally this is a weekend of jumping between three paid data services, copying numbers into Excel and writing a memo. Today you'll do it with Copilot in three steps.
+Verdantis already holds a lot of NVIDIA, so buying more puts even more policyholders' money on one company. The investment committee is the weekly meeting where senior people approve big investments, and they will challenge the case. A good answer has to hold up: every number sourced, checked across more than one provider, and challenged before the committee does it. You'll build that case with Copilot in three steps.
 
 **What you need for Monday:**
 
@@ -20,6 +27,22 @@ The investment committee is the weekly meeting where senior people approve big i
 4. A view that survives tough questions, written up as a memo.
 
 *Not in finance?* This works for any business case: is it worth a closer look, what do the numbers say, does my argument survive tough questions, and how do I write it up for the people who decide?
+
+<details><summary>New to finance? Terms you'll see</summary>
+
+| Term | Meaning |
+|---|---|
+| EPS (earnings per share) | Profit divided by the number of shares |
+| Consensus | The average forecast from analysts who follow the company |
+| Gross margin | How much of each $1 of sales is left after making the product |
+| ROIC | Profit earned on the money put into the business |
+| P/E (price-to-earnings) | How much investors pay for $1 of profit |
+| FY1 / FY2 | This fiscal year / next fiscal year |
+| Bear / base / bull | Worst, middle and best case |
+| Credit rating | A grade for how likely a company is to repay its debts |
+| SWOT | Strengths, weaknesses, opportunities and threats |
+
+</details>
 
 ## Before you start
 
@@ -45,6 +68,9 @@ I'm preparing a recommendation for Monday's investment committee on whether our 
 ```
 
 **What to look for:** actual and consensus figures for EPS and revenue, the fiscal quarter, and LSEG as the cited source.
+
+> [!TIP]
+> LSEG can return charts and analysis cards, not just text: the provider's own experience, inside Copilot.
 
 ### 1b. Is it stronger than its rivals?
 
@@ -92,6 +118,9 @@ Add a "Scenarios" sheet with worst, middle and best cases (bear, base, bull), us
 
 **Try this:** change one P/E multiple on the **Scenarios** sheet and watch the implied price and upside update.
 
+> [!TIP]
+> You didn't re-explain anything. Copilot in Excel picked up the context from the workbook, and these are real formulas you can check.
+
 ### 2c. Is it financially sound?
 
 *Excel · Copilot pane · Moody's company analysis skill*
@@ -100,9 +129,11 @@ Add a "Scenarios" sheet with worst, middle and best cases (bear, base, bull), us
 Using Moody's, add a "Credit" sheet with a credit SWOT for NVIDIA (strengths, weaknesses, opportunities and threats) and the factors that could lead to a rating upgrade or downgrade.
 ```
 
-**What to look for:** a **Credit** sheet with a SWOT and upgrade and downgrade drivers. The same Moody's connector works in Excel without any extra setup.
+**What to look for:** a **Credit** sheet with a SWOT and upgrade and downgrade drivers. The Moody's skill works in Excel too, not just in Cowork.
 
 ## Step 3: Back-check and report
+
+*Microsoft 365 Copilot app*
 
 ### 3a. Pressure-test your view
 
@@ -112,6 +143,9 @@ My view: we should buy more NVIDIA because its strong profits and earnings growt
 
 **What to look for:** evidence on both sides, the strongest counter-argument, and likely committee questions, drawing on the workbook and both connectors.
 
+> [!TIP]
+> Copilot argued against your view, so the committee isn't the first to find the weak spot.
+
 ### 3b. Prepare the report
 
 ```text
@@ -119,6 +153,8 @@ Turn this into a Word memo for the investment committee, reusing the workbook's 
 ```
 
 **What to look for:** a Word memo with citations, charts from the workbook, and a note on any gaps in the data.
+
+**Result:** a committee pack you can defend on Monday: a workbook with real formulas, a memo where every number is cited, and the gaps flagged instead of guessed.
 
 ## If it goes wrong
 
@@ -135,7 +171,7 @@ Turn this into a Word memo for the investment committee, reusing the workbook's 
 - [ ] Your **NVIDIA Committee Pack** has snapshot, **Scenarios** and **Credit** sheets.
 - [ ] You have a pressure-tested view and a committee memo with sources.
 
-**What you take away:** the IC pack (workbook and memo), and prompts that work for any company. Swap NVIDIA for another company and run them again.
+**What you take away:** the committee pack (workbook and memo), and prompts that work for any company. Swap NVIDIA for another company and run them again.
 
 ---
 
