@@ -32,7 +32,7 @@ Fill in the sections below yourself, then:
 
 # [Microsoft Ignite 2026](https://ignite.microsoft.com)
 
-## 🔥LAB654: Connect Business Data to Copilot with Custom Connectors
+## 🔥LAB654: Copilot Connectors: Connect once. Use enterprise knowledge everywhere.
 ### Session description
 
 AI is only as powerful as the knowledge it can access. Copilot Connectors securely bring your enterprise data into Copilot, grounding experiences in the information that matters most to your organization. In this hands-on lab, you’ll discover and acquire connectors, connect trusted data sources, and use interactive experiences, skills, and actions to make informed decisions and complete real-world workflows. Explore these end-to-end scenarios across finance, legal, engineering, and productivity
