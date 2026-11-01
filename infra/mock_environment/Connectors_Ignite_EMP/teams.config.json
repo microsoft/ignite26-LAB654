@@ -2,17 +2,17 @@
   {
     "TeamId": "eng-team-aurora",
     "Name": "Aurora Engineering",
-    "Description": "Engineering team for the Verdantis Aurora smart-home hub platform.",
+    "Description": "Engineering team for the Zava Aurora smart-home hub platform.",
     "CreatedDateTime": "2026-03-02T14:00:00Z",
     "TeamType": "Private",
     "Owners": [
-      "mhollowell"
+      "emil"
     ],
     "Members": [
-      "nchen",
-      "eruiz",
-      "tmorgan",
-      "spatel"
+      "triin",
+      "maria",
+      "kerry",
+      "tama"
     ]
   }
 ]

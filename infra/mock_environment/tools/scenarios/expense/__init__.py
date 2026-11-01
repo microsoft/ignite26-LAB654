@@ -1,24 +1,23 @@
-"""Bring-your-own-app (Verdantis Expense) tenant seed data.
+"""Bring-your-own-app (Zava Expense) tenant seed data.
 
-Source: the verdantis_expense mock's seed_files/expense_world.json ("seattle_trip"
-receipt_emails), with dates fixed to the lab calendar: Marcus's Seattle trip runs
+Source: the expense trial's "seattle_trip" receipt emails, with dates fixed to the lab calendar: Emil's Seattle trip runs
 Mon Oct 26 - Thu Oct 29, 2026, with the airfare booked Oct 19 and the submission
 reminder on Oct 30.
 
 Receipt senders are tenant users so the emails pass schema checks; their display
-names are the merchant names. Daniel Park (manager) and Aisha Rahman (Finance
-Operations) are Verdantis users referenced by the expense mock.
+names are the merchant names. Hannes Niemi (manager) and Ebere Ibeabuchi (Finance
+Operations) are Zava users referenced by the expense mock.
 """
 
 from __future__ import annotations
 
-from ..legal import MARCUS, TEAMS_ONLY, _user
+from ..legal import EMIL, TEAMS_ONLY, _user
 from ..productivity import at, ext_user
 
-DANIEL, AISHA = "dpark", "arahman"
+HANNES, EBERE = "hannes", "ebere"
 ALASKA, YELLOWCAB, CANLIS, DTF, WESTIN, UBER, EXPENSE = (
     "alaskareceipts", "yellowcabreceipts", "canlisreservations", "dintaifungreceipts",
-    "westinfolio", "uberreceipts", "verdantisexpense",
+    "westinfolio", "uberreceipts", "zavaexpense",
 )
 
 
@@ -29,11 +28,11 @@ def _vendor(nick, name, city, state):
 
 
 def users():
-    expense = _user(EXPENSE, "Verdantis", "Expense", "Expense notifications", "Finance", TEAMS_ONLY)
-    expense["DisplayName"] = "Verdantis Expense"
+    expense = _user(EXPENSE, "Zava", "Expense", "Expense notifications", "Finance", TEAMS_ONLY)
+    expense["DisplayName"] = "Zava Expense"
     return [
-        _user(DANIEL, "Daniel", "Park", "Vice President, Product", "Product", TEAMS_ONLY),
-        _user(AISHA, "Aisha", "Rahman", "Finance Operations Lead", "Finance", TEAMS_ONLY),
+        _user(HANNES, "Hannes", "Niemi", "Vice President, Product", "Product", TEAMS_ONLY),
+        _user(EBERE, "Ebere", "Ibeabuchi", "Finance Operations Lead", "Finance", TEAMS_ONLY),
         expense,
         _vendor(ALASKA, "Alaska Airlines", "Seattle", "WA"),
         _vendor(YELLOWCAB, "Seattle Yellow Cab", "Seattle", "WA"),
@@ -48,7 +47,7 @@ D0, D1, D2, D3 = "October 26", "October 27", "October 28", "October 29"
 
 RECEIPTS = [
     (ALASKA, "Your receipt: Seattle (SEA) round trip, confirmation KXQ4TZ",
-     f"Passenger: Marcus Hollowell. JFK–SEA {D0}, SEA–JFK {D3}. Economy. Total charged to card ending 4417: $486.40.",
+     f"Passenger: Emil Vanggaard. JFK–SEA {D0}, SEA–JFK {D3}. Economy. Total charged to card ending 4417: $486.40.",
      at(10, 19, 18, 12)),
     (YELLOWCAB, "Seattle Yellow Cab — trip receipt",
      f"SEA airport to The Westin Seattle, {D0}. Fare $48.75, tip $10.00. Total $58.75.",
@@ -60,14 +59,14 @@ RECEIPTS = [
      f"Table for 1 on {D2}. Total $48.20.",
      at(10, 28, 22, 10)),
     (WESTIN, "Your folio from The Westin Seattle",
-     f"Guest: Marcus Hollowell. Arrive {D0}, depart {D3}. Room rate: {D0} $239.00, {D1} $239.00, {D2} $389.00 "
+     f"Guest: Emil Vanggaard. Arrive {D0}, depart {D3}. Room rate: {D0} $239.00, {D1} $239.00, {D2} $389.00 "
      "(city-wide convention rate). Total $867.00.",
      at(10, 29, 9, 30)),
     (UBER, "Your Thursday morning trip with Uber",
      f"The Westin Seattle to SEA airport, {D3}. Total $52.30.",
      at(10, 29, 10, 25)),
     (EXPENSE, "Reminder: submit your Seattle trip expenses by Friday, November 20",
-     f"Hi Marcus, you have 8 unreported card charges from October 5 to {D3}. Please submit them in Verdantis "
+     f"Hi Emil, you have 8 unreported card charges from October 5 to {D3}. Please submit them in Zava "
      "Expense by Friday, November 20.",
      at(10, 30, 8, 0)),
 ]
@@ -79,7 +78,7 @@ def emails():
             "EmailId": f"exp-email-{i:03d}",
             "EmailAction": "Send",
             "Sender": sender,
-            "ToRecipients": [{"Recipient": MARCUS}],
+            "ToRecipients": [{"Recipient": EMIL}],
             "CcRecipients": [],
             "Subject": subject,
             "Body": f"<p>{body}</p>",

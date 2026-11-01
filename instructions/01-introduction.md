@@ -18,9 +18,9 @@ By the end of this lab, you'll be able to:
 2. **Ground Copilot** in trusted business and partner data, with citations back to each source.
 3. **Finish the work, not just the search:** use skills and write actions to produce a call brief, a sprint decision slide, a committee pack or a contract redline, and bring your own app with a custom connector.
 
-## Your role: Marcus Hollowell at Verdantis
+## Your role: Emil Vanggaard at Zava
 
-**Verdantis** is a fictional US insurer that also builds **Aurora**, a smart-home hub sold through retail partners such as Contoso Retail. You'll play **Marcus Hollowell**, who uses Copilot to handle very different requests. Each request is a track.
+**Zava** is a fictional US insurer that also builds **Aurora**, a smart-home hub sold through retail partners such as Lakeshore Retail. You'll play **Emil Vanggaard**, who uses Copilot to handle very different requests. Each request is a track.
 
 ## How the lab runs
 
@@ -33,11 +33,11 @@ By the end of this lab, you'll be able to:
 
 | Track | The ask | Connectors and tools | Time |
 |---|---|---|---|
-| [Finance](03-finance.md) | Jordan, who runs the Verdantis investment portfolio: "Should we buy more NVIDIA? Bring a recommendation to Monday's investment committee." | LSEG, FactSet, Moody's · equity research and company analysis skills · Excel, Word | ~18 min |
-| [Legal](04-legal.md) | Tomás, Chief Underwriting Officer: "Can we sign Cognivault's AI underwriting contract on the 12th?" | Work IQ (email and Teams), iManage · Word legal skills · Copilot Cowork | ~15 min |
-| [Productivity](05-productivity.md) | Pitch the Aurora rollout to all 400 Contoso Retail stores on Nov 20, with a CFO in the room and a competitor 20% cheaper. | Test_Salesforce, Test_Confluence, Teams, Outlook · sales skills · Copilot Cowork | ~10 min (+ stretch) |
+| [Finance](03-finance.md) | Kristian, who runs the Zava investment portfolio: "Should we buy more NVIDIA? Bring a recommendation to Monday's investment committee." | LSEG, FactSet, Moody's · equity research and company analysis skills · Excel, Word | ~18 min |
+| [Legal](04-legal.md) | Luc, Chief Underwriting Officer: "Can we sign Trey Research's AI underwriting contract on the 12th?" | Work IQ (email and Teams), iManage · Word legal skills · Copilot Cowork | ~15 min |
+| [Productivity](05-productivity.md) | Pitch the Aurora rollout to all 400 Lakeshore Retail stores on Nov 20, with a CFO in the room and a competitor 20% cheaper. | Test_Salesforce, Test_Confluence, Teams, Outlook · sales skills · Copilot Cowork | ~10 min (+ stretch) |
 | [Engineering](06-engineering.md) | A customer says the Aurora offline-status bug is still there, and the pilot expands on Monday. What's really happening? | Test_Jira, Test_GitHub, Outlook, Teams · sprint-to-slides skill · Copilot Cowork | ~15 min |
-| [Bring your own app](07-custom-mcp.md) (everyone) | Your expense tool isn't in any catalog. Connect it yourself, then file a trip from your inbox. | Verdantis Expense (custom MCP connector) · travel-policy skill · Excel | ~20 min |
+| [Bring your own app](07-custom-mcp.md) (everyone) | Your expense tool isn't in any catalog. Connect it yourself, then file a trip from your inbox. | Zava Expense (custom MCP connector) · travel-policy skill · Excel | ~20 min |
 
 ## Key ideas
 

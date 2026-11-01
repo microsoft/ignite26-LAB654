@@ -105,10 +105,10 @@ def main() -> None:
 
     data = {k: [x for s in SCENARIOS for x in hook(s, k)] for k in ENTITY_FILES}
     data["users"] = _merge_users(hook(s, "users") for s in SCENARIOS)
-    # Bring your own app step 3a: "submit the report to my manager" -> Daniel Park.
+    # Bring your own app step 3a: "submit the report to my manager" -> Hannes Niemi.
     for u in data["users"]:
-        if u["MailNickName"] == "mhollowell":
-            u["Manager"] = "dpark"
+        if u["MailNickName"] == "emil":
+            u["Manager"] = "hannes"
     data["emails"] = [_normalize_email(e) for e in data["emails"]]
 
     _write(PACKAGE_DIR / "config.json", CONFIG)

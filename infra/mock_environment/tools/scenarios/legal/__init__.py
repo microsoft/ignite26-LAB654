@@ -1,17 +1,17 @@
-"""Legal scenario tenant seed data (Verdantis x Cognivault).
+"""Legal scenario tenant seed data (Zava x Trey Research).
 
 Source: the "legal v1 seed kit" (see docs/scenarios/legal/seed_kit.md). Only
 what the kit asks to load into Outlook and Teams goes into the tenant:
 
-- Radhika's business-priorities email to Marcus, cc Tomás (lab date - 14 days)
-- Group chat "Cognivault deal" with 3 messages (lab date - 6 days, a Tuesday)
-- Trigger 1:1 chat, Tomás to Marcus (lab date, 8:07 AM ET)
+- Hemanti's business-priorities email to Emil, cc Luc (lab date - 14 days)
+- Group chat "Trey Research deal" with 3 messages (lab date - 6 days, a Tuesday)
+- Trigger 1:1 chat, Luc to Emil (lab date, 8:07 AM ET)
 
 The kit's documents (agreement, exhibits, playbook) live only in iManage, so
 they're under mock_mcp_servers/imanage/seed_files, not in the tenant. The kit
 needs no calendar items.
 
-LAB_DATE is the Monday of Tomás's trigger chat. Every tenant item is dated on
+LAB_DATE is the Monday of Luc's trigger chat. Every tenant item is dated on
 or before it, so it must be before the tenant is ingested. NEGOTIATION_DATE
 (a Thursday) and go-live / contract effective date (NEGOTIATION_DATE + 3, a
 Sunday) are still to come, so they must be after the last lab day.
@@ -31,7 +31,7 @@ LAB_DATE = date(2026, 10, 26)
 NEGOTIATION_DATE = date(2026, 12, 10)
 GO_LIVE_DATE = NEGOTIATION_DATE + timedelta(days=3)
 
-ET = ZoneInfo("America/New_York")  # Verdantis is in Stamford, CT
+ET = ZoneInfo("America/New_York")  # Zava is in Stamford, CT
 
 TEAMS_ONLY = ["Microsoft Teams Enterprise", "Office 365 E5 (no Teams)"]
 COPILOT_USER = ["Microsoft 365 Copilot", *TEAMS_ONLY]
@@ -56,7 +56,7 @@ def _user(nick, first, last, title, dept, licenses):
         "LastName": last,
         "JobTitle": title,
         "Department": dept,
-        "CompanyName": "Verdantis Technologies, Inc.",
+        "CompanyName": "Zava, Inc.",
         "UsageLocation": "US",
         "OfficeLocation": "Stamford, CT",
         "Address": {
@@ -70,17 +70,17 @@ def _user(nick, first, last, title, dept, licenses):
     }
 
 
-# Aliases match the kit's .eml addresses (mhollowell@, rsengupta@, taguilar@).
-MARCUS, RADHIKA, TOMAS = "mhollowell", "rsengupta", "taguilar"
+# Aliases match the kit's .eml addresses (emil@, hemanti@, luc@).
+EMIL, HEMANTI, LUC = "emil", "hemanti", "luc"
 
 
 def users():
     return [
-        _user(MARCUS, "Marcus", "Hollowell", "Associate General Counsel, Technology Transactions",
+        _user(EMIL, "Emil", "Vanggaard", "Associate General Counsel, Technology Transactions",
               "Legal", COPILOT_USER),
-        _user(RADHIKA, "Radhika", "Sengupta", "SVP, Strategic Procurement & Vendor Management",
+        _user(HEMANTI, "Hemanti", "Baishya", "SVP, Strategic Procurement & Vendor Management",
               "Procurement", TEAMS_ONLY),
-        _user(TOMAS, "Tomás", "Aguilar", "Chief Underwriting Officer", "Underwriting", TEAMS_ONLY),
+        _user(LUC, "Luc", "Lacombe", "Chief Underwriting Officer", "Underwriting", TEAMS_ONLY),
     ]
 
 
@@ -89,11 +89,11 @@ def emails():
         {
             "EmailId": "legal-email-001",
             "EmailAction": "Send",
-            "Sender": RADHIKA,
-            "ToRecipients": [{"Recipient": MARCUS}],
-            "CcRecipients": [{"Recipient": TOMAS}],
-            "Subject": "Cognivault Nexus \u2013 Business Requirements & Negotiation Priorities",
-            "Body": (CONTENT / "radhika_email_body.html").read_text(encoding="utf-8").strip(),
+            "Sender": HEMANTI,
+            "ToRecipients": [{"Recipient": EMIL}],
+            "CcRecipients": [{"Recipient": LUC}],
+            "Subject": "Trey Research AI Platform \u2013 Business Requirements & Negotiation Priorities",
+            "Body": (CONTENT / "hemanti_email_body.html").read_text(encoding="utf-8").strip(),
             "BodyType": "html",
             "Timestamp": utc(-14, 9, 12),
         }
@@ -109,18 +109,18 @@ def chats():
         {
             "ChatId": "legal-chat-001",
             "ChatType": "Group",
-            "ChatName": "Cognivault deal",
-            "Members": [TOMAS, RADHIKA, MARCUS],
+            "ChatName": "Trey Research deal",
+            "Members": [LUC, HEMANTI, EMIL],
             "CreatedDateTime": utc(-6, 10, 13),
             "ChatMessages": [
-                _msg(1, TOMAS,
-                     "Quick one on Cognivault. Our last vendor retired its model on 2 weeks' notice and we "
+                _msg(1, LUC,
+                     "Quick one on Trey Research. Our last vendor retired its model on 2 weeks' notice and we "
                      "couldn't quote for a week. Can't happen again.",
                      utc(-6, 10, 14)),
-                _msg(2, RADHIKA,
+                _msg(2, HEMANTI,
                      "Agreed. And we don't go to the table without owning the fine-tuned model.",
                      utc(-6, 10, 20)),
-                _msg(3, MARCUS,
+                _msg(3, EMIL,
                      "Understood. Their paper came in on Friday and it's in the matter. I'll review it against "
                      f"the playbook before the session on the {ordinal(NEGOTIATION_DATE)}.",
                      utc(-6, 10, 31)),
@@ -129,11 +129,11 @@ def chats():
         {
             "ChatId": "legal-chat-002",
             "ChatType": "OneOnOne",
-            "Members": [TOMAS, MARCUS],
+            "Members": [LUC, EMIL],
             "CreatedDateTime": utc(0, 8, 6),
             "ChatMessages": [
-                _msg(1, TOMAS,
-                     "Morning Marcus. Have you had a chance to look at Cognivault's contract? We'd like to sign "
+                _msg(1, LUC,
+                     "Morning Emil. Have you had a chance to look at Trey Research's contract? We'd like to sign "
                      f"at the session with them on the {ordinal(NEGOTIATION_DATE)} so we can go live on the "
                      f"{ordinal(GO_LIVE_DATE)}. Anything you need from me?",
                      utc(0, 8, 7)),

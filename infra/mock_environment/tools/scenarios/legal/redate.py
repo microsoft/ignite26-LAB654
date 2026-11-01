@@ -1,7 +1,7 @@
 """Move the legal scenario to new dates.
 
 The legal story has two anchors (in __init__.py in this folder):
-- LAB_DATE, the Monday of Tomás's trigger chat. The email, the group chat and
+- LAB_DATE, the Monday of Luc's trigger chat. The email, the group chat and
   the date the contract arrived all come before it. COEP rejects seed items
   dated in the future, so it must be before the tenant is ingested.
 - NEGOTIATION_DATE, a Thursday, with go-live / contract effective date three
@@ -44,10 +44,10 @@ HERE = Path(__file__).resolve().parent
 ENV = HERE.parents[2]
 REPO_ROOT = ENV.parents[1]
 LEGAL_PY = HERE / "__init__.py"
-MATTER = ENV / "mock_mcp_servers" / "imanage" / "seed_files" / "Cognivault-Nexus_matter"
+MATTER = ENV / "mock_mcp_servers" / "imanage" / "seed_files" / "TreyResearch-AIPlatform_matter"
 TEXT_FILES = [
     MATTER / "matter.json",
-    HERE / "content" / "radhika_email_body.html",
+    HERE / "content" / "hemanti_email_body.html",
 ]
 MARKDOWN_FILES = [
     REPO_ROOT / "docs" / "scenarios" / "legal" / "scenario.md",

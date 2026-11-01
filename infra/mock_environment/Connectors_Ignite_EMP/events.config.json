@@ -1,20 +1,20 @@
 [
   {
     "EventId": "prod-event-pilot-review",
-    "Subject": "Contoso Retail – Aurora pilot review",
-    "Body": "Review of the six-week, 50-store Aurora pilot with Contoso Retail and next steps toward the 400-store rollout.",
+    "Subject": "Lakeshore Retail – Aurora pilot review",
+    "Body": "Review of the six-week, 50-store Aurora pilot with Lakeshore Retail and next steps toward the 400-store rollout.",
     "StartDateTime": "2026-10-22T18:00:00Z",
     "EndDateTime": "2026-10-22T18:15:00Z",
-    "Sender": "mhollowell",
+    "Sender": "emil",
     "TimeZone": "UTC",
     "ShowAs": "busy",
     "RequiredAttendees": [
       {
-        "Email": "rblake",
+        "Email": "atul",
         "Operation": "Accepted"
       },
       {
-        "Email": "kliu",
+        "Email": "jahidi",
         "Operation": "Accepted"
       }
     ],
@@ -23,24 +23,24 @@
   },
   {
     "EventId": "prod-event-pitch",
-    "Subject": "Contoso Retail – Aurora expansion pitch",
-    "Body": "Aurora 400-store rollout proposal for Contoso Retail.<br>Attendees: Riley Blake (Director of Store Operations), Priya Nair (CFO), Ken Liu (IT Security Lead).",
+    "Subject": "Lakeshore Retail – Aurora expansion pitch",
+    "Body": "Aurora 400-store rollout proposal for Lakeshore Retail.<br>Attendees: Atul Manohar (Director of Store Operations), Nanami Nakayama (CFO), Jahidi Juma (IT Security Lead).",
     "StartDateTime": "2026-11-20T15:00:00Z",
     "EndDateTime": "2026-11-20T16:00:00Z",
-    "Sender": "mhollowell",
+    "Sender": "emil",
     "TimeZone": "UTC",
     "ShowAs": "busy",
     "RequiredAttendees": [
       {
-        "Email": "rblake",
+        "Email": "atul",
         "Operation": "Accepted"
       },
       {
-        "Email": "pnair",
+        "Email": "nanami",
         "Operation": "Accepted"
       },
       {
-        "Email": "kliu",
+        "Email": "jahidi",
         "Operation": "Accepted"
       }
     ],
@@ -53,12 +53,12 @@
     "Body": "Quarterly forecast review with the retail sales team.",
     "StartDateTime": "2026-11-23T14:00:00Z",
     "EndDateTime": "2026-11-23T16:00:00Z",
-    "Sender": "mhollowell",
+    "Sender": "emil",
     "TimeZone": "UTC",
     "ShowAs": "busy",
     "RequiredAttendees": [
       {
-        "Email": "lokafor",
+        "Email": "zoe",
         "Operation": "Accepted"
       }
     ],
@@ -71,7 +71,7 @@
     "Body": "Run-of-show for the Dec 8 Aurora launch event.",
     "StartDateTime": "2026-11-23T19:00:00Z",
     "EndDateTime": "2026-11-23T20:30:00Z",
-    "Sender": "mhollowell",
+    "Sender": "emil",
     "TimeZone": "UTC",
     "ShowAs": "busy",
     "RequiredAttendees": []
@@ -82,12 +82,12 @@
     "Body": "Weekly pipeline review.",
     "StartDateTime": "2026-11-24T15:00:00Z",
     "EndDateTime": "2026-11-24T16:00:00Z",
-    "Sender": "mhollowell",
+    "Sender": "emil",
     "TimeZone": "UTC",
     "ShowAs": "busy",
     "RequiredAttendees": [
       {
-        "Email": "lokafor",
+        "Email": "zoe",
         "Operation": "Accepted"
       }
     ],
@@ -100,23 +100,23 @@
     "Body": "Aurora partner enablement session (in person).",
     "StartDateTime": "2026-11-24T18:00:00Z",
     "EndDateTime": "2026-11-24T21:00:00Z",
-    "Sender": "mhollowell",
+    "Sender": "emil",
     "TimeZone": "UTC",
     "ShowAs": "busy",
     "RequiredAttendees": []
   },
   {
     "EventId": "prod-event-busy-5",
-    "Subject": "1:1 with Lena",
+    "Subject": "1:1 with Zoe",
     "Body": "Weekly 1:1.",
     "StartDateTime": "2026-11-25T16:00:00Z",
     "EndDateTime": "2026-11-25T16:30:00Z",
-    "Sender": "mhollowell",
+    "Sender": "emil",
     "TimeZone": "UTC",
     "ShowAs": "busy",
     "RequiredAttendees": [
       {
-        "Email": "lokafor",
+        "Email": "zoe",
         "Operation": "Accepted"
       }
     ],
@@ -129,7 +129,7 @@
     "Body": "Out of office for Thanksgiving.",
     "StartDateTime": "2026-11-26T05:00:00Z",
     "EndDateTime": "2026-11-28T05:00:00Z",
-    "Sender": "mhollowell",
+    "Sender": "emil",
     "TimeZone": "UTC",
     "ShowAs": "outOfOffice",
     "RequiredAttendees": []

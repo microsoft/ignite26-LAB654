@@ -1,6 +1,6 @@
 # Notion mock server
 
-Mock of the Notion MCP server for the [productivity scenario](../../../../docs/scenarios/productivity/scenario.md). It serves the Verdantis workspace in `seed_files/workspace.json`: the Aurora launch tracker, the launch plan, the decision log and two decoy trackers. There's no sign-in and no MCP Apps widget. The real Notion server doesn't return one in Microsoft 365 Copilot either.
+Mock of the Notion MCP server for the [productivity scenario](../../../../docs/scenarios/productivity/scenario.md). It serves the Zava workspace in `seed_files/workspace.json`: the Aurora launch tracker, the launch plan, the decision log and two decoy trackers. There's no sign-in and no MCP Apps widget. The real Notion server doesn't return one in Microsoft 365 Copilot either.
 
 Notion is the **federated** connector in this scenario: nothing is indexed, and Copilot reads and writes live as the user.
 
@@ -74,12 +74,12 @@ The seed is generated from the scenario data. Edit `seed_files/workspace.json` d
 
 | Step | What Copilot asks Notion for |
 |------|------------------------------|
-| 1 | Scheduled catch-up: tracker tasks due in the next 3 weeks and any vendor updates; flag the Northwind slip against the POS kit shipment |
+| 1 | Scheduled catch-up: tracker tasks due in the next 3 weeks and any vendor updates; flag the Lucerne Publishing slip against the POS kit shipment |
 | 3 | Set "Print brochures & in-store signage" to Due Nov 27 (anchor + 11) / At Risk; add the two-wave Decision Log entry with context and the playbook link |
 | Stretch | Read the whole tracker for an interactive dashboard |
 ## Data required
 
-### 1. Database: "Verdantis Aurora Launch Tracker"
+### 1. Database: "Zava Aurora Launch Tracker"
 
 | Property | Type | Values |
 |----------|------|--------|
@@ -94,11 +94,11 @@ The seed is generated from the scenario data. Edit `seed_files/workspace.json` d
 
 | Task | Workstream | Owner | Status | Due (offset → lab week) | Vendor update |
 |------|-----------|-------|--------|-----|---------------|
-| Print brochures & in-store signage | Retail | Northwind Print | In Progress | +4 → Fri Nov 20 | "Paper stock shortage – brochures and signage now deliver Nov 27 instead of Nov 20. We can split: brochures Nov 24, signage Nov 27." (+11, +4, +8, +11) |
+| Print brochures & in-store signage | Retail | Lucerne Publishing | In Progress | +4 → Fri Nov 20 | "Paper stock shortage – brochures and signage now deliver Nov 27 instead of Nov 20. We can split: brochures Nov 24, signage Nov 27." (+11, +4, +8, +11) |
 | Assemble POS kits | Retail | Ops | Not Started | +6 → Sun Nov 22 | |
-| Ship POS kits to Contoso Retail stores | Retail | Ops | Not Started | +9 → Wed Nov 25 | |
-| Store staff training | Retail | Contoso Retail | Not Started | +15 → Tue Dec 1 | |
-| Press briefing deck | PR | Marcus | In Progress | +12 → Sat Nov 28 | |
+| Ship POS kits to Lakeshore Retail stores | Retail | Ops | Not Started | +9 → Wed Nov 25 | |
+| Store staff training | Retail | Lakeshore Retail | Not Started | +15 → Tue Dec 1 | |
+| Press briefing deck | PR | Emil | In Progress | +12 → Sat Nov 28 | |
 | Launch event run-of-show | Events | Events team | In Progress | +19 → Sat Dec 5 | |
 | Launch event | Events | All | Not Started | +22 → Tue Dec 8 | |
 
@@ -108,11 +108,11 @@ The print row must be the most recently edited row (edited 03:47 UTC on the anch
 
 | Section | Content |
 |---------|---------|
-| Goals | Retail launch of the Verdantis Aurora smart-home hub |
+| Goals | Retail launch of the Zava Aurora smart-home hub |
 | Key dates | Store staff training **Tue Dec 1** (+15); launch event **Tue Dec 8** (+22) |
-| Owners | Marcus (launch lead); Sam (Retail Ops); workstream owners as in the tracker |
+| Owners | Emil (launch lead); Tama (Retail Ops); workstream owners as in the tracker |
 | Rules | **"POS kits must include signage before staff training."** |
-| Links | The Verdantis Hub Retail Partner Launch Playbook (`https://mock-verdantis-hub.yellowsand-9530f5dc.eastus.azurecontainerapps.io/retail/launch-playbook`, served by the [Verdantis Hub mock](../verdantis_hub/README.md)) |
+| Links | The Zava Hub Retail Partner Launch Playbook (`https://mock-zava-hub.yellowsand-9530f5dc.eastus.azurecontainerapps.io/retail/launch-playbook`, served by the retired Zava Hub mock) |
 
 ### 3. Database: "Launch Decision Log"
 
@@ -131,12 +131,12 @@ There's no Links property; links go in Context. The seed has **4 prior decisions
 |----------|--------|------|
 | Retail price point | Approved | -10 → Fri Nov 6 |
 | Move press briefing from Nov 21 to Nov 28 (+5 to +12) and hold it in person | Approved | -5 → Wed Nov 11 |
-| Add a second Contoso Retail launch city in Q1 | Rejected | -4 → Thu Nov 12 |
+| Add a second Lakeshore Retail launch city in Q1 | Rejected | -4 → Thu Nov 12 |
 | Extend launch-week support hours | Proposed | -3 → Fri Nov 13 |
 
-None is about split shipments or the Northwind slip; Step 3 creates that row. The wording of the Rejected and Proposed rows is authored; the spec names only their titles.
+None is about split shipments or the Lucerne Publishing slip; Step 3 creates that row. The wording of the Rejected and Proposed rows is authored; the spec names only their titles.
 
-Step 3's expected new row: Decision "Ship Contoso Retail POS kits in two waves (kits + brochures Nov 25; signage express Nov 27, in stores Nov 28)", Owner Marcus, Approver Sam Patel, Status Proposed, Context summarizing the Northwind delay with the playbook link.
+Step 3's expected new row: Decision "Ship Lakeshore Retail POS kits in two waves (kits + brochures Nov 25; signage express Nov 27, in stores Nov 28)", Owner Emil, Approver Tama Surya, Status Proposed, Context summarizing the Lucerne Publishing delay with the playbook link.
 
 ### 4. Decoy databases
 
@@ -144,13 +144,13 @@ They test that Copilot picks the right tracker.
 
 | Database | Contents |
 |----------|----------|
-| Verdantis Lumen Launch Tracker | A different product's launch plan |
-| 2025 Holiday Launch Tracker (archived) | Old rows including Northwind Print tasks with 2025 dates |
+| Zava Lumen Launch Tracker | A different product's launch plan |
+| 2025 Holiday Launch Tracker (archived) | Old rows including Lucerne Publishing tasks with 2025 dates |
 
 Lumen rows are dated 2027. Decoys need only enough rows to be plausible. None should mention Aurora POS kits with 2026 dates.
 
 ## Consistency rules
 
-- Names match the tenant: Marcus Hollowell (seat user), Sam Patel (Retail Ops lead). "Contoso Retail" and "Northwind Print" are organization names, not users.
+- Names match the tenant: Emil Vanggaard (seat user), Tama Surya (Retail Ops lead). "Lakeshore Retail" and "Lucerne Publishing" are organization names, not users.
 - Dates are offsets from the Monday anchor, so weekdays are always right. During lab week they match the [scenario doc](../../../../docs/scenarios/productivity/scenario.md).
-- The Step 2 answer depends on these dates: signage must be in stores by Sat Nov 28 (+12, 3 days before training on Dec 1), so Northwind's signage ships express Nov 27. The approval rule matches the [Verdantis Hub playbook](../verdantis_hub/README.md).
+- The Step 2 answer depends on these dates: signage must be in stores by Sat Nov 28 (+12, 3 days before training on Dec 1), so Lucerne Publishing's signage ships express Nov 27. The approval rule matches the Zava Hub playbook.

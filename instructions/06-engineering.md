@@ -10,39 +10,39 @@
 
 ## The story
 
-You're **Marcus Hollowell** at Verdantis. You have an email from **Riley Blake**, the pilot coordinator at Contoso Retail. Aurora smart-home hubs keep showing as offline after they reconnect, so store staff are restarting devices that are actually working.
+You're **Emil Vanggaard** at Zava. You have an email from **Atul Manohar**, the pilot coordinator at Lakeshore Retail. Aurora smart-home hubs keep showing as offline after they reconnect, so store staff are restarting devices that are actually working.
 
-Contoso expands its pilot on **Monday, November 23**, and Riley needs a status update before then. You remember a Jira bug, but its last update only says someone has started working on the fix. Before you reply, you need to know what's really happening.
+Lakeshore Retail expands its pilot on **Monday, November 23**, and Atul needs a status update before then. You remember a Jira bug, but its last update only says someone has started working on the fix. Before you reply, you need to know what's really happening.
 
 | Person | Role |
 |---|---|
-| **Marcus Hollowell** (you) | Owns the Contoso pilot relationship. |
-| Riley Blake | Pilot coordinator, Contoso Retail. |
-| Nina Chen | Engineer working on the fix. |
-| Elena Ruiz | Engineer who owns rollout and reconnect testing. |
-| Sam Patel | Platform lead; reviews the fix. |
-| Taylor Morgan | Engineering lead; approves sprint scope. |
+| **Emil Vanggaard** (you) | Owns the Lakeshore Retail pilot relationship. |
+| Atul Manohar | Pilot coordinator, Lakeshore Retail. |
+| Triin Lepp | Engineer working on the fix. |
+| Maria Oliva | Engineer who owns rollout and reconnect testing. |
+| Tama Surya | Platform lead; reviews the fix. |
+| Kerry Allen | Engineering lead; approves sprint scope. |
 
-You won't change any code or ship a release. Your job is to find the real status, understand what's blocking the fix, work out the sprint trade-off, then align the team and reply to Riley.
+You won't change any code or ship a release. Your job is to find the real status, understand what's blocking the fix, work out the sprint trade-off, then align the team and reply to Atul.
 
 ## Before you start
 
 - [ ] You completed [Getting started with connectors](02-getting-started.md).
 - [ ] **Test_Jira** and **Test_GitHub** show as connected.
-- [ ] You can see Riley's email, *Aurora pilot - offline status still wrong*, in Outlook.
+- [ ] You can see Atul's email, *Aurora pilot - offline status still wrong*, in Outlook.
 
 ## Step 1: Where are we with the customer issue?
 
 *Copilot Chat · Outlook · Test_Jira*
 
 ```text
-Riley is asking if the Aurora offline-status bug will be fixed before the pilot expansion. Where are we with the fix, and what have we already told them?
+Atul is asking if the Aurora offline-status bug will be fixed before the pilot expansion. Where are we with the fix, and what have we already told them?
 ```
 
 **What to look for:**
 
-- Copilot connects Riley's email to Jira issue **AUR-142**.
-- What you told Riley: engineering is working on a fix. You didn't promise a date.
+- Copilot connects Atul's email to Jira issue **AUR-142**.
+- What you told Atul: engineering is working on a fix. You didn't promise a date.
 - AUR-142 is In Progress. The last update, on October 26, only says "I have started working on the fix", so the ticket doesn't say whether a fix is ready.
 - Citations to the email and the Jira issue.
 
@@ -60,8 +60,8 @@ Can you find the PR for this item and where it is blocked?
 **What to look for:**
 
 - Copilot finds **PR #287** from its reference to AUR-142. The Jira issue doesn't link to it.
-- The PR is open and unmerged. Sam requested changes: it fixes the old polling service, but the Teams discussion confirms the Contoso pilot moves to the new event-driven service after the November 20 cutover.
-- Two things are needed: Nina adapts the fix to the new service, and Elena adds and runs the new-service reconnect tests. Then Sam reviews again.
+- The PR is open and unmerged. Tama requested changes: it fixes the old polling service, but the Teams discussion confirms the Lakeshore Retail pilot moves to the new event-driven service after the November 20 cutover.
+- Two things are needed: Triin adapts the fix to the new service, and Maria adds and runs the new-service reconnect tests. Then Tama reviews again.
 
 > [!TIP]
 > The fix exists, but for the old service. Only joining the code review with the migration discussion shows why the customer is still blocked.
@@ -87,20 +87,20 @@ Create one PowerPoint slide for Aurora Sprint 24 showing the impact of this fix 
 > [!TIP]
 > If Cowork doesn't have the context from Step 2, paste Copilot's Step 2 answer into the task first.
 
-## Step 4: Align the team and reply to Riley
+## Step 4: Align the team and reply to Atul
 
 *Same Cowork task · Teams · Outlook*
 
 ```text
-Share this slide in Aurora's engineering channel and ask LT to approve the revised sprint plan. Draft a reply to Riley with our progress and an update on November 20 at 3 pm.
+Share this slide in Aurora's engineering channel and ask LT to approve the revised sprint plan. Draft a reply to Atul with our progress and an update on November 20 at 3 pm.
 ```
 
 **What to look for:**
 
-- A Teams post for the Aurora **Engineering** channel with the slide, the 16-hour trade-off and named owners, asking the leadership team (Taylor and Sam) to approve.
-- A customer-friendly reply to Riley: the fix needs validation on the service the pilot will use, and the next update is **Friday, November 20 at 15:00**.
+- A Teams post for the Aurora **Engineering** channel with the slide, the 16-hour trade-off and named owners, asking the leadership team (Kerry and Tama) to approve.
+- A customer-friendly reply to Atul: the fix needs validation on the service the pilot will use, and the next update is **Friday, November 20 at 15:00**.
 - No promised delivery date, no internal review friction and no invented workaround.
-- Nothing is posted or sent until you approve it. Keep the email to Riley as a draft.
+- Nothing is posted or sent until you approve it. Keep the email to Atul as a draft.
 
 > [!TIP]
 > One evidence base became two useful messages: an internal decision request and an honest customer update.
@@ -109,7 +109,7 @@ Share this slide in Aurora's engineering channel and ask LT to approve the revis
 
 | What happens | What to do |
 |---|---|
-| Step 1 doesn't find Riley's email | Ask: "Find Riley's email about Aurora offline status." |
+| Step 1 doesn't find Atul's email | Ask: "Find Atul's email about Aurora offline status." |
 | Step 2 doesn't find the PR | Ask: "Search GitHub for a pull request that references AUR-142." |
 | The skill returns an outline, not a slide | Reply: "Create the .pptx file with one slide." |
 | Copilot offers to send the email | Say no. Keep it as a draft. |
@@ -118,7 +118,7 @@ Share this slide in Aurora's engineering channel and ask LT to approve the revis
 
 - [ ] You know the real status: a fix exists for the old service, and two tasks remain.
 - [ ] You have one sprint slide showing the 16-hour gap and the proposed deferral.
-- [ ] A Teams post and a reply to Riley are ready for your approval.
+- [ ] A Teams post and a reply to Atul are ready for your approval.
 
 **What you take away:** You started with a customer email and a stale ticket. Copilot found the real blocker, showed the sprint trade-off, and helped you bring a clear plan to the team and the customer.
 

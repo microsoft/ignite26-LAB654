@@ -15,7 +15,7 @@ Welcome! In this hands-on lab you'll connect trusted data sources to Microsoft 3
 
 | # | Module | What you'll do | Time |
 |---|---|---|---|
-| 1 | [Introduction](01-introduction.md) | Meet Marcus at Verdantis and the connector catalog | ~5 min |
+| 1 | [Introduction](01-introduction.md) | Meet Emil at Zava and the connector catalog | ~5 min |
 | 2 | [Getting started with connectors](02-getting-started.md) | Find, connect and try your connectors | ~10 min |
 | 3 | [Finance track](03-finance.md) | Build an NVIDIA investment committee pack with LSEG, FactSet and Moody's | ~18 min |
 | 4 | [Legal track](04-legal.md) | Flag, redline and prepare to negotiate an AI vendor contract with iManage | ~15 min |

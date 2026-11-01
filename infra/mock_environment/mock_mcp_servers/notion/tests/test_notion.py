@@ -40,8 +40,8 @@ def print_row(spec, conv=None):
 
 
 def test_search_ranks_tracker_first(spec):
-    results = call(spec, "notion-search", {"query": "Verdantis Aurora Launch Tracker"}).json["results"]
-    assert results[0]["title"] == "Verdantis Aurora Launch Tracker"
+    results = call(spec, "notion-search", {"query": "Zava Aurora Launch Tracker"}).json["results"]
+    assert results[0]["title"] == "Zava Aurora Launch Tracker"
     assert results[0]["type"] == "database"
 
 
@@ -203,7 +203,7 @@ def test_database_and_row_pages_render(web):
     spec, _, client = web
     db = client.get(f"/p/{TRACKER['id'].replace('-', '')}")
     assert db.status_code == 200
-    assert "Verdantis Aurora Launch Tracker" in db.text and "Print brochures" in db.text
+    assert "Zava Aurora Launch Tracker" in db.text and "Print brochures" in db.text
     assert "MOCK NOTION" in db.text and "original workspace" in db.text
     row = client.get(local(print_row(spec)["url"]))
     assert row.status_code == 200 and "In Progress" in row.text and "November 20, 2026" in row.text
@@ -293,7 +293,7 @@ def test_decision_log_shows_all_three_statuses(spec):
 def test_plan_page_dates_and_playbook_link(spec):
     text = call(spec, "notion-fetch", {"id": SEED["pages"][1]["id"]}).text
     assert "Tue Dec 8, 2026" in text and "Nov 25" in text and "Dec 1" in text
-    assert "mock-verdantis-hub" in text and "hub.verdantis.com" not in text
+    assert "mock-zava-hub" in text and "hub.zava-online.com" not in text
 
 
 def test_created_page_search_timestamp_is_creation_time(spec):

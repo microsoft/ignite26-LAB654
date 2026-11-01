@@ -1,6 +1,6 @@
-# Bring your own app: Verdantis Expense
+# Bring your own app: Zava Expense
 
-> **Duration:** ~20 minutes | **Connectors:** Verdantis Expense (custom MCP connector), Outlook | **Surfaces:** Microsoft 365 admin center, Copilot Chat, Excel
+> **Duration:** ~20 minutes | **Connectors:** Zava Expense (custom MCP connector), Outlook | **Surfaces:** Microsoft 365 admin center, Copilot Chat, Excel
 
 ## What you'll take away
 
@@ -10,26 +10,26 @@
 
 ## The story
 
-Verdantis runs much of its work on apps it built itself, and **Verdantis Expense** is the one everyone uses for travel. It's built in-house, so no connector catalog will ever list it. But the app team has put it behind an MCP server, so you'll connect it yourself.
+Zava runs much of its work on apps it built itself, and **Zava Expense** is the one everyone uses for travel. It's built in-house, so no connector catalog will ever list it. But the app team has put it behind an MCP server, so you'll connect it yourself.
 
-Later that week, you're back from a client trip to Seattle. Verdantis Expense emails a reminder: submit the trip by Friday, November 20. Your receipts are scattered across your inbox, and your last report was rejected for a missing receipt. This time, you'll file it from Copilot and get it right first time.
+Later that week, you're back from a client trip to Seattle. Zava Expense emails a reminder: submit the trip by Friday, November 20. Your receipts are scattered across your inbox, and your last report was rejected for a missing receipt. This time, you'll file it from Copilot and get it right first time.
 
 ## Before you start
 
 - [ ] You finished one of the tracks: [Finance](03-finance.md), [Legal](04-legal.md), [Productivity](05-productivity.md) or [Engineering](06-engineering.md).
 - [ ] You can open the **Microsoft 365 admin center**. Lab seats have admin rights.
-- [ ] You have the **Verdantis Expense MCP server address** from your seat card.
+- [ ] You have the **Zava Expense MCP server address** from your seat card.
 
-## Set up Verdantis Expense
+## Set up Zava Expense
 
 *Microsoft 365 admin center · no prompts*
 
-1. Go to **Copilot › Connectors › Gallery** and search for *Verdantis Expense*. It isn't listed, because it's built in-house.
+1. Go to **Copilot › Connectors › Gallery** and search for *Zava Expense*. It isn't listed, because it's built in-house.
 2. Go to **Agents › Settings › Agent and plugin access** and make sure **Allow agents and plugins built by your organization** is selected.
 3. Back in the Gallery, under **Created by your org**, select **Create a new connector**, then **Connect to MCP server**.
-4. Enter the display name **Verdantis Expense** and the MCP server address from your seat card. Set authentication to **No Auth**, then select **Save**.
-5. Under **Staged rollout**, make it available to yourself. Verdantis Expense now appears in **Your connections**, next to the catalog connectors.
-6. In Copilot, open **… › Settings › Sources** and connect **Verdantis Expense**.
+4. Enter the display name **Zava Expense** and the MCP server address from your seat card. Set authentication to **No Auth**, then select **Save**.
+5. Under **Staged rollout**, make it available to yourself. Zava Expense now appears in **Your connections**, next to the catalog connectors.
+6. In Copilot, open **… › Settings › Sources** and connect **Zava Expense**.
 
 > [!TIP]
 > That's the whole integration. Any app your company can put behind an MCP server can be connected this way, and admins govern it like any other connector.
@@ -38,10 +38,10 @@ Run Steps 1–4 in **one Copilot chat**. Each new chat starts from the original 
 
 ## Step 1: Check where you stand
 
-*Copilot Chat · Verdantis Expense*
+*Copilot Chat · Zava Expense*
 
 ```text
-Using Verdantis Expense, which expense reports do I still have open, and why was any of them rejected or returned?
+Using Zava Expense, which expense reports do I still have open, and why was any of them rejected or returned?
 ```
 
 **What to look for:**
@@ -53,34 +53,34 @@ Using Verdantis Expense, which expense reports do I still have open, and why was
 
 ## Step 2: File the trip
 
-*Same chat · Outlook · Verdantis Expense*
+*Same chat · Outlook · Zava Expense*
 
 ```text
-Find the receipts from my Seattle trip in my email and create an expense report in Verdantis Expense for the Fabrikam partnership review. Check it against our travel policy before anything is submitted.
+Find the receipts from my Seattle trip in my email and create an expense report in Zava Expense for the Fabrikam, Inc. partnership review. Check it against our travel policy before anything is submitted.
 ```
 
 **What to look for:**
 
 - Draft report **ER-2001**: six items totalling **$2,052.65**, with every receipt attached.
 - **Blocking:** the Westin charged $389 for the night of Oct 28, which is $139 over the $250 Seattle cap.
-- **Warning:** the $52.30 Uber ride was charged twice (TX-10111). Copilot suggests asking Aisha Rahman in Finance Operations to reverse it.
+- **Warning:** the $52.30 Uber ride was charged twice (TX-10111). Copilot suggests asking Ebere Ibeabuchi in Finance Operations to reverse it.
 
 > [!TIP]
 > The policy check ran before anything was submitted. That's why the report will be right first time.
 
 ## Step 3: Fix and submit
 
-*Same chat · Verdantis Expense · write action*
+*Same chat · Zava Expense · write action*
 
 ```text
-The last night was a city-wide convention rate, and no hotel near the Fabrikam office was under the cap. Add that as the justification and submit the report to my manager.
+The last night was a city-wide convention rate, and no hotel near the Fabrikam, Inc. office was under the cap. Add that as the justification and submit the report to my manager.
 ```
 
 **What to look for:**
 
 - Copilot reruns the check: no blocking issues and one justified exception.
 - An approval card appears. Approve it.
-- Copilot confirms that ER-2001 ($2,052.65) was submitted to **Daniel Park**.
+- Copilot confirms that ER-2001 ($2,052.65) was submitted to **Hannes Niemi**.
 
 Then check the status:
 
@@ -88,11 +88,11 @@ Then check the status:
 Has my report gone through? Who approves it?
 ```
 
-ER-2001 is pending approval, and Daniel Park is the approver.
+ER-2001 is pending approval, and Hannes Niemi is the approver.
 
 ## Step 4: Review your spend
 
-*Same chat · Verdantis Expense · Excel*
+*Same chat · Zava Expense · Excel*
 
 ```text
 How am I tracking against my Q4 travel budget? Put it in an Excel workbook with a chart.
@@ -108,14 +108,14 @@ How am I tracking against my Q4 travel budget? Put it in an Excel workbook with 
 
 | What happens | What to do |
 |---|---|
-| Verdantis Expense doesn't appear in Sources | Check that staged rollout includes you, then refresh Copilot. |
-| Copilot doesn't use Verdantis Expense | Start the prompt with "Using Verdantis Expense". |
+| Zava Expense doesn't appear in Sources | Check that staged rollout includes you, then refresh Copilot. |
+| Copilot doesn't use Zava Expense | Start the prompt with "Using Zava Expense". |
 | Step 2 misses some receipts | Ask: "Find all my Seattle receipts from October in my email." |
 | Step 3 says ER-2001 doesn't exist | You started a new chat. Rerun Step 2 in this chat first. |
 
 ## Checkpoint
 
-- [ ] Verdantis Expense is connected and shows in your sources.
+- [ ] Zava Expense is connected and shows in your sources.
 - [ ] ER-2001 was checked against policy, justified and submitted after your approval.
 - [ ] You have an Excel summary of your Q4 travel spend.
 

@@ -1,10 +1,10 @@
-<html><body style="font-family:Aptos,Calibri,Arial,sans-serif;font-size:11pt"><p>Marcus,</p>
-<p>I want to get you the business context you'll need before the Cognivault vendor agreement lands on your desk. Diane Xu, their VP of Enterprise Sales, has indicated that their standard form — the Cognivault AI Vendor Agreement v.4.2 — will be transmitted to us around October 16. The proposed effective date is December 13, 2026, and our negotiation session is scheduled for December 10, so the timeline is tight. I'm assuming you'll be running the vendor form against our AI Procurement Playbook v.2.1 (VTI-LEGAL-PB-AI-2.1, effective June 1, 2026).</p>
+<html><body style="font-family:Aptos,Calibri,Arial,sans-serif;font-size:11pt"><p>Emil,</p>
+<p>I want to get you the business context you'll need before the Trey Research vendor agreement lands on your desk. Andreea Bojin, their VP of Enterprise Sales, has indicated that their standard form — the Trey Research Vendor Agreement v.4.2 — will be transmitted to us around October 16. The proposed effective date is December 13, 2026, and our negotiation session is scheduled for December 10, so the timeline is tight. I'm assuming you'll be running the vendor form against our AI Procurement Playbook v.2.1 (VTI-LEGAL-PB-AI-2.1, effective June 1, 2026).</p>
 <p>Let me be direct about the significance of this deal. The total contract value is $14,750,000 over a 5-year initial term (December 13, 2026 through December 12, 2031) — that's a $1,200,000 implementation fee plus $2,710,000 per year in annual platform fees, putting ACV at $2,950,000. This is a high-risk AI deployment in a regulated industry and needs to be handled accordingly.</p>
 <p><b>Platform Overview &amp; Use Case</b></p>
-<p>Cognivault Nexus will be deployed for AI-driven underwriting decisioning across our personal auto and homeowners insurance lines. To be clear about scale: the platform will process up to 4 million underwriting decisions per month. This is production-critical infrastructure, not a pilot or proof of concept.</p>
-<p>What makes this deal especially sensitive from an IP standpoint is that our proprietary loss-history data and actuarial data are being used to fine-tune the Cognivault base models. Those fine-tuned models are core to our competitive differentiation — they're what separate our underwriting accuracy from the rest of the market.</p>
-<p>Tomás (cc'd) is the primary end-user stakeholder. His underwriting teams will depend on the platform for live decisioning pipelines day in and day out. He can speak directly to the operational stakes, and I'd encourage you to loop him in early.</p>
+<p>Trey Research AI Platform will be deployed for AI-driven underwriting decisioning across our personal auto and homeowners insurance lines. To be clear about scale: the platform will process up to 4 million underwriting decisions per month. This is production-critical infrastructure, not a pilot or proof of concept.</p>
+<p>What makes this deal especially sensitive from an IP standpoint is that our proprietary loss-history data and actuarial data are being used to fine-tune the Trey Research base models. Those fine-tuned models are core to our competitive differentiation — they're what separate our underwriting accuracy from the rest of the market.</p>
+<p>Luc (cc'd) is the primary end-user stakeholder. His underwriting teams will depend on the platform for live decisioning pipelines day in and day out. He can speak directly to the operational stakes, and I'd encourage you to loop him in early.</p>
 <p>One commercial note: the pricing structure includes an overage rate of $0.018 per decision above the 4,000,000 decisions/month threshold. We need to make sure the volume economics are protected and that the threshold mechanics are clearly defined.</p>
 <p><b>Regulatory Landscape</b></p>
 <p>This is where things get particularly consequential. State insurance regulators — particularly in Colorado and New York — are increasing scrutiny on AI-driven underwriting. Colorado has been at the forefront of regulating algorithmic decisioning in insurance, and we need contractual provisions that allow us to demonstrate compliance to examiners on demand. Algorithmic audit rights and bias-testing provisions are not "nice to haves" — they are operationally critical for regulatory compliance. Similarly, we need the ability to provide regulatory-grade explainability to state insurance examiners who may require us to demonstrate how underwriting decisions are being reached.</p>
@@ -12,26 +12,26 @@
 <p><b>Top Business Priorities for Negotiation</b></p>
 <p>I've organized these in priority order. These are the hills we need to be prepared to fight on.</p>
 <p><b>1. Ownership of Fine-Tuned Model Weights (Vendor Portability)</b></p>
-<p>This is the #1 business priority, full stop. Our proprietary loss-history and actuarial data are being used to fine-tune the Cognivault base models. Verdantis must own — or at an absolute minimum co-own — the fine-tuned model weights so that if the vendor relationship ends, we can port those models to another vendor or bring them in-house. All outputs and inferences generated from Verdantis data must be our sole property. Cognivault should not be permitted to use our data for cross-customer model improvement without our express opt-in consent.</p>
+<p>This is the #1 business priority, full stop. Our proprietary loss-history and actuarial data are being used to fine-tune the Trey Research base models. Zava must own — or at an absolute minimum co-own — the fine-tuned model weights so that if the vendor relationship ends, we can port those models to another vendor or bring them in-house. All outputs and inferences generated from Zava data must be our sole property. Trey Research should not be permitted to use our data for cross-customer model improvement without our express opt-in consent.</p>
 <p>I'm flagging this as non-negotiable. Without IP portability, we are locked into this vendor regardless of what other transition rights exist on paper. The transition rights discussion (Priority #4) is meaningless if we can't take our models with us.</p>
 <p><b>2. Robust Model Change-Control to Protect Underwriting Accuracy</b></p>
 <p>Any changes to the AI models that affect underwriting outcomes need to be subject to rigorous change-control. Material changes should be defined to include any change resulting in greater than 2% variance in output distribution or any change to training data sources. We need a meaningful advance notice period — not just days — and prior written approval rights for material changes.</p>
-<p>Tomás is especially concerned about model deprecation disrupting live underwriting pipelines. If a model version is deprecated, Verdantis needs continued access to the deprecated version for a substantial period so underwriting operations aren't disrupted while we validate the replacement. Model cards should be delivered with each model version so we can assess changes before they hit production.</p>
+<p>Luc is especially concerned about model deprecation disrupting live underwriting pipelines. If a model version is deprecated, Zava needs continued access to the deprecated version for a substantial period so underwriting operations aren't disrupted while we validate the replacement. Model cards should be delivered with each model version so we can assess changes before they hit production.</p>
 <p><b>3. Regulatory-Grade Explainability for State Insurance Examiners</b></p>
 <p>We need contractual commitments to explainability standards aligned with the NIST AI RMF "Measure" function. Specifically, this must include bias testing on a quarterly cadence, annual independent third-party algorithmic audits, and data-lineage and training-data provenance representations. State examiners in Colorado and New York may demand this information, and we cannot be in a position where the vendor refuses to cooperate with regulatory inquiries or withholds documentation we need to satisfy an examination.</p>
 <p><b>4. Strong Transition Rights to Avoid Vendor Lock-In</b></p>
 <p>If the relationship ends for any reason, we need a meaningful transition period — not just a few months of grudging cooperation. Transition services should be available for a substantial period at rates that don't constitute economic coercion. Data return must be in industry-standard, portable formats (Apache Parquet or CSV), not proprietary formats, and must be completed within 30 calendar days of termination notice.</p>
-<p>Source-code escrow should be established with Iron Mountain Intellectual Property Management, Inc. (consistent with our Playbook requirements) so that if Cognivault Systems Corp. becomes insolvent, we have access to the code. This ties directly back to Priority #1 — IP portability and transition rights together are how we avoid lock-in.</p>
+<p>Source-code escrow should be established with Iron Mountain Intellectual Property Management, Inc. (consistent with our Playbook requirements) so that if Trey Research becomes insolvent, we have access to the code. This ties directly back to Priority #1 — IP portability and transition rights together are how we avoid lock-in.</p>
 <p><b>5. Adequate Liability Protection</b></p>
 <p>Given the regulated nature of the use case and the volume — 4 million decisions per month flowing through production underwriting — liability caps need to be commensurate with the actual risk. A liability cap pegged to a fraction of annual fees would be wholly inadequate. We need caps tied to a meaningful multiple of ACV.</p>
 <p>Indemnification must cover not just patent claims but also copyright, trade secret, and critically, AI-specific output liability — including infringement and defamation arising from AI outputs. On the insurance side, we should be requiring CGL, E&amp;O/Tech PI, cyber liability, and an AI-specific E&amp;O rider, all at levels appropriate for a $14.75M deal in a regulated sector.</p>
 <p><b>Additional Business Context</b></p>
 <p>A few more items that should be on your radar as you prepare for the review:</p>
 <ul>
-<li><b>Operational risk:</b> As Tomás has emphasized to me, the platform processes live underwriting decisions. Any unplanned disruption — whether from model deprecation, vendor suspension rights, or inadequate transition planning — has direct financial and regulatory consequences. This isn't a system we can take offline for a week while we sort out a contractual dispute.</li>
+<li><b>Operational risk:</b> As Luc has emphasized to me, the platform processes live underwriting decisions. Any unplanned disruption — whether from model deprecation, vendor suspension rights, or inadequate transition planning — has direct financial and regulatory consequences. This isn't a system we can take offline for a week while we sort out a contractual dispute.</li>
 </ul>
 <ul>
-<li><b>Acceptable Use Policy:</b> Any AUP provisions giving Cognivault unilateral suspension rights or prohibiting competitive benchmarking need to be scrutinized carefully given the production-critical nature of the platform. We can't have a situation where the vendor can pull the plug based on a subjective AUP determination.</li>
+<li><b>Acceptable Use Policy:</b> Any AUP provisions giving Trey Research unilateral suspension rights or prohibiting competitive benchmarking need to be scrutinized carefully given the production-critical nature of the platform. We can't have a situation where the vendor can pull the plug based on a subjective AUP determination.</li>
 </ul>
 <ul>
 <li><b>Fee escalation:</b> Annual fee increases need to be capped at reasonable levels tied to CPI, not unconstrained compounding percentages.</li>
@@ -40,19 +40,19 @@
 <li><b>Subcontracting:</b> We need visibility and consent rights over any subcontractors involved in model training, data processing, or hosting.</li>
 </ul>
 <ul>
-<li><b>Security:</b> Verdantis should have penetration testing and audit rights. SOC reports should be Type II, not just Type I.</li>
+<li><b>Security:</b> Zava should have penetration testing and audit rights. SOC reports should be Type II, not just Type I.</li>
 </ul>
 <ul>
-<li><b>Governing law / dispute resolution:</b> I'll defer to you on the specifics, but Verdantis's strong preference — and I believe a Playbook requirement — is Delaware law and Delaware courts, not vendor-friendly arbitration in Cognivault's home jurisdiction (they're based in Austin at 8500 Shoal Creek Boulevard).</li>
+<li><b>Governing law / dispute resolution:</b> I'll defer to you on the specifics, but Zava's strong preference — and I believe a Playbook requirement — is Delaware law and Delaware courts, not vendor-friendly arbitration in Trey Research's home jurisdiction (they're based in Austin at 8500 Shoal Creek Boulevard).</li>
 </ul>
 <p><b>Next Steps</b></p>
-<p>Once the vendor draft arrives, I'd like to set up a call with you and Tomás to align on our redline strategy before December 10. In the meantime, if you see any areas where these business priorities conflict with what you think is realistically achievable, please flag them early so we can calibrate expectations on the business side before we're at the table. Tomás is available to speak directly to the operational impact of model change-control and transition-period requirements — I'd encourage you to take him up on that.</p>
-<p>I consider this deal strategically important to Verdantis, but I will not accept terms that create regulatory exposure or vendor dependency. We need to get this right.</p>
-<p>Thanks, Marcus. Looking forward to working through this together.</p>
+<p>Once the vendor draft arrives, I'd like to set up a call with you and Luc to align on our redline strategy before December 10. In the meantime, if you see any areas where these business priorities conflict with what you think is realistically achievable, please flag them early so we can calibrate expectations on the business side before we're at the table. Luc is available to speak directly to the operational impact of model change-control and transition-period requirements — I'd encourage you to take him up on that.</p>
+<p>I consider this deal strategically important to Zava, but I will not accept terms that create regulatory exposure or vendor dependency. We need to get this right.</p>
+<p>Thanks, Emil. Looking forward to working through this together.</p>
 <p>Best regards,</p>
-<p>Radhika Sengupta</p>
+<p>Hemanti Baishya</p>
 <p>SVP, Strategic Procurement &amp; Vendor Management</p>
-<p>Verdantis Technologies, Inc.</p>
+<p>Zava, Inc.</p>
 <p>200 Harborview Drive, Suite 1400</p>
 <p>Stamford, CT 06902</p>
-<p>rsengupta@verdantis.com</p></body></html>
+<p>hemanti@zava-online.com</p></body></html>

@@ -1,41 +1,41 @@
 {
   "source": "legal v1 seed kit, section 4 (iManage matter: folders and document profiles)",
-  "client": "Verdantis Technologies, Inc.",
-  "matter": "Cognivault \u2013 Nexus AI Platform Agreement",
-  "accessUsers": ["mhollowell"],
+  "client": "Zava, Inc.",
+  "matter": "Trey Research \u2013 AI Platform Agreement",
+  "accessUsers": ["emil"],
   "folders": [
     {
       "name": "01 Vendor Paper",
       "documents": [
         {
-          "file": "01 Vendor Paper/Cognivault AI Vendor Agreement v4.2.docx",
-          "description": "Cognivault AI Vendor Agreement v4.2, vendor draft (CVS-EA-2026-0417), received Oct 16, 2026",
+          "file": "01 Vendor Paper/Trey Research Vendor Agreement v4.2.docx",
+          "description": "Trey Research Vendor Agreement v4.2, vendor draft (TR-EA-2026-0417), received Oct 16, 2026",
           "docType": "Agreement",
-          "author": "Cognivault"
+          "author": "Trey Research"
         },
         {
-          "file": "01 Vendor Paper/Cognivault Exhibit A - Service Description and SLA.docx",
+          "file": "01 Vendor Paper/Trey Research Exhibit A - Service Description and SLA.docx",
           "description": "Exhibit A: service levels (99.5% availability, credits)",
           "docType": "Exhibit",
-          "author": "Cognivault"
+          "author": "Trey Research"
         },
         {
-          "file": "01 Vendor Paper/Cognivault Exhibit B - Fee Schedule and Order Form.xlsx",
+          "file": "01 Vendor Paper/Trey Research Exhibit B - Fee Schedule and Order Form.xlsx",
           "description": "Exhibit B: fees, 5% escalator, payment schedule",
           "docType": "Exhibit",
-          "author": "Cognivault"
+          "author": "Trey Research"
         },
         {
-          "file": "01 Vendor Paper/Cognivault Exhibit C - Security and Data Protection.docx",
+          "file": "01 Vendor Paper/Trey Research Exhibit C - Security and Data Protection.docx",
           "description": "Exhibit C: security standards, SOC 2 Type I, 72-hour incident notice",
           "docType": "Exhibit",
-          "author": "Cognivault"
+          "author": "Trey Research"
         },
         {
-          "file": "01 Vendor Paper/Cognivault Exhibit D - Acceptable Use Policy.docx",
+          "file": "01 Vendor Paper/Trey Research Exhibit D - Acceptable Use Policy.docx",
           "description": "Exhibit D: acceptable use, suspension right, benchmarking ban",
           "docType": "Exhibit",
-          "author": "Cognivault"
+          "author": "Trey Research"
         }
       ]
     },
@@ -43,10 +43,10 @@
       "name": "02 Playbooks",
       "documents": [
         {
-          "file": "02 Playbooks/Verdantis AI Procurement Playbook v2.1.docx",
+          "file": "02 Playbooks/Zava AI Procurement Playbook v2.1.docx",
           "description": "AI Procurement Playbook v2.1 (VTI-LEGAL-PB-AI-2.1), effective June 1, 2026",
           "docType": "Playbook",
-          "author": "Marcus Hollowell"
+          "author": "Emil Vanggaard"
         }
       ]
     },

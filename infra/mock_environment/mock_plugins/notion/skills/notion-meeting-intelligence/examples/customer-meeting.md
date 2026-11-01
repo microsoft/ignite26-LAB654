@@ -1,13 +1,13 @@
 # Example: Customer Meeting Prep
 
-**User Request**: "Prep for sales meeting with Acme Corp on Thursday"
+**User Request**: "Prep for sales meeting with Adatum Corporation on Thursday"
 
 ## Workflow
 
 ### 1. Search Customer Info
 ```
 Notion:search
-query: "Acme Corp"
+query: "Adatum Corporation"
 query_type: "internal"
 filters: {}
 ```
@@ -22,7 +22,7 @@ Found:
 ```
 Repeat for each Notion page result:
 Notion:fetch
-id: "acme-crm-notes-page-id"
+id: "adatum-crm-notes-page-id"
 ```
 
 **Key context**:
@@ -45,12 +45,12 @@ Notion:notion-create-pages
 parent: { page_id: "sales-meeting-prep-parent-id" }
 pages: [{
   properties: {
-    title: "Acme Corp Meeting - Pre-Read (Internal)"
+    title: "Adatum Corporation Meeting - Pre-Read (Internal)"
   },
-  content: "# Acme Corp Meeting - Pre-Read (Internal)
+  content: "# Adatum Corporation Meeting - Pre-Read (Internal)
 
 ## Company Overview
-**Company**: Acme Corp (500-person fintech, Series B)
+**Company**: Adatum Corporation (500-person fintech, Series B)
 **Decision Makers**: CTO, VP Product, CFO
 Source: <mention-page url='...'>CRM Notes</mention-page>
 
@@ -79,17 +79,17 @@ Notion:notion-create-pages
 parent: { page_id: "sales-meeting-prep-parent-id" }
 pages: [{
   properties: {
-    title: "Acme Corp - Product Demo & Q&A"
+    title: "Adatum Corporation - Product Demo & Q&A"
   },
-  content: "# Acme Corp - Product Demo & Q&A
+  content: "# Adatum Corporation - Product Demo & Q&A
 
 ## Meeting Details
 **Date**: Thursday, Oct 17, 2025 @ 2pm PST
-**Attendees**: CTO, VP Product, CFO (Acme) | Sales Lead, Solutions Engineer (Us)
+**Attendees**: CTO, VP Product, CFO (Adatum Corporation) | Sales Lead, Solutions Engineer (Us)
 **Duration**: 60 minutes
 
 ## Objective
-Demonstrate how our platform solves Acme's workflow automation and integration challenges.
+Demonstrate how our platform solves Adatum Corporation's workflow automation and integration challenges.
 
 ## Agenda
 

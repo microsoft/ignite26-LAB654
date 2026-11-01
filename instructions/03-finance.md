@@ -11,13 +11,13 @@
 
 ## The story
 
-Verdantis invests the insurance premiums it holds so it can pay future claims. One of the portfolio's biggest holdings is NVIDIA, the company behind most AI chips.
+Zava invests the insurance premiums it holds so it can pay future claims. One of the portfolio's biggest holdings is NVIDIA, the company behind most AI chips.
 
-Jordan Reyes, who runs the portfolio, messages you on Teams:
+Kristian Stensen, who runs the portfolio, messages you on Teams:
 
 > "Committee wants a view on NVIDIA Monday. Should we add more? Bring a short memo."
 
-Verdantis already holds a lot of NVIDIA, so buying more puts even more policyholders' money on one company. The investment committee is the weekly meeting where senior people approve big investments, and they will challenge the case. A good answer has to hold up: every number sourced, checked across more than one provider, and challenged before the committee does it. You'll build that case with Copilot in three steps.
+Zava already holds a lot of NVIDIA, so buying more puts even more policyholders' money on one company. The investment committee is the weekly meeting where senior people approve big investments, and they will challenge the case. A good answer has to hold up: every number sourced, checked across more than one provider, and challenged before the committee does it. You'll build that case with Copilot in three steps.
 
 **What you need for Monday:**
 

@@ -15,7 +15,7 @@ from .tools import CreatePages, Fetch, QueryDataSources, Search, UpdateDataSourc
 NAME = "notion"
 VERSION = "1.0.0"
 INSTRUCTIONS = (
-    "Mock of the Notion MCP server for the LAB654 Ignite lab (Verdantis workspace). Use notion-search to find "
+    "Mock of the Notion MCP server for the LAB654 Ignite lab (Zava workspace). Use notion-search to find "
     "pages and databases, notion-fetch to read them (databases return their schema and data source URL), and "
     "notion-query-data-sources to read database rows. Writes (notion-update-page, notion-create-pages, "
     "notion-update-data-source) are kept per conversation: later reads in the same conversation see them, other "

@@ -1,27 +1,27 @@
 {
   "workspace": {
-    "name": "Verdantis"
+    "name": "Zava"
   },
   "users": [
     {
       "id": "3ff6c630-c178-81a5-bbdc-42c9b1d094bc",
-      "name": "Marcus Hollowell",
+      "name": "Emil Vanggaard",
       "type": "person"
     },
     {
       "id": "3ff6c630-c178-8173-c2fd-4588b98ec795",
-      "name": "Sam Patel",
+      "name": "Tama Surya",
       "type": "person"
     }
   ],
   "pages": [
     {
       "id": "3ff6c630-c178-8154-233e-c4b0ae9a5996",
-      "title": "Verdantis Launches",
+      "title": "Zava Launches",
       "parent_id": null,
       "created": "{{-405T14:55|ts}}",
       "edited": "{{-3T15:25|ts}}",
-      "content": "Launch plans, trackers and decisions for Verdantis product launches."
+      "content": "Launch plans, trackers and decisions for Zava product launches."
     },
     {
       "id": "3ff6c630-c178-81be-001e-a3c291b3785c",
@@ -29,7 +29,7 @@
       "parent_id": "3ff6c630-c178-8154-233e-c4b0ae9a5996",
       "created": "{{-28T15:05|ts}}",
       "edited": "{{-3T15:25|ts}}",
-      "content": "# Aurora Launch Plan\nVerdantis Aurora is a smart-home hub sold through retail partners, starting with Contoso Retail.\n## Goals\n- Launch the Verdantis Aurora smart-home hub in Contoso Retail stores on {{+22|long}}.\n- Every store has complete POS kits and trained staff before launch day.\n## Key dates\n- {{+9|md}} – POS kits ship to Contoso Retail stores\n- {{+15|md}} – Contoso Retail store staff training\n- {{+22|md}} – Launch event\n## Owners\n- Launch lead: Marcus Hollowell\n- Retail Ops approver: Sam Patel\n- Partner contact: Riley Blake (Contoso Retail)\n- Workstream owners: see the launch tracker\n## Rules\n- POS kits must include signage before staff training.\n- Partner shipment rules: see the [Retail Partner Launch Playbook](https://mock-verdantis-hub.yellowsand-9530f5dc.eastus.azurecontainerapps.io/retail/launch-playbook) on Verdantis Hub.\n## Links\n- Tracker: [Verdantis Aurora Launch Tracker](https://app.notion.com/p/3ff6c630c17881be58d02194129d9a85)\n- Decisions: [Launch Decision Log](https://app.notion.com/p/3ff6c630c17881af6f79a2640c43c229)"
+      "content": "# Aurora Launch Plan\nZava Aurora is a smart-home hub sold through retail partners, starting with Lakeshore Retail.\n## Goals\n- Launch the Zava Aurora smart-home hub in Lakeshore Retail stores on {{+22|long}}.\n- Every store has complete POS kits and trained staff before launch day.\n## Key dates\n- {{+9|md}} – POS kits ship to Lakeshore Retail stores\n- {{+15|md}} – Lakeshore Retail store staff training\n- {{+22|md}} – Launch event\n## Owners\n- Launch lead: Emil Vanggaard\n- Retail Ops approver: Tama Surya\n- Partner contact: Atul Manohar (Lakeshore Retail)\n- Workstream owners: see the launch tracker\n## Rules\n- POS kits must include signage before staff training.\n- Partner shipment rules: see the [Retail Partner Launch Playbook](https://mock-zava-hub.yellowsand-9530f5dc.eastus.azurecontainerapps.io/retail/launch-playbook) on Zava Hub.\n## Links\n- Tracker: [Zava Aurora Launch Tracker](https://app.notion.com/p/3ff6c630c17881be58d02194129d9a85)\n- Decisions: [Launch Decision Log](https://app.notion.com/p/3ff6c630c17881af6f79a2640c43c229)"
     }
   ],
   "databases": [
@@ -37,7 +37,7 @@
       "id": "3ff6c630-c178-81be-58d0-2194129d9a85",
       "data_source_id": "3ff6c630-c178-819a-2609-0007d7a7ab47",
       "view_id": "3ff6c630-c178-814f-0175-000d77779f6b",
-      "title": "Verdantis Aurora Launch Tracker",
+      "title": "Zava Aurora Launch Tracker",
       "parent_id": "3ff6c630-c178-8154-233e-c4b0ae9a5996",
       "created": "{{-28T15:10|ts}}",
       "edited": "{{+0T03:47|ts}}",
@@ -128,7 +128,7 @@
           "properties": {
             "Task": "Print brochures & in-store signage",
             "Workstream": "Retail",
-            "Owner": "Northwind Print",
+            "Owner": "Lucerne Publishing",
             "Status": "In Progress",
             "Due": {
               "start": "{{+4|iso}}",
@@ -162,7 +162,7 @@
           "created": "{{-28T15:20|ts}}",
           "edited": "{{-7T14:22|ts}}",
           "properties": {
-            "Task": "Ship POS kits to Contoso Retail stores",
+            "Task": "Ship POS kits to Lakeshore Retail stores",
             "Workstream": "Retail",
             "Owner": "Ops",
             "Status": "Not Started",
@@ -182,7 +182,7 @@
           "properties": {
             "Task": "Store staff training",
             "Workstream": "Retail",
-            "Owner": "Contoso Retail",
+            "Owner": "Lakeshore Retail",
             "Status": "Not Started",
             "Due": {
               "start": "{{+15|iso}}",
@@ -200,7 +200,7 @@
           "properties": {
             "Task": "Press briefing deck",
             "Workstream": "PR",
-            "Owner": "Marcus",
+            "Owner": "Emil",
             "Status": "In Progress",
             "Due": {
               "start": "{{+12|iso}}",
@@ -320,16 +320,16 @@
           "created": "{{-10T18:40|ts}}",
           "edited": "{{-10T18:40|ts}}",
           "properties": {
-            "Decision": "Launch retail price at $199 with a $20 bundle discount for Verdantis home policyholders",
-            "Owner": "Marcus Hollowell",
-            "Approver": "Sam Patel",
+            "Decision": "Launch retail price at $199 with a $20 bundle discount for Zava home policyholders",
+            "Owner": "Emil Vanggaard",
+            "Approver": "Tama Surya",
             "Status": "Approved",
             "Date": {
               "start": "{{-10|iso}}",
               "end": null,
               "is_datetime": 0
             },
-            "Context": "Pricing aligned with Contoso Retail; discount funded by Marketing."
+            "Context": "Pricing aligned with Lakeshore Retail; discount funded by Marketing."
           },
           "content": ""
         },
@@ -339,15 +339,15 @@
           "edited": "{{-5T20:05|ts}}",
           "properties": {
             "Decision": "Move press briefing from {{+5|md}} to {{+12|md}} and hold it in person",
-            "Owner": "Marcus Hollowell",
-            "Approver": "Sam Patel",
+            "Owner": "Emil Vanggaard",
+            "Approver": "Tama Surya",
             "Status": "Approved",
             "Date": {
               "start": "{{-5|iso}}",
               "end": null,
               "is_datetime": 0
             },
-            "Context": "More time to add final retail pricing and Contoso Retail partner quotes to the deck. Press briefing deck due date moved to {{+12|md}} in the launch tracker."
+            "Context": "More time to add final retail pricing and Lakeshore Retail partner quotes to the deck. Press briefing deck due date moved to {{+12|md}} in the launch tracker."
           },
           "content": ""
         },
@@ -356,16 +356,16 @@
           "created": "{{-4T21:10|ts}}",
           "edited": "{{-4T21:10|ts}}",
           "properties": {
-            "Decision": "Add a second Contoso Retail launch city in Q1",
-            "Owner": "Marcus Hollowell",
-            "Approver": "Sam Patel",
+            "Decision": "Add a second Lakeshore Retail launch city in Q1",
+            "Owner": "Emil Vanggaard",
+            "Approver": "Tama Surya",
             "Status": "Rejected",
             "Date": {
               "start": "{{-4|iso}}",
               "end": null,
               "is_datetime": 0
             },
-            "Context": "Contoso Retail asked to open a second launch city in Q1. Rejected: POS kit stock and store staff training capacity cover only the launch-city stores. Revisit after the launch review."
+            "Context": "Lakeshore Retail asked to open a second launch city in Q1. Rejected: POS kit stock and store staff training capacity cover only the launch-city stores. Revisit after the launch review."
           },
           "content": ""
         },
@@ -375,15 +375,15 @@
           "edited": "{{-3T16:35|ts}}",
           "properties": {
             "Decision": "Extend launch-week support hours",
-            "Owner": "Marcus Hollowell",
-            "Approver": "Sam Patel",
+            "Owner": "Emil Vanggaard",
+            "Approver": "Tama Surya",
             "Status": "Proposed",
             "Date": {
               "start": "{{-3|iso}}",
               "end": null,
               "is_datetime": 0
             },
-            "Context": "Extend Verdantis support hours to 8 AM–10 PM ET during launch week so Contoso Retail store staff and early buyers can reach us. Waiting on the Support staffing plan."
+            "Context": "Extend Zava support hours to 8 AM–10 PM ET during launch week so Lakeshore Retail store staff and early buyers can reach us. Waiting on the Support staffing plan."
           },
           "content": ""
         }
@@ -393,7 +393,7 @@
       "id": "3ff6c630-c178-81d1-b915-c1083c0c9034",
       "data_source_id": "3ff6c630-c178-8118-b2f2-000f012e2b21",
       "view_id": "3ff6c630-c178-8134-3e71-000c90b34b1e",
-      "title": "Verdantis Lumen Launch Tracker",
+      "title": "Zava Lumen Launch Tracker",
       "parent_id": "3ff6c630-c178-8154-233e-c4b0ae9a5996",
       "created": "2026-09-28T17:00:00.000Z",
       "edited": "2026-10-09T18:10:00.000Z",
@@ -520,7 +520,7 @@
           "properties": {
             "Task": "Lumen retail partner pitch",
             "Workstream": "Retail",
-            "Owner": "Marcus",
+            "Owner": "Emil",
             "Status": "Not Started",
             "Due": {
               "start": "2027-02-05",
@@ -646,7 +646,7 @@
           "properties": {
             "Task": "Print holiday catalog",
             "Workstream": "Retail",
-            "Owner": "Northwind Print",
+            "Owner": "Lucerne Publishing",
             "Status": "Complete",
             "Due": {
               "start": "2025-11-06",
@@ -664,7 +664,7 @@
           "properties": {
             "Task": "Holiday in-store signage",
             "Workstream": "Retail",
-            "Owner": "Northwind Print",
+            "Owner": "Lucerne Publishing",
             "Status": "Complete",
             "Due": {
               "start": "2025-11-10",
@@ -700,7 +700,7 @@
           "properties": {
             "Task": "Holiday press release",
             "Workstream": "PR",
-            "Owner": "Marcus",
+            "Owner": "Emil",
             "Status": "Complete",
             "Due": {
               "start": "2025-11-18",

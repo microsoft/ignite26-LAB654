@@ -4,10 +4,10 @@ Source: docs/scenarios/engineering/scenario.md, Appendices A, C and D. Jira data
 (AUR-142, AUR-145, Sprint 24) lives in the Test_Jira mock server, not here.
 This module seeds:
 
-- E1: Riley's "Aurora pilot - offline status still wrong" thread with Marcus
+- E1: Atul's "Aurora pilot - offline status still wrong" thread with Emil
 - T1: Aurora Engineering team, Platform Migration channel, cutover thread
 - T2: the Engineering channel and the "Aurora Engineering LT" group chat
-- G1/G2: Test_GitHub synced connector (customconnectors) with PR #287, Sam's
+- G1/G2: Test_GitHub synced connector (customconnectors) with PR #287, Tama's
   changes-requested review in its content, and merged decoy PRs on the same repo
 
 All seeded evidence is dated on or before Oct 30, 2026; the Nov 20 cutover and
@@ -18,18 +18,18 @@ from __future__ import annotations
 
 import json
 
-from ..legal import MARCUS, TEAMS_ONLY, _msg, _user
-from ..productivity import RILEY, at
+from ..legal import EMIL, TEAMS_ONLY, _msg, _user
+from ..productivity import ATUL, at
 
-NINA, ELENA, TAYLOR, SAM = "nchen", "eruiz", "tmorgan", "spatel"
+TRIIN, MARIA, KERRY, TAMA = "triin", "maria", "kerry", "tama"
 
 
 def users():
     return [
-        _user(NINA, "Nina", "Chen", "Senior Software Engineer", "Engineering", TEAMS_ONLY),
-        _user(ELENA, "Elena", "Ruiz", "Senior QA Engineer", "Engineering", TEAMS_ONLY),
-        _user(TAYLOR, "Taylor", "Morgan", "Engineering Lead, Aurora", "Engineering", TEAMS_ONLY),
-        _user(SAM, "Sam", "Patel", "Platform Lead", "Engineering", TEAMS_ONLY),
+        _user(TRIIN, "Triin", "Lepp", "Senior Software Engineer", "Engineering", TEAMS_ONLY),
+        _user(MARIA, "Maria", "Oliva", "Senior QA Engineer", "Engineering", TEAMS_ONLY),
+        _user(KERRY, "Kerry", "Allen", "Engineering Lead, Aurora", "Engineering", TEAMS_ONLY),
+        _user(TAMA, "Tama", "Surya", "Platform Lead", "Engineering", TEAMS_ONLY),
     ]
 
 
@@ -55,19 +55,19 @@ def _email(eid, action, sender, to, subject, body, ts, ref=None):
 
 def emails():
     return [
-        _email("eng-email-001", "Send", RILEY, MARCUS, E1_SUBJECT,
-               "<p>Hi Marcus,</p><p>Some of our Aurora pilot stores are seeing hubs stay marked offline in the "
-               "dashboard after they reconnect to the network. Could your team take a look?</p><p>Thanks,<br>Riley</p>",
+        _email("eng-email-001", "Send", ATUL, EMIL, E1_SUBJECT,
+               "<p>Hi Emil,</p><p>Some of our Aurora pilot stores are seeing hubs stay marked offline in the "
+               "dashboard after they reconnect to the network. Could your team take a look?</p><p>Thanks,<br>Atul</p>",
                at(10, 23, 11, 5)),
-        _email("eng-email-002", "Reply", MARCUS, RILEY, f"RE: {E1_SUBJECT}",
+        _email("eng-email-002", "Reply", EMIL, ATUL, f"RE: {E1_SUBJECT}",
                "<p>Thanks for flagging the reconnect issue. Engineering is working on a fix, and I will share an "
-               "update once we have confirmed the validation plan.</p><p>Marcus</p>",
+               "update once we have confirmed the validation plan.</p><p>Emil</p>",
                at(10, 26, 14, 0), ref="eng-email-001"),
-        _email("eng-email-003", "Reply", RILEY, MARCUS, f"RE: {E1_SUBJECT}",
-               "<p>Hi Marcus, our pilot stores are still seeing Aurora hubs marked offline after they reconnect. "
+        _email("eng-email-003", "Reply", ATUL, EMIL, f"RE: {E1_SUBJECT}",
+               "<p>Hi Emil, our pilot stores are still seeing Aurora hubs marked offline after they reconnect. "
                "Staff keep restarting devices that are actually working. You mentioned a fix was being worked on. "
                "Can we expect it before Monday, November 23, when we expand the pilot? I need to brief our store "
-               "managers before then. Thanks, Riley.</p>",
+               "managers before then. Thanks, Atul.</p>",
                at(10, 29, 8, 15), ref="eng-email-002"),
     ]
 
@@ -78,10 +78,10 @@ def chats():
             "ChatId": "eng-chat-lt",
             "ChatType": "Group",
             "ChatName": "Aurora Engineering LT",
-            "Members": [TAYLOR, SAM, MARCUS],
+            "Members": [KERRY, TAMA, EMIL],
             "CreatedDateTime": at(9, 14, 9, 0),
             "ChatMessages": [
-                _msg(1, TAYLOR, "Setting up this group for Aurora engineering leadership. Sprint scope changes "
+                _msg(1, KERRY, "Setting up this group for Aurora engineering leadership. Sprint scope changes "
                                 "come here for approval.", at(9, 14, 9, 2)),
             ],
         }
@@ -100,7 +100,7 @@ def files():
 
 TEAM_ID = "eng-team-aurora"
 CH_MIGRATION, CH_ENGINEERING = "eng-ch-platform-migration", "eng-ch-engineering"
-MEMBERS = [NINA, ELENA, TAYLOR, SAM]
+MEMBERS = [TRIIN, MARIA, KERRY, TAMA]
 T1_ROOT = "eng-msg-t1"
 
 
@@ -109,17 +109,17 @@ def teams():
         {
             "TeamId": TEAM_ID,
             "Name": "Aurora Engineering",
-            "Description": "Engineering team for the Verdantis Aurora smart-home hub platform.",
+            "Description": "Engineering team for the Zava Aurora smart-home hub platform.",
             "CreatedDateTime": at(3, 2, 9, 0),
             "TeamType": "Private",
-            "Owners": [MARCUS],
+            "Owners": [EMIL],
             "Members": MEMBERS,
         }
     ]
 
 
 def channels():
-    everyone = [MARCUS, *MEMBERS]
+    everyone = [EMIL, *MEMBERS]
     return [
         {
             "ChannelId": CH_MIGRATION,
@@ -147,10 +147,10 @@ def channelmessages():
         {
             "ChannelMessageId": T1_ROOT,
             "ChannelId": CH_MIGRATION,
-            "From": SAM,
-            "Subject": "Aurora status-service cutover - Contoso pilot",
+            "From": TAMA,
+            "Subject": "Aurora status-service cutover - Lakeshore Retail pilot",
             "ContentType": "text",
-            "Content": "The November 20 status-service cutover is still the plan. The Contoso expansion on "
+            "Content": "The November 20 status-service cutover is still the plan. The Lakeshore Retail expansion on "
                        "November 23 will use the event-driven service. A fix confined to the legacy polling path "
                        "will not resolve that pilot's issue.",
             "SentDateTime": at(10, 28, 16, 0),
@@ -158,7 +158,7 @@ def channelmessages():
         {
             "ChannelMessageId": "eng-msg-sprint24",
             "ChannelId": CH_ENGINEERING,
-            "From": TAYLOR,
+            "From": KERRY,
             "Subject": "Aurora Sprint 24 has started",
             "ContentType": "text",
             "Content": "Aurora Sprint 24 runs October 26 to November 20. The sprint board is in Jira. Raise any "
@@ -173,7 +173,7 @@ def channelmessagereplies():
         {
             "ChannelMessageReplyId": "eng-reply-t1-1",
             "ChannelMessageId": T1_ROOT,
-            "From": ELENA,
+            "From": MARIA,
             "ContentType": "text",
             "Content": "We need reconnect coverage on the new path and the rollout regression checks. Passing the "
                        "old-service tests is not enough to call this ready.",
@@ -182,11 +182,11 @@ def channelmessagereplies():
         {
             "ChannelMessageReplyId": "eng-reply-t1-2",
             "ChannelMessageId": T1_ROOT,
-            "From": MARCUS,
+            "From": EMIL,
             "ContentType": "text",
-            "Content": "Bring a scope proposal before we move sprint work. LT needs to approve any deferral; Sam "
+            "Content": "Bring a scope proposal before we move sprint work. LT needs to approve any deferral; Tama "
                        "needs to confirm platform review availability. We have not committed a release date to "
-                       "Contoso.",
+                       "Lakeshore Retail.",
             "SentDateTime": at(10, 29, 8, 30),
         },
     ]
@@ -194,11 +194,11 @@ def channelmessagereplies():
 
 # --- Test_GitHub (synced custom connector) -----------------------------------
 
-ORG, REPO = "verdantis-lab", "aurora-status"
+ORG, REPO = "zava-lab", "aurora-status"
 ORG_URL = f"https://github.com/{ORG}"
 REPO_URL = f"{ORG_URL}/{REPO}"
 
-PEOPLE = {NINA: "Nina Chen", ELENA: "Elena Ruiz", SAM: "Sam Patel", TAYLOR: "Taylor Morgan"}
+PEOPLE = {TRIIN: "Triin Lepp", MARIA: "Maria Oliva", TAMA: "Tama Surya", KERRY: "Kerry Allen"}
 
 
 def _prop(name, type_, description, labels=None, searchable=False, refinable=False):
@@ -247,35 +247,35 @@ Checks: legacy-path checks pass as of October 28, 17:00.
 
 Not yet covered: the event-driven status service. Event-driven reconnect coverage is not implemented in this PR."""
 
-G2_REVIEW = ("The legacy-path fix looks reasonable, but Contoso moves to the event-driven status service with the "
+G2_REVIEW = ("The legacy-path fix looks reasonable, but Lakeshore Retail moves to the event-driven status service with the "
              "November 20 cutover. Two things are needed: implement the equivalent reconnect correction in that "
              "path, and add/run the reconnect tests there. Once both are done, request another platform review. "
              "I am not approving this version for the pilot.")
 
 # (number, title, body, author, created, modified, modified_by, merged, labels, assignees, contributors, milestone, comments)
 PRS = [
-    (287, "Fix stale offline state after reconnect", PR287_BODY, NINA,
-     at(10, 27, 11, 30), at(10, 28, 17, 20), SAM, None, ["bug", "aurora-status"], [NINA], [NINA, SAM],
+    (287, "Fix stale offline state after reconnect", PR287_BODY, TRIIN,
+     at(10, 27, 11, 30), at(10, 28, 17, 20), TAMA, None, ["bug", "aurora-status"], [TRIIN], [TRIIN, TAMA],
      "Aurora Sprint 24",
-     [{"SubmittedAt": at(10, 28, 17, 20), "createdBy": SAM, "Content": G2_REVIEW, "State": "ChangesRequested"}]),
+     [{"SubmittedAt": at(10, 28, 17, 20), "createdBy": TAMA, "Content": G2_REVIEW, "State": "ChangesRequested"}]),
     (281, "Add retry backoff to status poller",
      "Adds exponential backoff to the legacy status poller when the device gateway returns 503, to reduce load "
      "during regional outages.",
-     NINA, at(10, 13, 10, 0), at(10, 16, 15, 20), SAM, at(10, 16, 15, 20), ["enhancement", "aurora-status"],
-     [NINA], [NINA, SAM], "Aurora Sprint 23",
-     [{"SubmittedAt": at(10, 16, 14, 50), "createdBy": SAM, "Content": "Looks good. Approving.", "State": "Approved"}]),
+     TRIIN, at(10, 13, 10, 0), at(10, 16, 15, 20), TAMA, at(10, 16, 15, 20), ["enhancement", "aurora-status"],
+     [TRIIN], [TRIIN, TAMA], "Aurora Sprint 23",
+     [{"SubmittedAt": at(10, 16, 14, 50), "createdBy": TAMA, "Content": "Looks good. Approving.", "State": "Approved"}]),
     (276, "Event-driven status service: publish device heartbeat events",
      "First step of the status-service migration: device heartbeats are published as events on the new status "
      "bus. The dashboard still reads from the legacy poller until the cutover.",
-     SAM, at(9, 28, 9, 15), at(10, 7, 11, 40), SAM, at(10, 7, 11, 40), ["migration", "aurora-status"],
-     [SAM], [SAM, ELENA], "Aurora Sprint 23",
-     [{"SubmittedAt": at(10, 7, 10, 5), "createdBy": ELENA, "Content": "Regression suite passes on staging. Approved.",
+     TAMA, at(9, 28, 9, 15), at(10, 7, 11, 40), TAMA, at(10, 7, 11, 40), ["migration", "aurora-status"],
+     [TAMA], [TAMA, MARIA], "Aurora Sprint 23",
+     [{"SubmittedAt": at(10, 7, 10, 5), "createdBy": MARIA, "Content": "Regression suite passes on staging. Approved.",
        "State": "Approved"}]),
     (269, "Rollout regression suite: add store-group targeting tests",
      "Adds regression tests for store-group targeting in staged rollouts.",
-     ELENA, at(9, 15, 13, 0), at(9, 18, 16, 30), TAYLOR, at(9, 18, 16, 30), ["tests", "aurora-status"],
-     [ELENA], [ELENA, TAYLOR], "Aurora Sprint 22",
-     [{"SubmittedAt": at(9, 18, 16, 0), "createdBy": TAYLOR, "Content": "Approved.", "State": "Approved"}]),
+     MARIA, at(9, 15, 13, 0), at(9, 18, 16, 30), KERRY, at(9, 18, 16, 30), ["tests", "aurora-status"],
+     [MARIA], [MARIA, KERRY], "Aurora Sprint 22",
+     [{"SubmittedAt": at(9, 18, 16, 0), "createdBy": KERRY, "Content": "Approved.", "State": "Approved"}]),
 ]
 
 
@@ -319,7 +319,7 @@ def customconnectors():
         {
             "ConnectionId": "testgithub",
             "ConnectionName": "Test_GitHub",
-            "ConnectionDescription": "GitHub pull requests from the verdantis-lab organization, including reviews.",
+            "ConnectionDescription": "GitHub pull requests from the zava-lab organization, including reviews.",
             "ContentCategory": "taskManagement",
             "Properties": GITHUB_PROPERTIES,
             "Items": [_pr_item(*pr) for pr in PRS],

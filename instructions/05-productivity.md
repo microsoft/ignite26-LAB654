@@ -10,10 +10,10 @@
 
 ## The story
 
-You're **Marcus Hollowell** at Verdantis, and you own the **Contoso Retail** account. Contoso has piloted the **Aurora** smart-home hub in 50 stores for six weeks, ahead of the public launch event on Dec 8. Your next step is the **expansion pitch** to roll it out to all 400 stores.
+You're **Emil Vanggaard** at Zava, and you own the **Lakeshore Retail** account. Lakeshore Retail has piloted the **Aurora** smart-home hub in 50 stores for six weeks, ahead of the public launch event on Dec 8. Your next step is the **expansion pitch** to roll it out to all 400 stores.
 
-- Riley Blake, Contoso's Director of Store Operations, emailed ahead of the pitch. Their CFO, **Priya Nair**, is joining and wants the all-in cost for 400 stores. Contoso IT (**Ken Liu**) wants Verdantis' security documentation before anything goes to 400 stores.
-- On the Teams pilot review call, Riley said a competitor, Fabrikam Home, quoted about 20% under your list price.
+- Atul Manohar, Lakeshore Retail's Director of Store Operations, emailed ahead of the pitch. Their CFO, **Nanami Nakayama**, is joining and wants the all-in cost for 400 stores. Lakeshore Retail IT (**Jahidi Juma**) wants Zava's security documentation before anything goes to 400 stores.
+- On the Teams pilot review call, Atul said a competitor, Boulder Innovations, quoted about 20% under your list price.
 
 You'll prep the call, handle the price objection and book the security review, without leaving Copilot.
 
@@ -28,13 +28,13 @@ You'll prep the call, handle the price objection and book the security review, w
 *Copilot Cowork · Test_Salesforce call-prep skill · Outlook*
 
 ```text
-Prep me for my Contoso Retail expansion pitch.
+Prep me for my Lakeshore Retail expansion pitch.
 ```
 
 **What to look for:**
 
-- The deal: the *Contoso Retail – Aurora 400-store rollout* opportunity, Proposal/Price Quote, $1,200,000.
-- Who's in the room: Riley (champion), Ken (IT security; wants the security review first) and Priya (CFO; wants the all-in cost).
+- The deal: the *Lakeshore Retail – Aurora 400-store rollout* opportunity, Proposal/Price Quote, $1,200,000.
+- Who's in the room: Atul (champion), Jahidi (IT security; wants the security review first) and Nanami (CFO; wants the all-in cost).
 - What to cover: the price comparison, the security review and next steps.
 
 The layout can vary between runs. The content is what matters.
@@ -47,15 +47,15 @@ The layout can vary between runs. The content is what matters.
 *Same conversation · Teams · Test_Confluence*
 
 ```text
-Contoso said Fabrikam is 20% cheaper. What exactly did they say on the pilot review call, and what can I offer within our pricing policy?
+Lakeshore Retail said Boulder Innovations is 20% cheaper. What exactly did they say on the pilot review call, and what can I offer within our pricing policy?
 ```
 
 **What to look for:**
 
-- Quotes from the Teams meeting transcript: Riley on the Fabrikam quote and "sign this quarter", Riley on Priya wanting the all-in cost, and Ken on the security review.
-- The current *Aurora Retail Pricing & Discount Policy* in Confluence: up to 12% at 250+ stores with no approval; 12–15% needs Lena Okafor; above 15% needs VP Sales and Deal Desk. Copilot says **20% can't be offered in the pitch**.
+- Quotes from the Teams meeting transcript: Atul on the Boulder Innovations quote and "sign this quarter", Atul on Nanami wanting the all-in cost, and Jahidi on the security review.
+- The current *Aurora Retail Pricing & Discount Policy* in Confluence: up to 12% at 250+ stores with no approval; 12–15% needs Zoe Armstrong; above 15% needs VP Sales and Deal Desk. Copilot says **20% can't be offered in the pitch**.
 - The in-policy counter: 12% (about $1.06M for 400 stores) plus bundled in-store install and staff training, which don't count as discount.
-- The Fabrikam battlecard: about $3,250 all-in per store against Verdantis' $2,640. That's the number Priya asked for.
+- The Boulder Innovations battlecard: about $3,250 all-in per store against Zava's $2,640. That's the number Nanami asked for.
 
 > [!TIP]
 > Copilot caught the non-compliant answer before you said it to the CFO, and turned the price gap into an all-in cost argument.
@@ -65,12 +65,12 @@ Contoso said Fabrikam is 20% cheaper. What exactly did they say on the pilot rev
 *Same conversation · Test_Salesforce schedule-meeting skill · Outlook calendar · write actions*
 
 ```text
-Send Ken and Riley a calendar invite for a 45-minute Aurora security review next week, and log it on the Contoso opportunity.
+Send Jahidi and Atul a calendar invite for a 45-minute Aurora security review next week, and log it on the Lakeshore Retail opportunity.
 ```
 
 **What to look for:**
 
-1. Copilot finds Ken and Riley and the open opportunity in Salesforce, checks your calendar and proposes two or three slots next week.
+1. Copilot finds Jahidi and Atul and the open opportunity in Salesforce, checks your calendar and proposes two or three slots next week.
 2. **First confirmation:** a preview of the invite, with an agenda built from Steps 1 and 2. Approve it, and Copilot creates the Outlook invite.
 3. **Second confirmation:** a preview of the Salesforce event. Approve it, and Copilot logs the event on the opportunity.
 4. A confirmation with a link to the Salesforce record.
@@ -83,20 +83,20 @@ Send Ken and Riley a calendar invite for a 45-minute Aurora security review next
 *Same conversation · Outlook (draft only)*
 
 ```text
-Draft an email to Riley and Priya ahead of the pitch: confirm the agenda and link our security FAQ and the Wide World Importers case study.
+Draft an email to Atul and Nanami ahead of the pitch: confirm the agenda and link our security FAQ and the Wide World Importers case study.
 ```
 
 Copilot creates an Outlook draft with the agenda and links to the two Confluence pages. It stays a draft.
 
-Or try: `Log the pilot review call on the Contoso opportunity.`
+Or try: `Log the pilot review call on the Lakeshore Retail opportunity.`
 
 ## If it goes wrong
 
 | What happens | What to do |
 |---|---|
-| Copilot asks which account or meeting | Reply: "The Contoso Retail expansion pitch." |
-| The brief doesn't mention Priya | Ask: "Who's on the call, and what does each of them care about?" |
-| Step 2 answers from general knowledge | Reply: "Use the Teams recording of the Contoso pilot review and our pricing policy in Confluence." |
+| Copilot asks which account or meeting | Reply: "The Lakeshore Retail expansion pitch." |
+| The brief doesn't mention Nanami | Ask: "Who's on the call, and what does each of them care about?" |
+| Step 2 answers from general knowledge | Reply: "Use the Teams recording of the Lakeshore Retail pilot review and our pricing policy in Confluence." |
 | Slot picking runs long | Reply: "The first slot." |
 | Copilot asks whether to email or invite | Reply: "Send the invite." |
 
@@ -104,7 +104,7 @@ Or try: `Log the pilot review call on the Contoso opportunity.`
 
 - [ ] Your call brief covers the deal, all three attendees and the two risks.
 - [ ] Copilot refused the 20% discount and proposed the in-policy counter with the all-in cost.
-- [ ] The security review is on your calendar and logged on the Contoso opportunity.
+- [ ] The security review is on your calendar and logged on the Lakeshore Retail opportunity.
 
 **What you take away:** Copilot moved from finding information to finishing the job: a brief, a compliant answer, a booked meeting and an updated CRM, with you approving each change.
 

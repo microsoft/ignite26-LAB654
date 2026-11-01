@@ -1,12 +1,12 @@
 [
   {
-    "MailNickName": "mhollowell",
-    "DisplayName": "Marcus Hollowell",
-    "FirstName": "Marcus",
-    "LastName": "Hollowell",
+    "MailNickName": "emil",
+    "DisplayName": "Emil Vanggaard",
+    "FirstName": "Emil",
+    "LastName": "Vanggaard",
     "JobTitle": "Associate General Counsel, Technology Transactions",
     "Department": "Legal",
-    "CompanyName": "Verdantis Technologies, Inc.",
+    "CompanyName": "Zava, Inc.",
     "UsageLocation": "US",
     "OfficeLocation": "Stamford, CT",
     "Address": {
@@ -21,16 +21,16 @@
       "Microsoft Teams Enterprise",
       "Office 365 E5 (no Teams)"
     ],
-    "Manager": "dpark"
+    "Manager": "hannes"
   },
   {
-    "MailNickName": "rsengupta",
-    "DisplayName": "Radhika Sengupta",
-    "FirstName": "Radhika",
-    "LastName": "Sengupta",
+    "MailNickName": "hemanti",
+    "DisplayName": "Hemanti Baishya",
+    "FirstName": "Hemanti",
+    "LastName": "Baishya",
     "JobTitle": "SVP, Strategic Procurement & Vendor Management",
     "Department": "Procurement",
-    "CompanyName": "Verdantis Technologies, Inc.",
+    "CompanyName": "Zava, Inc.",
     "UsageLocation": "US",
     "OfficeLocation": "Stamford, CT",
     "Address": {
@@ -46,13 +46,13 @@
     ]
   },
   {
-    "MailNickName": "taguilar",
-    "DisplayName": "Tomás Aguilar",
-    "FirstName": "Tomás",
-    "LastName": "Aguilar",
+    "MailNickName": "luc",
+    "DisplayName": "Luc Lacombe",
+    "FirstName": "Luc",
+    "LastName": "Lacombe",
     "JobTitle": "Chief Underwriting Officer",
     "Department": "Underwriting",
-    "CompanyName": "Verdantis Technologies, Inc.",
+    "CompanyName": "Zava, Inc.",
     "UsageLocation": "US",
     "OfficeLocation": "Stamford, CT",
     "Address": {
@@ -68,13 +68,13 @@
     ]
   },
   {
-    "MailNickName": "jreyes",
-    "DisplayName": "Jordan Reyes",
-    "FirstName": "Jordan",
-    "LastName": "Reyes",
+    "MailNickName": "kristian",
+    "DisplayName": "Kristian Stensen",
+    "FirstName": "Kristian",
+    "LastName": "Stensen",
     "JobTitle": "Portfolio Manager",
     "Department": "Investment Office",
-    "CompanyName": "Verdantis Technologies, Inc.",
+    "CompanyName": "Zava, Inc.",
     "UsageLocation": "US",
     "OfficeLocation": "Stamford, CT",
     "Address": {
@@ -90,13 +90,13 @@
     ]
   },
   {
-    "MailNickName": "rblake",
-    "DisplayName": "Riley Blake",
-    "FirstName": "Riley",
-    "LastName": "Blake",
+    "MailNickName": "atul",
+    "DisplayName": "Atul Manohar",
+    "FirstName": "Atul",
+    "LastName": "Manohar",
     "JobTitle": "Director of Store Operations",
     "Department": "Store Operations",
-    "CompanyName": "Contoso Retail",
+    "CompanyName": "Lakeshore Retail",
     "UsageLocation": "US",
     "OfficeLocation": "Minneapolis, MN",
     "Licenses": [
@@ -105,13 +105,13 @@
     ]
   },
   {
-    "MailNickName": "kliu",
-    "DisplayName": "Ken Liu",
-    "FirstName": "Ken",
-    "LastName": "Liu",
+    "MailNickName": "jahidi",
+    "DisplayName": "Jahidi Juma",
+    "FirstName": "Jahidi",
+    "LastName": "Juma",
     "JobTitle": "IT Security Lead",
     "Department": "Information Technology",
-    "CompanyName": "Contoso Retail",
+    "CompanyName": "Lakeshore Retail",
     "UsageLocation": "US",
     "OfficeLocation": "Minneapolis, MN",
     "Licenses": [
@@ -120,13 +120,13 @@
     ]
   },
   {
-    "MailNickName": "pnair",
-    "DisplayName": "Priya Nair",
-    "FirstName": "Priya",
-    "LastName": "Nair",
+    "MailNickName": "nanami",
+    "DisplayName": "Nanami Nakayama",
+    "FirstName": "Nanami",
+    "LastName": "Nakayama",
     "JobTitle": "Chief Financial Officer",
     "Department": "Finance",
-    "CompanyName": "Contoso Retail",
+    "CompanyName": "Lakeshore Retail",
     "UsageLocation": "US",
     "OfficeLocation": "Minneapolis, MN",
     "Licenses": [
@@ -135,13 +135,13 @@
     ]
   },
   {
-    "MailNickName": "lokafor",
-    "DisplayName": "Lena Okafor",
-    "FirstName": "Lena",
-    "LastName": "Okafor",
+    "MailNickName": "zoe",
+    "DisplayName": "Zoe Armstrong",
+    "FirstName": "Zoe",
+    "LastName": "Armstrong",
     "JobTitle": "Director of Retail Sales",
     "Department": "Sales",
-    "CompanyName": "Verdantis Technologies, Inc.",
+    "CompanyName": "Zava, Inc.",
     "UsageLocation": "US",
     "OfficeLocation": "Stamford, CT",
     "Address": {
@@ -157,13 +157,13 @@
     ]
   },
   {
-    "MailNickName": "nchen",
-    "DisplayName": "Nina Chen",
-    "FirstName": "Nina",
-    "LastName": "Chen",
+    "MailNickName": "triin",
+    "DisplayName": "Triin Lepp",
+    "FirstName": "Triin",
+    "LastName": "Lepp",
     "JobTitle": "Senior Software Engineer",
     "Department": "Engineering",
-    "CompanyName": "Verdantis Technologies, Inc.",
+    "CompanyName": "Zava, Inc.",
     "UsageLocation": "US",
     "OfficeLocation": "Stamford, CT",
     "Address": {
@@ -179,13 +179,13 @@
     ]
   },
   {
-    "MailNickName": "eruiz",
-    "DisplayName": "Elena Ruiz",
-    "FirstName": "Elena",
-    "LastName": "Ruiz",
+    "MailNickName": "maria",
+    "DisplayName": "Maria Oliva",
+    "FirstName": "Maria",
+    "LastName": "Oliva",
     "JobTitle": "Senior QA Engineer",
     "Department": "Engineering",
-    "CompanyName": "Verdantis Technologies, Inc.",
+    "CompanyName": "Zava, Inc.",
     "UsageLocation": "US",
     "OfficeLocation": "Stamford, CT",
     "Address": {
@@ -201,13 +201,13 @@
     ]
   },
   {
-    "MailNickName": "tmorgan",
-    "DisplayName": "Taylor Morgan",
-    "FirstName": "Taylor",
-    "LastName": "Morgan",
+    "MailNickName": "kerry",
+    "DisplayName": "Kerry Allen",
+    "FirstName": "Kerry",
+    "LastName": "Allen",
     "JobTitle": "Engineering Lead, Aurora",
     "Department": "Engineering",
-    "CompanyName": "Verdantis Technologies, Inc.",
+    "CompanyName": "Zava, Inc.",
     "UsageLocation": "US",
     "OfficeLocation": "Stamford, CT",
     "Address": {
@@ -223,13 +223,13 @@
     ]
   },
   {
-    "MailNickName": "spatel",
-    "DisplayName": "Sam Patel",
-    "FirstName": "Sam",
-    "LastName": "Patel",
+    "MailNickName": "tama",
+    "DisplayName": "Tama Surya",
+    "FirstName": "Tama",
+    "LastName": "Surya",
     "JobTitle": "Platform Lead",
     "Department": "Engineering",
-    "CompanyName": "Verdantis Technologies, Inc.",
+    "CompanyName": "Zava, Inc.",
     "UsageLocation": "US",
     "OfficeLocation": "Stamford, CT",
     "Address": {
@@ -245,13 +245,13 @@
     ]
   },
   {
-    "MailNickName": "dpark",
-    "DisplayName": "Daniel Park",
-    "FirstName": "Daniel",
-    "LastName": "Park",
+    "MailNickName": "hannes",
+    "DisplayName": "Hannes Niemi",
+    "FirstName": "Hannes",
+    "LastName": "Niemi",
     "JobTitle": "Vice President, Product",
     "Department": "Product",
-    "CompanyName": "Verdantis Technologies, Inc.",
+    "CompanyName": "Zava, Inc.",
     "UsageLocation": "US",
     "OfficeLocation": "Stamford, CT",
     "Address": {
@@ -267,13 +267,13 @@
     ]
   },
   {
-    "MailNickName": "arahman",
-    "DisplayName": "Aisha Rahman",
-    "FirstName": "Aisha",
-    "LastName": "Rahman",
+    "MailNickName": "ebere",
+    "DisplayName": "Ebere Ibeabuchi",
+    "FirstName": "Ebere",
+    "LastName": "Ibeabuchi",
     "JobTitle": "Finance Operations Lead",
     "Department": "Finance",
-    "CompanyName": "Verdantis Technologies, Inc.",
+    "CompanyName": "Zava, Inc.",
     "UsageLocation": "US",
     "OfficeLocation": "Stamford, CT",
     "Address": {
@@ -289,13 +289,13 @@
     ]
   },
   {
-    "MailNickName": "verdantisexpense",
-    "DisplayName": "Verdantis Expense",
-    "FirstName": "Verdantis",
+    "MailNickName": "zavaexpense",
+    "DisplayName": "Zava Expense",
+    "FirstName": "Zava",
     "LastName": "Expense",
     "JobTitle": "Expense notifications",
     "Department": "Finance",
-    "CompanyName": "Verdantis Technologies, Inc.",
+    "CompanyName": "Zava, Inc.",
     "UsageLocation": "US",
     "OfficeLocation": "Stamford, CT",
     "Address": {

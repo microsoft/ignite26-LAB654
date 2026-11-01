@@ -2,31 +2,31 @@
   {
     "ChatId": "legal-chat-001",
     "ChatType": "Group",
-    "ChatName": "Cognivault deal",
+    "ChatName": "Trey Research deal",
     "Members": [
-      "taguilar",
-      "rsengupta",
-      "mhollowell"
+      "luc",
+      "hemanti",
+      "emil"
     ],
     "CreatedDateTime": "2026-10-20T14:13:00Z",
     "ChatMessages": [
       {
         "ChatMessageId": "1",
-        "From": "taguilar",
+        "From": "luc",
         "ContentType": "text",
-        "Content": "Quick one on Cognivault. Our last vendor retired its model on 2 weeks' notice and we couldn't quote for a week. Can't happen again.",
+        "Content": "Quick one on Trey Research. Our last vendor retired its model on 2 weeks' notice and we couldn't quote for a week. Can't happen again.",
         "SentDateTime": "2026-10-20T14:14:00Z"
       },
       {
         "ChatMessageId": "2",
-        "From": "rsengupta",
+        "From": "hemanti",
         "ContentType": "text",
         "Content": "Agreed. And we don't go to the table without owning the fine-tuned model.",
         "SentDateTime": "2026-10-20T14:20:00Z"
       },
       {
         "ChatMessageId": "3",
-        "From": "mhollowell",
+        "From": "emil",
         "ContentType": "text",
         "Content": "Understood. Their paper came in on Friday and it's in the matter. I'll review it against the playbook before the session on the 10th.",
         "SentDateTime": "2026-10-20T14:31:00Z"
@@ -37,16 +37,16 @@
     "ChatId": "legal-chat-002",
     "ChatType": "OneOnOne",
     "Members": [
-      "taguilar",
-      "mhollowell"
+      "luc",
+      "emil"
     ],
     "CreatedDateTime": "2026-10-26T12:06:00Z",
     "ChatMessages": [
       {
         "ChatMessageId": "1",
-        "From": "taguilar",
+        "From": "luc",
         "ContentType": "text",
-        "Content": "Morning Marcus. Have you had a chance to look at Cognivault's contract? We'd like to sign at the session with them on the 10th so we can go live on the 13th. Anything you need from me?",
+        "Content": "Morning Emil. Have you had a chance to look at Trey Research's contract? We'd like to sign at the session with them on the 10th so we can go live on the 13th. Anything you need from me?",
         "SentDateTime": "2026-10-26T12:07:00Z"
       }
     ]
@@ -55,14 +55,14 @@
     "ChatId": "finance-chat-001",
     "ChatType": "OneOnOne",
     "Members": [
-      "jreyes",
-      "mhollowell"
+      "kristian",
+      "emil"
     ],
     "CreatedDateTime": "2026-10-09T19:59:00Z",
     "ChatMessages": [
       {
         "ChatMessageId": "1",
-        "From": "jreyes",
+        "From": "kristian",
         "ContentType": "text",
         "Content": "Committee wants a view on NVIDIA Monday. Should we add more? Bring a short memo.",
         "SentDateTime": "2026-10-09T20:00:00Z"
@@ -74,15 +74,15 @@
     "ChatType": "Group",
     "ChatName": "Aurora Engineering LT",
     "Members": [
-      "tmorgan",
-      "spatel",
-      "mhollowell"
+      "kerry",
+      "tama",
+      "emil"
     ],
     "CreatedDateTime": "2026-09-14T13:00:00Z",
     "ChatMessages": [
       {
         "ChatMessageId": "1",
-        "From": "tmorgan",
+        "From": "kerry",
         "ContentType": "text",
         "Content": "Setting up this group for Aurora engineering leadership. Sprint scope changes come here for approval.",
         "SentDateTime": "2026-09-14T13:02:00Z"

@@ -14,7 +14,7 @@ SCALE = (
     "Aaa", "Aa1", "Aa2", "Aa3", "A1", "A2", "A3", "Baa1", "Baa2", "Baa3",
     "Ba1", "Ba2", "Ba3", "B1", "B2", "B3", "Caa1", "Caa2", "Caa3", "Ca", "C",
 )  # fmt: skip
-ANALYSTS = ("Priya Natarajan", "Daniel Okafor", "Elena Marquez", "Hannah Cole", "Marcus Lindqvist", "Aiko Tanaka")
+ANALYSTS = ("Jana Balazova", "Bogdan Petrescu", "Duangrat Supitayaporn", "Endang Suciningsih", "Mauno Kilpi", "Dominique Koch")
 _seed = Seeded("moodys", "ratings")
 
 

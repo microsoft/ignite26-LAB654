@@ -10,7 +10,7 @@
 | Legal | Work IQ, iManage | Flags and a redline in Word, then a negotiation pack in Cowork |
 | Productivity | Test_Salesforce, Test_Confluence, Teams, Outlook | A call brief, an in-policy answer to a price objection, and a booked and logged meeting |
 | Engineering | Test_Jira, Test_GitHub, Outlook, Teams | The real status of a customer bug, a sprint slide, and a team post and customer reply |
-| Bring your own app | Verdantis Expense (custom MCP) | An expense report checked, fixed and submitted, plus a spend summary in Excel |
+| Bring your own app | Zava Expense (custom MCP) | An expense report checked, fixed and submitted, plus a spend summary in Excel |
 
 ## Key takeaways
 
