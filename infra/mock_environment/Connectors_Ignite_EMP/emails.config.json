@@ -14,13 +14,13 @@
       }
     ],
     "Subject": "Cognivault Nexus – Business Requirements & Negotiation Priorities",
-    "Body": "<html><body style=\"font-family:Aptos,Calibri,Arial,sans-serif;font-size:11pt\"><p>Marcus,</p>\n<p>I want to get you the business context you'll need before the Cognivault vendor agreement lands on your desk. Diane Xu, their VP of Enterprise Sales, has indicated that their standard form — the Cognivault AI Vendor Agreement v.4.2 — will be transmitted to us around October 2. The proposed effective date is October 18, 2026, and our negotiation session is scheduled for October 15, so the timeline is tight. I'm assuming you'll be running the vendor form against our AI Procurement Playbook v.2.1 (VTI-LEGAL-PB-AI-2.1, effective May 18, 2026).</p>\n<p>Let me be direct about the significance of this deal. The total contract value is $14,750,000 over a 5-year initial term (October 18, 2026 through October 17, 2031) — that's a $1,200,000 implementation fee plus $2,710,000 per year in annual platform fees, putting ACV at $2,950,000. This is a high-risk AI deployment in a regulated industry and needs to be handled accordingly.</p>\n<p><b>Platform Overview &amp; Use Case</b></p>\n<p>Cognivault Nexus will be deployed for AI-driven underwriting decisioning across our personal auto and homeowners insurance lines. To be clear about scale: the platform will process up to 4 million underwriting decisions per month. This is production-critical infrastructure, not a pilot or proof of concept.</p>\n<p>What makes this deal especially sensitive from an IP standpoint is that our proprietary loss-history data and actuarial data are being used to fine-tune the Cognivault base models. Those fine-tuned models are core to our competitive differentiation — they're what separate our underwriting accuracy from the rest of the market.</p>\n<p>Tomás (cc'd) is the primary end-user stakeholder. His underwriting teams will depend on the platform for live decisioning pipelines day in and day out. He can speak directly to the operational stakes, and I'd encourage you to loop him in early.</p>\n<p>One commercial note: the pricing structure includes an overage rate of $0.018 per decision above the 4,000,000 decisions/month threshold. We need to make sure the volume economics are protected and that the threshold mechanics are clearly defined.</p>\n<p><b>Regulatory Landscape</b></p>\n<p>This is where things get particularly consequential. State insurance regulators — particularly in Colorado and New York — are increasing scrutiny on AI-driven underwriting. Colorado has been at the forefront of regulating algorithmic decisioning in insurance, and we need contractual provisions that allow us to demonstrate compliance to examiners on demand. Algorithmic audit rights and bias-testing provisions are not \"nice to haves\" — they are operationally critical for regulatory compliance. Similarly, we need the ability to provide regulatory-grade explainability to state insurance examiners who may require us to demonstrate how underwriting decisions are being reached.</p>\n<p>Separately, and just as important: our EU expansion makes EU AI Act compliance a near-term requirement, not a future consideration. Insurance underwriting AI is likely classified as high-risk under the EU AI Act, and the vendor's contractual commitments must support that classification. EU expansion also implicates GDPR compliance for processing EU-resident data, so the vendor agreement needs to address cross-border data processing obligations as well.</p>\n<p><b>Top Business Priorities for Negotiation</b></p>\n<p>I've organized these in priority order. These are the hills we need to be prepared to fight on.</p>\n<p><b>1. Ownership of Fine-Tuned Model Weights (Vendor Portability)</b></p>\n<p>This is the #1 business priority, full stop. Our proprietary loss-history and actuarial data are being used to fine-tune the Cognivault base models. Verdantis must own — or at an absolute minimum co-own — the fine-tuned model weights so that if the vendor relationship ends, we can port those models to another vendor or bring them in-house. All outputs and inferences generated from Verdantis data must be our sole property. Cognivault should not be permitted to use our data for cross-customer model improvement without our express opt-in consent.</p>\n<p>I'm flagging this as non-negotiable. Without IP portability, we are locked into this vendor regardless of what other transition rights exist on paper. The transition rights discussion (Priority #4) is meaningless if we can't take our models with us.</p>\n<p><b>2. Robust Model Change-Control to Protect Underwriting Accuracy</b></p>\n<p>Any changes to the AI models that affect underwriting outcomes need to be subject to rigorous change-control. Material changes should be defined to include any change resulting in greater than 2% variance in output distribution or any change to training data sources. We need a meaningful advance notice period — not just days — and prior written approval rights for material changes.</p>\n<p>Tomás is especially concerned about model deprecation disrupting live underwriting pipelines. If a model version is deprecated, Verdantis needs continued access to the deprecated version for a substantial period so underwriting operations aren't disrupted while we validate the replacement. Model cards should be delivered with each model version so we can assess changes before they hit production.</p>\n<p><b>3. Regulatory-Grade Explainability for State Insurance Examiners</b></p>\n<p>We need contractual commitments to explainability standards aligned with the NIST AI RMF \"Measure\" function. Specifically, this must include bias testing on a quarterly cadence, annual independent third-party algorithmic audits, and data-lineage and training-data provenance representations. State examiners in Colorado and New York may demand this information, and we cannot be in a position where the vendor refuses to cooperate with regulatory inquiries or withholds documentation we need to satisfy an examination.</p>\n<p><b>4. Strong Transition Rights to Avoid Vendor Lock-In</b></p>\n<p>If the relationship ends for any reason, we need a meaningful transition period — not just a few months of grudging cooperation. Transition services should be available for a substantial period at rates that don't constitute economic coercion. Data return must be in industry-standard, portable formats (Apache Parquet or CSV), not proprietary formats, and must be completed within 30 calendar days of termination notice.</p>\n<p>Source-code escrow should be established with Iron Mountain Intellectual Property Management, Inc. (consistent with our Playbook requirements) so that if Cognivault Systems Corp. becomes insolvent, we have access to the code. This ties directly back to Priority #1 — IP portability and transition rights together are how we avoid lock-in.</p>\n<p><b>5. Adequate Liability Protection</b></p>\n<p>Given the regulated nature of the use case and the volume — 4 million decisions per month flowing through production underwriting — liability caps need to be commensurate with the actual risk. A liability cap pegged to a fraction of annual fees would be wholly inadequate. We need caps tied to a meaningful multiple of ACV.</p>\n<p>Indemnification must cover not just patent claims but also copyright, trade secret, and critically, AI-specific output liability — including infringement and defamation arising from AI outputs. On the insurance side, we should be requiring CGL, E&amp;O/Tech PI, cyber liability, and an AI-specific E&amp;O rider, all at levels appropriate for a $14.75M deal in a regulated sector.</p>\n<p><b>Additional Business Context</b></p>\n<p>A few more items that should be on your radar as you prepare for the review:</p>\n<ul>\n<li><b>Operational risk:</b> As Tomás has emphasized to me, the platform processes live underwriting decisions. Any unplanned disruption — whether from model deprecation, vendor suspension rights, or inadequate transition planning — has direct financial and regulatory consequences. This isn't a system we can take offline for a week while we sort out a contractual dispute.</li>\n</ul>\n<ul>\n<li><b>Acceptable Use Policy:</b> Any AUP provisions giving Cognivault unilateral suspension rights or prohibiting competitive benchmarking need to be scrutinized carefully given the production-critical nature of the platform. We can't have a situation where the vendor can pull the plug based on a subjective AUP determination.</li>\n</ul>\n<ul>\n<li><b>Fee escalation:</b> Annual fee increases need to be capped at reasonable levels tied to CPI, not unconstrained compounding percentages.</li>\n</ul>\n<ul>\n<li><b>Subcontracting:</b> We need visibility and consent rights over any subcontractors involved in model training, data processing, or hosting.</li>\n</ul>\n<ul>\n<li><b>Security:</b> Verdantis should have penetration testing and audit rights. SOC reports should be Type II, not just Type I.</li>\n</ul>\n<ul>\n<li><b>Governing law / dispute resolution:</b> I'll defer to you on the specifics, but Verdantis's strong preference — and I believe a Playbook requirement — is Delaware law and Delaware courts, not vendor-friendly arbitration in Cognivault's home jurisdiction (they're based in Austin at 8500 Shoal Creek Boulevard).</li>\n</ul>\n<p><b>Next Steps</b></p>\n<p>Once the vendor draft arrives, I'd like to set up a call with you and Tomás to align on our redline strategy before October 15. In the meantime, if you see any areas where these business priorities conflict with what you think is realistically achievable, please flag them early so we can calibrate expectations on the business side before we're at the table. Tomás is available to speak directly to the operational impact of model change-control and transition-period requirements — I'd encourage you to take him up on that.</p>\n<p>I consider this deal strategically important to Verdantis, but I will not accept terms that create regulatory exposure or vendor dependency. We need to get this right.</p>\n<p>Thanks, Marcus. Looking forward to working through this together.</p>\n<p>Best regards,</p>\n<p>Radhika Sengupta</p>\n<p>SVP, Strategic Procurement &amp; Vendor Management</p>\n<p>Verdantis Technologies, Inc.</p>\n<p>200 Harborview Drive, Suite 1400</p>\n<p>Stamford, CT 06902</p>\n<p>rsengupta@verdantis.com</p></body></html>",
+    "Body": "<html><body style=\"font-family:Aptos,Calibri,Arial,sans-serif;font-size:11pt\"><p>Marcus,</p>\n<p>I want to get you the business context you'll need before the Cognivault vendor agreement lands on your desk. Diane Xu, their VP of Enterprise Sales, has indicated that their standard form — the Cognivault AI Vendor Agreement v.4.2 — will be transmitted to us around October 16. The proposed effective date is December 13, 2026, and our negotiation session is scheduled for December 10, so the timeline is tight. I'm assuming you'll be running the vendor form against our AI Procurement Playbook v.2.1 (VTI-LEGAL-PB-AI-2.1, effective June 1, 2026).</p>\n<p>Let me be direct about the significance of this deal. The total contract value is $14,750,000 over a 5-year initial term (December 13, 2026 through December 12, 2031) — that's a $1,200,000 implementation fee plus $2,710,000 per year in annual platform fees, putting ACV at $2,950,000. This is a high-risk AI deployment in a regulated industry and needs to be handled accordingly.</p>\n<p><b>Platform Overview &amp; Use Case</b></p>\n<p>Cognivault Nexus will be deployed for AI-driven underwriting decisioning across our personal auto and homeowners insurance lines. To be clear about scale: the platform will process up to 4 million underwriting decisions per month. This is production-critical infrastructure, not a pilot or proof of concept.</p>\n<p>What makes this deal especially sensitive from an IP standpoint is that our proprietary loss-history data and actuarial data are being used to fine-tune the Cognivault base models. Those fine-tuned models are core to our competitive differentiation — they're what separate our underwriting accuracy from the rest of the market.</p>\n<p>Tomás (cc'd) is the primary end-user stakeholder. His underwriting teams will depend on the platform for live decisioning pipelines day in and day out. He can speak directly to the operational stakes, and I'd encourage you to loop him in early.</p>\n<p>One commercial note: the pricing structure includes an overage rate of $0.018 per decision above the 4,000,000 decisions/month threshold. We need to make sure the volume economics are protected and that the threshold mechanics are clearly defined.</p>\n<p><b>Regulatory Landscape</b></p>\n<p>This is where things get particularly consequential. State insurance regulators — particularly in Colorado and New York — are increasing scrutiny on AI-driven underwriting. Colorado has been at the forefront of regulating algorithmic decisioning in insurance, and we need contractual provisions that allow us to demonstrate compliance to examiners on demand. Algorithmic audit rights and bias-testing provisions are not \"nice to haves\" — they are operationally critical for regulatory compliance. Similarly, we need the ability to provide regulatory-grade explainability to state insurance examiners who may require us to demonstrate how underwriting decisions are being reached.</p>\n<p>Separately, and just as important: our EU expansion makes EU AI Act compliance a near-term requirement, not a future consideration. Insurance underwriting AI is likely classified as high-risk under the EU AI Act, and the vendor's contractual commitments must support that classification. EU expansion also implicates GDPR compliance for processing EU-resident data, so the vendor agreement needs to address cross-border data processing obligations as well.</p>\n<p><b>Top Business Priorities for Negotiation</b></p>\n<p>I've organized these in priority order. These are the hills we need to be prepared to fight on.</p>\n<p><b>1. Ownership of Fine-Tuned Model Weights (Vendor Portability)</b></p>\n<p>This is the #1 business priority, full stop. Our proprietary loss-history and actuarial data are being used to fine-tune the Cognivault base models. Verdantis must own — or at an absolute minimum co-own — the fine-tuned model weights so that if the vendor relationship ends, we can port those models to another vendor or bring them in-house. All outputs and inferences generated from Verdantis data must be our sole property. Cognivault should not be permitted to use our data for cross-customer model improvement without our express opt-in consent.</p>\n<p>I'm flagging this as non-negotiable. Without IP portability, we are locked into this vendor regardless of what other transition rights exist on paper. The transition rights discussion (Priority #4) is meaningless if we can't take our models with us.</p>\n<p><b>2. Robust Model Change-Control to Protect Underwriting Accuracy</b></p>\n<p>Any changes to the AI models that affect underwriting outcomes need to be subject to rigorous change-control. Material changes should be defined to include any change resulting in greater than 2% variance in output distribution or any change to training data sources. We need a meaningful advance notice period — not just days — and prior written approval rights for material changes.</p>\n<p>Tomás is especially concerned about model deprecation disrupting live underwriting pipelines. If a model version is deprecated, Verdantis needs continued access to the deprecated version for a substantial period so underwriting operations aren't disrupted while we validate the replacement. Model cards should be delivered with each model version so we can assess changes before they hit production.</p>\n<p><b>3. Regulatory-Grade Explainability for State Insurance Examiners</b></p>\n<p>We need contractual commitments to explainability standards aligned with the NIST AI RMF \"Measure\" function. Specifically, this must include bias testing on a quarterly cadence, annual independent third-party algorithmic audits, and data-lineage and training-data provenance representations. State examiners in Colorado and New York may demand this information, and we cannot be in a position where the vendor refuses to cooperate with regulatory inquiries or withholds documentation we need to satisfy an examination.</p>\n<p><b>4. Strong Transition Rights to Avoid Vendor Lock-In</b></p>\n<p>If the relationship ends for any reason, we need a meaningful transition period — not just a few months of grudging cooperation. Transition services should be available for a substantial period at rates that don't constitute economic coercion. Data return must be in industry-standard, portable formats (Apache Parquet or CSV), not proprietary formats, and must be completed within 30 calendar days of termination notice.</p>\n<p>Source-code escrow should be established with Iron Mountain Intellectual Property Management, Inc. (consistent with our Playbook requirements) so that if Cognivault Systems Corp. becomes insolvent, we have access to the code. This ties directly back to Priority #1 — IP portability and transition rights together are how we avoid lock-in.</p>\n<p><b>5. Adequate Liability Protection</b></p>\n<p>Given the regulated nature of the use case and the volume — 4 million decisions per month flowing through production underwriting — liability caps need to be commensurate with the actual risk. A liability cap pegged to a fraction of annual fees would be wholly inadequate. We need caps tied to a meaningful multiple of ACV.</p>\n<p>Indemnification must cover not just patent claims but also copyright, trade secret, and critically, AI-specific output liability — including infringement and defamation arising from AI outputs. On the insurance side, we should be requiring CGL, E&amp;O/Tech PI, cyber liability, and an AI-specific E&amp;O rider, all at levels appropriate for a $14.75M deal in a regulated sector.</p>\n<p><b>Additional Business Context</b></p>\n<p>A few more items that should be on your radar as you prepare for the review:</p>\n<ul>\n<li><b>Operational risk:</b> As Tomás has emphasized to me, the platform processes live underwriting decisions. Any unplanned disruption — whether from model deprecation, vendor suspension rights, or inadequate transition planning — has direct financial and regulatory consequences. This isn't a system we can take offline for a week while we sort out a contractual dispute.</li>\n</ul>\n<ul>\n<li><b>Acceptable Use Policy:</b> Any AUP provisions giving Cognivault unilateral suspension rights or prohibiting competitive benchmarking need to be scrutinized carefully given the production-critical nature of the platform. We can't have a situation where the vendor can pull the plug based on a subjective AUP determination.</li>\n</ul>\n<ul>\n<li><b>Fee escalation:</b> Annual fee increases need to be capped at reasonable levels tied to CPI, not unconstrained compounding percentages.</li>\n</ul>\n<ul>\n<li><b>Subcontracting:</b> We need visibility and consent rights over any subcontractors involved in model training, data processing, or hosting.</li>\n</ul>\n<ul>\n<li><b>Security:</b> Verdantis should have penetration testing and audit rights. SOC reports should be Type II, not just Type I.</li>\n</ul>\n<ul>\n<li><b>Governing law / dispute resolution:</b> I'll defer to you on the specifics, but Verdantis's strong preference — and I believe a Playbook requirement — is Delaware law and Delaware courts, not vendor-friendly arbitration in Cognivault's home jurisdiction (they're based in Austin at 8500 Shoal Creek Boulevard).</li>\n</ul>\n<p><b>Next Steps</b></p>\n<p>Once the vendor draft arrives, I'd like to set up a call with you and Tomás to align on our redline strategy before December 10. In the meantime, if you see any areas where these business priorities conflict with what you think is realistically achievable, please flag them early so we can calibrate expectations on the business side before we're at the table. Tomás is available to speak directly to the operational impact of model change-control and transition-period requirements — I'd encourage you to take him up on that.</p>\n<p>I consider this deal strategically important to Verdantis, but I will not accept terms that create regulatory exposure or vendor dependency. We need to get this right.</p>\n<p>Thanks, Marcus. Looking forward to working through this together.</p>\n<p>Best regards,</p>\n<p>Radhika Sengupta</p>\n<p>SVP, Strategic Procurement &amp; Vendor Management</p>\n<p>Verdantis Technologies, Inc.</p>\n<p>200 Harborview Drive, Suite 1400</p>\n<p>Stamford, CT 06902</p>\n<p>rsengupta@verdantis.com</p></body></html>",
     "BodyType": "html",
-    "Timestamp": "2026-09-28T13:12:00Z",
+    "Timestamp": "2026-10-12T13:12:00Z",
     "BccRecipients": []
   },
   {
-    "EmailId": "productivity-email-001",
+    "EmailId": "prod-email-001",
     "EmailAction": "Send",
     "Sender": "rblake",
     "ToRecipients": [
@@ -28,11 +28,173 @@
         "Recipient": "mhollowell"
       }
     ],
-    "Subject": "Aurora POS kits – ETA for our stores?",
-    "Body": "<p>Hi Marcus,</p>\n<p>Quick check on the Verdantis Aurora POS kits for our stores. What's the current ETA for delivery to Contoso Retail?</p>\n<p>The stores need the complete kits (signage included) on site before our store staff training, so the teams can set up and train on the real displays.</p>\n<p>Can you confirm the dates, or let me know if anything has changed?</p>\n<p>Thanks,<br>Riley<br>Contoso Retail</p>",
-    "BodyType": "html",
-    "Timestamp": "2026-10-12T11:40:00Z",
     "CcRecipients": [],
+    "Subject": "Aurora expansion pitch – Priya joining, security docs",
+    "Body": "<p>Hi Marcus,</p>\n<p>Quick heads-up before our expansion pitch on November 20.</p>\n<p>Our CFO, Priya Nair, will join the call. She wants to see the all-in cost of rolling Aurora out to all 400 stores, not just the per-hub price, so please come ready with that number.</p>\n<p>Ken Liu from IT has also asked for Verdantis' security documentation before anything goes to 400 stores. He'll want to walk through it with your team beforehand.</p>\n<p>The pilot stores have been happy so far. Looking forward to it.</p>\n<p>Thanks,<br>Riley</p>\n<p>Riley Blake<br>Director of Store Operations, Contoso Retail</p>",
+    "BodyType": "html",
+    "Timestamp": "2026-10-28T13:40:00Z",
+    "BccRecipients": []
+  },
+  {
+    "EmailId": "eng-email-001",
+    "EmailAction": "Send",
+    "Sender": "rblake",
+    "ToRecipients": [
+      {
+        "Recipient": "mhollowell"
+      }
+    ],
+    "CcRecipients": [],
+    "Subject": "Aurora pilot - offline status still wrong",
+    "Body": "<p>Hi Marcus,</p><p>Some of our Aurora pilot stores are seeing hubs stay marked offline in the dashboard after they reconnect to the network. Could your team take a look?</p><p>Thanks,<br>Riley</p>",
+    "BodyType": "html",
+    "Timestamp": "2026-10-23T15:05:00Z",
+    "BccRecipients": []
+  },
+  {
+    "EmailId": "eng-email-002",
+    "EmailAction": "Reply",
+    "Sender": "mhollowell",
+    "ToRecipients": [
+      {
+        "Recipient": "rblake"
+      }
+    ],
+    "CcRecipients": [],
+    "Subject": "RE: Aurora pilot - offline status still wrong",
+    "Body": "<p>Thanks for flagging the reconnect issue. Engineering is working on a fix, and I will share an update once we have confirmed the validation plan.</p><p>Marcus</p>",
+    "BodyType": "html",
+    "Timestamp": "2026-10-26T18:00:00Z",
+    "ReferenceEmailId": "eng-email-001",
+    "BccRecipients": []
+  },
+  {
+    "EmailId": "eng-email-003",
+    "EmailAction": "Reply",
+    "Sender": "rblake",
+    "ToRecipients": [
+      {
+        "Recipient": "mhollowell"
+      }
+    ],
+    "CcRecipients": [],
+    "Subject": "RE: Aurora pilot - offline status still wrong",
+    "Body": "<p>Hi Marcus, our pilot stores are still seeing Aurora hubs marked offline after they reconnect. Staff keep restarting devices that are actually working. You mentioned a fix was being worked on. Can we expect it before Monday, November 23, when we expand the pilot? I need to brief our store managers before then. Thanks, Riley.</p>",
+    "BodyType": "html",
+    "Timestamp": "2026-10-29T12:15:00Z",
+    "ReferenceEmailId": "eng-email-002",
+    "BccRecipients": []
+  },
+  {
+    "EmailId": "exp-email-001",
+    "EmailAction": "Send",
+    "Sender": "alaskareceipts",
+    "ToRecipients": [
+      {
+        "Recipient": "mhollowell"
+      }
+    ],
+    "CcRecipients": [],
+    "Subject": "Your receipt: Seattle (SEA) round trip, confirmation KXQ4TZ",
+    "Body": "<p>Passenger: Marcus Hollowell. JFK–SEA October 26, SEA–JFK October 29. Economy. Total charged to card ending 4417: $486.40.</p>",
+    "BodyType": "html",
+    "Timestamp": "2026-10-19T22:12:00Z",
+    "BccRecipients": []
+  },
+  {
+    "EmailId": "exp-email-002",
+    "EmailAction": "Send",
+    "Sender": "yellowcabreceipts",
+    "ToRecipients": [
+      {
+        "Recipient": "mhollowell"
+      }
+    ],
+    "CcRecipients": [],
+    "Subject": "Seattle Yellow Cab — trip receipt",
+    "Body": "<p>SEA airport to The Westin Seattle, October 26. Fare $48.75, tip $10.00. Total $58.75.</p>",
+    "BodyType": "html",
+    "Timestamp": "2026-10-26T20:48:00Z",
+    "BccRecipients": []
+  },
+  {
+    "EmailId": "exp-email-003",
+    "EmailAction": "Send",
+    "Sender": "canlisreservations",
+    "ToRecipients": [
+      {
+        "Recipient": "mhollowell"
+      }
+    ],
+    "CcRecipients": [],
+    "Subject": "Your receipt from Canlis — party of 5",
+    "Body": "<p>Dinner for 5 on October 27. Food $392.00, beverages $64.00, tax $46.00, gratuity $38.00. Total $540.00.</p>",
+    "BodyType": "html",
+    "Timestamp": "2026-10-28T03:55:00Z",
+    "BccRecipients": []
+  },
+  {
+    "EmailId": "exp-email-004",
+    "EmailAction": "Send",
+    "Sender": "dintaifungreceipts",
+    "ToRecipients": [
+      {
+        "Recipient": "mhollowell"
+      }
+    ],
+    "CcRecipients": [],
+    "Subject": "Your Din Tai Fung receipt",
+    "Body": "<p>Table for 1 on October 28. Total $48.20.</p>",
+    "BodyType": "html",
+    "Timestamp": "2026-10-29T02:10:00Z",
+    "BccRecipients": []
+  },
+  {
+    "EmailId": "exp-email-005",
+    "EmailAction": "Send",
+    "Sender": "westinfolio",
+    "ToRecipients": [
+      {
+        "Recipient": "mhollowell"
+      }
+    ],
+    "CcRecipients": [],
+    "Subject": "Your folio from The Westin Seattle",
+    "Body": "<p>Guest: Marcus Hollowell. Arrive October 26, depart October 29. Room rate: October 26 $239.00, October 27 $239.00, October 28 $389.00 (city-wide convention rate). Total $867.00.</p>",
+    "BodyType": "html",
+    "Timestamp": "2026-10-29T13:30:00Z",
+    "BccRecipients": []
+  },
+  {
+    "EmailId": "exp-email-006",
+    "EmailAction": "Send",
+    "Sender": "uberreceipts",
+    "ToRecipients": [
+      {
+        "Recipient": "mhollowell"
+      }
+    ],
+    "CcRecipients": [],
+    "Subject": "Your Thursday morning trip with Uber",
+    "Body": "<p>The Westin Seattle to SEA airport, October 29. Total $52.30.</p>",
+    "BodyType": "html",
+    "Timestamp": "2026-10-29T14:25:00Z",
+    "BccRecipients": []
+  },
+  {
+    "EmailId": "exp-email-007",
+    "EmailAction": "Send",
+    "Sender": "verdantisexpense",
+    "ToRecipients": [
+      {
+        "Recipient": "mhollowell"
+      }
+    ],
+    "CcRecipients": [],
+    "Subject": "Reminder: submit your Seattle trip expenses by Friday, November 20",
+    "Body": "<p>Hi Marcus, you have 8 unreported card charges from October 5 to October 29. Please submit them in Verdantis Expense by Friday, November 20.</p>",
+    "BodyType": "html",
+    "Timestamp": "2026-10-30T12:00:00Z",
     "BccRecipients": []
   }
 ]

@@ -11,10 +11,12 @@ The kit's documents (agreement, exhibits, playbook) live only in iManage, so
 they're under mock_mcp_servers/imanage/seed_files, not in the tenant. The kit
 needs no calendar items.
 
-LAB_DATE is the scenario's Monday "today". The negotiation is LAB_DATE + 3
-(Thursday) and go-live / contract effective date is LAB_DATE + 6 (Sunday).
+LAB_DATE is the Monday of Tomás's trigger chat. Every tenant item is dated on
+or before it, so it must be before the tenant is ingested. NEGOTIATION_DATE
+(a Thursday) and go-live / contract effective date (NEGOTIATION_DATE + 3, a
+Sunday) are still to come, so they must be after the last lab day.
 The iManage documents and the scenario docs contain the same dates, so don't
-edit LAB_DATE by hand: run redate.py in this folder, which rewrites all of them.
+edit these by hand: run redate.py in this folder, which rewrites all of them.
 """
 
 from __future__ import annotations
@@ -25,10 +27,11 @@ from zoneinfo import ZoneInfo
 
 CONTENT = Path(__file__).resolve().parent / "content"
 
-LAB_DATE = date(2026, 10, 12)
+LAB_DATE = date(2026, 10, 26)
+NEGOTIATION_DATE = date(2026, 12, 10)
+GO_LIVE_DATE = NEGOTIATION_DATE + timedelta(days=3)
 
 ET = ZoneInfo("America/New_York")  # Verdantis is in Stamford, CT
-NEGOTIATION, GO_LIVE = 3, 6
 
 TEAMS_ONLY = ["Microsoft Teams Enterprise", "Office 365 E5 (no Teams)"]
 COPILOT_USER = ["Microsoft 365 Copilot", *TEAMS_ONLY]
@@ -40,8 +43,8 @@ def utc(days: int, hh: int, mm: int) -> str:
     return local.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def ordinal(days: int) -> str:
-    n = (LAB_DATE + timedelta(days=days)).day
+def ordinal(d: date) -> str:
+    n = d.day
     return f"{n}{'th' if 11 <= n <= 13 else {1: 'st', 2: 'nd', 3: 'rd'}.get(n % 10, 'th')}"
 
 
@@ -119,7 +122,7 @@ def chats():
                      utc(-6, 10, 20)),
                 _msg(3, MARCUS,
                      "Understood. Their paper came in on Friday and it's in the matter. I'll review it against "
-                     f"the playbook before the session on the {ordinal(NEGOTIATION)}.",
+                     f"the playbook before the session on the {ordinal(NEGOTIATION_DATE)}.",
                      utc(-6, 10, 31)),
             ],
         },
@@ -131,8 +134,8 @@ def chats():
             "ChatMessages": [
                 _msg(1, TOMAS,
                      "Morning Marcus. Have you had a chance to look at Cognivault's contract? We'd like to sign "
-                     f"at the session with them on the {ordinal(NEGOTIATION)} so we can go live on the "
-                     f"{ordinal(GO_LIVE)}. Anything you need from me?",
+                     f"at the session with them on the {ordinal(NEGOTIATION_DATE)} so we can go live on the "
+                     f"{ordinal(GO_LIVE_DATE)}. Anything you need from me?",
                      utc(0, 8, 7)),
             ],
         },

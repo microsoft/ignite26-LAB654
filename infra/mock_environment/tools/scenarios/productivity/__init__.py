@@ -1,95 +1,86 @@
-"""Productivity scenario tenant seed data (Verdantis Aurora launch, vendor slip).
+"""Productivity scenario tenant seed data (sales pitch prep, Contoso Retail).
 
-Source: docs/scenarios/productivity/scenario.md
-(Ignite_Lab_Productivity_Module_Smartsheet_Notion_Intranet.docx).
+Source: docs/scenarios/productivity/scenario.md section 5. Salesforce data lives
+in the Test_Salesforce mock server, not here. This module seeds:
 
-The doc asks the M365 tenant for:
+- Riley's pre-pitch email to Marcus (Priya is not cc'd: she has no email history)
+- The pitch meeting (Fri Nov 20, 2026), busy blocks Nov 23-25 and out of office
+  Nov 26-27 (Thanksgiving), so "next week" slots look real during Ignite week
+- The recorded "Contoso Retail - Aurora pilot review" Teams meeting: a past event,
+  an onlinemeetings item and its .vtt transcript (replaces Zoom)
+- Test_Confluence pages in the "Verdantis Sales" space
 
-- Lab users: the launch lead, Sam (Retail Ops lead) and Riley (Contoso
-  Retail). The unnamed "Aurora core team" is not seeded.
-- Riley's email to the launch lead asking for the POS kit ETA (doc 6.1). The
-  doc gives only its gist; the wording here is authored.
-- Verdantis Hub intranet pages (doc 6.3), seeded as COEP intranetwebsite items
-  so the synced Enterprise Websites connector has content to ground on.
-
-Notion data is served by the mock MCP server, not the tenant.
-
-One lab account plays every domain, so the launch lead is Marcus Hollowell
-(defined by the legal module, which is already in the tenant) instead of the
-doc's Avery, and Zava becomes Verdantis. The doc's Jordan is renamed Riley so
-it doesn't clash with finance's Jordan.
-
-Dates: COEP rejects future timestamps, so the email and page stamps sit
-before STORY_DATE. Nothing in the tenant names a story date: the Notion mock
-computes those from the current week, and Riley's email refers only to "store
-staff training". Surnames, titles, decoy page paths and the page author
-identity are placeholders; see the README's assumptions.
-
-The Hub is served by our own mock site (mock_mcp_servers/verdantis_hub), not
-hub.verdantis.com, which belongs to an unrelated real company.
+Date rule: seeded evidence is dated on or before Fri Oct 30, 2026 (the tenant is
+ingested once, around Nov 1). Upcoming items are on or after Fri Nov 20, after
+the last lab day (Nov 19).
 """
 
 from __future__ import annotations
 
-import hashlib
 import uuid
-from datetime import date, datetime, time, timedelta, timezone
-from html import escape
-from zoneinfo import ZoneInfo
+from datetime import datetime, timezone
 
-from ..legal import MARCUS, TEAMS_ONLY
-from ..legal import _user as _verdantis_user
+from ..legal import ET, MARCUS, TEAMS_ONLY, _user
 
-STORY_DATE = date(2026, 10, 12)  # reference for seeded timestamps only; story dates are relative
-
-ET = ZoneInfo("America/New_York")  # Verdantis is in Stamford, CT
-
-SAM, RILEY = "spatel", "rblake"
-
-HUB = "https://mock-verdantis-hub.yellowsand-9530f5dc.eastus.azurecontainerapps.io"
-HUB_AUTHOR = ("Verdantis Hub Content Team", "hubcontent@verdantis.com")
+RILEY, KEN, PRIYA, LENA = "rblake", "kliu", "pnair", "lokafor"
 
 
-def utc(day_offset: int, hh: int, mm: int) -> str:
-    local = datetime.combine(STORY_DATE + timedelta(days=day_offset), time(hh, mm), tzinfo=ET)
+def at(month: int, day: int, hh: int, mm: int, year: int = 2026) -> str:
+    """Eastern wall-clock time as a UTC timestamp."""
+    local = datetime(year, month, day, hh, mm, tzinfo=ET)
     return local.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def ext_user(nick, first, last, title, dept, company, city, state):
+    """A user from another company. Tenant users so they can attend Teams meetings."""
+    return {
+        "MailNickName": nick,
+        "DisplayName": f"{first} {last}",
+        "FirstName": first,
+        "LastName": last,
+        "JobTitle": title,
+        "Department": dept,
+        "CompanyName": company,
+        "UsageLocation": "US",
+        "OfficeLocation": f"{city}, {state}",
+        "Licenses": TEAMS_ONLY,
+    }
+
+
+def contoso(nick, first, last, title, dept):
+    return ext_user(nick, first, last, title, dept, "Contoso Retail", "Minneapolis", "MN")
 
 
 def users():
     return [
-        _verdantis_user(SAM, "Sam", "Patel", "Retail Operations Lead", "Retail Operations", TEAMS_ONLY),
-        {
-            "MailNickName": RILEY,
-            "DisplayName": "Riley Blake",
-            "FirstName": "Riley",
-            "LastName": "Blake",
-            "JobTitle": "Partner Account Manager",
-            "Department": "Partner Operations",
-            "CompanyName": "Contoso Retail",
-            "UsageLocation": "US",
-            "Licenses": TEAMS_ONLY,
-        },
+        contoso(RILEY, "Riley", "Blake", "Director of Store Operations", "Store Operations"),
+        contoso(KEN, "Ken", "Liu", "IT Security Lead", "Information Technology"),
+        contoso(PRIYA, "Priya", "Nair", "Chief Financial Officer", "Finance"),
+        _user(LENA, "Lena", "Okafor", "Director of Retail Sales", "Sales", TEAMS_ONLY),
     ]
 
 
 RILEY_EMAIL = """<p>Hi Marcus,</p>
-<p>Quick check on the Verdantis Aurora POS kits for our stores. What's the current ETA for delivery to Contoso Retail?</p>
-<p>The stores need the complete kits (signage included) on site before our store staff training, so the teams can set up and train on the real displays.</p>
-<p>Can you confirm the dates, or let me know if anything has changed?</p>
-<p>Thanks,<br>Riley<br>Contoso Retail</p>"""
+<p>Quick heads-up before our expansion pitch on November 20.</p>
+<p>Our CFO, Priya Nair, will join the call. She wants to see the all-in cost of rolling Aurora out to all 400 stores, not just the per-hub price, so please come ready with that number.</p>
+<p>Ken Liu from IT has also asked for Verdantis' security documentation before anything goes to 400 stores. He'll want to walk through it with your team beforehand.</p>
+<p>The pilot stores have been happy so far. Looking forward to it.</p>
+<p>Thanks,<br>Riley</p>
+<p>Riley Blake<br>Director of Store Operations, Contoso Retail</p>"""
 
 
 def emails():
     return [
         {
-            "EmailId": "productivity-email-001",
+            "EmailId": "prod-email-001",
             "EmailAction": "Send",
             "Sender": RILEY,
             "ToRecipients": [{"Recipient": MARCUS}],
-            "Subject": "Aurora POS kits \u2013 ETA for our stores?",
+            "CcRecipients": [],
+            "Subject": "Aurora expansion pitch \u2013 Priya joining, security docs",
             "Body": RILEY_EMAIL,
             "BodyType": "html",
-            "Timestamp": utc(0, 7, 40),
+            "Timestamp": at(10, 28, 9, 40),
         }
     ]
 
@@ -98,316 +89,132 @@ def chats():
     return []
 
 
+PILOT_REVIEW_EVENT = "prod-event-pilot-review"
+
+
+def _event(eid, subject, start, end, body, attendees=(), show_as="busy", online=False):
+    e = {
+        "EventId": eid,
+        "Subject": subject,
+        "Body": body,
+        "StartDateTime": start,
+        "EndDateTime": end,
+        "Sender": MARCUS,
+        "TimeZone": "UTC",
+        "ShowAs": show_as,
+        "RequiredAttendees": [{"Email": a, "Operation": "Accepted"} for a in attendees],
+    }
+    if online:
+        e |= {"IsOnlineMeeting": True, "OnlineMeetingProvider": "teamsForBusiness"}
+    return e
+
+
 def events():
-    return []
+    return [
+        _event(
+            PILOT_REVIEW_EVENT,
+            "Contoso Retail \u2013 Aurora pilot review",
+            at(10, 22, 14, 0), at(10, 22, 14, 15),
+            "Review of the six-week, 50-store Aurora pilot with Contoso Retail and next steps toward the 400-store rollout.",
+            [RILEY, KEN], online=True,
+        ),
+        _event(
+            "prod-event-pitch",
+            "Contoso Retail \u2013 Aurora expansion pitch",
+            at(11, 20, 10, 0), at(11, 20, 11, 0),
+            "Aurora 400-store rollout proposal for Contoso Retail.<br>Attendees: Riley Blake (Director of Store Operations), "
+            "Priya Nair (CFO), Ken Liu (IT Security Lead).",
+            [RILEY, PRIYA, KEN], online=True,
+        ),
+        _event("prod-event-busy-1", "Q4 retail forecast review", at(11, 23, 9, 0), at(11, 23, 11, 0),
+               "Quarterly forecast review with the retail sales team.", [LENA], online=True),
+        _event("prod-event-busy-2", "Aurora launch event planning", at(11, 23, 14, 0), at(11, 23, 15, 30),
+               "Run-of-show for the Dec 8 Aurora launch event."),
+        _event("prod-event-busy-3", "Retail sales pipeline sync", at(11, 24, 10, 0), at(11, 24, 11, 0),
+               "Weekly pipeline review.", [LENA], online=True),
+        _event("prod-event-busy-4", "Partner enablement workshop", at(11, 24, 13, 0), at(11, 24, 16, 0),
+               "Aurora partner enablement session (in person)."),
+        _event("prod-event-busy-5", "1:1 with Lena", at(11, 25, 11, 0), at(11, 25, 11, 30),
+               "Weekly 1:1.", [LENA], online=True),
+        _event("prod-event-ooo", "Out of office \u2013 Thanksgiving", at(11, 26, 0, 0), at(11, 28, 0, 0),
+               "Out of office for Thanksgiving.", show_as="outOfOffice"),
+    ]
 
 
 def files():
     return []
 
 
-# --- Verdantis Hub intranet pages (COEP intranetwebsite) -------------------------
+# --- Recorded pilot review call (Teams meeting + transcript) -------------------
 
-def _page_html(crumbs, title, updated: date, body: str) -> str:
-    items = "".join(f'<li><a href="{HUB}{href}">{escape(name)}</a></li>' for name, href in crumbs)
-    nav = f'<nav aria-label="Breadcrumb"><ol><li><a href="{HUB}/">Home</a></li>{items}<li>{escape(title)}</li></ol></nav>'
-    stamp = f"<p><em>Last updated: {updated:%B} {updated.day}, {updated.year}</em></p>"
-    return f"{nav}\n<h1>{escape(title)}</h1>\n{stamp}\n{body.strip()}"
+TRANSCRIPT_FILE = "transcripts/contoso-pilot-review.vtt"
 
-
-PAGES = [
-    {
-        "path": "/retail/launch-playbook",
-        "crumbs": [("Retail", "/retail")],
-        "title": "Retail Partner Launch Playbook",
-        "description": (
-            "The current rules every Verdantis launch team follows when shipping launch materials to retail partner stores. "
-            "It covers POS kit timing against store staff training, when split shipments are allowed and who approves them, "
-            "and how quickly partners must hear about changes."
-        ),
-        "keywords": ["Retail", "Launch", "POS kits", "Partners", "Split shipments"],
-        "created": -220,
-        "modified": -27,
-        "body": """
-<p>This playbook applies to every Verdantis product launch that ships point-of-sale (POS) kits, signage or other launch materials to retail partner stores. It replaces the <a href="/retail/launch-playbook-2025">2025 playbook</a>, which is archived and no longer in force.</p>
-<h2>Who this is for</h2>
-<p>Launch program managers, Retail Operations, and anyone who commits dates to a retail partner. If you are unsure whether a rule applies, ask Retail Operations before you promise anything to a partner.</p>
-<h2>POS kit timing</h2>
-<p>Every POS kit wave must be in partner stores at least <strong>3 days before store staff training</strong>. A wave counts as delivered only when everything planned for that wave, including signage, is on site at the partner's stores.</p>
-<table><thead><tr><th>Milestone</th><th>Rule</th></tr></thead><tbody>
-<tr><td>Store staff training</td><td>Date agreed with the partner; treat it as fixed once confirmed.</td></tr>
-<tr><td>Each POS kit wave in stores</td><td>At least 3 days before store staff training.</td></tr>
-<tr><td>Partner informed of any change</td><td>Within 1 business day of the change.</td></tr>
-</tbody></table>
-<h2>Split shipments</h2>
-<p>Split shipments are allowed with approval from the Retail Ops lead (Sam Patel). Each split must be logged in the Launch Decision Log before it ships, with the reason, the waves and their dates. Every wave still has to meet the 3-day rule.</p>
-<blockquote><strong>Note:</strong> A split shipment is a change to a partner commitment, so the partner must also be told within 1 business day.</blockquote>
-<h2>Changes to partner commitments</h2>
-<p>Any change to a date or deliverable promised to a partner must be communicated to the partner within <strong>1 business day</strong>, following the <a href="/comms/partner-updates">Partner Communication Guidelines</a>. Copy Retail Operations on the update.</p>
-<h2>Vendors</h2>
-<p>Print and signage must come from an approved vendor. See <a href="/procurement/approved-vendors/print">Approved Vendors – Print</a> for the primary and backup vendors and their rush terms.</p>
-<h2>Frequently asked questions</h2>
-<dl>
-<dt>Can we ship kits without signage and send the signage later?</dt><dd>Only as an approved split shipment, and only if every wave, including the signage wave, is in stores at least 3 days before staff training.</dd>
-<dt>Who approves a split shipment?</dt><dd>The Retail Ops lead, Sam Patel.</dd>
-<dt>Where do decisions get recorded?</dt><dd>In the Launch Decision Log for the launch.</dd>
-</dl>
-<h2>Contacts</h2>
-<p>Retail Operations: Sam Patel, Retail Operations Lead.</p>
-""",
-    },
-    {
-        "path": "/procurement/approved-vendors/print",
-        "crumbs": [("Procurement", "/procurement"), ("Approved Vendors", "/procurement/approved-vendors")],
-        "title": "Approved Vendors \u2013 Print",
-        "description": (
-            "The approved print vendors for brochures, in-store signage and other retail collateral. "
-            "It names the primary and backup vendors, the backup vendor's rush turnaround and surcharge, "
-            "and when Procurement approval is needed."
-        ),
-        "keywords": ["Procurement", "Vendors", "Print", "Signage", "Brochures"],
-        "created": -300,
-        "modified": -60,
-        "body": """
-<p>Use only the vendors on this page for printed launch materials: brochures, in-store signage, shelf talkers and packaging inserts. Using an unapproved vendor requires an exception from Procurement.</p>
-<h2>Approved print vendors</h2>
-<table><thead><tr><th>Vendor</th><th>Role</th><th>Terms</th></tr></thead><tbody>
-<tr><td>Northwind Print</td><td>Primary</td><td>Standard production schedule per purchase order.</td></tr>
-<tr><td>Litware Print</td><td>Backup</td><td>3-business-day rush available, +15% surcharge. Procurement approval is needed for a PO change.</td></tr>
-</tbody></table>
-<h2>When to use the backup vendor</h2>
-<p>Use the primary vendor unless it cannot meet a committed date. Before switching, check whether the primary vendor can split or expedite the order, because switching vendors needs a PO change and adds the rush surcharge.</p>
-<h2>How to request a PO change</h2>
-<ol>
-<li>Confirm the quantities, artwork files and delivery addresses with the launch team.</li>
-<li>Get a written quote and delivery date from the vendor.</li>
-<li>Submit the PO change to Procurement with the reason and the quote. Procurement approves or rejects it.</li>
-<li>Record the change in the launch's decision log.</li>
-</ol>
-<blockquote><strong>Tip:</strong> Rush turnaround is counted in business days from approved artwork, not from the PO change request.</blockquote>
-<h2>Quality and delivery</h2>
-<p>All vendors ship to the addresses on the PO and provide tracking. Report damaged or incorrect deliveries to Procurement within 2 business days so the vendor can reprint.</p>
-<h2>Contacts</h2>
-<p>Procurement: procurement@verdantis.com. Include the launch name and PO number in the subject line.</p>
-""",
-    },
-    {
-        "path": "/comms/partner-updates",
-        "crumbs": [("Communications", "/comms")],
-        "title": "Partner Communication Guidelines",
-        "description": (
-            "How to write updates to retail partners when plans change. It sets out the five-part structure every partner "
-            "update should follow, the 1-business-day timing rule, and tone and review tips so partners get clear, actionable messages."
-        ),
-        "keywords": ["Communications", "Partners", "Updates", "Email"],
-        "created": -250,
-        "modified": -45,
-        "body": """
-<p>Partners plan their stores, staff and promotions around the dates we give them. When something changes, they need to hear it from us quickly and clearly. These guidelines apply to email and chat updates sent to any retail partner.</p>
-<h2>Timing</h2>
-<p>Send the update within <strong>1 business day</strong> of the change, even if some details are still being confirmed. Say what is still open and when you will follow up.</p>
-<h2>Structure</h2>
-<p>Every partner update uses these five parts, in this order:</p>
-<ol>
-<li><strong>What changed</strong>: one or two sentences, in plain language.</li>
-<li><strong>Impact on you</strong>: what it means for the partner's stores and teams.</li>
-<li><strong>New dates</strong>: the revised dates, listed clearly.</li>
-<li><strong>What we need from you</strong>: any action or confirmation, with a deadline.</li>
-<li><strong>Contact</strong>: who to reach with questions.</li>
-</ol>
-<h2>Tone</h2>
-<ul>
-<li>Lead with the facts; don't bury the change under background.</li>
-<li>Take ownership. Don't blame a vendor or another team by name.</li>
-<li>Be specific: dates, quantities and locations, not "soon" or "shortly".</li>
-<li>Keep it short. Link to details rather than pasting them.</li>
-</ul>
-<h2>Who to include</h2>
-<p>Send to the partner's main contact and copy the internal launch core team. For changes to POS kits or signage, also copy Retail Operations.</p>
-<h2>Example subject lines</h2>
-<ul>
-<li>"Updated delivery dates for launch materials"</li>
-<li>"Change to your POS kit shipment"</li>
-</ul>
-<blockquote><strong>Note:</strong> If the change needs an internal approval, say so and give the date you expect a decision.</blockquote>
-<h2>Before you send</h2>
-<p>Check the dates against the launch tracker, make sure every action you ask of the partner has a deadline, and have a second person on the launch team read the update if it changes a store-facing date.</p>
-""",
-    },
-    {
-        "path": "/retail/launch-playbook-2025",
-        "crumbs": [("Retail", "/retail"), ("Archive", "/retail/archive")],
-        "title": "Retail Partner Launch Playbook (2025, archived)",
-        "description": (
-            "The archived 2025 version of the retail partner launch playbook, kept for reference only. "
-            "It has been superseded by the current Retail Partner Launch Playbook, and its timing and shipment rules "
-            "no longer apply to current launches."
-        ),
-        "keywords": ["Retail", "Launch", "Archive", "2025"],
-        "created": -650,
-        "modified": -400,
-        "body": """
-<blockquote><strong>Archived.</strong> This page is superseded by the current <a href="/retail/launch-playbook">Retail Partner Launch Playbook</a> and is kept for reference only. Do not use these rules for current launches.</blockquote>
-<p>This playbook applied to Verdantis product launches in 2025 that shipped launch materials to retail partner stores.</p>
-<h2>POS kit timing</h2>
-<p>POS kits must arrive in partner stores at least <strong>5 days</strong> before store staff training.</p>
-<h2>Split shipments</h2>
-<p>Split shipments are not permitted. Each partner receives one complete POS kit shipment.</p>
-<h2>Changes to partner commitments</h2>
-<p>Changes must be communicated to the partner within 2 business days by the launch program manager.</p>
-<h2>Vendors</h2>
-<p>All printed materials were produced by Northwind Print under the 2025 master agreement.</p>
-<h2>Checklist</h2>
-<ul>
-<li>Confirm training dates with each partner at least 6 weeks before launch.</li>
-<li>Lock artwork 4 weeks before the kit ship date.</li>
-<li>Confirm delivery addresses with partner store operations.</li>
-<li>Send tracking details to each partner when kits ship.</li>
-</ul>
-<h2>Frequently asked questions</h2>
-<dl>
-<dt>Can we ship signage separately?</dt><dd>No. Under this playbook, kits ship complete or not at all.</dd>
-<dt>Who signs off on kit contents?</dt><dd>The launch program manager.</dd>
-</dl>
-<p>For current rules, including the 3-day timing rule and approved split shipments, see the <a href="/retail/launch-playbook">current playbook</a>.</p>
-<h2>Why this was replaced</h2>
-<p>The 2025 rules proved too rigid when vendors slipped. The current playbook shortens the lead time and allows approved split shipments with a logged decision.</p>
-""",
-    },
-    {
-        "path": "/customer-service/holiday-returns",
-        "crumbs": [("Customer Service", "/customer-service")],
-        "title": "Holiday Returns Policy",
-        "description": (
-            "The extended return window for Verdantis products bought during the holiday season. "
-            "It explains which purchases qualify, the return deadline, the condition products must be in, "
-            "and how store and online customers return items."
-        ),
-        "keywords": ["Customer Service", "Returns", "Holiday"],
-        "created": -380,
-        "modified": -30,
-        "body": """
-<p>To make holiday gifting easier, Verdantis extends the standard 30-day return window for purchases made during the holiday season. This policy applies to Verdantis products bought directly from Verdantis and from participating retail partners.</p>
-<h2>Eligible purchases</h2>
-<p>Products bought between <strong>November 1 and December 31</strong> can be returned until <strong>January 31</strong> of the following year with proof of purchase.</p>
-<h2>Condition of returned products</h2>
-<ul>
-<li>Opened devices must include all accessories, cables and packaging.</li>
-<li>Devices must be reset to factory settings and removed from the customer's Verdantis account.</li>
-<li>Products with physical damage not caused by a defect are not eligible.</li>
-</ul>
-<h2>How to return</h2>
-<table><thead><tr><th>Bought from</th><th>Return to</th></tr></thead><tbody>
-<tr><td>Verdantis online store</td><td>Start a return from the order page; a prepaid label is emailed.</td></tr>
-<tr><td>Retail partner</td><td>The partner store where it was bought, under the partner's process.</td></tr>
-</tbody></table>
-<h2>Refunds</h2>
-<p>Refunds go back to the original payment method within 10 business days of receiving the return. Gift receipts are refunded as store credit.</p>
-<h2>Frequently asked questions</h2>
-<dl>
-<dt>Does this extend the warranty?</dt><dd>No. The product warranty is unchanged.</dd>
-<dt>Can a customer exchange instead of return?</dt><dd>Yes, for the same product in a different color, subject to stock.</dd>
-</dl>
-<p>Questions: contact Customer Service through the support portal.</p>
-<h2>For store and support staff</h2>
-<p>Check the purchase date on the receipt or order before accepting a return under this policy. Outside the holiday window, the standard 30-day return policy applies.</p>
-""",
-    },
-    {
-        "path": "/products/verdantis-lumen/launch-faq",
-        "crumbs": [("Products", "/products"), ("Verdantis Lumen", "/products/verdantis-lumen")],
-        "title": "Verdantis Lumen Launch FAQ",
-        "description": (
-            "Frequently asked questions about the Verdantis Lumen smart lighting launch for internal teams. "
-            "It covers who owns the launch, where its tracker and materials live, and how to raise questions. "
-            "It does not cover the Verdantis Aurora launch."
-        ),
-        "keywords": ["Verdantis Lumen", "Launch", "FAQ"],
-        "created": -120,
-        "modified": -20,
-        "body": """
-<p>Verdantis Lumen is our smart lighting line. This FAQ answers common internal questions about its launch. For other launches, check that product's own pages.</p>
-<h2>Who owns the Verdantis Lumen launch?</h2>
-<p>The Lumen launch team in Product Marketing owns the launch plan, partner communication and launch event.</p>
-<h2>Where is the launch tracker?</h2>
-<p>In Notion, under "Verdantis Lumen Launch Tracker". Ask the Lumen launch team for access.</p>
-<h2>Which retail partners are carrying Lumen?</h2>
-<p>Lumen launches online first. Retail partners will be confirmed later; until then, don't commit dates or materials to any partner.</p>
-<h2>Are there POS kits for Lumen?</h2>
-<p>Not for the online launch. If retail is added, POS kits will follow the current <a href="/retail/launch-playbook">Retail Partner Launch Playbook</a>.</p>
-<h2>Where are the product images and messaging?</h2>
-<p>In the Lumen brand folder, linked from the launch tracker. Use only approved assets.</p>
-<h2>Who do I ask about pricing?</h2>
-<p>The Commercial team. Don't share pricing outside Verdantis before the launch date.</p>
-<h2>How do I raise a question that isn't answered here?</h2>
-<p>Post it in the Lumen launch channel, or contact the Lumen launch team directly. We update this FAQ weekly during the launch period.</p>
-<h2>Is there a launch event?</h2>
-<p>An online launch stream is planned. Details will be posted here when confirmed.</p>
-<h2>Can I share Lumen details with partners or press?</h2>
-<p>Not yet. All external communication about Lumen goes through the Lumen launch team and PR until the launch date.</p>
-<h2>Where do Lumen launch decisions get recorded?</h2>
-<p>In the Lumen launch team's own decision log, linked from the Lumen launch tracker.</p>
-""",
-    },
-    {
-        "path": "/finance/travel-expense-policy",
-        "crumbs": [("Finance", "/finance")],
-        "title": "Travel & Expense Policy",
-        "description": (
-            "The rules for booking business travel and claiming business expenses at Verdantis. "
-            "It covers booking channels, approval requirements, travel classes, meals and lodging limits, "
-            "and the deadline and receipts needed to submit an expense claim."
-        ),
-        "keywords": ["Finance", "Travel", "Expenses"],
-        "created": -500,
-        "modified": -90,
-        "body": """
-<p>This policy applies to all Verdantis employees and contractors who travel or spend money on Verdantis's behalf. It helps you spend responsibly and get reimbursed quickly.</p>
-<h2>Booking travel</h2>
-<ul>
-<li>Book flights, hotels and rental cars through the corporate travel tool.</li>
-<li>Get manager approval before booking any trip.</li>
-<li>International travel also needs approval from your department head.</li>
-</ul>
-<h2>Travel class</h2>
-<table><thead><tr><th>Trip</th><th>Class</th></tr></thead><tbody>
-<tr><td>Flights under 6 hours</td><td>Economy</td></tr>
-<tr><td>Flights of 6 hours or more</td><td>Premium economy</td></tr>
-<tr><td>Rail</td><td>Standard class</td></tr>
-</tbody></table>
-<h2>Lodging and meals</h2>
-<p>Use hotels from the corporate travel tool where available. Meal costs should be reasonable for the location; alcohol is not reimbursed except at approved client events.</p>
-<h2>Submitting expenses</h2>
-<p>Submit expense claims within <strong>30 days</strong> with itemized receipts. Claims older than 90 days are not reimbursed without Finance approval.</p>
-<h2>Non-reimbursable expenses</h2>
-<ul>
-<li>Personal entertainment and upgrades you choose for yourself.</li>
-<li>Traffic and parking fines.</li>
-<li>Expenses for people who aren't on Verdantis business.</li>
-</ul>
-<h2>Frequently asked questions</h2>
-<dl>
-<dt>What if I lose a receipt?</dt><dd>Submit a missing-receipt declaration with the claim. Repeated missing receipts are reviewed by Finance.</dd>
-<dt>Who approves my expense claim?</dt><dd>Your manager, then Finance for amounts over the department limit.</dd>
-<dt>Can I book travel outside the travel tool?</dt><dd>Only if the tool has no suitable option. Keep the booking confirmation and note the reason on your claim.</dd>
-</dl>
-""",
-    },
+_CUES = [
+    ("Marcus Hollowell", "Thanks for making time, Riley, Ken. I'd like to walk through how the pilot went and talk about what the full rollout could look like."),
+    ("Riley Blake", "Sure. Overall the stores have been really positive. Staff picked it up faster than we expected."),
+    ("Marcus Hollowell", "Good to hear. On our side, the headline number is attach rate. Across the 50 pilot stores we're seeing a 9% attach-rate lift on smart-home bundles compared with the control stores."),
+    ("Riley Blake", "That matches what our store managers are telling me. The demo stations especially are pulling people in."),
+    ("Marcus Hollowell", "So the proposal for next month is to take Aurora to all 400 stores ahead of the holiday season."),
+    ("Riley Blake", "That's where I need to be straight with you. We've had Fabrikam Home in as well, and they quoted about 20% under your list price."),
+    ("Riley Blake", "If you can get close to that we could sign this quarter. I'd rather stay with Aurora, the pilot has gone well, but price is going to come up."),
+    ("Marcus Hollowell", "Understood. Is that 20% on the hub alone, or does it include install and support?"),
+    ("Riley Blake", "Honestly I'm not sure. I've only seen the per-store number."),
+    ("Riley Blake", "And Priya will want the all-in cost. She's joining the pitch, and she'll look at the total for 400 stores, not the sticker price."),
+    ("Marcus Hollowell", "That's helpful. I'll bring an all-in, per-store and total view for Priya."),
+    ("Ken Liu", "From the IT side, one thing before we go any further. We need a security review before the 400-store rollout. The pilot was a small footprint, so we let it through on a lighter check."),
+    ("Ken Liu", "For 400 stores I need to see your security documentation, where the data is stored, and confirm nothing captures customer PII in store."),
+    ("Marcus Hollowell", "Absolutely. We have a security and compliance FAQ, and I can set up a session with our team to walk through it with you."),
+    ("Ken Liu", "That works. As long as it happens before anything is signed for the full rollout."),
+    ("Riley Blake", "One more thing from the stores: the reconnect issue we saw a couple of times. I'll send details separately, but it's not a blocker for this conversation."),
+    ("Marcus Hollowell", "Noted. So next steps: I'll set up the security review with Ken, and I'll come to the pitch with the all-in cost for Priya."),
+    ("Riley Blake", "Sounds good. Thanks, Marcus."),
+    ("Ken Liu", "Thanks."),
 ]
 
 
-def _performer():
-    name, email = HUB_AUTHOR
-    return {
-        "ExternalId": str(uuid.uuid5(uuid.NAMESPACE_URL, f"mailto:{email}")),
-        "Email": email,
-        "ExternalName": name,
-        "PrincipalType": "user",
-        "id": email,
-        "identitySourceProperties": {"email": email},
-        "identitySource": "azureActiveDirectory",
-    }
+def _ts(seconds: int) -> str:
+    return f"{seconds // 3600:02d}:{seconds % 3600 // 60:02d}:{seconds % 60:02d}.000"
 
+
+def transcripts():
+    """{package-relative path: WebVTT text} for the onlinemeetings transcripts."""
+    blocks, t = ["WEBVTT"], 4
+    for i, (speaker, text) in enumerate(_CUES, 1):
+        dur = max(8, len(text) // 6)
+        blocks.append(f"{i}\n{_ts(t)} --> {_ts(t + dur)}\n<v {speaker}>{text}</v>")
+        t += dur + 25  # pauses: the call runs about 10 minutes
+    return {TRANSCRIPT_FILE: "\n\n".join(blocks) + "\n"}
+
+
+def onlinemeetings():
+    return [
+        {
+            "OnlineMeetingId": "prod-meeting-pilot-review",
+            "OnlineMeetingType": "Event",
+            "EventId": PILOT_REVIEW_EVENT,
+            "StartDateTime": at(10, 22, 14, 0),
+            "EndDateTime": at(10, 22, 14, 15),
+            "Owner": MARCUS,
+            "Participants": [MARCUS, RILEY, KEN],
+            "Transcripts": [{"LanguageTag": "en", "TranscriptFile": TRANSCRIPT_FILE}],
+        }
+    ]
+
+
+# --- Test_Confluence (space "Verdantis Sales") -------------------------------
+
+SITE = "https://verdantis.atlassian.net"
+SPACE = {
+    "SpaceName": "Verdantis Sales",
+    "SpaceKey": "VSALES",
+    "SpaceId": "884213307",
+    "SpaceURL": f"{SITE}/wiki/rest/api/space/VSALES",
+    "SpaceDescription": "Verdantis retail sales playbooks: pricing and discount policy, competitive battlecards, "
+                        "security and compliance answers for customers, and customer case studies.",
+    "SpaceStatus": "current",
+    "SpaceType": "global",
+    "SpaceLabels": ["sales", "retail", "aurora", "pricing", "enablement"],
+}
 
 EVERYONE_ACL = {
     "principal": {
@@ -426,67 +233,152 @@ EVERYONE_ACL = {
 }
 
 
-def _intranet_item(i: int, p: dict) -> dict:
-    url = HUB + p["path"]
-    created, modified = utc(p["created"], 10, 0), utc(p["modified"], 14, 30)
-    updated = STORY_DATE + timedelta(days=p["modified"])
+def _person(name: str, email: str) -> dict:
     return {
-        "id": hashlib.sha512(url.encode("utf-16-le")).hexdigest().upper(),
-        "displayName": url,
-        "contentDomainCategoryName": "knowledgeBase",
-        "accessControlList": [EVERYONE_ACL],
-        "activityList": [
-            {"ActivityType": "created", "ActivityPerformer": _performer(), "ActivityDateTime": created, "id": f"activity-hub{i:02d}-created"},
-            {"ActivityType": "modified", "ActivityPerformer": _performer(), "ActivityDateTime": modified, "id": f"activity-hub{i:02d}-1"},
-        ],
-        "isContainer": False,
-        "containerId": None,
-        "itemVersion": None,
-        "skipAssociatedItems": False,
-        "isAssociatedItem": False,
-        "UniversalAccessControlBlock": None,
-        "contentEnrichmentData": None,
-        "associatedItemsMetadata": None,
-        "shouldHashId": False,
-        "hashedId": None,
-        "dataSourceResponse": None,
-        "content": {
-            "parsedData": _page_html(p["crumbs"], p["title"], updated, p["body"]),
-            "type": "html",
-            "annotation": None,
-            "semanticContent": None,
-        },
-        "properties": {
-            "FileType": "html",
-            "URL": url,
-            "Title": p["title"],
-            "IconUrl": "/assets/icons/verdantis-hub.svg",
-            "Keywords": p["keywords"],
-            "Authors": [HUB_AUTHOR[0]],
-            "LastModifiedBy": HUB_AUTHOR[0],
-            "CreatedDateTime": created,
-            "LastModifiedDateTime": modified,
-            "Description": p["description"],
-        },
+        "ExternalId": str(uuid.uuid5(uuid.NAMESPACE_URL, f"mailto:{email}")),
+        "Email": email,
+        "ExternalName": name,
+        "PrincipalType": "user",
+        "id": email,
     }
 
 
-def hub_pages():
-    """Page data for the hosted Verdantis Hub site (verdantis_hub/export_pages.py)."""
-    out = []
-    for p in PAGES:
-        updated = STORY_DATE + timedelta(days=p["modified"])
-        out.append({
-            "path": p["path"],
-            "title": p["title"],
-            "crumbs": [[name, href] for name, href in p["crumbs"]],
-            "description": p["description"],
-            "keywords": p["keywords"],
-            "updated": updated.isoformat(),
-            "html": _page_html(p["crumbs"], p["title"], updated, p["body"]),
-        })
-    return out
+P_LENA = ("Lena Okafor", "lokafor@verdantis.com")
+P_DEALDESK = ("Owen Pritchard", "opritchard@verdantis.com")
+P_SECURITY = ("Hana Moriyama", "hmoriyama@verdantis.com")
+P_MARKETING = ("Grace Adeyemi", "gadeyemi@verdantis.com")
+
+PRICING_POLICY = """<h1>Aurora Retail Pricing &amp; Discount Policy</h1>
+<p><strong>Status:</strong> Current. Effective for all Aurora retail deals from September 1, 2026. Supersedes the 2025 Aurora retail pricing policy (archived).</p>
+<h2>List price</h2>
+<p>Aurora retail list price is <strong>$3,000 per store</strong>. This includes the in-store Aurora hub kit and 3-year support.</p>
+<h2>Volume discounts and approvals</h2>
+<table>
+<tr><th>Discount off list</th><th>Eligibility</th><th>Approval</th></tr>
+<tr><td>Up to 12%</td><td>250+ stores</td><td>None required</td></tr>
+<tr><td>Over 12% and up to 15%</td><td>250+ stores</td><td>Lena Okafor, Director of Retail Sales</td></tr>
+<tr><td>Over 15%</td><td>Any</td><td>VP Sales and Deal Desk</td></tr>
+</table>
+<p>Do not quote a discount that needs approval until it has been approved.</p>
+<h2>Value-add items</h2>
+<p>In-store installation and staff training are normally <strong>$300 per store</strong>. They can be bundled at no charge as value-add on deals of 250+ stores. Value-add items <strong>do not count as discount</strong> toward the tiers above.</p>
+<h2>Worked example</h2>
+<p>400 stores at 12% off: $2,640 per store, about <strong>$1.06M</strong> total, with installation and training bundled as value-add.</p>"""
+
+BATTLECARD = """<h1>Competitive Battlecard: Fabrikam Home</h1>
+<h2>Positioning</h2>
+<p>Fabrikam Home leads with a low sticker price: about <strong>$2,400 per store</strong>, roughly 20% under Aurora's $3,000 list. The sticker price <strong>excludes</strong> installation and 3-year support, which Aurora includes or bundles.</p>
+<h2>All-in cost per store (3 years)</h2>
+<table>
+<tr><th>Item</th><th>Fabrikam Home</th><th>Verdantis Aurora (12% volume discount)</th></tr>
+<tr><td>Hub kit</td><td>$2,400</td><td>$2,640 (includes 3-year support)</td></tr>
+<tr><td>In-store installation</td><td>about $350</td><td>Included (value-add)</td></tr>
+<tr><td>3-year support</td><td>about $500</td><td>Included</td></tr>
+<tr><td><strong>All-in per store</strong></td><td><strong>about $3,250</strong></td><td><strong>$2,640</strong></td></tr>
+</table>
+<p>For 400 stores, Aurora at 12% is about $1.06M all-in.</p>
+<h2>How to win</h2>
+<ul>
+<li><strong>Don't lead with discount.</strong> Lead with all-in cost (TCO) and pilot results.</li>
+<li>Bundle installation and staff training as value-add instead of going past the 12% tier.</li>
+<li>Bring finance stakeholders the per-store and total all-in numbers.</li>
+</ul>"""
+
+SECURITY_FAQ = """<h1>Aurora Security &amp; Compliance FAQ</h1>
+<h2>Certifications</h2>
+<p>The Aurora cloud service is <strong>SOC 2 Type II</strong> certified. The current report is available to customers under NDA.</p>
+<h2>Where is data stored?</h2>
+<p>Aurora supports <strong>regional data residency</strong>. US customers' device and store data is stored in US data centers.</p>
+<h2>Does Aurora capture customer data in store?</h2>
+<p>No. Aurora hubs have <strong>no in-store cameras</strong> and do not collect shopper <strong>PII</strong>. Hubs report device status and anonymous demo-station usage only.</p>
+<h2>Security review</h2>
+<p>For rollouts over 100 stores, Verdantis offers a security review session with the customer's IT security team covering this FAQ, data residency and the rollout plan.</p>"""
+
+CASE_STUDY = """<h1>Case Study: Wide World Importers 320-store rollout</h1>
+<h2>Summary</h2>
+<p>Wide World Importers rolled Aurora out to 320 stores after a 40-store pilot. Fabrikam Home was also shortlisted.</p>
+<h2>Timeline</h2>
+<ul>
+<li>Pilot: 40 stores, 6 weeks</li>
+<li>Security review with WWI IT: 2 weeks before signature</li>
+<li>Rollout: 320 stores in 10 weeks, in three regional waves</li>
+</ul>
+<h2>Outcome</h2>
+<p>Verdantis won on all-in cost: a 12% volume discount with installation and staff training bundled as value-add, and no discount above 12%. WWI reported higher smart-home bundle attach rates in rollout stores in the first quarter after launch.</p>"""
+
+ARCHIVED_PRICING = """<h1>Aurora Retail Pricing Policy (2025)</h1>
+<p><strong>ARCHIVED.</strong> Superseded by the current Aurora Retail Pricing &amp; Discount Policy. Do not use for new deals.</p>
+<p>List price $3,200 per store. Volume discounts up to 18% at 200+ stores with regional sales manager approval.</p>"""
+
+ONBOARDING = """<h1>Aurora Retail Partner Onboarding Checklist</h1>
+<ul>
+<li>Sign partner agreement and data processing addendum</li>
+<li>Schedule store-staff training sessions</li>
+<li>Confirm demo-station placement per store layout</li>
+<li>Set up the partner dashboard accounts</li>
+</ul>"""
+
+QBR = """<h1>Retail Sales QBR Template</h1>
+<p>Use this template for quarterly business reviews with retail partners: pipeline, wins and losses, pilot results, next-quarter plan and asks.</p>"""
+
+PAGES = [
+    # (id, title, html, labels, created, updated, author, editor, status, likes)
+    ("884213411", "Aurora Retail Pricing & Discount Policy", PRICING_POLICY, ["pricing", "discount-policy", "aurora"],
+     at(8, 24, 10, 5), at(9, 1, 9, 30), P_LENA, P_DEALDESK, "current", 14),
+    ("884213452", "Competitive Battlecard: Fabrikam Home", BATTLECARD, ["battlecard", "competitive", "fabrikam"],
+     at(9, 8, 11, 20), at(10, 14, 16, 45), P_MARKETING, P_LENA, "current", 22),
+    ("884213487", "Aurora Security & Compliance FAQ", SECURITY_FAQ, ["security", "compliance", "faq"],
+     at(7, 15, 13, 0), at(10, 6, 10, 10), P_SECURITY, P_SECURITY, "current", 9),
+    ("884213523", "Case Study: Wide World Importers 320-store rollout", CASE_STUDY, ["case-study", "aurora"],
+     at(9, 29, 15, 40), at(9, 30, 9, 15), P_MARKETING, P_MARKETING, "current", 11),
+    ("884212190", "Aurora Retail Pricing Policy (2025)", ARCHIVED_PRICING, ["pricing", "archived"],
+     at(1, 12, 9, 0, year=2025), at(9, 1, 9, 35), P_DEALDESK, P_DEALDESK, "archived", 3),
+    ("884213566", "Aurora Retail Partner Onboarding Checklist", ONBOARDING, ["onboarding", "partners"],
+     at(6, 3, 14, 0), at(8, 19, 11, 0), P_LENA, P_LENA, "current", 5),
+    ("884213598", "Retail Sales QBR Template", QBR, ["template", "qbr"],
+     at(5, 11, 10, 30), at(5, 11, 10, 30), P_LENA, P_LENA, "current", 2),
+]
 
 
-def intranetpages():
-    return [_intranet_item(i, p) for i, p in enumerate(PAGES, 1)]
+def _confluence_item(pid, title, html, labels, created, updated, author, editor, status, likes):
+    slug = "+".join(title.replace("&", "%26").replace(":", "").split())
+    authors = [_person(*author)] + ([_person(*editor)] if editor != author else [])
+    return {
+        "id": pid,
+        "displayName": pid,
+        "contentDomainCategoryName": "wikis",
+        "isContainer": False,
+        "containerId": None,
+        "UniversalAccessControlBlock": None,
+        "activityList": None,
+        "contentEnrichmentData": None,
+        "associatedItemsMetadata": None,
+        "itemVersion": None,
+        "isAssociatedItem": False,
+        "accessControlList": [EVERYONE_ACL],
+        "properties": {
+            "Id": pid,
+            "Title": title,
+            "Url": f"{SITE}/wiki/spaces/{SPACE['SpaceKey']}/pages/{pid}/{slug}",
+            "Type": "page",
+            "Status": status,
+            "PageTree": SPACE["SpaceName"],
+            "ItemPath": f"/{SPACE['SpaceName']}",
+            "Labels": labels,
+            "Likes": likes,
+            "IconUrl": f"{SITE}/wiki/download/thumbnails/{SPACE['SpaceId']}/space-icon.png",
+            **SPACE,
+            "CreatedOn": created,
+            "CreatedByEmail": author[1],
+            "CreatedByName": _person(*author),
+            "UpdatedOn": updated,
+            "UpdatedByEmail": editor[1],
+            "UpdatedByName": _person(*editor),
+            "Authors": authors,
+        },
+        "content": {"parsedData": html, "type": "html", "annotation": None, "semanticContent": None},
+    }
+
+
+def confluencepages():
+    return [_confluence_item(*p) for p in PAGES]

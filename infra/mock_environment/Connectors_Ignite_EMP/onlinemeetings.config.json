@@ -1,0 +1,21 @@
+[
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "mhollowell",
+    "Participants": [
+      "mhollowell",
+      "rblake",
+      "kliu"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/contoso-pilot-review.vtt"
+      }
+    ]
+  }
+]

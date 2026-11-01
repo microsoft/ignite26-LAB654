@@ -1,16 +1,20 @@
-"""Move the legal scenario to a new lab date.
+"""Move the legal scenario to new dates.
 
-The legal story is pinned to a Monday "lab date" (LAB_DATE in __init__.py in
-this folder). The email, chats, iManage documents and scenario docs all
-mention dates relative to it, and COEP rejects seed items dated in the future.
-This script rewrites every one of those dates in place so the story keeps the
-same shape around a new Monday:
+The legal story has two anchors (in __init__.py in this folder):
+- LAB_DATE, the Monday of Tomás's trigger chat. The email, the group chat and
+  the date the contract arrived all come before it. COEP rejects seed items
+  dated in the future, so it must be before the tenant is ingested.
+- NEGOTIATION_DATE, a Thursday, with go-live / contract effective date three
+  days later. These are still to come in the story, so they must be after the
+  last lab day.
+The email, chats, iManage documents and scenario docs all mention these dates.
+This script rewrites every one of them in place:
 
-    python infra/mock_environment/tools/scenarios/legal/redate.py --lab-date 2026-10-12
+    python infra/mock_environment/tools/scenarios/legal/redate.py --lab-date 2026-10-26 --negotiation-date 2026-12-10
 
 Rules:
-- Dates before the contract effective date (lab date + 6) move by the same
-  number of days, so weekdays are kept.
+- Dates before the old negotiation move by the same number of days as the lab
+  date, so weekdays are kept. The negotiation moves to the new negotiation date.
 - Dates on or after the effective date keep their monthly position relative
   to it (anniversaries and quarterly payments stay on the same schedule):
   Nov 14, 2031 with effective date Nov 15, 2026 becomes the day before the
@@ -18,7 +22,7 @@ Rules:
 - Dates without a year are taken to be within (lab date - 2 months, lab date
   + 10 months).
 - Ordinals in the Markdown docs ("the 12th") are moved only for the lab date,
-  the negotiation (lab date + 3) and go-live (lab date + 6).
+  the negotiation and go-live.
 
 Afterwards run build_tenant.py to regenerate the tenant JSON.
 """
@@ -48,9 +52,9 @@ TEXT_FILES = [
 MARKDOWN_FILES = [
     REPO_ROOT / "docs" / "scenarios" / "legal" / "scenario.md",
     REPO_ROOT / "docs" / "scenarios" / "legal" / "seed_kit.md",
+    REPO_ROOT / "instructions" / "04-legal.md",
 ]
-GO_LIVE_OFFSET = 6
-STORY_OFFSETS = (0, 3, GO_LIVE_OFFSET)
+GO_LIVE_AFTER_NEGOTIATION = 3
 
 MONTHS = {m.lower(): i for i, m in enumerate(calendar.month_name) if m}
 MONTHS.update({m.lower(): i for i, m in enumerate(calendar.month_abbr) if m})
@@ -65,6 +69,7 @@ DATE_RE = re.compile(
     r"(?:(?P<ysep>,?\s+)(?P<year>20\d\d)(?!\d))?"
 )
 LAB_RE = re.compile(r"LAB_DATE = date\((\d{4}), (\d{1,2}), (\d{1,2})\)")
+NEG_RE = re.compile(r"NEGOTIATION_DATE = date\((\d{4}), (\d{1,2}), (\d{1,2})\)")
 
 
 def add_months(d: date, n: int) -> date:
@@ -74,16 +79,19 @@ def add_months(d: date, n: int) -> date:
 
 
 class Shifter:
-    def __init__(self, old_lab: date, new_lab: date):
+    def __init__(self, old_lab: date, new_lab: date, old_neg: date, new_neg: date):
         self.old_lab, self.new_lab = old_lab, new_lab
+        self.old_neg, self.new_neg = old_neg, new_neg
         self.delta = new_lab - old_lab
-        self.old_eff = old_lab + timedelta(GO_LIVE_OFFSET)
-        self.new_eff = new_lab + timedelta(GO_LIVE_OFFSET)
+        self.old_eff = old_neg + timedelta(GO_LIVE_AFTER_NEGOTIATION)
+        self.new_eff = new_neg + timedelta(GO_LIVE_AFTER_NEGOTIATION)
         self.count = 0
 
     def shift(self, d: date) -> date:
-        if d < self.old_eff:
+        if d < self.old_neg:
             return d + self.delta
+        if d < self.old_eff:
+            return d + (self.new_neg - self.old_neg)
         months = (d.year - self.old_eff.year) * 12 + d.month - self.old_eff.month
         return add_months(self.new_eff, months) + timedelta(d.day - self.old_eff.day)
 
@@ -133,9 +141,8 @@ class Shifter:
 
     def ordinals(self, s: str) -> str:
         table = {}
-        for k in STORY_OFFSETS:
-            o, n = (self.old_lab + timedelta(k)).day, (self.new_lab + timedelta(k)).day
-            table[o] = n
+        for o, n in ((self.old_lab, self.new_lab), (self.old_neg, self.new_neg), (self.old_eff, self.new_eff)):
+            table[o.day] = n.day
 
         def sub(m: re.Match) -> str:
             n = table.get(int(m[1]))
@@ -175,20 +182,26 @@ def office_text(path: Path) -> str:
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--lab-date", required=True, type=date.fromisoformat, help="new lab date (a Monday), YYYY-MM-DD")
-    new_lab = ap.parse_args().lab_date
+    ap.add_argument("--lab-date", required=True, type=date.fromisoformat, help="trigger chat date (a Monday), YYYY-MM-DD")
+    ap.add_argument("--negotiation-date", required=True, type=date.fromisoformat, help="negotiation date (a Thursday), YYYY-MM-DD")
+    args = ap.parse_args()
+    new_lab, new_neg = args.lab_date, args.negotiation_date
     if new_lab.weekday() != 0:
         sys.exit(f"{new_lab} is a {calendar.day_name[new_lab.weekday()]}; the lab date must be a Monday.")
+    if new_neg.weekday() != 3:
+        sys.exit(f"{new_neg} is a {calendar.day_name[new_neg.weekday()]}; the negotiation date must be a Thursday.")
+    if new_neg <= new_lab:
+        sys.exit("The negotiation must come after the lab date.")
 
     src = LEGAL_PY.read_bytes().decode("utf-8")
-    m = LAB_RE.search(src)
-    if not m:
-        sys.exit(f"LAB_DATE not found in {LEGAL_PY}")
-    old_lab = date(*map(int, m.groups()))
-    if old_lab == new_lab:
-        print(f"Lab date is already {new_lab}.")
+    m, n = LAB_RE.search(src), NEG_RE.search(src)
+    if not (m and n):
+        sys.exit(f"LAB_DATE or NEGOTIATION_DATE not found in {LEGAL_PY}")
+    old_lab, old_neg = date(*map(int, m.groups())), date(*map(int, n.groups()))
+    if (old_lab, old_neg) == (new_lab, new_neg):
+        print("Dates are already set.")
         return 0
-    sh = Shifter(old_lab, new_lab)
+    sh = Shifter(old_lab, new_lab, old_neg, new_neg)
 
     office = sorted(p for p in MATTER.rglob("*") if p.suffix in (".docx", ".xlsx"))
     for p in office:
@@ -201,12 +214,14 @@ def main() -> int:
         p.write_text(s, encoding="utf-8", newline="")
         print(f"{sh.count - before:4d}  {p.relative_to(REPO_ROOT)}")
 
+    src = LAB_RE.sub(f"LAB_DATE = date({new_lab.year}, {new_lab.month}, {new_lab.day})", src, count=1)
+    src = NEG_RE.sub(f"NEGOTIATION_DATE = date({new_neg.year}, {new_neg.month}, {new_neg.day})", src, count=1)
     LEGAL_PY.write_text(
-        LAB_RE.sub(f"LAB_DATE = date({new_lab.year}, {new_lab.month}, {new_lab.day})", src, count=1),
+        src,
         encoding="utf-8",
         newline="",
     )
-    print(f"Lab date {old_lab} -> {new_lab}; {sh.count} dates rewritten. Now run build_tenant.py.")
+    print(f"Lab date {old_lab} -> {new_lab}, negotiation {old_neg} -> {new_neg}; {sh.count} dates rewritten. Now run build_tenant.py.")
     return 0
 
 

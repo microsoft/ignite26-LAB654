@@ -5,7 +5,6 @@ Mock MCP servers for the third-party connectors used in the scenarios. Each serv
 | Server | Scenario | Status |
 |--------|----------|--------|
 | [`imanage/`](imanage/README.md) | Legal | Data spec. Seed data: Cognivault-Nexus matter (agreement, Exhibits A–D, playbook) |
-| [`harvey/`](harvey/README.md) | Legal | Data spec. No seed data yet (answers from public law) |
 | [`lseg/`](lseg/README.md) | Finance | **Built.** I/B/E/S estimates and actuals, Worldscope fundamentals, pricing, news, symbology |
 | [`factset/`](factset/README.md) | Finance | **Built.** Metrics search, entity reference, RBICS, fundamentals, consensus, prices |
 | [`moodys/`](moodys/README.md) | Finance | **Built.** Entity search, ratings and history, credit opinions |

@@ -6,14 +6,15 @@ Usage (from repo root):
 Checks each *.config.json (and config.json), and each connector folder's
 <type>/<type>_*.jsonl, against its JSON schema, then a
 subset of the COEP cross-file rules (user references, file references, shared
-links, placeholders, email chains, licences, timestamps, intranet page ids). It doesn't replace
-COEP's own validation; it catches the common mistakes before upload.
+links, placeholders, email chains, licences, timestamps, teams/channels,
+online meetings and WebVTT transcripts, connector item ids, custom-connector
+property labels and value types). It doesn't replace COEP's own validation; it
+catches the common mistakes before upload.
 """
 
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import re
 import sys
@@ -63,7 +64,7 @@ def schema_check(pkg: Path) -> dict[str, list | dict]:
         targets[p.name.split(".")[0].lower()] = [p]
     # Connector types: <type>/<type>_*.jsonl (COEP Connector Entity Guide).
     for d in pkg.iterdir():
-        if d.is_dir() and d.name != "files":
+        if d.is_dir() and d.name not in ("files", "transcripts"):
             files = sorted(d.glob("*.jsonl"))
             for p in files:
                 if p.name.split("_")[0] != d.name or d.name != d.name.lower():
@@ -83,9 +84,13 @@ def schema_check(pkg: Path) -> dict[str, list | dict]:
         schema = load(schema_path)
         v = validator_for(schema)(schema, format_checker=validator_for(schema).FORMAT_CHECKER)
         label = paths[0].name if len(paths) == 1 else f"{type_name}/*.jsonl"
-        for e in sorted(v.iter_errors(doc), key=lambda e: list(e.absolute_path)):
-            loc = "/".join(str(x) for x in e.absolute_path)
-            err(f"{label}:{loc}: {e.message[:300]}")
+        # Object schemas (e.g. customconnectors) describe one JSONL line each.
+        docs = list(enumerate(doc)) if schema.get("type") == "object" and isinstance(doc, list) else [(None, doc)]
+        for n, d in docs:
+            prefix = label if n is None else f"{label}[{n}]"
+            for e in sorted(v.iter_errors(d), key=lambda e: list(e.absolute_path)):
+                loc = "/".join(str(x) for x in e.absolute_path)
+                err(f"{prefix}:{loc}: {e.message[:300]}")
     return data
 
 
@@ -231,32 +236,252 @@ def cross_checks(pkg: Path, data: dict) -> None:
         if c["ChatType"] == "Meeting" and c.get("EventId") not in event_ids:
             err(f"{w}: Meeting chat EventId not in events")
 
-    connector_ids: set[str] = set()
-    for p in data.get("intranetwebsite", []):
-        props = p["properties"]
-        w = f"intranetwebsite[{props['URL']}]"
-        if not re.fullmatch(r"[A-Za-z0-9]+", p["id"]):
-            err(f"{w}: id must contain only letters and digits")
-        if p["id"] in connector_ids:
-            err(f"{w}: duplicate id")
-        connector_ids.add(p["id"])
-        if p["displayName"] != props["URL"]:
-            err(f"{w}: displayName must equal properties.URL")
-        if p["id"] != hashlib.sha512(props["URL"].encode("utf-16-le")).hexdigest().upper():
-            err(f"{w}: id must be the uppercase SHA-512 of the URL (UTF-16LE)")
-        if props["LastModifiedBy"] not in props["Authors"]:
-            err(f"{w}: LastModifiedBy must be one of Authors")
-        if props["CreatedDateTime"] > props["LastModifiedDateTime"]:
-            err(f"{w}: CreatedDateTime after LastModifiedDateTime")
-        past(props["LastModifiedDateTime"], w)
-        acts = p["activityList"]
-        created = [a for a in acts if a["ActivityType"] == "created"]
-        if len(created) != 1 or created[0]["ActivityDateTime"] != props["CreatedDateTime"]:
-            err(f"{w}: needs one 'created' activity matching CreatedDateTime")
-        for a in acts:
-            past(a["ActivityDateTime"], f"{w}.activity[{a['id']}]")
-            if created and a["ActivityDateTime"] < created[0]["ActivityDateTime"]:
-                err(f"{w}: activity {a['id']} is earlier than 'created'")
+    teams_m365_checks(data, users, teams_licensed, event_ids, chat_ids, user)
+    online_meeting_checks(pkg, data, users, user)
+    connector_checks(data)
+
+
+def teams_m365_checks(data, users, teams_licensed, event_ids, chat_ids, user) -> None:
+    teams = {}
+    for t in data.get("teams", []):
+        w = f"teams[{t['TeamId']}]"
+        if t["TeamId"] in teams:
+            err(f"{w}: duplicate TeamId")
+        teams[t["TeamId"]] = t
+        past(t["CreatedDateTime"], w)
+        owners, members = set(t.get("Owners") or []), set(t.get("Members") or [])
+        if owners & members:
+            err(f"{w}: Owners and Members overlap {sorted(owners & members)}")
+        for m in owners | members:
+            user(m, f"{w}.Owners/Members")
+    if len({t["Name"] for t in teams.values()}) != len(teams):
+        err("teams: Name must be unique")
+
+    channels = {}
+    for c in data.get("channels", []):
+        w = f"channels[{c['ChannelId']}]"
+        if c["ChannelId"] in channels:
+            err(f"{w}: duplicate ChannelId")
+        channels[c["ChannelId"]] = c
+        team = teams.get(c["TeamId"])
+        if not team:
+            err(f"{w}: TeamId {c['TeamId']} not in teams")
+            continue
+        if c["Name"].strip().lower() == "general":
+            err(f"{w}: channel name must not be General")
+        if c.get("CreatedDateTime"):
+            past(c["CreatedDateTime"], w)
+            if c["CreatedDateTime"] < team["CreatedDateTime"]:
+                err(f"{w}: CreatedDateTime earlier than team CreatedDateTime")
+        roster = set(team.get("Owners") or []) | set(team.get("Members") or [])
+        for m in [*c["Members"], *([c["Creator"]] if c.get("Creator") else [])]:
+            user(m, f"{w}.Members")
+            if m not in roster:
+                err(f"{w}: member {m} is not in team {c['TeamId']}")
+            if m in users and m not in teams_licensed:
+                err(f"{w}: member {m} lacks 'Microsoft Teams Enterprise' licence")
+    names = [(c["TeamId"], c["Name"]) for c in channels.values()]
+    if len(names) != len(set(names)):
+        err("channels: Name must be unique within a team")
+
+    msgs, sent = {}, {}
+    for m in data.get("channelmessages", []):
+        w = f"channelmessages[{m['ChannelMessageId']}]"
+        if m["ChannelMessageId"] in msgs:
+            err(f"{w}: duplicate ChannelMessageId")
+        msgs[m["ChannelMessageId"]] = m
+        ch = channels.get(m["ChannelId"])
+        if not ch:
+            err(f"{w}: ChannelId {m['ChannelId']} not in channels")
+            continue
+        past(m["SentDateTime"], w)
+        if m["From"] not in ch["Members"]:
+            err(f"{w}: From is not a member of the channel")
+        if ch.get("CreatedDateTime") and m["SentDateTime"] < ch["CreatedDateTime"]:
+            err(f"{w}: sent before the channel was created")
+        sent.setdefault(m["ChannelId"], []).append(m["SentDateTime"])
+    reply_ids = set()
+    for r in data.get("channelmessagereplies", []):
+        w = f"channelmessagereplies[{r['ChannelMessageReplyId']}]"
+        if r["ChannelMessageReplyId"] in reply_ids:
+            err(f"{w}: duplicate ChannelMessageReplyId")
+        reply_ids.add(r["ChannelMessageReplyId"])
+        parent = msgs.get(r["ChannelMessageId"])
+        if not parent:
+            err(f"{w}: ChannelMessageId {r['ChannelMessageId']} not in channelmessages")
+            continue
+        past(r["SentDateTime"], w)
+        if r["SentDateTime"] < parent["SentDateTime"]:
+            err(f"{w}: sent before its parent message")
+        ch = channels.get(parent["ChannelId"])
+        if ch and r["From"] not in ch["Members"]:
+            err(f"{w}: From is not a member of the channel")
+        sent.setdefault(parent["ChannelId"], []).append(r["SentDateTime"])
+    for ch, times in sent.items():
+        if len(times) != len(set(times)):
+            err(f"channels[{ch}]: SentDateTime values must be unique across messages and replies")
+
+
+VTT_TS = r"(\d{2}:)?\d{2}:\d{2}\.\d{3}"
+VTT_TIMING = re.compile(rf"^({VTT_TS}) --> ({VTT_TS})(\s.*)?$")
+VTT_SPEAKER = re.compile(r"<v(?:\.[^ >]+)* ([^>]+)>")
+
+
+def _vtt_seconds(ts: str) -> float:
+    parts = [float(x) for x in ts.split(":")]
+    return sum(v * 60 ** i for i, v in enumerate(reversed(parts)))
+
+
+def vtt_check(path: Path, allowed: set[str], where: str) -> None:
+    text = path.read_text(encoding="utf-8-sig").replace("\r\n", "\n")
+    blocks = text.split("\n\n")
+    if not blocks[0].startswith("WEBVTT") or "\n" in blocks[0].strip():
+        err(f"{where}: must start with 'WEBVTT' followed by a blank line")
+    if text.count("WEBVTT") > 1 and not all(b.startswith("NOTE") for b in blocks[1:] if "WEBVTT" in b):
+        err(f"{where}: duplicate WEBVTT signature")
+    cues, last = 0, -1.0
+    for b in blocks[1:]:
+        lines = [l for l in b.split("\n") if l != ""]
+        if not lines or lines[0].startswith("NOTE"):
+            continue
+        idx = 0 if "-->" in lines[0] else 1
+        if idx >= len(lines) or not (m := VTT_TIMING.match(lines[idx])):
+            err(f"{where}: cue '{lines[0][:40]}' has no valid timing line")
+            continue
+        start, end = _vtt_seconds(m.group(1)), _vtt_seconds(m.group(3))
+        if end <= start:
+            err(f"{where}: cue '{lines[0][:40]}' end time must be after start time")
+        if start < last:
+            err(f"{where}: cue '{lines[0][:40]}' is out of order")
+        last = start
+        if len(lines) == idx + 1:
+            err(f"{where}: cue '{lines[0][:40]}' has no text")
+        for line in lines[idx + 1:]:
+            for spk in VTT_SPEAKER.findall(line):
+                if spk not in allowed:
+                    err(f"{where}: speaker '{spk}' is not the event sender or an attendee")
+        cues += 1
+    if not cues:
+        err(f"{where}: must contain at least one cue")
+
+
+def online_meeting_checks(pkg: Path, data: dict, users: dict, user) -> None:
+    events = {e["EventId"]: e for e in data.get("events", [])}
+    seen = set()
+    for om in data.get("onlinemeetings", []):
+        w = f"onlinemeetings[{om['OnlineMeetingId']}]"
+        if om["OnlineMeetingId"] in seen:
+            err(f"{w}: duplicate OnlineMeetingId")
+        seen.add(om["OnlineMeetingId"])
+        if om.get("StartDateTime") and om.get("EndDateTime") and om["StartDateTime"] >= om["EndDateTime"]:
+            err(f"{w}: StartDateTime must be earlier than EndDateTime")
+        ev = events.get(om.get("EventId"))
+        if not ev:
+            err(f"{w}: EventId {om.get('EventId')} not in events")
+            continue
+        if not ev.get("IsOnlineMeeting"):
+            err(f"{w}: referenced event is not an online meeting")
+        if om.get("Owner") != ev["Sender"]:
+            err(f"{w}: Owner must be the event Sender")
+        parts = om.get("Participants") or []
+        if len(parts) > 15:
+            err(f"{w}: more than 15 participants")
+        for p in parts:
+            user(p, f"{w}.Participants")
+        group = {ev["Sender"]} | {a["Email"] for f in ("RequiredAttendees", "OptionalAttendees") for a in ev.get(f) or []}
+        names = {users[n]["DisplayName"] for n in group if n in users} | group
+        for t in om.get("Transcripts") or []:
+            f = pkg / t["TranscriptFile"]
+            if not f.is_file():
+                err(f"{w}: transcript {t['TranscriptFile']} missing")
+            else:
+                vtt_check(f, names, f"{w}:{t['TranscriptFile']}")
+
+
+STRING_LABELS = {"title", "url", "fileName", "fileExtension", "iconUrl", "containerName", "containerUrl",
+                 "secondaryId", "itemParentId", "parentUrl", "itemType", "itemPath", "sprintName", "state"}
+DATE_LABELS = {"createdDateTime", "lastModifiedDateTime", "dueDate", "closedDate"}
+PERSON_LABELS = {"createdBy", "lastModifiedBy", "closedBy", "reportedBy"}
+PEOPLE_LABELS = {"authors", "assignedToPeople"}
+LABEL_TYPES = {
+    **{l: {"string"} for l in STRING_LABELS},
+    **{l: {"dateTime"} for l in DATE_LABELS},
+    **{l: {"string", "principal"} for l in PERSON_LABELS},
+    **{l: {"stringCollection", "principalCollection"} for l in PEOPLE_LABELS},
+    "tags": {"stringCollection"},
+}
+
+
+def _is_datetime(v) -> bool:
+    try:
+        datetime.fromisoformat(str(v).replace("Z", "+00:00"))
+        return isinstance(v, str)
+    except ValueError:
+        return False
+
+
+VALUE_CHECKS = {
+    "string": lambda v: isinstance(v, str),
+    "int64": lambda v: isinstance(v, int) and not isinstance(v, bool),
+    "double": lambda v: isinstance(v, (int, float)) and not isinstance(v, bool),
+    "boolean": lambda v: isinstance(v, bool),
+    "dateTime": _is_datetime,
+    "stringCollection": lambda v: isinstance(v, list) and all(isinstance(x, str) for x in v),
+    "int64Collection": lambda v: isinstance(v, list) and all(isinstance(x, int) for x in v),
+    "doubleCollection": lambda v: isinstance(v, list) and all(isinstance(x, (int, float)) for x in v),
+    "dateTimeCollection": lambda v: isinstance(v, list) and all(_is_datetime(x) for x in v),
+    "principal": lambda v: isinstance(v, dict),
+    "principalCollection": lambda v: isinstance(v, list) and all(isinstance(x, dict) for x in v),
+}
+
+
+def connector_checks(data: dict) -> None:
+    ids = set()
+    for p in data.get("confluence", []):
+        if p["id"] in ids:
+            err(f"confluence[{p['id']}]: duplicate id")
+        ids.add(p["id"])
+
+    conn_ids = set()
+    for c in data.get("customconnectors", []):
+        w = f"customconnectors[{c['ConnectionId']}]"
+        if c["ConnectionId"] in conn_ids:
+            err(f"{w}: duplicate ConnectionId")
+        conn_ids.add(c["ConnectionId"])
+        props = {p["name"]: p for p in c["Properties"]}
+        if len(props) != len(c["Properties"]):
+            err(f"{w}: duplicate property name")
+        label_owner: dict[str, str] = {}
+        for p in c["Properties"]:
+            pw = f"{w}.Properties[{p['name']}]"
+            if p.get("isSearchable") and p["type"] not in ("string", "stringCollection"):
+                err(f"{pw}: only string/stringCollection can be searchable")
+            if p.get("isSearchable") and p.get("isRefinable"):
+                err(f"{pw}: a property can't be both searchable and refinable")
+            for l in p.get("labels") or []:
+                if l in label_owner:
+                    err(f"{pw}: label '{l}' already used on {label_owner[l]}")
+                label_owner[l] = p["name"]
+                if not p.get("isRetrievable"):
+                    err(f"{pw}: labelled properties must be retrievable")
+                if l in LABEL_TYPES and p["type"] not in LABEL_TYPES[l]:
+                    err(f"{pw}: label '{l}' needs type {sorted(LABEL_TYPES[l])}, not {p['type']}")
+                if l in ("assignedToPeople", "secondaryId") and not all(
+                        p.get(k) for k in ("isQueryable", "isRetrievable", "isSearchable")):
+                    err(f"{pw}: label '{l}' should be queryable, retrievable and searchable")
+        item_ids = set()
+        for it in c["Items"]:
+            iw = f"{w}.Items[{it['id']}]"
+            if it["id"] in item_ids:
+                err(f"{iw}: duplicate item id")
+            item_ids.add(it["id"])
+            for k, v in it["properties"].items():
+                if k not in props:
+                    err(f"{iw}: property '{k}' is not defined")
+                elif not VALUE_CHECKS[props[k]["type"]](v):
+                    err(f"{iw}: '{k}' value doesn't match type {props[k]['type']}")
+                elif props[k]["type"] in ("dateTime",):
+                    past(v, f"{iw}.{k}")
 
 
 def array_scope_checks(data: dict) -> None:

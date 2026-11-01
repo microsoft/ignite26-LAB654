@@ -1,0 +1,20 @@
+[
+  {
+    "ChannelMessageId": "eng-msg-t1",
+    "ChannelId": "eng-ch-platform-migration",
+    "From": "spatel",
+    "Subject": "Aurora status-service cutover - Contoso pilot",
+    "ContentType": "text",
+    "Content": "The November 20 status-service cutover is still the plan. The Contoso expansion on November 23 will use the event-driven service. A fix confined to the legacy polling path will not resolve that pilot's issue.",
+    "SentDateTime": "2026-10-28T20:00:00Z"
+  },
+  {
+    "ChannelMessageId": "eng-msg-sprint24",
+    "ChannelId": "eng-ch-engineering",
+    "From": "tmorgan",
+    "Subject": "Aurora Sprint 24 has started",
+    "ContentType": "text",
+    "Content": "Aurora Sprint 24 runs October 26 to November 20. The sprint board is in Jira. Raise any scope change here and bring it to LT for approval.",
+    "SentDateTime": "2026-10-26T13:30:00Z"
+  }
+]

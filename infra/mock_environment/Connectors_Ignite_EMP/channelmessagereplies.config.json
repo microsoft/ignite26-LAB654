@@ -1,0 +1,18 @@
+[
+  {
+    "ChannelMessageReplyId": "eng-reply-t1-1",
+    "ChannelMessageId": "eng-msg-t1",
+    "From": "eruiz",
+    "ContentType": "text",
+    "Content": "We need reconnect coverage on the new path and the rollout regression checks. Passing the old-service tests is not enough to call this ready.",
+    "SentDateTime": "2026-10-28T20:10:00Z"
+  },
+  {
+    "ChannelMessageReplyId": "eng-reply-t1-2",
+    "ChannelMessageId": "eng-msg-t1",
+    "From": "mhollowell",
+    "ContentType": "text",
+    "Content": "Bring a scope proposal before we move sprint work. LT needs to approve any deferral; Sam needs to confirm platform review availability. We have not committed a release date to Contoso.",
+    "SentDateTime": "2026-10-29T12:30:00Z"
+  }
+]

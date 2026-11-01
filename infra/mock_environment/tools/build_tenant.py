@@ -3,28 +3,35 @@
 Usage (from repo root):
     python infra/mock_environment/tools/build_tenant.py
 
-Each scenario module in tools/scenarios exposes users(), emails(), chats(),
-events() and files(), and optionally build_documents(files_dir) for documents
-that must be generated into Connectors_Ignite_EMP/files and intranetpages()
-for COEP intranetwebsite connector items (written as
-intranetwebsite/intranetwebsite_<scenario>.jsonl). The package is
-rebuilt from scratch on every run. Then run validate_package.py.
+Each scenario module in tools/scenarios may expose any of the M365 entity hooks
+(users, emails, chats, events, files, teams, channels, channelmessages,
+channelmessagereplies, onlinemeetings); missing hooks count as empty. Optional
+extras:
+
+- build_documents(files_dir): generate documents into Connectors_Ignite_EMP/files
+- transcripts(): {"transcripts/<name>.vtt": text} meeting transcripts
+- confluencepages(): Test_Confluence synced items (confluence/confluence_<scenario>.jsonl)
+- customconnectors(): custom synced connections such as Test_GitHub
+  (customconnectors/customconnectors_<scenario>.jsonl, one connection per line)
+
+The package is rebuilt from scratch on every run. Then run validate_package.py.
 """
 
 from __future__ import annotations
 
 import json
+import shutil
 import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
-from scenarios import finance, legal, productivity  # noqa: E402
+from scenarios import engineering, expense, finance, legal, productivity  # noqa: E402
 
 PACKAGE_DIR = HERE.parent / "Connectors_Ignite_EMP"
 
-SCENARIOS = [legal, finance, productivity]
+SCENARIOS = [legal, finance, productivity, engineering, expense]
 
 CONFIG = {
     "Tenant": {
@@ -42,11 +49,19 @@ ENTITY_FILES = {
     "chats": "chats.config.json",
     "events": "events.config.json",
     "files": "files.config.json",
+    "teams": "teams.config.json",
+    "channels": "channels.config.json",
+    "channelmessages": "channelmessages.config.json",
+    "channelmessagereplies": "channelmessagereplies.config.json",
+    "onlinemeetings": "onlinemeetings.config.json",
 }
 
 # Connector (3P) types use a different layout: <type>/<type>_<name>.jsonl, one
 # searchable item per line (COEP Connector Entity Guide). One file per scenario.
-CONNECTOR_TYPES = {"intranetwebsite": "intranetpages"}
+CONNECTOR_TYPES = {"confluence": "confluencepages", "customconnectors": "customconnectors"}
+
+# Generated directories cleared on every rebuild (includes retired connector types).
+GENERATED_DIRS = [*CONNECTOR_TYPES, "transcripts", "intranetwebsite"]
 
 
 def _merge_users(lists):
@@ -82,17 +97,19 @@ def main() -> None:
     PACKAGE_DIR.mkdir(parents=True, exist_ok=True)
     for p in PACKAGE_DIR.glob("*.config.json"):
         p.unlink()
-    for t in CONNECTOR_TYPES:
-        for p in (PACKAGE_DIR / t).glob(f"{t}_*.jsonl"):
-            p.unlink()
+    for d in GENERATED_DIRS:
+        shutil.rmtree(PACKAGE_DIR / d, ignore_errors=True)
 
-    data = {
-        "users": _merge_users(s.users() for s in SCENARIOS),
-        "emails": [_normalize_email(e) for s in SCENARIOS for e in s.emails()],
-        "chats": [c for s in SCENARIOS for c in s.chats()],
-        "events": [e for s in SCENARIOS for e in s.events()],
-        "files": [f for s in SCENARIOS for f in s.files()],
-    }
+    def hook(s, name):
+        return getattr(s, name, lambda: [])()
+
+    data = {k: [x for s in SCENARIOS for x in hook(s, k)] for k in ENTITY_FILES}
+    data["users"] = _merge_users(hook(s, "users") for s in SCENARIOS)
+    # Bring your own app step 3a: "submit the report to my manager" -> Daniel Park.
+    for u in data["users"]:
+        if u["MailNickName"] == "mhollowell":
+            u["Manager"] = "dpark"
+    data["emails"] = [_normalize_email(e) for e in data["emails"]]
 
     _write(PACKAGE_DIR / "config.json", CONFIG)
     for key, name in ENTITY_FILES.items():
@@ -102,17 +119,25 @@ def main() -> None:
     for t, fn in CONNECTOR_TYPES.items():
         data[t] = []
         for s in SCENARIOS:
-            items = getattr(s, fn, lambda: [])()
+            items = hook(s, fn)
             if items:
                 _write_jsonl(PACKAGE_DIR / t / f"{t}_{s.__name__.rsplit('.', 1)[-1]}.jsonl", items)
                 data[t] += items
+
+    data["transcripts"] = []
+    for s in SCENARIOS:
+        for rel, text in getattr(s, "transcripts", dict)().items():
+            path = PACKAGE_DIR / rel
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(text, encoding="utf-8", newline="\n")
+            data["transcripts"].append(rel)
 
     files_dir = PACKAGE_DIR / "files"
     for s in SCENARIOS:
         build = getattr(s, "build_documents", None)
         for p in build(files_dir) if build else []:
             print(f"wrote {p.relative_to(PACKAGE_DIR)}")
-    for key in [*ENTITY_FILES, *CONNECTOR_TYPES]:
+    for key in [*ENTITY_FILES, *CONNECTOR_TYPES, "transcripts"]:
         print(f"{key}: {len(data[key])}")
 
 

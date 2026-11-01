@@ -1,0 +1,32 @@
+[
+  {
+    "ChannelId": "eng-ch-platform-migration",
+    "TeamId": "eng-team-aurora",
+    "Name": "Platform Migration",
+    "Description": "Migration from the legacy polling status service to the event-driven status service.",
+    "CreatedDateTime": "2026-06-08T14:00:00Z",
+    "ChannelType": "Standard",
+    "Members": [
+      "mhollowell",
+      "nchen",
+      "eruiz",
+      "tmorgan",
+      "spatel"
+    ]
+  },
+  {
+    "ChannelId": "eng-ch-engineering",
+    "TeamId": "eng-team-aurora",
+    "Name": "Engineering",
+    "Description": "Aurora engineering updates, sprint planning and decisions.",
+    "CreatedDateTime": "2026-03-02T14:05:00Z",
+    "ChannelType": "Standard",
+    "Members": [
+      "mhollowell",
+      "nchen",
+      "eruiz",
+      "tmorgan",
+      "spatel"
+    ]
+  }
+]

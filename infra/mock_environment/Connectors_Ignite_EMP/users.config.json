@@ -20,7 +20,8 @@
       "Microsoft 365 Copilot",
       "Microsoft Teams Enterprise",
       "Office 365 E5 (no Teams)"
-    ]
+    ],
+    "Manager": "dpark"
   },
   {
     "MailNickName": "rsengupta",
@@ -89,12 +90,57 @@
     ]
   },
   {
-    "MailNickName": "spatel",
-    "DisplayName": "Sam Patel",
-    "FirstName": "Sam",
-    "LastName": "Patel",
-    "JobTitle": "Retail Operations Lead",
-    "Department": "Retail Operations",
+    "MailNickName": "rblake",
+    "DisplayName": "Riley Blake",
+    "FirstName": "Riley",
+    "LastName": "Blake",
+    "JobTitle": "Director of Store Operations",
+    "Department": "Store Operations",
+    "CompanyName": "Contoso Retail",
+    "UsageLocation": "US",
+    "OfficeLocation": "Minneapolis, MN",
+    "Licenses": [
+      "Microsoft Teams Enterprise",
+      "Office 365 E5 (no Teams)"
+    ]
+  },
+  {
+    "MailNickName": "kliu",
+    "DisplayName": "Ken Liu",
+    "FirstName": "Ken",
+    "LastName": "Liu",
+    "JobTitle": "IT Security Lead",
+    "Department": "Information Technology",
+    "CompanyName": "Contoso Retail",
+    "UsageLocation": "US",
+    "OfficeLocation": "Minneapolis, MN",
+    "Licenses": [
+      "Microsoft Teams Enterprise",
+      "Office 365 E5 (no Teams)"
+    ]
+  },
+  {
+    "MailNickName": "pnair",
+    "DisplayName": "Priya Nair",
+    "FirstName": "Priya",
+    "LastName": "Nair",
+    "JobTitle": "Chief Financial Officer",
+    "Department": "Finance",
+    "CompanyName": "Contoso Retail",
+    "UsageLocation": "US",
+    "OfficeLocation": "Minneapolis, MN",
+    "Licenses": [
+      "Microsoft Teams Enterprise",
+      "Office 365 E5 (no Teams)"
+    ]
+  },
+  {
+    "MailNickName": "lokafor",
+    "DisplayName": "Lena Okafor",
+    "FirstName": "Lena",
+    "LastName": "Okafor",
+    "JobTitle": "Director of Retail Sales",
+    "Department": "Sales",
     "CompanyName": "Verdantis Technologies, Inc.",
     "UsageLocation": "US",
     "OfficeLocation": "Stamford, CT",
@@ -111,14 +157,244 @@
     ]
   },
   {
-    "MailNickName": "rblake",
-    "DisplayName": "Riley Blake",
-    "FirstName": "Riley",
-    "LastName": "Blake",
-    "JobTitle": "Partner Account Manager",
-    "Department": "Partner Operations",
-    "CompanyName": "Contoso Retail",
+    "MailNickName": "nchen",
+    "DisplayName": "Nina Chen",
+    "FirstName": "Nina",
+    "LastName": "Chen",
+    "JobTitle": "Senior Software Engineer",
+    "Department": "Engineering",
+    "CompanyName": "Verdantis Technologies, Inc.",
     "UsageLocation": "US",
+    "OfficeLocation": "Stamford, CT",
+    "Address": {
+      "Street": "200 Harborview Drive, Suite 1400",
+      "City": "Stamford",
+      "State": "CT",
+      "PostalCode": "06902",
+      "Country": "USA"
+    },
+    "Licenses": [
+      "Microsoft Teams Enterprise",
+      "Office 365 E5 (no Teams)"
+    ]
+  },
+  {
+    "MailNickName": "eruiz",
+    "DisplayName": "Elena Ruiz",
+    "FirstName": "Elena",
+    "LastName": "Ruiz",
+    "JobTitle": "Senior QA Engineer",
+    "Department": "Engineering",
+    "CompanyName": "Verdantis Technologies, Inc.",
+    "UsageLocation": "US",
+    "OfficeLocation": "Stamford, CT",
+    "Address": {
+      "Street": "200 Harborview Drive, Suite 1400",
+      "City": "Stamford",
+      "State": "CT",
+      "PostalCode": "06902",
+      "Country": "USA"
+    },
+    "Licenses": [
+      "Microsoft Teams Enterprise",
+      "Office 365 E5 (no Teams)"
+    ]
+  },
+  {
+    "MailNickName": "tmorgan",
+    "DisplayName": "Taylor Morgan",
+    "FirstName": "Taylor",
+    "LastName": "Morgan",
+    "JobTitle": "Engineering Lead, Aurora",
+    "Department": "Engineering",
+    "CompanyName": "Verdantis Technologies, Inc.",
+    "UsageLocation": "US",
+    "OfficeLocation": "Stamford, CT",
+    "Address": {
+      "Street": "200 Harborview Drive, Suite 1400",
+      "City": "Stamford",
+      "State": "CT",
+      "PostalCode": "06902",
+      "Country": "USA"
+    },
+    "Licenses": [
+      "Microsoft Teams Enterprise",
+      "Office 365 E5 (no Teams)"
+    ]
+  },
+  {
+    "MailNickName": "spatel",
+    "DisplayName": "Sam Patel",
+    "FirstName": "Sam",
+    "LastName": "Patel",
+    "JobTitle": "Platform Lead",
+    "Department": "Engineering",
+    "CompanyName": "Verdantis Technologies, Inc.",
+    "UsageLocation": "US",
+    "OfficeLocation": "Stamford, CT",
+    "Address": {
+      "Street": "200 Harborview Drive, Suite 1400",
+      "City": "Stamford",
+      "State": "CT",
+      "PostalCode": "06902",
+      "Country": "USA"
+    },
+    "Licenses": [
+      "Microsoft Teams Enterprise",
+      "Office 365 E5 (no Teams)"
+    ]
+  },
+  {
+    "MailNickName": "dpark",
+    "DisplayName": "Daniel Park",
+    "FirstName": "Daniel",
+    "LastName": "Park",
+    "JobTitle": "Vice President, Product",
+    "Department": "Product",
+    "CompanyName": "Verdantis Technologies, Inc.",
+    "UsageLocation": "US",
+    "OfficeLocation": "Stamford, CT",
+    "Address": {
+      "Street": "200 Harborview Drive, Suite 1400",
+      "City": "Stamford",
+      "State": "CT",
+      "PostalCode": "06902",
+      "Country": "USA"
+    },
+    "Licenses": [
+      "Microsoft Teams Enterprise",
+      "Office 365 E5 (no Teams)"
+    ]
+  },
+  {
+    "MailNickName": "arahman",
+    "DisplayName": "Aisha Rahman",
+    "FirstName": "Aisha",
+    "LastName": "Rahman",
+    "JobTitle": "Finance Operations Lead",
+    "Department": "Finance",
+    "CompanyName": "Verdantis Technologies, Inc.",
+    "UsageLocation": "US",
+    "OfficeLocation": "Stamford, CT",
+    "Address": {
+      "Street": "200 Harborview Drive, Suite 1400",
+      "City": "Stamford",
+      "State": "CT",
+      "PostalCode": "06902",
+      "Country": "USA"
+    },
+    "Licenses": [
+      "Microsoft Teams Enterprise",
+      "Office 365 E5 (no Teams)"
+    ]
+  },
+  {
+    "MailNickName": "verdantisexpense",
+    "DisplayName": "Verdantis Expense",
+    "FirstName": "Verdantis",
+    "LastName": "Expense",
+    "JobTitle": "Expense notifications",
+    "Department": "Finance",
+    "CompanyName": "Verdantis Technologies, Inc.",
+    "UsageLocation": "US",
+    "OfficeLocation": "Stamford, CT",
+    "Address": {
+      "Street": "200 Harborview Drive, Suite 1400",
+      "City": "Stamford",
+      "State": "CT",
+      "PostalCode": "06902",
+      "Country": "USA"
+    },
+    "Licenses": [
+      "Microsoft Teams Enterprise",
+      "Office 365 E5 (no Teams)"
+    ]
+  },
+  {
+    "MailNickName": "alaskareceipts",
+    "DisplayName": "Alaska Airlines",
+    "FirstName": "Alaska Airlines",
+    "LastName": "Receipts",
+    "JobTitle": "Receipts",
+    "Department": "Billing",
+    "CompanyName": "Alaska Airlines",
+    "UsageLocation": "US",
+    "OfficeLocation": "Seattle, WA",
+    "Licenses": [
+      "Microsoft Teams Enterprise",
+      "Office 365 E5 (no Teams)"
+    ]
+  },
+  {
+    "MailNickName": "yellowcabreceipts",
+    "DisplayName": "Seattle Yellow Cab",
+    "FirstName": "Seattle Yellow Cab",
+    "LastName": "Receipts",
+    "JobTitle": "Receipts",
+    "Department": "Billing",
+    "CompanyName": "Seattle Yellow Cab",
+    "UsageLocation": "US",
+    "OfficeLocation": "Seattle, WA",
+    "Licenses": [
+      "Microsoft Teams Enterprise",
+      "Office 365 E5 (no Teams)"
+    ]
+  },
+  {
+    "MailNickName": "canlisreservations",
+    "DisplayName": "Canlis",
+    "FirstName": "Canlis",
+    "LastName": "Receipts",
+    "JobTitle": "Receipts",
+    "Department": "Billing",
+    "CompanyName": "Canlis",
+    "UsageLocation": "US",
+    "OfficeLocation": "Seattle, WA",
+    "Licenses": [
+      "Microsoft Teams Enterprise",
+      "Office 365 E5 (no Teams)"
+    ]
+  },
+  {
+    "MailNickName": "dintaifungreceipts",
+    "DisplayName": "Din Tai Fung",
+    "FirstName": "Din Tai Fung",
+    "LastName": "Receipts",
+    "JobTitle": "Receipts",
+    "Department": "Billing",
+    "CompanyName": "Din Tai Fung",
+    "UsageLocation": "US",
+    "OfficeLocation": "Seattle, WA",
+    "Licenses": [
+      "Microsoft Teams Enterprise",
+      "Office 365 E5 (no Teams)"
+    ]
+  },
+  {
+    "MailNickName": "westinfolio",
+    "DisplayName": "The Westin Seattle",
+    "FirstName": "The Westin Seattle",
+    "LastName": "Receipts",
+    "JobTitle": "Receipts",
+    "Department": "Billing",
+    "CompanyName": "The Westin Seattle",
+    "UsageLocation": "US",
+    "OfficeLocation": "Seattle, WA",
+    "Licenses": [
+      "Microsoft Teams Enterprise",
+      "Office 365 E5 (no Teams)"
+    ]
+  },
+  {
+    "MailNickName": "uberreceipts",
+    "DisplayName": "Uber Receipts",
+    "FirstName": "Uber Receipts",
+    "LastName": "Receipts",
+    "JobTitle": "Receipts",
+    "Department": "Billing",
+    "CompanyName": "Uber Receipts",
+    "UsageLocation": "US",
+    "OfficeLocation": "San Francisco, CA",
     "Licenses": [
       "Microsoft Teams Enterprise",
       "Office 365 E5 (no Teams)"
