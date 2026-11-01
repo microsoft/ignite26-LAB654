@@ -1,0 +1,18 @@
+{
+ "tool": "search_folders",
+ "args": {
+  "container_id": "Dev!1870",
+  "name": "02 Playbooks"
+ },
+ "summary": {
+  "has_more": false
+ },
+ "items": [
+  {
+   "name": "02 Playbooks",
+   "wstype": "folder",
+   "owner": "EMIL",
+   "folder_type": "regular"
+  }
+ ]
+}

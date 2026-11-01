@@ -1,0 +1,17 @@
+{
+ "tool": "search",
+ "args": {
+  "query": "AI Procurement Playbook"
+ },
+ "summary": {
+  "has_more": false
+ },
+ "items": [
+  {
+   "url": "https://imanage.example.com/work/link/d/DEV!252567.1",
+   "name": "Zava AI Procurement Playbook v2.1",
+   "wstype": "document",
+   "text": ""
+  }
+ ]
+}

@@ -1,0 +1,62 @@
+{
+ "tool": "get_document_profile",
+ "args": {
+  "documentId": "DEV!252567.1"
+ },
+ "summary": {
+  "access": "read_write",
+  "author": "EMIL",
+  "author_description": "Emil Vanggaard",
+  "author_info": {
+   "is_external": false,
+   "allow_logon": true
+  },
+  "class": "DOC",
+  "class_description": "Document",
+  "content_type": "D",
+  "create_date": "2026-10-23T11:25:07.904Z",
+  "database": "DEV",
+  "default_security": "private",
+  "document_number": 252567,
+  "document_url": "https://imanage.example.com/work/link/d/DEV!252567.1",
+  "edit_date": "2026-10-23T11:25:07.904Z",
+  "edit_profile_date": "2026-10-23T11:49:33.224Z",
+  "extension": "docx",
+  "file_create_date": "2026-10-23T11:25:07.904Z",
+  "file_edit_date": "2026-10-23T11:25:07.904Z",
+  "full_file_name": "Zava AI Procurement Playbook v2.1.docx",
+  "basic_properties": "<span><a href=https://imanage.example.com/work/link/d/DEV!252567.1>Zava AI Procurement Playbook v2.1.docx</a>&nbsp;(58.57 KB)</span>",
+  "is_checked_out": false,
+  "is_declared": false,
+  "is_external": false,
+  "is_external_as_normal": false,
+  "is_hipaa": false,
+  "is_in_use": false,
+  "is_latest": true,
+  "is_related": false,
+  "is_restorable": true,
+  "iwl": "iwl:dms=imanage.example.com&&lib=DEV&&num=252567&&ver=1",
+  "last_user": "EMIL",
+  "last_user_description": "Emil Vanggaard",
+  "last_user_info": {
+   "is_external": false,
+   "allow_logon": true
+  },
+  "latest": "DEV!252567.1",
+  "name": "Zava AI Procurement Playbook v2.1",
+  "operator": "EMIL",
+  "operator_description": "Emil Vanggaard",
+  "operator_info": {
+   "is_external": false,
+   "allow_logon": true
+  },
+  "retain_days": 10,
+  "size": 59972,
+  "type_description": "WORD 2007",
+  "version": 1,
+  "workspace_id": "Dev!1870",
+  "workspace_name": "Trey Research – AI Platform Agreement",
+  "wstype": "document"
+ },
+ "items": []
+}

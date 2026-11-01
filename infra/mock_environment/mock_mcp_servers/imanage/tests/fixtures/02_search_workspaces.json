@@ -1,0 +1,34 @@
+{
+ "tool": "search_workspaces",
+ "args": {
+  "searchParams": {
+   "name": "Trey Research"
+  },
+  "limit": 100
+ },
+ "summary": {
+  "topMatchingId": "Dev!1870",
+  "topMatchingName": "Trey Research – AI Platform Agreement",
+  "has_more": false
+ },
+ "items": [
+  {
+   "basic_properties": "<span><a href=https://imanage.example.com/work/link/w/Dev!1870>Trey Research – AI Platform Agreement</a></span>",
+   "create_date": "2026-10-23T03:41:38.097Z",
+   "database": "DEV",
+   "default_security": "private",
+   "document_number": 252553,
+   "edit_date": "2026-10-23T03:42:21.571Z",
+   "has_subfolders": true,
+   "is_external": false,
+   "is_external_as_normal": false,
+   "is_hipaa": false,
+   "iwl": "iwl:dms=imanage.example.com&&lib=Dev&&num=252553&&ver=1",
+   "name": "Trey Research – AI Platform Agreement",
+   "owner": "EMIL",
+   "owner_description": "Emil Vanggaard",
+   "wstype": "workspace",
+   "workspace_url": "https://imanage.example.com/work/link/w/Dev!1870"
+  }
+ ]
+}

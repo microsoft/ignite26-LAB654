@@ -1,0 +1,733 @@
+[
+ {
+  "name": "get_document_profile",
+  "description": "Gets the document properties associated with a specific document ID. Document properties include the Client and Matter information.",
+  "inputSchema": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "documentId": {
+     "type": "string",
+     "pattern": "^[^!]+!\\d+\\.\\d+$",
+     "description": "Specifies a system-generated unique identifier assigned to each document within iManage Work."
+    },
+    "latest": {
+     "default": false,
+     "type": "boolean",
+     "description": "Specifies indicates whether this document is the latest version in the system. This is used to track document revisions and ensure users are accessing the most current information."
+    }
+   },
+   "required": [
+    "documentId"
+   ],
+   "additionalProperties": false
+  }
+ },
+ {
+  "name": "get_workspace_profile",
+  "description": "Gets the profile of the matter for the provided matter ID.",
+  "inputSchema": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "workspaceId": {
+     "type": "string",
+     "pattern": "^[^!]+!\\d+$",
+     "description": "Specifies the matter id to be added as input by which matter is fetched"
+    }
+   },
+   "required": [
+    "workspaceId"
+   ],
+   "additionalProperties": false
+  }
+ },
+ {
+  "name": "download_document",
+  "description": "Downloads the text content of a document based on its ID.",
+  "inputSchema": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "documentId": {
+     "type": "string",
+     "pattern": "^[^!]+!\\d+\\.\\d+$",
+     "description": "Specifies a system-generated unique identifier assigned to each document within iManage Work."
+    },
+    "cursor": {
+     "type": "string",
+     "description": "Cursor from the previous response to retrieve the next chunk of data. Omit this parameter for the initial request."
+    }
+   },
+   "required": [
+    "documentId"
+   ],
+   "additionalProperties": false
+  }
+ },
+ {
+  "name": "get_libraries",
+  "description": "Gets all the libraries for the current user.",
+  "inputSchema": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {},
+   "additionalProperties": false
+  }
+ },
+ {
+  "name": "get_recent_documents",
+  "description": "Gets recent documents by the current user, sorted by most recently accessed first. Defaults to documents with edit activity, matching Work Web behavior. Pass the `activity` filter to retrieve documents with other activity types (e.g. `all`, `download`, `view`).",
+  "inputSchema": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "filters": {
+     "type": "object",
+     "properties": {
+      "custom1": {
+       "type": "string",
+       "description": "Specifies a unique identifier assigned to a client or legal entity involved in the case. Used to link all matters, communications, and documents related to that specific client across the system."
+      },
+      "custom2": {
+       "type": "string",
+       "description": "Specifies a unique identifier assigned to a specific legal case, project, or transaction associated with a client. It distinguishes one matter from another under the same client and is used to track all related activities and records."
+      },
+      "activity": {
+       "type": "string",
+       "enum": [
+        "copy",
+        "download",
+        "edit",
+        "email",
+        "print",
+        "version",
+        "view",
+        "all"
+       ]
+      },
+      "anywhere": {
+       "type": "string",
+       "description": "Specifies a string to find anywhere in the profile or contents of documents."
+      },
+      "comments": {
+       "type": "string",
+       "description": "Specifies the comments associated with the document."
+      },
+      "create_date_from": {
+       "type": "string",
+       "description": "Specifies to return documents created on or after this date (in ISO 8601 format)."
+      },
+      "create_date_to": {
+       "type": "string",
+       "description": "Specifies to return documents created on or before this date (in ISO 8601 format)."
+      }
+     },
+     "additionalProperties": {},
+     "description": "Optional filters to narrow down the search results."
+    },
+    "limit": {
+     "type": "integer",
+     "minimum": 1,
+     "maximum": 9007199254740991,
+     "description": "Number of results to return per page. Defaults to 100 if not specified."
+    },
+    "cursor": {
+     "type": "string",
+     "description": "Cursor from the previous response to retrieve the next page of results. Omit this parameter for the initial request."
+    }
+   },
+   "additionalProperties": false
+  }
+ },
+ {
+  "name": "get_recent_workspaces",
+  "description": "Gets recently accessed Matters by the current user.",
+  "inputSchema": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "filters": {
+     "type": "object",
+     "properties": {
+      "custom1": {
+       "type": "string",
+       "description": "Specifies a unique identifier assigned to a client or legal entity involved in the case. Used to link all matters, communications, and documents related to that specific client across the system."
+      },
+      "custom2": {
+       "type": "string",
+       "description": "Specifies a unique identifier assigned to a specific legal case, project, or transaction associated with a client. It distinguishes one matter from another under the same client and is used to track all related activities and records."
+      },
+      "name_or_description": {
+       "type": "string",
+       "description": "Specifies the text to search in the name or description of the matter."
+      }
+     },
+     "additionalProperties": {},
+     "description": "Optional filters to narrow down the search results."
+    },
+    "limit": {
+     "type": "integer",
+     "minimum": 1,
+     "maximum": 9007199254740991,
+     "description": "Number of results to return per page. Defaults to 100 if not specified."
+    },
+    "cursor": {
+     "type": "string",
+     "description": "Cursor from the previous response to retrieve the next page of results. Omit this parameter for the initial request."
+    }
+   },
+   "additionalProperties": false
+  }
+ },
+ {
+  "name": "get_user_information",
+  "description": "Gets information about users in the iManage Work system. A user in iManage Work may be associated with documents as an author or have access to documents as a reviewer or collaborator. They may also be owners of a matter or have tasks assigned to them. Returns information about the current user when the query is an empty string.",
+  "inputSchema": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "query": {
+     "type": "string",
+     "description": "Indicates a search string to find user-specific information by matching against attributes such as name, ID, or email. Supports partial searches."
+    },
+    "libraryId": {
+     "type": "string",
+     "description": "Specifies a unique identifier for the library. This ID is passed to tools that require a library ID."
+    }
+   },
+   "additionalProperties": false
+  }
+ },
+ {
+  "name": "search",
+  "description": "\n        Searches across iManage Work, for workspaces and documents. Matters are searched by their names and descriptions. Documents are searched by their names, descriptions, comments, and content.\n\n        Intent Interpretation:\n        Before forming the query, identify what the user is actually trying to find—such as a specific document, similar past work, matter-related material, or all documents related to an event or concept.\n\n        Query Construction:\n        Rewrite the user request into a single, concise, meaning-rich search phrase. Extract key elements such as:\n        • document type (example: NDA, contract, memo, settlement)\n        • legal or business concepts (example: garden leave, termination, indemnity, breach)\n        • names of clients, counterparties, employees, or entities\n        • jurisdictions or regions\n\n        Include synonyms or related terms only when they clearly reinforce the user's intent, not as broad expansions.\n\n        Search Strategy:\n        Run one well-constructed search per user query.\n        Don't perform multiple incremental searches unless the user explicitly asks to refine or explore further.\n      ",
+  "inputSchema": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "query": {
+     "type": "string",
+     "minLength": 1,
+     "description": "Specifies the string to be searched anywhere in the document profile or contents."
+    },
+    "libraryId": {
+     "type": "string",
+     "description": "Specifies the name of the library or database to scope the search to. When provided, the search for documents and workspaces is limited to this specific library."
+    },
+    "cursor": {
+     "type": "string",
+     "description": "Cursor from the previous response to retrieve the next page of results. Omit this parameter for the initial request."
+    }
+   },
+   "required": [
+    "query"
+   ],
+   "additionalProperties": false
+  }
+ },
+ {
+  "name": "fetch",
+  "description": "Downloads and returns the text content of the document for the specified ID.",
+  "inputSchema": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "id": {
+     "type": "string",
+     "pattern": "^[^!]+!\\d+\\.\\d+$",
+     "description": "Specifies a system-generated unique identifier assigned to each document within iManage Work."
+    },
+    "cursor": {
+     "type": "string",
+     "description": "Cursor from the previous response to retrieve the next chunk of data. Omit this parameter for the initial request."
+    }
+   },
+   "required": [
+    "id"
+   ],
+   "additionalProperties": false
+  }
+ },
+ {
+  "name": "get_workspace_templates",
+  "description": "Gets list of matter templates available in a library. matter templates are predefined folder structures used to create consistent, organized Matters.",
+  "inputSchema": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "libraryId": {
+     "type": "string",
+     "description": "Specifies a unique identifier assigned to each library within iManage Work. In the absence of a specific library identifier, this can also use the current user's preferred library."
+    },
+    "name_or_description": {
+     "type": "string",
+     "description": "Specifies a search string to match against the name or description of matter templates. This allows users to find templates based on keywords or phrases contained in their names or descriptions. The wildcard character (*) is not supported."
+    },
+    "custom1": {
+     "type": "string",
+     "description": "Specifies a unique identifier assigned to a client or legal entity involved in the case. Used to link all matters, communications, and documents related to that specific client across the system. Templates can be searched by this field."
+    },
+    "custom2": {
+     "type": "string",
+     "description": "Specifies a unique identifier assigned to a specific legal case, project, or transaction associated with a client. It distinguishes one matter from another under the same client and is used to track all related activities and records. Templates can be searched by this field in combination with client."
+    },
+    "custom3": {
+     "type": "string",
+     "description": "Specifies a custom metadata field for storing additional information about the custom3."
+    },
+    "custom4": {
+     "type": "string",
+     "description": "Specifies a custom metadata field for storing additional information about the custom4."
+    },
+    "custom5": {
+     "type": "string",
+     "description": "Specifies a custom metadata field for storing additional information about the custom5."
+    },
+    "custom6": {
+     "type": "string",
+     "description": "Specifies a custom metadata field for storing additional information about the custom6."
+    },
+    "custom7": {
+     "type": "string",
+     "description": "Specifies a custom metadata field for storing additional information about the custom7."
+    },
+    "custom8": {
+     "type": "string",
+     "description": "Specifies a custom metadata field for storing additional information about the custom8."
+    },
+    "custom9": {
+     "type": "string",
+     "description": "Specifies a custom metadata field for storing additional information about the custom9."
+    },
+    "custom10": {
+     "type": "string",
+     "description": "Specifies a custom metadata field for storing additional information about the team location."
+    },
+    "custom11": {
+     "type": "string",
+     "description": "Specifies a custom metadata field for storing additional information about the custom11test."
+    },
+    "custom12": {
+     "type": "string",
+     "description": "Specifies a custom metadata field for storing additional information about the custom12."
+    },
+    "custom17": {
+     "type": "number",
+     "description": "Specifies a custom metadata field for storing additional information about the custom17."
+    },
+    "custom18": {
+     "type": "number",
+     "description": "Specifies a custom metadata field for storing additional information about the custom18."
+    },
+    "custom19": {
+     "type": "number",
+     "description": "Specifies a custom metadata field for storing additional information about the custom19."
+    },
+    "custom20": {
+     "type": "number",
+     "description": "Specifies a custom metadata field for storing additional information about the custom20."
+    },
+    "custom21": {
+     "type": "string",
+     "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|([+-])\\d{2}(:)?\\d{2})$",
+     "description": "Specifies a custom metadata field for storing a date/time value in ISO 8601 format custom21."
+    },
+    "custom21_from": {
+     "type": "string",
+     "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|([+-])\\d{2}(:)?\\d{2})$",
+     "description": "Specifies the lower limit of custom21 (in ISO 8601 datetime format) to search. This property is not reserved by iManage Work and is not a validated value. It is intended to be customized for your company's requirements."
+    },
+    "custom21_to": {
+     "type": "string",
+     "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|([+-])\\d{2}(:)?\\d{2})$",
+     "description": "Specifies the upper limit of custom21 (in ISO 8601 datetime format) to search. This property is not reserved by iManage Work and is not a validated value. It is intended to be customized for your company's requirements."
+    },
+    "custom21_relative": {
+     "type": "string",
+     "pattern": "^(-)?(\\d)+:(-)?(\\d)+([dmy])$",
+     "description": "Specifies  a date range to search, relative to the current date. This parameter has a format of [begin]:[end][time units (d, m or y)]. For example, -15:1d specifies a date range from 15 days prior to the current date through one day after the current date (one day in the future)."
+    },
+    "custom22": {
+     "type": "string",
+     "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|([+-])\\d{2}(:)?\\d{2})$",
+     "description": "Specifies a custom metadata field for storing a date/time value in ISO 8601 format custom22."
+    },
+    "custom22_from": {
+     "type": "string",
+     "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|([+-])\\d{2}(:)?\\d{2})$",
+     "description": "Specifies the lower limit of custom22 (in ISO 8601 datetime format) to search. This property is not reserved by iManage Work and is not a validated value. It is intended to be customized for your company's requirements."
+    },
+    "custom22_to": {
+     "type": "string",
+     "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|([+-])\\d{2}(:)?\\d{2})$",
+     "description": "Specifies the upper limit of custom22 (in ISO 8601 datetime format) to search. This property is not reserved by iManage Work and is not a validated value. It is intended to be customized for your company's requirements."
+    },
+    "custom22_relative": {
+     "type": "string",
+     "pattern": "^(-)?(\\d)+:(-)?(\\d)+([dmy])$",
+     "description": "Specifies  a date range to search, relative to the current date. This parameter has a format of [begin]:[end][time units (d, m or y)]. For example, -15:1d specifies a date range from 15 days prior to the current date through one day after the current date (one day in the future)."
+    },
+    "custom23": {
+     "type": "string",
+     "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|([+-])\\d{2}(:)?\\d{2})$",
+     "description": "Specifies a custom metadata field for storing a date/time value in ISO 8601 format custom23."
+    },
+    "custom23_from": {
+     "type": "string",
+     "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|([+-])\\d{2}(:)?\\d{2})$",
+     "description": "Specifies the lower limit of custom23 (in ISO 8601 datetime format) to search. This property is not reserved by iManage Work and is not a validated value. It is intended to be customized for your company's requirements."
+    },
+    "custom23_to": {
+     "type": "string",
+     "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|([+-])\\d{2}(:)?\\d{2})$",
+     "description": "Specifies the upper limit of custom23 (in ISO 8601 datetime format) to search. This property is not reserved by iManage Work and is not a validated value. It is intended to be customized for your company's requirements."
+    },
+    "custom23_relative": {
+     "type": "string",
+     "pattern": "^(-)?(\\d)+:(-)?(\\d)+([dmy])$",
+     "description": "Specifies  a date range to search, relative to the current date. This parameter has a format of [begin]:[end][time units (d, m or y)]. For example, -15:1d specifies a date range from 15 days prior to the current date through one day after the current date (one day in the future)."
+    },
+    "custom24": {
+     "type": "string",
+     "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|([+-])\\d{2}(:)?\\d{2})$",
+     "description": "Specifies a custom metadata field for storing a date/time value in ISO 8601 format custom24."
+    },
+    "custom24_from": {
+     "type": "string",
+     "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|([+-])\\d{2}(:)?\\d{2})$",
+     "description": "Specifies the lower limit of custom24 (in ISO 8601 datetime format) to search. This property is not reserved by iManage Work and is not a validated value. It is intended to be customized for your company's requirements."
+    },
+    "custom24_to": {
+     "type": "string",
+     "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|([+-])\\d{2}(:)?\\d{2})$",
+     "description": "Specifies the upper limit of custom24 (in ISO 8601 datetime format) to search. This property is not reserved by iManage Work and is not a validated value. It is intended to be customized for your company's requirements."
+    },
+    "custom24_relative": {
+     "type": "string",
+     "pattern": "^(-)?(\\d)+:(-)?(\\d)+([dmy])$",
+     "description": "Specifies  a date range to search, relative to the current date. This parameter has a format of [begin]:[end][time units (d, m or y)]. For example, -15:1d specifies a date range from 15 days prior to the current date through one day after the current date (one day in the future)."
+    },
+    "custom25": {
+     "type": "boolean",
+     "description": "Specifies a custom metadata field for storing a boolean value about the custom25."
+    },
+    "custom26": {
+     "type": "boolean",
+     "description": "Specifies a custom metadata field for storing a boolean value about the custom26."
+    },
+    "custom27": {
+     "type": "boolean",
+     "description": "Specifies a custom metadata field for storing a boolean value about the custom27."
+    },
+    "custom28": {
+     "type": "boolean",
+     "description": "Specifies a custom metadata field for storing a boolean value about the custom28."
+    },
+    "custom29": {
+     "type": "string",
+     "description": "Specifies a custom metadata field for storing additional information about the custom29."
+    },
+    "custom30": {
+     "type": "string",
+     "description": "Specifies a custom metadata field for storing additional information about the custom30."
+    }
+   },
+   "required": [
+    "libraryId"
+   ],
+   "additionalProperties": false
+  }
+ },
+ {
+  "name": "search_workspaces",
+  "description": "Searches for Matters based on the provided criteria.",
+  "inputSchema": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "searchParams": {
+     "type": "object",
+     "properties": {
+      "name": {
+       "type": "string",
+       "description": "Specifies the human-readable name of the matter, used for identification and navigation within iManage Work."
+      },
+      "owner": {
+       "type": "string",
+       "description": "Specifies the user ID of the matter owner, responsible for managing and maintaining the matter."
+      },
+      "anywhere": {
+       "type": "string",
+       "description": "Specifies case-insensitive search anywhere in matter profile."
+      },
+      "description": {
+       "type": "string",
+       "description": "Specifies additional information or notes about the matter, providing context or clarification for users and administrators."
+      },
+      "subclass": {
+       "type": "string",
+       "description": "Specifies the subclass of the matter, typically based on the subclass of the documents it contains, used for categorization."
+      },
+      "custom1": {
+       "type": "string",
+       "description": "Specifies a unique identifier assigned to a client or legal entity involved in the case. Used to link all matters, communications, and documents related to that specific client across the system."
+      },
+      "custom2": {
+       "type": "string",
+       "description": "Specifies a unique identifier assigned to a specific legal case, project, or transaction associated with a client. It distinguishes one matter from another under the same client and is used to track all related activities and records."
+      },
+      "custom3": {
+       "type": "string",
+       "description": "Specifies a custom metadata field for storing additional information about the custom3."
+      },
+      "custom4": {
+       "type": "string",
+       "description": "Specifies a custom metadata field for storing additional information about the custom4."
+      },
+      "custom5": {
+       "type": "string",
+       "description": "Specifies a custom metadata field for storing additional information about the custom5."
+      },
+      "custom6": {
+       "type": "string",
+       "description": "Specifies a custom metadata field for storing additional information about the custom6."
+      },
+      "custom7": {
+       "type": "string",
+       "description": "Specifies a custom metadata field for storing additional information about the custom7."
+      },
+      "custom8": {
+       "type": "string",
+       "description": "Specifies a custom metadata field for storing additional information about the custom8."
+      },
+      "custom9": {
+       "type": "string",
+       "description": "Specifies a custom metadata field for storing additional information about the custom9."
+      },
+      "custom10": {
+       "type": "string",
+       "description": "Specifies a custom metadata field for storing additional information about the team location."
+      },
+      "custom11": {
+       "type": "string",
+       "description": "Specifies a custom metadata field for storing additional information about the custom11test."
+      },
+      "custom12": {
+       "type": "string",
+       "description": "Specifies a custom metadata field for storing additional information about the custom12."
+      },
+      "custom13": {
+       "type": "string",
+       "description": "Specifies a custom metadata field for storing additional information about the category."
+      },
+      "custom14": {
+       "type": "string",
+       "description": "Specifies a custom metadata field for storing additional information about the custom14."
+      },
+      "custom15": {
+       "type": "string",
+       "description": "Specifies a custom metadata field for storing additional information about the custom15."
+      },
+      "custom16": {
+       "type": "string",
+       "description": "Specifies a custom metadata field for storing additional information about the custom16."
+      },
+      "custom17": {
+       "type": "string",
+       "description": "Specifies a custom metadata field for storing additional information about the custom17."
+      },
+      "custom18": {
+       "type": "string",
+       "description": "Specifies a custom metadata field for storing additional information about the custom18."
+      },
+      "custom19": {
+       "type": "string",
+       "description": "Specifies a custom metadata field for storing additional information about the custom19."
+      },
+      "custom20": {
+       "type": "string",
+       "description": "Specifies a custom metadata field for storing additional information about the custom20."
+      },
+      "custom21_from": {
+       "type": "string",
+       "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|([+-])\\d{2}(:)?\\d{2})$",
+       "description": "Specifies lower bound (ISO 8601) for custom21."
+      },
+      "custom21_to": {
+       "type": "string",
+       "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|([+-])\\d{2}(:)?\\d{2})$",
+       "description": "Specifies upper bound (ISO 8601) for custom21."
+      },
+      "custom22_from": {
+       "type": "string",
+       "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|([+-])\\d{2}(:)?\\d{2})$",
+       "description": "Specifies lower bound (ISO 8601) for custom22."
+      },
+      "custom22_to": {
+       "type": "string",
+       "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|([+-])\\d{2}(:)?\\d{2})$",
+       "description": "Specifies upper bound (ISO 8601) for custom22."
+      },
+      "custom23_from": {
+       "type": "string",
+       "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|([+-])\\d{2}(:)?\\d{2})$",
+       "description": "Specifies lower bound (ISO 8601) for custom23."
+      },
+      "custom23_to": {
+       "type": "string",
+       "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|([+-])\\d{2}(:)?\\d{2})$",
+       "description": "Specifies upper bound (ISO 8601) for custom23."
+      },
+      "custom24_from": {
+       "type": "string",
+       "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|([+-])\\d{2}(:)?\\d{2})$",
+       "description": "Specifies lower bound (ISO 8601) for custom24."
+      },
+      "custom24_to": {
+       "type": "string",
+       "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|([+-])\\d{2}(:)?\\d{2})$",
+       "description": "Specifies upper bound (ISO 8601) for custom24."
+      },
+      "custom25": {
+       "type": "boolean",
+       "description": "Specifies a custom metadata field for storing a boolean value about the custom25."
+      },
+      "custom26": {
+       "type": "boolean",
+       "description": "Specifies a custom metadata field for storing a boolean value about the custom26."
+      },
+      "custom27": {
+       "type": "boolean",
+       "description": "Specifies a custom metadata field for storing a boolean value about the custom27."
+      },
+      "custom28": {
+       "type": "boolean",
+       "description": "Specifies a custom metadata field for storing a boolean value about the custom28."
+      },
+      "custom29": {
+       "type": "string",
+       "description": "Specifies a custom metadata field for storing additional information about the custom29."
+      },
+      "custom30": {
+       "type": "string",
+       "description": "Specifies a custom metadata field for storing additional information about the custom30."
+      }
+     },
+     "additionalProperties": {},
+     "description": "Search parameters for matter discovery. All fields are optional.\n    Matching rules: name, owner, anywhere, description, and subclass perform case-insensitive substring matches; custom1-12, custom17-20, and custom29-30 require exact (no wildcard/partial) matches;\n    custom13-16 support wildcards (*) and partials; custom21-24 use date ranges via <field>_from and <field>_to in ISO 8601 (e.g., 2025-11-03T07:30:22.559Z); and custom25-28 are booleans."
+    },
+    "limit": {
+     "type": "integer",
+     "minimum": 1,
+     "maximum": 9007199254740991,
+     "description": "Number of results to return per page. Defaults to 100 if not specified."
+    },
+    "cursor": {
+     "type": "string",
+     "description": "Cursor from the previous response to retrieve the next page of results. Omit this parameter for the initial request."
+    }
+   },
+   "required": [
+    "searchParams"
+   ],
+   "additionalProperties": false
+  }
+ },
+ {
+  "name": "search_folders",
+  "description": "Searches for folders within iManage Work by name within a specific workspace or parent folder. Supports wildcard matching in the name (e.g., *report*).",
+  "inputSchema": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "container_id": {
+     "type": "string",
+     "minLength": 1,
+     "description": "Specifies the unique ID of a workspace or a folder to search within."
+    },
+    "name": {
+     "type": "string",
+     "minLength": 1,
+     "description": "Specifies a value to be found in the name property of the folder. Case-insensitive, matches whole fields. Use the wildcard character (*) before, after, or both ends of the term for partial matching (e.g., *report*). Multiple names can be included using a comma-separated list."
+    },
+    "limit": {
+     "type": "integer",
+     "minimum": 1,
+     "maximum": 9007199254740991,
+     "description": "Number of results to return per page. Defaults to 100 if not specified."
+    },
+    "cursor": {
+     "type": "string",
+     "description": "Cursor from the previous response to retrieve the next page of results. Omit this parameter for the initial request."
+    }
+   },
+   "required": [
+    "container_id",
+    "name"
+   ],
+   "additionalProperties": false
+  }
+ },
+ {
+  "name": "get_container_children",
+  "description": "Gets the children of a container from given container_id. Returns a maximum of 500 items in a single call. Children can be documents, folders, workspaces, emails, or shortcuts (document_shortcut, folder_shortcut, workspace_shortcut). Call this tool to iteratively get all children of a container. Valid container types are matter, tab, and folder.",
+  "inputSchema": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "container_id": {
+     "type": "string",
+     "pattern": "^[^!]+!\\d+$",
+     "description": "Specifies the container id to be added as input by which container is fetched."
+    },
+    "container_type": {
+     "type": "string",
+     "enum": [
+      "workspace",
+      "tab",
+      "folder"
+     ]
+    },
+    "cursor": {
+     "type": "number",
+     "description": "Specifies the number of items to skip before starting to collect the result set. Leave empty to start from the beginning."
+    }
+   },
+   "required": [
+    "container_id",
+    "container_type"
+   ],
+   "additionalProperties": false
+  }
+ },
+ {
+  "name": "get_document_versions",
+  "description": "Gets the complete version history of a document, including all version metadata such as version numbers, authors, modification dates, file sizes, and comments. Returns up to 1000 versions. Each version includes the full document profile.",
+  "inputSchema": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "documentId": {
+     "type": "string",
+     "pattern": "^[^!]+!\\d+\\.\\d+$",
+     "description": "Specifies a system-generated unique identifier assigned to each document within iManage Work."
+    },
+    "limit": {
+     "type": "integer",
+     "minimum": 1,
+     "maximum": 9007199254740991,
+     "description": "Number of results to return per page. Defaults to 100 if not specified."
+    },
+    "cursor": {
+     "type": "string",
+     "description": "Cursor from the previous response to retrieve the next page of results. Omit this parameter for the initial request."
+    }
+   },
+   "required": [
+    "documentId"
+   ],
+   "additionalProperties": false
+  }
+ }
+]

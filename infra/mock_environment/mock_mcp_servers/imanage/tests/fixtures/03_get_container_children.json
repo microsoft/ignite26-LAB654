@@ -1,0 +1,25 @@
+{
+ "tool": "get_container_children",
+ "args": {
+  "container_id": "Dev!1870",
+  "container_type": "workspace"
+ },
+ "summary": {
+  "cursor": 4,
+  "hasMore": false
+ },
+ "items": [
+  {
+   "name": "01 Vendor Paper"
+  },
+  {
+   "name": "02 Playbooks"
+  },
+  {
+   "name": "03 Research"
+  },
+  {
+   "name": "04 Drafts"
+  }
+ ]
+}

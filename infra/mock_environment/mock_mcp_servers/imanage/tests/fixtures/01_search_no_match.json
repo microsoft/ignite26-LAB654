@@ -1,0 +1,10 @@
+{
+ "tool": "search",
+ "args": {
+  "query": "Contoso AI Procurement Playbook hard stops"
+ },
+ "summary": {
+  "has_more": false
+ },
+ "items": []
+}
