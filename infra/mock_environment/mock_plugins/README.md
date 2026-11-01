@@ -10,6 +10,8 @@ Microsoft 365 app packages for the lab's third-party connectors. Each package is
 | `moodys/` | Test_Moodys | 7 | `https://mock-moodys.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` | `gim-home/skill-studio`: `connector-skills-packages/moodys/MOSified/v0_20260918/withConstraints` |
 | `factset/` | Test_FactSet | None | `https://mock-factset.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` | `gim-home/M365FCCMOSPackages`: `mos-packages/factset/inDev/factset.zip` |
 | `notion/` | Test_Notion | 4 | `https://mock-notion.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` | `gim-home/skill-studio`: `connector-skills-packages/notion/MOSified/v0_20260902/basic` |
+| `imanage/` | Test_iManage | None | `https://mock-imanage.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` | `gim-home/M365FCCMOSPackages`: `mos-packages/imanage-work/inDev/imanage-work.zip` |
+| `zava_expense/` | Test_Zava Expense | 1 | `https://mock-zava-expense.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` | Written for the lab (no real connector); skill `zava-travel-policy` |
 
 ## Changes from the source packages
 
@@ -23,10 +25,11 @@ Icons and `skills/` are copied unchanged. `addendum.json` (internal publishing r
 | `mcpServerUrl` | Mock server URL | Serves mock data |
 | `authorization` | Removed | Mock servers need no sign-in |
 | `description.full` (Notion only) | "Does not create or edit" sentence replaced with one saying it can create pages and update properties | The lab's productivity flow updates tracker rows |
+| `description.full` (iManage only) | Adds a sentence saying it can save new documents and folders to a matter | The mock supports document and folder uploads |
 
 ## Build packages
 
-The ready-to-upload packages are `test_lseg.zip`, `test_moodys.zip`, `test_factset.zip` and `test_notion.zip` in this folder. After changing a plugin, rebuild them:
+The ready-to-upload packages are `test_lseg.zip`, `test_moodys.zip`, `test_factset.zip`, `test_notion.zip`, `test_imanage.zip` and `test_zava_expense.zip` in this folder. After changing a plugin, rebuild them:
 
 ```powershell
 python infra\mock_environment\mock_plugins\build_plugins.py              # all plugins

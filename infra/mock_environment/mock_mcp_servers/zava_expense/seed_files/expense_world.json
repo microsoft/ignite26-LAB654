@@ -1,0 +1,605 @@
+{
+  "_comment": "Zava Expense world: the input to scripts/build_seed.py, which writes seed_files/expense_seed.json. Fixed dates follow the lab calendar (Seattle trip Mon Oct 26 - Thu Oct 29, 2026; lab week starts Mon Nov 16). Item offsets are days from their trip's first day.",
+  "random_seed": 20417,
+  "company": "Zava",
+  "currency": "USD",
+  "employee": {
+    "name": "Emil Vanggaard",
+    "email": "emil@zava-online.com",
+    "employee_id": "ZV-20417",
+    "office": "Stamford, CT",
+    "card_last_four": "4417"
+  },
+  "manager": {
+    "name": "Hannes Niemi",
+    "email": "hannes@zava-online.com"
+  },
+  "finance_contact": {
+    "name": "Ebere Ibeabuchi",
+    "email": "ebere@zava-online.com",
+    "title": "Finance Operations Lead"
+  },
+  "home_city": "Stamford",
+  "local_spend_days": 150,
+  "local_spend_probability": 0.62,
+  "first_report_number": 1041,
+  "first_transaction_number": 10001,
+  "new_report_number": 2001,
+  "policy": {
+    "name": "Zava Travel & Expense Policy",
+    "version": "2026.2",
+    "hotel_nightly_caps_usd": {
+      "Seattle": 250,
+      "San Francisco": 300,
+      "Boston": 275,
+      "Chicago": 230,
+      "Austin": 210,
+      "Dallas": 200
+    },
+    "default_hotel_nightly_cap_usd": 200,
+    "meals_per_day_usd": 75,
+    "client_entertainment_per_person_usd": 120,
+    "receipt_required_at_or_above_usd": 25,
+    "submission_deadline_days": 30,
+    "rules": [
+      {
+        "rule_id": "TE-01",
+        "topic": "lodging",
+        "title": "Hotel nightly cap",
+        "rule": "Hotel room rate per night must not exceed the city cap (Seattle $250, San Francisco $300, Boston $275, Chicago $230, Austin $210, Dallas $200, all other cities $200), excluding taxes."
+      },
+      {
+        "rule_id": "TE-02",
+        "topic": "lodging",
+        "title": "Personal hotel charges",
+        "rule": "Minibar, in-room movies, spa and other personal charges are not reimbursable."
+      },
+      {
+        "rule_id": "TE-03",
+        "topic": "meals",
+        "title": "Travel meals",
+        "rule": "Meals while travelling are reimbursed up to $75 per person per day."
+      },
+      {
+        "rule_id": "TE-04",
+        "topic": "meals",
+        "title": "Client entertainment",
+        "rule": "Client meals and entertainment are reimbursed up to $120 per person. List the attendees and the client in the business purpose."
+      },
+      {
+        "rule_id": "TE-05",
+        "topic": "meals",
+        "title": "Alcohol",
+        "rule": "Alcohol is reimbursable only as part of client entertainment."
+      },
+      {
+        "rule_id": "TE-06",
+        "topic": "receipts",
+        "title": "Receipts",
+        "rule": "An itemized receipt is required for every expense of $25 or more."
+      },
+      {
+        "rule_id": "TE-07",
+        "topic": "airfare",
+        "title": "Class of travel",
+        "rule": "Book economy for flights under 6 hours. Book at least 14 days ahead where possible."
+      },
+      {
+        "rule_id": "TE-08",
+        "topic": "ground",
+        "title": "Ground transport",
+        "rule": "Taxis and rideshare are reimbursable. Car rentals longer than 3 days need manager pre-approval."
+      },
+      {
+        "rule_id": "TE-09",
+        "topic": "general",
+        "title": "Business purpose",
+        "rule": "Every report needs a business purpose, and the client name if the trip was client-related."
+      },
+      {
+        "rule_id": "TE-10",
+        "topic": "general",
+        "title": "Submission deadline",
+        "rule": "Submit expenses within 30 days of the trip ending."
+      },
+      {
+        "rule_id": "TE-11",
+        "topic": "general",
+        "title": "Policy exceptions",
+        "rule": "Any expense above a policy limit needs a written justification on the report and is approved by your manager."
+      },
+      {
+        "rule_id": "TE-12",
+        "topic": "general",
+        "title": "Duplicate charges",
+        "rule": "Each charge may be claimed once. Report duplicate card charges to Finance Operations so the card provider can reverse them."
+      }
+    ]
+  },
+  "budget": {
+    "lines": [
+      {
+        "category": "Airfare",
+        "budget": 2500
+      },
+      {
+        "category": "Lodging",
+        "budget": 1800
+      },
+      {
+        "category": "Meals & entertainment",
+        "budget": 1500
+      },
+      {
+        "category": "Ground transport",
+        "budget": 400
+      },
+      {
+        "category": "Conference & training",
+        "budget": 600
+      }
+    ]
+  },
+  "clients": [
+    {
+      "name": "Fabrikam, Inc.",
+      "city": "Seattle"
+    },
+    {
+      "name": "Northwind Traders",
+      "city": "Chicago"
+    },
+    {
+      "name": "Tailspin Toys",
+      "city": "Austin"
+    },
+    {
+      "name": "Wide World Importers",
+      "city": "Boston"
+    },
+    {
+      "name": "Proseware, Inc.",
+      "city": "Dallas"
+    }
+  ],
+  "past_trips": [
+    {
+      "start": "2026-07-21",
+      "city": "San Francisco",
+      "client": null,
+      "status": "Approved",
+      "title": "San Francisco — Insurance technology summit",
+      "purpose": "Attended the Insurance Technology Summit sessions on AI underwriting.",
+      "items": [
+        {
+          "offset": -25,
+          "merchant": "INSURTECH SUMMIT REG",
+          "category": "Conference & training",
+          "amount": 450
+        },
+        {
+          "offset": -21,
+          "merchant": "UNITED AIRLINES 0164421",
+          "category": "Airfare",
+          "amount": 589.4
+        },
+        {
+          "offset": 0,
+          "merchant": "SFO YELLOW CAB",
+          "category": "Ground transport",
+          "amount": 61.5
+        },
+        {
+          "offset": 1,
+          "merchant": "TARTINE BAKERY SF",
+          "category": "Meals",
+          "amount": 12.5
+        },
+        {
+          "offset": 2,
+          "merchant": "HOTEL ZETTA SAN FRANCISCO",
+          "category": "Lodging",
+          "amount": 578,
+          "nights": [
+            289,
+            289
+          ]
+        },
+        {
+          "offset": 2,
+          "merchant": "UBER *TRIP",
+          "category": "Ground transport",
+          "amount": 47.25
+        }
+      ]
+    },
+    {
+      "start": "2026-09-08",
+      "city": "Chicago",
+      "client": "Northwind Traders",
+      "status": "Approved",
+      "title": "Chicago — Northwind Traders quarterly business review",
+      "purpose": "Quarterly business review with Northwind Traders.",
+      "items": [
+        {
+          "offset": -15,
+          "merchant": "AMERICAN AIRLINES 0012876",
+          "category": "Airfare",
+          "amount": 461.3
+        },
+        {
+          "offset": 0,
+          "merchant": "OHARE TAXI ASSOC",
+          "category": "Ground transport",
+          "amount": 52.0
+        },
+        {
+          "offset": 0,
+          "merchant": "GIBSONS BAR & STEAKHOUSE",
+          "category": "Client entertainment",
+          "amount": 396.0,
+          "attendees": 4
+        },
+        {
+          "offset": 1,
+          "merchant": "PALMER HOUSE HILTON",
+          "category": "Lodging",
+          "amount": 219,
+          "nights": [
+            219
+          ]
+        },
+        {
+          "offset": 1,
+          "merchant": "PRET A MANGER CHICAGO",
+          "category": "Meals",
+          "amount": 14.85
+        }
+      ]
+    },
+    {
+      "start": "2026-09-29",
+      "city": "Boston",
+      "client": "Wide World Importers",
+      "status": "Approved",
+      "title": "Boston — Wide World Importers renewal",
+      "purpose": "Contract renewal meeting with Wide World Importers procurement.",
+      "items": [
+        {
+          "offset": -20,
+          "merchant": "AMTRAK 1830472216",
+          "category": "Airfare",
+          "amount": 168.0
+        },
+        {
+          "offset": 0,
+          "merchant": "BOSTON CAB DISPATCH",
+          "category": "Ground transport",
+          "amount": 24.2
+        },
+        {
+          "offset": 0,
+          "merchant": "LEGAL SEA FOODS BOSTON",
+          "category": "Client entertainment",
+          "amount": 318.4,
+          "attendees": 3
+        },
+        {
+          "offset": 1,
+          "merchant": "HILTON BOSTON BACK BAY",
+          "category": "Lodging",
+          "amount": 518,
+          "nights": [
+            259,
+            259
+          ]
+        },
+        {
+          "offset": 2,
+          "merchant": "UBER *TRIP",
+          "category": "Ground transport",
+          "amount": 39.6
+        }
+      ]
+    },
+    {
+      "start": "2026-10-13",
+      "city": "Dallas",
+      "client": "Proseware, Inc.",
+      "status": "Rejected",
+      "status_reason": "Missing itemized receipt for PAPPAS BROS STEAKHOUSE ($142.60). Policy TE-06 requires a receipt for every expense of $25 or more. Attach the receipt and resubmit.",
+      "title": "Dallas — Proseware partner meeting",
+      "purpose": "Partner meeting with Proseware, Inc. on claims-data integration.",
+      "items": [
+        {
+          "offset": -16,
+          "merchant": "DELTA AIR LINES 0067733",
+          "category": "Airfare",
+          "amount": 412.9
+        },
+        {
+          "offset": 0,
+          "merchant": "DFW TAXI",
+          "category": "Ground transport",
+          "amount": 41.0
+        },
+        {
+          "offset": 1,
+          "merchant": "PAPPAS BROS STEAKHOUSE",
+          "category": "Client entertainment",
+          "amount": 142.6,
+          "attendees": 2,
+          "receipt": false
+        },
+        {
+          "offset": 2,
+          "merchant": "OMNI DALLAS HOTEL",
+          "category": "Lodging",
+          "amount": 378,
+          "nights": [
+            189,
+            189
+          ]
+        },
+        {
+          "offset": 2,
+          "merchant": "LYFT *RIDE",
+          "category": "Ground transport",
+          "amount": 38.75
+        }
+      ]
+    },
+    {
+      "start": "2026-10-20",
+      "city": "Austin",
+      "client": "Tailspin Toys",
+      "status": "Pending approval",
+      "title": "Austin — Tailspin Toys onboarding",
+      "purpose": "On-site onboarding workshop with the Tailspin Toys operations team.",
+      "items": [
+        {
+          "offset": -18,
+          "merchant": "SOUTHWEST AIRLINES 5262113",
+          "category": "Airfare",
+          "amount": 348.2
+        },
+        {
+          "offset": 0,
+          "merchant": "AUSTIN YELLOW CAB",
+          "category": "Ground transport",
+          "amount": 34.8
+        },
+        {
+          "offset": 0,
+          "merchant": "TORCHYS TACOS AUSTIN",
+          "category": "Meals",
+          "amount": 21.4
+        },
+        {
+          "offset": 1,
+          "merchant": "HYATT REGENCY AUSTIN",
+          "category": "Lodging",
+          "amount": 198,
+          "nights": [
+            198
+          ]
+        },
+        {
+          "offset": 1,
+          "merchant": "UBER *TRIP",
+          "category": "Ground transport",
+          "amount": 29.1
+        }
+      ]
+    }
+  ],
+  "returned_report": {
+    "status": "Returned",
+    "status_reason": "Returned by Hannes Niemi: add a business purpose and the list of attendees, then resubmit (policy TE-09).",
+    "title": "Team offsite supplies",
+    "items": [
+      {
+        "merchant": "COSTCO WHSE #0318",
+        "city": "Stamford",
+        "category": "Office supplies",
+        "amount": 186.42
+      },
+      {
+        "merchant": "STAPLES #0322 STAMFORD",
+        "city": "Stamford",
+        "category": "Office supplies",
+        "amount": 64.18
+      }
+    ],
+    "date": "2026-10-22"
+  },
+  "local_merchants": [
+    {
+      "merchant": "STARBUCKS #11872 STAMFORD",
+      "category": "Meals",
+      "min": 4.5,
+      "max": 9.8
+    },
+    {
+      "merchant": "SWEETGREEN STAMFORD",
+      "category": "Meals",
+      "min": 11,
+      "max": 19
+    },
+    {
+      "merchant": "THE CAPITAL GRILLE STAMFORD",
+      "category": "Client entertainment",
+      "min": 140,
+      "max": 260
+    },
+    {
+      "merchant": "MORTONS STEAKHOUSE STAMFORD",
+      "category": "Client entertainment",
+      "min": 80,
+      "max": 150
+    },
+    {
+      "merchant": "UBER *TRIP",
+      "category": "Ground transport",
+      "min": 14,
+      "max": 42
+    },
+    {
+      "merchant": "STAMFORD TRANS CTR PARKING",
+      "category": "Ground transport",
+      "min": 12,
+      "max": 28
+    },
+    {
+      "merchant": "STAPLES #0322 STAMFORD",
+      "category": "Office supplies",
+      "min": 18,
+      "max": 85
+    },
+    {
+      "merchant": "FEDEX OFFICE #0871",
+      "category": "Office supplies",
+      "min": 22,
+      "max": 64
+    }
+  ],
+  "recurring": [
+    {
+      "day": 3,
+      "merchant": "VERIZON WIRELESS",
+      "category": "Mobile & internet",
+      "amount": 85
+    },
+    {
+      "day": 5,
+      "merchant": "ADOBE *ACROBAT PRO",
+      "category": "Software & subscriptions",
+      "amount": 19.99
+    },
+    {
+      "day": 9,
+      "merchant": "ZOOM.US 888-799-9666",
+      "category": "Software & subscriptions",
+      "amount": 15.99
+    }
+  ],
+  "seattle_trip": {
+    "days": 4,
+    "client": "Fabrikam, Inc.",
+    "purpose": "Fabrikam, Inc. partnership review",
+    "items": [
+      {
+        "merchant": "ALASKA AIR 0272345671",
+        "category": "Airfare",
+        "amount": 486.4,
+        "date": "2026-10-19"
+      },
+      {
+        "offset": 0,
+        "merchant": "SEATTLE YELLOW CAB",
+        "category": "Ground transport",
+        "amount": 58.75
+      },
+      {
+        "offset": 0,
+        "merchant": "STARBUCKS #1912 SEATTLE",
+        "category": "Meals",
+        "amount": 6.45
+      },
+      {
+        "offset": 1,
+        "merchant": "CANLIS SEATTLE",
+        "category": "Client entertainment",
+        "amount": 540,
+        "attendees": 5
+      },
+      {
+        "offset": 2,
+        "merchant": "DIN TAI FUNG SEATTLE",
+        "category": "Meals",
+        "amount": 48.2
+      },
+      {
+        "offset": 3,
+        "merchant": "THE WESTIN SEATTLE",
+        "category": "Lodging",
+        "amount": 867,
+        "nights": [
+          239,
+          239,
+          389
+        ]
+      },
+      {
+        "offset": 3,
+        "merchant": "UBER *TRIP",
+        "category": "Ground transport",
+        "amount": 52.3
+      },
+      {
+        "offset": 3,
+        "merchant": "UBER *TRIP",
+        "category": "Ground transport",
+        "amount": 52.3
+      }
+    ],
+    "receipt_emails": [
+      {
+        "amount": 486.4,
+        "from": "Alaska Airlines <alaskareceipts@zava-online.com>",
+        "subject": "Your receipt: Seattle (SEA) round trip, confirmation KXQ4TZ",
+        "body": "Passenger: Emil Vanggaard. JFK–SEA {d0}, SEA–JFK {d3}. Economy. Total charged to card ending {card}: $486.40.",
+        "received_on": "2026-10-19"
+      },
+      {
+        "amount": 58.75,
+        "from": "Seattle Yellow Cab <yellowcabreceipts@zava-online.com>",
+        "subject": "Seattle Yellow Cab — trip receipt",
+        "body": "SEA airport to The Westin Seattle, {d0}. Fare $48.75, tip $10.00. Total $58.75.",
+        "received_on": "2026-10-26"
+      },
+      {
+        "amount": 540,
+        "from": "Canlis <canlisreservations@zava-online.com>",
+        "subject": "Your receipt from Canlis — party of 5",
+        "body": "Dinner for 5 on {d1}. Food $392.00, beverages $64.00, tax $46.00, gratuity $38.00. Total $540.00.",
+        "received_on": "2026-10-27"
+      },
+      {
+        "amount": 48.2,
+        "from": "Din Tai Fung <dintaifungreceipts@zava-online.com>",
+        "subject": "Your Din Tai Fung receipt",
+        "body": "Table for 1 on {d2}. Total $48.20.",
+        "received_on": "2026-10-28"
+      },
+      {
+        "amount": 867,
+        "from": "The Westin Seattle <westinfolio@zava-online.com>",
+        "subject": "Your folio from The Westin Seattle",
+        "body": "Guest: Emil Vanggaard. Arrive {d0}, depart {d3}. Room rate: {d0} $239.00, {d1} $239.00, {d2} $389.00 (city-wide convention rate). Total $867.00.",
+        "received_on": "2026-10-29"
+      },
+      {
+        "amount": 52.3,
+        "from": "Uber Receipts <uberreceipts@zava-online.com>",
+        "subject": "Your Thursday morning trip with Uber",
+        "body": "The Westin Seattle to SEA airport, {d3}. Total $52.30.",
+        "received_on": "2026-10-29"
+      },
+      {
+        "amount": null,
+        "from": "Zava Expense <zavaexpense@zava-online.com>",
+        "subject": "Reminder: submit your Seattle trip expenses by Friday, November 20",
+        "body": "Hi Emil, you have 8 unreported card charges from {airfare} to {d3}. Please submit them in Zava Expense by Friday, November 20.",
+        "received_on": "2026-10-30"
+      }
+    ],
+    "start": "2026-10-26",
+    "random_draw_blackout": {
+      "start": "2026-11-09",
+      "end": "2026-11-12",
+      "_comment": "Weekdays skipped by the local-spend random draws. Kept from the original generator so the draws, and with them ER-1051 ($953.09) and the Q4 totals in the lab guide, stay the same."
+    }
+  },
+  "lab_week_start": "2026-11-16"
+}

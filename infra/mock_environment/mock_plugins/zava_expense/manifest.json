@@ -1,0 +1,42 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.29/MicrosoftTeams.schema.json",
+    "manifestVersion": "1.29",
+    "version": "1.0.0",
+    "id": "e731a259-fd8d-41ef-9bd9-2f4e55be756e",
+    "developer": {
+        "name": "Tezan Sahu",
+        "websiteUrl": "https://github.com/microsoft/ignite26-LAB654",
+        "privacyUrl": "https://github.com/microsoft/ignite26-LAB654",
+        "termsOfUseUrl": "https://github.com/microsoft/ignite26-LAB654"
+    },
+    "name": {
+        "short": "Test_Zava Expense",
+        "full": "Test_Zava Expense"
+    },
+    "description": {
+        "short": "File, check and track your Zava expense reports.",
+        "full": "Zava Expense is Zava's internal expense system. This connector brings it into Microsoft 365 Copilot, so you can file and track expenses in plain language without opening the expense tool.\n\nWhat you can do:\n\n- See your expense reports and their status, including anything rejected or returned and why.\n- Find charges on your corporate card, and spot duplicate charges.\n- Create an expense report from the receipts in your email; each receipt is matched to its card charge.\n- Check a report against the Zava travel policy before you submit it.\n- Submit a report to your manager for approval, after you confirm.\n- See your travel spend for the quarter against your budget.\n\nGood to know: this is a lab mock for Microsoft Ignite LAB654. All people, companies and amounts are fictional."
+    },
+    "icons": {
+        "color": "color.png",
+        "outline": "outline.png"
+    },
+    "accentColor": "#1E6B4F",
+    "agentConnectors": [
+        {
+            "id": "dfb920af-cd16-423a-a97f-35fd14e8c4b6",
+            "displayName": "Test_Zava Expense",
+            "description": "Use Zava Expense, Zava's internal expense system, for the signed-in employee's expense reports, corporate card charges, travel policy and travel budget. Use it to list reports and their status, find card charges for a trip, create a report from receipts, check a report against the travel policy, submit it for approval, and compare travel spend with budget.\nKeywords: expenses, expense report, receipts, reimbursement, corporate card, travel policy, hotel cap, per diem, travel budget, approval, Zava",
+            "toolSource": {
+                "remoteMcpServer": {
+                    "mcpServerUrl": "https://mock-zava-expense.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp"
+                }
+            }
+        }
+    ],
+    "agentSkills": [
+        {
+            "folder": "./skills/zava-travel-policy"
+        }
+    ]
+}

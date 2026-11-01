@@ -1,0 +1,37 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.29/MicrosoftTeams.schema.json",
+    "manifestVersion": "1.29",
+    "version": "1.2.1",
+    "id": "a995d0ac-4143-4d1c-b58c-053d2a39f519",
+    "developer": {
+        "name": "Tezan Sahu",
+        "websiteUrl": "https://github.com/microsoft/ignite26-LAB654",
+        "privacyUrl": "https://github.com/microsoft/ignite26-LAB654",
+        "termsOfUseUrl": "https://github.com/microsoft/ignite26-LAB654"
+    },
+    "name": {
+        "short": "Test_iManage",
+        "full": "Test_iManage"
+    },
+    "description": {
+        "short": "Search your documents, matters, folders, and recent activity.",
+        "full": "search and retrieve content from iManage Work, including documents, matters, folders, libraries, users, workspace templates, document versions, and recent user actions. It can also save new documents and folders to a matter. Available in Microsoft 365 Copilot. An iManage LLC account is required. To sign up, visit https://imanage.com/imanage-products/document-email-management."
+    },
+    "icons": {
+        "color": "color.png",
+        "outline": "outline.png"
+    },
+    "accentColor": "#2848D8",
+    "agentConnectors": [
+        {
+            "id": "b280ab9c-6aa5-44be-ae2c-fb3588123df9",
+            "displayName": "Test_iManage",
+            "description": "Use this tool to search and retrieve content from iManage Work, including documents, matters, folders, libraries, users, workspace templates, document versions, and recent user actions.\nKeywords: imanage, imanage work, imanage cloud, work 10, imanage10, file, folder, archive, brief, dossier, matter, record, portfolio, repository, briefcase",
+            "toolSource": {
+                "remoteMcpServer": {
+                    "mcpServerUrl": "https://mock-imanage.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp"
+                }
+            }
+        }
+    ]
+}

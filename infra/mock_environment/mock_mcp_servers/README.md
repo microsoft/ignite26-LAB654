@@ -8,6 +8,7 @@ Mock MCP servers for the third-party connectors used in the scenarios. Each serv
 | [`lseg/`](lseg/README.md) | Finance | **Built.** I/B/E/S estimates and actuals, Worldscope fundamentals, pricing, news, symbology |
 | [`factset/`](factset/README.md) | Finance | **Built.** Metrics search, entity reference, RBICS, fundamentals, consensus, prices |
 | [`moodys/`](moodys/README.md) | Finance | **Built.** Entity search, ratings and history, credit opinions |
+| [`zava_expense/`](zava_expense/README.md) | Custom connector | **Built.** Zava's in-house expense app: reports, card charges, travel policy, policy check, spend vs budget, and report create, update and submit kept per conversation. Emil Vanggaard's Seattle trip with an over-cap hotel night and a duplicate Uber charge |
 | [`notion/`](notion/README.md) | Productivity | **Built.** Search, fetch, query, and page and data-source writes kept per conversation, and a Notion-style page viewer so returned links open. Aurora launch tracker, launch plan, decision log, 2 decoy trackers |
 
 ## How the built servers work
@@ -20,7 +21,7 @@ Every server has the same three layers:
 | Logic | `<server>/mock_<server>/` | One class per tool: name, description, JSON input schema, extra validation and `run()`. Errors use the real server's wording and shape. |
 | Fallback | `mockmcp.Seeded` | When a request goes beyond the recorded data (another quarter, peer or date window), values are generated from the company model with a seed derived from the inputs. The same request always gets the same answer. |
 
-Read-only tools are marked with the MCP `readOnlyHint` annotation. Each tool call receives the host's `x-microsoft-ai-conversationid` header as `ctx.conversation_id`. Notion and iManage use it to keep write changes per conversation (see [notion/README.md](notion/README.md#how-writes-work) and [imanage/README.md](imanage/README.md#conversations-and-the-viewer)).
+Read-only tools are marked with the MCP `readOnlyHint` annotation. Each tool call receives the host's `x-microsoft-ai-conversationid` header as `ctx.conversation_id`. Notion, iManage and Zava Expense use it to keep write changes per conversation (see [notion/README.md](notion/README.md#how-writes-work), [imanage/README.md](imanage/README.md#conversations-and-the-viewer) and [zava_expense/README.md](zava_expense/README.md#how-writes-work)).
 
 ## Layout
 
@@ -28,7 +29,7 @@ Read-only tools are marked with the MCP `readOnlyHint` annotation. Each tool cal
 mock_mcp_servers/
 ├── _framework/mockmcp/     # Shared: Tool base class, server spec, HTTP/stdio app, errors, seeded RNG, test helpers
 ├── _domains/finance/       # Shared finance model (mockfin): 8 semiconductor companies, calendars, financials, prices
-├── lseg/  factset/  moodys/  notion/  imanage/
+├── lseg/  factset/  moodys/  notion/  imanage/  zava_expense/
 │   ├── mock_<server>/      # Tools and server spec (python -m mock_<server>)
 │   ├── seed_files/         # Server-specific data
 │   ├── tests/              # Trace replay and behaviour tests; tests/fixtures holds the recorded calls
@@ -84,6 +85,6 @@ docker build -f lseg/Dockerfile -t mock-lseg:latest .
 docker run -p 8000:8000 mock-lseg:latest
 ```
 
-Each image runs one server over stateless streamable HTTP on port 8000, which suits Azure Container Apps (ingress to port 8000, health probe `/healthz`). The finance servers can run any number of replicas. Notion and iManage keep write state in memory, so each must run exactly one.
+Each image runs one server over stateless streamable HTTP on port 8000, which suits Azure Container Apps (ingress to port 8000, health probe `/healthz`). The finance servers can run any number of replicas. Notion, iManage and Zava Expense keep write state in memory, so each must run exactly one.
 
 See [DEPLOYMENT.md](DEPLOYMENT.md) for the Azure setup, update steps, troubleshooting and the live server URLs. See [COST_ESTIMATE.md](COST_ESTIMATE.md) for hosting costs and capacity during the lab.

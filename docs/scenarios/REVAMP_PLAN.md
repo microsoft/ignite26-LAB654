@@ -12,7 +12,7 @@ Sources: the scenario docs in this folder. Lab flow: Introduction → one of fou
 | Lab manual module | ✅ `03` (as is) | ✅ `04` rewritten | ✅ `05` rewritten | ✅ `06` new | ✅ `07` new |
 | COEP tenant data (M365) | ✅ no change expected | ✅ redated | ✅ rebuilt | ✅ new | ✅ receipts |
 | Synced connectors (COEP) | n/a | n/a | ✅ Test_Confluence | ✅ Test_GitHub | n/a |
-| Mock MCP servers (federated) | ✅ LSEG, FactSet, Moody's live | ⬜ iManage | ⬜ Salesforce | ⬜ Test_Jira | ⬜ merge Expense |
+| Mock MCP servers (federated) | ✅ LSEG, FactSet, Moody's live | ✅ iManage live | ⬜ Salesforce | ⬜ Test_Jira | ⬜ merge Expense |
 | Test plugins | ✅ 3 built | ⬜ 1 to build (Test_iManage) | ⬜ 1 to build (Test_Salesforce) | ⬜ 1 to build | n/a (admin flow) |
 | Dry run | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ |
 
@@ -152,9 +152,10 @@ All new mocks follow the Notion pattern in `mock_mcp_servers/_framework`: real t
 
 ### 5.3 Test_iManage (Legal)
 
-- [ ] Build from the existing `mock_mcp_servers/imanage/seed_files` (matter, v4.2 agreement, Exhibits A–D, Playbook v2.1, empty 04 Drafts).
-- [ ] Writes: save to 04 Drafts, conversation-scoped.
-- [ ] Use Word/Office debug traces for tool shapes.
+- [x] Build from the existing `mock_mcp_servers/imanage/seed_files` (matter, v4.2 agreement, Exhibits A–D, Playbook v2.1, empty 04 Drafts).
+- [x] Writes: save to 04 Drafts, conversation-scoped.
+- [x] Use Word/Office debug traces for tool shapes.
+- [x] Deployed as `mock-imanage` (see `mock_mcp_servers/DEPLOYMENT.md`).
 - [ ] Plugin **Test_iManage**.
 
 ### 5.4 Zava Expense (Bring your own app)

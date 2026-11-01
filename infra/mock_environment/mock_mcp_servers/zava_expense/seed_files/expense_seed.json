@@ -1,0 +1,3258 @@
+{
+ "lab_week_start": "2026-11-16",
+ "company": "Zava",
+ "employee": {
+  "name": "Emil Vanggaard",
+  "email": "emil@zava-online.com",
+  "employee_id": "ZV-20417",
+  "office": "Stamford, CT",
+  "card_last_four": "4417"
+ },
+ "manager": {
+  "name": "Hannes Niemi",
+  "email": "hannes@zava-online.com"
+ },
+ "finance_contact": {
+  "name": "Ebere Ibeabuchi",
+  "email": "ebere@zava-online.com",
+  "title": "Finance Operations Lead"
+ },
+ "clients": [
+  {
+   "name": "Fabrikam, Inc.",
+   "city": "Seattle"
+  },
+  {
+   "name": "Northwind Traders",
+   "city": "Chicago"
+  },
+  {
+   "name": "Tailspin Toys",
+   "city": "Austin"
+  },
+  {
+   "name": "Wide World Importers",
+   "city": "Boston"
+  },
+  {
+   "name": "Proseware, Inc.",
+   "city": "Dallas"
+  }
+ ],
+ "policy": {
+  "name": "Zava Travel & Expense Policy",
+  "version": "2026.2",
+  "hotel_nightly_caps_usd": {
+   "Seattle": 250,
+   "San Francisco": 300,
+   "Boston": 275,
+   "Chicago": 230,
+   "Austin": 210,
+   "Dallas": 200
+  },
+  "default_hotel_nightly_cap_usd": 200,
+  "meals_per_day_usd": 75,
+  "client_entertainment_per_person_usd": 120,
+  "receipt_required_at_or_above_usd": 25,
+  "submission_deadline_days": 30,
+  "rules": [
+   {
+    "rule_id": "TE-01",
+    "topic": "lodging",
+    "title": "Hotel nightly cap",
+    "rule": "Hotel room rate per night must not exceed the city cap (Seattle $250, San Francisco $300, Boston $275, Chicago $230, Austin $210, Dallas $200, all other cities $200), excluding taxes."
+   },
+   {
+    "rule_id": "TE-02",
+    "topic": "lodging",
+    "title": "Personal hotel charges",
+    "rule": "Minibar, in-room movies, spa and other personal charges are not reimbursable."
+   },
+   {
+    "rule_id": "TE-03",
+    "topic": "meals",
+    "title": "Travel meals",
+    "rule": "Meals while travelling are reimbursed up to $75 per person per day."
+   },
+   {
+    "rule_id": "TE-04",
+    "topic": "meals",
+    "title": "Client entertainment",
+    "rule": "Client meals and entertainment are reimbursed up to $120 per person. List the attendees and the client in the business purpose."
+   },
+   {
+    "rule_id": "TE-05",
+    "topic": "meals",
+    "title": "Alcohol",
+    "rule": "Alcohol is reimbursable only as part of client entertainment."
+   },
+   {
+    "rule_id": "TE-06",
+    "topic": "receipts",
+    "title": "Receipts",
+    "rule": "An itemized receipt is required for every expense of $25 or more."
+   },
+   {
+    "rule_id": "TE-07",
+    "topic": "airfare",
+    "title": "Class of travel",
+    "rule": "Book economy for flights under 6 hours. Book at least 14 days ahead where possible."
+   },
+   {
+    "rule_id": "TE-08",
+    "topic": "ground",
+    "title": "Ground transport",
+    "rule": "Taxis and rideshare are reimbursable. Car rentals longer than 3 days need manager pre-approval."
+   },
+   {
+    "rule_id": "TE-09",
+    "topic": "general",
+    "title": "Business purpose",
+    "rule": "Every report needs a business purpose, and the client name if the trip was client-related."
+   },
+   {
+    "rule_id": "TE-10",
+    "topic": "general",
+    "title": "Submission deadline",
+    "rule": "Submit expenses within 30 days of the trip ending."
+   },
+   {
+    "rule_id": "TE-11",
+    "topic": "general",
+    "title": "Policy exceptions",
+    "rule": "Any expense above a policy limit needs a written justification on the report and is approved by your manager."
+   },
+   {
+    "rule_id": "TE-12",
+    "topic": "general",
+    "title": "Duplicate charges",
+    "rule": "Each charge may be claimed once. Report duplicate card charges to Finance Operations so the card provider can reverse them."
+   }
+  ]
+ },
+ "budget": {
+  "owner": "Emil Vanggaard",
+  "period": "Q4 2026",
+  "period_start": "2026-10-01",
+  "period_end": "2026-12-31",
+  "lines": [
+   {
+    "category": "Airfare",
+    "budget": 2500
+   },
+   {
+    "category": "Lodging",
+    "budget": 1800
+   },
+   {
+    "category": "Meals & entertainment",
+    "budget": 1500
+   },
+   {
+    "category": "Ground transport",
+    "budget": 400
+   },
+   {
+    "category": "Conference & training",
+    "budget": 600
+   }
+  ]
+ },
+ "seattle_trip": {
+  "start": "2026-10-26",
+  "end": "2026-10-29",
+  "client": "Fabrikam, Inc.",
+  "purpose": "Fabrikam, Inc. partnership review"
+ },
+ "receipt_emails": [
+  {
+   "from": "Alaska Airlines <alaskareceipts@zava-online.com>",
+   "subject": "Your receipt: Seattle (SEA) round trip, confirmation KXQ4TZ",
+   "received_on": "2026-10-19",
+   "amount": 486.4,
+   "body": "Passenger: Emil Vanggaard. JFK–SEA October 26, SEA–JFK October 29. Economy. Total charged to card ending 4417: $486.40."
+  },
+  {
+   "from": "Seattle Yellow Cab <yellowcabreceipts@zava-online.com>",
+   "subject": "Seattle Yellow Cab — trip receipt",
+   "received_on": "2026-10-26",
+   "amount": 58.75,
+   "body": "SEA airport to The Westin Seattle, October 26. Fare $48.75, tip $10.00. Total $58.75."
+  },
+  {
+   "from": "Canlis <canlisreservations@zava-online.com>",
+   "subject": "Your receipt from Canlis — party of 5",
+   "received_on": "2026-10-27",
+   "amount": 540,
+   "body": "Dinner for 5 on October 27. Food $392.00, beverages $64.00, tax $46.00, gratuity $38.00. Total $540.00."
+  },
+  {
+   "from": "Din Tai Fung <dintaifungreceipts@zava-online.com>",
+   "subject": "Your Din Tai Fung receipt",
+   "received_on": "2026-10-28",
+   "amount": 48.2,
+   "body": "Table for 1 on October 28. Total $48.20."
+  },
+  {
+   "from": "The Westin Seattle <westinfolio@zava-online.com>",
+   "subject": "Your folio from The Westin Seattle",
+   "received_on": "2026-10-29",
+   "amount": 867,
+   "body": "Guest: Emil Vanggaard. Arrive October 26, depart October 29. Room rate: October 26 $239.00, October 27 $239.00, October 28 $389.00 (city-wide convention rate). Total $867.00."
+  },
+  {
+   "from": "Uber Receipts <uberreceipts@zava-online.com>",
+   "subject": "Your Thursday morning trip with Uber",
+   "received_on": "2026-10-29",
+   "amount": 52.3,
+   "body": "The Westin Seattle to SEA airport, October 29. Total $52.30."
+  },
+  {
+   "from": "Zava Expense <zavaexpense@zava-online.com>",
+   "subject": "Reminder: submit your Seattle trip expenses by Friday, November 20",
+   "received_on": "2026-10-30",
+   "amount": null,
+   "body": "Hi Emil, you have 8 unreported card charges from October 19 to October 29. Please submit them in Zava Expense by Friday, November 20."
+  }
+ ],
+ "transactions": [
+  {
+   "transaction_id": "TX-10029",
+   "date": "2026-06-22",
+   "merchant": "MORTONS STEAKHOUSE STAMFORD",
+   "city": "Stamford",
+   "category": "Client entertainment",
+   "amount": 111.36,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "attendees": 2,
+   "receipt_on_file": true,
+   "report_id": "ER-1047"
+  },
+  {
+   "transaction_id": "TX-10030",
+   "date": "2026-06-23",
+   "merchant": "STAPLES #0322 STAMFORD",
+   "city": "Stamford",
+   "category": "Office supplies",
+   "amount": 60.87,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1047"
+  },
+  {
+   "transaction_id": "TX-10001",
+   "date": "2026-06-26",
+   "merchant": "INSURTECH SUMMIT REG",
+   "city": "San Francisco",
+   "category": "Conference & training",
+   "amount": 450.0,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1041"
+  },
+  {
+   "transaction_id": "TX-10031",
+   "date": "2026-06-26",
+   "merchant": "UBER *TRIP",
+   "city": "Stamford",
+   "category": "Ground transport",
+   "amount": 33.66,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1047"
+  },
+  {
+   "transaction_id": "TX-10032",
+   "date": "2026-06-29",
+   "merchant": "MORTONS STEAKHOUSE STAMFORD",
+   "city": "Stamford",
+   "category": "Client entertainment",
+   "amount": 131.28,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "attendees": 3,
+   "receipt_on_file": true,
+   "report_id": "ER-1047"
+  },
+  {
+   "transaction_id": "TX-10002",
+   "date": "2026-06-30",
+   "merchant": "UNITED AIRLINES 0164421",
+   "city": "San Francisco",
+   "category": "Airfare",
+   "amount": 589.4,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1041"
+  },
+  {
+   "transaction_id": "TX-10033",
+   "date": "2026-07-01",
+   "merchant": "MORTONS STEAKHOUSE STAMFORD",
+   "city": "Stamford",
+   "category": "Client entertainment",
+   "amount": 106.34,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "attendees": 3,
+   "receipt_on_file": true,
+   "report_id": "ER-1048"
+  },
+  {
+   "transaction_id": "TX-10034",
+   "date": "2026-07-03",
+   "merchant": "VERIZON WIRELESS",
+   "city": "Online",
+   "category": "Mobile & internet",
+   "amount": 85.0,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1048"
+  },
+  {
+   "transaction_id": "TX-10035",
+   "date": "2026-07-03",
+   "merchant": "STARBUCKS #11872 STAMFORD",
+   "city": "Stamford",
+   "category": "Meals",
+   "amount": 5.31,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1048"
+  },
+  {
+   "transaction_id": "TX-10036",
+   "date": "2026-07-05",
+   "merchant": "ADOBE *ACROBAT PRO",
+   "city": "Online",
+   "category": "Software & subscriptions",
+   "amount": 19.99,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1048"
+  },
+  {
+   "transaction_id": "TX-10037",
+   "date": "2026-07-06",
+   "merchant": "MORTONS STEAKHOUSE STAMFORD",
+   "city": "Stamford",
+   "category": "Client entertainment",
+   "amount": 93.28,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "attendees": 2,
+   "receipt_on_file": true,
+   "report_id": "ER-1048"
+  },
+  {
+   "transaction_id": "TX-10038",
+   "date": "2026-07-07",
+   "merchant": "SWEETGREEN STAMFORD",
+   "city": "Stamford",
+   "category": "Meals",
+   "amount": 16.1,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1048"
+  },
+  {
+   "transaction_id": "TX-10039",
+   "date": "2026-07-09",
+   "merchant": "ZOOM.US 888-799-9666",
+   "city": "Online",
+   "category": "Software & subscriptions",
+   "amount": 15.99,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1048"
+  },
+  {
+   "transaction_id": "TX-10040",
+   "date": "2026-07-09",
+   "merchant": "STAPLES #0322 STAMFORD",
+   "city": "Stamford",
+   "category": "Office supplies",
+   "amount": 53.82,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1048"
+  },
+  {
+   "transaction_id": "TX-10041",
+   "date": "2026-07-14",
+   "merchant": "SWEETGREEN STAMFORD",
+   "city": "Stamford",
+   "category": "Meals",
+   "amount": 16.36,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1048"
+  },
+  {
+   "transaction_id": "TX-10042",
+   "date": "2026-07-15",
+   "merchant": "STAPLES #0322 STAMFORD",
+   "city": "Stamford",
+   "category": "Office supplies",
+   "amount": 71.72,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1048"
+  },
+  {
+   "transaction_id": "TX-10043",
+   "date": "2026-07-16",
+   "merchant": "UBER *TRIP",
+   "city": "Stamford",
+   "category": "Ground transport",
+   "amount": 40.4,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1048"
+  },
+  {
+   "transaction_id": "TX-10044",
+   "date": "2026-07-17",
+   "merchant": "STAPLES #0322 STAMFORD",
+   "city": "Stamford",
+   "category": "Office supplies",
+   "amount": 76.41,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1048"
+  },
+  {
+   "transaction_id": "TX-10045",
+   "date": "2026-07-20",
+   "merchant": "SWEETGREEN STAMFORD",
+   "city": "Stamford",
+   "category": "Meals",
+   "amount": 15.79,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1048"
+  },
+  {
+   "transaction_id": "TX-10046",
+   "date": "2026-07-20",
+   "merchant": "FEDEX OFFICE #0871",
+   "city": "Stamford",
+   "category": "Office supplies",
+   "amount": 43.26,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1048"
+  },
+  {
+   "transaction_id": "TX-10003",
+   "date": "2026-07-21",
+   "merchant": "SFO YELLOW CAB",
+   "city": "San Francisco",
+   "category": "Ground transport",
+   "amount": 61.5,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1041"
+  },
+  {
+   "transaction_id": "TX-10004",
+   "date": "2026-07-22",
+   "merchant": "TARTINE BAKERY SF",
+   "city": "San Francisco",
+   "category": "Meals",
+   "amount": 12.5,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1041"
+  },
+  {
+   "transaction_id": "TX-10005",
+   "date": "2026-07-23",
+   "merchant": "HOTEL ZETTA SAN FRANCISCO",
+   "city": "San Francisco",
+   "category": "Lodging",
+   "amount": 578.0,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "lodging_nights": [
+    {
+     "date": "2026-07-21",
+     "rate": 289
+    },
+    {
+     "date": "2026-07-22",
+     "rate": 289
+    }
+   ],
+   "receipt_on_file": true,
+   "report_id": "ER-1041"
+  },
+  {
+   "transaction_id": "TX-10006",
+   "date": "2026-07-23",
+   "merchant": "UBER *TRIP",
+   "city": "San Francisco",
+   "category": "Ground transport",
+   "amount": 47.25,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1041"
+  },
+  {
+   "transaction_id": "TX-10047",
+   "date": "2026-07-24",
+   "merchant": "THE CAPITAL GRILLE STAMFORD",
+   "city": "Stamford",
+   "category": "Client entertainment",
+   "amount": 214.4,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "attendees": 2,
+   "receipt_on_file": true,
+   "report_id": "ER-1048"
+  },
+  {
+   "transaction_id": "TX-10048",
+   "date": "2026-07-24",
+   "merchant": "UBER *TRIP",
+   "city": "Stamford",
+   "category": "Ground transport",
+   "amount": 41.78,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1048"
+  },
+  {
+   "transaction_id": "TX-10049",
+   "date": "2026-07-24",
+   "merchant": "STAPLES #0322 STAMFORD",
+   "city": "Stamford",
+   "category": "Office supplies",
+   "amount": 70.46,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1048"
+  },
+  {
+   "transaction_id": "TX-10050",
+   "date": "2026-07-28",
+   "merchant": "SWEETGREEN STAMFORD",
+   "city": "Stamford",
+   "category": "Meals",
+   "amount": 16.63,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1048"
+  },
+  {
+   "transaction_id": "TX-10051",
+   "date": "2026-07-31",
+   "merchant": "SWEETGREEN STAMFORD",
+   "city": "Stamford",
+   "category": "Meals",
+   "amount": 15.18,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1048"
+  },
+  {
+   "transaction_id": "TX-10052",
+   "date": "2026-08-03",
+   "merchant": "VERIZON WIRELESS",
+   "city": "Online",
+   "category": "Mobile & internet",
+   "amount": 85.0,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1049"
+  },
+  {
+   "transaction_id": "TX-10053",
+   "date": "2026-08-05",
+   "merchant": "ADOBE *ACROBAT PRO",
+   "city": "Online",
+   "category": "Software & subscriptions",
+   "amount": 19.99,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1049"
+  },
+  {
+   "transaction_id": "TX-10054",
+   "date": "2026-08-05",
+   "merchant": "MORTONS STEAKHOUSE STAMFORD",
+   "city": "Stamford",
+   "category": "Client entertainment",
+   "amount": 115.3,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "attendees": 2,
+   "receipt_on_file": true,
+   "report_id": "ER-1049"
+  },
+  {
+   "transaction_id": "TX-10055",
+   "date": "2026-08-06",
+   "merchant": "STAMFORD TRANS CTR PARKING",
+   "city": "Stamford",
+   "category": "Ground transport",
+   "amount": 24.2,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1049"
+  },
+  {
+   "transaction_id": "TX-10056",
+   "date": "2026-08-09",
+   "merchant": "ZOOM.US 888-799-9666",
+   "city": "Online",
+   "category": "Software & subscriptions",
+   "amount": 15.99,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1049"
+  },
+  {
+   "transaction_id": "TX-10057",
+   "date": "2026-08-12",
+   "merchant": "STAMFORD TRANS CTR PARKING",
+   "city": "Stamford",
+   "category": "Ground transport",
+   "amount": 14.78,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1049"
+  },
+  {
+   "transaction_id": "TX-10058",
+   "date": "2026-08-17",
+   "merchant": "UBER *TRIP",
+   "city": "Stamford",
+   "category": "Ground transport",
+   "amount": 24.12,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1049"
+  },
+  {
+   "transaction_id": "TX-10059",
+   "date": "2026-08-18",
+   "merchant": "STAMFORD TRANS CTR PARKING",
+   "city": "Stamford",
+   "category": "Ground transport",
+   "amount": 22.89,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1049"
+  },
+  {
+   "transaction_id": "TX-10060",
+   "date": "2026-08-20",
+   "merchant": "MORTONS STEAKHOUSE STAMFORD",
+   "city": "Stamford",
+   "category": "Client entertainment",
+   "amount": 128.32,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "attendees": 3,
+   "receipt_on_file": true,
+   "report_id": "ER-1049"
+  },
+  {
+   "transaction_id": "TX-10007",
+   "date": "2026-08-24",
+   "merchant": "AMERICAN AIRLINES 0012876",
+   "city": "Chicago",
+   "category": "Airfare",
+   "amount": 461.3,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1042"
+  },
+  {
+   "transaction_id": "TX-10061",
+   "date": "2026-08-25",
+   "merchant": "UBER *TRIP",
+   "city": "Stamford",
+   "category": "Ground transport",
+   "amount": 24.71,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1049"
+  },
+  {
+   "transaction_id": "TX-10062",
+   "date": "2026-08-27",
+   "merchant": "UBER *TRIP",
+   "city": "Stamford",
+   "category": "Ground transport",
+   "amount": 41.16,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1049"
+  },
+  {
+   "transaction_id": "TX-10063",
+   "date": "2026-08-31",
+   "merchant": "STAMFORD TRANS CTR PARKING",
+   "city": "Stamford",
+   "category": "Ground transport",
+   "amount": 21.17,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1049"
+  },
+  {
+   "transaction_id": "TX-10064",
+   "date": "2026-09-01",
+   "merchant": "STAMFORD TRANS CTR PARKING",
+   "city": "Stamford",
+   "category": "Ground transport",
+   "amount": 17.45,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1050"
+  },
+  {
+   "transaction_id": "TX-10065",
+   "date": "2026-09-02",
+   "merchant": "THE CAPITAL GRILLE STAMFORD",
+   "city": "Stamford",
+   "category": "Client entertainment",
+   "amount": 205.79,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "attendees": 3,
+   "receipt_on_file": true,
+   "report_id": "ER-1050"
+  },
+  {
+   "transaction_id": "TX-10066",
+   "date": "2026-09-03",
+   "merchant": "VERIZON WIRELESS",
+   "city": "Online",
+   "category": "Mobile & internet",
+   "amount": 85.0,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1050"
+  },
+  {
+   "transaction_id": "TX-10067",
+   "date": "2026-09-03",
+   "merchant": "STAPLES #0322 STAMFORD",
+   "city": "Stamford",
+   "category": "Office supplies",
+   "amount": 59.36,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1050"
+  },
+  {
+   "transaction_id": "TX-10068",
+   "date": "2026-09-04",
+   "merchant": "STARBUCKS #11872 STAMFORD",
+   "city": "Stamford",
+   "category": "Meals",
+   "amount": 7.98,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1050"
+  },
+  {
+   "transaction_id": "TX-10069",
+   "date": "2026-09-05",
+   "merchant": "ADOBE *ACROBAT PRO",
+   "city": "Online",
+   "category": "Software & subscriptions",
+   "amount": 19.99,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1050"
+  },
+  {
+   "transaction_id": "TX-10070",
+   "date": "2026-09-07",
+   "merchant": "THE CAPITAL GRILLE STAMFORD",
+   "city": "Stamford",
+   "category": "Client entertainment",
+   "amount": 186.23,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "attendees": 3,
+   "receipt_on_file": true,
+   "report_id": "ER-1050"
+  },
+  {
+   "transaction_id": "TX-10008",
+   "date": "2026-09-08",
+   "merchant": "OHARE TAXI ASSOC",
+   "city": "Chicago",
+   "category": "Ground transport",
+   "amount": 52.0,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1042"
+  },
+  {
+   "transaction_id": "TX-10009",
+   "date": "2026-09-08",
+   "merchant": "GIBSONS BAR & STEAKHOUSE",
+   "city": "Chicago",
+   "category": "Client entertainment",
+   "amount": 396.0,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "attendees": 4,
+   "receipt_on_file": true,
+   "report_id": "ER-1042"
+  },
+  {
+   "transaction_id": "TX-10010",
+   "date": "2026-09-09",
+   "merchant": "PALMER HOUSE HILTON",
+   "city": "Chicago",
+   "category": "Lodging",
+   "amount": 219.0,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "lodging_nights": [
+    {
+     "date": "2026-09-08",
+     "rate": 219
+    }
+   ],
+   "receipt_on_file": true,
+   "report_id": "ER-1042"
+  },
+  {
+   "transaction_id": "TX-10011",
+   "date": "2026-09-09",
+   "merchant": "PRET A MANGER CHICAGO",
+   "city": "Chicago",
+   "category": "Meals",
+   "amount": 14.85,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1042"
+  },
+  {
+   "transaction_id": "TX-10012",
+   "date": "2026-09-09",
+   "merchant": "AMTRAK 1830472216",
+   "city": "Boston",
+   "category": "Airfare",
+   "amount": 168.0,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1043"
+  },
+  {
+   "transaction_id": "TX-10071",
+   "date": "2026-09-09",
+   "merchant": "ZOOM.US 888-799-9666",
+   "city": "Online",
+   "category": "Software & subscriptions",
+   "amount": 15.99,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1050"
+  },
+  {
+   "transaction_id": "TX-10072",
+   "date": "2026-09-10",
+   "merchant": "THE CAPITAL GRILLE STAMFORD",
+   "city": "Stamford",
+   "category": "Client entertainment",
+   "amount": 154.53,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "attendees": 2,
+   "receipt_on_file": true,
+   "report_id": "ER-1050"
+  },
+  {
+   "transaction_id": "TX-10073",
+   "date": "2026-09-11",
+   "merchant": "UBER *TRIP",
+   "city": "Stamford",
+   "category": "Ground transport",
+   "amount": 27.58,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1050"
+  },
+  {
+   "transaction_id": "TX-10074",
+   "date": "2026-09-14",
+   "merchant": "STAPLES #0322 STAMFORD",
+   "city": "Stamford",
+   "category": "Office supplies",
+   "amount": 30.73,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1050"
+  },
+  {
+   "transaction_id": "TX-10075",
+   "date": "2026-09-16",
+   "merchant": "STAPLES #0322 STAMFORD",
+   "city": "Stamford",
+   "category": "Office supplies",
+   "amount": 54.69,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1050"
+  },
+  {
+   "transaction_id": "TX-10076",
+   "date": "2026-09-17",
+   "merchant": "FEDEX OFFICE #0871",
+   "city": "Stamford",
+   "category": "Office supplies",
+   "amount": 48.62,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1050"
+  },
+  {
+   "transaction_id": "TX-10077",
+   "date": "2026-09-18",
+   "merchant": "STARBUCKS #11872 STAMFORD",
+   "city": "Stamford",
+   "category": "Meals",
+   "amount": 6.42,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1050"
+  },
+  {
+   "transaction_id": "TX-10078",
+   "date": "2026-09-24",
+   "merchant": "FEDEX OFFICE #0871",
+   "city": "Stamford",
+   "category": "Office supplies",
+   "amount": 57.61,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1050"
+  },
+  {
+   "transaction_id": "TX-10017",
+   "date": "2026-09-27",
+   "merchant": "DELTA AIR LINES 0067733",
+   "city": "Dallas",
+   "category": "Airfare",
+   "amount": 412.9,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1044"
+  },
+  {
+   "transaction_id": "TX-10079",
+   "date": "2026-09-28",
+   "merchant": "UBER *TRIP",
+   "city": "Stamford",
+   "category": "Ground transport",
+   "amount": 18.24,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1050"
+  },
+  {
+   "transaction_id": "TX-10080",
+   "date": "2026-09-28",
+   "merchant": "THE CAPITAL GRILLE STAMFORD",
+   "city": "Stamford",
+   "category": "Client entertainment",
+   "amount": 231.12,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "attendees": 2,
+   "receipt_on_file": true,
+   "report_id": "ER-1050"
+  },
+  {
+   "transaction_id": "TX-10013",
+   "date": "2026-09-29",
+   "merchant": "BOSTON CAB DISPATCH",
+   "city": "Boston",
+   "category": "Ground transport",
+   "amount": 24.2,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1043"
+  },
+  {
+   "transaction_id": "TX-10014",
+   "date": "2026-09-29",
+   "merchant": "LEGAL SEA FOODS BOSTON",
+   "city": "Boston",
+   "category": "Client entertainment",
+   "amount": 318.4,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "attendees": 3,
+   "receipt_on_file": true,
+   "report_id": "ER-1043"
+  },
+  {
+   "transaction_id": "TX-10015",
+   "date": "2026-09-30",
+   "merchant": "HILTON BOSTON BACK BAY",
+   "city": "Boston",
+   "category": "Lodging",
+   "amount": 518.0,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "lodging_nights": [
+    {
+     "date": "2026-09-28",
+     "rate": 259
+    },
+    {
+     "date": "2026-09-29",
+     "rate": 259
+    }
+   ],
+   "receipt_on_file": true,
+   "report_id": "ER-1043"
+  },
+  {
+   "transaction_id": "TX-10016",
+   "date": "2026-10-01",
+   "merchant": "UBER *TRIP",
+   "city": "Boston",
+   "category": "Ground transport",
+   "amount": 39.6,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1043"
+  },
+  {
+   "transaction_id": "TX-10022",
+   "date": "2026-10-02",
+   "merchant": "SOUTHWEST AIRLINES 5262113",
+   "city": "Austin",
+   "category": "Airfare",
+   "amount": 348.2,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1045"
+  },
+  {
+   "transaction_id": "TX-10081",
+   "date": "2026-10-03",
+   "merchant": "VERIZON WIRELESS",
+   "city": "Online",
+   "category": "Mobile & internet",
+   "amount": 85.0,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1051"
+  },
+  {
+   "transaction_id": "TX-10082",
+   "date": "2026-10-05",
+   "merchant": "ADOBE *ACROBAT PRO",
+   "city": "Online",
+   "category": "Software & subscriptions",
+   "amount": 19.99,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1051"
+  },
+  {
+   "transaction_id": "TX-10083",
+   "date": "2026-10-05",
+   "merchant": "SWEETGREEN STAMFORD",
+   "city": "Stamford",
+   "category": "Meals",
+   "amount": 14.46,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1051"
+  },
+  {
+   "transaction_id": "TX-10084",
+   "date": "2026-10-08",
+   "merchant": "THE CAPITAL GRILLE STAMFORD",
+   "city": "Stamford",
+   "category": "Client entertainment",
+   "amount": 156.46,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "attendees": 2,
+   "receipt_on_file": true,
+   "report_id": "ER-1051"
+  },
+  {
+   "transaction_id": "TX-10085",
+   "date": "2026-10-09",
+   "merchant": "ZOOM.US 888-799-9666",
+   "city": "Online",
+   "category": "Software & subscriptions",
+   "amount": 15.99,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1051"
+  },
+  {
+   "transaction_id": "TX-10086",
+   "date": "2026-10-09",
+   "merchant": "THE CAPITAL GRILLE STAMFORD",
+   "city": "Stamford",
+   "category": "Client entertainment",
+   "amount": 221.43,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "attendees": 3,
+   "receipt_on_file": true,
+   "report_id": "ER-1051"
+  },
+  {
+   "transaction_id": "TX-10087",
+   "date": "2026-10-12",
+   "merchant": "MORTONS STEAKHOUSE STAMFORD",
+   "city": "Stamford",
+   "category": "Client entertainment",
+   "amount": 147.26,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "attendees": 3,
+   "receipt_on_file": true,
+   "report_id": "ER-1051"
+  },
+  {
+   "transaction_id": "TX-10018",
+   "date": "2026-10-13",
+   "merchant": "DFW TAXI",
+   "city": "Dallas",
+   "category": "Ground transport",
+   "amount": 41.0,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1044"
+  },
+  {
+   "transaction_id": "TX-10019",
+   "date": "2026-10-14",
+   "merchant": "PAPPAS BROS STEAKHOUSE",
+   "city": "Dallas",
+   "category": "Client entertainment",
+   "amount": 142.6,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "attendees": 2,
+   "receipt_on_file": false,
+   "report_id": "ER-1044"
+  },
+  {
+   "transaction_id": "TX-10020",
+   "date": "2026-10-15",
+   "merchant": "OMNI DALLAS HOTEL",
+   "city": "Dallas",
+   "category": "Lodging",
+   "amount": 378.0,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "lodging_nights": [
+    {
+     "date": "2026-10-13",
+     "rate": 189
+    },
+    {
+     "date": "2026-10-14",
+     "rate": 189
+    }
+   ],
+   "receipt_on_file": true,
+   "report_id": "ER-1044"
+  },
+  {
+   "transaction_id": "TX-10021",
+   "date": "2026-10-15",
+   "merchant": "LYFT *RIDE",
+   "city": "Dallas",
+   "category": "Ground transport",
+   "amount": 38.75,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1044"
+  },
+  {
+   "transaction_id": "TX-10088",
+   "date": "2026-10-16",
+   "merchant": "SWEETGREEN STAMFORD",
+   "city": "Stamford",
+   "category": "Meals",
+   "amount": 15.14,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1051"
+  },
+  {
+   "transaction_id": "TX-10089",
+   "date": "2026-10-16",
+   "merchant": "STAPLES #0322 STAMFORD",
+   "city": "Stamford",
+   "category": "Office supplies",
+   "amount": 45.03,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1051"
+  },
+  {
+   "transaction_id": "TX-10090",
+   "date": "2026-10-16",
+   "merchant": "FEDEX OFFICE #0871",
+   "city": "Stamford",
+   "category": "Office supplies",
+   "amount": 48.28,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1051"
+  },
+  {
+   "transaction_id": "TX-10091",
+   "date": "2026-10-19",
+   "merchant": "SWEETGREEN STAMFORD",
+   "city": "Stamford",
+   "category": "Meals",
+   "amount": 11.01,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1051"
+  },
+  {
+   "transaction_id": "TX-10092",
+   "date": "2026-10-19",
+   "merchant": "UBER *TRIP",
+   "city": "Stamford",
+   "category": "Ground transport",
+   "amount": 15.17,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1051"
+  },
+  {
+   "transaction_id": "TX-10104",
+   "date": "2026-10-19",
+   "merchant": "ALASKA AIR 0272345671",
+   "city": "Seattle",
+   "category": "Airfare",
+   "amount": 486.4,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": false,
+   "report_id": null
+  },
+  {
+   "transaction_id": "TX-10023",
+   "date": "2026-10-20",
+   "merchant": "AUSTIN YELLOW CAB",
+   "city": "Austin",
+   "category": "Ground transport",
+   "amount": 34.8,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1045"
+  },
+  {
+   "transaction_id": "TX-10024",
+   "date": "2026-10-20",
+   "merchant": "TORCHYS TACOS AUSTIN",
+   "city": "Austin",
+   "category": "Meals",
+   "amount": 21.4,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1045"
+  },
+  {
+   "transaction_id": "TX-10025",
+   "date": "2026-10-21",
+   "merchant": "HYATT REGENCY AUSTIN",
+   "city": "Austin",
+   "category": "Lodging",
+   "amount": 198.0,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "lodging_nights": [
+    {
+     "date": "2026-10-20",
+     "rate": 198
+    }
+   ],
+   "receipt_on_file": true,
+   "report_id": "ER-1045"
+  },
+  {
+   "transaction_id": "TX-10026",
+   "date": "2026-10-21",
+   "merchant": "UBER *TRIP",
+   "city": "Austin",
+   "category": "Ground transport",
+   "amount": 29.1,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1045"
+  },
+  {
+   "transaction_id": "TX-10027",
+   "date": "2026-10-22",
+   "merchant": "COSTCO WHSE #0318",
+   "city": "Stamford",
+   "category": "Office supplies",
+   "amount": 186.42,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1046"
+  },
+  {
+   "transaction_id": "TX-10028",
+   "date": "2026-10-22",
+   "merchant": "STAPLES #0322 STAMFORD",
+   "city": "Stamford",
+   "category": "Office supplies",
+   "amount": 64.18,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1046"
+  },
+  {
+   "transaction_id": "TX-10093",
+   "date": "2026-10-22",
+   "merchant": "STAMFORD TRANS CTR PARKING",
+   "city": "Stamford",
+   "category": "Ground transport",
+   "amount": 21.45,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1051"
+  },
+  {
+   "transaction_id": "TX-10094",
+   "date": "2026-10-22",
+   "merchant": "STAMFORD TRANS CTR PARKING",
+   "city": "Stamford",
+   "category": "Ground transport",
+   "amount": 24.95,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1051"
+  },
+  {
+   "transaction_id": "TX-10095",
+   "date": "2026-10-23",
+   "merchant": "FEDEX OFFICE #0871",
+   "city": "Stamford",
+   "category": "Office supplies",
+   "amount": 50.89,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1051"
+  },
+  {
+   "transaction_id": "TX-10096",
+   "date": "2026-10-23",
+   "merchant": "SWEETGREEN STAMFORD",
+   "city": "Stamford",
+   "category": "Meals",
+   "amount": 11.95,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1051"
+  },
+  {
+   "transaction_id": "TX-10105",
+   "date": "2026-10-26",
+   "merchant": "SEATTLE YELLOW CAB",
+   "city": "Seattle",
+   "category": "Ground transport",
+   "amount": 58.75,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": false,
+   "report_id": null
+  },
+  {
+   "transaction_id": "TX-10106",
+   "date": "2026-10-26",
+   "merchant": "STARBUCKS #1912 SEATTLE",
+   "city": "Seattle",
+   "category": "Meals",
+   "amount": 6.45,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": false,
+   "report_id": null
+  },
+  {
+   "transaction_id": "TX-10107",
+   "date": "2026-10-27",
+   "merchant": "CANLIS SEATTLE",
+   "city": "Seattle",
+   "category": "Client entertainment",
+   "amount": 540.0,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "attendees": 5,
+   "receipt_on_file": false,
+   "report_id": null
+  },
+  {
+   "transaction_id": "TX-10108",
+   "date": "2026-10-28",
+   "merchant": "DIN TAI FUNG SEATTLE",
+   "city": "Seattle",
+   "category": "Meals",
+   "amount": 48.2,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": false,
+   "report_id": null
+  },
+  {
+   "transaction_id": "TX-10109",
+   "date": "2026-10-29",
+   "merchant": "THE WESTIN SEATTLE",
+   "city": "Seattle",
+   "category": "Lodging",
+   "amount": 867.0,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "lodging_nights": [
+    {
+     "date": "2026-10-26",
+     "rate": 239
+    },
+    {
+     "date": "2026-10-27",
+     "rate": 239
+    },
+    {
+     "date": "2026-10-28",
+     "rate": 389
+    }
+   ],
+   "receipt_on_file": false,
+   "report_id": null
+  },
+  {
+   "transaction_id": "TX-10110",
+   "date": "2026-10-29",
+   "merchant": "UBER *TRIP",
+   "city": "Seattle",
+   "category": "Ground transport",
+   "amount": 52.3,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": false,
+   "report_id": null
+  },
+  {
+   "transaction_id": "TX-10111",
+   "date": "2026-10-29",
+   "merchant": "UBER *TRIP",
+   "city": "Seattle",
+   "category": "Ground transport",
+   "amount": 52.3,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": false,
+   "report_id": null
+  },
+  {
+   "transaction_id": "TX-10097",
+   "date": "2026-10-30",
+   "merchant": "SWEETGREEN STAMFORD",
+   "city": "Stamford",
+   "category": "Meals",
+   "amount": 11.31,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1051"
+  },
+  {
+   "transaction_id": "TX-10098",
+   "date": "2026-10-30",
+   "merchant": "UBER *TRIP",
+   "city": "Stamford",
+   "category": "Ground transport",
+   "amount": 37.32,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": "ER-1051"
+  },
+  {
+   "transaction_id": "TX-10099",
+   "date": "2026-11-03",
+   "merchant": "VERIZON WIRELESS",
+   "city": "Online",
+   "category": "Mobile & internet",
+   "amount": 85.0,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": null
+  },
+  {
+   "transaction_id": "TX-10100",
+   "date": "2026-11-04",
+   "merchant": "SWEETGREEN STAMFORD",
+   "city": "Stamford",
+   "category": "Meals",
+   "amount": 17.95,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": false,
+   "report_id": null
+  },
+  {
+   "transaction_id": "TX-10101",
+   "date": "2026-11-05",
+   "merchant": "ADOBE *ACROBAT PRO",
+   "city": "Online",
+   "category": "Software & subscriptions",
+   "amount": 19.99,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": null
+  },
+  {
+   "transaction_id": "TX-10102",
+   "date": "2026-11-06",
+   "merchant": "THE CAPITAL GRILLE STAMFORD",
+   "city": "Stamford",
+   "category": "Client entertainment",
+   "amount": 220.84,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "attendees": 3,
+   "receipt_on_file": false,
+   "report_id": null
+  },
+  {
+   "transaction_id": "TX-10103",
+   "date": "2026-11-09",
+   "merchant": "ZOOM.US 888-799-9666",
+   "city": "Online",
+   "category": "Software & subscriptions",
+   "amount": 15.99,
+   "currency": "USD",
+   "card_last_four": "4417",
+   "receipt_on_file": true,
+   "report_id": null
+  }
+ ],
+ "reports": [
+  {
+   "report_id": "ER-1041",
+   "title": "San Francisco — Insurance technology summit",
+   "business_purpose": "Attended the Insurance Technology Summit sessions on AI underwriting.",
+   "client": null,
+   "status": "Approved",
+   "status_reason": null,
+   "created_on": "2026-07-24",
+   "submitted_on": "2026-07-26",
+   "decided_on": "2026-07-29",
+   "reimbursed_on": "2026-08-03",
+   "approver": "Hannes Niemi",
+   "justification": null,
+   "note_to_approver": null,
+   "items": [
+    {
+     "item_id": "LI-1",
+     "transaction_id": "TX-10001",
+     "date": "2026-06-26",
+     "merchant": "INSURTECH SUMMIT REG",
+     "city": "San Francisco",
+     "category": "Conference & training",
+     "amount": 450.0,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10001.pdf"
+     }
+    },
+    {
+     "item_id": "LI-2",
+     "transaction_id": "TX-10002",
+     "date": "2026-06-30",
+     "merchant": "UNITED AIRLINES 0164421",
+     "city": "San Francisco",
+     "category": "Airfare",
+     "amount": 589.4,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10002.pdf"
+     }
+    },
+    {
+     "item_id": "LI-3",
+     "transaction_id": "TX-10003",
+     "date": "2026-07-21",
+     "merchant": "SFO YELLOW CAB",
+     "city": "San Francisco",
+     "category": "Ground transport",
+     "amount": 61.5,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10003.pdf"
+     }
+    },
+    {
+     "item_id": "LI-4",
+     "transaction_id": "TX-10004",
+     "date": "2026-07-22",
+     "merchant": "TARTINE BAKERY SF",
+     "city": "San Francisco",
+     "category": "Meals",
+     "amount": 12.5,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10004.pdf"
+     }
+    },
+    {
+     "item_id": "LI-5",
+     "transaction_id": "TX-10005",
+     "date": "2026-07-23",
+     "merchant": "HOTEL ZETTA SAN FRANCISCO",
+     "city": "San Francisco",
+     "category": "Lodging",
+     "amount": 578.0,
+     "lodging_nights": [
+      {
+       "date": "2026-07-21",
+       "rate": 289
+      },
+      {
+       "date": "2026-07-22",
+       "rate": 289
+      }
+     ],
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10005.pdf"
+     }
+    },
+    {
+     "item_id": "LI-6",
+     "transaction_id": "TX-10006",
+     "date": "2026-07-23",
+     "merchant": "UBER *TRIP",
+     "city": "San Francisco",
+     "category": "Ground transport",
+     "amount": 47.25,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10006.pdf"
+     }
+    }
+   ],
+   "total": 1738.65
+  },
+  {
+   "report_id": "ER-1042",
+   "title": "Chicago — Northwind Traders quarterly business review",
+   "business_purpose": "Quarterly business review with Northwind Traders.",
+   "client": "Northwind Traders",
+   "status": "Approved",
+   "status_reason": null,
+   "created_on": "2026-09-10",
+   "submitted_on": "2026-09-12",
+   "decided_on": "2026-09-15",
+   "reimbursed_on": "2026-09-20",
+   "approver": "Hannes Niemi",
+   "justification": null,
+   "note_to_approver": null,
+   "items": [
+    {
+     "item_id": "LI-7",
+     "transaction_id": "TX-10007",
+     "date": "2026-08-24",
+     "merchant": "AMERICAN AIRLINES 0012876",
+     "city": "Chicago",
+     "category": "Airfare",
+     "amount": 461.3,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10007.pdf"
+     }
+    },
+    {
+     "item_id": "LI-8",
+     "transaction_id": "TX-10008",
+     "date": "2026-09-08",
+     "merchant": "OHARE TAXI ASSOC",
+     "city": "Chicago",
+     "category": "Ground transport",
+     "amount": 52.0,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10008.pdf"
+     }
+    },
+    {
+     "item_id": "LI-9",
+     "transaction_id": "TX-10009",
+     "date": "2026-09-08",
+     "merchant": "GIBSONS BAR & STEAKHOUSE",
+     "city": "Chicago",
+     "category": "Client entertainment",
+     "amount": 396.0,
+     "attendees": 4,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10009.pdf"
+     }
+    },
+    {
+     "item_id": "LI-10",
+     "transaction_id": "TX-10010",
+     "date": "2026-09-09",
+     "merchant": "PALMER HOUSE HILTON",
+     "city": "Chicago",
+     "category": "Lodging",
+     "amount": 219.0,
+     "lodging_nights": [
+      {
+       "date": "2026-09-08",
+       "rate": 219
+      }
+     ],
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10010.pdf"
+     }
+    },
+    {
+     "item_id": "LI-11",
+     "transaction_id": "TX-10011",
+     "date": "2026-09-09",
+     "merchant": "PRET A MANGER CHICAGO",
+     "city": "Chicago",
+     "category": "Meals",
+     "amount": 14.85,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10011.pdf"
+     }
+    }
+   ],
+   "total": 1143.15
+  },
+  {
+   "report_id": "ER-1043",
+   "title": "Boston — Wide World Importers renewal",
+   "business_purpose": "Contract renewal meeting with Wide World Importers procurement.",
+   "client": "Wide World Importers",
+   "status": "Approved",
+   "status_reason": null,
+   "created_on": "2026-10-02",
+   "submitted_on": "2026-10-04",
+   "decided_on": "2026-10-07",
+   "reimbursed_on": "2026-10-12",
+   "approver": "Hannes Niemi",
+   "justification": null,
+   "note_to_approver": null,
+   "items": [
+    {
+     "item_id": "LI-12",
+     "transaction_id": "TX-10012",
+     "date": "2026-09-09",
+     "merchant": "AMTRAK 1830472216",
+     "city": "Boston",
+     "category": "Airfare",
+     "amount": 168.0,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10012.pdf"
+     }
+    },
+    {
+     "item_id": "LI-13",
+     "transaction_id": "TX-10013",
+     "date": "2026-09-29",
+     "merchant": "BOSTON CAB DISPATCH",
+     "city": "Boston",
+     "category": "Ground transport",
+     "amount": 24.2,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10013.pdf"
+     }
+    },
+    {
+     "item_id": "LI-14",
+     "transaction_id": "TX-10014",
+     "date": "2026-09-29",
+     "merchant": "LEGAL SEA FOODS BOSTON",
+     "city": "Boston",
+     "category": "Client entertainment",
+     "amount": 318.4,
+     "attendees": 3,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10014.pdf"
+     }
+    },
+    {
+     "item_id": "LI-15",
+     "transaction_id": "TX-10015",
+     "date": "2026-09-30",
+     "merchant": "HILTON BOSTON BACK BAY",
+     "city": "Boston",
+     "category": "Lodging",
+     "amount": 518.0,
+     "lodging_nights": [
+      {
+       "date": "2026-09-28",
+       "rate": 259
+      },
+      {
+       "date": "2026-09-29",
+       "rate": 259
+      }
+     ],
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10015.pdf"
+     }
+    },
+    {
+     "item_id": "LI-16",
+     "transaction_id": "TX-10016",
+     "date": "2026-10-01",
+     "merchant": "UBER *TRIP",
+     "city": "Boston",
+     "category": "Ground transport",
+     "amount": 39.6,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10016.pdf"
+     }
+    }
+   ],
+   "total": 1068.2
+  },
+  {
+   "report_id": "ER-1044",
+   "title": "Dallas — Proseware partner meeting",
+   "business_purpose": "Partner meeting with Proseware, Inc. on claims-data integration.",
+   "client": "Proseware, Inc.",
+   "status": "Rejected",
+   "status_reason": "Missing itemized receipt for PAPPAS BROS STEAKHOUSE ($142.60). Policy TE-06 requires a receipt for every expense of $25 or more. Attach the receipt and resubmit.",
+   "created_on": "2026-10-16",
+   "submitted_on": "2026-10-18",
+   "decided_on": "2026-10-21",
+   "reimbursed_on": null,
+   "approver": "Hannes Niemi",
+   "justification": null,
+   "note_to_approver": null,
+   "items": [
+    {
+     "item_id": "LI-17",
+     "transaction_id": "TX-10017",
+     "date": "2026-09-27",
+     "merchant": "DELTA AIR LINES 0067733",
+     "city": "Dallas",
+     "category": "Airfare",
+     "amount": 412.9,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10017.pdf"
+     }
+    },
+    {
+     "item_id": "LI-18",
+     "transaction_id": "TX-10018",
+     "date": "2026-10-13",
+     "merchant": "DFW TAXI",
+     "city": "Dallas",
+     "category": "Ground transport",
+     "amount": 41.0,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10018.pdf"
+     }
+    },
+    {
+     "item_id": "LI-19",
+     "transaction_id": "TX-10019",
+     "date": "2026-10-14",
+     "merchant": "PAPPAS BROS STEAKHOUSE",
+     "city": "Dallas",
+     "category": "Client entertainment",
+     "amount": 142.6,
+     "attendees": 2,
+     "receipt": {
+      "attached": false
+     }
+    },
+    {
+     "item_id": "LI-20",
+     "transaction_id": "TX-10020",
+     "date": "2026-10-15",
+     "merchant": "OMNI DALLAS HOTEL",
+     "city": "Dallas",
+     "category": "Lodging",
+     "amount": 378.0,
+     "lodging_nights": [
+      {
+       "date": "2026-10-13",
+       "rate": 189
+      },
+      {
+       "date": "2026-10-14",
+       "rate": 189
+      }
+     ],
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10020.pdf"
+     }
+    },
+    {
+     "item_id": "LI-21",
+     "transaction_id": "TX-10021",
+     "date": "2026-10-15",
+     "merchant": "LYFT *RIDE",
+     "city": "Dallas",
+     "category": "Ground transport",
+     "amount": 38.75,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10021.pdf"
+     }
+    }
+   ],
+   "total": 1013.25
+  },
+  {
+   "report_id": "ER-1045",
+   "title": "Austin — Tailspin Toys onboarding",
+   "business_purpose": "On-site onboarding workshop with the Tailspin Toys operations team.",
+   "client": "Tailspin Toys",
+   "status": "Pending approval",
+   "status_reason": null,
+   "created_on": "2026-10-22",
+   "submitted_on": "2026-10-24",
+   "decided_on": null,
+   "reimbursed_on": null,
+   "approver": "Hannes Niemi",
+   "justification": null,
+   "note_to_approver": null,
+   "items": [
+    {
+     "item_id": "LI-22",
+     "transaction_id": "TX-10022",
+     "date": "2026-10-02",
+     "merchant": "SOUTHWEST AIRLINES 5262113",
+     "city": "Austin",
+     "category": "Airfare",
+     "amount": 348.2,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10022.pdf"
+     }
+    },
+    {
+     "item_id": "LI-23",
+     "transaction_id": "TX-10023",
+     "date": "2026-10-20",
+     "merchant": "AUSTIN YELLOW CAB",
+     "city": "Austin",
+     "category": "Ground transport",
+     "amount": 34.8,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10023.pdf"
+     }
+    },
+    {
+     "item_id": "LI-24",
+     "transaction_id": "TX-10024",
+     "date": "2026-10-20",
+     "merchant": "TORCHYS TACOS AUSTIN",
+     "city": "Austin",
+     "category": "Meals",
+     "amount": 21.4,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10024.pdf"
+     }
+    },
+    {
+     "item_id": "LI-25",
+     "transaction_id": "TX-10025",
+     "date": "2026-10-21",
+     "merchant": "HYATT REGENCY AUSTIN",
+     "city": "Austin",
+     "category": "Lodging",
+     "amount": 198.0,
+     "lodging_nights": [
+      {
+       "date": "2026-10-20",
+       "rate": 198
+      }
+     ],
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10025.pdf"
+     }
+    },
+    {
+     "item_id": "LI-26",
+     "transaction_id": "TX-10026",
+     "date": "2026-10-21",
+     "merchant": "UBER *TRIP",
+     "city": "Austin",
+     "category": "Ground transport",
+     "amount": 29.1,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10026.pdf"
+     }
+    }
+   ],
+   "total": 631.5
+  },
+  {
+   "report_id": "ER-1046",
+   "title": "Team offsite supplies",
+   "business_purpose": "",
+   "client": null,
+   "status": "Returned",
+   "status_reason": "Returned by Hannes Niemi: add a business purpose and the list of attendees, then resubmit (policy TE-09).",
+   "created_on": "2026-10-23",
+   "submitted_on": "2026-10-24",
+   "decided_on": "2026-10-26",
+   "reimbursed_on": null,
+   "approver": "Hannes Niemi",
+   "justification": null,
+   "note_to_approver": null,
+   "items": [
+    {
+     "item_id": "LI-27",
+     "transaction_id": "TX-10027",
+     "date": "2026-10-22",
+     "merchant": "COSTCO WHSE #0318",
+     "city": "Stamford",
+     "category": "Office supplies",
+     "amount": 186.42,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10027.pdf"
+     }
+    },
+    {
+     "item_id": "LI-28",
+     "transaction_id": "TX-10028",
+     "date": "2026-10-22",
+     "merchant": "STAPLES #0322 STAMFORD",
+     "city": "Stamford",
+     "category": "Office supplies",
+     "amount": 64.18,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10028.pdf"
+     }
+    }
+   ],
+   "total": 250.6
+  },
+  {
+   "report_id": "ER-1047",
+   "title": "Local expenses and subscriptions — June 2026",
+   "business_purpose": "Local client meetings, travel to customer sites and monthly software subscriptions.",
+   "client": null,
+   "status": "Approved",
+   "status_reason": null,
+   "created_on": "2026-07-02",
+   "submitted_on": "2026-07-03",
+   "decided_on": "2026-07-07",
+   "reimbursed_on": "2026-07-12",
+   "approver": "Hannes Niemi",
+   "justification": null,
+   "note_to_approver": null,
+   "items": [
+    {
+     "item_id": "LI-29",
+     "transaction_id": "TX-10029",
+     "date": "2026-06-22",
+     "merchant": "MORTONS STEAKHOUSE STAMFORD",
+     "city": "Stamford",
+     "category": "Client entertainment",
+     "amount": 111.36,
+     "attendees": 2,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10029.pdf"
+     }
+    },
+    {
+     "item_id": "LI-30",
+     "transaction_id": "TX-10030",
+     "date": "2026-06-23",
+     "merchant": "STAPLES #0322 STAMFORD",
+     "city": "Stamford",
+     "category": "Office supplies",
+     "amount": 60.87,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10030.pdf"
+     }
+    },
+    {
+     "item_id": "LI-31",
+     "transaction_id": "TX-10031",
+     "date": "2026-06-26",
+     "merchant": "UBER *TRIP",
+     "city": "Stamford",
+     "category": "Ground transport",
+     "amount": 33.66,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10031.pdf"
+     }
+    },
+    {
+     "item_id": "LI-32",
+     "transaction_id": "TX-10032",
+     "date": "2026-06-29",
+     "merchant": "MORTONS STEAKHOUSE STAMFORD",
+     "city": "Stamford",
+     "category": "Client entertainment",
+     "amount": 131.28,
+     "attendees": 3,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10032.pdf"
+     }
+    }
+   ],
+   "total": 337.17
+  },
+  {
+   "report_id": "ER-1048",
+   "title": "Local expenses and subscriptions — July 2026",
+   "business_purpose": "Local client meetings, travel to customer sites and monthly software subscriptions.",
+   "client": null,
+   "status": "Approved",
+   "status_reason": null,
+   "created_on": "2026-08-02",
+   "submitted_on": "2026-08-03",
+   "decided_on": "2026-08-07",
+   "reimbursed_on": "2026-08-12",
+   "approver": "Hannes Niemi",
+   "justification": null,
+   "note_to_approver": null,
+   "items": [
+    {
+     "item_id": "LI-33",
+     "transaction_id": "TX-10033",
+     "date": "2026-07-01",
+     "merchant": "MORTONS STEAKHOUSE STAMFORD",
+     "city": "Stamford",
+     "category": "Client entertainment",
+     "amount": 106.34,
+     "attendees": 3,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10033.pdf"
+     }
+    },
+    {
+     "item_id": "LI-34",
+     "transaction_id": "TX-10034",
+     "date": "2026-07-03",
+     "merchant": "VERIZON WIRELESS",
+     "city": "Online",
+     "category": "Mobile & internet",
+     "amount": 85.0,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10034.pdf"
+     }
+    },
+    {
+     "item_id": "LI-35",
+     "transaction_id": "TX-10035",
+     "date": "2026-07-03",
+     "merchant": "STARBUCKS #11872 STAMFORD",
+     "city": "Stamford",
+     "category": "Meals",
+     "amount": 5.31,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10035.pdf"
+     }
+    },
+    {
+     "item_id": "LI-36",
+     "transaction_id": "TX-10036",
+     "date": "2026-07-05",
+     "merchant": "ADOBE *ACROBAT PRO",
+     "city": "Online",
+     "category": "Software & subscriptions",
+     "amount": 19.99,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10036.pdf"
+     }
+    },
+    {
+     "item_id": "LI-37",
+     "transaction_id": "TX-10037",
+     "date": "2026-07-06",
+     "merchant": "MORTONS STEAKHOUSE STAMFORD",
+     "city": "Stamford",
+     "category": "Client entertainment",
+     "amount": 93.28,
+     "attendees": 2,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10037.pdf"
+     }
+    },
+    {
+     "item_id": "LI-38",
+     "transaction_id": "TX-10038",
+     "date": "2026-07-07",
+     "merchant": "SWEETGREEN STAMFORD",
+     "city": "Stamford",
+     "category": "Meals",
+     "amount": 16.1,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10038.pdf"
+     }
+    },
+    {
+     "item_id": "LI-39",
+     "transaction_id": "TX-10039",
+     "date": "2026-07-09",
+     "merchant": "ZOOM.US 888-799-9666",
+     "city": "Online",
+     "category": "Software & subscriptions",
+     "amount": 15.99,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10039.pdf"
+     }
+    },
+    {
+     "item_id": "LI-40",
+     "transaction_id": "TX-10040",
+     "date": "2026-07-09",
+     "merchant": "STAPLES #0322 STAMFORD",
+     "city": "Stamford",
+     "category": "Office supplies",
+     "amount": 53.82,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10040.pdf"
+     }
+    },
+    {
+     "item_id": "LI-41",
+     "transaction_id": "TX-10041",
+     "date": "2026-07-14",
+     "merchant": "SWEETGREEN STAMFORD",
+     "city": "Stamford",
+     "category": "Meals",
+     "amount": 16.36,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10041.pdf"
+     }
+    },
+    {
+     "item_id": "LI-42",
+     "transaction_id": "TX-10042",
+     "date": "2026-07-15",
+     "merchant": "STAPLES #0322 STAMFORD",
+     "city": "Stamford",
+     "category": "Office supplies",
+     "amount": 71.72,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10042.pdf"
+     }
+    },
+    {
+     "item_id": "LI-43",
+     "transaction_id": "TX-10043",
+     "date": "2026-07-16",
+     "merchant": "UBER *TRIP",
+     "city": "Stamford",
+     "category": "Ground transport",
+     "amount": 40.4,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10043.pdf"
+     }
+    },
+    {
+     "item_id": "LI-44",
+     "transaction_id": "TX-10044",
+     "date": "2026-07-17",
+     "merchant": "STAPLES #0322 STAMFORD",
+     "city": "Stamford",
+     "category": "Office supplies",
+     "amount": 76.41,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10044.pdf"
+     }
+    },
+    {
+     "item_id": "LI-45",
+     "transaction_id": "TX-10045",
+     "date": "2026-07-20",
+     "merchant": "SWEETGREEN STAMFORD",
+     "city": "Stamford",
+     "category": "Meals",
+     "amount": 15.79,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10045.pdf"
+     }
+    },
+    {
+     "item_id": "LI-46",
+     "transaction_id": "TX-10046",
+     "date": "2026-07-20",
+     "merchant": "FEDEX OFFICE #0871",
+     "city": "Stamford",
+     "category": "Office supplies",
+     "amount": 43.26,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10046.pdf"
+     }
+    },
+    {
+     "item_id": "LI-47",
+     "transaction_id": "TX-10047",
+     "date": "2026-07-24",
+     "merchant": "THE CAPITAL GRILLE STAMFORD",
+     "city": "Stamford",
+     "category": "Client entertainment",
+     "amount": 214.4,
+     "attendees": 2,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10047.pdf"
+     }
+    },
+    {
+     "item_id": "LI-48",
+     "transaction_id": "TX-10048",
+     "date": "2026-07-24",
+     "merchant": "UBER *TRIP",
+     "city": "Stamford",
+     "category": "Ground transport",
+     "amount": 41.78,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10048.pdf"
+     }
+    },
+    {
+     "item_id": "LI-49",
+     "transaction_id": "TX-10049",
+     "date": "2026-07-24",
+     "merchant": "STAPLES #0322 STAMFORD",
+     "city": "Stamford",
+     "category": "Office supplies",
+     "amount": 70.46,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10049.pdf"
+     }
+    },
+    {
+     "item_id": "LI-50",
+     "transaction_id": "TX-10050",
+     "date": "2026-07-28",
+     "merchant": "SWEETGREEN STAMFORD",
+     "city": "Stamford",
+     "category": "Meals",
+     "amount": 16.63,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10050.pdf"
+     }
+    },
+    {
+     "item_id": "LI-51",
+     "transaction_id": "TX-10051",
+     "date": "2026-07-31",
+     "merchant": "SWEETGREEN STAMFORD",
+     "city": "Stamford",
+     "category": "Meals",
+     "amount": 15.18,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10051.pdf"
+     }
+    }
+   ],
+   "total": 1018.22
+  },
+  {
+   "report_id": "ER-1049",
+   "title": "Local expenses and subscriptions — August 2026",
+   "business_purpose": "Local client meetings, travel to customer sites and monthly software subscriptions.",
+   "client": null,
+   "status": "Approved",
+   "status_reason": null,
+   "created_on": "2026-09-02",
+   "submitted_on": "2026-09-03",
+   "decided_on": "2026-09-07",
+   "reimbursed_on": "2026-09-12",
+   "approver": "Hannes Niemi",
+   "justification": null,
+   "note_to_approver": null,
+   "items": [
+    {
+     "item_id": "LI-52",
+     "transaction_id": "TX-10052",
+     "date": "2026-08-03",
+     "merchant": "VERIZON WIRELESS",
+     "city": "Online",
+     "category": "Mobile & internet",
+     "amount": 85.0,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10052.pdf"
+     }
+    },
+    {
+     "item_id": "LI-53",
+     "transaction_id": "TX-10053",
+     "date": "2026-08-05",
+     "merchant": "ADOBE *ACROBAT PRO",
+     "city": "Online",
+     "category": "Software & subscriptions",
+     "amount": 19.99,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10053.pdf"
+     }
+    },
+    {
+     "item_id": "LI-54",
+     "transaction_id": "TX-10054",
+     "date": "2026-08-05",
+     "merchant": "MORTONS STEAKHOUSE STAMFORD",
+     "city": "Stamford",
+     "category": "Client entertainment",
+     "amount": 115.3,
+     "attendees": 2,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10054.pdf"
+     }
+    },
+    {
+     "item_id": "LI-55",
+     "transaction_id": "TX-10055",
+     "date": "2026-08-06",
+     "merchant": "STAMFORD TRANS CTR PARKING",
+     "city": "Stamford",
+     "category": "Ground transport",
+     "amount": 24.2,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10055.pdf"
+     }
+    },
+    {
+     "item_id": "LI-56",
+     "transaction_id": "TX-10056",
+     "date": "2026-08-09",
+     "merchant": "ZOOM.US 888-799-9666",
+     "city": "Online",
+     "category": "Software & subscriptions",
+     "amount": 15.99,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10056.pdf"
+     }
+    },
+    {
+     "item_id": "LI-57",
+     "transaction_id": "TX-10057",
+     "date": "2026-08-12",
+     "merchant": "STAMFORD TRANS CTR PARKING",
+     "city": "Stamford",
+     "category": "Ground transport",
+     "amount": 14.78,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10057.pdf"
+     }
+    },
+    {
+     "item_id": "LI-58",
+     "transaction_id": "TX-10058",
+     "date": "2026-08-17",
+     "merchant": "UBER *TRIP",
+     "city": "Stamford",
+     "category": "Ground transport",
+     "amount": 24.12,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10058.pdf"
+     }
+    },
+    {
+     "item_id": "LI-59",
+     "transaction_id": "TX-10059",
+     "date": "2026-08-18",
+     "merchant": "STAMFORD TRANS CTR PARKING",
+     "city": "Stamford",
+     "category": "Ground transport",
+     "amount": 22.89,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10059.pdf"
+     }
+    },
+    {
+     "item_id": "LI-60",
+     "transaction_id": "TX-10060",
+     "date": "2026-08-20",
+     "merchant": "MORTONS STEAKHOUSE STAMFORD",
+     "city": "Stamford",
+     "category": "Client entertainment",
+     "amount": 128.32,
+     "attendees": 3,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10060.pdf"
+     }
+    },
+    {
+     "item_id": "LI-61",
+     "transaction_id": "TX-10061",
+     "date": "2026-08-25",
+     "merchant": "UBER *TRIP",
+     "city": "Stamford",
+     "category": "Ground transport",
+     "amount": 24.71,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10061.pdf"
+     }
+    },
+    {
+     "item_id": "LI-62",
+     "transaction_id": "TX-10062",
+     "date": "2026-08-27",
+     "merchant": "UBER *TRIP",
+     "city": "Stamford",
+     "category": "Ground transport",
+     "amount": 41.16,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10062.pdf"
+     }
+    },
+    {
+     "item_id": "LI-63",
+     "transaction_id": "TX-10063",
+     "date": "2026-08-31",
+     "merchant": "STAMFORD TRANS CTR PARKING",
+     "city": "Stamford",
+     "category": "Ground transport",
+     "amount": 21.17,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10063.pdf"
+     }
+    }
+   ],
+   "total": 537.63
+  },
+  {
+   "report_id": "ER-1050",
+   "title": "Local expenses and subscriptions — September 2026",
+   "business_purpose": "Local client meetings, travel to customer sites and monthly software subscriptions.",
+   "client": null,
+   "status": "Approved",
+   "status_reason": null,
+   "created_on": "2026-10-02",
+   "submitted_on": "2026-10-03",
+   "decided_on": "2026-10-07",
+   "reimbursed_on": "2026-10-12",
+   "approver": "Hannes Niemi",
+   "justification": null,
+   "note_to_approver": null,
+   "items": [
+    {
+     "item_id": "LI-64",
+     "transaction_id": "TX-10064",
+     "date": "2026-09-01",
+     "merchant": "STAMFORD TRANS CTR PARKING",
+     "city": "Stamford",
+     "category": "Ground transport",
+     "amount": 17.45,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10064.pdf"
+     }
+    },
+    {
+     "item_id": "LI-65",
+     "transaction_id": "TX-10065",
+     "date": "2026-09-02",
+     "merchant": "THE CAPITAL GRILLE STAMFORD",
+     "city": "Stamford",
+     "category": "Client entertainment",
+     "amount": 205.79,
+     "attendees": 3,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10065.pdf"
+     }
+    },
+    {
+     "item_id": "LI-66",
+     "transaction_id": "TX-10066",
+     "date": "2026-09-03",
+     "merchant": "VERIZON WIRELESS",
+     "city": "Online",
+     "category": "Mobile & internet",
+     "amount": 85.0,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10066.pdf"
+     }
+    },
+    {
+     "item_id": "LI-67",
+     "transaction_id": "TX-10067",
+     "date": "2026-09-03",
+     "merchant": "STAPLES #0322 STAMFORD",
+     "city": "Stamford",
+     "category": "Office supplies",
+     "amount": 59.36,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10067.pdf"
+     }
+    },
+    {
+     "item_id": "LI-68",
+     "transaction_id": "TX-10068",
+     "date": "2026-09-04",
+     "merchant": "STARBUCKS #11872 STAMFORD",
+     "city": "Stamford",
+     "category": "Meals",
+     "amount": 7.98,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10068.pdf"
+     }
+    },
+    {
+     "item_id": "LI-69",
+     "transaction_id": "TX-10069",
+     "date": "2026-09-05",
+     "merchant": "ADOBE *ACROBAT PRO",
+     "city": "Online",
+     "category": "Software & subscriptions",
+     "amount": 19.99,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10069.pdf"
+     }
+    },
+    {
+     "item_id": "LI-70",
+     "transaction_id": "TX-10070",
+     "date": "2026-09-07",
+     "merchant": "THE CAPITAL GRILLE STAMFORD",
+     "city": "Stamford",
+     "category": "Client entertainment",
+     "amount": 186.23,
+     "attendees": 3,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10070.pdf"
+     }
+    },
+    {
+     "item_id": "LI-71",
+     "transaction_id": "TX-10071",
+     "date": "2026-09-09",
+     "merchant": "ZOOM.US 888-799-9666",
+     "city": "Online",
+     "category": "Software & subscriptions",
+     "amount": 15.99,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10071.pdf"
+     }
+    },
+    {
+     "item_id": "LI-72",
+     "transaction_id": "TX-10072",
+     "date": "2026-09-10",
+     "merchant": "THE CAPITAL GRILLE STAMFORD",
+     "city": "Stamford",
+     "category": "Client entertainment",
+     "amount": 154.53,
+     "attendees": 2,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10072.pdf"
+     }
+    },
+    {
+     "item_id": "LI-73",
+     "transaction_id": "TX-10073",
+     "date": "2026-09-11",
+     "merchant": "UBER *TRIP",
+     "city": "Stamford",
+     "category": "Ground transport",
+     "amount": 27.58,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10073.pdf"
+     }
+    },
+    {
+     "item_id": "LI-74",
+     "transaction_id": "TX-10074",
+     "date": "2026-09-14",
+     "merchant": "STAPLES #0322 STAMFORD",
+     "city": "Stamford",
+     "category": "Office supplies",
+     "amount": 30.73,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10074.pdf"
+     }
+    },
+    {
+     "item_id": "LI-75",
+     "transaction_id": "TX-10075",
+     "date": "2026-09-16",
+     "merchant": "STAPLES #0322 STAMFORD",
+     "city": "Stamford",
+     "category": "Office supplies",
+     "amount": 54.69,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10075.pdf"
+     }
+    },
+    {
+     "item_id": "LI-76",
+     "transaction_id": "TX-10076",
+     "date": "2026-09-17",
+     "merchant": "FEDEX OFFICE #0871",
+     "city": "Stamford",
+     "category": "Office supplies",
+     "amount": 48.62,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10076.pdf"
+     }
+    },
+    {
+     "item_id": "LI-77",
+     "transaction_id": "TX-10077",
+     "date": "2026-09-18",
+     "merchant": "STARBUCKS #11872 STAMFORD",
+     "city": "Stamford",
+     "category": "Meals",
+     "amount": 6.42,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10077.pdf"
+     }
+    },
+    {
+     "item_id": "LI-78",
+     "transaction_id": "TX-10078",
+     "date": "2026-09-24",
+     "merchant": "FEDEX OFFICE #0871",
+     "city": "Stamford",
+     "category": "Office supplies",
+     "amount": 57.61,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10078.pdf"
+     }
+    },
+    {
+     "item_id": "LI-79",
+     "transaction_id": "TX-10079",
+     "date": "2026-09-28",
+     "merchant": "UBER *TRIP",
+     "city": "Stamford",
+     "category": "Ground transport",
+     "amount": 18.24,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10079.pdf"
+     }
+    },
+    {
+     "item_id": "LI-80",
+     "transaction_id": "TX-10080",
+     "date": "2026-09-28",
+     "merchant": "THE CAPITAL GRILLE STAMFORD",
+     "city": "Stamford",
+     "category": "Client entertainment",
+     "amount": 231.12,
+     "attendees": 2,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10080.pdf"
+     }
+    }
+   ],
+   "total": 1227.33
+  },
+  {
+   "report_id": "ER-1051",
+   "title": "Local expenses and subscriptions — October 2026",
+   "business_purpose": "Local client meetings, travel to customer sites and monthly software subscriptions.",
+   "client": null,
+   "status": "Pending approval",
+   "status_reason": null,
+   "created_on": "2026-11-02",
+   "submitted_on": "2026-11-03",
+   "decided_on": null,
+   "reimbursed_on": null,
+   "approver": "Hannes Niemi",
+   "justification": null,
+   "note_to_approver": null,
+   "items": [
+    {
+     "item_id": "LI-81",
+     "transaction_id": "TX-10081",
+     "date": "2026-10-03",
+     "merchant": "VERIZON WIRELESS",
+     "city": "Online",
+     "category": "Mobile & internet",
+     "amount": 85.0,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10081.pdf"
+     }
+    },
+    {
+     "item_id": "LI-82",
+     "transaction_id": "TX-10082",
+     "date": "2026-10-05",
+     "merchant": "ADOBE *ACROBAT PRO",
+     "city": "Online",
+     "category": "Software & subscriptions",
+     "amount": 19.99,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10082.pdf"
+     }
+    },
+    {
+     "item_id": "LI-83",
+     "transaction_id": "TX-10083",
+     "date": "2026-10-05",
+     "merchant": "SWEETGREEN STAMFORD",
+     "city": "Stamford",
+     "category": "Meals",
+     "amount": 14.46,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10083.pdf"
+     }
+    },
+    {
+     "item_id": "LI-84",
+     "transaction_id": "TX-10084",
+     "date": "2026-10-08",
+     "merchant": "THE CAPITAL GRILLE STAMFORD",
+     "city": "Stamford",
+     "category": "Client entertainment",
+     "amount": 156.46,
+     "attendees": 2,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10084.pdf"
+     }
+    },
+    {
+     "item_id": "LI-85",
+     "transaction_id": "TX-10085",
+     "date": "2026-10-09",
+     "merchant": "ZOOM.US 888-799-9666",
+     "city": "Online",
+     "category": "Software & subscriptions",
+     "amount": 15.99,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10085.pdf"
+     }
+    },
+    {
+     "item_id": "LI-86",
+     "transaction_id": "TX-10086",
+     "date": "2026-10-09",
+     "merchant": "THE CAPITAL GRILLE STAMFORD",
+     "city": "Stamford",
+     "category": "Client entertainment",
+     "amount": 221.43,
+     "attendees": 3,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10086.pdf"
+     }
+    },
+    {
+     "item_id": "LI-87",
+     "transaction_id": "TX-10087",
+     "date": "2026-10-12",
+     "merchant": "MORTONS STEAKHOUSE STAMFORD",
+     "city": "Stamford",
+     "category": "Client entertainment",
+     "amount": 147.26,
+     "attendees": 3,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10087.pdf"
+     }
+    },
+    {
+     "item_id": "LI-88",
+     "transaction_id": "TX-10088",
+     "date": "2026-10-16",
+     "merchant": "SWEETGREEN STAMFORD",
+     "city": "Stamford",
+     "category": "Meals",
+     "amount": 15.14,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10088.pdf"
+     }
+    },
+    {
+     "item_id": "LI-89",
+     "transaction_id": "TX-10089",
+     "date": "2026-10-16",
+     "merchant": "STAPLES #0322 STAMFORD",
+     "city": "Stamford",
+     "category": "Office supplies",
+     "amount": 45.03,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10089.pdf"
+     }
+    },
+    {
+     "item_id": "LI-90",
+     "transaction_id": "TX-10090",
+     "date": "2026-10-16",
+     "merchant": "FEDEX OFFICE #0871",
+     "city": "Stamford",
+     "category": "Office supplies",
+     "amount": 48.28,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10090.pdf"
+     }
+    },
+    {
+     "item_id": "LI-91",
+     "transaction_id": "TX-10091",
+     "date": "2026-10-19",
+     "merchant": "SWEETGREEN STAMFORD",
+     "city": "Stamford",
+     "category": "Meals",
+     "amount": 11.01,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10091.pdf"
+     }
+    },
+    {
+     "item_id": "LI-92",
+     "transaction_id": "TX-10092",
+     "date": "2026-10-19",
+     "merchant": "UBER *TRIP",
+     "city": "Stamford",
+     "category": "Ground transport",
+     "amount": 15.17,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10092.pdf"
+     }
+    },
+    {
+     "item_id": "LI-93",
+     "transaction_id": "TX-10093",
+     "date": "2026-10-22",
+     "merchant": "STAMFORD TRANS CTR PARKING",
+     "city": "Stamford",
+     "category": "Ground transport",
+     "amount": 21.45,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10093.pdf"
+     }
+    },
+    {
+     "item_id": "LI-94",
+     "transaction_id": "TX-10094",
+     "date": "2026-10-22",
+     "merchant": "STAMFORD TRANS CTR PARKING",
+     "city": "Stamford",
+     "category": "Ground transport",
+     "amount": 24.95,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10094.pdf"
+     }
+    },
+    {
+     "item_id": "LI-95",
+     "transaction_id": "TX-10095",
+     "date": "2026-10-23",
+     "merchant": "FEDEX OFFICE #0871",
+     "city": "Stamford",
+     "category": "Office supplies",
+     "amount": 50.89,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10095.pdf"
+     }
+    },
+    {
+     "item_id": "LI-96",
+     "transaction_id": "TX-10096",
+     "date": "2026-10-23",
+     "merchant": "SWEETGREEN STAMFORD",
+     "city": "Stamford",
+     "category": "Meals",
+     "amount": 11.95,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10096.pdf"
+     }
+    },
+    {
+     "item_id": "LI-97",
+     "transaction_id": "TX-10097",
+     "date": "2026-10-30",
+     "merchant": "SWEETGREEN STAMFORD",
+     "city": "Stamford",
+     "category": "Meals",
+     "amount": 11.31,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10097.pdf"
+     }
+    },
+    {
+     "item_id": "LI-98",
+     "transaction_id": "TX-10098",
+     "date": "2026-10-30",
+     "merchant": "UBER *TRIP",
+     "city": "Stamford",
+     "category": "Ground transport",
+     "amount": 37.32,
+     "receipt": {
+      "attached": true,
+      "source": "upload",
+      "reference": "receipt-TX-10098.pdf"
+     }
+    }
+   ],
+   "total": 953.09
+  }
+ ],
+ "_next_report": 2001,
+ "_next_item": 99
+}
