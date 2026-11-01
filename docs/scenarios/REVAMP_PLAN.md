@@ -12,8 +12,8 @@ Sources: the scenario docs in this folder. Lab flow: Introduction → one of fou
 | Lab manual module | ✅ `03` (as is) | ✅ `04` rewritten | ✅ `05` rewritten | ✅ `06` new | ✅ `07` new |
 | COEP tenant data (M365) | ✅ no change expected | ✅ redated | ✅ rebuilt | ✅ new | ✅ receipts |
 | Synced connectors (COEP) | n/a | n/a | ✅ Test_Confluence | ✅ Test_GitHub | n/a |
-| Mock MCP servers (federated) | ✅ LSEG, FactSet, Moody's live | ✅ iManage live | ⬜ Salesforce | ⬜ Test_Jira | ⬜ merge Expense |
-| Test plugins | ✅ 3 built | ⬜ 1 to build (Test_iManage) | ⬜ 1 to build (Test_Salesforce) | ⬜ 1 to build | n/a (admin flow) |
+| Mock MCP servers (federated) | ✅ LSEG, FactSet, Moody's live | ✅ iManage live | ⬜ Salesforce | ⬜ Test_Jira | ✅ Zava Expense live |
+| Test plugins | ✅ 3 built | ✅ Test_iManage built | ⬜ 1 to build (Test_Salesforce) | ⬜ 1 to build | ✅ Test_Zava Expense built (flow to confirm) |
 | Dry run | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ |
 
 ## 1. Lab manual
@@ -156,15 +156,19 @@ All new mocks follow the Notion pattern in `mock_mcp_servers/_framework`: real t
 - [x] Writes: save to 04 Drafts, conversation-scoped.
 - [x] Use Word/Office debug traces for tool shapes.
 - [x] Deployed as `mock-imanage` (see `mock_mcp_servers/DEPLOYMENT.md`).
-- [ ] Plugin **Test_iManage**.
+- [x] Plugin **Test_iManage** (`mock_plugins/imanage`, `test_imanage.zip`), built from the real iManage Work package.
 
 ### 5.4 Zava Expense (Bring your own app)
 
-- [ ] Build a new mock inspired by the earlier trial, on the shared framework.
-- [ ] Dates are computed when a request arrives (no reseeding or restarts). ER-2001 lines must line up with the tenant receipts (Oct 19–29; Westin over-cap night Oct 28).
-- [ ] Keep the trial's test items: the $6.45 Starbucks charge with no receipt and the duplicate $52.30 Uber charge (TX-10111).
-- [ ] Writes (justification, submit) are conversation-scoped. Submit routes to Hannes Niemi.
-- [ ] Deploy, then put the MCP server address on the seat card (module 07, setup step 4).
+- [x] Build a new mock based on the earlier trial's 9 tools, on the shared framework (`mock_mcp_servers/zava_expense`). Data is frozen in `seed_files/expense_seed.json`, built by `scripts/build_seed.py`.
+- [x] Dates are fixed, not computed per request: the clock is Mon Nov 16, 2026 (lab week) and the Seattle trip is Oct 26–29, matching the tenant receipts. New reports start at ER-2001; the six receipts total $2,052.65 with the Westin over-cap night on Oct 28. `MOCK_NOW` overrides the clock for testing.
+- [x] Keep the trial's test items: the $6.45 Starbucks charge with no receipt (TX-10106) and the duplicate $52.30 Uber charge (TX-10111).
+- [x] Writes (justification, submit) are conversation-scoped. Submit routes to Hannes Niemi.
+- [x] Deployed as `mock-zava-expense` (`https://mock-zava-expense.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp`).
+- [x] Plugin **Test_Zava Expense** (`mock_plugins/zava_expense`, `test_zava_expense.zip`) with the `zava-travel-policy` skill.
+- [ ] Confirm the module 07 flow: attendees add the server through the admin click-through, or upload the plugin zip.
+- [ ] Put the MCP server address on the seat card (module 07, setup step 4).
+- [ ] Tenant reminder email says the Seattle charges run "from October 5"; the mock's first Seattle charge is Oct 19. Align one of them.
 
 ### 5.5 Retire
 
