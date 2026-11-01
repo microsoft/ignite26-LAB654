@@ -1,35 +1,36 @@
-# LAB654 · Finance track: Friday ask → Monday investment committee
+# LAB654 · Finance track: Should we buy more NVIDIA?
 
 > Converted from `LAB654_Finance_Track_OnePager.docx` (owner: Anshuman). Wording is preserved; layout is simplified to Markdown.
 >
 > **Single lab persona:** one lab account plays all three domains, so Alex is replaced by Marcus Hollowell at Verdantis (the legal persona), the asset manager becomes the Verdantis Investment Office, and prompt 1a no longer states a job title.
+>
+> **Synced with commit `777ada5` (Anshuman):** the lab manual now frames the track around a case that holds up rather than weekend-vs-Copilot speed, drops "Friday 4pm", and says "committee pack" instead of "IC Pack". The same changes are applied below; prompts are unchanged.
 
 **Connectors:** LSEG · FactSet · Moody's  |  **~15 min hands-on**  |  **Owner:** Anshuman
 
 ## What attendees take away
 
 - **Do a real analyst job, end to end:** decide if a company is worth a closer look, dig into the numbers, then pressure-test the view and produce a committee-ready report.
-- **Use trusted financial data where they work:** LSEG, FactSet and Moody's data lands straight in answers, an Excel model and a Word memo, with sources and dates.
-- **Get partner expertise, not just data:** LSEG and Moody's skills apply their analyst playbooks automatically.
-- **Connect once, use everywhere:** the same connectors work across Copilot and Excel with no extra setup.
-- **Take home:** the IC Pack (workbook + memo) and prompts that work for any company.
+- **Trusted data where they work:** LSEG, FactSet and Moody's answer inside Copilot, Excel and Word, with every number cited and dated.
+- **Partner expertise, not just data:** LSEG and Moody's skills apply their analysts' methods, in the Copilot app and in Excel.
+- **Connect once, use everywhere:** the same three connectors work in the Copilot app and in Excel, with no extra setup.
+- **A case that holds up:** real Excel formulas you can check, and Copilot challenges the view before the committee does.
+- **Take home:** the committee pack (workbook + memo) and prompts that work for any company.
 
 ## Persona and scenario
 
 Marcus, at Verdantis, a US car and home insurer. Verdantis's investment portfolio already owns NVIDIA.
 
-Friday 4pm: Jordan, the portfolio manager, asks, "Should we buy more NVIDIA (or Company X)? Bring it to Monday's investment committee."
+Jordan, the portfolio manager, asks, "Should we buy more NVIDIA (or Company X)? Bring it to Monday's investment committee."
 
-Today: ~2 days across data services, Excel, Word and PowerPoint. In the lab: ~20 min with Copilot.
-
-Meet Marcus. Marcus works at Verdantis, an insurer whose Investment Office invests the premiums it holds to pay future claims. One of the portfolio's biggest holdings is NVIDIA, the company behind most AI chips. It's Friday afternoon, and Jordan, who runs the portfolio, asks Marcus: "Should we buy more NVIDIA? Bring a recommendation to Monday's investment committee", the weekly meeting where senior people approve big investments. Normally that's a weekend of jumping between three paid data services, copying numbers into Excel and writing a memo. Today Marcus does it with Copilot in three steps.
+Meet Marcus. Marcus works at Verdantis, an insurer whose Investment Office invests the premiums it holds to pay future claims. One of the portfolio's biggest holdings is NVIDIA, the company behind most AI chips. Jordan, who runs the portfolio, asks Marcus: "Should we buy more NVIDIA? Bring a recommendation to Monday's investment committee", the weekly meeting where senior people approve big investments, and they will challenge the case. A good answer has to hold up: every number sourced, checked across more than one provider, and challenged before the committee does it. Marcus builds that case with Copilot in three steps.
 
 *Not in finance?* This is any business case: is it worth a closer look, what do the numbers say, does my argument survive tough questions, then write it up for the people who decide.
 
 | | |
 |---|---|
 | **The people** | Marcus Hollowell: the Copilot user. · Jordan Reyes, portfolio manager, Verdantis Investment Office: asks the question. · The investment committee: senior people who approve big investments and will challenge the case. |
-| **The trigger** | Jordan on Teams, Friday 4pm: "Committee wants a view on NVIDIA Monday. Should we add more? Bring a short memo." |
+| **The trigger** | Jordan on Teams: "Committee wants a view on NVIDIA Monday. Should we add more? Bring a short memo." |
 | **Why it matters** | The portfolio already holds a lot of NVIDIA, so buying more puts even more policyholders' money on one company. A weak case gets torn apart on Monday. |
 | **What Marcus needs for Monday** | 1. Is the business beating expectations? 2. Is it stronger than its rivals? 3. What's the upside and downside at today's price? 4. A view that survives tough questions, written up as a memo. |
 
@@ -38,7 +39,7 @@ Meet Marcus. Marcus works at Verdantis, an insurer whose Investment Office inves
 | Step | Min | Marcus's question | Output |
 |---|---|---|---|
 | 1 · Sense check | 0–4 | Is NVIDIA worth a closer look? | Quick read on earnings and rivals |
-| 2 · Deep dive on the numbers | 4–12 | What do the numbers say, and what's the upside? | NVDA IC Pack workbook: snapshot + scenarios |
+| 2 · Deep dive on the numbers | 4–12 | What do the numbers say, and what's the upside? | NVIDIA Committee Pack workbook: snapshot + scenarios |
 | 3 · Back-check and report | 12–18 | Does my view hold up? | Pressure-tested view + committee memo |
 
 ## Prompts

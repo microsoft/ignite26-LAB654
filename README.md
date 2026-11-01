@@ -35,7 +35,7 @@ Fill in the sections below yourself, then:
 ## 🔥LAB654: Copilot Connectors: Connect once and bring your enterprise knowledge to every workflow
 ### Session description
 
-AI is only as powerful as the knowledge it can access. Copilot Connectors securely bring your enterprise data into Copilot, grounding experiences in the information that matters most to your organization. In this hands-on lab, you'll discover and acquire connectors, connect trusted data sources, and use interactive experiences, skills, and actions to make informed decisions and complete real-world workflows. Explore these end-to-end scenarios across finance, legal, and productivity.
+AI is only as powerful as the knowledge it can access. Copilot Connectors securely bring your enterprise data into Copilot, grounding experiences in the information that matters most to your organization. In this hands-on lab, you'll discover and acquire connectors, connect trusted data sources, and use interactive experiences, skills, and actions to make informed decisions and complete real-world workflows. Explore end-to-end scenarios across finance, legal, productivity, and engineering, then bring your own app into Copilot through a custom MCP connector.
 
 **Level:** 200 · **Duration:** 75 minutes
 
@@ -47,7 +47,7 @@ If you're following along during a live session:
 
 1. Sign in to Microsoft 365 Copilot with the credentials on your seat card
 2. Open the [lab manual](instructions/README.md) and complete the introduction and getting started modules
-3. Pick two of the three tracks (finance, legal, productivity) and follow the steps
+3. Pick one of the four tracks (finance, legal, productivity, engineering), then complete Bring your own app
 
 #### On your own
 

@@ -1,0 +1,187 @@
+# Lab revamp plan
+
+This is the working checklist for the LAB654 revamp: four tracks plus Bring your own app. Tick items as they land. Each section says what changes in the **COEP tenant**, the **mock MCP servers**, the **test plugins** and the **lab manual**.
+
+Sources: the scenario docs in this folder. Lab flow: Introduction → one of four tracks (Finance, Legal, Productivity, Engineering) → Bring your own app → outro.
+
+## Status at a glance
+
+| Area | Finance | Legal | Productivity | Engineering | Bring your own app |
+|---|---|---|---|---|---|
+| Scenario doc | ✅ synced with `777ada5` | ✅ v3 short | ✅ new | ✅ new | ✅ new |
+| Lab manual module | ✅ `03` (as is) | ✅ `04` rewritten | ✅ `05` rewritten | ✅ `06` new | ✅ `07` new |
+| COEP tenant data (M365) | ✅ no change expected | ✅ redated | ✅ rebuilt | ✅ new | ✅ receipts |
+| Synced connectors (COEP) | n/a | n/a | ✅ Test_Confluence | ✅ Test_GitHub | n/a |
+| Mock MCP servers (federated) | ✅ LSEG, FactSet, Moody's live | ⬜ iManage | ⬜ Salesforce | ⬜ Test_Jira | ⬜ merge Expense |
+| Test plugins | ✅ 3 built | ⬜ 1 to build (Test_iManage) | ⬜ 1 to build (Test_Salesforce) | ⬜ 1 to build | n/a (admin flow) |
+| Dry run | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ |
+
+## 1. Lab manual
+
+- [x] `01-introduction.md`: four tracks + Bring your own app, 300+ connectors across Chat, Cowork, Word, Excel and PowerPoint. Removed the synced/federated table (the productivity spec says the manual must not discuss connector architecture).
+- [x] `02-getting-started.md`: track-to-connector table, conversation-scoped note, four sample prompts.
+- [x] `03-finance.md`: kept Anshuman's `777ada5` text; footer only.
+- [x] `04-legal.md`: v3 short (four steps: catch up, flag, fix, pack).
+- [x] `05-productivity.md`: Salesforce pitch prep (three steps + stretch).
+- [x] `06-engineering.md`: new.
+- [x] `07-custom-mcp.md`: new. App named **Verdantis Expense**.
+- [x] `08-summary.md`: renamed from `06-summary.md`; outro with governance and CTA.
+- [x] `instructions/README.md` and `docs/scenarios/README.md` updated.
+- [x] Root `README.md`: "Getting started" step 3 now says one of four tracks, then Bring your own app.
+- [x] Root `README.md`: session description now covers all four tracks plus Bring your own app.
+- [x] Durations (approximate): Finance ~18, Legal ~15, Productivity ~10, Engineering ~15, Bring your own app ~20.
+
+## 2. Connector support in the COEP tenant
+
+COEP grounding schemas available today (`infra/mock_environment/_schemas/Grounding`): `azuredevopswiki`, `azuredevopsworkitems`, `channels`, `channelmessages`, `channelmessagereplies`, `chats`, `confluence`, `contacts`, `customconnectors`, `emails`, `events`, `files`, `googledrive`, `intranetwebsite`, `onlinemeetings`, `servicenowkb`, `sites`, `teams`, `users`, Viva Engage, and others.
+
+| Connector | Track | Type | COEP support | Plan |
+|---|---|---|---|---|
+| Test_Confluence | Productivity | Synced | ✅ `confluence` schema | Seed the Verdantis Sales space (§4.3). |
+| Test_GitHub | Engineering | Synced | ✅ `customconnectors` schema | Seed PR #287 with Sam's review, using the real GitHub pull-request connector's fields (§4.4, engineering Appendix D). |
+| Test_Jira | Engineering | Federated | n/a | Mock MCP server + plugin with the `sprint-to-slides` skill (§5.2). |
+| Test_Salesforce | Productivity | Federated | n/a | Mock MCP server + plugin with sales skills (§5.1). |
+| Test_iManage | Legal | Federated | n/a | Mock MCP server + plugin; seed files already in repo (§5.3). |
+| Test_LSEG, Test_FactSet, Test_Moodys | Finance | Federated | n/a | Live; keep. |
+| Verdantis Expense | Bring your own app | Custom MCP | n/a | Anshuman's mock (§5.4). |
+| Outlook, Teams | All | Microsoft 365 | ✅ `emails`, `events`, `onlinemeetings`, `chats`, `teams`, `channels`, `channelmessages` | Seed in COEP. |
+
+## 3. Personas and naming
+
+Tenant users (`users.config.json`): 21 across all tracks. Marcus Hollowell's manager is Daniel Park.
+
+| Person | Needed by | Status |
+|---|---|---|
+| Marcus Hollowell | All | Keep. COEP holds one job title; the legal one is current. Productivity says "no job title in prompts", so the legal title is fine. Confirm with owners. |
+| Radhika Sengupta, Tomás Aguilar | Legal | Keep. |
+| Jordan Reyes | Finance | Keep. |
+| Sam Patel | Engineering (platform lead, PR reviewer, LT) | Keep; retitle from "Retail Operations Lead" to "Platform Lead, Aurora". |
+| Lena Okafor | Productivity (Director of Retail Sales; approves 12–15% discounts) | **Add.** Named in the Confluence pricing policy only. |
+| Riley Blake | Productivity (Contoso Director of Store Operations), Engineering (Contoso pilot coordinator) | **Minor conflict.** Proposed title: "Director of Store Operations, Contoso Retail" in both; engineering text calls Riley the pilot contact. Update from "Partner Account Manager". |
+| Ken Liu | Productivity (Contoso IT Security Lead) | **Add.** |
+| Priya Nair | Productivity (Contoso CFO, no email history) | **Add.** Must not appear in any email before the lab. |
+| Nina Chen, Elena Ruiz, Taylor Morgan | Engineering | **Add.** |
+| Daniel Park | Bring your own app (approver; Marcus's manager) | **Add**, and set as Marcus's manager (step 3a: "submit the report to my manager"). |
+| Aisha Rahman | Bring your own app (Finance Operations) | **Add.** |
+| Priya Ramasubramanian, Diane Xu | Legal (Cognivault, documents only) | Don't add as users. |
+
+- [x] Contoso people (Riley, Ken, Priya Nair) are tenant users. COEP rejects email senders, recipients, event attendees and meeting participants that aren't in `users`. External (MSA) users can send email and attend events, but not join online meetings, so Riley and Ken must be normal users. Their titles say "Contoso Retail".
+- [x] Naming: the app is **Verdantis Expense** everywhere. The repo scenarios and lab instructions are the source of truth, not the original docs.
+- [x] "Priya" appears twice (Priya Nair, Contoso CFO; Priya Ramasubramanian, Cognivault counsel, documents only). Different tracks; no clash.
+
+## 4. COEP tenant changes
+
+Build with `infra/mock_environment/tools/build_tenant.py` (`SCENARIOS = [legal, finance, productivity, engineering, expense]`). Each scenario module returns `users()`, `emails()`, `chats()`, `events()`, `files()`.
+
+### 4.1 Remove
+
+- [x] Productivity (Notion era): email *Aurora POS kits – ETA for our stores?* and related chats or events.
+- [x] `intranetwebsite/intranetwebsite_productivity.jsonl` (Verdantis Hub playbook pages).
+- [x] Any Notion references in `tools/scenarios/productivity`.
+
+**Date rule (all tracks):** the tenant is loaded once (around Nov 1) and the lab runs Nov 17–19, 2026. Everything seeded is dated on or before **Fri Oct 30, 2026**; anything still to come in a story is on or after **Fri Nov 20, 2026**. Prompts never use relative days ("today", "Monday", "this afternoon").
+
+### 4.2 Legal (`tools/scenarios/legal`)
+
+- [x] Redated with `redate.py --lab-date 2026-10-26 --negotiation-date 2026-12-10` (two anchors): Radhika's email Mon Oct 12, contract received Fri Oct 16, *Cognivault deal* chat Tue Oct 20, Tomás's trigger Mon Oct 26 08:07; negotiation Thu Dec 10, go-live Sun Dec 13. iManage files, `matter.json` and the legal docs updated; prompt says "the December 10 session".
+- [x] Radhika's email and the *Cognivault deal* chat match the v3 seed kit wording (only dates differed).
+- [x] Agreement checked against *legal v1 seed kit 1.zip*: same text; only our intended date shift differs. No swap needed.
+
+### 4.3 Productivity (`tools/scenarios/productivity`, rewrite)
+
+- [x] Email from Riley, dated before the tenant is built (COEP needs past timestamps): Priya joins and wants the all-in cost for 400 stores; Ken needs security docs. No cc to Priya.
+- [x] Event Fri Nov 20, 2026, 10:00–11:00 (day after the last lab day), *Contoso Retail – Aurora expansion pitch*, attendees Riley, Priya Nair, Ken. Same emails as Salesforce.
+- [x] Busy blocks next week; Marcus out of office **Nov 26–27**.
+- [x] Test_Confluence (`confluence` schema), space **Verdantis Sales**: pricing policy, Fabrikam battlecard, security FAQ, Wide World Importers case study, 2–3 distractors (archived 2025 pricing policy).
+- [x] Teams meeting *Contoso Retail – Aurora pilot review*, organized by Marcus, fixed past date: past `events` item + `onlinemeetings` item (linked by EventId) + `.vtt` transcript, ~10 min, speakers Marcus, Riley, Ken, with the five required lines (9% attach lift; Fabrikam "about 20% under your list price"; "if you can get close to that we could sign this quarter"; security review before 400-store rollout; "Priya will want the all-in cost"). Riley and Ken must be tenant users (participants are mail nicknames).
+- [x] **Date-agnostic design:** Outlook items are fixed once ingested and email timestamps must be in the past, so they can't move. Prompts refer to items by name, not by day ("my Contoso Retail expansion pitch", "Riley's email about the pitch", "the pilot review call"). The pitch event is Fri Nov 20 (last lab day Nov 19), so it's always upcoming. Test_Salesforce computes its dates from the request day.
+
+### 4.4 Engineering (`tools/scenarios/engineering`, new)
+
+- [x] E1 email thread *Aurora pilot - offline status still wrong*: Marcus Mon Oct 26 14:00; Riley Thu Oct 29 08:15.
+- [x] Teams team **Aurora Engineering**, channel **Platform Migration**, thread T1 (Sam Wed Oct 28 16:00, Elena 16:10, Marcus Thu Oct 29 08:30).
+- [x] Teams team/channel **Aurora / Engineering** for the Step 4 post; group **Aurora Engineering LT** (Taylor, Sam).
+- [x] Test_GitHub (`customconnectors`, ConnectionId `testgithub`, ConnectionName "Test_GitHub", ContentCategory `taskManagement`) with the real 22 GitHub Cloud PR properties and labels. Item PR #287 in `verdantis-lab/aurora-status`: State Open, Type "Pull request", MergedAt null, Milestone Aurora Sprint 24, CreatedBy/Assignees Nina, Contributors Nina + Sam, LastModifiedBy Sam. CreatedAt Tue Oct 27; review and LastModifiedAt Wed Oct 28 17:20. Content = PR body (references AUR-142) + G2 review as `{"comments":[{SubmittedAt, createdBy, Content, State}]}`. Optional 2–3 merged decoy PRs. Full mapping: engineering doc Appendix D.
+- [x] Docs redated to the date rule: cutover and Riley's update Fri Nov 20 15:00; pilot expansion Mon Nov 23; prompts name dates, not days.
+
+### 4.5 Bring your own app
+
+- [x] Seven receipt emails in Marcus's inbox:
+
+| Date | From | Amount |
+|---|---|---|
+| Oct 19 | Alaska Airlines | $486.40 |
+| Oct 26 | Yellow Cab | $58.75 |
+| Oct 27 | Canlis | $540.00 |
+| Oct 28 | Din Tai Fung | $48.20 |
+| Oct 29 | The Westin Seattle | $867.00 |
+| Oct 29 | Uber | $52.30 |
+| Oct 30 | Verdantis Expense reminder (submit by Fri Nov 20) | n/a |
+
+- [x] Amounts match Anshuman's trial mock (ER-2001: six items, $2,052.65). Dates are handled in the new mock (§5.4).
+
+### 4.6 Finance
+
+- [x] No changes expected. Verify `777ada5` prompts still match the finance seed and mocks (`ASK_DATE` 2026-10-09). Tenant chat text matches; NVDA, AMD and AVGO are covered in all three mocks; both skills exist; Moody's returns upgrade and downgrade factors; mock tests pass (LSEG 35 + 1 expected fail, FactSet 13, Moody's 15).
+
+### 4.7 Build and deploy
+
+- [x] Add `engineering` (and `expense` if separate) to `SCENARIOS`.
+- [x] `validate_package.py` passes; zip and hand over for ingestion (`Connectors_Ignite_EMP_v6.zip`).
+
+## 5. Mock MCP servers
+
+All new mocks follow the Notion pattern in `mock_mcp_servers/_framework`: real tool names and schemas from traces, seed data from the scenario doc, and **writes scoped to the conversation** (keyed by the Copilot or Cowork conversation ID header, 2-hour retention).
+
+### 5.1 Test_Salesforce (new, Productivity)
+
+- [ ] Get real Salesforce MCP tool shapes from eval traces.
+- [ ] Seed: account *Contoso Retail*, the only one on its domain; opportunities 400-store rollout (open, $1.2M) and 50-store pilot (Closed Won, $150K); Wide World Importers (Won) and Tailspin Toys (Lost); contacts Riley and Ken only; pitch Event (same date as Outlook); 2–3 completed Tasks.
+- [ ] Writes: Event create (Subject, Start, End, WhoId, WhatId); Task create for `log-activity`.
+- [ ] Owner scope: everything owned by Marcus (`scope: MINE`).
+- [ ] Dates computed from the request day: pitch Event matches the Outlook event; close date = end of current quarter; completed Tasks in the past few weeks.
+- [ ] Plugin: `salesforce_v0_20260918_withConstraints` skills (`call-prep`, `schedule-meeting`, `handle-objection`, `log-activity`) → **Test_Salesforce**.
+
+### 5.2 Test_Jira (new, Engineering)
+
+- [ ] Get real Atlassian/Jira MCP tool shapes from traces.
+- [ ] Seed: AUR-142 (In Progress, Nina, 8h, last update Oct 26 16:00, no PR link), AUR-145 breakdown (24h, updated Oct 29 08:45), AUR-139 (8h), AUR-151 (16h), Sprint 24 (Oct 26–Nov 20, 32h capacity before the Nov 20 checkpoint).
+- [ ] Plugin **Test_Jira**: use *Rovo_CEA 9 (2) 1.zip* as the structure reference (manifest + skills). Connector points at the mock with no auth. Keep `sprint-to-slides`. Verify one-slide .pptx output.
+- [ ] `sprint-to-slides` needs: sprint metadata, sprint issues (key, summary, status, estimate, assignee), and issue search (blockers, linked breakdowns). It optionally calls Teamwork Graph (`get_work_summary_for_given_user`, `get_team_users`, …) and falls back to Jira data, so the mock can skip Teamwork Graph. Confluence page creation is optional and suppressed in this lab.
+- [ ] Exact Atlassian MCP tool names and schemas: still needed from traces (the skill describes REST calls, not MCP tool names).
+
+### 5.3 Test_iManage (Legal)
+
+- [ ] Build from the existing `mock_mcp_servers/imanage/seed_files` (matter, v4.2 agreement, Exhibits A–D, Playbook v2.1, empty 04 Drafts).
+- [ ] Writes: save to 04 Drafts, conversation-scoped.
+- [ ] Use Word/Office debug traces for tool shapes.
+- [ ] Plugin **Test_iManage**.
+
+### 5.4 Verdantis Expense (Bring your own app)
+
+- [ ] Build a new mock inspired by Anshuman's trial (`origin/anparanjape/verdantis-expense-mock`, `fe4e1ec`), on the shared framework.
+- [ ] Dates are computed when a request arrives (no reseeding or restarts). ER-2001 lines must line up with the tenant receipts (Oct 19–29; Westin over-cap night Oct 28).
+- [ ] Keep the trial's test items: the $6.45 Starbucks charge with no receipt and the duplicate $52.30 Uber charge (TX-10111).
+- [ ] Writes (justification, submit) are conversation-scoped. Submit routes to Daniel Park.
+- [ ] Deploy, then put the MCP server address on the seat card (module 07, setup step 4).
+
+### 5.5 Retire
+
+- [ ] Notion mock and **Test_Notion** plugin (`mock_plugins/notion`, `test_notion.zip`).
+- [ ] Verdantis Hub app and the probe server on ACA.
+- [ ] Keep the code in git history; remove the ACA apps after the new mocks are live.
+
+### 5.6 Finance mocks
+
+- [x] LSEG, FactSet, Moody's: no change needed for `777ada5`.
+
+## 6. Open questions for the owners
+
+- [ ] Legal Step 4 regulator check: is web grounding enough, or seed a short regulatory note in the iManage matter as a fallback?
+
+## 7. Before the lab
+
+- [ ] Redeploy mocks; rebuild all test plugin ZIPs (`mock_plugins/build_plugins.py`).
+- [ ] Ingest the rebuilt COEP package.
+- [ ] Dry run each track as an attendee, in the exact prompt order, and record timings.
+- [ ] Update `02-getting-started.md` if the connector display names change.

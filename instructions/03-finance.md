@@ -175,4 +175,4 @@ Turn this into a Word memo for the investment committee, reusing the workbook's 
 
 ---
 
-**Next:** another track ([Legal](04-legal.md) · [Productivity](05-productivity.md)) or the [Summary](06-summary.md)
+**Next:** [Bring your own app](07-custom-mcp.md), or try another track ([Legal](04-legal.md) · [Productivity](05-productivity.md) · [Engineering](06-engineering.md))

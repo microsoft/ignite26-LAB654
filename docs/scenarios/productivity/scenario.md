@@ -1,215 +1,212 @@
-# Get work done across Notion & your intranet
-
-> Converted from `Ignite_Lab_Productivity_Module_Smartsheet_Notion_Intranet.docx` (Ignite Lab200 · Connectors · Productivity module, DRAFT v2). Wording is preserved; layout is simplified to Markdown.
+> Source: *productivity module* (Word, OneDrive). Converted to Markdown for reference; formatting differs from the original, wording is preserved. Replaces the earlier Notion and Verdantis Hub scenario.
 >
-> **Dates follow the doc.** The doc's story runs on a Monday "today" of Nov 16, 2026, and the dates below are the doc's. The mock Notion workspace computes its dates from the Monday of the current week, so during lab week they match this doc exactly, and on any other week they move with it (see the [Notion mock README](../../../infra/mock_environment/mock_mcp_servers/notion/README.md#dates-move-with-the-calendar)). The tenant seed (Riley's email, the intranet pages) names no story dates. The [lab manual](../../../instructions/05-productivity.md) refers to dates relatively.
+# IGNITE LAB654 · PRODUCTIVITY MODULE
 
-Scenario design and lab readiness plan for a 10-minute hands-on module.
+## Productivity Scenario: Sales pitch prep
 
-| | |
+Test_Salesforce · Test_Confluence · Teams · Outlook
+
+| **Lab** | Supercharge Copilot: Connect your work data & Get work done with Copilot Connectors (LAB654) |
 |---|---|
-| **Lab** | Supercharge Copilot: Connect your work data & Get work done with Copilot Connectors (LAB654, 75 min) |
 | **Module** | [Productivity] Complete end-to-end productivity workflows with MCP apps and skills |
-| **Module DRI** | Danny (also Lab Readiness DRI) |
-| **Time budget** | 10 minutes, 4 steps |
-| **Lab user** | Marcus Hollowell, Verdantis (the one LAB654 persona shared by the legal, finance, and productivity modules) |
-| **Connectors** | Notion (federated) · Verdantis Hub intranet (synced · Enterprise Websites) |
-| **Status** | DRAFT v2 for review |
+| **Time budget** | 10 minutes: 3 core steps + 1 stretch |
+| **Surface** | Cowork |
+| **Lab user** | Marcus Hollowell, Verdantis |
+| **Connectors** | Test_Salesforce · Test_Confluence · Teams · Outlook |
 
-> **WHAT CHANGED IN V2**
->
-> - **Single persona (LAB654 design note):** Marcus Hollowell at Verdantis is the Copilot user. Zava → Verdantis, Avery → Marcus, Jordan → Riley, smart speaker → smart-home hub. Prompts don't state a job title.
-> - **Simpler flow:** Smartsheet removed; the launch tracker moves into Notion. Six steps become four.
-> - **Review comments:** "Hybrid" is no longer used anywhere in the doc. Step 1 is now a scheduled prompt.
+## 1. Framing
 
-## 1. Summary
+| **MODULE OUTCOME (LABS OUTLINE §4)** |
+|---|
+| Move from retrieval to task completion with skills, MCP apps and write actions. 10 minutes. Surface: Cowork. |
 
-Participants play Marcus, who is coordinating a product launch whose print vendor just slipped. The plan and the team's decisions live in Notion; the rules for retail partners live on Verdantis Hub, the company intranet. In 10 minutes Marcus reads a catch-up that Copilot prepared on a schedule, checks the fix against company policy, updates the plan and logs the decision in Notion, then emails the partner and books an approval meeting.
+| **LAB-LEVEL MESSAGE** |
+|---|
+| Recognizable connectors + a useful workflow. The manual and talk track do **not** discuss connector architecture (sync / federated / hybrid). |
 
-**End-user outcome:** Participants can move beyond retrieval and use Copilot to complete a multi-step task across apps, using connectors for read and write, and skills for the Microsoft 365 work product.
+### Connectors in play
 
-### Key takeaways (say these out loud)
-
-| Takeaway | |
-|---|---|
-| **Copilot works before you do** | A scheduled prompt has the morning catch-up ready when Marcus opens Copilot. |
-| **Company knowledge shapes the decision** | The intranet playbook says what's allowed and who approves, so the fix is right the first time. |
-| **Write actions with control** | Copilot updates Notion as Marcus, with his permissions, after he approves. |
-| **Skills finish the job** | Email and Scheduling skills turn the decision into a partner update and an approval meeting. |
-
-## 2. The two connectors
-
-One connector of each kind keeps the module short: Notion is read and written live as the user, and the intranet is indexed once by an admin for everyone.
-
-| Connector | Role in the story | What Copilot uses |
+| **Source** | **What learners see it do** | **Under the hood (internal only)** |
 |---|---|---|
-| **Notion** · FEDERATED · Microsoft-published · on by default | Team workspace: launch tracker, launch plan, decision log | Read: `notion-search`, `notion-fetch`. Write: `notion-update-page`, `notion-create-pages` |
-| **Verdantis Hub** · SYNCED · Enterprise Websites cloud connector | Company policies: retail partner launch playbook, approved print vendors, partner comms guidelines | Index only: semantic search over Verdantis Hub pages. No live tools, no write, no user sign-in |
+| **Salesforce CRM** | Account, opportunity, contacts, meetings, activity history; logs the follow-up meeting on the opportunity | Federated only (Salesforce MCP) + Salesforce skills package (`salesforce_v0_20260918_withConstraints`) |
+| **Teams (1P)** | What the customer said on the pilot review call | Microsoft 365 (Teams meeting recording and transcript) |
+| **Confluence** | Pricing policy, competitive battlecard, security FAQ, case study | Synced (Test_Confluence) |
+| **Outlook (1P)** | Customer email that sets up the pitch; the pitch meeting; calendar for the follow-up; pre-read draft | Microsoft 365 |
 
-| | Synced · Verdantis Hub | Federated · Notion |
-|---|---|---|
-| **Where data lives** | Indexed into Microsoft Graph | Stays in Notion; read live |
-| **Identity** | Admin connection; visible to everyone in the org | User's own sign-in |
-| **Freshness** | Full crawl daily; incremental every 15 min with a sitemap | Real time |
-| **Write actions** | No | Yes, after the user approves |
+## 2. Cast
 
-> **SYNCED NOTE:** The Enterprise Websites cloud connector only supports Everyone permissions, which fits company-wide policies. Content that needs per-user permissions belongs in a federated source like Notion (a good contrast for the Governance module).
-
-## 3. Scenario: "The vendor slipped – fix the plan before standup"
-
-| | |
+| **Character** | **Role in the story** |
 |---|---|
-| **Persona** | Marcus, at Verdantis (fictional), coordinating the Verdantis Aurora smart-home hub retail launch. Launch event: Dec 8. |
-| **Trigger** | Northwind Print, the print vendor, updated its row in the Notion launch tracker: brochures and in-store signage slip from Nov 20 to Nov 27, or they can split (brochures Nov 24, signage Nov 27). That collides with the POS kit shipment to Contoso Retail stores on Nov 25. Riley at Contoso Retail emailed Marcus at 7:40 AM asking for the kit ETA. |
-| **Twist** | Marcus's first idea, shipping signage on Dec 1, breaks the Retail Partner Launch Playbook on Verdantis Hub. Copilot catches it and finds an option that complies. |
-| **Goal** | Fix the plan, log the decision, tell the partner, and book the approval, without opening Notion or the intranet. |
+| **Marcus Hollowell**, Verdantis | Copilot user. Runs the Verdantis Aurora smart-home hub launch with Contoso Retail and owns the Contoso Retail account in Salesforce. No job title in prompts. |
+| **Riley Blake**, Contoso Retail | Champion for the rollout; emails Marcus; Salesforce contact. |
+| **Ken Liu**, Contoso Retail | IT security lead; Salesforce contact. |
+| **Priya Nair**, Contoso Retail | CFO; joins the pitch; not in Salesforce. |
+| **Lena Okafor**, Verdantis | Director of Retail Sales; approves discounts of 12–15% (pricing policy). |
+| Contoso Retail | Aurora retail partner. 50-store pilot running; public launch event Dec 8; Marcus pitches the rollout to all 400 stores. |
+| Fabrikam Home | Competitor. |
 
-## 4. Lab flow at a glance (10 min)
+## 3. Story
 
-| # | Step | Time | Connector / skill |
+Contoso Retail has piloted Aurora in 50 stores for the past six weeks, ahead of the public launch event on Dec 8. Marcus's next step is the **expansion pitch** to roll it out to all 400 stores.
+
+- Riley emailed ahead of the pitch. Their CFO, **Priya Nair**, is joining and wants the all-in cost for 400 stores. Contoso IT (Ken) wants Verdantis' security documentation before anything goes to 400 stores.
+- On the Teams pilot review call, Riley said Fabrikam Home quoted about 20% under Verdantis' list price.
+
+| **WHAT COPILOT DOES, END TO END** |
+|---|
+| It builds the call brief from Salesforce and Outlook. It pulls what the customer actually said on the Teams call, catches that a 20% discount breaks Verdantis' pricing policy, and finds the in-policy counter. It books the security review with Contoso and logs it in Salesforce. Marcus never leaves Copilot. |
+
+## 4. Steps (target ≤ 10 min: 3 core steps + 1 stretch)
+
+Run all steps in **one Cowork conversation**: Step 3 reuses the account and agenda from Steps 1–2.
+
+| **#** | **Step** | **Time** | **Connector / skill** |
 |---|---|---|---|
-| 1 | Read the scheduled morning catch-up | 2:00 | Notion + Outlook |
-| 2 | Check the fix against company policy | 2:00 | Verdantis Hub (synced) |
-| 3 | Update the plan and log the decision | 2:30 | Notion (write) |
-| 4 | Email the partner and book the approval | 2:30 | Email + Scheduling skills |
-| – | Wrap-up | 1:00 | – |
+| 1 | Prep the call | ~3:00 | Salesforce `call-prep` skill; Outlook |
+| 2 | Handle the price objection | ~3:00 | Teams + Confluence (`handle-objection` skill likely) |
+| 3 | Book the security review and log it in Salesforce | ~3:00 | Salesforce `schedule-meeting` + Outlook calendar **(write action)** |
+| *Stretch* | Send the pre-read | – | Outlook *(draft only)* |
 
-**Surface:** Cowork. Notion is connected before the lab (6.1) because the scheduled prompt runs before participants sit down.
-
-## 5. Step-by-step script
-
-### Step 1: Read the scheduled morning catch-up
-
-*2:00 · Notion (live) · Outlook*
-
-Open the "Aurora morning catch-up" result. The scheduled prompt already ran this morning:
-
-```text
-I'm coordinating the Verdantis Aurora launch. Give me a catch-up for this week:
-- from the Aurora launch tracker in Notion: tasks due in the next 3 weeks
-and any vendor updates
-- anything in my email from Contoso Retail
-Flag any conflicts between vendor updates and the plan.
-```
-
-**Expected result:** A short brief with citations to Notion and Outlook:
-
-- (a) Northwind Print slips from Nov 20 to Nov 27, or can split (brochures Nov 24, signage Nov 27);
-- (b) this conflicts with "Ship POS kits to Contoso Retail stores" on Nov 25;
-- (c) Riley asks for the kit ETA, and stores need kits before staff training on Dec 1.
-
-> **SAY THIS:** Copilot did the catch-up before Marcus started his day, from Notion live as Marcus and from his inbox. Any prompt you run every morning can be scheduled.
-
-> **IF IT GOES WRONG:** If the scheduled result is missing, paste the prompt above and run it now.
-
-### Step 2: Check the fix against company policy
-
-*2:00 · Verdantis Hub (synced)*
-
-```text
-My idea: ship the POS kits to Contoso Retail on Nov 25 without signage, and
-send the signage on Dec 1. Check the Retail Partner Launch Playbook on
-Verdantis Hub. Is that allowed? Who has to approve it?
-```
-
-**Expected result:** Copilot cites the current playbook (not the archived 2025 version):
-
-- (a) No: every POS kit wave must be in partner stores at least 3 days before staff training, so signage must arrive by Nov 28;
-- (b) a split shipment is allowed if the Retail Ops lead (Sam) approves and it's logged in the Launch Decision Log;
-- (c) Northwind's split offer works: ship signage express on Nov 27 so it arrives Nov 28.
-
-> **SAY THIS:** An admin indexed the intranet once, and now everyone's Copilot knows the rules. Copilot didn't just answer; it stopped Marcus from breaking a partner commitment.
-
-> **IF IT GOES WRONG:** If Copilot answers from general knowledge → "Search Verdantis Hub for the Retail Partner Launch Playbook."
-
-### Step 3: Update the plan and log the decision
-
-*2:30 · Notion write actions*
-
-```text
-In Notion:
-1. In the Aurora launch tracker, set "Print brochures & in-store signage" to
-due Nov 27, status At Risk.
-2. Add an entry to the Launch Decision Log: ship Contoso Retail POS kits in two
-waves (kits + brochures Nov 25; signage express Nov 27, in stores Nov 28).
-Owner: me. Approver: Sam Patel. Status: Proposed. In Context, summarize the
-Northwind delay and link the playbook page.
-```
-
-**Expected result:** Confirmation cards for `notion-update-page` and `notion-create-pages`. Participants expand a card to check the values, then choose Allow once. Copilot confirms both changes.
-
-> **SAY THIS:** Write actions run in Notion as Marcus, with his permissions, and nothing changes until he approves. The menu also offers Allow for conversation and Always allow, per tool; users can reset it in Settings › Sources › Notion. The playbook said split shipments must be logged, and now they are.
-
-### Step 4: Email the partner and book the approval
-
-*2:30 · Email + Scheduling skills*
-
-```text
-Following the partner communication guidelines on Verdantis Hub, draft an
-email to Riley at Contoso Retail with the new two-wave timeline, cc Sam Patel.
-Then schedule a 15-minute "Aurora POS kit approval" with Sam tomorrow
-morning. Show me both before sending.
-```
-
-**Expected result:** Cowork loads the Email and Scheduling skills, shows a draft that follows the guideline's structure and a meeting proposal, and waits for Send / Schedule approval.
-
-> **SAY THIS:** The intranet even shapes how the message is written, and skills turn the decision into finished work.
-
-> **LAB SAFETY:** Riley Blake (Contoso Retail) and Sam Patel are lab users in the demo tenant; nothing leaves the tenant.
-
-### Wrap-up
-
-*1:00*
-
-> **SAY THIS:** "Copilot prepared your morning, checked company policy, updated the plan, and closed the loop with your partner. You approved every change, and you never opened Notion or the intranet."
-
-> **STRETCH:** Fast finishers: "Build me an interactive dashboard app from the Aurora launch tracker" (App skill, Frontier). Notion doesn't return MCP app UI widgets in Microsoft 365 Copilot today, so this is the module's interactive moment.
-
-## 6. Demo environment and seed data
-
-### 6.1 Readiness checklist
-
-| Area | Requirement |
+| **STEP 1** | **Prep the call**<br>~3:00 · Salesforce skill + Outlook |
 |---|---|
-| ☐ **M365 seats** | One Marcus Hollowell account per seat (mhollowell01…mhollowellNN) with Copilot and Cowork. Riley Blake and Sam Patel exist as lab users (done). |
-| ☐ **Notion** | Test_Notion (mock Notion MCP server, no sign-in) uploaded and enabled for every seat. All seats share one server; write changes are kept per Cowork conversation (keyed on the `x-microsoft-ai-conversationid` header), so seats never collide. See `infra/mock_environment/mock_mcp_servers/notion/README.md`. |
-| ☐ **Pre-connect** | Check that Test_Notion shows as Connected in each seat (Settings › Sources) before the event; the scheduled prompt can't run without it. |
-| ☐ **Scheduled prompt** | Per seat: create "Aurora morning catch-up" (Step 1 prompt), weekdays at 8:00 AM event-local time. Check that it ran before doors open. |
-| ☐ **Verdantis Hub** | Enterprise Websites cloud connection to the Verdantis Hub site (the lab's mock: `https://mock-verdantis-hub.yellowsand-9530f5dc.eastus.azurecontainerapps.io`), display name "Verdantis Hub". Re-crawl after the Zava → Verdantis edit and spot-check that the old Zava text is gone. |
-| ☐ **Outlook** | Riley's POS-kit ETA email in each Marcus inbox, 7:40 AM Eastern (done). |
 
-### 6.2 Notion seed (shared, read-only baseline)
+| **▶ PROMPT** copy & paste into Copilot |
+|---|
+| Prep me for my Contoso Retail expansion pitch. |
 
-| Item | Type | Contents |
+| **EXPECTED RESULT** |
+|---|
+| The `call-prep` skill finds the pitch meeting in Salesforce, then reads the account, the open opportunity (*Contoso Retail – Aurora 400-store rollout*, Proposal/Price Quote, $1,200,000), the attendees who are contacts, and recent activity.<br><br>In parallel it searches Outlook for Riley's email. It may also surface the Teams pilot review transcript; this is not guaranteed in Step 1, and Step 2 is the transcript moment.<br><br>It returns a call brief. The layout can vary between runs; the content is what matters:<br>• the deal: Contoso Retail, the 400-store rollout opportunity, its stage and amount<br>• who's in the room: Riley (champion), Ken (IT security; wants the security review first), Priya (CFO; wants the all-in cost)<br>• what to cover: the price comparison, the security review, next steps |
+
+| **WOW MOMENT** |
+|---|
+| One prompt turns the CRM and the inbox into a brief that already points to the pitch's two risks: the CFO's cost question and IT's security review. |
+
+| **SAY THIS** |
+|---|
+| A skill that knows how sales teams prep, working on Marcus' real account data. |
+
+| **IF IT GOES WRONG** |
+|---|
+| If Copilot asks which account or meeting, reply "The Contoso Retail expansion pitch."<br><br>If the brief doesn't mention Priya, ask "Who's on the call, and what does each of them care about?" |
+
+| **STEP 2** | **Handle the price objection**<br>~3:00 · Teams + Confluence |
+|---|---|
+
+| **▶ PROMPT** copy & paste into Copilot |
+|---|
+| Contoso said Fabrikam is 20% cheaper. What exactly did they say on the pilot review call, and what can I offer within our pricing policy? |
+
+| **EXPECTED RESULT** |
+|---|
+| Quotes from the Teams meeting transcript: Riley on the Fabrikam quote and "sign this quarter"; Riley on Priya wanting the all-in cost; Ken on the security review.<br><br>Confluence *Aurora Retail Pricing & Discount Policy* (current version, not the archived 2025 one):<br>• Up to 12% volume discount at 250+ stores with no approval.<br>• 12–15% needs Lena Okafor.<br>• Above 15% needs VP Sales and Deal Desk.<br>Copilot says **20% cannot be offered in the pitch**.<br><br>It proposes the in-policy counter: 12% (about $1.06M for 400 stores) plus bundled in-store install and staff training. The bundle is value-add and does not count as discount.<br><br>It backs this with the *Fabrikam Home* battlecard TCO: Fabrikam's sticker price excludes install and 3-year support. All-in per store, Fabrikam is about $3,250 versus Verdantis' $2,640 with the counter-offer. That is the number Priya asked for.<br><br>If `handle-objection` runs and the win/loss history in 5.1 is seeded, the answer also has "What history says" (the Wide World Importers win and the Tailspin Toys loss against Fabrikam) and a "Don't" line: don't lead with a discount. |
+
+| **WOW MOMENT** |
+|---|
+| Copilot catches the non-compliant answer before Marcus says it to the CFO, and turns the price gap into an all-in cost argument. |
+
+| **IF IT GOES WRONG** |
+|---|
+| If Copilot answers from general knowledge, reply "Use the Teams recording of the Contoso pilot review and our pricing policy in Confluence." |
+
+| **STEP 3** | **Book the security review and log it in Salesforce**<br>~3:00 · write action |
+|---|---|
+
+| **▶ PROMPT** copy & paste into Copilot |
+|---|
+| Send Ken and Riley a calendar invite for a 45-minute Aurora security review next week, and log it on the Contoso opportunity. |
+
+| **PROMPT WORDING** |
+|---|
+| Asking for "a calendar invite" answers the skill's "propose by email or invite directly?" question up front. |
+
+| **EXPECTED RESULT** |
+|---|
+| The `schedule-meeting` skill runs:<br>• 1. It finds Ken and Riley (with emails) and the one open opportunity in Salesforce.<br>• 2. It checks Marcus' Outlook calendar and proposes 2–3 slots next week.<br>• 3. **Gate 1:** it shows the invite preview (title, time, attendees, an agenda built from Steps 1–2, e.g. security FAQ walkthrough, data residency, rollout plan). After the learner says yes, it creates the Outlook invite.<br>• 4. **Gate 2:** it shows the Salesforce Event preview. After yes, it creates the Event on the opportunity.<br>• 5. It shows the confirmation: "✅ Booked … Calendar: event created … Salesforce: Event logged on Contoso Retail / Aurora 400-store rollout", with the record link. |
+
+| **WOW MOMENT** |
+|---|
+| One prompt books the meeting and updates the CRM, with a human yes before each write. |
+
+| **IF IT GOES WRONG** |
+|---|
+| If slot picking runs long, the learner replies "The first slot." If Copilot still asks whether to email or invite, reply "Send the invite." |
+
+| **STRETCH** | **Step 4 — Send the pre-read**<br>Outlook, draft only |
+|---|---|
+
+| **▶ PROMPT** copy & paste into Copilot |
+|---|
+| Draft an email to Riley and Priya ahead of the pitch: confirm the agenda and link our security FAQ and the Wide World Importers case study. |
+
+| **EXPECTED RESULT** |
+|---|
+| An Outlook draft to Riley and Priya with the agenda and links to the two Confluence pages. It stays a draft. |
+
+| **ALTERNATIVE** |
+|---|
+| Alternative stretch: "Log the pilot review call on the Contoso opportunity." (`log-activity`, one confirmation, creates a completed Task.) |
+
+## 5. Seed data
+
+| **DATES** |
+|---|
+| No prompt depends on the lab day, so the tenant is built once. Prompts name items instead of days ("my Contoso Retail expansion pitch", "the pilot review call"). Outlook items have fixed dates: Riley's email and the pilot review are in the past; the pitch is on **Fri Nov 20, 2026** (the last lab day is Nov 19), so it is always upcoming. Test_Salesforce works out its dates from the day of the request. "Next week" in Step 3 uses Marcus' live calendar, so it works on any day; in Ignite week (Mon Nov 16) it is US Thanksgiving week, so block Nov 26–27. The Dec 8 launch event is a fixed date. |
+
+| **ONE IDENTITY PER PERSON** |
+|---|
+| Riley, Ken and Priya each use one email address everywhere: Salesforce contact (Riley, Ken), Outlook meeting attendee, Riley's email, Teams meeting participant. `call-prep` matches attendees to contacts by exact email. |
+
+### 5.1 Salesforce (federated only)
+
+| **Owner** | Marcus' Salesforce user owns the account, all opportunities below and the pitch Event. The skills read `scope: MINE` and stop (they don't widen) if it comes back empty. |
+|---|---|
+| **Account** | *Contoso Retail* (Retail, about 12,000 employees, Type = Customer). Website = the email domain Riley and Ken use. **No other account may use that domain**, or `call-prep` lists candidates and asks. |
+| **Opportunities** | • *Contoso Retail – Aurora 400-store rollout*: Proposal/Price Quote, $1,200,000 ($3,000 list per store), close date end of the current quarter. It must be the **only open** opportunity on the account; otherwise `schedule-meeting` asks which one.<br>• *Contoso Retail – Aurora pilot (50 stores)*: Closed Won, $150,000. |
+| **Win/loss history** | Recommended, for Step 2 depth. Two more opportunities owned by Marcus, closed in the last six months; the Description or loss-reason field names Fabrikam:<br>• *Wide World Importers – Aurora 320-store rollout*: Closed Won. Beat Fabrikam on all-in TCO with bundled install, no discount above 12%.<br>• *Tailspin Toys – Aurora 120-store rollout*: Closed Lost to Fabrikam on price. We led with a discount and never showed TCO. |
+| **Contacts** | On Contoso Retail:<br>• Riley Blake, Director of Store Operations<br>• Ken Liu, IT Security Lead<br>• **Not** Priya Nair: she must show up as new. |
+| **Pitch Event** | Fri Nov 20, 2026, 10:00–11:00 (same as the Outlook pitch meeting), "Contoso Retail – Aurora expansion pitch". WhoId = Riley; WhatId = the open opportunity. Description lists the attendees with emails: Riley Blake, Priya Nair (CFO), Ken Liu. The skill reads attendees from the Description and the Outlook meeting, not from Salesforce invitee records. |
+| **Activity history** | 2–3 completed Tasks, e.g. "Pilot kickoff" and "30-day pilot check-in". Do **not** log the pilot review; that is the alternative stretch. |
+| **Event object** | Check this org's required fields and picklists. `schedule-meeting` writes Subject, Start, End, WhoId and WhatId only. |
+
+### 5.2 Teams meeting
+
+One recorded Teams meeting with transcript: "Contoso Retail – Aurora pilot review", about 10 minutes, organized by Marcus. Speakers: Marcus, Riley, Ken. In COEP this is a past `events` item plus an `onlinemeetings` item with a `.vtt` transcript; Riley and Ken must be tenant users because participants are tenant mail nicknames. Give it a fixed date before the tenant is built; prompts call it "the pilot review call", so the date doesn't matter.
+
+Lines that must be in it:
+
+- The pilot result, e.g. a 9% attach-rate lift in pilot stores.
+- Riley: Fabrikam Home quoted "about 20% under your list price".
+- Riley: "if you can get close to that we could sign this quarter".
+- Ken: the security review must happen before the 400-store rollout.
+- Riley: "Priya will want the all-in cost".
+
+### 5.3 Test_Confluence (space Verdantis Sales)
+
+| **Page** | **What the demo relies on** |
+|---|---|
+| *Aurora Retail Pricing & Discount Policy* | List $3,000 per store (hub + 3-year support). Volume tiers: up to 12% at 250+ stores, no approval. 12–15% needs Lena Okafor. Above 15% needs VP Sales and Deal Desk. Value-add items (in-store install and staff training, normally $300 per store) do not count as discount. |
+| *Competitive Battlecard: Fabrikam Home* | Sticker about 20% under Verdantis ($2,400 per store) but excludes install (about $350) and 3-year support (about $500), so about $3,250 all-in. TCO table. "Don't lead with discount." |
+| *Aurora Security & Compliance FAQ* | SOC 2 Type II, regional data residency, no in-store cameras or PII. |
+| *Case Study: Wide World Importers 320-store rollout* | Rollout timeline and outcome, cited in the pre-read. |
+| *2–3 distractor pages* | *E.g. the 2025 pricing policy marked archived, so retrieval has to pick the current one.* |
+
+### 5.4 Outlook (Marcus' mailbox and calendar)
+
+| **Email** | From Riley Blake, dated before the tenant is built: Priya (CFO) joins the pitch and wants the all-in cost for 400 stores; IT (Ken) needs the security documentation beforehand. Don't cc Priya; she must have no email history. |
+|---|---|
+| **Pitch meeting** | Fri Nov 20, 2026. The same 10:00–11:00 "Contoso Retail – Aurora expansion pitch", with Riley, Priya and Ken as attendees. |
+| **Calendar next week** | A few busy blocks, so the proposed slots look real; Nov 26–27 out of office in Ignite week. Ken's and Riley's free/busy visible if possible. |
+| **Lab users** | Riley Blake exists. **Ken Liu, Priya Nair and Lena Okafor are new.** Priya is needed as a meeting attendee and the Step 4 recipient, not as a Salesforce contact. |
+
+## 6. Validation run
+
+Goal: prove `call-prep` and `schedule-meeting` (2 gates + Event write) work in Cowork against the real Salesforce org before the seed is locked.
+
+| **#** | **Action** | **Details** |
 |---|---|---|
-| Verdantis Aurora Launch Tracker | Database | Properties: Task, Workstream, Owner, Status, Due, Vendor update. Rows below. |
-| Aurora Launch Plan | Page | Key dates (staff training Dec 1, launch event Dec 8), owners, link to the playbook on Verdantis Hub. Includes "POS kits must include signage before staff training." |
-| Launch Decision Log | Database | Properties: Decision, Owner, Approver, Status (Proposed / Approved / Rejected), Date, Context. Seed 4 prior decisions as examples, covering all three statuses (2 Approved, 1 Rejected: "Add a second Contoso Retail launch city in Q1", 1 Proposed: "Extend launch-week support hours"). |
-| Decoys | Database | "Verdantis Lumen Launch Tracker" (other product); "2025 Holiday Launch Tracker (archived)" with old Northwind rows. |
-
-| Task | Owner | Status | Due | Vendor update |
-|---|---|---|---|---|
-| **Print brochures & in-store signage** | Northwind Print | In Progress | Nov 20 | "Paper stock shortage – brochures and signage now deliver Nov 27 instead of Nov 20. We can split: brochures Nov 24, signage Nov 27." |
-| Assemble POS kits | Ops | Not Started | Nov 22 | |
-| **Ship POS kits to Contoso Retail stores** | Ops | Not Started | Nov 25 | |
-| Store staff training | Contoso Retail | Not Started | Dec 1 | |
-| Press briefing deck | Marcus | In Progress | Nov 28 | |
-| Launch event run-of-show | Events team | In Progress | Dec 5 | |
-| Launch event | All | Not Started | Dec 8 | |
-
-Bold rows are the ones the story turns on.
-
-### 6.3 Verdantis Hub (7 pages, live)
-
-| Page | What the demo relies on |
-|---|---|
-| **Retail Partner Launch Playbook** | Each POS kit wave in stores 3+ days before staff training. Split shipments need Retail Ops (Sam) approval and a Launch Decision Log entry. |
-| **Approved Vendors – Print** | Northwind Print (primary); Litware Print (backup). |
-| **Partner Communication Guidelines** | Update structure: what changed, impact, new dates, what we need, contact. |
-| **4 decoy pages** | 2025 archived playbook (older 5-day rule), Holiday Returns Policy, Lumen Launch FAQ, Travel & Expense. |
-
-### 6.4 Reset between sessions
-
-- **Notion:** nothing to reset. Each conversation's changes expire after 2 hours idle, and a new conversation always starts from the seed. Restarting the `mock-notion` container clears everything at once.
-- **M365:** clear sent mail and meetings; re-seed Riley's email if it was moved or deleted.
-- **Copilot:** revoke "Always allow" if participants set it. The scheduled prompt and Verdantis Hub need no reset.
+| 1 | **Schedule the run** | Agree a 15-minute slot with the Salesforce org owner, who approves the MFA prompt. Confirm which org it is and whether Contoso data is seeded. |
+| 2 | **Load the Salesforce package in Cowork** | Publish → "Only you", and connect it by OAuth. |
+| 3 | **Run Steps 1–3** with the exact prompts | Record:<br>• how the brief is shown<br>• whether it covers Priya and her cost question<br>• whether Step 1 picks up the Teams transcript<br>• the number of confirmations and approval cards<br>• the time per step<br>• Salesforce calls (trajectory export) |
+| 4 | **Clean up** | Delete the test Event and the calendar invite. |
+| 5 | **Report** | What worked, any prompt or seed changes, and timing. |

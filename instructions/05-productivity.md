@@ -1,171 +1,113 @@
-# Productivity track: The vendor slipped, so fix the plan before standup
+# Productivity track: Sales pitch prep
 
-> **Duration:** ~10 minutes (+3 minute stretch) | **Connectors:** Test_Notion, Verdantis Hub (Test_Intranet) | **Surface:** Copilot Cowork
+> **Duration:** ~10 minutes (+ stretch) | **Connectors:** Test_Salesforce, Test_Confluence, Teams, Outlook | **Surface:** Copilot Cowork
+
+## What you'll take away
+
+- **A skill that knows how sales teams work:** Salesforce's call-prep skill builds a brief from your real account data.
+- **Grounded answers that keep you in policy:** Copilot quotes what the customer said and checks it against your pricing policy before you say it in the room.
+- **From answer to action:** one prompt books a meeting and logs it in your CRM, with your yes before each change.
 
 ## The story
 
-You're coordinating the retail launch of the **Verdantis Aurora** smart-home hub. The launch event is about three weeks away.
+You're **Marcus Hollowell** at Verdantis, and you own the **Contoso Retail** account. Contoso has piloted the **Aurora** smart-home hub in 50 stores for six weeks, ahead of the public launch event on Dec 8. Your next step is the **expansion pitch** to roll it out to all 400 stores.
 
-| Where it lives | What's there |
-|---|---|
-| **Notion** | The team workspace: the Aurora launch tracker, the launch plan and the Launch Decision Log |
-| **Verdantis Hub** (intranet) | Company rules: the Retail Partner Launch Playbook, approved print vendors, partner communication guidelines |
-| **Outlook** | Email from Riley at Contoso Retail, the retail partner |
+- Riley Blake, Contoso's Director of Store Operations, emailed ahead of the pitch. Their CFO, **Priya Nair**, is joining and wants the all-in cost for 400 stores. Contoso IT (**Ken Liu**) wants Verdantis' security documentation before anything goes to 400 stores.
+- On the Teams pilot review call, Riley said a competitor, Fabrikam Home, quoted about 20% under your list price.
 
-It's Monday morning. The print vendor, Northwind Print, updated its row in the Notion launch tracker: brochures and in-store signage will be a week late. That collides with the POS kit shipment to Contoso Retail stores, and Riley has emailed asking for the kit ETA.
+You'll prep the call, handle the price objection and book the security review, without leaving Copilot.
 
-**Your goal:** fix the plan, log the decision, tell the partner and book the approval, all without opening Notion or the intranet.
+## Before you start
 
-## Two connector models, one answer
+- [ ] You completed [Getting started with connectors](02-getting-started.md).
+- [ ] **Test_Salesforce** and **Test_Confluence** show as connected.
+- [ ] Open **Copilot Cowork** and start a new task. Run every step in this one conversation: Step 3 reuses what Copilot learned in Steps 1 and 2.
 
-| | Verdantis Hub (Test_Intranet) | Test_Notion |
-|---|---|---|
-| **Model** | Synced | Federated |
-| **How Copilot gets the data** | Indexed once by an admin for everyone | Read live from Notion |
-| **Whose access** | Everyone in the organization | Your Notion permissions |
-| **Freshness** | Re-crawled on a schedule | Real time |
-| **Can Copilot make changes?** | No | Yes, after you approve |
+## Step 1: Prep the call
 
-> [!NOTE]
-> `Test_…` connectors are mock versions of the real connectors, built for this lab with sample Verdantis data. They're pre-configured, so you don't need a Notion account.
-
-## Step 0: Check your sources
-
-*~30 sec · Copilot Chat › Settings › Sources*
-
-1. In Microsoft 365 Copilot, open **…** › **Settings** › **Sources**.
-2. Confirm **Test_Notion** and **Verdantis Hub (Test_Intranet)** show as **Connected**. If one doesn't, ask a proctor.
-
-Then open **Cowork**. Sources available in Copilot Chat carry over.
-
-## Step 1: Read your scheduled morning catch-up
-
-*~2 min · Notion, Outlook*
-
-Copilot already ran a scheduled prompt for you this morning. Open the **Aurora morning catch-up** result. This is the prompt it ran:
+*Copilot Cowork · Test_Salesforce call-prep skill · Outlook*
 
 ```text
-I'm coordinating the Verdantis Aurora launch. Give me a catch-up for this week:
-- from the Aurora launch tracker in Notion: tasks due in the next 3 weeks
-and any vendor updates
-- anything in my email from Contoso Retail
-Flag any conflicts between vendor updates and the plan.
-```
-
-> [!TIP]
-> If you don't see the scheduled result, paste the prompt above into Cowork and run it now.
-
-**What to look for:** a short brief with citations to Notion and Outlook that calls out:
-
-- Northwind Print's slip from **this Friday** to **a week later**, or a split: brochures next Tuesday, signage next Friday.
-- The conflict with **"Ship POS kits to Contoso Retail stores"**, due **next Wednesday**.
-- Riley asking for the kit ETA. Stores need kits before **store staff training** (the Tuesday after next).
-
-> [!NOTE]
-> The mock Notion workspace dates its story from the Monday of the current week, so the dates you see depend on when you run the lab. During Ignite week they're: print due Fri Nov 20, now Nov 27 (or brochures Nov 24, signage Nov 27); ship Wed Nov 25; staff training Tue Dec 1; launch Tue Dec 8.
-
-Copilot did the catch-up before you started your day. Any prompt you run every morning can be scheduled.
-
-## Step 2: Check the fix against company policy
-
-*~2 min · Verdantis Hub*
-
-Your first idea is to ship the kits without signage and send the signage later. Check it:
-
-```text
-My idea: ship the POS kits to Contoso Retail on the planned ship date without
-signage, and send the signage on the day of store staff training. Check the
-Retail Partner Launch Playbook on Verdantis Hub. Is that allowed? Who has to
-approve it?
-```
-
-**What to look for:** an answer citing the *current* playbook, not the archived 2025 version:
-
-- **No.** Every POS kit wave must be in partner stores at least 3 days before staff training, so signage must arrive by **the Saturday before training** (Nov 28 in Ignite week).
-- A split shipment **is** allowed, with approval from the Retail Ops lead (**Sam**), and must be logged in the Launch Decision Log.
-- Northwind's split offer works: ship signage express on **Northwind's new date** (the Friday), arriving the next day.
-
-Copilot didn't just answer; it stopped you from breaking a partner commitment.
-
-## Step 3: Update the plan and log the decision
-
-*~2.5 min · Notion write actions*
-
-```text
-In Notion:
-1. In the Aurora launch tracker, set "Print brochures & in-store signage" to
-due on Northwind's new signage date, status At Risk.
-2. Add an entry to the Launch Decision Log: ship Contoso Retail POS kits in two
-waves (kits + brochures on the planned ship date; signage express on
-Northwind's new date, in stores the next day).
-Owner: me. Approver: Sam Patel. Status: Proposed. In Context, summarize the
-Northwind delay and link the playbook page.
-```
-
-**What to look for:** a confirmation card before each change (`notion-update-page`, then `notion-create-pages`).
-
-1. Expand the card and review the parameters: which row or page, and which values.
-2. Select **Allow once**.
-3. Copilot confirms both changes.
-4. Optional: select a Notion link in the answer. It opens a mock Notion page that shows your changes.
-
-> [!NOTE]
-> Write actions run in Notion as you, with your permissions, and only after you approve. The card offers **Allow once**, **Allow for conversation** or **Always allow**. The choice applies per tool. You can reset it in **Settings › Sources › Test_Notion**.
-
-> [!IMPORTANT]
-> Test_Notion is shared by everyone in the lab, so your changes are kept only **in this conversation**. Ask Copilot to show the tracker here, or open the Notion links from this conversation, and you'll see them. A new conversation, or this one after about 2 hours, shows the original data.
-
-The playbook said split shipments must be logged, and now this one is.
-
-## Step 4: Email the partner and book the approval
-
-*~2.5 min · Email and Scheduling skills*
-
-```text
-Following the partner communication guidelines on Verdantis Hub, draft an
-email to Riley at Contoso Retail with the new two-wave timeline, cc Sam Patel.
-Then schedule a 15-minute "Aurora POS kit approval" with Sam tomorrow
-morning. Show me both before sending.
+Prep me for my Contoso Retail expansion pitch.
 ```
 
 **What to look for:**
 
-- Cowork loads the **Email** and **Scheduling** skills, which appear as chips in the side panel.
-- The draft email follows the intranet's guideline structure: what changed, the impact on you, new dates, what we need from you, and a contact.
-- A meeting proposal with Sam for tomorrow morning.
-- Cowork pauses so you can choose **Send** and **Schedule**.
+- The deal: the *Contoso Retail – Aurora 400-store rollout* opportunity, Proposal/Price Quote, $1,200,000.
+- Who's in the room: Riley (champion), Ken (IT security; wants the security review first) and Priya (CFO; wants the all-in cost).
+- What to cover: the price comparison, the security review and next steps.
 
-> [!NOTE]
-> Riley Blake and Sam Patel are lab users in the demo tenant. Nothing leaves the tenant.
+The layout can vary between runs. The content is what matters.
 
-## Stretch: interactive launch dashboard
+> [!TIP]
+> One prompt turned the CRM and your inbox into a brief that already points to the pitch's two risks: the CFO's cost question and IT's security review.
 
-*+3 min · App skill (Frontier preview), if your tenant has it*
+## Step 2: Handle the price objection
+
+*Same conversation · Teams · Test_Confluence*
 
 ```text
-Build me an interactive dashboard app from the Aurora launch tracker.
+Contoso said Fabrikam is 20% cheaper. What exactly did they say on the pilot review call, and what can I offer within our pricing policy?
 ```
+
+**What to look for:**
+
+- Quotes from the Teams meeting transcript: Riley on the Fabrikam quote and "sign this quarter", Riley on Priya wanting the all-in cost, and Ken on the security review.
+- The current *Aurora Retail Pricing & Discount Policy* in Confluence: up to 12% at 250+ stores with no approval; 12–15% needs Lena Okafor; above 15% needs VP Sales and Deal Desk. Copilot says **20% can't be offered in the pitch**.
+- The in-policy counter: 12% (about $1.06M for 400 stores) plus bundled in-store install and staff training, which don't count as discount.
+- The Fabrikam battlecard: about $3,250 all-in per store against Verdantis' $2,640. That's the number Priya asked for.
+
+> [!TIP]
+> Copilot caught the non-compliant answer before you said it to the CFO, and turned the price gap into an all-in cost argument.
+
+## Step 3: Book the security review and log it
+
+*Same conversation · Test_Salesforce schedule-meeting skill · Outlook calendar · write actions*
+
+```text
+Send Ken and Riley a calendar invite for a 45-minute Aurora security review next week, and log it on the Contoso opportunity.
+```
+
+**What to look for:**
+
+1. Copilot finds Ken and Riley and the open opportunity in Salesforce, checks your calendar and proposes two or three slots next week.
+2. **First confirmation:** a preview of the invite, with an agenda built from Steps 1 and 2. Approve it, and Copilot creates the Outlook invite.
+3. **Second confirmation:** a preview of the Salesforce event. Approve it, and Copilot logs the event on the opportunity.
+4. A confirmation with a link to the Salesforce record.
+
+> [!TIP]
+> One prompt booked the meeting and updated the CRM, and nothing changed until you said yes.
+
+## Stretch: Send the pre-read
+
+*Same conversation · Outlook (draft only)*
+
+```text
+Draft an email to Riley and Priya ahead of the pitch: confirm the agenda and link our security FAQ and the Wide World Importers case study.
+```
+
+Copilot creates an Outlook draft with the agenda and links to the two Confluence pages. It stays a draft.
+
+Or try: `Log the pilot review call on the Contoso opportunity.`
 
 ## If it goes wrong
 
-| What happens | Try this |
+| What happens | What to do |
 |---|---|
-| The scheduled catch-up isn't there | Paste the Step 1 prompt and run it. |
-| The catch-up misses the vendor update | "Show me Northwind Print's latest vendor update in the Aurora launch tracker in Notion." |
-| Copilot picks the wrong tracker | "Use the Verdantis Aurora Launch Tracker database." |
-| The policy answer comes from general knowledge | "Search Verdantis Hub for the Retail Partner Launch Playbook." |
-| A connector shows as not connected | Ask a proctor. The `Test_…` connectors are pre-configured. |
-| Your Notion changes are gone | They're kept only in the conversation that made them. Go back to that conversation, or redo Step 3. |
+| Copilot asks which account or meeting | Reply: "The Contoso Retail expansion pitch." |
+| The brief doesn't mention Priya | Ask: "Who's on the call, and what does each of them care about?" |
+| Step 2 answers from general knowledge | Reply: "Use the Teams recording of the Contoso pilot review and our pricing policy in Confluence." |
+| Slot picking runs long | Reply: "The first slot." |
+| Copilot asks whether to email or invite | Reply: "Send the invite." |
 
 ## Checkpoint
 
-- [ ] You read a catch-up across Notion and Outlook that Copilot prepared on a schedule.
-- [ ] You checked your fix against the intranet playbook and changed it.
-- [ ] You updated the tracker and logged the decision in Notion after approving each change.
-- [ ] You drafted the partner update and booked the approval meeting.
+- [ ] Your call brief covers the deal, all three attendees and the two risks.
+- [ ] Copilot refused the 20% discount and proposed the in-policy counter with the all-in cost.
+- [ ] The security review is on your calendar and logged on the Contoso opportunity.
 
-**What you did:** Copilot prepared your morning, checked company policy, updated the plan and closed the loop with your partner. You approved every change, and you never opened Notion or the intranet.
+**What you take away:** Copilot moved from finding information to finishing the job: a brief, a compliant answer, a booked meeting and an updated CRM, with you approving each change.
 
 ---
 
-**Next:** another track ([Finance](03-finance.md) · [Legal](04-legal.md)) or the [Summary](06-summary.md)
+**Next:** [Bring your own app](07-custom-mcp.md), or try another track ([Finance](03-finance.md) · [Legal](04-legal.md) · [Engineering](06-engineering.md))
