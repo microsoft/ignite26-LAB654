@@ -68,7 +68,7 @@ Either way, don’t attach the contract. The only copy should be in iManage.
 | Trey Research Exhibit B - Fee Schedule and Order Form.xlsx | 01 Vendor Paper | Exhibit B: fees, 5% escalator, payment schedule | Exhibit / Trey Research |
 | Trey Research Exhibit C - Security and Data Protection.docx | 01 Vendor Paper | Exhibit C: security standards, SOC 2 Type I, 72-hour incident notice | Exhibit / Trey Research |
 | Trey Research Exhibit D - Acceptable Use Policy.docx | 01 Vendor Paper | Exhibit D: acceptable use, suspension right, benchmarking ban | Exhibit / Trey Research |
-| Zava AI Procurement Playbook v2.1.docx | 02 Playbooks | AI Procurement Playbook v2.1 (VTI-LEGAL-PB-AI-2.1), effective June 1, 2026 | Playbook / Emil Vanggaard |
+| Zava AI Procurement Playbook v2.1.docx | 02 Playbooks | AI Procurement Playbook v2.1 (ZAVA-LEGAL-PB-AI-2.1), effective June 1, 2026 | Playbook / Emil Vanggaard |
 | (empty) | 03 Research | Copilot saves the research note here in step 2 | — |
 | (empty) | 04 Drafts | Copilot / Cowork save the redline, negotiation list and 1-pager here in steps 3–4 | — |
 
