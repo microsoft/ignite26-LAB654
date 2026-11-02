@@ -12,7 +12,7 @@
 
 Zava, a US car and home insurer, wants **Trey Research's** AI to make up to 4 million underwriting decisions a month: a five-year, **$14.75 million** deal. Regulators in Colorado and New York hold the insurer responsible for vendor AI. Zava trains the AI on its own claims data, so it must own what gets built.
 
-Nothing is signed. Trey Research sent its own one-sided draft, and it's in the iManage matter. A negotiation session with Trey Research is booked for **Thursday the 10th**.
+Nothing is signed. Trey Research sent its own one-sided draft, and it's in your OneDrive. Zava's playbook is in the iManage matter. A negotiation session with Trey Research is booked for **Thursday, December 10**.
 
 | Person | Role |
 |---|---|
@@ -24,16 +24,16 @@ Luc has pinged you on Teams:
 
 > "Morning Emil. Have you had a chance to look at Trey Research's contract? We'd like to sign at the session with them on the 10th so we can go live on the 13th. Anything you need from me?"
 
-You need the backstory, a redline and a plain-English answer before the 10th. You'll use three prompts in one Word chat and one in Cowork, and you'll approve everything.
+You need the backstory, a redline and a plain-English answer before December 10. You'll use three prompts in one Word chat and one in Cowork, and you'll approve everything.
 
 ## Before you start
 
 - [ ] You completed [Getting started with connectors](02-getting-started.md).
 - [ ] **Test_iManage** shows as connected.
 - [ ] You can see Luc's message in Teams.
-- [ ] In iManage, open the matter **Trey Research – AI Platform Agreement** and open **Trey Research Vendor Agreement v4.2** in Word.
+- [ ] Open **Trey Research Vendor Agreement v4.2** in Word from your OneDrive: `<OneDrive path to Trey Research Vendor Agreement v4.2.docx>`.
 
-The matter also holds the **AI Procurement Playbook v2.1**: Zava's rules for what it will and won't accept in AI contracts.
+The iManage matter [Trey Research – AI Platform Agreement](https://mock-imanage.yellowsand-9530f5dc.eastus.azurecontainerapps.io/work/link/w/Dev!1870) holds the [Zava AI Procurement Playbook v2.1](https://mock-imanage.yellowsand-9530f5dc.eastus.azurecontainerapps.io/work/link/d/DEV!252567.1): Zava's rules for what it will and won't accept in AI contracts. Open it to see what Copilot will read. Its **Drafts** folder is empty until Step 4.
 
 ## Step 1: Catch up
 
@@ -103,20 +103,12 @@ Get me ready for the December 10 session with Trey Research. Turn my redline and
 - A negotiation list with one row per change or flag, the playbook fallback, and "do not concede" on hard stops.
 - A regulator check against the Colorado and New York rules: no audit right, no bias testing and no regulator cooperation clause, and the playbook itself has no regulator-cooperation clause.
 - A one-pager: "The 10th is a negotiation, not a signing; three asks."
-- A reply to Luc, held for your approval. Files are saved to **04 Drafts** in the matter.
+- A reply to Luc, held for your approval. Files are saved to **Drafts** in the matter. Follow the links Copilot returns to see them in iManage.
 
 Open Cowork's review list, check the one-pager (the regulator points link to the published regulations) and approve the reply to Luc.
 
 > [!TIP]
 > Cowork keeps working in the background. One request becomes four deliverables across iManage and Outlook, and nothing is sent until you approve it.
-
-## Encore (optional)
-
-```text
-Do the exhibits in the matter contradict this agreement?
-```
-
-Copilot finds that Exhibit A promises 60 days' notice and Parquet or CSV data return, but §23.10 says the agreement wins.
 
 ## If it goes wrong
 
@@ -131,7 +123,7 @@ Copilot finds that Exhibit A promises 60 days' notice and Parquet or CSV data re
 
 - [ ] Your catch-up linked to Hemanti's email and the Teams chat.
 - [ ] The agreement has comments on the hard stops and a redline for the two must-haves.
-- [ ] The negotiation list, one-pager and reply are in 04 Drafts, and you approved the reply.
+- [ ] The negotiation list, one-pager and reply are in Drafts, and you approved the reply.
 
 **What you take away:** Copilot did the reading, the redlining and the drafting across email, Teams and iManage. You stayed the lawyer: every change has a reason, and nothing went out without your approval.
 

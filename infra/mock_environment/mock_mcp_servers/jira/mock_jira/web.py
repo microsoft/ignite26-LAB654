@@ -312,7 +312,7 @@ def shell(view: View, *, title: str, active: str, body: str) -> str:
         for key, label, href in items)
     notice = f'<div class="notice">{e(view.notice)}</div>' if view.notice else ""
     return f"""<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport"
-content="width=device-width,initial-scale=1"><title>{e(title)} - Jira</title><style>{CSS}</style></head><body>
+content="width=device-width,initial-scale=1"><title>{e(title)} - Jira</title><style>{CSS}{_BADGE_CSS}</style></head><body>
 <header class="top"><div class="tl"><span class="grid" title="Switch apps"><svg width="20" height="20"
 viewBox="0 0 20 20"><g fill="#44546F"><rect x="3" y="3" width="4" height="4" rx="1"/><rect x="8" y="3" width="4"
 height="4" rx="1"/><rect x="13" y="3" width="4" height="4" rx="1"/><rect x="3" y="8" width="4" height="4" rx="1"/>
@@ -322,8 +322,7 @@ rx="1"/></g></svg></span><a class="logo" href="{view.board()}">{JIRA_LOGO}<span>
 <form class="search" action="{view.list()}" method="get"><svg width="16" height="16" viewBox="0 0 16 16"><circle
 cx="7" cy="7" r="4.6" stroke="#626F86" stroke-width="1.6" fill="none"/><path d="M10.5 10.5l3 3" stroke="#626F86"
 stroke-width="1.6" stroke-linecap="round"/></svg><input name="text" placeholder="Search" aria-label="Search"></form>
-<div class="tr"><span class="create">+ Create</span><span class="mock" title="Lab mock, not a real Jira site">MOCK
-JIRA</span>{avatar(me, 28)}</div></header>
+<div class="tr"><span class="create">+ Create</span>{avatar(me, 28)}</div></header>
 <div class="wrap"><nav class="side">
 <a class="nv" href="{view.board()}">{_nav_icon("foryou")}<span>For you</span></a>
 <a class="nv" href="{view.board()}">{_nav_icon("recent")}<span>Recent</span></a>
@@ -333,7 +332,20 @@ JIRA</span>{avatar(me, 28)}</div></header>
 <a class="nv proj" href="{view.board()}"><span class="pa">{PROJECT_SVG}</span><span>{e(p["name"])}</span></a>
 {nav}
 </nav><main>{notice}{body}<footer>Mock environment for Microsoft Ignite lab LAB654. Not affiliated with Atlassian.
-Data is fictitious.</footer></main></div></body></html>"""
+Data is fictitious.</footer></main></div>{_mock_badge(view.prefix.startswith("/v/") and not view.notice)}</body></html>"""
+
+
+_BADGE_CSS = (".mock-badge{position:fixed;right:16px;bottom:16px;z-index:1000;display:flex;flex-direction:column;"
+              "align-items:flex-end;background:#d13438;color:#fff;border-radius:8px;padding:6px 12px;"
+              "box-shadow:0 4px 14px rgba(0,0,0,.2);font:12px/1.35 'Segoe UI',system-ui,sans-serif}"
+              ".mock-badge .mb-top{font-weight:700;letter-spacing:.06em}.mock-badge .mb-sub{opacity:.92}")
+
+
+def _mock_badge(scoped: bool) -> str:
+    state = "Showing this conversation's changes" if scoped else "Showing the original site data"
+    return ('<div class="mock-badge" title="This is a mock Jira page served by a mock MCP server. '
+            f'It is not a real Jira site."><span class="mb-top">MOCK JIRA</span>'
+            f'<span class="mb-sub">{state}</span></div>')
 
 
 def _crumbs(view: View, *extra: str) -> str:

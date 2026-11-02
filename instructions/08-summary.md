@@ -36,7 +36,6 @@ Enable the connectors that matter most to your organization. Start with the syst
 
 - Try another track.
 - **Finance:** swap NVIDIA for another company and rerun the prompts.
-- **Legal:** run the encore and compare the exhibits with the agreement.
 - **Productivity:** run the stretch step and send the pre-read draft.
 
 ## Continue your learning

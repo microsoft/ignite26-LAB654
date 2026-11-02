@@ -178,7 +178,7 @@ def shell(site: Site, *, title: str, active: str, body: str, notice: str | None,
     org_name = next((o.get("Name") for o in site.org.records("Organization")), "Salesforce")
     return f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
-<title>{e(title)} | Salesforce</title><style>{CSS}</style></head><body>
+<title>{e(title)} | Salesforce</title><style>{CSS}{_BADGE_CSS}</style></head><body>
 <header class="gh"><div class="gh-top"><a class="logo" href="{site.home()}" title="{e(org_name)}">{_CLOUD}</a>
 <form class="search" action="{site.prefix}/lightning/search" method="get">{_SEARCH_ICON}
 <input name="q" value="{e(q)}" placeholder="Search..." aria-label="Search"></form>
@@ -186,7 +186,20 @@ def shell(site: Site, *, title: str, active: str, body: str, notice: str | None,
 <nav class="ctx"><span class="waffle" title="App Launcher"><i>{"<b></b>" * 9}</i></span>
 <span class="appname">Sales</span>{"".join(tabs)}</nav></header>{banner}
 <main>{body}</main><footer>Mock environment for Microsoft Ignite lab LAB654. Not affiliated with Salesforce. Data is
-fictitious and read-only.</footer></body></html>"""
+fictitious and read-only.</footer>{_mock_badge(site.prefix.startswith("/v/") and not notice)}</body></html>"""
+
+
+_BADGE_CSS = (".mock-badge{position:fixed;right:16px;bottom:16px;z-index:1000;display:flex;flex-direction:column;"
+              "align-items:flex-end;background:#d13438;color:#fff;border-radius:8px;padding:6px 12px;"
+              "box-shadow:0 4px 14px rgba(0,0,0,.2);font:12px/1.35 'Segoe UI',system-ui,sans-serif}"
+              ".mock-badge .mb-top{font-weight:700;letter-spacing:.06em}.mock-badge .mb-sub{opacity:.92}")
+
+
+def _mock_badge(scoped: bool) -> str:
+    state = "Showing this conversation's changes" if scoped else "Showing the original org data"
+    return ('<div class="mock-badge" title="This is a mock Salesforce page served by a mock MCP server. '
+            f'It is not a real Salesforce org."><span class="mb-top">MOCK SALESFORCE</span>'
+            f'<span class="mb-sub">{state}</span></div>')
 
 
 # --- List views ---------------------------------------------------------------------------------------------------
