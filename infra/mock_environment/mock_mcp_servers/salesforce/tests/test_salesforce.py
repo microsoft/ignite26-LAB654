@@ -215,3 +215,15 @@ def test_widget_handshake_matches_mcp_apps_sdk():
     init = re.search(r'request\("ui/initialize",\s*\{(.*?)\}\)', html, re.S).group(1)
     assert all(k in init for k in ("appInfo:", "appCapabilities:", "protocolVersion:"))
     assert "if (!initialized) return;" in html
+
+
+def test_widget_render_is_fail_safe_for_rich_cells():
+    from pathlib import Path
+
+    import mock_salesforce
+
+    html = (Path(mock_salesforce.__file__).parent / "ui" / "widget.html").read_text(encoding="utf-8")
+    # Real Salesforce datagrids send badge cells as {value, badgeVariant}; an uncaught throw empties the iframe.
+    assert "v.badgeVariant" in html
+    assert "if (c instanceof Node)" in html
+    assert "render failed" in html

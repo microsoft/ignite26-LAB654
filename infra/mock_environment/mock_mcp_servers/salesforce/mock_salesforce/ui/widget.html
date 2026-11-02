@@ -149,7 +149,9 @@
   function add(el, c) {
     if (c == null || c === false) return;
     if (Array.isArray(c)) { c.forEach(function (x) { add(el, x); }); return; }
-    el.appendChild(typeof c === "object" ? c : document.createTextNode(String(c)));
+    if (c instanceof Node) { el.appendChild(c); return; }
+    if (typeof c === "object") c = c.value != null ? c.value : c.label != null ? c.label : JSON.stringify(c);
+    el.appendChild(document.createTextNode(String(c)));
   }
   function svgIcon(name) { return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + (ICONS[name] || ICONS.dashboard) + "</svg>"; }
 
@@ -222,11 +224,13 @@
   }
 
   function cell(c, r) {
-    var v = r[c.key], t = c.type || "text";
+    var v = r[c.key], t = c.type || "text", vt = r._tone;
+    /* Cells may be rich objects, e.g. {value, badgeVariant}. */
+    if (v && typeof v === "object" && !Array.isArray(v) && "value" in v) { vt = v.badgeVariant || v.variant || vt; v = v.value; }
     if (t === "currency") return fmt(v, "currency");
     if (t === "number") return fmt(v, "number");
     if (t === "date") return date(v);
-    if (t === "badge") return v == null || v === "" ? "" : h("span", { class: "badge " + (tone(r._tone) || "secondary") }, v);
+    if (t === "badge") return v == null || v === "" ? "" : h("span", { class: "badge " + (tone(vt) || "secondary") }, v);
     if (t === "avatar") return v ? h("span", { class: "av" }, h("i", null, initials(v)), v) : "";
     if (t === "databar") { var max = c.max || 100; return h("div", { class: "bar", title: fmt(v) }, h("div", { style: "width:" + Math.max(0, Math.min(100, (Number(v) || 0) / max * 100)) + "%" })); }
     if (t === "sparkline") return spark(Array.isArray(v) ? v : []);
@@ -244,7 +248,7 @@
     var wrap = h("div", { class: "tbl-wrap" });
     function draw() {
       var list = rows.slice();
-      if (state.key) list.sort(function (x, y) { var p = x[state.key], q = y[state.key]; return (p < q ? -1 : p > q ? 1 : 0) * state.dir; });
+      if (state.key) list.sort(function (x, y) { var p = x[state.key], q = y[state.key]; if (p && typeof p === "object" && "value" in p) p = p.value; if (q && typeof q === "object" && "value" in q) q = q.value; return (p < q ? -1 : p > q ? 1 : 0) * state.dir; });
       var head = h("tr", null, cols.map(function (c) {
         var sortable = c.sortable !== false;
         return h("th", { class: (c.align === "right" || c.type === "currency" || c.type === "number" ? "r " : "") + (sortable ? "sortable" : ""), onclick: sortable ? function () { state.dir = state.key === c.key ? -state.dir : 1; state.key = c.key; draw(); } : null },
@@ -379,8 +383,14 @@
   function render(def) {
     var root = def && def.renderer && def.renderer.componentOverrides && def.renderer.componentOverrides.$;
     root = root || (def && def.definition ? def : null);
+    var body;
+    /* Build off-DOM first so a bad component never leaves the iframe empty (hosts hide 0-height widgets). */
+    try { body = root ? tile(root) : h("div", { class: "empty" }, "This widget has no content."); }
+    catch (err) {
+      if (window.console) console.error("[salesforce-mock-widget] render failed:", err);
+      body = h("div", { class: "empty" }, "Couldn't render this widget (" + ((err && err.message) || err) + ").");
+    }
     app.innerHTML = "";
-    var body = root ? tile(root) : h("div", { class: "empty" }, "This widget has no content.");
     app.appendChild(h("div", { class: "card" }, h("div", { class: "card-hd", html: CLOUD }, h("b", null, "Salesforce")), h("div", { class: "card-bd" }, body)));
   }
   function fromResult(result) {
