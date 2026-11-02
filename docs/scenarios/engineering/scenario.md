@@ -4,7 +4,7 @@
 >
 > IGNITE LAB654 | Engineering connectors lab | Fictional lab data
 >
-> **Lab build notes:** Test_GitHub is a read-only mock MCP server (`mock_mcp_servers/github`) with only the GitHub MCP server's read tools, so it behaves like a synced connector: Copilot can find and read PR #287 but can't change it. Appendix D records the earlier synced-connector item shape, which is still in the COEP seed. Test_Jira is a mock MCP server; its plugin follows the structure of *Rovo_CEA 9 (2) 1.zip*.
+> **Lab build notes:** Test_GitHub is a mock MCP server (`mock_mcp_servers/github`) with the GitHub MCP server's read tools and the write tools the data supports. Writes are kept per conversation, and merging PR #287 is blocked by branch protection. Appendix D records the earlier synced-connector item shape, which is still in the COEP seed. Test_Jira is a mock MCP server; its plugin follows the structure of *Rovo_CEA 9 (2) 1.zip*.
 
 ## At a glance
 
@@ -74,7 +74,7 @@ Lakeshore Retail expands its pilot on Monday, November 23, and Atul needs a stat
 | | |
 |---|---|
 | **Validate access** | Pre-connect Test_Jira and Test_GitHub; verify Jira and sprint access, GitHub search permissions, Outlook/Teams access, and Chat-to-Cowork handoff as an attendee. All recipients must be lab identities. |
-| **Validate GitHub** | Confirm Test_GitHub finds PR #287 from "AUR-142" and returns Tama's changes-requested review, with citations to the PR. The mock has read tools only, so Copilot can't comment on, approve or merge the PR. |
+| **Validate GitHub** | Confirm Test_GitHub finds PR #287 from "AUR-142" and returns Tama's changes-requested review, with citations to the PR. The mock also has write tools (comment, review, label, edit), kept per conversation so attendees don't affect each other. Merging is blocked by branch protection while Tama's changes-requested review stands. |
 | **Validate skill** | Package confirms sprint-to-slides, not a tested runtime. Verify one-slide .pptx output, available Jira tools, and a shareable link. Suppress the full report and Confluence archive for this short lab. Test native Teams posting separately; skill instructions are not proof of available tools. |
 | **Dry run / reset** | Measure the full flow. All seeded evidence is dated on or before Oct 30, 2026 (the tenant is loaded once); the cutover, checkpoint and expansion fall after the Nov 17–19 lab. Prompts use no relative days. Isolate generated artifacts/posts by seat; reset drafts and outputs without changing shared evidence. Do not infer merge, release, or approved sprint changes. |
 

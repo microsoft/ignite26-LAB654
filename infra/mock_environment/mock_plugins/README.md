@@ -30,7 +30,7 @@ Icons and `skills/` are copied unchanged. `addendum.json` (internal publishing r
 | `description` (Jira only) | Rewritten to describe the Jira tools in Copilot instead of the Rovo Teams bot | The package ships only the connector and skills |
 | `bots`, `copilotAgents`, `webApplicationInfo`, `permissions`, `supportsChannelFeatures`, `validDomains`, `defaultInstallScope`, `publisherDocsUrl` (Jira only) | Removed | They register Atlassian's real Rovo bot and app, which the mock doesn't provide |
 | `color.png` (Jira only) | Renamed from `color-prod.png` | Matches the other packages |
-| `agentSkills` and `skills/` (GitHub only) | Removed | The source's 4 skills (`github`, `gh-address-comments`, `gh-fix-ci`, `yeet`) run `gh` CLI workflows that fix code, push branches and open pull requests. Test_GitHub is read-only |
+| `agentSkills` and `skills/` (GitHub only) | Removed | The source's 4 skills (`github`, `gh-address-comments`, `gh-fix-ci`, `yeet`) run `gh` CLI workflows that fix code, push branches and open pull requests. The mock has no code, branches or CI |
 
 ## Build packages
 

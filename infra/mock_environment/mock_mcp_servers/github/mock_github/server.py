@@ -1,24 +1,28 @@
-"""GitHub mock MCP server: eight read-only tools of github/github-mcp-server over the zava-lab/aurora-status pull
-requests, with a GitHub look-alike viewer next to /mcp."""
+"""GitHub mock MCP server: eight read and ten write tools of github/github-mcp-server over the zava-lab/aurora-status
+pull requests, with a GitHub look-alike viewer next to /mcp. Writes are kept per conversation."""
 
 from __future__ import annotations
 
 from mockmcp import Clock, InvalidParams, ServerSpec, ToolError
 
-from .store import Store
+from .store import StateStore
 from .tools import TOOLS, load_schemas
 from .web import build_routes
 
 NAME = "github"
-VERSION = "1.0.0"
+VERSION = "2.0.0"
 DEFAULT_NOW = "2026-10-29T13:00:00Z"
 INSTRUCTIONS = (
-    "Mock of the GitHub MCP server with read-only tools. The zava-lab organization has one repository, "
-    "zava-lab/aurora-status (Aurora hub status service), with four pull requests and their reviews. Use "
-    "search_pull_requests to find pull requests by text such as a Jira key, pull_request_read (methods get, "
-    "get_reviews, get_comments, get_review_comments) for details and reviews, and list_pull_requests, "
-    "search_repositories, search_users, list_label, get_label and get_me for context. The mock has no write tools "
-    "and no diffs, files, commits or check runs."
+    "Mock of the GitHub MCP server. The zava-lab organization has one repository, zava-lab/aurora-status (Aurora "
+    "hub status service), with four pull requests and their reviews. Use search_pull_requests to find pull requests "
+    "by text such as a Jira key, pull_request_read (methods get, get_reviews, get_comments, get_review_comments) for "
+    "details, reviews and comments, and list_pull_requests, search_repositories, search_users, list_label, get_label "
+    "and get_me for context. Write tools (add_issue_comment, update_issue_comment, issue_write, label_write, "
+    "pull_request_review_write, add_comment_to_pending_review, add_reply_to_pull_request_comment, "
+    "update_pull_request, merge_pull_request, request_copilot_review) change only this conversation's copy of the "
+    "data; other conversations still see the original. Links returned after a write open that copy in the viewer. "
+    "The mock has no branches, diffs, files, commits or check runs, so it can't create pull requests, and GitHub "
+    "Issues are turned off for the repository (work is tracked in Jira)."
 )
 
 
@@ -32,10 +36,10 @@ def render_error(error: ToolError, tool: str) -> str:
     return error.message
 
 
-def build_spec(store: Store | None = None) -> ServerSpec:
+def build_spec(store: StateStore | None = None) -> ServerSpec:
     """Tool results link to the viewer at env PUBLIC_BASE_URL (default http://localhost:8000)."""
     if store is None:
-        store = Store()
+        store = StateStore()
     schemas = load_schemas()
     tools = [cls(store, schemas) for cls in TOOLS]
 

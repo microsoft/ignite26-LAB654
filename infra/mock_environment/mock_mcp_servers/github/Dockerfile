@@ -1,7 +1,7 @@
 # Build from infra/mock_environment/mock_mcp_servers:
 #   docker build -f github/Dockerfile -t mock-github:latest .
 # On networks that block PyPI, add: --build-arg PIP_INDEX_URL=<your mirror>/simple/
-# The mock is read-only and keeps no state, so any replica count works. Set PUBLIC_BASE_URL to the public address so links work.
+# One replica only: conversation copies live in process memory. Set PUBLIC_BASE_URL to the public address so links work.
 FROM python:3.12-slim
 
 ARG PIP_INDEX_URL=https://pypi.org/simple/

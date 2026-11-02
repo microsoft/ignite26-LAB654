@@ -446,5 +446,637 @@
       "readOnlyHint": true,
       "title": "Get a specific label from a repository"
     }
+  },
+  {
+    "name": "add_issue_comment",
+    "description": "Add a comment and/or reaction to a specific issue or issue comment in a GitHub repository. Use this tool with pull requests as well (in this case pass pull request number as issue_number), but only if user is not asking specifically to add or react to review comments. At least one of body or reaction is required.",
+    "inputSchema": {
+      "properties": {
+        "body": {
+          "description": "Comment content. Required unless reaction is provided.",
+          "minLength": 1,
+          "type": "string"
+        },
+        "comment_id": {
+          "description": "The numeric ID of the issue or pull request comment to react to. Use this for reactions to comments; omit it to react to the issue or pull request itself. Cannot be combined with body.",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "issue_number": {
+          "description": "Issue or pull request number to comment on or react to.",
+          "type": "number"
+        },
+        "owner": {
+          "description": "Repository owner",
+          "type": "string"
+        },
+        "reaction": {
+          "description": "Emoji reaction to add. Required unless body is provided.",
+          "enum": [
+            "+1",
+            "-1",
+            "laugh",
+            "confused",
+            "heart",
+            "hooray",
+            "rocket",
+            "eyes"
+          ],
+          "type": "string"
+        },
+        "repo": {
+          "description": "Repository name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "owner",
+        "repo",
+        "issue_number"
+      ],
+      "type": "object"
+    },
+    "annotations": {
+      "idempotentHint": false,
+      "readOnlyHint": false,
+      "title": "Add comment to issue or pull request"
+    }
+  },
+  {
+    "name": "update_issue_comment",
+    "description": "Update the body of an existing issue or pull request conversation comment. This tool cannot update pull request review comments.",
+    "inputSchema": {
+      "properties": {
+        "body": {
+          "description": "New comment content",
+          "minLength": 1,
+          "type": "string"
+        },
+        "comment_id": {
+          "description": "The numeric ID of the issue or pull request conversation comment to update. Do not use a pull request review comment ID.",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "owner": {
+          "description": "Repository owner",
+          "type": "string"
+        },
+        "repo": {
+          "description": "Repository name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "owner",
+        "repo",
+        "comment_id",
+        "body"
+      ],
+      "type": "object"
+    },
+    "annotations": {
+      "idempotentHint": false,
+      "readOnlyHint": false,
+      "title": "Update issue comment"
+    }
+  },
+  {
+    "name": "issue_write",
+    "description": "Create a new or update an existing issue in a GitHub repository.",
+    "inputSchema": {
+      "properties": {
+        "assignees": {
+          "description": "Usernames to assign to this issue",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "body": {
+          "description": "Issue body content",
+          "type": "string"
+        },
+        "duplicate_of": {
+          "description": "Issue number that this issue is a duplicate of. Required when state_reason is 'duplicate'.",
+          "type": "number"
+        },
+        "issue_fields": {
+          "description": "Issue field values to set or clear. Each item requires 'field_name' and exactly one of 'value', 'field_option_name', or 'delete: true'.",
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "delete": {
+                "description": "Set to true to clear this field's current value on the issue. When false or omitted, this property is ignored. Cannot be true when 'value' or 'field_option_name' is provided.",
+                "type": "boolean"
+              },
+              "field_name": {
+                "description": "Issue field name (case-insensitive). Must match a field returned by list_issue_fields for this repository or its organization.",
+                "type": "string"
+              },
+              "field_option_name": {
+                "description": "Option name for single-select fields. Validated against the field's options before the API call. Cannot be combined with 'value' or 'delete: true'.",
+                "type": "string"
+              },
+              "value": {
+                "description": "Value to set. Use for text, number, and date fields (date as YYYY-MM-DD). For single-select fields, prefer 'field_option_name' so the option is validated before the API call. Cannot be combined with 'field_option_name' or 'delete: true'.",
+                "type": [
+                  "string",
+                  "number",
+                  "boolean"
+                ]
+              }
+            },
+            "required": [
+              "field_name"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "issue_number": {
+          "description": "Issue number to update",
+          "type": "number"
+        },
+        "labels": {
+          "description": "Labels to apply to this issue",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "method": {
+          "description": "Write operation to perform on a single issue.\nOptions are:\n- 'create' - creates a new issue.\n- 'update' - updates an existing issue.\n",
+          "enum": [
+            "create",
+            "update"
+          ],
+          "type": "string"
+        },
+        "milestone": {
+          "description": "Milestone number",
+          "type": "number"
+        },
+        "owner": {
+          "description": "Repository owner",
+          "type": "string"
+        },
+        "parent_issue_number": {
+          "description": "Issue number of the parent issue. Only used when method is 'create' and cannot be combined with issue_fields. The new issue is created and attached to this parent in the same operation.",
+          "minimum": 1,
+          "type": "number"
+        },
+        "parent_owner": {
+          "description": "Repository owner of the parent issue. Must be provided with parent_repo. Omit both to use owner and repo. Only used when method is 'create' and parent_issue_number is provided.",
+          "type": "string"
+        },
+        "parent_repo": {
+          "description": "Repository name of the parent issue. Must be provided with parent_owner. Omit both to use owner and repo. Only used when method is 'create' and parent_issue_number is provided.",
+          "type": "string"
+        },
+        "repo": {
+          "description": "Repository name",
+          "type": "string"
+        },
+        "state": {
+          "description": "New state",
+          "enum": [
+            "open",
+            "closed"
+          ],
+          "type": "string"
+        },
+        "state_reason": {
+          "description": "Reason for the state change. Ignored unless state is changed.",
+          "enum": [
+            "completed",
+            "not_planned",
+            "duplicate"
+          ],
+          "type": "string"
+        },
+        "title": {
+          "description": "Issue title",
+          "type": "string"
+        },
+        "type": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Type of this issue. For updates, pass null to remove the current type. Only use if issue types are enabled for this repository. Use list_issue_types to get valid type values for this repository or its owner organization. If the repository doesn't support issue types, omit this parameter."
+        }
+      },
+      "required": [
+        "method",
+        "owner",
+        "repo"
+      ],
+      "type": "object"
+    },
+    "annotations": {
+      "idempotentHint": false,
+      "readOnlyHint": false,
+      "title": "Create or update issue/pull request"
+    }
+  },
+  {
+    "name": "label_write",
+    "description": "Perform write operations on repository labels. To set labels on issues, use the 'update_issue' tool.",
+    "inputSchema": {
+      "properties": {
+        "color": {
+          "description": "Label color as 6-character hex code without '#' prefix (e.g., 'f29513'). Required for 'create', optional for 'update'.",
+          "type": "string"
+        },
+        "description": {
+          "description": "Label description text. Optional for 'create' and 'update'.",
+          "type": "string"
+        },
+        "method": {
+          "description": "Operation to perform: 'create', 'update', or 'delete'",
+          "enum": [
+            "create",
+            "update",
+            "delete"
+          ],
+          "type": "string"
+        },
+        "name": {
+          "description": "Label name - required for all operations",
+          "type": "string"
+        },
+        "new_name": {
+          "description": "New name for the label (used only with 'update' method to rename)",
+          "type": "string"
+        },
+        "owner": {
+          "description": "Repository owner (username or organization name)",
+          "type": "string"
+        },
+        "repo": {
+          "description": "Repository name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "method",
+        "owner",
+        "repo",
+        "name"
+      ],
+      "type": "object"
+    },
+    "annotations": {
+      "destructiveHint": true,
+      "idempotentHint": false,
+      "readOnlyHint": false,
+      "title": "Write operations on repository labels"
+    }
+  },
+  {
+    "name": "pull_request_review_write",
+    "description": "Create and/or submit, delete review of a pull request.\n\nAvailable methods:\n- create: Create a new review of a pull request. If \"event\" parameter is provided, the review is submitted. If \"event\" is omitted, a pending review is created.\n- submit_pending: Submit an existing pending review of a pull request. This requires that a pending review exists for the current user on the specified pull request. The \"body\" and \"event\" parameters are used when submitting the review.\n- delete_pending: Delete an existing pending review of a pull request. This requires that a pending review exists for the current user on the specified pull request.\n- resolve_thread: Resolve a review thread. Requires only \"threadId\" parameter with the thread's node ID (e.g., PRRT_kwDOxxx). The owner, repo, and pullNumber parameters are not used for this method. Resolving an already-resolved thread is a no-op.\n- unresolve_thread: Unresolve a previously resolved review thread. Requires only \"threadId\" parameter. The owner, repo, and pullNumber parameters are not used for this method. Unresolving an already-unresolved thread is a no-op.\n",
+    "inputSchema": {
+      "properties": {
+        "body": {
+          "description": "Review comment text",
+          "type": "string"
+        },
+        "commitID": {
+          "description": "SHA of commit to review",
+          "type": "string"
+        },
+        "event": {
+          "description": "Review action to perform.",
+          "enum": [
+            "APPROVE",
+            "REQUEST_CHANGES",
+            "COMMENT"
+          ],
+          "type": "string"
+        },
+        "method": {
+          "description": "The write operation to perform on pull request review.",
+          "enum": [
+            "create",
+            "submit_pending",
+            "delete_pending",
+            "resolve_thread",
+            "unresolve_thread"
+          ],
+          "type": "string"
+        },
+        "owner": {
+          "description": "Repository owner",
+          "type": "string"
+        },
+        "pullNumber": {
+          "description": "Pull request number",
+          "type": "number"
+        },
+        "repo": {
+          "description": "Repository name",
+          "type": "string"
+        },
+        "threadId": {
+          "description": "The node ID of the review thread (e.g., PRRT_kwDOxxx). Required for resolve_thread and unresolve_thread methods. Get thread IDs from pull_request_read with method get_review_comments.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "method",
+        "owner",
+        "repo",
+        "pullNumber"
+      ],
+      "type": "object"
+    },
+    "annotations": {
+      "idempotentHint": false,
+      "readOnlyHint": false,
+      "title": "Write operations (create, submit, delete) on pull request reviews"
+    }
+  },
+  {
+    "name": "add_comment_to_pending_review",
+    "description": "Add review comment to the requester's latest pending pull request review. A pending review needs to already exist to call this (check with the user if not sure).",
+    "inputSchema": {
+      "properties": {
+        "body": {
+          "description": "The text of the review comment",
+          "type": "string"
+        },
+        "line": {
+          "description": "The line of the blob in the pull request diff that the comment applies to. For multi-line comments, the last line of the range",
+          "type": "number"
+        },
+        "owner": {
+          "description": "Repository owner",
+          "type": "string"
+        },
+        "path": {
+          "description": "The relative path to the file that necessitates a comment",
+          "type": "string"
+        },
+        "pullNumber": {
+          "description": "Pull request number",
+          "type": "number"
+        },
+        "repo": {
+          "description": "Repository name",
+          "type": "string"
+        },
+        "side": {
+          "description": "The side of the diff to comment on. LEFT indicates the previous state, RIGHT indicates the new state",
+          "enum": [
+            "LEFT",
+            "RIGHT"
+          ],
+          "type": "string"
+        },
+        "startLine": {
+          "description": "For multi-line comments, the first line of the range that the comment applies to",
+          "type": "number"
+        },
+        "startSide": {
+          "description": "For multi-line comments, the starting side of the diff that the comment applies to. LEFT indicates the previous state, RIGHT indicates the new state",
+          "enum": [
+            "LEFT",
+            "RIGHT"
+          ],
+          "type": "string"
+        },
+        "subjectType": {
+          "description": "The level at which the comment is targeted",
+          "enum": [
+            "FILE",
+            "LINE"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "owner",
+        "repo",
+        "pullNumber",
+        "path",
+        "body",
+        "subjectType"
+      ],
+      "type": "object"
+    },
+    "annotations": {
+      "idempotentHint": false,
+      "readOnlyHint": false,
+      "title": "Add review comment to the requester's latest pending pull request review"
+    }
+  },
+  {
+    "name": "add_reply_to_pull_request_comment",
+    "description": "Add a reply and/or reaction to an existing pull request comment. This can create a new comment linked as a reply to the specified comment, add an emoji reaction to the specified comment, or do both. At least one of body or reaction is required.",
+    "inputSchema": {
+      "properties": {
+        "body": {
+          "description": "The text of the reply. Required unless reaction is provided.",
+          "type": "string"
+        },
+        "commentId": {
+          "description": "The numeric ID of the pull request review comment to reply or react to. Use the number from a #discussion_r... anchor, not the GraphQL thread node ID (PRRT_...).",
+          "minimum": 1,
+          "type": "number"
+        },
+        "owner": {
+          "description": "Repository owner",
+          "type": "string"
+        },
+        "pullNumber": {
+          "description": "Pull request number. Required when body is provided.",
+          "type": "number"
+        },
+        "reaction": {
+          "description": "Emoji reaction to add. Required unless body is provided.",
+          "enum": [
+            "+1",
+            "-1",
+            "laugh",
+            "confused",
+            "heart",
+            "hooray",
+            "rocket",
+            "eyes"
+          ],
+          "type": "string"
+        },
+        "repo": {
+          "description": "Repository name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "owner",
+        "repo",
+        "commentId"
+      ],
+      "type": "object"
+    },
+    "annotations": {
+      "idempotentHint": false,
+      "readOnlyHint": false,
+      "title": "Add reply to pull request comment"
+    }
+  },
+  {
+    "name": "update_pull_request",
+    "description": "Update an existing pull request in a GitHub repository.",
+    "inputSchema": {
+      "properties": {
+        "base": {
+          "description": "New base branch name",
+          "type": "string"
+        },
+        "body": {
+          "description": "New description",
+          "type": "string"
+        },
+        "draft": {
+          "description": "Mark pull request as draft (true) or ready for review (false)",
+          "type": "boolean"
+        },
+        "maintainer_can_modify": {
+          "description": "Allow maintainer edits",
+          "type": "boolean"
+        },
+        "owner": {
+          "description": "Repository owner",
+          "type": "string"
+        },
+        "pullNumber": {
+          "description": "Pull request number to update",
+          "type": "number"
+        },
+        "repo": {
+          "description": "Repository name",
+          "type": "string"
+        },
+        "reviewers": {
+          "description": "GitHub usernames or ORG/team-slug team reviewers to request reviews from",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "state": {
+          "description": "New state",
+          "enum": [
+            "open",
+            "closed"
+          ],
+          "type": "string"
+        },
+        "title": {
+          "description": "New title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "owner",
+        "repo",
+        "pullNumber"
+      ],
+      "type": "object"
+    },
+    "annotations": {
+      "idempotentHint": false,
+      "readOnlyHint": false,
+      "title": "Edit pull request"
+    }
+  },
+  {
+    "name": "merge_pull_request",
+    "description": "Merge a pull request in a GitHub repository.",
+    "inputSchema": {
+      "properties": {
+        "commit_message": {
+          "description": "Extra detail for merge commit",
+          "type": "string"
+        },
+        "commit_title": {
+          "description": "Title for merge commit",
+          "type": "string"
+        },
+        "expectedHeadSha": {
+          "description": "The expected SHA of the pull request's HEAD ref",
+          "type": "string"
+        },
+        "merge_method": {
+          "description": "Merge method",
+          "enum": [
+            "merge",
+            "squash",
+            "rebase"
+          ],
+          "type": "string"
+        },
+        "owner": {
+          "description": "Repository owner",
+          "type": "string"
+        },
+        "pullNumber": {
+          "description": "Pull request number",
+          "type": "number"
+        },
+        "repo": {
+          "description": "Repository name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "owner",
+        "repo",
+        "pullNumber"
+      ],
+      "type": "object"
+    },
+    "annotations": {
+      "idempotentHint": false,
+      "readOnlyHint": false,
+      "title": "Merge pull request"
+    }
+  },
+  {
+    "name": "request_copilot_review",
+    "description": "Request a GitHub Copilot code review for a pull request. Use this for automated feedback on pull requests, usually before requesting a human reviewer.",
+    "inputSchema": {
+      "properties": {
+        "owner": {
+          "description": "Repository owner",
+          "type": "string"
+        },
+        "pullNumber": {
+          "description": "Pull request number",
+          "type": "number"
+        },
+        "repo": {
+          "description": "Repository name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "owner",
+        "repo",
+        "pullNumber"
+      ],
+      "type": "object"
+    },
+    "annotations": {
+      "idempotentHint": false,
+      "readOnlyHint": false,
+      "title": "Request Copilot review"
+    }
   }
 ]

@@ -1,4 +1,4 @@
-"""Mock GitHub MCP server (read-only tools)."""
+"""Mock GitHub MCP server (read tools, and write tools kept per conversation)."""
 
 from .server import build_spec
 

@@ -1,18 +1,28 @@
-"""A small GitHub look-alike viewer for the seeded pull requests, so links in tool results open a real page."""
+"""A small GitHub look-alike viewer for the seeded pull requests, so links in tool results open a real page.
+
+Every page also exists under ``/v/{token}`` and shows one conversation's own changes (comments, reviews, labels, edits
+and merges made with the write tools). Unscoped pages always show the original lab data."""
 
 from __future__ import annotations
 
 import hashlib
 import html
 import re
+from contextvars import ContextVar
 from datetime import datetime
 
-from .store import Store
-from .tools import parse, pr_matches
+from .store import COPILOT_REVIEWER, StateStore, Store
+from .tools import comment_visible, parse, pr_matches, visible_reviews
 
 e = html.escape
 
 _HEADERS = {"Cache-Control": "no-store", "X-Robots-Tag": "noindex"}
+_TOKEN = re.compile(r"[0-9a-f]{20}")
+_LINK = re.compile(r'(href|action)="/(?!avatars/)')
+_EXPIRED = ("No saved changes were found for this conversation (nothing was changed yet, or the changes expired after "
+            "about 2 hours). Showing the original lab data.")
+BADGE_SUB: ContextVar[str] = ContextVar("github_badge_sub", default="Original lab data")
+NOTICE: ContextVar[str] = ContextVar("github_notice", default="")
 _PALETTE = ["#0969da", "#8250df", "#bf3989", "#1a7f37", "#bc4c00", "#9a6700", "#cf222e", "#1b7c83"]
 
 
@@ -29,6 +39,10 @@ def initials(name: str) -> str:
 
 
 def avatar_svg(store: Store, login: str) -> str | None:
+    if login == COPILOT_REVIEWER:
+        return ('<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96">'
+                '<circle cx="48" cy="48" r="48" fill="#1f2328"/><text x="48" y="58" text-anchor="middle" '
+                'font-family="Segoe UI,Arial,sans-serif" font-size="30" font-weight="600" fill="#fff">CP</text></svg>')
     u = store.user(login)
     if u is None:
         return None
@@ -37,6 +51,16 @@ def avatar_svg(store: Store, login: str) -> str | None:
             f'<circle cx="48" cy="48" r="48" fill="{color}"/><text x="48" y="58" text-anchor="middle" '
             f'font-family="Segoe UI,Arial,sans-serif" font-size="36" font-weight="600" fill="#fff">'
             f'{e(initials(u["name"]))}</text></svg>')
+
+
+def who(login: str) -> str:
+    return "Copilot" if login == COPILOT_REVIEWER else login
+
+
+def user_link(login: str) -> str:
+    if login == COPILOT_REVIEWER:
+        return "<strong>Copilot</strong>"
+    return f'<a href="/{e(login)}"><strong>{e(login)}</strong></a>'
 
 
 def av(login: str, size: int = 20) -> str:
@@ -127,7 +151,7 @@ def shell(store: Store, title: str, body: str, repo: dict | None = None, tab: st
 {f'<a href="/{e(repo["owner"])}">{e(repo["owner"])}</a> / <a href="/{e(repo["owner"])}/{e(repo["name"])}">{e(repo["name"])}</a>' if repo else ""}
 </span><form class="search" action="/{e(store.org["login"])}/{e(store.repos[0]["name"])}/pulls"><input name="q"
 placeholder="Type / to search" aria-label="Search pull requests"></form><a href="/{e(me)}">{av(me, 32)}</a></header>
-{nav}<main>{body}<footer>Mock environment for Microsoft Ignite lab LAB654. Not affiliated with GitHub. Data is
+{nav}<main>{_notice()}{body}<footer>Mock environment for Microsoft Ignite lab LAB654. Not affiliated with GitHub. Data is
 fictitious.</footer></main>{_mock_badge()}</body></html>"""
 
 
@@ -140,14 +164,40 @@ _BADGE_CSS = (".mock-badge{position:fixed;right:16px;bottom:16px;z-index:1000;di
 def _mock_badge() -> str:
     return ('<div class="mock-badge" title="This is a mock GitHub page served by a mock MCP server. '
             'It is not GitHub."><span class="mb-top">MOCK GITHUB</span>'
-            '<span class="mb-sub">Read-only lab data</span></div>')
+            f'<span class="mb-sub">{e(BADGE_SUB.get())}</span></div>')
+
+
+def _notice() -> str:
+    text = NOTICE.get()
+    return f'<div class="notice">{e(text)}</div>' if text else ""
+
+
+def review_states(store: Store, pr: dict) -> dict[str, str]:
+    """Latest decisive review state per reviewer; a later COMMENTED review doesn't clear an earlier verdict."""
+    out: dict[str, str] = {}
+    for r in sorted(visible_reviews(store, pr), key=lambda x: x.get("submitted_at") or ""):
+        if r["state"] == "PENDING":
+            continue
+        if r["state"] in ("APPROVED", "CHANGES_REQUESTED", "DISMISSED") or r["user"] not in out:
+            out[r["user"]] = r["state"]
+    return out
+
+
+def reactions_html(items: list[dict]) -> str:
+    emoji = {"+1": "&#128077;", "-1": "&#128078;", "laugh": "&#128516;", "confused": "&#128533;",
+             "heart": "&#10084;&#65039;", "hooray": "&#127881;", "rocket": "&#128640;", "eyes": "&#128064;"}
+    counts: dict[str, int] = {}
+    for r in items or []:
+        counts[r["content"]] = counts.get(r["content"], 0) + 1
+    chips = "".join(f'<span class="rx">{emoji.get(k, e(k))} {n}</span>' for k, n in counts.items())
+    return f'<div class="rxs">{chips}</div>' if chips else ""
 
 
 def pr_row(store: Store, repo: dict, pr: dict) -> str:
     base = f'/{repo["owner"]}/{repo["name"]}'
     icon = MERGED_SVG if pr["merged"] else OPEN_SVG
     cls = "merged" if pr["merged"] else pr["state"]
-    states = [r["state"] for r in pr["reviews"]]
+    states = list(review_states(store, pr).values())
     review = ""
     if "CHANGES_REQUESTED" in states:
         review = '<span class="rv cr">Changes requested</span>'
@@ -184,39 +234,81 @@ Closed</a></div>{rows}</div>"""
     return shell(store, f"Pull requests · {repo['owner']}/{repo['name']}", body, repo, "pulls")
 
 
+def thread_html(store: Store, pr: dict, t: dict) -> str:
+    items = [c for c in t["comments"] if comment_visible(store, pr, c)]
+    if not items:
+        return ""
+    first = items[0]
+    where = e(first["path"]) + (f' line {first["line"]}' if first.get("line") else "")
+    resolved = '<span class="rv ok">Resolved</span>' if t["is_resolved"] else ""
+    rows = "".join(f"""<div class="tc" id="discussion_r{c["id"]}">{av(c["user"])} {user_link(c["user"])}
+<span class="muted">{when(c["created_at"])}</span><div class="md">{markdown(c["body"])}</div>
+{reactions_html(c.get("reactions"))}</div>""" for c in items)
+    return f'<div class="th"><div class="thh"><code>{where}</code>{resolved}</div>{rows}</div>'
+
+
 def pr_page(store: Store, repo: dict, pr: dict) -> str:
     u = pr["user"]
     if pr["merged"]:
-        sub = (f'<a href="/{pr["merged_by"]}"><strong>{e(pr["merged_by"])}</strong></a> merged this pull request on '
-               f'{when(pr["merged_at"])}')
+        sub = (f'{user_link(pr["merged_by"])} merged this pull request on {when(pr["merged_at"])}')
     else:
-        sub = f'<a href="/{u}"><strong>{e(u)}</strong></a> opened this pull request on {when(pr["created_at"])}'
-    events = [f"""<div class="tl"><a href="/{u}">{av(u, 40)}</a><div class="cm"><div class="ch"><a href="/{u}">
-<strong>{e(u)}</strong></a> commented on {when(pr["created_at"])}<span class="role">Member</span><span
-class="role">Author</span></div><div class="cb md">{markdown(pr["body"])}</div></div></div>"""]
+        sub = f'{user_link(u)} opened this pull request on {when(pr["created_at"])}'
+    events: list[tuple[str, str]] = [(pr["created_at"], f"""<div class="tl"><a href="/{u}">{av(u, 40)}</a><div
+class="cm"><div class="ch">{user_link(u)} commented on {when(pr["created_at"])}<span class="role">Member</span><span
+class="role">Author</span></div><div class="cb md">{markdown(pr["body"])}</div>{reactions_html(pr.get("reactions"))}
+</div></div>""")]
+    by_review: dict[int, list[str]] = {}
+    for t in pr["threads"]:
+        block = thread_html(store, pr, t)
+        if not block:
+            continue
+        rid = t["comments"][0].get("review_id")
+        if rid is not None and any(r["id"] == rid for r in pr["reviews"]):
+            by_review.setdefault(rid, []).append(block)
+        else:
+            events.append((t["comments"][0]["created_at"], f'<div class="tl solo">{block}</div>'))
     for r in pr["reviews"]:
-        verb, cls = {"APPROVED": ("approved these changes", "ok"),
-                     "CHANGES_REQUESTED": ("requested changes", "cr")}.get(r["state"], ("reviewed", "cm2"))
-        events.append(f"""<div class="tl" id="pullrequestreview-{r["id"]}"><a href="/{r["user"]}">
-{av(r["user"], 40)}</a><div class="cm {cls}"><div class="ch"><a href="/{r["user"]}"><strong>{e(r["user"])}</strong>
-</a> {verb} on {when(r["submitted_at"])}<span class="role">Member</span></div><div class="cb md">
-{markdown(r["body"])}</div></div></div>""")
+        if r["state"] == "PENDING":
+            continue
+        verb, cls = {"APPROVED": ("approved these changes", "ok"), "CHANGES_REQUESTED": ("requested changes", "cr"),
+                     "DISMISSED": ("reviewed (dismissed)", "cm2")}.get(r["state"], ("reviewed", "cm2"))
+        body = f'<div class="cb md">{markdown(r["body"])}</div>' if r.get("body") else ""
+        events.append((r.get("submitted_at") or "", f"""<div class="tl" id="pullrequestreview-{r["id"]}">
+{av(r["user"], 40)}<div class="cm {cls}"><div class="ch">{user_link(r["user"])} {verb} on {when(r.get("submitted_at"))}
+<span class="role">{"Bot" if r["user"] == COPILOT_REVIEWER else "Member"}</span></div>{body}
+{"".join(by_review.get(r["id"], []))}</div></div>"""))
+    for c in pr["comments"]:
+        events.append((c["created_at"], f"""<div class="tl" id="issuecomment-{c["id"]}"><a href="/{c["user"]}">
+{av(c["user"], 40)}</a><div class="cm"><div class="ch">{user_link(c["user"])} commented on {when(c["created_at"])}
+<span class="role">Member</span></div><div class="cb md">{markdown(c["body"])}</div>{reactions_html(c.get("reactions"))}
+</div></div>"""))
     if pr["merged"]:
-        events.append(f'<div class="ev"><span class="ic merged">{MERGED_SVG}</span><a href="/{pr["merged_by"]}">'
-                      f'<strong>{e(pr["merged_by"])}</strong></a> merged this pull request on '
-                      f'{when(pr["merged_at"])}</div>')
-    reviewers = "".join(
-        f'<div class="si">{av(r["user"])} <a href="/{r["user"]}">{e(r["user"])}</a><span class="rv '
-        f'{"cr" if r["state"] == "CHANGES_REQUESTED" else "ok"}">'
-        f'{"Changes requested" if r["state"] == "CHANGES_REQUESTED" else "Approved"}</span></div>'
-        for r in pr["reviews"]) or '<div class="muted">No reviews</div>'
+        events.append((pr["merged_at"], f'<div class="ev"><span class="ic merged">{MERGED_SVG}</span>'
+                       f'{user_link(pr["merged_by"])} merged this pull request on {when(pr["merged_at"])}</div>'))
+    elif pr["state"] == "closed" and pr.get("closed_at"):
+        events.append((pr["closed_at"], f'<div class="ev"><span class="ic closed">{OPEN_SVG}</span>'
+                       f'This pull request was closed on {when(pr["closed_at"])}</div>'))
+    events.sort(key=lambda x: x[0] or "")
+    states = review_states(store, pr)
+    label = {"APPROVED": ("ok", "Approved"), "CHANGES_REQUESTED": ("cr", "Changes requested"),
+             "COMMENTED": ("cm2", "Commented"), "DISMISSED": ("cm2", "Dismissed")}
+    rows = []
+    for login in pr["requested_reviewers"]:
+        rows.append(f'<div class="si">{av(login)} {user_link(login)}<span class="rv pend">Awaiting review</span></div>')
+    for login, st in states.items():
+        if login in pr["requested_reviewers"]:
+            continue
+        cls, text = label.get(st, ("cm2", st.title()))
+        rows.append(f'<div class="si">{av(login)} {user_link(login)}<span class="rv {cls}">{text}</span></div>')
+    reviewers = "".join(rows) or '<div class="muted">No reviews</div>'
     assignees = "".join(f'<div class="si">{av(a)} <a href="/{a}">{e(a)}</a></div>' for a in pr["assignees"]) \
         or '<div class="muted">No one assigned</div>'
     labels = " ".join(label_chip(repo, n) for n in pr["labels"]) or '<div class="muted">None yet</div>'
     ms = e(pr["milestone"]) if pr.get("milestone") else '<span class="muted">No milestone</span>'
+    n_conv = len(pr["comments"]) + sum(1 for r in pr["reviews"] if r["state"] != "PENDING")
     body = f"""<div class="ph"><h1>{e(pr["title"])} <span class="num">#{pr["number"]}</span></h1>
 <div class="phs">{state_badge(pr)} <span>{sub}</span></div></div><nav class="ptabs"><a class="on">Conversation
-<span class="cnt">{len(pr["reviews"])}</span></a></nav><div class="pw"><div class="pl">{"".join(events)}</div>
+<span class="cnt">{n_conv}</span></a></nav><div class="pw"><div class="pl">{"".join(x for _, x in events)}</div>
 <aside class="ps"><div class="sb"><h3>Reviewers</h3>{reviewers}</div><div class="sb"><h3>Assignees</h3>{assignees}
 </div><div class="sb"><h3>Labels</h3>{labels}</div><div class="sb"><h3>Milestone</h3>{ms}</div></aside></div>"""
     return shell(store, f"{pr['title']} by {u} · Pull Request #{pr['number']} · {repo['owner']}/{repo['name']}",
@@ -277,66 +369,112 @@ def not_found_page(store: Store) -> str:
 
 # --- routes --------------------------------------------------------------------------------------------------------
 
-def build_routes(store: Store, clock_factory=None) -> list:
+def build_routes(state: StateStore, clock_factory=None) -> list:
     from starlette.responses import HTMLResponse, RedirectResponse, Response
     from starlette.routing import Route
 
-    def html_(text: str, status: int = 200) -> HTMLResponse:
-        return HTMLResponse(text, status_code=status, headers=_HEADERS)
+    def resolve(request) -> tuple[Store, str, str, str] | None:
+        """(store, link prefix, badge sub-line, notice) or None for a malformed token."""
+        token = request.path_params.get("token")
+        if token is None:
+            return state.seed, "", "Original lab data", ""
+        if not _TOKEN.fullmatch(token):
+            return None
+        store, scoped = state.read_by_token(token)
+        if scoped:
+            return store, f"/v/{token}", "This conversation's changes", ""
+        return store, f"/v/{token}", "Original lab data", _EXPIRED
 
-    def missing() -> HTMLResponse:
-        return html_(not_found_page(store), 404)
+    def page(render):
+        async def endpoint(request):
+            found = resolve(request)
+            if found is None:
+                return HTMLResponse(not_found_page(state.seed), status_code=404, headers=_HEADERS)
+            store, prefix, sub, notice = found
+            t1, t2 = BADGE_SUB.set(sub), NOTICE.set(notice)
+            try:
+                result = render(request, store, prefix)
+            finally:
+                BADGE_SUB.reset(t1)
+                NOTICE.reset(t2)
+            if isinstance(result, tuple):
+                text, status = result
+                if prefix:
+                    text = _LINK.sub(lambda m: f'{m.group(1)}="{prefix}/', text)
+                return HTMLResponse(text, status_code=status, headers=_HEADERS)
+            return result
+        return endpoint
 
-    def get_repo(request) -> dict | None:
+    def get_repo(request, store: Store) -> dict | None:
         return store.repo(request.path_params["owner"], request.path_params["repo"])
 
-    async def home(request):
-        return RedirectResponse(f"/{store.org['login']}", status_code=302)
+    def get_pr(request, store: Store) -> tuple[dict | None, dict | None]:
+        repo = get_repo(request, store)
+        num = request.path_params["number"]
+        return repo, next((p for p in repo["pulls"] if str(p["number"]) == num), None) if repo else None
 
-    async def owner(request):
+    def missing(store: Store):
+        return not_found_page(store), 404
+
+    def home(request, store, prefix):
+        return RedirectResponse(f"{prefix}/{store.org['login']}", status_code=302)
+
+    def owner(request, store, prefix):
         login = request.path_params["owner"]
         if login.lower() == store.org["login"].lower():
-            return html_(org_page(store))
+            return org_page(store), 200
         user = store.user(login)
-        return html_(user_page(store, user)) if user else missing()
+        return (user_page(store, user), 200) if user else missing(store)
 
-    async def repo_home(request):
-        repo = get_repo(request)
-        return html_(repo_page(store, repo)) if repo else missing()
+    def repo_home(request, store, prefix):
+        repo = get_repo(request, store)
+        return (repo_page(store, repo), 200) if repo else missing(store)
 
-    async def pulls(request):
-        repo = get_repo(request)
-        return html_(pulls_page(store, repo, request.query_params.get("q", ""))) if repo else missing()
+    def pulls(request, store, prefix):
+        repo = get_repo(request, store)
+        return (pulls_page(store, repo, request.query_params.get("q", "")), 200) if repo else missing(store)
 
-    async def pull(request):
-        repo = get_repo(request)
-        num = request.path_params["number"]
-        pr = next((p for p in repo["pulls"] if str(p["number"]) == num), None) if repo else None
-        return html_(pr_page(store, repo, pr)) if pr else missing()
+    def pull(request, store, prefix):
+        repo, pr = get_pr(request, store)
+        return (pr_page(store, repo, pr), 200) if pr else missing(store)
 
-    async def labels(request):
-        repo = get_repo(request)
-        return html_(labels_page(store, repo)) if repo else missing()
+    def issue(request, store, prefix):
+        repo, pr = get_pr(request, store)
+        if pr is None:
+            return missing(store)
+        return RedirectResponse(f"{prefix}/{repo['owner']}/{repo['name']}/pull/{pr['number']}", status_code=302)
+
+    def labels(request, store, prefix):
+        repo = get_repo(request, store)
+        return (labels_page(store, repo), 200) if repo else missing(store)
 
     async def avatar(request):
-        svg = avatar_svg(store, request.path_params["login"])
+        svg = avatar_svg(state.seed, request.path_params["login"])
         if svg is None:
             return Response("Not found", status_code=404)
         return Response(svg, media_type="image/svg+xml", headers={"Cache-Control": "public, max-age=86400"})
 
-    return [
-        Route("/", home),
-        Route("/avatars/{login}.svg", avatar),
-        Route("/{owner}", owner),
-        Route("/{owner}/{repo}", repo_home),
-        Route("/{owner}/{repo}/pulls", pulls),
-        Route("/{owner}/{repo}/pull/{number}", pull),
-        Route("/{owner}/{repo}/pull/{number}/{tab}", pull),
-        Route("/{owner}/{repo}/labels", labels),
-    ]
-
+    routes = [Route("/avatars/{login}.svg", avatar), Route("/", page(home)), Route("/v/{token}", page(home)),
+              Route("/v/{token}/", page(home))]
+    for base in ("/v/{token}", ""):
+        routes += [
+            Route(base + "/{owner}", page(owner)),
+            Route(base + "/{owner}/{repo}", page(repo_home)),
+            Route(base + "/{owner}/{repo}/pulls", page(pulls)),
+            Route(base + "/{owner}/{repo}/pull/{number}", page(pull)),
+            Route(base + "/{owner}/{repo}/pull/{number}/{tab}", page(pull)),
+            Route(base + "/{owner}/{repo}/issues/{number}", page(issue)),
+            Route(base + "/{owner}/{repo}/labels", page(labels)),
+        ]
+    return routes
 
 CSS = """
+.notice{background:#fff8c5;border:1px solid #d4a72c66;border-radius:6px;padding:8px 12px;margin-bottom:16px}
+.rxs{display:flex;gap:6px;padding:0 16px 10px}.rx{border:1px solid #d1d9e0;border-radius:999px;padding:0 8px;
+font-size:12px;background:#f6f8fa}.th{border:1px solid #d1d9e0;border-radius:6px;margin:8px 16px 12px}
+.thh{display:flex;gap:8px;align-items:center;padding:6px 10px;background:#f6f8fa;border-bottom:1px solid #d1d9e0}
+.tc{padding:8px 10px;border-top:1px solid #eef1f4}.tc:first-of-type{border-top:0}.tc .md{margin-top:4px}
+.tl.solo{display:block}.rv.pend{background:#fff8c5;color:#7d4e00}
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,
 Arial,sans-serif;font-size:14px;line-height:1.5;color:#1f2328;background:#fff}a{color:#0969da;text-decoration:none}
 a:hover{text-decoration:underline}.muted{color:#59636e}
