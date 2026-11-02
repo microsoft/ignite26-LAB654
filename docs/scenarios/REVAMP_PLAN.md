@@ -157,8 +157,10 @@ All new mocks follow the same pattern in `mock_mcp_servers/_framework`: real too
 
 ### 5.3 Test_iManage (Legal)
 
-- [x] Build from the existing `mock_mcp_servers/imanage/seed_files` (matter, v4.2 agreement, Exhibits A–D, Playbook v2.1, empty 04 Drafts).
-- [x] Writes: save to 04 Drafts, conversation-scoped.
+- [x] Build from the existing `mock_mcp_servers/imanage/seed_files`.
+- [x] Slim the matter to Playbooks (Playbook v2.1) and an empty Drafts. Word can't open a mock-hosted document, so the v4.2 agreement moves to each attendee's OneDrive (`docs/scenarios/legal/files/`). Viewer restyled after the iManage Work web client.
+- [ ] Upload the v4.2 agreement to attendee OneDrives and fill in the path placeholder in `instructions/04-legal.md`.
+- [x] Writes: save to Drafts, conversation-scoped.
 - [x] Use Word/Office debug traces for tool shapes.
 - [x] Deployed as `mock-imanage` (see `mock_mcp_servers/DEPLOYMENT.md`).
 - [x] Plugin **Test_iManage** (`mock_plugins/imanage`, `test_imanage.zip`), built from the real iManage Work package.

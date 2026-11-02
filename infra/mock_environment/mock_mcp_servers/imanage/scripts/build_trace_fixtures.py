@@ -25,7 +25,7 @@ CALLS = {  # result file suffix -> (fixture name, tool, args as the mock should 
                                                                     "limit": 100}),
     "1793358945145": ("03_get_container_children", "get_container_children",
                       {"container_id": "Dev!1870", "container_type": "workspace"}),
-    "1793358952852": ("04_search_folders", "search_folders", {"container_id": "Dev!1870", "name": "02 Playbooks"}),
+    "1793358952852": ("04_search_folders", "search_folders", {"container_id": "Dev!1870", "name": "Playbooks"}),
     "1793358968394": ("05_search", "search", {"query": "AI Procurement Playbook"}),
     "1793358976966": ("06_fetch", "fetch", {"id": "DEV!252567.1"}),
     "1793358986427": ("07_get_document_profile", "get_document_profile", {"documentId": "DEV!252567.1"}),
@@ -40,7 +40,11 @@ RENAMES = [
     ("VTI-LEGAL-PB-AI-2.1", "ZAVA-LEGAL-PB-AI-2.1"),
     ('"123"', '"EMIL"'),
     ('"hyi"', '"Emil Vanggaard"'),
+    ('"02 Playbooks"', '"Playbooks"'),
+    ('"04 Drafts"', '"Drafts"'),
 ]
+# The recorded matter had four folders; the lab matter keeps only these two.
+DROPPED_FOLDERS = {"01 Vendor Paper", "03 Research"}
 
 
 def _clean(entry: dict) -> dict:
@@ -61,7 +65,10 @@ def main() -> None:
         if tool in ("fetch", "get_document_profile"):
             summary, items = _clean(entries[0]), []
         else:
-            summary, items = _clean(entries[0]), [_clean(e) for e in entries[1:]]
+            summary = _clean(entries[0])
+            items = [_clean(e) for e in entries[1:] if e.get("name") not in DROPPED_FOLDERS]
+            if "cursor" in summary:
+                summary["cursor"] = len(items)
         text = json.dumps({"tool": tool, "args": call_args, "summary": summary, "items": items},
                           ensure_ascii=False, indent=1)
         text = HOST.sub("imanage.example.com", text)

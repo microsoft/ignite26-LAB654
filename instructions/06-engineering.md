@@ -31,6 +31,8 @@ You won't change any code or ship a release. Your job is to find the real status
 - [ ] **Test_Jira** and **Test_GitHub** show as connected.
 - [ ] You can see Atul's email, *Aurora pilot - offline status still wrong*, in Outlook.
 
+To see what Copilot will read, open the [Aurora Sprint 24 board](https://mock-jira.yellowsand-9530f5dc.eastus.azurecontainerapps.io/jira/software/projects/AUR/boards/57) in Test_Jira.
+
 ## Step 1: Where are we with the customer issue?
 
 *Copilot Chat · Outlook · Test_Jira*
@@ -41,7 +43,7 @@ Atul is asking if the Aurora offline-status bug will be fixed before the pilot e
 
 **What to look for:**
 
-- Copilot connects Atul's email to Jira issue **AUR-142**.
+- Copilot connects Atul's email to Jira issue [**AUR-142**](https://mock-jira.yellowsand-9530f5dc.eastus.azurecontainerapps.io/browse/AUR-142).
 - What you told Atul: engineering is working on a fix. You didn't promise a date.
 - AUR-142 is In Progress. The last update, on October 26, only says "I have started working on the fix", so the ticket doesn't say whether a fix is ready.
 - Citations to the email and the Jira issue.
@@ -79,9 +81,9 @@ Create one PowerPoint slide for Aurora Sprint 24 showing the impact of this fix 
 
 **What to look for:**
 
-- The bug now needs 24 hours (from the newer AUR-145 breakdown), not the 8 recorded on AUR-142.
+- The bug now needs 24 hours (from the newer [AUR-145](https://mock-jira.yellowsand-9530f5dc.eastus.azurecontainerapps.io/browse/AUR-145) breakdown), not the 8 recorded on AUR-142.
 - Revised scope is 48 hours against 32 hours of capacity before the November 20 checkpoint: a **16-hour gap**.
-- The proposal: defer the 16-hour custom dashboard filters work (AUR-151) and keep the required rollout regression.
+- The proposal: defer the 16-hour custom dashboard filters work ([AUR-151](https://mock-jira.yellowsand-9530f5dc.eastus.azurecontainerapps.io/browse/AUR-151)) and keep the required rollout regression.
 - One slide with customer impact, blocker, trade-off, owners and the decision needed.
 
 > [!TIP]
@@ -98,7 +100,7 @@ Share this slide in Aurora's engineering channel and ask LT to approve the revis
 **What to look for:**
 
 - A Teams post for the Aurora **Engineering** channel with the slide, the 16-hour trade-off and named owners, asking the leadership team (Kerry and Tama) to approve.
-- A customer-friendly reply to Atul: the fix needs validation on the service the pilot will use, and the next update is **Friday, November 20 at 15:00**.
+- A customer-friendly reply to Atul: the fix needs validation on the service the pilot will use, and the next update is **Friday, November 20 at 3 pm**.
 - No promised delivery date, no internal review friction and no invented workaround.
 - Nothing is posted or sent until you approve it. Keep the email to Atul as a draft.
 

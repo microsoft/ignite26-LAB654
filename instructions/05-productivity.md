@@ -23,6 +23,8 @@ You'll prep the call, handle the price objection and book the security review, w
 - [ ] **Test_Salesforce** and **Test_Confluence** show as connected.
 - [ ] Open **Copilot Cowork** and start a new task. Run every step in this one conversation: Step 3 reuses what Copilot learned in Steps 1 and 2.
 
+To see what Copilot will read, open the [Lakeshore Retail account](https://mock-salesforce.yellowsand-9530f5dc.eastus.azurecontainerapps.io/lightning/r/Account/001Hp0000000001IAA/view) in Test_Salesforce.
+
 ## Step 1: Prep the call
 
 *Copilot Cowork · Test_Salesforce call-prep skill · Outlook*
@@ -33,7 +35,7 @@ Prep me for my Lakeshore Retail expansion pitch.
 
 **What to look for:**
 
-- The deal: the *Lakeshore Retail – Aurora 400-store rollout* opportunity, Proposal/Price Quote, $1,200,000.
+- The deal: the [*Lakeshore Retail – Aurora 400-store rollout*](https://mock-salesforce.yellowsand-9530f5dc.eastus.azurecontainerapps.io/lightning/r/Opportunity/006Hp0000000001IAA/view) opportunity, Proposal/Price Quote, $1,200,000.
 - Who's in the room: Atul (champion), Jahidi (IT security; wants the security review first) and Nanami (CFO; wants the all-in cost).
 - What to cover: the price comparison, the security review and next steps.
 

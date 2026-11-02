@@ -12,7 +12,7 @@ from mockmcp.testing import assert_deterministic, call
 BASE = "https://imanage.example.com"
 FIXTURES = sorted((Path(__file__).parent / "fixtures").glob("*.json"))
 PLAYBOOK = "DEV!252567.1"
-WORKSPACE, VENDOR_PAPER, PLAYBOOKS, RESEARCH, DRAFTS = "Dev!1870", "Dev!1871", "Dev!1872", "Dev!1873", "Dev!1874"
+WORKSPACE, PLAYBOOKS, DRAFTS = "Dev!1870", "Dev!1872", "Dev!1874"
 
 
 @pytest.fixture(scope="module")
@@ -82,8 +82,7 @@ def test_lab_flow_finds_and_reads_playbook(spec):
     ws = call(spec, "search_workspaces", {"searchParams": {"name": "Trey Research"}})
     assert ws.json["topMatchingId"] == WORKSPACE
     children = call(spec, "get_container_children", {"container_id": WORKSPACE, "container_type": "workspace"})
-    assert [c["name"] for c in children.json["items"]] == ["01 Vendor Paper", "02 Playbooks", "03 Research",
-                                                          "04 Drafts"]
+    assert [c["name"] for c in children.json["items"]] == ["Playbooks", "Drafts"]
     docs = call(spec, "get_container_children", {"container_id": PLAYBOOKS, "container_type": "folder"})
     assert PLAYBOOK in docs.text
     hit = call(spec, "search", {"query": "AI Procurement Playbook"})
@@ -133,10 +132,10 @@ def test_writes_without_conversation_are_not_kept(spec):
     assert not call(spec, "get_document_profile", {"documentId": out.json["id"]}).ok
 
 
-@pytest.mark.parametrize("folder", [VENDOR_PAPER, PLAYBOOKS, WORKSPACE])
+@pytest.mark.parametrize("folder", [PLAYBOOKS, WORKSPACE])
 def test_read_only_containers_reject_uploads(spec, folder):
     out = _upload(spec, "conv-ro", folder=folder)
-    assert not out.ok and "04 Drafts" in out.text
+    assert not out.ok and "Drafts" in out.text
 
 
 def test_unknown_folder_is_not_found(spec):
@@ -144,10 +143,10 @@ def test_unknown_folder_is_not_found(spec):
 
 
 def test_create_folder_and_duplicate(spec):
-    first = call(spec, "create_folder", {"parent_id": RESEARCH, "name": "Benchmarks"}, "conv-f")
+    first = call(spec, "create_folder", {"parent_id": DRAFTS, "name": "Benchmarks"}, "conv-f")
     assert first.ok and first.json["id"] == "Dev!1875"
-    assert not call(spec, "create_folder", {"parent_id": RESEARCH, "name": "Benchmarks"}, "conv-f").ok
-    assert call(spec, "create_folder", {"parent_id": RESEARCH, "name": "Benchmarks"}, "conv-g").ok
+    assert not call(spec, "create_folder", {"parent_id": DRAFTS, "name": "Benchmarks"}, "conv-f").ok
+    assert call(spec, "create_folder", {"parent_id": DRAFTS, "name": "Benchmarks"}, "conv-g").ok
     assert not call(spec, "create_folder", {"parent_id": PLAYBOOKS, "name": "X"}, "conv-f").ok
 
 
@@ -159,7 +158,7 @@ def test_create_folder_and_duplicate(spec):
     ("get_container_children", {"container_id": WORKSPACE, "container_type": "drawer"}),
     ("upload_document", {"folder_id": DRAFTS, "name": "x", "content": "y", "format": "txt"}),
     ("upload_document", {"folder_id": DRAFTS, "name": "x", "content": ""}),
-    ("create_folder", {"parent_id": RESEARCH}),
+    ("create_folder", {"parent_id": DRAFTS}),
 ])
 def test_bad_arguments_are_rejected(spec, tool, args):
     assert not call(spec, tool, args).ok

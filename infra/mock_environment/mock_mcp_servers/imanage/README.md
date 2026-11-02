@@ -2,15 +2,15 @@
 
 Mock of the iManage Work MCP server for the [legal scenario](../../../../docs/scenarios/legal/scenario.md) and [lab part 4](../../../../instructions/04-legal.md). In the lab it appears as the **Test_iManage** connector. See the [mock servers README](../README.md) for the shared framework and how to run, test and deploy, and [MOCK_SERVER_ARCHITECTURE.md](../../../../MOCK_SERVER_ARCHITECTURE.md) for the general pattern.
 
-It serves one matter, **Trey Research – AI Platform Agreement** (`Dev!1870`, client Zava, Inc.), as user **EMIL**. Copilot can search and read it, and save new documents and folders to it. Changes are kept per conversation, and every link opens a mock iManage Work page that shows them.
+It serves one matter, **Trey Research – AI Platform Agreement** (`Dev!1870`, client Zava, Inc.), as user **EMIL**. The matter holds only what the lab needs: a `Playbooks` folder with the Zava AI Procurement Playbook, and an empty `Drafts` folder for Copilot's output. The vendor agreement isn't here: Word can't open a document from a mock server, so attendees open it from their OneDrive (source copy in [`docs/scenarios/legal/files/`](../../../../docs/scenarios/legal/files/)). Copilot can search and read the matter, and save new documents and folders to it. Changes are kept per conversation, and every link opens a mock page styled after the iManage Work web client that shows them.
 
 ## Prompts it powers
 
 | Lab step | What Copilot asks iManage for |
 |----------|-------------------------------|
-| 2 | Find the matter, open `02 Playbooks` and read the Zava AI Procurement Playbook (the hard stops are in Section 14) |
-| 3 | Re-read playbook sections while redlining the vendor agreement |
-| 4 (Cowork) | Save the research note to `03 Research` and the redline, fallback memo and summary to `04 Drafts` |
+| 2 | Find the matter, open `Playbooks` and read the Zava AI Procurement Playbook (the hard stops are in Section 14) |
+| 3 | Re-read playbook sections while redlining the vendor agreement (opened in Word from the attendee's OneDrive, not from iManage) |
+| 4 (Cowork) | Save the negotiation list, one-page summary and reply to `Drafts` |
 
 ## Tools
 
@@ -30,7 +30,7 @@ Schemas come from the live connector's tool list in the recorded Office (Word) t
 | `upload_document` | Saves text as a new PDF or Word document in a writable folder | Inferred | Inferred |
 | `create_folder` | Creates a subfolder in a writable folder | Inferred | Inferred |
 
-Only `03 Research` and `04 Drafts` (and folders created inside them) accept writes. Other folders return 403 with the list of writable folders.
+Only `Drafts` (and folders created inside it) accepts writes. Other containers return 403 with the list of writable folders.
 
 ## Conversations and the viewer
 
@@ -45,21 +45,17 @@ These open the seed data on the deployed server. They never show a conversation'
 | Item | URL path (after `https://mock-imanage.yellowsand-9530f5dc.eastus.azurecontainerapps.io`) |
 |---|---|
 | Workspace: Trey Research – AI Platform Agreement | `/work/link/w/Dev!1870` |
-| Folder: 01 Vendor Paper | `/work/link/f/Dev!1871` |
-| Folder: 02 Playbooks | `/work/link/f/Dev!1872` |
-| Folder: 03 Research | `/work/link/f/Dev!1873` |
-| Folder: 04 Drafts | `/work/link/f/Dev!1874` |
-| Trey Research Vendor Agreement v4.2 | `/work/link/d/DEV!252561.1` |
-| Exhibit A – Service Description and SLA | `/work/link/d/DEV!252562.1` |
-| Exhibit B – Fee Schedule and Order Form | `/work/link/d/DEV!252563.1` |
-| Exhibit C – Security and Data Protection | `/work/link/d/DEV!252564.1` |
-| Exhibit D – Acceptable Use Policy | `/work/link/d/DEV!252565.1` |
+| Folder: Playbooks | `/work/link/f/Dev!1872` |
+| Folder: Drafts | `/work/link/f/Dev!1874` |
 | Zava AI Procurement Playbook v2.1 | `/work/link/d/DEV!252567.1` |
+
+The ids keep the numbering of the recorded matter (`Dev!1871` and `Dev!1873` were folders the lab no longer needs).
+
 ## Data
 
 - `seed_files/TreyResearch-AIPlatform_matter/`: the matter as files, taken from the legal seed kit. `matter.json` holds the client, matter name and each document's profile.
 - `seed_files/workspace.json`: the matter the server loads, with extracted document text. `seed_files/tool_schemas.json`: the live tool names, descriptions and input schemas. Both are built by `scripts/build_seed.py`. Rebuild after changing the matter files.
-- `tests/fixtures/`: the seven recorded responses with Office's wrapper removed and the fictitious names swapped in, built by `scripts/build_trace_fixtures.py`. The tests check the mock's keys, key order and value types against them.
+- `tests/fixtures/`: the seven recorded responses with Office's wrapper removed, the fictitious names swapped in and the recorded matter's extra folders dropped, built by `scripts/build_trace_fixtures.py`. The tests check the mock's keys, key order and value types against them.
 
 ## Run and test
 

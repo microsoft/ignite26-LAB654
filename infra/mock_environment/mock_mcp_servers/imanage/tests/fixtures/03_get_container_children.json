@@ -5,21 +5,15 @@
   "container_type": "workspace"
  },
  "summary": {
-  "cursor": 4,
+  "cursor": 2,
   "hasMore": false
  },
  "items": [
   {
-   "name": "01 Vendor Paper"
+   "name": "Playbooks"
   },
   {
-   "name": "02 Playbooks"
-  },
-  {
-   "name": "03 Research"
-  },
-  {
-   "name": "04 Drafts"
+   "name": "Drafts"
   }
  ]
 }

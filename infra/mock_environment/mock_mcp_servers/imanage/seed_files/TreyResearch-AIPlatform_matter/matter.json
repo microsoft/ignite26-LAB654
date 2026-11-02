@@ -1,49 +1,15 @@
 {
-  "source": "legal v1 seed kit, section 4 (iManage matter: folders and document profiles)",
+  "source": "legal v1 seed kit, section 4 (iManage matter: folders and document profiles). Slimmed for the lab: the vendor agreement lives in the attendee's OneDrive (opened in Word), so the matter holds only the playbook and an empty Drafts folder.",
   "client": "Zava, Inc.",
   "matter": "Trey Research \u2013 AI Platform Agreement",
   "accessUsers": ["emil"],
   "folders": [
     {
-      "name": "01 Vendor Paper",
+      "id": "Dev!1872",
+      "name": "Playbooks",
       "documents": [
         {
-          "file": "01 Vendor Paper/Trey Research Vendor Agreement v4.2.docx",
-          "description": "Trey Research Vendor Agreement v4.2, vendor draft (TR-EA-2026-0417), received Oct 16, 2026",
-          "docType": "Agreement",
-          "author": "Trey Research"
-        },
-        {
-          "file": "01 Vendor Paper/Trey Research Exhibit A - Service Description and SLA.docx",
-          "description": "Exhibit A: service levels (99.5% availability, credits)",
-          "docType": "Exhibit",
-          "author": "Trey Research"
-        },
-        {
-          "file": "01 Vendor Paper/Trey Research Exhibit B - Fee Schedule and Order Form.xlsx",
-          "description": "Exhibit B: fees, 5% escalator, payment schedule",
-          "docType": "Exhibit",
-          "author": "Trey Research"
-        },
-        {
-          "file": "01 Vendor Paper/Trey Research Exhibit C - Security and Data Protection.docx",
-          "description": "Exhibit C: security standards, SOC 2 Type I, 72-hour incident notice",
-          "docType": "Exhibit",
-          "author": "Trey Research"
-        },
-        {
-          "file": "01 Vendor Paper/Trey Research Exhibit D - Acceptable Use Policy.docx",
-          "description": "Exhibit D: acceptable use, suspension right, benchmarking ban",
-          "docType": "Exhibit",
-          "author": "Trey Research"
-        }
-      ]
-    },
-    {
-      "name": "02 Playbooks",
-      "documents": [
-        {
-          "file": "02 Playbooks/Zava AI Procurement Playbook v2.1.docx",
+          "file": "Playbooks/Zava AI Procurement Playbook v2.1.docx",
           "description": "AI Procurement Playbook v2.1 (ZAVA-LEGAL-PB-AI-2.1), effective June 1, 2026",
           "docType": "Playbook",
           "author": "Emil Vanggaard"
@@ -51,14 +17,9 @@
       ]
     },
     {
-      "name": "03 Research",
-      "description": "Empty. Copilot saves the research note here in step 2.",
-      "writable": true,
-      "documents": []
-    },
-    {
-      "name": "04 Drafts",
-      "description": "Empty. Copilot / Cowork save the redline, negotiation list and 1-pager here in steps 3-4.",
+      "id": "Dev!1874",
+      "name": "Drafts",
+      "description": "Empty. Copilot Cowork saves the negotiation list, one-page summary and reply here in step 4.",
       "writable": true,
       "documents": []
     }

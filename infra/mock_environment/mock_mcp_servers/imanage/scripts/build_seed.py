@@ -117,7 +117,7 @@ def build_workspace() -> dict:
     folders, documents = [], []
     number = FIRST_DOCUMENT
     for i, folder in enumerate(matter["folders"]):
-        folder_id = f"Dev!{FIRST_FOLDER + i}"
+        folder_id = folder.get("id") or f"Dev!{FIRST_FOLDER + i}"
         folders.append({"id": folder_id, "name": folder["name"], "parent_id": WORKSPACE_ID,
                         "description": folder.get("description", ""), "writable": bool(folder.get("writable")),
                         "owner": OWNER, "create_date": CREATED, "edit_date": CREATED})
@@ -147,7 +147,7 @@ def build_workspace() -> dict:
                       "owner": OWNER, "create_date": CREATED, "edit_date": EDITED},
         "folders": folders,
         "documents": documents,
-        "next_folder": FIRST_FOLDER + len(folders),
+        "next_folder": max(int(f["id"].split("!")[1]) for f in folders) + 1,
         "next_document": max(PLAYBOOK_NUMBER, number) + 1,
     }
 
