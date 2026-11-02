@@ -11,6 +11,7 @@ Microsoft 365 app packages for the lab's third-party connectors. Each package is
 | `factset/` | Test_FactSet | None | `https://mock-factset.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` | `gim-home/M365FCCMOSPackages`: `mos-packages/factset/inDev/factset.zip` |
 | `notion/` | Test_Notion | 4 | `https://mock-notion.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` | `gim-home/skill-studio`: `connector-skills-packages/notion/MOSified/v0_20260902/basic` |
 | `imanage/` | Test_iManage | None | `https://mock-imanage.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` | `gim-home/M365FCCMOSPackages`: `mos-packages/imanage-work/inDev/imanage-work.zip` |
+| `salesforce/` | Test_Salesforce | 37 | `https://mock-salesforce.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` | `gim-home/skill-studio`: `connector-skills-packages/salesforce/MOSified/v0_20260918/withConstraints` |
 | `zava_expense/` | Test_Zava Expense | 1 | `https://mock-zava-expense.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` | Written for the lab (no real connector); skill `zava-travel-policy` |
 
 ## Changes from the source packages
@@ -29,7 +30,7 @@ Icons and `skills/` are copied unchanged. `addendum.json` (internal publishing r
 
 ## Build packages
 
-The ready-to-upload packages are `test_lseg.zip`, `test_moodys.zip`, `test_factset.zip`, `test_notion.zip`, `test_imanage.zip` and `test_zava_expense.zip` in this folder. After changing a plugin, rebuild them:
+The ready-to-upload packages are `test_lseg.zip`, `test_moodys.zip`, `test_factset.zip`, `test_notion.zip`, `test_imanage.zip`, `test_salesforce.zip` and `test_zava_expense.zip` in this folder. After changing a plugin, rebuild them:
 
 ```powershell
 python infra\mock_environment\mock_plugins\build_plugins.py              # all plugins

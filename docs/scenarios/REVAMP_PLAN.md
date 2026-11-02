@@ -12,8 +12,8 @@ Sources: the scenario docs in this folder. Lab flow: Introduction → one of fou
 | Lab manual module | ✅ `03` (as is) | ✅ `04` rewritten | ✅ `05` rewritten | ✅ `06` new | ✅ `07` new |
 | COEP tenant data (M365) | ✅ no change expected | ✅ redated | ✅ rebuilt | ✅ new | ✅ receipts |
 | Synced connectors (COEP) | n/a | n/a | ✅ Test_Confluence | ✅ Test_GitHub | n/a |
-| Mock MCP servers (federated) | ✅ LSEG, FactSet, Moody's live | ✅ iManage live | ⬜ Salesforce | ⬜ Test_Jira | ✅ Zava Expense live |
-| Test plugins | ✅ 3 built | ✅ Test_iManage built | ⬜ 1 to build (Test_Salesforce) | ⬜ 1 to build | ✅ Test_Zava Expense built (flow to confirm) |
+| Mock MCP servers (federated) | ✅ LSEG, FactSet, Moody's live | ✅ iManage live | ✅ Salesforce live | ⬜ Test_Jira | ✅ Zava Expense live |
+| Test plugins | ✅ 3 built | ✅ Test_iManage built | ✅ Test_Salesforce built | ⬜ 1 to build | ✅ Test_Zava Expense built (flow to confirm) |
 | Dry run | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ |
 
 ## 1. Lab manual
@@ -135,12 +135,15 @@ All new mocks follow the Notion pattern in `mock_mcp_servers/_framework`: real t
 
 ### 5.1 Test_Salesforce (new, Productivity)
 
-- [ ] Get real Salesforce MCP tool shapes from eval traces.
-- [ ] Seed: account *Lakeshore Retail*, the only one on its domain; opportunities 400-store rollout (open, $1.2M) and 50-store pilot (Closed Won, $150K); Wide World Importers (Won) and Tailspin Toys (Lost); contacts Atul and Jahidi only; pitch Event (same date as Outlook); 2–3 completed Tasks.
-- [ ] Writes: Event create (Subject, Start, End, WhoId, WhatId); Task create for `log-activity`.
-- [ ] Owner scope: everything owned by Emil (`scope: MINE`).
-- [ ] Dates computed from the request day: pitch Event matches the Outlook event; close date = end of current quarter; completed Tasks in the past few weeks.
-- [ ] Plugin: `salesforce_v0_20260918_withConstraints` skills (`call-prep`, `schedule-meeting`, `handle-objection`, `log-activity`) → **Test_Salesforce**.
+- [x] Real Salesforce Hosted MCP tool shapes taken from the SEVAL eval traces: `discover`, `describe`, `dispatch`, `dispatch_readonly`, `display_widget` (`mock_mcp_servers/salesforce`).
+- [x] Seed: account *Lakeshore Retail*, the only one on its domain; opportunities 400-store rollout (open, $1.2M) and 50-store pilot (Closed Won, $150K); Wide World Importers (Won) and Tailspin Toys (Lost); contacts Atul and Jahidi only; pitch Event; 2 completed Tasks.
+- [x] Writes: create, update and delete for Account, Contact, Lead, Opportunity, Event and Task, kept per conversation.
+- [x] Owner scope: everything owned by Emil.
+- [x] Dates are fixed to the lab week, not computed from the request day: pitch Event Fri Nov 20, 2026, 10:00–11:00 ET (matches Outlook); rollout close date Dec 31, 2026 (end of quarter); completed Tasks Sep 1 and Oct 1, 2026. Server "now" is `MOCK_NOW` (default Mon Nov 16, 2026).
+- [x] Lightning Experience-style viewer for record links (Sales home, list views, record pages, dashboard).
+- [x] Deployed as `mock-salesforce` (see `mock_mcp_servers/DEPLOYMENT.md`).
+- [x] Plugin **Test_Salesforce** (`mock_plugins/salesforce`, `test_salesforce.zip`), built from `salesforce_v0_20260918_withConstraints` (all 37 skills kept, including `call-prep`, `schedule-meeting`, `handle-objection`, `log-activity`).
+- [ ] Upload `test_salesforce.zip` to the tenant and run the Productivity prompts end to end.
 
 ### 5.2 Test_Jira (new, Engineering)
 
