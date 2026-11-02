@@ -12,8 +12,8 @@ Sources: the scenario docs in this folder. Lab flow: Introduction → one of fou
 | Lab manual module | ✅ `03` (as is) | ✅ `04` rewritten | ✅ `05` rewritten | ✅ `06` new | ✅ `07` new |
 | COEP tenant data (M365) | ✅ no change expected | ✅ redated | ✅ rebuilt | ✅ new | ✅ receipts |
 | Synced connectors (COEP) | n/a | n/a | ✅ Test_Confluence | ✅ Test_GitHub | n/a |
-| Mock MCP servers (federated) | ✅ LSEG, FactSet, Moody's live | ✅ iManage live | ✅ Salesforce live | ⬜ Test_Jira | ✅ Zava Expense live |
-| Test plugins | ✅ 3 built | ✅ Test_iManage built | ✅ Test_Salesforce built | ⬜ 1 to build | ✅ Test_Zava Expense built (flow to confirm) |
+| Mock MCP servers (federated) | ✅ LSEG, FactSet, Moody's deployed | ✅ iManage deployed | ✅ Salesforce deployed | ✅ Jira deployed | ✅ Zava Expense deployed |
+| Test plugins | ✅ 3 built | ✅ Test_iManage built | ✅ Test_Salesforce built | ✅ Test_Jira built | ✅ Test_Zava Expense built (flow to confirm) |
 | Dry run | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ |
 
 ## 1. Lab manual
@@ -147,11 +147,13 @@ All new mocks follow the Notion pattern in `mock_mcp_servers/_framework`: real t
 
 ### 5.2 Test_Jira (new, Engineering)
 
-- [ ] Get real Atlassian/Jira MCP tool shapes from traces.
-- [ ] Seed: AUR-142 (In Progress, Triin, 8h, last update Oct 26 16:00, no PR link), AUR-145 breakdown (24h, updated Oct 29 08:45), AUR-139 (8h), AUR-151 (16h), Sprint 24 (Oct 26–Nov 20, 32h capacity before the Nov 20 checkpoint).
-- [ ] Plugin **Test_Jira**: use *Rovo_CEA 9 (2) 1.zip* as the structure reference (manifest + skills). Connector points at the mock with no auth. Keep `sprint-to-slides`. Verify one-slide .pptx output.
-- [ ] `sprint-to-slides` needs: sprint metadata, sprint issues (key, summary, status, estimate, assignee), and issue search (blockers, linked breakdowns). It optionally calls Teamwork Graph (`get_work_summary_for_given_user`, `get_team_users`, …) and falls back to Jira data, so the mock can skip Teamwork Graph. Confluence page creation is optional and suppressed in this lab.
-- [ ] Exact Atlassian MCP tool names and schemas: still needed from traces (the skill describes REST calls, not MCP tool names).
+- [x] Real Atlassian MCP tool shapes: no traces existed, so all 41 tool schemas and sample responses were captured read-only from the live Atlassian MCP server (`jira/seed_files/tool_schemas.json`).
+- [x] Seed: AUR-142 (In Progress, Triin, 8h, last update Oct 26 16:00 ET, no PR link), AUR-145 breakdown (24h, updated Oct 29 08:45 ET), AUR-139 (8h), AUR-151 (16h), Sprint 24 (Oct 26–Nov 20, 32h capacity before the Nov 20 checkpoint).
+- [x] Mock server `mock_mcp_servers/jira`: the 41 Atlassian tools (Jira, Confluence, Compass, Teamwork Graph, search), JQL, writes kept per conversation, and a Jira Cloud-style viewer (`/browse/AUR-142`, board, backlog).
+- [x] Deployed as `mock-jira` (see `mock_mcp_servers/DEPLOYMENT.md`).
+- [x] Plugin **Test_Jira** (`mock_plugins/jira`, `test_jira.zip`), built from *Rovo_CEA 9 (2) 1.zip*: all 4 skills kept (including `sprint-to-slides`), connector points at the mock with no auth, Rovo bot fields removed.
+- [ ] Upload `test_jira.zip` to the tenant and run the Engineering prompts end to end. Verify one-slide .pptx output.
+- `sprint-to-slides` optionally calls Teamwork Graph and falls back to Jira data. Confluence page creation is optional and suppressed in this lab.
 
 ### 5.3 Test_iManage (Legal)
 

@@ -1,0 +1,51 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.29/MicrosoftTeams.schema.json",
+    "manifestVersion": "1.29",
+    "version": "1.0.0",
+    "id": "0b0db8d9-c2bc-49c9-b8d9-4358e73ffcd8",
+    "developer": {
+        "name": "Tezan Sahu",
+        "websiteUrl": "https://github.com/microsoft/ignite26-LAB654",
+        "privacyUrl": "https://github.com/microsoft/ignite26-LAB654",
+        "termsOfUseUrl": "https://github.com/microsoft/ignite26-LAB654"
+    },
+    "name": {
+        "short": "Test_Jira",
+        "full": "Test_Jira"
+    },
+    "description": {
+        "short": "Access and speed up work across Atlassian apps",
+        "full": "Use Jira in Microsoft 365 Copilot through the Atlassian MCP tools. Search work items, track sprints, and create and update Jira work items without switching apps. An active Atlassian Cloud account may be required to sign in. Responses may include AI-generated content; verify important information. Learn more at https://www.atlassian.com/software/rovo."
+    },
+    "icons": {
+        "color": "color.png",
+        "outline": "outline.png"
+    },
+    "accentColor": "#0052CC",
+    "agentConnectors": [
+        {
+            "id": "bf1f1106-77d3-40c2-a3e6-8ce997afb193",
+            "displayName": "Test_Jira",
+            "description": "Remote MCP server providing tools for Atlassian",
+            "toolSource": {
+                "remoteMcpServer": {
+                    "mcpServerUrl": "https://mock-jira.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp"
+                }
+            }
+        }
+    ],
+    "agentSkills": [
+        {
+            "folder": "./skills/brief-to-teams"
+        },
+        {
+            "folder": "./skills/sharepoint-to-backlog"
+        },
+        {
+            "folder": "./skills/sprint-to-slides"
+        },
+        {
+            "folder": "./skills/teams-meeting-to-work"
+        }
+    ]
+}

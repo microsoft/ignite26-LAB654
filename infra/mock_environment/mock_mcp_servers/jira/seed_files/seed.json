@@ -1,0 +1,150 @@
+{
+  "_source": "docs/scenarios/engineering/scenario.md, Appendices A and B (J1, J2, J3). Names are from the CELA-approved list used for the tenant.",
+  "site": {
+    "name": "zava-online",
+    "cloudId": "a6d131af-e79b-5495-ab06-65cad3645500",
+    "statusActivationId": "ead1adbe-46f5-50a7-b9e5-74d3234d36f6",
+    "avatarUrl": "https://settings-cdn-bifrost.prod-east.frontend.public.atl-paas.net/assets/avatars/240/rocket.png",
+    "confluenceScopes": ["read:comment:confluence", "read:confluence-user", "read:page:confluence", "read:space:confluence", "search:confluence", "write:comment:confluence", "write:page:confluence"],
+    "jiraScopes": ["read:jira-work", "write:jira-work"]
+  },
+  "currentUser": "emil",
+  "users": [
+    {"key": "emil", "accountId": "712020:ac6ec882-d8f6-545b-a935-2543379b5997", "displayName": "Emil Vanggaard", "email": "emil@zava-online.com", "initials": "EV", "teamType": "Product management", "createdAt": "2025-03-04T14:12:09.218Z"},
+    {"key": "triin", "accountId": "712020:8684f2c6-a616-5b7d-8ce8-b4701490acf2", "displayName": "Triin Lepp", "email": "triin@zava-online.com", "initials": "TL", "teamType": "Software engineering", "createdAt": "2025-03-04T14:15:41.502Z"},
+    {"key": "maria", "accountId": "712020:028e23f5-2d8e-5029-9999-6ffb9cdf4572", "displayName": "Maria Oliva", "email": "maria@zava-online.com", "initials": "MO", "teamType": "Software engineering", "createdAt": "2025-03-04T14:16:02.877Z"},
+    {"key": "kerry", "accountId": "712020:8180e15f-5f8a-51e6-90c8-d4b30177dd5f", "displayName": "Kerry Allen", "email": "kerry@zava-online.com", "initials": "KA", "teamType": "Software engineering", "createdAt": "2025-03-04T14:10:27.664Z"},
+    {"key": "tama", "accountId": "712020:198d488e-7e89-50d1-9fe3-f349fd590434", "displayName": "Tama Surya", "email": "tama@zava-online.com", "initials": "TS", "teamType": "Software engineering", "createdAt": "2025-03-04T14:17:55.130Z"}
+  ],
+  "project": {
+    "id": "10040",
+    "key": "AUR",
+    "name": "Aurora",
+    "description": "Aurora smart-home hub platform: device status, the store operations dashboard and the status service.",
+    "lead": "kerry",
+    "avatarId": 10411,
+    "projectTypeKey": "software",
+    "simplified": true,
+    "style": "next-gen",
+    "boardId": 57
+  },
+  "issueTypes": [
+    {"id": "10796", "name": "Task", "description": "Tasks track small, distinct pieces of work.", "avatarId": 10318, "subtask": false, "hierarchyLevel": 0, "entityId": "1c371cb9-ee78-50c6-a2a3-99eccd3ab0ae"},
+    {"id": "10797", "name": "Bug", "description": "Bugs track problems or errors.", "avatarId": 10303, "subtask": false, "hierarchyLevel": 0, "entityId": "46a62eb7-da39-5134-b557-e02f4dfe63a9"},
+    {"id": "10798", "name": "Story", "description": "Stories track functionality or features expressed as user goals.", "avatarId": 10315, "subtask": false, "hierarchyLevel": 0, "entityId": "ddd801b9-65d6-5f11-b29e-4418021a02df"},
+    {"id": "10799", "name": "Epic", "description": "Epics track collections of related bugs, stories, and tasks.", "avatarId": 10307, "subtask": false, "hierarchyLevel": 1, "entityId": "4b84acfd-c582-570f-af5f-64f4413bcb58"},
+    {"id": "10800", "name": "Subtask", "description": "Subtasks track small pieces of work that are part of a larger task.", "avatarId": 10316, "subtask": true, "hierarchyLevel": -1, "entityId": "13e08d7e-86f9-52d3-8b9a-75255bdd76cc"}
+  ],
+  "statuses": [
+    {"id": "10756", "name": "To Do", "category": 2},
+    {"id": "10757", "name": "In Progress", "category": 4},
+    {"id": "10758", "name": "Done", "category": 3}
+  ],
+  "transitions": [
+    {"id": "11", "name": "To Do", "to": "10756"},
+    {"id": "21", "name": "In Progress", "to": "10757"},
+    {"id": "31", "name": "Done", "to": "10758"}
+  ],
+  "priorities": [
+    {"id": "1", "name": "Highest", "icon": "highest_new.svg"},
+    {"id": "2", "name": "High", "icon": "high_new.svg"},
+    {"id": "3", "name": "Medium", "icon": "medium_new.svg"},
+    {"id": "4", "name": "Low", "icon": "low_new.svg"},
+    {"id": "5", "name": "Lowest", "icon": "lowest_new.svg"}
+  ],
+  "linkTypes": [
+    {"id": "10000", "name": "Blocks", "inward": "is blocked by", "outward": "blocks"},
+    {"id": "10001", "name": "Cloners", "inward": "is cloned by", "outward": "clones"},
+    {"id": "10002", "name": "Duplicate", "inward": "is duplicated by", "outward": "duplicates"},
+    {"id": "10003", "name": "Relates", "inward": "relates to", "outward": "relates to"}
+  ],
+  "sprints": [
+    {
+      "id": 241,
+      "name": "Aurora Sprint 24",
+      "state": "active",
+      "boardId": 57,
+      "goal": "Fix the Aurora reconnect status for the Lakeshore Retail pilot and keep the November 20 status-service cutover safe. Available capacity before the Friday, November 20, 15:00 checkpoint: 32 team-hours.",
+      "startDate": "2026-10-26T13:00:00.000Z",
+      "endDate": "2026-11-20T20:00:00.000Z"
+    }
+  ],
+  "issues": [
+    {
+      "id": "10139",
+      "key": "AUR-139",
+      "type": "Task",
+      "summary": "Rollout regression checks for the status-service cutover",
+      "description": "Run the rollout regression checks on the event-driven status service before the November 20 cutover.\n\nRequired for a safe cutover.",
+      "status": "To Do",
+      "priority": "High",
+      "assignee": "maria",
+      "reporter": "kerry",
+      "labels": ["status-service-cutover"],
+      "sprint": 241,
+      "estimateHours": 8,
+      "created": "2026-10-21T15:05:12.341+0000",
+      "updated": "2026-10-26T13:20:44.118+0000",
+      "comments": [],
+      "links": []
+    },
+    {
+      "id": "10142",
+      "key": "AUR-142",
+      "type": "Bug",
+      "summary": "Aurora hubs remain offline after reconnect",
+      "description": "Lakeshore Retail pilot hubs remain Offline in the dashboard after a successful network reconnect. Telemetry resumes, but staff restart working devices because the visible state is stale. Pilot expansion is November 23.\n\n**Acceptance criteria**\n\n- Reconnected pilot devices show Online on the active service.\n- Automated new-service reconnect coverage.\n- No regression in existing reconnect behaviour.",
+      "status": "In Progress",
+      "priority": "High",
+      "assignee": "triin",
+      "reporter": "emil",
+      "labels": ["lakeshore-retail-pilot"],
+      "sprint": 241,
+      "estimateHours": 8,
+      "created": "2026-10-23T14:41:27.905+0000",
+      "updated": "2026-10-26T20:00:00.000+0000",
+      "comments": [
+        {"id": "10421", "author": "triin", "body": "I have started working on the fix.", "created": "2026-10-26T20:00:00.000+0000"}
+      ],
+      "links": [
+        {"id": "10512", "type": "Relates", "outward": "AUR-145"}
+      ]
+    },
+    {
+      "id": "10145",
+      "key": "AUR-145",
+      "type": "Task",
+      "summary": "Aurora new-service reconnect work breakdown",
+      "description": "Replacement estimate for AUR-142. The Lakeshore Retail pilot moves to the event-driven status service with the November 20 cutover, so the reconnect correction is needed on that path too.\n\n| # | Work | Owner | Estimate |\n|---|---|---|---|\n| 1 | Adapt the reconnect fix to the event-driven status path | Triin Lepp | 12h |\n| 2 | Add and run new-service reconnect validation and tests | Maria Oliva | 8h |\n| 3 | Follow-up platform review after items 1 and 2 | Tama Surya | 4h |\n| | **Total replacement estimate for AUR-142** | | **24h** |\n\nThese 24 hours replace the 8-hour estimate recorded on AUR-142. This breakdown is not counted in the Sprint 24 totals.",
+      "status": "To Do",
+      "priority": "High",
+      "assignee": "triin",
+      "reporter": "triin",
+      "labels": ["lakeshore-retail-pilot", "status-service-cutover"],
+      "sprint": null,
+      "estimateHours": null,
+      "created": "2026-10-28T22:05:36.410+0000",
+      "updated": "2026-10-29T12:45:00.000+0000",
+      "comments": [],
+      "links": []
+    },
+    {
+      "id": "10151",
+      "key": "AUR-151",
+      "type": "Story",
+      "summary": "Custom dashboard filters for the store status view",
+      "description": "Let store operations save custom filters on the device status dashboard.\n\nLower-priority enhancement. No contractual or pilot dependency.",
+      "status": "To Do",
+      "priority": "Low",
+      "assignee": "triin",
+      "reporter": "kerry",
+      "labels": ["dashboard"],
+      "sprint": 241,
+      "estimateHours": 16,
+      "created": "2026-10-20T16:31:08.772+0000",
+      "updated": "2026-10-26T13:22:09.506+0000",
+      "comments": [],
+      "links": []
+    }
+  ]
+}
