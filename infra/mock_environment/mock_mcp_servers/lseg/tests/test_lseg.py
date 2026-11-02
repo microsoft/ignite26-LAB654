@@ -124,6 +124,10 @@ def test_widgets_are_served_as_self_contained_mcp_apps(spec):
         html = contents[0].text
         assert html.startswith("<!doctype html>") and "window.Kit" in html and "ui/initialize" in html
         assert "include:" not in html
+        # MCP Apps SDK hosts reject ui/initialize without appInfo + appCapabilities + protocolVersion.
+        init = re.search(r'request\("ui/initialize",\s*\{(.*?)\}\)\.then', html, re.S).group(1)
+        assert all(k in init for k in ("appInfo:", "appCapabilities:", "protocolVersion:")), uri
+        assert "if (!initialized) return;" in html, uri
         assert not re.search(r"""(src|href)\s*=\s*["']?(https?:)?//""", html), uri
 
 

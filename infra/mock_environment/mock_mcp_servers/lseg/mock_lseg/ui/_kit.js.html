@@ -187,7 +187,10 @@
         if (m.id != null && m.method) post({ jsonrpc: "2.0", id: m.id, error: { code: -32601, message: "Method not found" } });
     }
   });
+  var initialized = false;
   function reportSize() {
+    /* Hosts must not receive View notifications before the ui/initialize handshake completes. */
+    if (!initialized) return;
     /* Measure the body, not the document: the document never shrinks below the iframe's current height. */
     var r = document.body.getBoundingClientRect();
     notify("ui/notifications/size-changed", { width: Math.ceil(Math.max(r.width, document.body.scrollWidth)), height: Math.ceil(r.height) });
@@ -204,14 +207,25 @@
       if (g.theme) applyContext({ theme: g.theme });
       if (g.toolOutput) deliver({ structuredContent: g.toolOutput });
     });
+    if (!window.parent || window.parent === window) return;
+    /* Current MCP Apps hosts require appInfo; clientInfo is kept for older hosts. */
+    var info = { name: "lseg-mock-widget", version: "1.1.0" };
     request("ui/initialize", {
+      appInfo: info,
+      clientInfo: info,
       appCapabilities: { availableDisplayModes: ["inline"] },
-      clientInfo: { name: "lseg-mock-widget", version: "1.0.0" },
       protocolVersion: "2026-01-26"
     }).then(function (res) {
       applyContext(res && res.hostContext);
       notify("ui/notifications/initialized", {});
-    }).catch(function () { /* Not hosted (e.g. opened directly); nothing to do. */ });
+      initialized = true;
+      reportSize();
+    }).catch(function (err) {
+      var msg = (err && err.message) || String(err);
+      if (window.console) console.error("[lseg-mock-widget] ui/initialize failed:", err);
+      var empty = !lastResult && document.querySelector("#app .empty");
+      if (empty) empty.textContent = "Couldn't connect to the host (" + msg + ").";
+    });
   }
   /* structuredContent first; fall back to parsing the text content. */
   function payload(result) {

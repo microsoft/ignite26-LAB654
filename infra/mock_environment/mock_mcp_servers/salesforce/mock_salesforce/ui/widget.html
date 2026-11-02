@@ -419,14 +419,25 @@
       default: if (m.id != null && m.method) post({ jsonrpc: "2.0", id: m.id, error: { code: -32601, message: "Method not found" } });
     }
   });
-  function reportSize() { var r = document.body.getBoundingClientRect(); notify("ui/notifications/size-changed", { width: Math.ceil(Math.max(r.width, document.body.scrollWidth)), height: Math.ceil(r.height) }); }
+  var initialized = false;
+  /* Hosts must not receive View notifications before the ui/initialize handshake completes. */
+  function reportSize() { if (!initialized) return; var r = document.body.getBoundingClientRect(); notify("ui/notifications/size-changed", { width: Math.ceil(Math.max(r.width, document.body.scrollWidth)), height: Math.ceil(r.height) }); }
   if (window.ResizeObserver) new ResizeObserver(reportSize).observe(document.body);
   var oa = window.openai;
   if (oa && oa.toolOutput) fromResult({ structuredContent: oa.toolOutput });
   window.addEventListener("openai:set_globals", function (e) { var g = (e.detail && e.detail.globals) || {}; if (g.theme) applyContext({ theme: g.theme }); if (g.toolOutput) fromResult({ structuredContent: g.toolOutput }); });
-  request("ui/initialize", { appCapabilities: { availableDisplayModes: ["inline"] }, clientInfo: { name: "salesforce-mock-widget", version: "1.0.0" }, protocolVersion: "2026-01-26" })
-    .then(function (res) { applyContext(res && res.hostContext); notify("ui/notifications/initialized", {}); })
-    .catch(function () {});
+  /* Current MCP Apps hosts require appInfo; clientInfo is kept for older hosts. */
+  var info = { name: "salesforce-mock-widget", version: "1.1.0" };
+  if (window.parent && window.parent !== window) {
+    request("ui/initialize", { appInfo: info, clientInfo: info, appCapabilities: { availableDisplayModes: ["inline"] }, protocolVersion: "2026-01-26" })
+      .then(function (res) { applyContext(res && res.hostContext); notify("ui/notifications/initialized", {}); initialized = true; reportSize(); })
+      .catch(function (err) {
+        var msg = (err && err.message) || String(err);
+        if (window.console) console.error("[salesforce-mock-widget] ui/initialize failed:", err);
+        var empty = document.querySelector("#app .empty");
+        if (empty && /^Waiting/.test(empty.textContent)) empty.textContent = "Couldn't connect to the host (" + msg + ").";
+      });
+  }
   window.__renderWidget = render;
 })();
 </script>

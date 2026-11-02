@@ -202,3 +202,16 @@ def test_icon_route(web):
     ok = client.get("/img/icon/t4v35/standard/opportunity.svg")
     assert ok.status_code == 200 and ok.headers["content-type"].startswith("image/svg+xml")
     assert client.get("/img/icon/t4v35/standard/nope.svg").status_code == 404
+
+
+def test_widget_handshake_matches_mcp_apps_sdk():
+    import re
+    from pathlib import Path
+
+    import mock_salesforce
+
+    html = (Path(mock_salesforce.__file__).parent / "ui" / "widget.html").read_text(encoding="utf-8")
+    # MCP Apps SDK hosts reject ui/initialize without appInfo + appCapabilities + protocolVersion.
+    init = re.search(r'request\("ui/initialize",\s*\{(.*?)\}\)', html, re.S).group(1)
+    assert all(k in init for k in ("appInfo:", "appCapabilities:", "protocolVersion:"))
+    assert "if (!initialized) return;" in html

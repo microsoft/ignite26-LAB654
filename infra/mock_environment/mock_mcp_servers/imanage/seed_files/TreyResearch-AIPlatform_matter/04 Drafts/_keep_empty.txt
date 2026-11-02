@@ -1,1 +1,0 @@
-Leave this folder empty. Copilot saves into it during the lab.
