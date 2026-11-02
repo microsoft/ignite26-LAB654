@@ -11,9 +11,9 @@ Sources: the scenario docs in this folder. Lab flow: Introduction → one of fou
 | Scenario doc | ✅ synced with lab manual | ✅ v3 short | ✅ new | ✅ new | ✅ new |
 | Lab manual module | ✅ `03` (as is) | ✅ `04` rewritten | ✅ `05` rewritten | ✅ `06` new | ✅ `07` new |
 | COEP tenant data (M365) | ✅ no change expected | ✅ redated | ✅ rebuilt | ✅ new | ✅ receipts |
-| Synced connectors (COEP) | n/a | n/a | ✅ Test_Confluence | ✅ Test_GitHub | n/a |
-| Mock MCP servers (federated) | ✅ LSEG, FactSet, Moody's deployed | ✅ iManage deployed | ✅ Salesforce deployed | ✅ Jira deployed | ✅ Zava Expense deployed |
-| Test plugins | ✅ 3 built | ✅ Test_iManage built | ✅ Test_Salesforce built | ✅ Test_Jira built | ✅ Test_Zava Expense built (flow to confirm) |
+| Synced connectors (COEP) | n/a | n/a | ✅ Test_Confluence | n/a (GitHub moved to a mock) | n/a |
+| Mock MCP servers (federated) | ✅ LSEG, FactSet, Moody's deployed | ✅ iManage deployed | ✅ Salesforce deployed | ✅ Jira, GitHub (read-only) deployed | ✅ Zava Expense deployed |
+| Test plugins | ✅ 3 built | ✅ Test_iManage built | ✅ Test_Salesforce built | ✅ Test_Jira, Test_GitHub built | ✅ Test_Zava Expense built (flow to confirm) |
 | Dry run | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ |
 
 ## 1. Lab manual
@@ -38,7 +38,7 @@ COEP grounding schemas available today (`infra/mock_environment/_schemas/Groundi
 | Connector | Track | Type | COEP support | Plan |
 |---|---|---|---|---|
 | Test_Confluence | Productivity | Synced | ✅ `confluence` schema | Seed the Zava Sales space (§4.3). |
-| Test_GitHub | Engineering | Synced | ✅ `customconnectors` schema | Seed PR #287 with Tama's review, using the real GitHub pull-request connector's fields (§4.4, engineering Appendix D). |
+| Test_GitHub | Engineering | Federated (read-only) | n/a | Read-only mock MCP server + plugin (§5.7). Replaces the earlier synced connector, which stays in the tenant seed (§4.4). |
 | Test_Jira | Engineering | Federated | n/a | Mock MCP server + plugin with the `sprint-to-slides` skill (§5.2). |
 | Test_Salesforce | Productivity | Federated | n/a | Mock MCP server + plugin with sales skills (§5.1). |
 | Test_iManage | Legal | Federated | n/a | Mock MCP server + plugin; seed files already in repo (§5.3). |
@@ -101,7 +101,7 @@ Build with `infra/mock_environment/tools/build_tenant.py` (`SCENARIOS = [legal, 
 - [x] E1 email thread *Aurora pilot - offline status still wrong*: Emil Mon Oct 26 14:00; Atul Thu Oct 29 08:15.
 - [x] Teams team **Aurora Engineering**, channel **Platform Migration**, thread T1 (Tama Wed Oct 28 16:00, Maria 16:10, Emil Thu Oct 29 08:30).
 - [x] Teams team/channel **Aurora / Engineering** for the Step 4 post; group **Aurora Engineering LT** (Kerry, Tama).
-- [x] Test_GitHub (`customconnectors`, ConnectionId `testgithub`, ConnectionName "Test_GitHub", ContentCategory `taskManagement`) with the real 22 GitHub Cloud PR properties and labels. Item PR #287 in `zava-lab/aurora-status`: State Open, Type "Pull request", MergedAt null, Milestone Aurora Sprint 24, CreatedBy/Assignees Triin, Contributors Triin + Tama, LastModifiedBy Tama. CreatedAt Tue Oct 27; review and LastModifiedAt Wed Oct 28 17:20. Content = PR body (references AUR-142) + G2 review as `{"comments":[{SubmittedAt, createdBy, Content, State}]}`. Optional 2–3 merged decoy PRs. Full mapping: engineering doc Appendix D.
+- [x] Test_GitHub (`customconnectors`, ConnectionId `testgithub`, ConnectionName "Test_GitHub", ContentCategory `taskManagement`) with the real 22 GitHub Cloud PR properties and labels. Item PR #287 in `zava-lab/aurora-status`: State Open, Type "Pull request", MergedAt null, Milestone Aurora Sprint 24, CreatedBy/Assignees Triin, Contributors Triin + Tama, LastModifiedBy Tama. CreatedAt Tue Oct 27; review and LastModifiedAt Wed Oct 28 17:20. Content = PR body (references AUR-142) + G2 review as `{"comments":[{SubmittedAt, createdBy, Content, State}]}`. Optional 2–3 merged decoy PRs. Full mapping: engineering doc Appendix D. Superseded by the Test_GitHub mock (§5.7); the connection stays in the tenant but the lab doesn't use it.
 - [x] Docs redated to the date rule: cutover and Atul's update Fri Nov 20 15:00; pilot expansion Mon Nov 23; prompts name dates, not days.
 
 ### 4.5 Bring your own app
@@ -187,6 +187,14 @@ All new mocks follow the same pattern in `mock_mcp_servers/_framework`: real too
 ### 5.6 Finance mocks
 
 - [x] LSEG, FactSet, Moody's: no change needed for the finance prompt update.
+
+### 5.7 Test_GitHub (Engineering, replaces the synced connector)
+
+- [x] Mock server `mock_mcp_servers/github`: only the 8 read tools from the GitHub MCP server that the lab data supports (get_me, search_users, search_repositories, list_pull_requests, search_pull_requests, pull_request_read, list_label, get_label). It has no write tools, so it behaves like a synced connector.
+- [x] Same data as the synced seed: PR #287 with Tama's changes-requested review, plus three merged decoy PRs. GitHub-style viewer at `/zava-lab/aurora-status/pull/287`.
+- [x] Deployed as `mock-github` (see `mock_mcp_servers/DEPLOYMENT.md`).
+- [x] Plugin **Test_GitHub** (`mock_plugins/github`, `test_github.zip`), built from the real GitHub package. Its four skills are dropped because they're write workflows (fix CI, push, open PRs).
+- [ ] Upload `test_github.zip` and check that the tenant's older synced Test_GitHub connection doesn't clash with it.
 
 ## 6. Open questions for the owners
 

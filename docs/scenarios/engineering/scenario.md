@@ -4,7 +4,7 @@
 >
 > IGNITE LAB654 | Engineering connectors lab | Fictional lab data
 >
-> **Lab build notes:** Test_GitHub is a synced connector seeded in COEP with the real GitHub pull-request connector's fields (Appendix D). Test_Jira is a mock MCP server; its plugin follows the structure of *Rovo_CEA 9 (2) 1.zip*.
+> **Lab build notes:** Test_GitHub is a read-only mock MCP server (`mock_mcp_servers/github`) with only the GitHub MCP server's read tools, so it behaves like a synced connector: Copilot can find and read PR #287 but can't change it. Appendix D records the earlier synced-connector item shape, which is still in the COEP seed. Test_Jira is a mock MCP server; its plugin follows the structure of *Rovo_CEA 9 (2) 1.zip*.
 
 ## At a glance
 
@@ -73,8 +73,8 @@ Lakeshore Retail expands its pilot on Monday, November 23, and Atul needs a stat
 
 | | |
 |---|---|
-| **Validate access** | Pre-connect Test_Jira; verify Jira and sprint access, GitHub search permissions, Outlook/Teams access, and Chat-to-Cowork handoff as an attendee. All recipients must be lab identities. |
-| **Validate GitHub** | Confirm the synced connector indexes the PR and review evidence with citations. Record freshness in the facilitator notes, not the participant query. If unsupported, use an explicitly labelled supported indexed document and revise the expected retrieval. Do not claim live PR status. |
+| **Validate access** | Pre-connect Test_Jira and Test_GitHub; verify Jira and sprint access, GitHub search permissions, Outlook/Teams access, and Chat-to-Cowork handoff as an attendee. All recipients must be lab identities. |
+| **Validate GitHub** | Confirm Test_GitHub finds PR #287 from "AUR-142" and returns Tama's changes-requested review, with citations to the PR. The mock has read tools only, so Copilot can't comment on, approve or merge the PR. |
 | **Validate skill** | Package confirms sprint-to-slides, not a tested runtime. Verify one-slide .pptx output, available Jira tools, and a shareable link. Suppress the full report and Confluence archive for this short lab. Test native Teams posting separately; skill instructions are not proof of available tools. |
 | **Dry run / reset** | Measure the full flow. All seeded evidence is dated on or before Oct 30, 2026 (the tenant is loaded once); the cutover, checkpoint and expansion fall after the Nov 17–19 lab. Prompts use no relative days. Isolate generated artifacts/posts by seat; reset drafts and outputs without changing shared evidence. Do not infer merge, release, or approved sprint changes. |
 
@@ -118,7 +118,7 @@ Fictional authoring fixtures. Replace link tokens with actual seeded URLs; do no
 | | PR body | References AUR-142 explicitly with its actual Jira link. Updates the legacy polling status handler so reconnect clears stale Offline state. Includes legacy-path tests. Event-driven status-service coverage is not yet implemented. This reference enables Copilot to discover the PR without a link in Jira. |
 | | Checks | Legacy-path checks pass as of October 28, 17:00. Do not imply new-service coverage or deployment success. |
 | G2 | Review | Tama Surya / October 28, 17:20 / Changes requested: "The legacy-path fix looks reasonable, but Lakeshore Retail moves to the event-driven status service with the November 20 cutover. Two things are needed: implement the equivalent reconnect correction in that path, and add/run the reconnect tests there. Once both are done, request another platform review. I am not approving this version for the pilot." |
-| | Index readiness | Seed PR and review before the crawl. Target verified indexed snapshot: October 29, 09:00. If review content is unsupported or absent, the lab is not ready as scripted. Do not substitute live tools while claiming a synced experience. |
+| | Data source | Served by the Test_GitHub mock (`mock_mcp_servers/github/seed_files/seed.json`), with three merged decoy PRs on the same repo. |
 | T1 | Thread | Aurora Engineering team / Platform Migration channel. Thread: Aurora status-service cutover - Lakeshore Retail pilot. |
 | | Migration context | Tama / October 28, 16:00: "The November 20 status-service cutover is still the plan. The Lakeshore Retail expansion on November 23 will use the event-driven service. A fix confined to the legacy polling path will not resolve that pilot's issue." |
 | | Test context | Maria / October 28, 16:10: "We need reconnect coverage on the new path and the rollout regression checks. Passing the old-service tests is not enough to call this ready." |
@@ -126,7 +126,9 @@ Fictional authoring fixtures. Replace link tokens with actual seeded URLs; do no
 | T2 | Destination | Aurora team / Engineering channel. Leadership group: Aurora Engineering LT. Kerry Allen (engineering lead) approves sprint scope; Tama Surya (platform lead) confirms review capacity. Posting a request does not record approval. Directory: Emil Vanggaard, Atul Manohar, Triin Lepp, Maria Oliva, Tama Surya, Kerry Allen; LT group contains Kerry and Tama. Resolve demo identities, channel, and group mentions before delivery; do not guess addresses or IDs. |
 | | Publishing | Use approved tenant storage for a real slide link. A local file path is not a shareable link. If publication is enabled, isolate posts by seat and keep the customer email unsent. |
 
-## Appendix D: GitHub synced item shape (lab build)
+## Appendix D: GitHub synced item shape (earlier build)
+
+> The lab now uses the Test_GitHub mock MCP server instead. This shape is kept because the COEP seed still contains the `testgithub` connection; the tenant is unchanged.
 
 Reference: the Microsoft GitHub Cloud pull-request connector schema (`github-cloud-prs.json`) and a sample crawl (`github_cloud_pull_requests.jsonl`) from the 3P Frontier Agents synthetic tenant. One item per pull request; **reviews are not separate items**. The connector puts them in the item content as `{"comments":[{SubmittedAt, createdBy, Content, State}]}` after the PR description.
 

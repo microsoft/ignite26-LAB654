@@ -31,7 +31,7 @@ You won't change any code or ship a release. Your job is to find the real status
 - [ ] **Test_Jira** and **Test_GitHub** show as connected.
 - [ ] You can see Atul's email, *Aurora pilot - offline status still wrong*, in Outlook.
 
-To see what Copilot will read, open the [Aurora Sprint 24 board](https://mock-jira.yellowsand-9530f5dc.eastus.azurecontainerapps.io/jira/software/projects/AUR/boards/57) in Test_Jira.
+To see what Copilot will read, open the [Aurora Sprint 24 board](https://mock-jira.yellowsand-9530f5dc.eastus.azurecontainerapps.io/jira/software/projects/AUR/boards/57) in Test_Jira and the [aurora-status pull requests](https://mock-github.yellowsand-9530f5dc.eastus.azurecontainerapps.io/zava-lab/aurora-status/pulls) in Test_GitHub.
 
 ## Step 1: Where are we with the customer issue?
 
@@ -61,7 +61,7 @@ Can you find the PR for this item and where it is blocked?
 
 **What to look for:**
 
-- Copilot finds **PR #287** from its reference to AUR-142. The Jira issue doesn't link to it.
+- Copilot finds [**PR #287**](https://mock-github.yellowsand-9530f5dc.eastus.azurecontainerapps.io/zava-lab/aurora-status/pull/287) from its reference to AUR-142. The Jira issue doesn't link to it.
 - The PR is open and unmerged. Tama requested changes: it fixes the old polling service, but the Teams discussion confirms the Lakeshore Retail pilot moves to the new event-driven service after the November 20 cutover.
 - Two things are needed: Triin adapts the fix to the new service, and Maria adds and runs the new-service reconnect tests. Then Tama reviews again.
 

@@ -6,6 +6,7 @@ Mock MCP servers for the third-party connectors used in the scenarios. Each serv
 |--------|----------|--------|
 | [`imanage/`](imanage/README.md) | Legal | **Built.** Workspace, folder and document search, document text and profiles, and document and folder uploads kept per conversation, with an iManage Work-style matter viewer. Trey Research – AI Platform Agreement matter (agreement, Exhibits A–D, playbook) |
 | [`jira/`](jira/README.md) | Engineering | **Built.** The 41 Atlassian Rovo MCP tools (Jira, Confluence, Compass, Teamwork Graph and search), with schemas captured from the live server, JQL, issue create, edit, transition, comment, worklog and link kept per conversation, and a Jira Cloud-style viewer. Aurora project, Sprint 24, AUR-142 and its AUR-145 breakdown |
+| [`github/`](github/README.md) | Engineering | **Built.** 8 read-only tools from the GitHub MCP server (get_me, user, repository and pull request search, list and read pull requests, labels). It has no write tools, which keeps the read-only behaviour of the synced connector it replaces. It also has a GitHub-style viewer. zava-lab/aurora-status with PR #287, Tama's changes-requested review and three merged decoy PRs |
 | [`lseg/`](lseg/README.md) | Finance | **Built.** I/B/E/S estimates and actuals, Worldscope fundamentals, pricing, news, symbology |
 | [`factset/`](factset/README.md) | Finance | **Built.** Metrics search, entity reference, RBICS, fundamentals, consensus, prices |
 | [`moodys/`](moodys/README.md) | Finance | **Built.** Entity search, ratings and history, credit opinions |
@@ -30,7 +31,7 @@ Read-only tools are marked with the MCP `readOnlyHint` annotation. Each tool cal
 mock_mcp_servers/
 ├── _framework/mockmcp/     # Shared: Tool base class, server spec, HTTP/stdio app, errors, seeded RNG, test helpers
 ├── _domains/finance/       # Shared finance model (mockfin): 8 semiconductor companies, calendars, financials, prices
-├── lseg/  factset/  moodys/  imanage/  salesforce/  jira/  zava_expense/
+├── lseg/  factset/  moodys/  imanage/  salesforce/  jira/  github/  zava_expense/
 │   ├── mock_<server>/      # Tools and server spec (python -m mock_<server>)
 │   ├── seed_files/         # Server-specific data
 │   ├── tests/              # Trace replay and behaviour tests; tests/fixtures holds the recorded calls
@@ -55,7 +56,7 @@ python -m mock_moodys --transport stdio   # for a local MCP client
 | `HOST`, `PORT` | `0.0.0.0`, `8000` | HTTP bind address |
 | `LOG_LEVEL` | `INFO` | Logs go to stderr |
 | `MOCK_NOW` | `2026-10-16T09:00:00Z` | The server's "now". All "latest", "last quarter" and date-window answers are relative to it. |
-| `PUBLIC_BASE_URL` | unset | iManage, Salesforce and Jira: public address of the server, used in links to their viewers. Defaults to `http://localhost:8000` when unset. |
+| `PUBLIC_BASE_URL` | unset | iManage, Salesforce, Jira and GitHub: public address of the server, used in links to their viewers. Defaults to `http://localhost:8000` when unset. |
 | `IMANAGE_VIEW_SECRET`, `SALESFORCE_VIEW_SECRET`, `JIRA_VIEW_SECRET` | random per process | iManage, Salesforce and Jira: key for the viewer's link tokens. Set it to keep links stable across restarts. |
 | `CORS_ORIGIN_REGEX` | Copilot's widget renderer, plus `localhost` | Regex of browser origins allowed to call the server. Microsoft 365 Copilot renders MCP Apps widgets on `*.widget-renderer.usercontent.microsoft.com`. |
 

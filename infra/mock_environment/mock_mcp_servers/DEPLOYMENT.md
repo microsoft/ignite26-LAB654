@@ -10,11 +10,12 @@ Each mock MCP server runs as its own Azure Container App. All of them share one 
 | FactSet | `mock-factset` | `mock-factset:v1` | `https://mock-factset.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` |
 | Moody's | `mock-moodys` | `mock-moodys:v2` | `https://mock-moodys.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` |
 | iManage | `mock-imanage` | `mock-imanage:v2` | `https://mock-imanage.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` |
-| Salesforce | `mock-salesforce` | `mock-salesforce:v3` | `https://mock-salesforce.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` |
+| Salesforce | `mock-salesforce` | `mock-salesforce:v4` | `https://mock-salesforce.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` |
 | Jira | `mock-jira` | `mock-jira:v2` | `https://mock-jira.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` |
+| GitHub | `mock-github` | `mock-github:v1` | `https://mock-github.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` |
 | Zava Expense | `mock-zava-expense` | `mock-zava-expense:v1` | `https://mock-zava-expense.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` |
 
-Health checks are at the same host with `/healthz` instead of `/mcp`. Every app runs 0.5 vCPU and 1 GiB. The finance apps run 0 to 3 replicas (scale to zero when idle). iManage, Salesforce, Jira and Zava Expense run 0 to 1 replica, because they keep each conversation's write changes in memory. iManage has `PUBLIC_BASE_URL` set, so `document_url` links open its matter viewer under `/v/...`. Salesforce has it set too, so record URLs open its Lightning-style viewer (the root URL opens Sales home). Jira has it set, so issue links open its Jira Cloud-style viewer (for example `/browse/AUR-142`; the root URL opens the Sprint 24 board).
+Health checks are at the same host with `/healthz` instead of `/mcp`. Every app runs 0.5 vCPU and 1 GiB. The finance apps run 0 to 3 replicas (scale to zero when idle). GitHub is read-only and keeps no state. It runs exactly one replica so it's always warm, and has `PUBLIC_BASE_URL` set so pull request links open its GitHub-style viewer (for example `/zava-lab/aurora-status/pull/287`). iManage, Salesforce, Jira and Zava Expense run 0 to 1 replica, because they keep each conversation's write changes in memory. iManage has `PUBLIC_BASE_URL` set, so `document_url` links open its matter viewer under `/v/...`. Salesforce has it set too, so record URLs open its Lightning-style viewer (the root URL opens Sales home). Jira has it set, so issue links open its Jira Cloud-style viewer (for example `/browse/AUR-142`; the root URL opens the Sprint 24 board).
 ## Azure resources
 
 | Resource | Name |
@@ -62,7 +63,7 @@ The environment takes a few minutes to create. It also creates a Log Analytics w
 ## 3. Build and push an image
 
 ```powershell
-$S   = "lseg"   # lseg | factset | moodys | imanage | salesforce | jira | zava_expense (name the app mock-zava-expense: app names can't contain _)
+$S   = "lseg"   # lseg | factset | moodys | imanage | salesforce | jira | github | zava_expense (name the app mock-zava-expense: app names can't contain _)
 $TAG = "v1"
 
 az acr login -n $ACR

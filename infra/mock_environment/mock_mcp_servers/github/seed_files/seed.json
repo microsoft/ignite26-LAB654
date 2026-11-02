@@ -1,0 +1,226 @@
+{
+  "_source": "Built from Connectors_Ignite_EMP/customconnectors/customconnectors_engineering.jsonl (the Test_GitHub COEP items). PR numbers, titles, bodies, states, people, labels, milestones, timestamps and reviews come from that file. Logins, numeric IDs, label colours, account dates and the default branch are mock-defined. No diffs, files, commits or check runs are seeded.",
+  "now": "2026-10-29T13:00:00Z",
+  "me": "emil-vanggaard",
+  "users": [
+    {
+      "login": "emil-vanggaard",
+      "id": 181401,
+      "name": "Emil Vanggaard",
+      "company": "Zava",
+      "bio": "Customer engineering",
+      "created_at": "2024-02-05T09:00:00Z",
+      "updated_at": "2026-10-01T09:00:00Z"
+    },
+    {
+      "login": "triin-lepp",
+      "id": 181402,
+      "name": "Triin Lepp",
+      "company": "Zava",
+      "bio": "Aurora engineer",
+      "created_at": "2024-02-05T09:00:00Z",
+      "updated_at": "2026-10-01T09:00:00Z"
+    },
+    {
+      "login": "maria-oliva",
+      "id": 181403,
+      "name": "Maria Oliva",
+      "company": "Zava",
+      "bio": "QA engineer",
+      "created_at": "2024-02-05T09:00:00Z",
+      "updated_at": "2026-10-01T09:00:00Z"
+    },
+    {
+      "login": "kerry-allen",
+      "id": 181404,
+      "name": "Kerry Allen",
+      "company": "Zava",
+      "bio": "Engineering lead",
+      "created_at": "2024-02-05T09:00:00Z",
+      "updated_at": "2026-10-01T09:00:00Z"
+    },
+    {
+      "login": "tama-surya",
+      "id": 181405,
+      "name": "Tama Surya",
+      "company": "Zava",
+      "bio": "Platform lead",
+      "created_at": "2024-02-05T09:00:00Z",
+      "updated_at": "2026-10-01T09:00:00Z"
+    }
+  ],
+  "org": {
+    "login": "zava-lab",
+    "id": 181400,
+    "name": "Zava Lab",
+    "description": "Zava engineering"
+  },
+  "repos": [
+    {
+      "id": 7720301,
+      "owner": "zava-lab",
+      "name": "aurora-status",
+      "description": "Aurora hub status service",
+      "private": true,
+      "default_branch": "main",
+      "labels": [
+        {
+          "id": "LA_aurora_1",
+          "name": "bug",
+          "color": "d73a4a",
+          "description": "Something isn't working"
+        },
+        {
+          "id": "LA_aurora_2",
+          "name": "enhancement",
+          "color": "a2eeef",
+          "description": "New feature or request"
+        },
+        {
+          "id": "LA_aurora_3",
+          "name": "aurora-status",
+          "color": "1d76db",
+          "description": ""
+        },
+        {
+          "id": "LA_aurora_4",
+          "name": "migration",
+          "color": "5319e7",
+          "description": ""
+        },
+        {
+          "id": "LA_aurora_5",
+          "name": "tests",
+          "color": "0e8a16",
+          "description": ""
+        }
+      ],
+      "pulls": [
+        {
+          "number": 287,
+          "title": "Fix stale offline state after reconnect",
+          "body": "Fixes AUR-142: Aurora hubs remain offline after reconnect.\n\nUpdates the legacy polling status handler so a successful network reconnect clears the stale Offline state in the dashboard. Previously the handler kept the last Offline state until the next full poll cycle, so reconnected hubs stayed Offline even though telemetry had resumed.\n\nChanges:\n- Legacy polling status handler: clear Offline on reconnect heartbeat\n- Legacy-path reconnect tests added\n\nChecks: legacy-path checks pass as of October 28, 17:00.\n\nNot yet covered: the event-driven status service. Event-driven reconnect coverage is not implemented in this PR.",
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "user": "triin-lepp",
+          "assignees": [
+            "triin-lepp"
+          ],
+          "labels": [
+            "bug",
+            "aurora-status"
+          ],
+          "milestone": "Aurora Sprint 24",
+          "created_at": "2026-10-27T15:30:00Z",
+          "updated_at": "2026-10-28T21:20:00Z",
+          "closed_at": null,
+          "merged_at": null,
+          "merged_by": null,
+          "reviews": [
+            {
+              "id": 4900001,
+              "user": "tama-surya",
+              "state": "CHANGES_REQUESTED",
+              "body": "The legacy-path fix looks reasonable, but Lakeshore Retail moves to the event-driven status service with the November 20 cutover. Two things are needed: implement the equivalent reconnect correction in that path, and add/run the reconnect tests there. Once both are done, request another platform review. I am not approving this version for the pilot.",
+              "submitted_at": "2026-10-28T21:20:00Z"
+            }
+          ]
+        },
+        {
+          "number": 281,
+          "title": "Add retry backoff to status poller",
+          "body": "Adds exponential backoff to the legacy status poller when the device gateway returns 503, to reduce load during regional outages.",
+          "state": "closed",
+          "merged": true,
+          "draft": false,
+          "user": "triin-lepp",
+          "assignees": [
+            "triin-lepp"
+          ],
+          "labels": [
+            "enhancement",
+            "aurora-status"
+          ],
+          "milestone": "Aurora Sprint 23",
+          "created_at": "2026-10-13T14:00:00Z",
+          "updated_at": "2026-10-16T19:20:00Z",
+          "closed_at": "2026-10-16T19:20:00Z",
+          "merged_at": "2026-10-16T19:20:00Z",
+          "merged_by": "tama-surya",
+          "reviews": [
+            {
+              "id": 4900002,
+              "user": "tama-surya",
+              "state": "APPROVED",
+              "body": "Looks good. Approving.",
+              "submitted_at": "2026-10-16T18:50:00Z"
+            }
+          ]
+        },
+        {
+          "number": 276,
+          "title": "Event-driven status service: publish device heartbeat events",
+          "body": "First step of the status-service migration: device heartbeats are published as events on the new status bus. The dashboard still reads from the legacy poller until the cutover.",
+          "state": "closed",
+          "merged": true,
+          "draft": false,
+          "user": "tama-surya",
+          "assignees": [
+            "tama-surya"
+          ],
+          "labels": [
+            "migration",
+            "aurora-status"
+          ],
+          "milestone": "Aurora Sprint 23",
+          "created_at": "2026-09-28T13:15:00Z",
+          "updated_at": "2026-10-07T15:40:00Z",
+          "closed_at": "2026-10-07T15:40:00Z",
+          "merged_at": "2026-10-07T15:40:00Z",
+          "merged_by": "tama-surya",
+          "reviews": [
+            {
+              "id": 4900003,
+              "user": "maria-oliva",
+              "state": "APPROVED",
+              "body": "Regression suite passes on staging. Approved.",
+              "submitted_at": "2026-10-07T14:05:00Z"
+            }
+          ]
+        },
+        {
+          "number": 269,
+          "title": "Rollout regression suite: add store-group targeting tests",
+          "body": "Adds regression tests for store-group targeting in staged rollouts.",
+          "state": "closed",
+          "merged": true,
+          "draft": false,
+          "user": "maria-oliva",
+          "assignees": [
+            "maria-oliva"
+          ],
+          "labels": [
+            "tests",
+            "aurora-status"
+          ],
+          "milestone": "Aurora Sprint 22",
+          "created_at": "2026-09-15T17:00:00Z",
+          "updated_at": "2026-09-18T20:30:00Z",
+          "closed_at": "2026-09-18T20:30:00Z",
+          "merged_at": "2026-09-18T20:30:00Z",
+          "merged_by": "kerry-allen",
+          "reviews": [
+            {
+              "id": 4900004,
+              "user": "kerry-allen",
+              "state": "APPROVED",
+              "body": "Approved.",
+              "submitted_at": "2026-09-18T20:00:00Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
