@@ -18,7 +18,6 @@ Later that week, you're back from a client trip to Seattle. Zava Expense emails 
 
 - [ ] You finished one of the tracks: [Finance](03-finance.md), [Legal](04-legal.md), [Productivity](05-productivity.md) or [Engineering](06-engineering.md).
 - [ ] You can open the **Microsoft 365 admin center**. Lab seats have admin rights.
-- [ ] You have the **Zava Expense MCP server address** from your seat card.
 
 ## Set up Zava Expense
 
@@ -27,7 +26,7 @@ Later that week, you're back from a client trip to Seattle. Zava Expense emails 
 1. Go to **Copilot › Connectors › Gallery** and search for *Zava Expense*. It isn't listed, because it's built in-house.
 2. Go to **Agents › Settings › Agent and plugin access** and make sure **Allow agents and plugins built by your organization** is selected.
 3. Back in the Gallery, under **Created by your org**, select **Create a new connector**, then **Connect to MCP server**.
-4. Enter the display name **Zava Expense** and the MCP server address from your seat card. Set authentication to **No Auth**, then select **Save**.
+4. Enter the display name **Zava Expense** and this MCP server address: `https://mock-zava-expense.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp`. Set authentication to **No Auth**, then select **Save**.
 5. Under **Staged rollout**, make it available to yourself. Zava Expense now appears in **Your connections**, next to the catalog connectors.
 6. In Copilot, open **… › Settings › Sources** and connect **Zava Expense**.
 

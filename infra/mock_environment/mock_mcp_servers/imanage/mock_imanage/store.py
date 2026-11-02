@@ -1,4 +1,4 @@
-"""Seed matter plus copy-on-write state per conversation (the Notion mock's pattern).
+"""Seed matter plus copy-on-write state per conversation.
 
 Reads come from the conversation's overlay if it has written anything, otherwise from the shared
 seed. The first write in a conversation deep-copies the seed into an overlay keyed by the host's

@@ -590,7 +590,7 @@
         "amount": null,
         "from": "Zava Expense <zavaexpense@zava-online.com>",
         "subject": "Reminder: submit your Seattle trip expenses by Friday, November 20",
-        "body": "Hi Emil, you have 8 unreported card charges from {airfare} to {d3}. Please submit them in Zava Expense by Friday, November 20.",
+        "body": "Hi Emil, you have 8 unreported card charges from October 5 to {d3}. Please submit them in Zava Expense by Friday, November 20.",
         "received_on": "2026-10-30"
       }
     ],

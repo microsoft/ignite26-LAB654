@@ -11,7 +11,6 @@ Mock MCP servers for the third-party connectors used in the scenarios. Each serv
 | [`moodys/`](moodys/README.md) | Finance | **Built.** Entity search, ratings and history, credit opinions |
 | [`salesforce/`](salesforce/README.md) | Productivity | **Built.** The five Salesforce Hosted MCP tools (discover, describe, dispatch, dispatch_readonly, display_widget) over a small Zava Sales Cloud org: SOQL, GraphQL, search, sObject reads, and record create, update and delete kept per conversation, with a Lightning Experience-style viewer. Lakeshore Retail account, the Aurora 400-store rollout opportunity, the pitch Event, Atul and Jahidi as contacts |
 | [`zava_expense/`](zava_expense/README.md) | Custom connector | **Built.** Zava's in-house expense app: reports, card charges, travel policy, policy check, spend vs budget, and report create, update and submit kept per conversation. Emil Vanggaard's Seattle trip with an over-cap hotel night and a duplicate Uber charge |
-| [`notion/`](notion/README.md) | Productivity | **Built.** Search, fetch, query, and page and data-source writes kept per conversation, and a Notion-style page viewer so returned links open. Aurora launch tracker, launch plan, decision log, 2 decoy trackers |
 
 ## How the built servers work
 
@@ -23,7 +22,7 @@ Every server has the same three layers:
 | Logic | `<server>/mock_<server>/` | One class per tool: name, description, JSON input schema, extra validation and `run()`. Errors use the real server's wording and shape. |
 | Fallback | `mockmcp.Seeded` | When a request goes beyond the recorded data (another quarter, peer or date window), values are generated from the company model with a seed derived from the inputs. The same request always gets the same answer. |
 
-Read-only tools are marked with the MCP `readOnlyHint` annotation. Each tool call receives the host's `x-microsoft-ai-conversationid` header as `ctx.conversation_id`. Notion, iManage, Salesforce, Jira and Zava Expense use it to keep write changes per conversation (see [notion/README.md](notion/README.md#how-writes-work), [imanage/README.md](imanage/README.md#conversations-and-the-viewer), [salesforce/README.md](salesforce/README.md#conversations-and-the-viewer), [jira/README.md](jira/README.md#conversations-and-the-viewer) and [zava_expense/README.md](zava_expense/README.md#how-writes-work)).
+Read-only tools are marked with the MCP `readOnlyHint` annotation. Each tool call receives the host's `x-microsoft-ai-conversationid` header as `ctx.conversation_id`. iManage, Salesforce, Jira and Zava Expense use it to keep write changes per conversation (see [imanage/README.md](imanage/README.md#conversations-and-the-viewer), [salesforce/README.md](salesforce/README.md#conversations-and-the-viewer), [jira/README.md](jira/README.md#conversations-and-the-viewer) and [zava_expense/README.md](zava_expense/README.md#how-writes-work)).
 
 ## Layout
 
@@ -31,7 +30,7 @@ Read-only tools are marked with the MCP `readOnlyHint` annotation. Each tool cal
 mock_mcp_servers/
 ├── _framework/mockmcp/     # Shared: Tool base class, server spec, HTTP/stdio app, errors, seeded RNG, test helpers
 ├── _domains/finance/       # Shared finance model (mockfin): 8 semiconductor companies, calendars, financials, prices
-├── lseg/  factset/  moodys/  notion/  imanage/  salesforce/  jira/  zava_expense/
+├── lseg/  factset/  moodys/  imanage/  salesforce/  jira/  zava_expense/
 │   ├── mock_<server>/      # Tools and server spec (python -m mock_<server>)
 │   ├── seed_files/         # Server-specific data
 │   ├── tests/              # Trace replay and behaviour tests; tests/fixtures holds the recorded calls
@@ -56,8 +55,8 @@ python -m mock_moodys --transport stdio   # for a local MCP client
 | `HOST`, `PORT` | `0.0.0.0`, `8000` | HTTP bind address |
 | `LOG_LEVEL` | `INFO` | Logs go to stderr |
 | `MOCK_NOW` | `2026-10-16T09:00:00Z` | The server's "now". All "latest", "last quarter" and date-window answers are relative to it. |
-| `PUBLIC_BASE_URL` | unset | Notion, iManage, Salesforce and Jira: public address of the server. When set, Notion links to its page viewer instead of `app.notion.com`. iManage, Salesforce and Jira always link to their own viewers and use `http://localhost:8000` when unset. See [notion/README.md](notion/README.md#page-viewer). |
-| `NOTION_VIEW_SECRET`, `IMANAGE_VIEW_SECRET`, `SALESFORCE_VIEW_SECRET`, `JIRA_VIEW_SECRET` | random per process | Notion, iManage, Salesforce and Jira: key for the viewer's link tokens. Set it to keep links stable across restarts. |
+| `PUBLIC_BASE_URL` | unset | iManage, Salesforce and Jira: public address of the server, used in links to their viewers. Defaults to `http://localhost:8000` when unset. |
+| `IMANAGE_VIEW_SECRET`, `SALESFORCE_VIEW_SECRET`, `JIRA_VIEW_SECRET` | random per process | iManage, Salesforce and Jira: key for the viewer's link tokens. Set it to keep links stable across restarts. |
 | `CORS_ORIGIN_REGEX` | Copilot's widget renderer, plus `localhost` | Regex of browser origins allowed to call the server. Microsoft 365 Copilot renders MCP Apps widgets on `*.widget-renderer.usercontent.microsoft.com`. |
 
 ### MCP Apps widgets
@@ -87,6 +86,6 @@ docker build -f lseg/Dockerfile -t mock-lseg:latest .
 docker run -p 8000:8000 mock-lseg:latest
 ```
 
-Each image runs one server over stateless streamable HTTP on port 8000, which suits Azure Container Apps (ingress to port 8000, health probe `/healthz`). The finance servers can run any number of replicas. Notion, iManage, Salesforce, Jira and Zava Expense keep write state in memory, so each must run exactly one.
+Each image runs one server over stateless streamable HTTP on port 8000, which suits Azure Container Apps (ingress to port 8000, health probe `/healthz`). The finance servers can run any number of replicas. iManage, Salesforce, Jira and Zava Expense keep write state in memory, so each must run exactly one.
 
 See [DEPLOYMENT.md](DEPLOYMENT.md) for the Azure setup, update steps, troubleshooting and the live server URLs. See [COST_ESTIMATE.md](COST_ESTIMATE.md) for hosting costs and capacity during the lab.

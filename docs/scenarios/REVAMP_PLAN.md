@@ -131,7 +131,7 @@ Build with `infra/mock_environment/tools/build_tenant.py` (`SCENARIOS = [legal, 
 
 ## 5. Mock MCP servers
 
-All new mocks follow the Notion pattern in `mock_mcp_servers/_framework`: real tool names and schemas from traces, seed data from the scenario doc, and **writes scoped to the conversation** (keyed by the Copilot or Cowork conversation ID header, 2-hour retention).
+All new mocks follow the same pattern in `mock_mcp_servers/_framework`: real tool names and schemas from traces, seed data from the scenario doc, and **writes scoped to the conversation** (keyed by the Copilot or Cowork conversation ID header, 2-hour retention).
 
 ### 5.1 Test_Salesforce (new, Productivity)
 
@@ -172,15 +172,15 @@ All new mocks follow the Notion pattern in `mock_mcp_servers/_framework`: real t
 - [x] Deployed as `mock-zava-expense` (`https://mock-zava-expense.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp`).
 - [x] Plugin **Test_Zava Expense** (`mock_plugins/zava_expense`, `test_zava_expense.zip`) with the `zava-travel-policy` skill.
 - [ ] Confirm the module 07 flow: attendees add the server through the admin click-through, or upload the plugin zip.
-- [ ] Put the MCP server address on the seat card (module 07, setup step 4).
-- [ ] Tenant reminder email says the Seattle charges run "from October 5"; the mock's first Seattle charge is Oct 19. Align one of them.
+- [x] Put the MCP server address in module 07 (checklist and setup step 4), instead of on the seat card.
+- [x] Tenant reminder email says the Seattle charges run "from October 5"; the mock's charges (Oct 19–29) fall inside that range. The mock's copy of the email now matches the tenant; the tenant is unchanged.
 
 ### 5.5 Retire
 
-- [ ] Notion mock and **Test_Notion** plugin (`mock_plugins/notion`, `test_notion.zip`).
+- [x] Notion mock and **Test_Notion** plugin: folders and zip removed, ACA app and image deleted.
 - [x] Zava Hub app: folder removed and its ACA apps deleted.
-- [ ] The probe server on ACA.
-- [ ] Keep the code in git history; remove the ACA apps after the new mocks are live.
+- [x] The probe server: it ran on a dev tunnel, not ACA; the tunnel and files were deleted earlier.
+- [x] Keep the code in git history; remove the ACA apps after the new mocks are live.
 
 ### 5.6 Finance mocks
 
@@ -188,7 +188,7 @@ All new mocks follow the Notion pattern in `mock_mcp_servers/_framework`: real t
 
 ## 6. Open questions for the owners
 
-- [ ] Legal Step 4 regulator check: is web grounding enough, or seed a short regulatory note in the iManage matter as a fallback?
+- [ ] Legal Step 4 regulator check: is web grounding enough, or seed a short regulatory note in the iManage matter as a fallback? For now, web grounding.
 
 ## 7. Before the lab
 
