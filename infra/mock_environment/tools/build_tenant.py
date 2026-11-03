@@ -10,9 +10,6 @@ extras:
 
 - build_documents(files_dir): generate documents into Connectors_Ignite_EMP/files
 - transcripts(): {"transcripts/<name>.vtt": text} meeting transcripts
-- confluencepages(): Test_Confluence synced items (confluence/confluence_<scenario>.jsonl)
-- customconnectors(): custom synced connections such as Test_GitHub
-  (customconnectors/customconnectors_<scenario>.jsonl, one connection per line)
 
 The package is rebuilt from scratch on every run. Then run validate_package.py.
 """
@@ -56,12 +53,8 @@ ENTITY_FILES = {
     "onlinemeetings": "onlinemeetings.config.json",
 }
 
-# Connector (3P) types use a different layout: <type>/<type>_<name>.jsonl, one
-# searchable item per line (COEP Connector Entity Guide). One file per scenario.
-CONNECTOR_TYPES = {"confluence": "confluencepages", "customconnectors": "customconnectors"}
-
-# Generated directories cleared on every rebuild (includes retired connector types).
-GENERATED_DIRS = [*CONNECTOR_TYPES, "transcripts", "intranetwebsite"]
+# Generated directories cleared on every rebuild.
+GENERATED_DIRS = ["transcripts"]
 
 
 def _merge_users(lists):
@@ -88,11 +81,6 @@ def _write(path: Path, data) -> None:
     path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
-def _write_jsonl(path: Path, items) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text("".join(json.dumps(i, ensure_ascii=False) + "\n" for i in items), encoding="utf-8")
-
-
 def main() -> None:
     PACKAGE_DIR.mkdir(parents=True, exist_ok=True)
     for p in PACKAGE_DIR.glob("*.config.json"):
@@ -116,14 +104,6 @@ def main() -> None:
         if data[key]:
             _write(PACKAGE_DIR / name, data[key])
 
-    for t, fn in CONNECTOR_TYPES.items():
-        data[t] = []
-        for s in SCENARIOS:
-            items = hook(s, fn)
-            if items:
-                _write_jsonl(PACKAGE_DIR / t / f"{t}_{s.__name__.rsplit('.', 1)[-1]}.jsonl", items)
-                data[t] += items
-
     data["transcripts"] = []
     for s in SCENARIOS:
         for rel, text in getattr(s, "transcripts", dict)().items():
@@ -137,7 +117,7 @@ def main() -> None:
         build = getattr(s, "build_documents", None)
         for p in build(files_dir) if build else []:
             print(f"wrote {p.relative_to(PACKAGE_DIR)}")
-    for key in [*ENTITY_FILES, *CONNECTOR_TYPES, "transcripts"]:
+    for key in [*ENTITY_FILES, "transcripts"]:
         print(f"{key}: {len(data[key])}")
 
 

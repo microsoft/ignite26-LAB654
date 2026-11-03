@@ -10,8 +10,6 @@ from mockmcp.app import build_asgi_app
 from mockmcp.testing import call
 
 REPO = {"owner": "zava-lab", "repo": "aurora-status"}
-JSONL = (Path(__file__).resolve().parents[3] / "Connectors_Ignite_EMP" / "customconnectors"
-         / "customconnectors_engineering.jsonl")
 
 
 @pytest.fixture(scope="module")
@@ -53,23 +51,6 @@ def test_annotations_follow_the_real_server(spec):
         assert tool.annotations.get("readOnlyHint") is (tool.name in READ)
         assert schemas[tool.name]["annotations"]["readOnlyHint"] is (tool.name in READ)
     assert next(t for t in spec.tools if t.name == "label_write").annotations["destructiveHint"] is True
-
-
-# --- seed fidelity -------------------------------------------------------------------------------------------------
-
-def test_seed_matches_connector_items(spec):
-    items = [it for line in JSONL.read_text(encoding="utf-8").splitlines() if line.strip()
-             for it in json.loads(line)["Items"]]
-    prs = {p["number"]: p for p in ok(spec, "list_pull_requests", {**REPO, "state": "all"})}
-    assert sorted(prs) == sorted(int(it["properties"]["Id"]) for it in items)
-    for it in items:
-        p, pr = it["properties"], prs[int(it["properties"]["Id"])]
-        assert pr["title"] == p["Title"]
-        assert pr["body"] == p["Description"]
-        assert pr["labels"] == p["Labels"]
-        assert pr["milestone"] == p["Milestone"]
-        assert pr["merged"] == (p["State"] == "Merged")
-        assert pr["created_at"] == p["CreatedAt"]
 
 
 # --- pull requests -------------------------------------------------------------------------------------------------

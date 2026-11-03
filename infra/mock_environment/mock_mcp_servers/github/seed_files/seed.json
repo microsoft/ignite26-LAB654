@@ -1,5 +1,5 @@
 {
-  "_source": "Built from Connectors_Ignite_EMP/customconnectors/customconnectors_engineering.jsonl (the Test_GitHub COEP items). PR numbers, titles, bodies, states, people, labels, milestones, timestamps and reviews come from that file. Logins, numeric IDs, label colours, account dates and the default branch are mock-defined. No diffs, files, commits or check runs are seeded.",
+  "_source": "docs/scenarios/engineering/scenario.md (G1, G2). PR numbers, titles, bodies, states, people, labels, milestones, timestamps and reviews follow the scenario. Logins, numeric IDs, label colours, account dates and the default branch are mock-defined. No diffs, files, commits or check runs are seeded.",
   "now": "2026-10-29T13:00:00Z",
   "me": "emil-vanggaard",
   "users": [

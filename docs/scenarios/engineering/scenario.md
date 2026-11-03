@@ -4,7 +4,7 @@
 >
 > IGNITE LAB654 | Engineering connectors lab | Fictional lab data
 >
-> **Lab build notes:** Test_GitHub is a mock MCP server (`mock_mcp_servers/github`) with the GitHub MCP server's read tools and the write tools the data supports. Writes are kept per conversation, and merging PR #287 is blocked by branch protection. Appendix D records the earlier synced-connector item shape, which is still in the COEP seed. Test_Jira is a mock MCP server; its plugin follows the structure of *Rovo_CEA 9 (2) 1.zip*.
+> **Lab build notes:** Test_GitHub is a mock MCP server (`mock_mcp_servers/github`) with the GitHub MCP server's read tools and the write tools the data supports. Writes are kept per conversation, and merging PR #287 is blocked by branch protection. Test_Jira is a mock MCP server; its plugin follows the structure of *Rovo_CEA 9 (2) 1.zip*.
 
 ## At a glance
 
@@ -125,38 +125,3 @@ Fictional authoring fixtures. Replace link tokens with actual seeded URLs; do no
 | | Decision context | Emil / October 29, 08:30: "Bring a scope proposal before we move sprint work. LT needs to approve any deferral; Tama needs to confirm platform review availability. We have not committed a release date to Lakeshore Retail." |
 | T2 | Destination | Aurora team / Engineering channel. Leadership group: Aurora Engineering LT. Kerry Allen (engineering lead) approves sprint scope; Tama Surya (platform lead) confirms review capacity. Posting a request does not record approval. Directory: Emil Vanggaard, Atul Manohar, Triin Lepp, Maria Oliva, Tama Surya, Kerry Allen; LT group contains Kerry and Tama. Resolve demo identities, channel, and group mentions before delivery; do not guess addresses or IDs. |
 | | Publishing | Use approved tenant storage for a real slide link. A local file path is not a shareable link. If publication is enabled, isolate posts by seat and keep the customer email unsent. |
-
-## Appendix D: GitHub synced item shape (earlier build)
-
-> The lab now uses the Test_GitHub mock MCP server instead. This shape is kept because the COEP seed still contains the `testgithub` connection; the tenant is unchanged.
-
-Reference: the Microsoft GitHub Cloud pull-request connector schema (`github-cloud-prs.json`) and a sample crawl (`github_cloud_pull_requests.jsonl`) from the 3P Frontier Agents synthetic tenant. One item per pull request; **reviews are not separate items**. The connector puts them in the item content as `{"comments":[{SubmittedAt, createdBy, Content, State}]}` after the PR description.
-
-| Property | Type | Semantic label | PR #287 value |
-|---|---|---|---|
-| Id | String | secondaryId | `287` |
-| Url | String | url | `https://github.com/zava-lab/aurora-status/pull/287` |
-| Title | String | title | Fix stale offline state after reconnect |
-| Description | String | – | G1 PR body (references AUR-142 with its Jira link) |
-| CreatedBy | Principal | createdBy | Triin Lepp |
-| CreatedAt | DateTime | createdDateTime | 2026-10-27 (after Triin's Jira update) |
-| LastModifiedAt | DateTime | lastModifiedDateTime | 2026-10-28T17:20 (Tama's review) |
-| MergedAt | DateTime | closedDate | null |
-| State | String | state | Open |
-| Labels | StringCollection | tags | e.g. `bug`, `aurora-status` |
-| Assignees | PrincipalCollection | assignedToPeople | Triin Lepp |
-| Contributors | PrincipalCollection | authors | Triin Lepp, Tama Surya |
-| RepositoryName | String | containerName | aurora-status |
-| RepositoryURL | String | containerUrl | `https://github.com/zava-lab/aurora-status` |
-| RepositoryDescription | String | – | Aurora hub status service |
-| Type | String | itemType | Pull request |
-| ItemPath | String | itemPath | zava-lab/aurora-status |
-| OrganizationName / OrganizationUrl | String | – | zava-lab / `https://github.com/zava-lab` |
-| Milestone | String | sprintName | Aurora Sprint 24 |
-| DueDate | DateTime | DueDate | null |
-| LastModifiedBy | Principal | lastModifiedBy | Tama Surya |
-
-Content (text): the PR body, then the G2 review as `{"comments":[{"SubmittedAt":"2026-10-28T17:20:00Z","createdBy":"sampatel","Content":"<G2 text>","State":"ChangesRequested"}]}`. Checks (G1 "legacy-path checks pass, Oct 28 17:00") go in the body text.
-
-COEP mapping: `customconnectors`, ConnectionId `testgithub`, ConnectionName "Test_GitHub", ContentCategory `taskManagement`. COEP supports all 11 property types and every label used here (`DueDate` is spelled `dueDate` in COEP). Properties labelled `assignedToPeople` or `secondaryId` must be queryable, retrievable and searchable (COEP rule). Optionally add 2–3 merged decoy PRs on the same repo so retrieval has to pick #287.
-

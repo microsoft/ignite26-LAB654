@@ -1,10 +1,10 @@
-> Source: *productivity module* (Word, OneDrive). Converted to Markdown for reference; formatting differs from the original, wording is preserved. Replaces the earlier Notion and Zava Hub scenario.
+> Source: *IGNITE LAB654 · PRODUCTIVITY MODULE* (Word, OneDrive), v4.1, Nov 2, 2026. Converted to Markdown for reference; formatting differs from the original. Replaces the earlier Notion and Zava Hub scenario.
 >
 # IGNITE LAB654 · PRODUCTIVITY MODULE
 
-## Productivity Scenario: Sales pitch prep
+## Productivity Scenario: Sales pitch prep (v4.1)
 
-Test_Salesforce · Test_Confluence · Teams · Outlook
+Test_Salesforce · Teams · Outlook
 
 | **Lab** | Supercharge Copilot: Connect your work data & Get work done with Copilot Connectors (LAB654) |
 |---|---|
@@ -12,7 +12,7 @@ Test_Salesforce · Test_Confluence · Teams · Outlook
 | **Time budget** | 10 minutes: 3 core steps + 1 stretch |
 | **Surface** | Cowork |
 | **Lab user** | Emil Vanggaard, Zava |
-| **Connectors** | Test_Salesforce · Test_Confluence · Teams · Outlook |
+| **Connectors** | Test_Salesforce (mock MCP) · WorkIQ (Outlook mail and calendar, Teams meeting transcript) |
 
 ## 1. Framing
 
@@ -28,10 +28,9 @@ Test_Salesforce · Test_Confluence · Teams · Outlook
 
 | **Source** | **What learners see it do** | **Under the hood (internal only)** |
 |---|---|---|
-| **Salesforce CRM** | Account, opportunity, contacts, meetings, activity history; logs the follow-up meeting on the opportunity | Federated only (Salesforce MCP) + Salesforce skills package (`salesforce_v0_20260918_withConstraints`) |
-| **Teams (1P)** | What the customer said on the pilot review call | Microsoft 365 (Teams meeting recording and transcript) |
-| **Confluence** | Pricing policy, competitive battlecard, security FAQ, case study | Synced (Test_Confluence) |
-| **Outlook (1P)** | Customer email that sets up the pitch; the pitch meeting; calendar for the follow-up; pre-read draft | Microsoft 365 |
+| **Salesforce CRM** | Account, opportunity, contacts, meetings, activity history, win/loss history against Boulder Innovations; logs the follow-up meeting on the opportunity | Test_Salesforce mock MCP + Salesforce skills package (`salesforce_v0_20260918_withConstraints`) |
+| **Teams (1P)** | What the customer said on the pilot review call | WorkIQ (Teams meeting transcript) |
+| **Outlook (1P)** | Customer email that sets up the pitch; the pitch meeting; calendar for the follow-up | WorkIQ |
 
 ## 2. Cast
 
@@ -41,9 +40,8 @@ Test_Salesforce · Test_Confluence · Teams · Outlook
 | **Atul Manohar**, Lakeshore Retail | Champion for the rollout; emails Emil; Salesforce contact. |
 | **Jahidi Juma**, Lakeshore Retail | IT security lead; Salesforce contact. |
 | **Nanami Nakayama**, Lakeshore Retail | CFO; joins the pitch; not in Salesforce. |
-| **Zoe Armstrong**, Zava | Director of Retail Sales; approves discounts of 12–15% (pricing policy). |
 | Lakeshore Retail | Aurora retail partner. 50-store pilot running; public launch event Dec 8; Emil pitches the rollout to all 400 stores. |
-| Boulder Innovations | Competitor. |
+| Boulder Innovations | Competitor. Zava has beaten it once (Wide World Importers) and lost to it once (Tailspin Toys). |
 
 ## 3. Story
 
@@ -54,18 +52,18 @@ Lakeshore Retail has piloted Aurora in 50 stores for the past six weeks, ahead o
 
 | **WHAT COPILOT DOES, END TO END** |
 |---|
-| It builds the call brief from Salesforce and Outlook. It pulls what the customer actually said on the Teams call, catches that a 20% discount breaks Zava's pricing policy, and finds the in-policy counter. It books the security review with Lakeshore Retail and logs it in Salesforce. Emil never leaves Copilot. |
+| It builds the call brief from Salesforce and Outlook. It pulls what the customer actually said on the Teams call and uses Zava's win/loss history against Boulder Innovations to turn the 20% gap into an all-in cost argument. It books the security review with Lakeshore Retail and logs it in Salesforce. Emil never leaves Copilot. |
 
 ## 4. Steps (target ≤ 10 min: 3 core steps + 1 stretch)
 
-Run all steps in **one Cowork conversation**: Step 3 reuses the account and agenda from Steps 1–2.
+Run all steps in **one Cowork conversation**: Step 3 reuses the account and agenda from Steps 1–2, and Salesforce mock writes persist only within that conversation.
 
 | **#** | **Step** | **Time** | **Connector / skill** |
 |---|---|---|---|
 | 1 | Prep the call | ~3:00 | Salesforce `call-prep` skill; Outlook |
-| 2 | Handle the price objection | ~3:00 | Teams + Confluence (`handle-objection` skill likely) |
+| 2 | Handle the price objection | ~3:00 | Teams transcript + Salesforce win/loss history |
 | 3 | Book the security review and log it in Salesforce | ~3:00 | Salesforce `schedule-meeting` + Outlook calendar **(write action)** |
-| *Stretch* | Send the pre-read | – | Outlook *(draft only)* |
+| *Stretch* | Log the pilot review call | – | Salesforce `log-activity` **(write action)** |
 
 | **STEP 1** | **Prep the call**<br>~3:00 · Salesforce skill + Outlook |
 |---|---|
@@ -76,7 +74,7 @@ Run all steps in **one Cowork conversation**: Step 3 reuses the account and agen
 
 | **EXPECTED RESULT** |
 |---|
-| The `call-prep` skill finds the pitch meeting in Salesforce, then reads the account, the open opportunity (*Lakeshore Retail – Aurora 400-store rollout*, Proposal/Price Quote, $1,200,000), the attendees who are contacts, and recent activity.<br><br>In parallel it searches Outlook for Atul's email. It may also surface the Teams pilot review transcript; this is not guaranteed in Step 1, and Step 2 is the transcript moment.<br><br>It returns a call brief. The layout can vary between runs; the content is what matters:<br>• the deal: Lakeshore Retail, the 400-store rollout opportunity, its stage and amount<br>• who's in the room: Atul (champion), Jahidi (IT security; wants the security review first), Nanami (CFO; wants the all-in cost)<br>• what to cover: the price comparison, the security review, next steps |
+| The `call-prep` skill finds the pitch event in Salesforce (*Lakeshore Retail – Aurora expansion pitch*, Fri Nov 20, 10:00–11:00 ET; its Description lists Atul, Nanami (CFO) and Jahidi). It reads:<br>• the account: Lakeshore Retail, Retail, 12,000 employees, Customer<br>• the one open opportunity: *Lakeshore Retail – Aurora 400-store rollout*, Proposal/Price Quote, $1,200,000, close Dec 31, Next Step "bring the all-in per-store and total cost"<br>• contacts: Atul and Jahidi. Nanami isn't a contact, so she shows up as new<br>• activity: the pilot kickoff and the 30-day check-in<br><br>From Outlook it adds Atul's Oct 28 email: Nanami joins and wants the all-in cost; IT wants the security docs.<br><br>It returns a call brief. The layout can vary between runs; the content is what matters: the deal, who's in the room, and what to cover (the price comparison, the security review, next steps). |
 
 | **WOW MOMENT** |
 |---|
@@ -84,30 +82,30 @@ Run all steps in **one Cowork conversation**: Step 3 reuses the account and agen
 
 | **SAY THIS** |
 |---|
-| A skill that knows how sales teams prep, working on Emil' real account data. |
+| A skill that knows how sales teams prep, working on Emil's real account data. |
 
 | **IF IT GOES WRONG** |
 |---|
 | If Copilot asks which account or meeting, reply "The Lakeshore Retail expansion pitch."<br><br>If the brief doesn't mention Nanami, ask "Who's on the call, and what does each of them care about?" |
 
-| **STEP 2** | **Handle the price objection**<br>~3:00 · Teams + Confluence |
+| **STEP 2** | **Handle the price objection**<br>~3:00 · Teams + Salesforce |
 |---|---|
 
 | **▶ PROMPT** copy & paste into Copilot |
 |---|
-| Lakeshore Retail said Boulder Innovations is 20% cheaper. What exactly did they say on the pilot review call, and what can I offer within our pricing policy? |
+| Lakeshore Retail says Boulder Innovations is 20% cheaper. How should I handle that? Use what they said on the pilot review call and our win/loss history against Boulder Innovations. |
 
 | **EXPECTED RESULT** |
 |---|
-| Quotes from the Teams meeting transcript: Atul on the Boulder Innovations quote and "sign this quarter"; Atul on Nanami wanting the all-in cost; Jahidi on the security review.<br><br>Confluence *Aurora Retail Pricing & Discount Policy* (current version, not the archived 2025 one):<br>• Up to 12% volume discount at 250+ stores with no approval.<br>• 12–15% needs Zoe Armstrong.<br>• Above 15% needs VP Sales and Deal Desk.<br>Copilot says **20% cannot be offered in the pitch**.<br><br>It proposes the in-policy counter: 12% (about $1.06M for 400 stores) plus bundled in-store install and staff training. The bundle is value-add and does not count as discount.<br><br>It backs this with the *Boulder Innovations* battlecard TCO: Boulder Innovations' sticker price excludes install and 3-year support. All-in per store, Boulder Innovations is about $3,250 versus Zava's $2,640 with the counter-offer. That is the number Nanami asked for.<br><br>If `handle-objection` runs and the win/loss history in 5.1 is seeded, the answer also has "What history says" (the Wide World Importers win and the Tailspin Toys loss against Boulder Innovations) and a "Don't" line: don't lead with a discount. |
+| Quotes from the Oct 22 pilot review transcript in Teams: Atul on the Boulder Innovations quote ("about 20% under your list price") and "if you can get close to that we could sign this quarter"; Atul on Nanami wanting the all-in cost; Jahidi on the security review before the 400-store rollout.<br><br>Salesforce win/loss history against Boulder Innovations (Competitor = Boulder Innovations on both):<br>• *Wide World Importers – Aurora 320-store rollout*: Closed Won, $844,800. Won on all-in TCO: Boulder Innovations came to about $3,250 per store all-in against Zava's $2,640, with install bundled and the discount held to 12%.<br>• *Tailspin Toys – Aurora 120-store rollout*: Closed Lost, $360,000, Loss Reason Price. "We led with a discount and never showed the all-in TCO."<br><br>The recommendation: **don't match the 20%**. Lead with the all-in cost for 400 stores and offer 12% plus bundled install. That's the number Nanami asked for. |
 
 | **WOW MOMENT** |
 |---|
-| Copilot catches the non-compliant answer before Emil says it to the CFO, and turns the price gap into an all-in cost argument. |
+| Copilot turns a headline price gap into an all-in cost argument, using what won and lost against the same competitor. |
 
 | **IF IT GOES WRONG** |
 |---|
-| If Copilot answers from general knowledge, reply "Use the Teams recording of the Lakeshore Retail pilot review and our pricing policy in Confluence." |
+| If Copilot answers from general knowledge, reply "Use the Teams transcript of the Lakeshore Retail pilot review and our closed deals against Boulder Innovations in Salesforce." |
 
 | **STEP 3** | **Book the security review and log it in Salesforce**<br>~3:00 · write action |
 |---|---|
@@ -122,7 +120,7 @@ Run all steps in **one Cowork conversation**: Step 3 reuses the account and agen
 
 | **EXPECTED RESULT** |
 |---|
-| The `schedule-meeting` skill runs:<br>• 1. It finds Jahidi and Atul (with emails) and the one open opportunity in Salesforce.<br>• 2. It checks Emil' Outlook calendar and proposes 2–3 slots next week.<br>• 3. **Gate 1:** it shows the invite preview (title, time, attendees, an agenda built from Steps 1–2, e.g. security FAQ walkthrough, data residency, rollout plan). After the learner says yes, it creates the Outlook invite.<br>• 4. **Gate 2:** it shows the Salesforce Event preview. After yes, it creates the Event on the opportunity.<br>• 5. It shows the confirmation: "✅ Booked … Calendar: event created … Salesforce: Event logged on Lakeshore Retail / Aurora 400-store rollout", with the record link. |
+| The `schedule-meeting` skill runs:<br>• 1. It finds Jahidi and Atul (with emails) and the one open opportunity in Salesforce.<br>• 2. It checks Emil's Outlook calendar and proposes 2–3 free slots next week, for example Mon Nov 23, 11:30–12:15 ET.<br>• 3. **Gate 1:** it shows the invite preview (title, time, attendees, an agenda built from Steps 1–2). After the learner says yes, it creates the Outlook invite.<br>• 4. **Gate 2:** it shows the Salesforce activity preview. After yes, it creates a Task on the opportunity (Type Meeting, Status Not Started, related to Jahidi; HTTP 201).<br>• 5. It shows the confirmation with the record link. The record page shows the changes from this conversation. |
 
 | **WOW MOMENT** |
 |---|
@@ -130,48 +128,47 @@ Run all steps in **one Cowork conversation**: Step 3 reuses the account and agen
 
 | **IF IT GOES WRONG** |
 |---|
-| If slot picking runs long, the learner replies "The first slot." If Copilot still asks whether to email or invite, reply "Send the invite." |
+| If slot picking runs long, the learner replies "The first slot." If Copilot still asks whether to email or invite, reply "Send the invite."<br><br>"Next week" follows the real current date, so outside Ignite week the proposed slots won't be Nov 23–25. |
 
-| **STRETCH** | **Step 4 — Send the pre-read**<br>Outlook, draft only |
+| **STRETCH** | **Step 4 — Log the pilot review call**<br>Salesforce, write action |
 |---|---|
 
 | **▶ PROMPT** copy & paste into Copilot |
 |---|
-| Draft an email to Atul and Nanami ahead of the pitch: confirm the agenda and link our security FAQ and the Wide World Importers case study. |
+| Log the pilot review call on the Lakeshore Retail opportunity. |
 
 | **EXPECTED RESULT** |
 |---|
-| An Outlook draft to Atul and Nanami with the agenda and links to the two Confluence pages. It stays a draft. |
+| The `log-activity` skill asks for one confirmation, then creates a completed Task (Type Meeting, dated Oct 22) on the Lakeshore Retail opportunity, with the attendees and key points from the transcript (HTTP 201). It appears on the opportunity's activity timeline.<br><br>If the transcript isn't available, Copilot doesn't make up outcomes. It asks whether to log the basics now or wait for notes. The basics have the date, attendees and agenda, with outcomes marked "[not recorded – add notes]". |
 
 | **ALTERNATIVE** |
 |---|
-| Alternative stretch: "Log the pilot review call on the Lakeshore Retail opportunity." (`log-activity`, one confirmation, creates a completed Task.) |
+| Where writes aren't wanted: "Draft an email to Atul and Nanami ahead of the pitch to confirm the agenda." Outlook draft only. |
 
 ## 5. Seed data
 
 | **DATES** |
 |---|
-| No prompt depends on the lab day, so the tenant is built once. Prompts name items instead of days ("my Lakeshore Retail expansion pitch", "the pilot review call"). Outlook items have fixed dates: Atul's email and the pilot review are in the past; the pitch is on **Fri Nov 20, 2026** (the last lab day is Nov 19), so it is always upcoming. Test_Salesforce works out its dates from the day of the request. "Next week" in Step 3 uses Emil' live calendar, so it works on any day; in Ignite week (Mon Nov 16) it is US Thanksgiving week, so block Nov 26–27. The Dec 8 launch event is a fixed date. |
+| The tenant is built once. Prompts name items instead of days ("my Lakeshore Retail expansion pitch", "the pilot review call"). Outlook items have fixed dates: Atul's Oct 28 email and the Oct 22 pilot review are in the past; the pitch is on **Fri Nov 20, 2026** (the last lab day is Nov 19), so it is always upcoming. "Next week" in Step 3 uses Emil's live calendar; in Ignite week (Mon Nov 16) it is US Thanksgiving week, so Nov 26–27 are blocked. The Dec 8 launch event is a fixed date. |
 
 | **ONE IDENTITY PER PERSON** |
 |---|
 | Atul, Jahidi and Nanami each use one email address everywhere: Salesforce contact (Atul, Jahidi), Outlook meeting attendee, Atul's email, Teams meeting participant. `call-prep` matches attendees to contacts by exact email. |
 
-### 5.1 Salesforce (federated only)
+### 5.1 Salesforce (Test_Salesforce mock)
 
-| **Owner** | Emil' Salesforce user owns the account, all opportunities below and the pitch Event. The skills read `scope: MINE` and stop (they don't widen) if it comes back empty. |
+| **Owner** | Emil's Salesforce user owns the account, all opportunities below and the pitch Event. The skills read `scope: MINE` and stop (they don't widen) if it comes back empty. |
 |---|---|
-| **Account** | *Lakeshore Retail* (Retail, about 12,000 employees, Type = Customer). Website = the email domain Atul and Jahidi use. **No other account may use that domain**, or `call-prep` lists candidates and asks. |
-| **Opportunities** | • *Lakeshore Retail – Aurora 400-store rollout*: Proposal/Price Quote, $1,200,000 ($3,000 list per store), close date end of the current quarter. It must be the **only open** opportunity on the account; otherwise `schedule-meeting` asks which one.<br>• *Lakeshore Retail – Aurora pilot (50 stores)*: Closed Won, $150,000. |
-| **Win/loss history** | Recommended, for Step 2 depth. Two more opportunities owned by Emil, closed in the last six months; the Description or loss-reason field names Boulder Innovations:<br>• *Wide World Importers – Aurora 320-store rollout*: Closed Won. Beat Boulder Innovations on all-in TCO with bundled install, no discount above 12%.<br>• *Tailspin Toys – Aurora 120-store rollout*: Closed Lost to Boulder Innovations on price. We led with a discount and never showed TCO. |
+| **Account** | *Lakeshore Retail* (Retail, 12,000 employees, Type = Customer, Website = lakeshore-retail.com). |
+| **Opportunities** | • *Lakeshore Retail – Aurora 400-store rollout*: Proposal/Price Quote, $1,200,000 ($3,000 list per store), close Dec 31, Next Step "bring the all-in per-store and total cost". It must be the **only open** opportunity on the account; otherwise `schedule-meeting` asks which one.<br>• *Lakeshore Retail – Aurora pilot (50 stores)*: Closed Won, $150,000. |
+| **Win/loss history** | Two more opportunities owned by Emil, both with Competitor = Boulder Innovations:<br>• *Wide World Importers – Aurora 320-store rollout*: Closed Won, $844,800. Won on all-in TCO: Boulder Innovations about $3,250 per store all-in against Zava's $2,640; install bundled; discount held to 12%.<br>• *Tailspin Toys – Aurora 120-store rollout*: Closed Lost, $360,000, Loss Reason Price. "We led with a discount and never showed the all-in TCO." |
 | **Contacts** | On Lakeshore Retail:<br>• Atul Manohar, Director of Store Operations<br>• Jahidi Juma, IT Security Lead<br>• **Not** Nanami Nakayama: she must show up as new. |
-| **Pitch Event** | Fri Nov 20, 2026, 10:00–11:00 (same as the Outlook pitch meeting), "Lakeshore Retail – Aurora expansion pitch". WhoId = Atul; WhatId = the open opportunity. Description lists the attendees with emails: Atul Manohar, Nanami Nakayama (CFO), Jahidi Juma. The skill reads attendees from the Description and the Outlook meeting, not from Salesforce invitee records. |
-| **Activity history** | 2–3 completed Tasks, e.g. "Pilot kickoff" and "30-day pilot check-in". Do **not** log the pilot review; that is the alternative stretch. |
-| **Event object** | Check this org's required fields and picklists. `schedule-meeting` writes Subject, Start, End, WhoId and WhatId only. |
+| **Pitch Event** | Fri Nov 20, 2026, 10:00–11:00 ET (same as the Outlook pitch meeting), "Lakeshore Retail – Aurora expansion pitch". WhoId = Atul; WhatId = the open opportunity. Description lists the attendees with emails: Atul Manohar, Nanami Nakayama (CFO), Jahidi Juma. |
+| **Activity history** | Completed Tasks "Pilot kickoff" and "30-day pilot check-in". Do **not** log the pilot review; that is the stretch. |
 
 ### 5.2 Teams meeting
 
-One recorded Teams meeting with transcript: "Lakeshore Retail – Aurora pilot review", about 10 minutes, organized by Emil. Speakers: Emil, Atul, Jahidi. In COEP this is a past `events` item plus an `onlinemeetings` item with a `.vtt` transcript; Atul and Jahidi must be tenant users because participants are tenant mail nicknames. Give it a fixed date before the tenant is built; prompts call it "the pilot review call", so the date doesn't matter.
+One recorded Teams meeting with transcript: "Lakeshore Retail – Aurora pilot review", Oct 22, about 10 minutes, organized by Emil. Speakers: Emil, Atul, Jahidi. In COEP this is a past `events` item plus an `onlinemeetings` item with a `.vtt` transcript; Atul and Jahidi are tenant users because participants are tenant mail nicknames.
 
 Lines that must be in it:
 
@@ -181,32 +178,21 @@ Lines that must be in it:
 - Jahidi: the security review must happen before the 400-store rollout.
 - Atul: "Nanami will want the all-in cost".
 
-### 5.3 Test_Confluence (space Zava Sales)
+### 5.3 Outlook (Emil's mailbox and calendar)
 
-| **Page** | **What the demo relies on** |
+| **Email** | From Atul Manohar, Oct 28: Nanami (CFO) joins the pitch and wants the all-in cost for 400 stores; IT (Jahidi) needs the security documentation beforehand. Don't cc Nanami; she must have no email history. |
 |---|---|
-| *Aurora Retail Pricing & Discount Policy* | List $3,000 per store (hub + 3-year support). Volume tiers: up to 12% at 250+ stores, no approval. 12–15% needs Zoe Armstrong. Above 15% needs VP Sales and Deal Desk. Value-add items (in-store install and staff training, normally $300 per store) do not count as discount. |
-| *Competitive Battlecard: Boulder Innovations* | Sticker about 20% under Zava ($2,400 per store) but excludes install (about $350) and 3-year support (about $500), so about $3,250 all-in. TCO table. "Don't lead with discount." |
-| *Aurora Security & Compliance FAQ* | SOC 2 Type II, regional data residency, no in-store cameras or PII. |
-| *Case Study: Wide World Importers 320-store rollout* | Rollout timeline and outcome, cited in the pre-read. |
-| *2–3 distractor pages* | *E.g. the 2025 pricing policy marked archived, so retrieval has to pick the current one.* |
+| **Pitch meeting** | Fri Nov 20, 2026, 10:00–11:00 ET, "Lakeshore Retail – Aurora expansion pitch", with Atul, Nanami and Jahidi as attendees. |
+| **Calendar next week** | Busy: Mon Nov 23 9–11 and 14–15:30; Tue Nov 24 10–11 and 13–16; Wed Nov 25 11–11:30. Nov 26–27 out of office. |
+| **Lab users** | Atul Manohar, Jahidi Juma and Nanami Nakayama are tenant users with mailbox and Teams. Nanami is needed as a meeting attendee, not as a Salesforce contact. |
 
-### 5.4 Outlook (Emil' mailbox and calendar)
+## 6. Validation status
 
-| **Email** | From Atul Manohar, dated before the tenant is built: Nanami (CFO) joins the pitch and wants the all-in cost for 400 stores; IT (Jahidi) needs the security documentation beforehand. Don't cc Nanami; she must have no email history. |
-|---|---|
-| **Pitch meeting** | Fri Nov 20, 2026. The same 10:00–11:00 "Lakeshore Retail – Aurora expansion pitch", with Atul, Nanami and Jahidi as attendees. |
-| **Calendar next week** | A few busy blocks, so the proposed slots look real; Nov 26–27 out of office in Ignite week. Jahidi's and Atul's free/busy visible if possible. |
-| **Lab users** | Atul Manohar exists. **Jahidi Juma, Nanami Nakayama and Zoe Armstrong are new.** Nanami is needed as a meeting attendee and the Step 4 recipient, not as a Salesforce contact. |
+The v4 Salesforce calls were tested against the live Test_Salesforce mock on Nov 2, and the whole flow ran in Cowork as Emil: 20 Salesforce calls with no failures, including both writes returning HTTP 201. Verdict: feasible.
 
-## 6. Validation run
-
-Goal: prove `call-prep` and `schedule-meeting` (2 gates + Event write) work in Cowork against the real Salesforce org before the seed is locked.
-
-| **#** | **Action** | **Details** |
+| **#** | **Watch for** | **Details** |
 |---|---|---|
-| 1 | **Schedule the run** | Agree a 15-minute slot with the Salesforce org owner, who approves the MFA prompt. Confirm which org it is and whether Lakeshore Retail data is seeded. |
-| 2 | **Load the Salesforce package in Cowork** | Publish → "Only you", and connect it by OAuth. |
-| 3 | **Run Steps 1–3** with the exact prompts | Record:<br>• how the brief is shown<br>• whether it covers Nanami and her cost question<br>• whether Step 1 picks up the Teams transcript<br>• the number of confirmations and approval cards<br>• the time per step<br>• Salesforce calls (trajectory export) |
-| 4 | **Clean up** | Delete the test Event and the calendar invite. |
-| 5 | **Report** | What worked, any prompt or seed changes, and timing. |
+| 1 | **Pilot review transcript in the tenant** | Without it, Step 2 can't quote Atul and the stretch logs only the basics. |
+| 2 | **"Next week"** | Cowork uses the real current date. A dry run before Ignite proposed slots from Mon Nov 9; in Ignite week they start Nov 23. |
+| 3 | **One conversation** | Step 3 reuses Steps 1–2, and Salesforce mock writes are kept only within the conversation. |
+| 4 | **Discount approval** | The earlier 12–15% approval rule isn't in Salesforce or WorkIQ, so it isn't part of the expected result. |

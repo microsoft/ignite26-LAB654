@@ -1,11 +1,11 @@
 # Productivity track: Sales pitch prep
 
-> **Duration:** ~10 minutes (+ stretch) | **Connectors:** Test_Salesforce, Test_Confluence, Teams, Outlook | **Surface:** Copilot Cowork
+> **Duration:** ~10 minutes (+ stretch) | **Connectors:** Test_Salesforce, Teams, Outlook | **Surface:** Copilot Cowork
 
 ## What you'll take away
 
 - **A skill that knows how sales teams work:** Salesforce's call-prep skill builds a brief from your real account data.
-- **Grounded answers that keep you in policy:** Copilot quotes what the customer said and checks it against your pricing policy before you say it in the room.
+- **Grounded answers, not guesses:** Copilot quotes what the customer said and uses your own win/loss history to shape the response.
 - **From answer to action:** one prompt books a meeting and logs it in your CRM, with your yes before each change.
 
 ## The story
@@ -20,8 +20,8 @@ You'll prep the call, handle the price objection and book the security review, w
 ## Before you start
 
 - [ ] You completed [Getting started with connectors](02-getting-started.md).
-- [ ] **Test_Salesforce** and **Test_Confluence** show as connected.
-- [ ] Open **Copilot Cowork** and start a new task. Run every step in this one conversation: Step 3 reuses what Copilot learned in Steps 1 and 2.
+- [ ] **Test_Salesforce** shows as connected.
+- [ ] Open **Copilot Cowork** and start a new task. Run every step in this one conversation: Step 3 reuses what Copilot learned in Steps 1 and 2, and your Salesforce changes are kept only within that conversation.
 
 To see what Copilot will read, open the [Lakeshore Retail account](https://mock-salesforce.yellowsand-9530f5dc.eastus.azurecontainerapps.io/lightning/r/Account/001Hp0000000001IAA/view) in Test_Salesforce.
 
@@ -35,8 +35,9 @@ Prep me for my Lakeshore Retail expansion pitch.
 
 **What to look for:**
 
-- The deal: the [*Lakeshore Retail – Aurora 400-store rollout*](https://mock-salesforce.yellowsand-9530f5dc.eastus.azurecontainerapps.io/lightning/r/Opportunity/006Hp0000000001IAA/view) opportunity, Proposal/Price Quote, $1,200,000.
-- Who's in the room: Atul (champion), Jahidi (IT security; wants the security review first) and Nanami (CFO; wants the all-in cost).
+- The meeting: *Lakeshore Retail – Aurora expansion pitch*, Friday, Nov 20, 10:00–11:00 ET.
+- The deal: the [*Lakeshore Retail – Aurora 400-store rollout*](https://mock-salesforce.yellowsand-9530f5dc.eastus.azurecontainerapps.io/lightning/r/Opportunity/006Hp0000000001IAA/view) opportunity, Proposal/Price Quote, $1,200,000, closing Dec 31. Next step: bring the all-in per-store and total cost.
+- Who's in the room: Atul (champion), Jahidi (IT security; wants the security docs first) and Nanami (CFO; wants the all-in cost). Nanami isn't a Salesforce contact yet, so Copilot flags her as new.
 - What to cover: the price comparison, the security review and next steps.
 
 The layout can vary between runs. The content is what matters.
@@ -46,21 +47,21 @@ The layout can vary between runs. The content is what matters.
 
 ## Step 2: Handle the price objection
 
-*Same conversation · Teams · Test_Confluence*
+*Same conversation · Teams meeting transcript · Test_Salesforce win/loss history*
 
 ```text
-Lakeshore Retail said Boulder Innovations is 20% cheaper. What exactly did they say on the pilot review call, and what can I offer within our pricing policy?
+Lakeshore Retail says Boulder Innovations is 20% cheaper. How should I handle that? Use what they said on the pilot review call and our win/loss history against Boulder Innovations.
 ```
 
 **What to look for:**
 
-- Quotes from the Teams meeting transcript: Atul on the Boulder Innovations quote and "sign this quarter", Atul on Nanami wanting the all-in cost, and Jahidi on the security review.
-- The current *Aurora Retail Pricing & Discount Policy* in Confluence: up to 12% at 250+ stores with no approval; 12–15% needs Zoe Armstrong; above 15% needs VP Sales and Deal Desk. Copilot says **20% can't be offered in the pitch**.
-- The in-policy counter: 12% (about $1.06M for 400 stores) plus bundled in-store install and staff training, which don't count as discount.
-- The Boulder Innovations battlecard: about $3,250 all-in per store against Zava's $2,640. That's the number Nanami asked for.
+- Quotes from the Oct 22 pilot review transcript in Teams: Atul on the Boulder Innovations quote ("about 20% under your list price") and "sign this quarter", Atul on Nanami wanting the all-in cost, and Jahidi on the security review before the 400-store rollout.
+- The win in Salesforce: [*Wide World Importers – Aurora 320-store rollout*](https://mock-salesforce.yellowsand-9530f5dc.eastus.azurecontainerapps.io/lightning/r/Opportunity/006Hp0000000003IAA/view), Closed Won, $844,800 against Boulder Innovations. Boulder Innovations came to about $3,250 per store all-in, against Zava's $2,640, with install bundled and the discount held to 12%.
+- The loss: [*Tailspin Toys – Aurora 120-store rollout*](https://mock-salesforce.yellowsand-9530f5dc.eastus.azurecontainerapps.io/lightning/r/Opportunity/006Hp0000000004IAA/view), Closed Lost on price: "We led with a discount and never showed the all-in TCO."
+- The recommendation: **don't match the 20%**. Lead with the all-in cost for 400 stores, and offer 12% plus bundled install. That's the number Nanami asked for.
 
 > [!TIP]
-> Copilot caught the non-compliant answer before you said it to the CFO, and turned the price gap into an all-in cost argument.
+> Copilot used what won and lost against the same competitor to turn a headline price gap into an all-in cost argument.
 
 ## Step 3: Book the security review and log it
 
@@ -72,25 +73,29 @@ Send Jahidi and Atul a calendar invite for a 45-minute Aurora security review ne
 
 **What to look for:**
 
-1. Copilot finds Jahidi and Atul and the open opportunity in Salesforce, checks your calendar and proposes two or three slots next week.
+1. Copilot finds Jahidi and Atul and the open opportunity in Salesforce, checks your calendar and proposes two or three free slots next week (for example, Monday 11:30–12:15 ET).
 2. **First confirmation:** a preview of the invite, with an agenda built from Steps 1 and 2. Approve it, and Copilot creates the Outlook invite.
-3. **Second confirmation:** a preview of the Salesforce event. Approve it, and Copilot logs the event on the opportunity.
-4. A confirmation with a link to the Salesforce record.
+3. **Second confirmation:** a preview of the Salesforce activity. Approve it, and Copilot logs it on the opportunity as a meeting task.
+4. A confirmation with a link to the Salesforce record. The record page shows the changes from your conversation.
+
+"Next week" follows today's date, so the proposed slots depend on when you run the lab.
 
 > [!TIP]
 > One prompt booked the meeting and updated the CRM, and nothing changed until you said yes.
 
-## Stretch: Send the pre-read
+## Stretch: Log the pilot review call
 
-*Same conversation · Outlook (draft only)*
+*Same conversation · Test_Salesforce log-activity skill · write action*
 
 ```text
-Draft an email to Atul and Nanami ahead of the pitch: confirm the agenda and link our security FAQ and the Wide World Importers case study.
+Log the pilot review call on the Lakeshore Retail opportunity.
 ```
 
-Copilot creates an Outlook draft with the agenda and links to the two Confluence pages. It stays a draft.
+After one confirmation, Copilot logs a completed meeting task dated Oct 22 on the opportunity, with the attendees and key points from the transcript. Open the opportunity's **Activity** tab to see it.
 
-Or try: `Log the pilot review call on the Lakeshore Retail opportunity.`
+If Copilot can't find the transcript, it asks whether to log the basics now or wait for notes. It marks anything it doesn't know as "[not recorded – add notes]" rather than making it up.
+
+Prefer not to make changes? Try `Draft an email to Atul and Nanami ahead of the pitch to confirm the agenda.` It stays an Outlook draft.
 
 ## If it goes wrong
 
@@ -98,17 +103,17 @@ Or try: `Log the pilot review call on the Lakeshore Retail opportunity.`
 |---|---|
 | Copilot asks which account or meeting | Reply: "The Lakeshore Retail expansion pitch." |
 | The brief doesn't mention Nanami | Ask: "Who's on the call, and what does each of them care about?" |
-| Step 2 answers from general knowledge | Reply: "Use the Teams recording of the Lakeshore Retail pilot review and our pricing policy in Confluence." |
+| Step 2 answers from general knowledge | Reply: "Use the Teams transcript of the Lakeshore Retail pilot review and our closed deals against Boulder Innovations in Salesforce." |
 | Slot picking runs long | Reply: "The first slot." |
 | Copilot asks whether to email or invite | Reply: "Send the invite." |
 
 ## Checkpoint
 
 - [ ] Your call brief covers the deal, all three attendees and the two risks.
-- [ ] Copilot refused the 20% discount and proposed the in-policy counter with the all-in cost.
+- [ ] Copilot didn't match the 20% and proposed 12% plus bundled install, led by the all-in cost.
 - [ ] The security review is on your calendar and logged on the Lakeshore Retail opportunity.
 
-**What you take away:** Copilot moved from finding information to finishing the job: a brief, a compliant answer, a booked meeting and an updated CRM, with you approving each change.
+**What you take away:** Copilot moved from finding information to finishing the job: a brief, a grounded answer, a booked meeting and an updated CRM, with you approving each change.
 
 ---
 

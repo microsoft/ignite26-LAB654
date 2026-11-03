@@ -1,14 +1,13 @@
 """Engineering scenario tenant seed data (Aurora offline-status fix).
 
 Source: docs/scenarios/engineering/scenario.md, Appendices A, C and D. Jira data
-(AUR-142, AUR-145, Sprint 24) lives in the Test_Jira mock server, not here.
+(AUR-142, AUR-145, Sprint 24) lives in the Test_Jira mock server and GitHub data
+(PR #287) in the Test_GitHub mock server, not here.
 This module seeds:
 
 - E1: Atul's "Aurora pilot - offline status still wrong" thread with Emil
 - T1: Aurora Engineering team, Platform Migration channel, cutover thread
 - T2: the Engineering channel and the "Aurora Engineering LT" group chat
-- G1/G2: Test_GitHub synced connector (customconnectors) with PR #287, Tama's
-  changes-requested review in its content, and merged decoy PRs on the same repo
 
 All seeded evidence is dated on or before Oct 30, 2026; the Nov 20 cutover and
 Nov 23 expansion appear only as future dates in message text.
@@ -189,139 +188,4 @@ def channelmessagereplies():
                        "Lakeshore Retail.",
             "SentDateTime": at(10, 29, 8, 30),
         },
-    ]
-
-
-# --- Test_GitHub (synced custom connector) -----------------------------------
-
-ORG, REPO = "zava-lab", "aurora-status"
-ORG_URL = f"https://github.com/{ORG}"
-REPO_URL = f"{ORG_URL}/{REPO}"
-
-PEOPLE = {TRIIN: "Triin Lepp", MARIA: "Maria Oliva", TAMA: "Tama Surya", KERRY: "Kerry Allen"}
-
-
-def _prop(name, type_, description, labels=None, searchable=False, refinable=False):
-    p = {"name": name, "type": type_, "description": description}
-    if labels:
-        p["labels"] = labels
-    p |= {"isSearchable": searchable, "isRetrievable": True, "isQueryable": True}
-    if refinable:
-        p["isRefinable"] = True
-    return p
-
-
-GITHUB_PROPERTIES = [
-    _prop("Id", "string", "Pull request number.", ["secondaryId"], searchable=True),
-    _prop("Url", "string", "Link to the pull request on GitHub.", ["url"]),
-    _prop("Title", "string", "Pull request title.", ["title"], searchable=True),
-    _prop("Description", "string", "Pull request description.", searchable=True),
-    _prop("CreatedBy", "string", "Author of the pull request.", ["createdBy"], searchable=True),
-    _prop("CreatedAt", "dateTime", "When the pull request was opened.", ["createdDateTime"], refinable=True),
-    _prop("LastModifiedAt", "dateTime", "When the pull request was last updated.", ["lastModifiedDateTime"], refinable=True),
-    _prop("LastModifiedBy", "string", "Person who last updated the pull request.", ["lastModifiedBy"], searchable=True),
-    _prop("MergedAt", "dateTime", "When the pull request was merged.", ["closedDate"], refinable=True),
-    _prop("State", "string", "Pull request state: Open, Merged or Closed.", ["state"], refinable=True),
-    _prop("Labels", "stringCollection", "Labels on the pull request.", ["tags"], searchable=True),
-    _prop("Assignees", "stringCollection", "People assigned to the pull request.", searchable=True),
-    _prop("Contributors", "stringCollection", "People who authored or reviewed the pull request.", ["authors"], searchable=True),
-    _prop("RepositoryName", "string", "Repository name.", ["containerName"], searchable=True),
-    _prop("RepositoryURL", "string", "Link to the repository.", ["containerUrl"]),
-    _prop("RepositoryDescription", "string", "Repository description.", searchable=True),
-    _prop("Type", "string", "Item type.", ["itemType"], refinable=True),
-    _prop("ItemPath", "string", "Owner and repository of the pull request.", ["itemPath"]),
-    _prop("OrganizationName", "string", "GitHub organization.", refinable=True),
-    _prop("OrganizationUrl", "string", "Link to the GitHub organization."),
-    _prop("Milestone", "string", "Milestone (sprint) of the pull request.", ["sprintName"], refinable=True),
-]
-
-PR287_BODY = """Fixes AUR-142: Aurora hubs remain offline after reconnect.
-
-Updates the legacy polling status handler so a successful network reconnect clears the stale Offline state in the dashboard. Previously the handler kept the last Offline state until the next full poll cycle, so reconnected hubs stayed Offline even though telemetry had resumed.
-
-Changes:
-- Legacy polling status handler: clear Offline on reconnect heartbeat
-- Legacy-path reconnect tests added
-
-Checks: legacy-path checks pass as of October 28, 17:00.
-
-Not yet covered: the event-driven status service. Event-driven reconnect coverage is not implemented in this PR."""
-
-G2_REVIEW = ("The legacy-path fix looks reasonable, but Lakeshore Retail moves to the event-driven status service with the "
-             "November 20 cutover. Two things are needed: implement the equivalent reconnect correction in that "
-             "path, and add/run the reconnect tests there. Once both are done, request another platform review. "
-             "I am not approving this version for the pilot.")
-
-# (number, title, body, author, created, modified, modified_by, merged, labels, assignees, contributors, milestone, comments)
-PRS = [
-    (287, "Fix stale offline state after reconnect", PR287_BODY, TRIIN,
-     at(10, 27, 11, 30), at(10, 28, 17, 20), TAMA, None, ["bug", "aurora-status"], [TRIIN], [TRIIN, TAMA],
-     "Aurora Sprint 24",
-     [{"SubmittedAt": at(10, 28, 17, 20), "createdBy": TAMA, "Content": G2_REVIEW, "State": "ChangesRequested"}]),
-    (281, "Add retry backoff to status poller",
-     "Adds exponential backoff to the legacy status poller when the device gateway returns 503, to reduce load "
-     "during regional outages.",
-     TRIIN, at(10, 13, 10, 0), at(10, 16, 15, 20), TAMA, at(10, 16, 15, 20), ["enhancement", "aurora-status"],
-     [TRIIN], [TRIIN, TAMA], "Aurora Sprint 23",
-     [{"SubmittedAt": at(10, 16, 14, 50), "createdBy": TAMA, "Content": "Looks good. Approving.", "State": "Approved"}]),
-    (276, "Event-driven status service: publish device heartbeat events",
-     "First step of the status-service migration: device heartbeats are published as events on the new status "
-     "bus. The dashboard still reads from the legacy poller until the cutover.",
-     TAMA, at(9, 28, 9, 15), at(10, 7, 11, 40), TAMA, at(10, 7, 11, 40), ["migration", "aurora-status"],
-     [TAMA], [TAMA, MARIA], "Aurora Sprint 23",
-     [{"SubmittedAt": at(10, 7, 10, 5), "createdBy": MARIA, "Content": "Regression suite passes on staging. Approved.",
-       "State": "Approved"}]),
-    (269, "Rollout regression suite: add store-group targeting tests",
-     "Adds regression tests for store-group targeting in staged rollouts.",
-     MARIA, at(9, 15, 13, 0), at(9, 18, 16, 30), KERRY, at(9, 18, 16, 30), ["tests", "aurora-status"],
-     [MARIA], [MARIA, KERRY], "Aurora Sprint 22",
-     [{"SubmittedAt": at(9, 18, 16, 0), "createdBy": KERRY, "Content": "Approved.", "State": "Approved"}]),
-]
-
-
-def _pr_item(num, title, body, author, created, modified, modified_by, merged, labels, assignees,
-             contributors, milestone, comments):
-    props = {
-        "Id": str(num),
-        "Url": f"{REPO_URL}/pull/{num}",
-        "Title": title,
-        "Description": body,
-        "CreatedBy": PEOPLE[author],
-        "CreatedAt": created,
-        "LastModifiedAt": modified,
-        "LastModifiedBy": PEOPLE[modified_by],
-        "State": "Merged" if merged else "Open",
-        "Labels": labels,
-        "Assignees": [PEOPLE[a] for a in assignees],
-        "Contributors": [PEOPLE[c] for c in contributors],
-        "RepositoryName": REPO,
-        "RepositoryURL": REPO_URL,
-        "RepositoryDescription": "Aurora hub status service",
-        "Type": "Pull request",
-        "ItemPath": f"{ORG}/{REPO}",
-        "OrganizationName": ORG,
-        "OrganizationUrl": ORG_URL,
-        "Milestone": milestone,
-    }
-    if merged:
-        props["MergedAt"] = merged
-    review = {"comments": [{**c, "createdBy": PEOPLE[c["createdBy"]]} for c in comments]}
-    return {
-        "id": f"pr{num}",
-        "properties": props,
-        "content": f"{body}\n\n{json.dumps(review, ensure_ascii=False)}",
-        "contentType": "text",
-    }
-
-
-def customconnectors():
-    return [
-        {
-            "ConnectionId": "testgithub",
-            "ConnectionName": "Test_GitHub",
-            "ConnectionDescription": "GitHub pull requests from the zava-lab organization, including reviews.",
-            "ContentCategory": "taskManagement",
-            "Properties": GITHUB_PROPERTIES,
-            "Items": [_pr_item(*pr) for pr in PRS],
-        }
     ]

@@ -11,7 +11,6 @@ Sources: the scenario docs in this folder. Lab flow: Introduction → one of fou
 | Scenario doc | ✅ synced with lab manual | ✅ v3 short | ✅ new | ✅ new | ✅ new |
 | Lab manual module | ✅ `03` (as is) | ✅ `04` rewritten | ✅ `05` rewritten | ✅ `06` new | ✅ `07` new |
 | COEP tenant data (M365) | ✅ no change expected | ✅ redated | ✅ rebuilt | ✅ new | ✅ receipts |
-| Synced connectors (COEP) | n/a | n/a | ✅ Test_Confluence | n/a (GitHub moved to a mock) | n/a |
 | Mock MCP servers (federated) | ✅ LSEG, FactSet, Moody's deployed | ✅ iManage deployed | ✅ Salesforce deployed | ✅ Jira, GitHub deployed | ✅ Zava Expense deployed |
 | Test plugins | ✅ 3 built | ✅ Test_iManage built | ✅ Test_Salesforce built | ✅ Test_Jira, Test_GitHub built | ✅ Test_Zava Expense built (flow to confirm) |
 | Dry run | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ |
@@ -37,8 +36,7 @@ COEP grounding schemas available today (`infra/mock_environment/_schemas/Groundi
 
 | Connector | Track | Type | COEP support | Plan |
 |---|---|---|---|---|
-| Test_Confluence | Productivity | Synced | ✅ `confluence` schema | Seed the Zava Sales space (§4.3). |
-| Test_GitHub | Engineering | Federated | n/a | Mock MCP server + plugin (§5.7), writes conversation-scoped. Replaces the earlier synced connector, which stays in the tenant seed (§4.4). |
+| Test_GitHub | Engineering | Federated | n/a | Mock MCP server + plugin (§5.7), writes conversation-scoped. |
 | Test_Jira | Engineering | Federated | n/a | Mock MCP server + plugin with the `sprint-to-slides` skill (§5.2). |
 | Test_Salesforce | Productivity | Federated | n/a | Mock MCP server + plugin with sales skills (§5.1). |
 | Test_iManage | Legal | Federated | n/a | Mock MCP server + plugin; seed files already in repo (§5.3). |
@@ -56,7 +54,7 @@ Tenant users (`users.config.json`): 21 across all tracks. Emil Vanggaard's manag
 | Hemanti Baishya, Luc Lacombe | Legal | Keep. |
 | Kristian Stensen | Finance | Keep. |
 | Tama Surya | Engineering (platform lead, PR reviewer, LT) | Keep; retitle from "Retail Operations Lead" to "Platform Lead, Aurora". |
-| Zoe Armstrong | Productivity (Director of Retail Sales; approves 12–15% discounts) | **Add.** Named in the Confluence pricing policy only. |
+| Zoe Armstrong | Productivity (Director of Retail Sales) | **Add.** Tenant user; no step depends on her. |
 | Atul Manohar | Productivity (Lakeshore Retail Director of Store Operations), Engineering (Lakeshore Retail pilot coordinator) | **Minor conflict.** Proposed title: "Director of Store Operations, Lakeshore Retail" in both; engineering text calls Atul the pilot contact. Update from "Partner Account Manager". |
 | Jahidi Juma | Productivity (Lakeshore Retail IT Security Lead) | **Add.** |
 | Nanami Nakayama | Productivity (Lakeshore Retail CFO, no email history) | **Add.** Must not appear in any email before the lab. |
@@ -92,7 +90,6 @@ Build with `infra/mock_environment/tools/build_tenant.py` (`SCENARIOS = [legal, 
 - [x] Email from Atul, dated before the tenant is built (COEP needs past timestamps): Nanami joins and wants the all-in cost for 400 stores; Jahidi needs security docs. No cc to Nanami.
 - [x] Event Fri Nov 20, 2026, 10:00–11:00 (day after the last lab day), *Lakeshore Retail – Aurora expansion pitch*, attendees Atul, Nanami Nakayama, Jahidi. Same emails as Salesforce.
 - [x] Busy blocks next week; Emil out of office **Nov 26–27**.
-- [x] Test_Confluence (`confluence` schema), space **Zava Sales**: pricing policy, Boulder Innovations battlecard, security FAQ, Wide World Importers case study, 2–3 distractors (archived 2025 pricing policy).
 - [x] Teams meeting *Lakeshore Retail – Aurora pilot review*, organized by Emil, fixed past date: past `events` item + `onlinemeetings` item (linked by EventId) + `.vtt` transcript, ~10 min, speakers Emil, Atul, Jahidi, with the five required lines (9% attach lift; Boulder Innovations "about 20% under your list price"; "if you can get close to that we could sign this quarter"; security review before 400-store rollout; "Nanami will want the all-in cost"). Atul and Jahidi must be tenant users (participants are mail nicknames).
 - [x] **Date-agnostic design:** Outlook items are fixed once ingested and email timestamps must be in the past, so they can't move. Prompts refer to items by name, not by day ("my Lakeshore Retail expansion pitch", "Atul's email about the pitch", "the pilot review call"). The pitch event is Fri Nov 20 (last lab day Nov 19), so it's always upcoming. Test_Salesforce computes its dates from the request day.
 
@@ -101,7 +98,7 @@ Build with `infra/mock_environment/tools/build_tenant.py` (`SCENARIOS = [legal, 
 - [x] E1 email thread *Aurora pilot - offline status still wrong*: Emil Mon Oct 26 14:00; Atul Thu Oct 29 08:15.
 - [x] Teams team **Aurora Engineering**, channel **Platform Migration**, thread T1 (Tama Wed Oct 28 16:00, Maria 16:10, Emil Thu Oct 29 08:30).
 - [x] Teams team/channel **Aurora / Engineering** for the Step 4 post; group **Aurora Engineering LT** (Kerry, Tama).
-- [x] Test_GitHub (`customconnectors`, ConnectionId `testgithub`, ConnectionName "Test_GitHub", ContentCategory `taskManagement`) with the real 22 GitHub Cloud PR properties and labels. Item PR #287 in `zava-lab/aurora-status`: State Open, Type "Pull request", MergedAt null, Milestone Aurora Sprint 24, CreatedBy/Assignees Triin, Contributors Triin + Tama, LastModifiedBy Tama. CreatedAt Tue Oct 27; review and LastModifiedAt Wed Oct 28 17:20. Content = PR body (references AUR-142) + G2 review as `{"comments":[{SubmittedAt, createdBy, Content, State}]}`. Optional 2–3 merged decoy PRs. Full mapping: engineering doc Appendix D. Superseded by the Test_GitHub mock (§5.7); the connection stays in the tenant but the lab doesn't use it.
+- [x] GitHub PR data (PR #287 and decoys) lives in the Test_GitHub mock (§5.7), not the tenant.
 - [x] Docs redated to the date rule: cutover and Atul's update Fri Nov 20 15:00; pilot expansion Mon Nov 23; prompts name dates, not days.
 
 ### 4.5 Bring your own app
@@ -188,14 +185,14 @@ All new mocks follow the same pattern in `mock_mcp_servers/_framework`: real too
 
 - [x] LSEG, FactSet, Moody's: no change needed for the finance prompt update.
 
-### 5.7 Test_GitHub (Engineering, replaces the synced connector)
+### 5.7 Test_GitHub (Engineering)
 
 - [x] Mock server `mock_mcp_servers/github`: 8 read tools from the GitHub MCP server that the lab data supports (get_me, search_users, search_repositories, list_pull_requests, search_pull_requests, pull_request_read, list_label, get_label).
 - [x] Writes, conversation-scoped: add_issue_comment, update_issue_comment, issue_write (update only; Issues are disabled), label_write, pull_request_review_write, add_comment_to_pending_review, add_reply_to_pull_request_comment, update_pull_request, merge_pull_request (blocked on #287 by branch protection), request_copilot_review.
-- [x] Same data as the synced seed: PR #287 with Tama's changes-requested review, plus three merged decoy PRs. GitHub-style viewer at `/zava-lab/aurora-status/pull/287`.
+- [x] Seed data: PR #287 with Tama's changes-requested review, plus three merged decoy PRs. GitHub-style viewer at `/zava-lab/aurora-status/pull/287`.
 - [x] Deployed as `mock-github` (see `mock_mcp_servers/DEPLOYMENT.md`).
 - [x] Plugin **Test_GitHub** (`mock_plugins/github`, `test_github.zip`), built from the real GitHub package. Its four skills are dropped because they need code, branches and CI that the mock doesn't have (fix CI, push, open PRs).
-- [ ] Upload `test_github.zip` and check that the tenant's older synced Test_GitHub connection doesn't clash with it.
+- [ ] Upload `test_github.zip`.
 
 ## 6. Open questions for the owners
 

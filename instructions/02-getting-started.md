@@ -24,7 +24,7 @@ Sign in as Emil, discover connectors in the catalog, check the ones for your tra
     |---|---|
     | Finance | Test_LSEG · Test_FactSet · Test_Moodys |
     | Legal | Test_iManage |
-    | Productivity | Test_Salesforce · Test_Confluence |
+    | Productivity | Test_Salesforce |
     | Engineering | Test_Jira · Test_GitHub |
     | Bring your own app (everyone) | Zava Expense: you'll add this one yourself in [module 7](07-custom-mcp.md) |
 

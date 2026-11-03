@@ -92,7 +92,8 @@ def test_soql_lab_queries(spec):
 
 def test_no_tenant_domain_as_website(spec):
     acct = _get(spec, f"{V}/sobjects/Account/{LAKESHORE}")["body"]
-    assert not acct.get("Website")
+    assert acct["Website"] == "lakeshore-retail.com"
+    assert "onmicrosoft.com" not in acct["Website"]
 
 
 def test_readonly_rejects_writes(spec):

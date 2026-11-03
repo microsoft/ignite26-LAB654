@@ -3,12 +3,10 @@
 Usage (from repo root):
     python infra/mock_environment/tools/validate_package.py [package_dir] [--as-of 2026-11-09T14:00Z]
 
-Checks each *.config.json (and config.json), and each connector folder's
-<type>/<type>_*.jsonl, against its JSON schema, then a
+Checks each *.config.json (and config.json) against its JSON schema, then a
 subset of the COEP cross-file rules (user references, file references, shared
 links, placeholders, email chains, licences, timestamps, teams/channels,
-online meetings and WebVTT transcripts, connector item ids, custom-connector
-property labels and value types). It doesn't replace COEP's own validation; it
+online meetings and WebVTT transcripts). It doesn't replace COEP's own validation; it
 catches the common mistakes before upload.
 """
 
@@ -40,57 +38,23 @@ def load(path: Path):
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def load_jsonl(path: Path) -> list:
-    items = []
-    for n, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
-        if not line.strip():
-            continue
-        try:
-            obj = json.loads(line)
-        except json.JSONDecodeError as e:
-            err(f"{path.name}:{n}: not valid JSON ({e.msg})")
-            continue
-        if not isinstance(obj, dict):
-            err(f"{path.name}:{n}: each line must be one JSON object, not an array")
-            continue
-        items.append(obj)
-    return items
-
-
 def schema_check(pkg: Path) -> dict[str, list | dict]:
     data = {}
     targets = {"config": [pkg / "config.json"]}
     for p in pkg.glob("*.config.json"):
         targets[p.name.split(".")[0].lower()] = [p]
-    # Connector types: <type>/<type>_*.jsonl (COEP Connector Entity Guide).
-    for d in pkg.iterdir():
-        if d.is_dir() and d.name not in ("files", "transcripts"):
-            files = sorted(d.glob("*.jsonl"))
-            for p in files:
-                if p.name.split("_")[0] != d.name or d.name != d.name.lower():
-                    err(f"{d.name}/{p.name}: folder and file prefix must both be the lowercase type name")
-            if files:
-                targets[d.name] = files
     for type_name, paths in targets.items():
         schema_path = SCHEMAS / type_name / "schema.json"
         if not schema_path.exists():
             err(f"{paths[0].name}: no local schema for type '{type_name}'")
             continue
-        if paths[0].suffix == ".jsonl":
-            doc = [i for p in paths for i in load_jsonl(p)]
-        else:
-            doc = load(paths[0])
+        doc = load(paths[0])
         data[type_name] = doc
         schema = load(schema_path)
         v = validator_for(schema)(schema, format_checker=validator_for(schema).FORMAT_CHECKER)
-        label = paths[0].name if len(paths) == 1 else f"{type_name}/*.jsonl"
-        # Object schemas (e.g. customconnectors) describe one JSONL line each.
-        docs = list(enumerate(doc)) if schema.get("type") == "object" and isinstance(doc, list) else [(None, doc)]
-        for n, d in docs:
-            prefix = label if n is None else f"{label}[{n}]"
-            for e in sorted(v.iter_errors(d), key=lambda e: list(e.absolute_path)):
-                loc = "/".join(str(x) for x in e.absolute_path)
-                err(f"{prefix}:{loc}: {e.message[:300]}")
+        for e in sorted(v.iter_errors(doc), key=lambda e: list(e.absolute_path)):
+            loc = "/".join(str(x) for x in e.absolute_path)
+            err(f"{paths[0].name}:{loc}: {e.message[:300]}")
     return data
 
 
@@ -238,7 +202,6 @@ def cross_checks(pkg: Path, data: dict) -> None:
 
     teams_m365_checks(data, users, teams_licensed, event_ids, chat_ids, user)
     online_meeting_checks(pkg, data, users, user)
-    connector_checks(data)
 
 
 def teams_m365_checks(data, users, teams_licensed, event_ids, chat_ids, user) -> None:
@@ -396,92 +359,6 @@ def online_meeting_checks(pkg: Path, data: dict, users: dict, user) -> None:
                 err(f"{w}: transcript {t['TranscriptFile']} missing")
             else:
                 vtt_check(f, names, f"{w}:{t['TranscriptFile']}")
-
-
-STRING_LABELS = {"title", "url", "fileName", "fileExtension", "iconUrl", "containerName", "containerUrl",
-                 "secondaryId", "itemParentId", "parentUrl", "itemType", "itemPath", "sprintName", "state"}
-DATE_LABELS = {"createdDateTime", "lastModifiedDateTime", "dueDate", "closedDate"}
-PERSON_LABELS = {"createdBy", "lastModifiedBy", "closedBy", "reportedBy"}
-PEOPLE_LABELS = {"authors", "assignedToPeople"}
-LABEL_TYPES = {
-    **{l: {"string"} for l in STRING_LABELS},
-    **{l: {"dateTime"} for l in DATE_LABELS},
-    **{l: {"string", "principal"} for l in PERSON_LABELS},
-    **{l: {"stringCollection", "principalCollection"} for l in PEOPLE_LABELS},
-    "tags": {"stringCollection"},
-}
-
-
-def _is_datetime(v) -> bool:
-    try:
-        datetime.fromisoformat(str(v).replace("Z", "+00:00"))
-        return isinstance(v, str)
-    except ValueError:
-        return False
-
-
-VALUE_CHECKS = {
-    "string": lambda v: isinstance(v, str),
-    "int64": lambda v: isinstance(v, int) and not isinstance(v, bool),
-    "double": lambda v: isinstance(v, (int, float)) and not isinstance(v, bool),
-    "boolean": lambda v: isinstance(v, bool),
-    "dateTime": _is_datetime,
-    "stringCollection": lambda v: isinstance(v, list) and all(isinstance(x, str) for x in v),
-    "int64Collection": lambda v: isinstance(v, list) and all(isinstance(x, int) for x in v),
-    "doubleCollection": lambda v: isinstance(v, list) and all(isinstance(x, (int, float)) for x in v),
-    "dateTimeCollection": lambda v: isinstance(v, list) and all(_is_datetime(x) for x in v),
-    "principal": lambda v: isinstance(v, dict),
-    "principalCollection": lambda v: isinstance(v, list) and all(isinstance(x, dict) for x in v),
-}
-
-
-def connector_checks(data: dict) -> None:
-    ids = set()
-    for p in data.get("confluence", []):
-        if p["id"] in ids:
-            err(f"confluence[{p['id']}]: duplicate id")
-        ids.add(p["id"])
-
-    conn_ids = set()
-    for c in data.get("customconnectors", []):
-        w = f"customconnectors[{c['ConnectionId']}]"
-        if c["ConnectionId"] in conn_ids:
-            err(f"{w}: duplicate ConnectionId")
-        conn_ids.add(c["ConnectionId"])
-        props = {p["name"]: p for p in c["Properties"]}
-        if len(props) != len(c["Properties"]):
-            err(f"{w}: duplicate property name")
-        label_owner: dict[str, str] = {}
-        for p in c["Properties"]:
-            pw = f"{w}.Properties[{p['name']}]"
-            if p.get("isSearchable") and p["type"] not in ("string", "stringCollection"):
-                err(f"{pw}: only string/stringCollection can be searchable")
-            if p.get("isSearchable") and p.get("isRefinable"):
-                err(f"{pw}: a property can't be both searchable and refinable")
-            for l in p.get("labels") or []:
-                if l in label_owner:
-                    err(f"{pw}: label '{l}' already used on {label_owner[l]}")
-                label_owner[l] = p["name"]
-                if not p.get("isRetrievable"):
-                    err(f"{pw}: labelled properties must be retrievable")
-                if l in LABEL_TYPES and p["type"] not in LABEL_TYPES[l]:
-                    err(f"{pw}: label '{l}' needs type {sorted(LABEL_TYPES[l])}, not {p['type']}")
-                if l in ("assignedToPeople", "secondaryId") and not all(
-                        p.get(k) for k in ("isQueryable", "isRetrievable", "isSearchable")):
-                    err(f"{pw}: label '{l}' should be queryable, retrievable and searchable")
-        item_ids = set()
-        for it in c["Items"]:
-            iw = f"{w}.Items[{it['id']}]"
-            if it["id"] in item_ids:
-                err(f"{iw}: duplicate item id")
-            item_ids.add(it["id"])
-            for k, v in it["properties"].items():
-                if k not in props:
-                    err(f"{iw}: property '{k}' is not defined")
-                elif not VALUE_CHECKS[props[k]["type"]](v):
-                    err(f"{iw}: '{k}' value doesn't match type {props[k]['type']}")
-                elif props[k]["type"] in ("dateTime",):
-                    past(v, f"{iw}.{k}")
 
 
 def array_scope_checks(data: dict) -> None:

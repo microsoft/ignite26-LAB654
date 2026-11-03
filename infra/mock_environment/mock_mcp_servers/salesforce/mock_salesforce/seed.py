@@ -64,7 +64,7 @@ def build_seed(email_domain: str | None = None) -> dict:
 
     accounts = [
         stamp({"Id": lakeshore, "Name": "Lakeshore Retail", "Type": "Customer", "Industry": "Retail",
-               "NumberOfEmployees": 12000, "AccountSource": "Partner Referral",
+               "NumberOfEmployees": 12000, "Website": "lakeshore-retail.com", "AccountSource": "Partner Referral",
                "BillingCity": "Minneapolis", "BillingState": "MN", "BillingCountry": "United States",
                "Description": "Retailer with about 400 stores. Ran a 50-store Aurora smart-home hub pilot in 2026; "
                               "the full 400-store rollout is in proposal."},
@@ -110,10 +110,10 @@ def build_seed(email_domain: str | None = None) -> dict:
         stamp({"Id": wwi_deal, "Name": "Wide World Importers \u2013 Aurora 320-store rollout", "AccountId": wwi,
                "StageName": "Closed Won", "Amount": 844800.0, "CloseDate": "2026-09-18", "Type": "New Customer",
                "LeadSource": "Web", "Competitor__c": "Boulder Innovations",
-               "Description": "Won against Boulder Innovations on all-in TCO. Boulder's sticker price was lower "
-                              "(about $2,400 per store) but about $3,250 per store all-in once install and "
-                              "support were added. We bundled install ($300 per store) and held the discount to "
-                              "12% ($2,640 per store against $3,000 list).",
+               "Description": "Won against Boulder Innovations on all-in TCO. Boulder's sticker price was about "
+                              "20% lower (about $2,400 per store) but about $3,250 per store all-in once install "
+                              "and support were added. We held the discount to 12% ($2,640 per store against "
+                              "$3,000 list) with install bundled at no extra cost.",
                "LastStageChangeDate": _ts("2026-09-18", "19:00:00")},
               _ts("2026-06-15", "16:40:00")),
         stamp({"Id": tailspin_deal, "Name": "Tailspin Toys \u2013 Aurora 120-store rollout", "AccountId": tailspin,

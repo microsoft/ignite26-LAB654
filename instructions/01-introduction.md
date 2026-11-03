@@ -35,7 +35,7 @@ By the end of this lab, you'll be able to:
 |---|---|---|---|
 | [Finance](03-finance.md) | Kristian, who runs the Zava investment portfolio: "Should we buy more NVIDIA? Bring a recommendation to Monday's investment committee." | LSEG, FactSet, Moody's · equity research and company analysis skills · Excel, Word | ~18 min |
 | [Legal](04-legal.md) | Luc, Chief Underwriting Officer: "Can we sign Trey Research's AI underwriting contract on the 12th?" | Work IQ (email and Teams), iManage · Word legal skills · Copilot Cowork | ~15 min |
-| [Productivity](05-productivity.md) | Pitch the Aurora rollout to all 400 Lakeshore Retail stores on Nov 20, with a CFO in the room and a competitor 20% cheaper. | Test_Salesforce, Test_Confluence, Teams, Outlook · sales skills · Copilot Cowork | ~10 min (+ stretch) |
+| [Productivity](05-productivity.md) | Pitch the Aurora rollout to all 400 Lakeshore Retail stores on Nov 20, with a CFO in the room and a competitor 20% cheaper. | Test_Salesforce, Teams, Outlook · sales skills · Copilot Cowork | ~10 min (+ stretch) |
 | [Engineering](06-engineering.md) | A customer says the Aurora offline-status bug is still there, and the pilot expands on Monday. What's really happening? | Test_Jira, Test_GitHub, Outlook, Teams · sprint-to-slides skill · Copilot Cowork | ~15 min |
 | [Bring your own app](07-custom-mcp.md) (everyone) | Your expense tool isn't in any catalog. Connect it yourself, then file a trip from your inbox. | Zava Expense (custom MCP connector) · travel-policy skill · Excel | ~20 min |
 

@@ -6,9 +6,7 @@ It serves one organization, **zava-lab**, which has one private repository: **au
 
 ## Background
 
-Test_GitHub used to be a synced connector (Graph connector) seeded in the COEP tenant. Version 1 of this mock kept that read-only behaviour. Version 2 adds the live server's write tools that fit the data, kept per conversation like the other mocks.
-
-The original connector seed (`Connectors_Ignite_EMP/customconnectors/customconnectors_engineering.jsonl`) is unchanged and remains tenant data. This mock is built from the same items.
+Version 1 of this mock had read-only tools. Version 2 adds the live server's write tools that fit the data, kept per conversation like the other mocks.
 
 ## Prompts it powers
 
