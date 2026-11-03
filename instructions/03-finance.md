@@ -1,13 +1,8 @@
 # Finance track: Should we buy more NVIDIA?
 
-> **Duration:** ~18 minutes | **Connectors:** Test_LSEG, Test_FactSet, Test_Moodys | **Surfaces:** Microsoft 365 Copilot app, Excel, Word
+> **Duration:** ~20 minutes | **Connectors:** Test_LSEG, Test_FactSet, Test_Moodys | **Surfaces:** Copilot Chat, Copilot Cowork, Excel
 
-## What you'll take away
-
-- **Trusted data where you work.** LSEG, FactSet and Moody's answer inside Copilot, Excel and Word, with every number cited and dated.
-- **Connect once, use everywhere.** The same three connectors work in the Copilot app and in Excel, with no extra setup.
-- **Partner expertise, not just data.** LSEG and Moody's skills apply their analysts' methods, in the Copilot app and in Excel.
-- **A case that holds up.** Real Excel formulas you can check, and Copilot challenges your view before the committee does.
+In this module, you'll use three financial data sources, **LSEG**, **FactSet** and **Moody's**, through Copilot connectors. You'll take one investment question from a first sense check to a committee-ready memo, using the same connectors in Copilot Chat, Copilot Cowork and Excel, with partner skills that apply each provider's analyst methods.
 
 ## The story
 
@@ -44,6 +39,13 @@ Zava already holds a lot of NVIDIA, so buying more puts even more policyholders'
 
 </details>
 
+## What you'll take away
+
+- **Trusted data where you work.** LSEG, FactSet and Moody's answer inside Copilot, Excel and Word, with every number cited and dated.
+- **Connect once, use everywhere.** The same three connectors work in the Copilot app and in Excel, with no extra setup.
+- **Partner expertise, not just data.** LSEG and Moody's skills apply their analysts' methods, in the Copilot app and in Excel.
+- **A case that holds up.** Real Excel formulas you can check, and Copilot challenges your view before the committee does.
+
 ## Before you start
 
 - [ ] You completed [Getting started with connectors](02-getting-started.md).
@@ -51,13 +53,13 @@ Zava already holds a lot of NVIDIA, so buying more puts even more policyholders'
 
 | Step | Time | Question | Output |
 |---|---|---|---|
-| 1 · Sense check | ~4 min | Is NVIDIA worth a closer look? | Quick read on earnings, rivals and credit |
+| 1 · Sense check | ~5 min | Is NVIDIA worth a closer look? | Quick read on earnings, rivals and credit |
 | 2 · Deep dive on the numbers | ~8 min | What do the numbers say, and what's the upside? | "NVIDIA Committee Pack" workbook: snapshot, scenarios, credit |
-| 3 · Back-check and report | ~6 min | Does my view hold up? | Pressure-tested view and committee memo |
+| 3 · Back-check and report | ~7 min | Does my view hold up? | Pressure-tested view and committee memo |
 
 ## Step 1: Sense check
 
-*Microsoft 365 Copilot app*
+> **Where:** Copilot Chat in the Microsoft 365 Copilot app. Run 1a to 1c in one chat.
 
 ### 1a. Did it beat expectations?
 
@@ -95,7 +97,7 @@ What is NVIDIA's credit rating and outlook according to Moody's and what's drivi
 
 ### 2a. Get the numbers in one place
 
-*Microsoft 365 Copilot app · LSEG equity research skill*
+> **Where:** **Copilot Cowork.** In the Microsoft 365 Copilot app, open **Cowork** and start a new task. Cowork creates the workbook and saves it to your OneDrive.
 
 ```text
 Using LSEG, create an Excel workbook called "NVIDIA Committee Pack" with an equity research snapshot of NVIDIA: analysts' earnings and revenue forecasts for this year and next (FY1, FY2), how many analysts cover it and how much they disagree, 5 years of financials, and valuation. Cite sources and dates.
@@ -106,11 +108,9 @@ Using LSEG, create an Excel workbook called "NVIDIA Committee Pack" with an equi
 - Copilot uses LSEG's **equity research** skill. You get the partner's analyst method as well as its data.
 - A workbook named **NVIDIA Committee Pack**, with sources and dates.
 
-Open the workbook in **Excel** for the next two prompts.
-
 ### 2b. What's the upside?
 
-*Excel · Copilot pane*
+> **Where:** Excel. Open **NVIDIA Committee Pack**, then open the **Copilot** pane. Run 2b and 2c there.
 
 ```text
 Add a "Scenarios" sheet with worst, middle and best cases (bear, base, bull), using the lowest, average and highest FY2 earnings-per-share forecasts from the snapshot and NVIDIA's current share price. Make the price-to-earnings (P/E) multiple an editable input for each case and use formulas to show the implied share price and % upside or downside.
@@ -123,8 +123,6 @@ Add a "Scenarios" sheet with worst, middle and best cases (bear, base, bull), us
 
 ### 2c. Is it financially sound?
 
-*Excel · Copilot pane · Moody's company analysis skill*
-
 ```text
 Using Moody's, add a "Credit" sheet with a credit SWOT for NVIDIA (strengths, weaknesses, opportunities and threats) and the factors that could lead to a rating upgrade or downgrade.
 ```
@@ -133,7 +131,7 @@ Using Moody's, add a "Credit" sheet with a credit SWOT for NVIDIA (strengths, we
 
 ## Step 3: Back-check and report
 
-*Microsoft 365 Copilot app*
+> **Where:** Copilot Chat in the Microsoft 365 Copilot app. Go back to your chat from Step 1.
 
 ### 3a. Pressure-test your view
 
