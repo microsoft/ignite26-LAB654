@@ -128,6 +128,19 @@ Create one PowerPoint slide summarizing Aurora Sprint 24 for engineering leaders
 
 **What you take away:** You started with a mostly green sprint board. Copilot found the one item at risk, joined Jira, Confluence and GitHub to show what it was waiting on, then Cowork asked for the decision and gave leadership a one-slide update.
 
+## More connectors to try
+
+The same pattern works with other connectors. Try them in your own tenant for similar scenarios.
+
+<table>
+  <tr>
+    <td align="center"><img src="images/connectors/azure-devops.svg" alt="Azure DevOps" width="200"></td>
+    <td align="center"><img src="images/connectors/pagerduty.svg" alt="PagerDuty" width="200"></td>
+  </tr>
+</table>
+
+<sub>Logos are trademarks of their respective owners.</sub>
+
 ---
 
 **Next:** [Bring your own app](07-custom-mcp.md), or try another track ([Finance](03-finance.md) · [Legal](04-legal.md) · [Productivity](05-productivity.md))

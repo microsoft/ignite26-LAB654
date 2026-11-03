@@ -115,6 +115,20 @@ Prefer not to make changes? Try `Draft an email to Atul and Nanami ahead of the 
 
 **What you take away:** Copilot moved from finding information to finishing the job: a brief, a grounded answer, a booked meeting and an updated CRM, with you approving each change.
 
+## More connectors to try
+
+The same pattern works with other connectors. Try them in your own tenant for similar scenarios.
+
+<table>
+  <tr>
+    <td align="center"><img src="images/connectors/linear.svg" alt="Linear" width="200"></td>
+    <td align="center"><img src="images/connectors/intercom.svg" alt="Intercom" width="200"></td>
+    <td align="center"><img src="images/connectors/zoom.svg" alt="Zoom" width="200"></td>
+  </tr>
+</table>
+
+<sub>Logos are trademarks of their respective owners.</sub>
+
 ---
 
 **Next:** [Bring your own app](07-custom-mcp.md), or try another track ([Finance](03-finance.md) · [Legal](04-legal.md) · [Engineering](06-engineering.md))

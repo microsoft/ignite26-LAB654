@@ -130,6 +130,19 @@ Open Cowork's review list, check the one-pager (the regulator points link to the
 > [!NOTE]
 > Fictional parties adapted from the Harvey lab (MIT license). Not legal advice.
 
+## More connectors to try
+
+The same pattern works with other connectors. Try them in your own tenant for similar scenarios.
+
+<table>
+  <tr>
+    <td align="center"><img src="images/connectors/lexisnexis.svg" alt="LexisNexis" width="200"></td>
+    <td align="center"><img src="images/connectors/legal-data-hunter.svg" alt="Legal Data Hunter" width="200"></td>
+  </tr>
+</table>
+
+<sub>Logos are trademarks of their respective owners.</sub>
+
 ---
 
 **Next:** [Bring your own app](07-custom-mcp.md), or try another track ([Finance](03-finance.md) · [Productivity](05-productivity.md) · [Engineering](06-engineering.md))

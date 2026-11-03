@@ -171,6 +171,19 @@ Turn this into a Word memo for the investment committee, reusing the workbook's 
 
 **What you take away:** the committee pack (workbook and memo), and prompts that work for any company. Swap NVIDIA for another company and run them again.
 
+## More connectors to try
+
+The same pattern works with other connectors. Try them in your own tenant for similar scenarios.
+
+<table>
+  <tr>
+    <td align="center"><img src="images/connectors/sp-global.svg" alt="S&P Global" width="200"></td>
+    <td align="center"><img src="images/connectors/morningstar.svg" alt="Morningstar" width="200"></td>
+  </tr>
+</table>
+
+<sub>Logos are trademarks of their respective owners.</sub>
+
 ---
 
 **Next:** [Bring your own app](07-custom-mcp.md), or try another track ([Legal](04-legal.md) · [Productivity](05-productivity.md) · [Engineering](06-engineering.md))

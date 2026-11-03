@@ -4,7 +4,7 @@
 >
 > - **03 Research is no longer used.** v3 has no research step in Word; the regulator check runs inside the Cowork step and Cowork saves everything to the Drafts folder.
 > - **The lab matter is slimmer than the kit's.** The mock iManage matter holds only `Playbooks` (the playbook) and an empty `Drafts`. The agreement is opened in Word from each attendee's OneDrive instead (Word can't open a document from the mock server), using [`files/Trey Research Vendor Agreement v4.2.docx`](files/). The exhibits aren't seeded. The folder table and the "only copy should be in iManage" note below describe the kit's original setup.
-> - **The agreement in Word is the shortened lab edition** ("original section numbers"). The kit and `infra/mock_environment/mock_mcp_servers/imanage/seed_files` still hold the full-length v4.2. See [REVAMP_PLAN.md](../REVAMP_PLAN.md).
+> - **The agreement in Word is the shortened lab edition** ("original section numbers"). The kit and `infra/mock_environment/mock_mcp_servers/imanage/seed_files` still hold the full-length v4.2.
 > - The quick answer key below describes the older five-step outputs. Use the "What comes back" column in [scenario.md](scenario.md) for v3.
 >
 > Seed data built from this kit lives in `infra/mock_environment` (tenant: `tools/scenarios/legal/`; iManage: `mock_mcp_servers/imanage/seed_files`). Dates follow the lab-wide rule: everything seeded is dated on or before Oct 30, 2026 (the tenant is loaded once, before the Nov 17–19 lab), and what is still to come in the story (negotiation, go-live) falls after the lab. To move them, run `tools/scenarios/legal/redate.py --lab-date <Monday> --negotiation-date <Thursday>`.
