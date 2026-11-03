@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import base64
 import hashlib
+import html as _html
 import os
 import re
 from contextvars import ContextVar
@@ -120,6 +121,10 @@ def to_adf(markdown: str | None) -> dict | None:
             items = [{"type": "listItem", "content": [{"type": "paragraph",
                                                         "content": _inline(line.lstrip()[2:])}]} for line in lines]
             content.append({"type": "bulletList", "content": items})
+        elif all(re.match(r"\s*\d+\.\s", line) for line in lines):
+            items = [{"type": "listItem", "content": [{"type": "paragraph", "content": _inline(
+                re.sub(r"\s*\d+\.\s+", "", line, count=1))}]} for line in lines]
+            content.append({"type": "orderedList", "attrs": {"order": 1}, "content": items})
         elif all(line.lstrip().startswith("|") for line in lines):
             rows = []
             for i, line in enumerate(lines):
@@ -174,6 +179,101 @@ def from_adf(node: Any) -> str:
 
 def body(text: str | None, fmt: str | None) -> Any:
     return to_adf(text) if fmt == "adf" else text
+
+
+# --- Confluence ----------------------------------------------------------------------------------------------------
+
+def wiki_base() -> str:
+    return f"{site_url()}/wiki"
+
+
+def page_ari(site: Site, page: dict) -> str:
+    return f"ari:cloud:confluence:{site.data['site']['cloudId']}:page/{page['id']}"
+
+
+def page_slug(title: str) -> str:
+    return "+".join(re.findall(r"[\w-]+", title)) or "page"
+
+
+def page_path(site: Site, page: dict) -> str:
+    """The page's web UI path below /wiki, as Confluence puts in ``_links.webui``."""
+    space = site.spaces.get(page.get("spaceId"))
+    return f"/spaces/{space['key'] if space else 'AUR'}/pages/{page['id']}/{page_slug(page['title'])}"
+
+
+def page_url(site: Site, page: dict) -> str:
+    """Browse link for a page; inside a tool call with a conversation it opens that conversation's view."""
+    return f"{site_url()}{VIEW_SCOPE.get()}/wiki{page_path(site, page)}"
+
+
+def _html_inline(text: str) -> str:
+    out = _html.escape(text, quote=False)
+    out = re.sub(r"`([^`]+)`", r"<code>\1</code>", out)
+    out = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", out)
+    return re.sub(r"\[([^\]]+)\]\(([^)\s]+)\)", r'<a href="\2">\1</a>', out)
+
+
+def to_html(markdown: str | None) -> str:
+    """Markdown to the structured HTML Confluence returns for ``contentFormat: html``."""
+    out: list[str] = []
+    for block in re.split(r"\n\s*\n", (markdown or "").strip()):
+        lines = [line for line in block.splitlines() if line.strip()]
+        if not lines:
+            continue
+        if all(line.lstrip().startswith(("- ", "* ")) for line in lines):
+            out.append("<ul>" + "".join(f"<li><p>{_html_inline(x.lstrip()[2:])}</p></li>" for x in lines) + "</ul>")
+        elif all(re.match(r"\s*\d+\.\s", line) for line in lines):
+            items = [_html_inline(re.sub(r"^\s*\d+\.\s+", "", x)) for x in lines]
+            out.append("<ol>" + "".join(f"<li><p>{x}</p></li>" for x in items) + "</ol>")
+        elif all(line.lstrip().startswith("|") for line in lines):
+            rows = []
+            for i, line in enumerate(lines):
+                cells = [c.strip() for c in line.strip().strip("|").split("|")]
+                if all(re.fullmatch(r":?-{3,}:?", c) for c in cells):
+                    continue
+                tag = "th" if i == 0 else "td"
+                rows.append("<tr>" + "".join(f"<{tag}><p>{_html_inline(c)}</p></{tag}>" for c in cells) + "</tr>")
+            out.append("<table><tbody>" + "".join(rows) + "</tbody></table>")
+        elif re.match(r"#{1,6} ", lines[0]) and len(lines) == 1:
+            level = len(lines[0].split(" ", 1)[0])
+            out.append(f"<h{level}>{_html_inline(lines[0][level + 1:])}</h{level}>")
+        else:
+            out.append("<p>" + "<br />".join(_html_inline(x) for x in lines) + "</p>")
+    return "".join(out)
+
+
+def from_html(text: str) -> str:
+    """Structured HTML (as agents write page bodies) back to markdown for storage."""
+    s = re.sub(r"\s*\n\s*", " ", text)
+    s = re.sub(r"<(strong|b)>(.*?)</\1>", r"**\2**", s, flags=re.I | re.S)
+    s = re.sub(r"<code>(.*?)</code>", r"`\1`", s, flags=re.I | re.S)
+    s = re.sub(r'<a\s[^>]*href="([^"]+)"[^>]*>(.*?)</a>', r"[\2](\1)", s, flags=re.I | re.S)
+    s = re.sub(r"<h([1-6])[^>]*>(.*?)</h\1>", lambda m: "\n\n" + "#" * int(m.group(1)) + " " + m.group(2) + "\n\n",
+               s, flags=re.I | re.S)
+
+    def table(m: re.Match) -> str:
+        rows = []
+        for row in re.findall(r"<tr[^>]*>(.*?)</tr>", m.group(0), flags=re.I | re.S):
+            cells = [re.sub(r"<[^>]+>", "", c).strip() for c in
+                     re.findall(r"<t[hd][^>]*>(.*?)</t[hd]>", row, flags=re.I | re.S)]
+            rows.append("| " + " | ".join(cells) + " |")
+            if len(rows) == 1:
+                rows.append("|" + "---|" * len(cells))
+        return "\n\n" + "\n".join(rows) + "\n\n"
+
+    s = re.sub(r"<table[^>]*>.*?</table>", table, s, flags=re.I | re.S)
+
+    def listing(m: re.Match) -> str:
+        items = re.findall(r"<li[^>]*>(.*?)</li>", m.group(2), flags=re.I | re.S)
+        marks = [f"{i}." if m.group(1).lower() == "ol" else "-" for i in range(1, len(items) + 1)]
+        return "\n\n" + "\n".join(f"{k} {re.sub(r'<[^>]+>', '', x).strip()}" for k, x in zip(marks, items)) + "\n\n"
+
+    s = re.sub(r"<(ul|ol)[^>]*>(.*?)</\1>", listing, s, flags=re.I | re.S)
+    s = re.sub(r"<br\s*/?>", "\n", s, flags=re.I)
+    s = re.sub(r"</p>|</div>", "\n\n", s, flags=re.I)
+    s = re.sub(r"<[^>]+>", "", s)
+    s = _html.unescape(s)
+    return re.sub(r"\n{3,}", "\n\n", "\n".join(line.strip() for line in s.splitlines())).strip()
 
 
 # --- durations -----------------------------------------------------------------------------------------------------

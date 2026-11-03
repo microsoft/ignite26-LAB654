@@ -1,5 +1,5 @@
 # Build from infra/mock_environment/mock_mcp_servers:
-#   docker build -f jira/Dockerfile -t mock-jira:latest .
+#   docker build -f atlassian/Dockerfile -t mock-atlassian:latest .
 # On networks that block PyPI, add: --build-arg PIP_INDEX_URL=<your mirror>/simple/
 # Run with one replica: conversation changes live in memory. Set PUBLIC_BASE_URL to the public address so links work.
 FROM python:3.12-slim
@@ -7,7 +7,7 @@ FROM python:3.12-slim
 ARG PIP_INDEX_URL=https://pypi.org/simple/
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
-    PYTHONPATH=/app/_framework:/app/jira \
+    PYTHONPATH=/app/_framework:/app/atlassian \
     MCP_TRANSPORT=http \
     PORT=8000
 
@@ -16,12 +16,12 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir --index-url "$PIP_INDEX_URL" -r requirements.txt
 
 COPY _framework/ _framework/
-COPY jira/mock_jira/ jira/mock_jira/
-COPY jira/seed_files/ jira/seed_files/
+COPY atlassian/mock_atlassian/ atlassian/mock_atlassian/
+COPY atlassian/seed_files/ atlassian/seed_files/
 
 RUN useradd --uid 10001 --no-create-home mcp
 USER mcp
 
 EXPOSE 8000
 HEALTHCHECK --interval=30s --timeout=3s CMD python -c "import os,urllib.request; urllib.request.urlopen(f'http://127.0.0.1:{os.environ.get(\"PORT\",\"8000\")}/healthz')"
-CMD ["python", "-m", "mock_jira"]
+CMD ["python", "-m", "mock_atlassian"]

@@ -11,8 +11,8 @@ Sources: the scenario docs in this folder. Lab flow: Introduction → one of fou
 | Scenario doc | ✅ synced with lab manual | ✅ v3 short | ✅ new | ✅ new | ✅ new |
 | Lab manual module | ✅ `03` (as is) | ✅ `04` rewritten | ✅ `05` rewritten | ✅ `06` new | ✅ `07` new |
 | COEP tenant data (M365) | ✅ no change expected | ✅ redated | ✅ rebuilt | ✅ new | ✅ receipts |
-| Mock MCP servers (federated) | ✅ LSEG, FactSet, Moody's deployed | ✅ iManage deployed | ✅ Salesforce deployed | ✅ Jira, GitHub deployed | ✅ Zava Expense deployed |
-| Test plugins | ✅ 3 built | ✅ Test_iManage built | ✅ Test_Salesforce built | ✅ Test_Jira, Test_GitHub built | ✅ Test_Zava Expense built (flow to confirm) |
+| Mock MCP servers (federated) | ✅ LSEG, FactSet, Moody's deployed | ✅ iManage deployed | ✅ Salesforce deployed | ✅ Rovo (Jira + Confluence), GitHub deployed | ✅ Zava Expense deployed |
+| Test plugins | ✅ 3 built | ✅ Test_iManage built | ✅ Test_Salesforce built | ✅ Test_Rovo, Test_GitHub built | ✅ Test_Zava Expense built (flow to confirm) |
 | Dry run | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ |
 
 ## 1. Lab manual
@@ -37,7 +37,8 @@ COEP grounding schemas available today (`infra/mock_environment/_schemas/Groundi
 | Connector | Track | Type | COEP support | Plan |
 |---|---|---|---|---|
 | Test_GitHub | Engineering | Federated | n/a | Mock MCP server + plugin (§5.7), writes conversation-scoped. |
-| Test_Jira | Engineering | Federated | n/a | Mock MCP server + plugin with the `sprint-to-slides` skill (§5.2). |
+| Jira, Confluence | Engineering | Synced | ✅ `customconnectors`, `confluence` | Seeded from the Rovo mock seed so all Atlassian sources match (§5.2). |
+| Test_Rovo | Engineering | Federated | n/a | Rovo mock MCP server (Jira + Confluence) + plugin with the `sprint-to-slides` skill (§5.2). |
 | Test_Salesforce | Productivity | Federated | n/a | Mock MCP server + plugin with sales skills (§5.1). |
 | Test_iManage | Legal | Federated | n/a | Mock MCP server + plugin; seed files already in repo (§5.3). |
 | Test_LSEG, Test_FactSet, Test_Moodys | Finance | Federated | n/a | Live; keep. |
@@ -142,15 +143,16 @@ All new mocks follow the same pattern in `mock_mcp_servers/_framework`: real too
 - [x] Plugin **Test_Salesforce** (`mock_plugins/salesforce`, `test_salesforce.zip`), built from `salesforce_v0_20260918_withConstraints` (all 37 skills kept, including `call-prep`, `schedule-meeting`, `handle-objection`, `log-activity`).
 - [ ] Upload `test_salesforce.zip` to the tenant and run the Productivity prompts end to end.
 
-### 5.2 Test_Jira (new, Engineering)
+### 5.2 Test_Rovo and the Jira and Confluence synced connectors (Engineering)
 
-- [x] Real Atlassian MCP tool shapes: no traces existed, so all 41 tool schemas and sample responses were captured read-only from the live Atlassian MCP server (`jira/seed_files/tool_schemas.json`).
-- [x] Seed: AUR-142 (In Progress, Triin, 8h, last update Oct 26 16:00 ET, no PR link), AUR-145 breakdown (24h, updated Oct 29 08:45 ET), AUR-139 (8h), AUR-151 (16h), Sprint 24 (Oct 26–Nov 20, 32h capacity before the Nov 20 checkpoint).
-- [x] Mock server `mock_mcp_servers/jira`: the 41 Atlassian tools (Jira, Confluence, Compass, Teamwork Graph, search), JQL, writes kept per conversation, and a Jira Cloud-style viewer (`/browse/AUR-142`, board, backlog).
-- [x] Deployed as `mock-jira` (see `mock_mcp_servers/DEPLOYMENT.md`).
-- [x] Plugin **Test_Jira** (`mock_plugins/jira`, `test_jira.zip`), built from *Rovo_CEA 9 (2) 1.zip*: all 4 skills kept (including `sprint-to-slides`), connector points at the mock with no auth, Rovo bot fields removed.
-- [ ] Upload `test_jira.zip` to the tenant and run the Engineering prompts end to end. Verify one-slide .pptx output.
-- `sprint-to-slides` optionally calls Teamwork Graph and falls back to Jira data. Confluence page creation is optional and suppressed in this lab.
+- [x] Real Atlassian MCP tool shapes: no traces existed, so all 41 tool schemas and sample responses were captured read-only from the live Atlassian MCP server (`atlassian/seed_files/tool_schemas.json`).
+- [x] Seed (`atlassian/seed_files/seed.json`): Sprint 24 (Oct 26–Nov 20) with six items, all on track except AUR-142 (at risk; Jira has the delay signal but no ETA). Confluence space AUR: delivery commitments, ADR-014 (Proposed, Tama is decision owner), sprint plan, cutover runbook. Consistent with GitHub PR #287.
+- [x] Mock server `mock_mcp_servers/atlassian`: the 41 Atlassian tools (Jira, Confluence, Compass, Teamwork Graph, search), JQL and CQL, Rovo `search`/`fetch`, writes kept per conversation, and Jira- and Confluence-style viewers (`/browse/AUR-142`, board, `/wiki/spaces/AUR/pages/98457`).
+- [x] Deployed as `mock-atlassian` (see `mock_mcp_servers/DEPLOYMENT.md`).
+- [x] Synced connectors: `tools/scenarios/engineering` builds `customconnectors_engineering.jsonl` (Jira) and `confluence_engineering.jsonl` from the same seed; item links point at the mock viewer.
+- [x] Plugin **Test_Rovo** (`mock_plugins/rovo`, `test_rovo.zip`), built from *Rovo_CEA 9 (2) 1.zip*: all 4 skills kept (including `sprint-to-slides`), connector points at the mock with no auth, Rovo bot fields removed.
+- [ ] Upload `test_rovo.zip` to the tenant and run the Engineering prompts end to end (Part A in Chat, Part B in Cowork). Verify one-slide .pptx output.
+- `sprint-to-slides` optionally calls Teamwork Graph and falls back to Jira data. Confluence page creation is optional and kept per conversation.
 
 ### 5.3 Test_iManage (Legal)
 

@@ -20,7 +20,7 @@ Welcome! In this hands-on lab you'll connect trusted data sources to Microsoft 3
 | 3 | [Finance track](03-finance.md) | Build an NVIDIA investment committee pack with LSEG, FactSet and Moody's | ~18 min |
 | 4 | [Legal track](04-legal.md) | Flag, redline and prepare to negotiate an AI vendor contract with iManage | ~15 min |
 | 5 | [Productivity track](05-productivity.md) | Prep a sales pitch with Test_Salesforce | ~10 min |
-| 6 | [Engineering track](06-engineering.md) | Unblock a customer bug fix with Test_Jira and Test_GitHub | ~15 min |
+| 6 | [Engineering track](06-engineering.md) | Find what an at-risk sprint item is waiting on with Jira, Confluence and GitHub, then act in Cowork | ~15 min |
 | 7 | [Bring your own app](07-custom-mcp.md) | Connect an in-house expense app through MCP and file a trip | ~20 min |
 | 8 | [Summary](08-summary.md) | Recap, governance and next steps | ~3 min |
 

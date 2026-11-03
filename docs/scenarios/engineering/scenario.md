@@ -1,127 +1,122 @@
-# Engineering: The fix exists. The customer is still waiting.
+# Engineering: One item at risk. Who is it waiting on?
 
-> Source: *Ignite_Engineering_Connectors_Lab_v3.docx* (facilitator draft). Converted to Markdown for reference; formatting differs from the original, wording is preserved.
+> Source: *Ignite_Engineering_Connectors_Lab_v3.docx* (facilitator draft), reworked for the revised engineering flow: start from sprint status, drill into the one at-risk item, then act on it. Formatting differs from the original.
 >
 > IGNITE LAB654 | Engineering connectors lab | Fictional lab data
 >
-> **Lab build notes:** Test_GitHub is a mock MCP server (`mock_mcp_servers/github`) with the GitHub MCP server's read tools and the write tools the data supports. Writes are kept per conversation, and merging PR #287 is blocked by branch protection. Test_Jira is a mock MCP server; its plugin follows the structure of *Rovo_CEA 9 (2) 1.zip*.
+> **Lab build notes:** Jira and Confluence are **synced connectors** in the lab tenant (`customconnectors_engineering.jsonl` and `confluence_engineering.jsonl`). GitHub and Rovo are **MCP connectors**: Test_GitHub (`mock_mcp_servers/github`) and Test_Rovo (`mock_mcp_servers/atlassian`, plugin `mock_plugins/rovo`, built from *Rovo_CEA 9 (2) 1.zip*). The synced Jira and Confluence items are generated from the Rovo mock's seed file, so all three Atlassian sources return the same records, and their links open in the Rovo mock's viewer.
 
 ## At a glance
 
 | | |
 |---|---|
-| **Experience** | Test_Jira + Test_GitHub; Outlook and Teams. Copilot Chat for investigation, Cowork for the sprint slide and communication. |
-| **Timing** | 15-minute target: setup 2 min; Steps 1-4: 2 / 3 / 4 / 3 min; wrap-up 1 min. Confirm in a dry run. |
-| **Take home** | A cited explanation, a sprint decision slide, a Teams post, and a customer email draft. |
+| **Experience** | Part A in Copilot Chat: Jira and Confluence (synced) + Test_GitHub. Part B in Cowork: Teams + Test_Rovo `sprint-to-slides` skill. |
+| **Timing** | 15-minute target: setup 2 min; Steps 1-4: 2 / 4 / 3 / 4 min; wrap-up 1 min. Confirm in a dry run. |
+| **Take home** | A cited sprint status, the real blocker behind the at-risk item, a Teams message to the approver, and a sprint status slide. |
 
 ## Setup: explain the scenario to the room
 
-**Read aloud:** Meet Emil Vanggaard at Zava. He has an email from Atul at Lakeshore Retail. Aurora smart-home hubs keep showing as offline after reconnecting, so store staff are restarting devices that are actually working.
+**Read aloud:** Meet Emil Vanggaard, product manager for Aurora at Zava. Aurora is a smart-home hub that retail stores use to track devices. Lakeshore Retail is piloting it, and on Monday, November 23, every pilot store goes live.
 
-Lakeshore Retail expands its pilot on Monday, November 23, and Atul needs a status update before then. Emil remembers a Jira bug, but its last update only says someone has started working on the fix. Before replying, he needs to know what is really happening.
+Atul, the pilot coordinator, has emailed again: hubs keep showing Offline after they reconnect, and staff are restarting devices that are working fine. He wants to know if it will be fixed before the expansion.
 
-**Your job:** Find the real status, understand what is blocking the fix, work out the sprint trade-off, and help Emil align the team and reply to Atul. No code change or release is performed.
+Emil opens the Sprint 24 board. Almost everything is on track. One item isn't, and it's Atul's bug. The ticket says it's at risk, but not why, and nobody can give a date. Before Emil answers Atul, he needs to know who the work is really waiting on, and get it moving.
 
-## Step 1: Where are we with the customer issue?
+**Your job:** Read the sprint, find out what is really blocking the at-risk item, then switch to Cowork to unblock it and give leadership a one-slide sprint update. No code change or release is performed.
 
-| | |
-|---|---|
-| **Time / surface** | 2 min / Copilot Chat / Outlook + Test_Jira |
-| **Query to fire** | Atul is asking if the Aurora offline-status bug will be fixed before the pilot expansion. Where are we with the fix, and what have we already told them? |
-| **Expected response** | Connects Atul's email to Jira AUR-142. The customer needs an update before the November 23 expansion. Emil said engineering was working on it, not that delivery before the expansion was guaranteed. Jira is In Progress; the last update, October 26, says "I have started working on the fix." The ticket does not tell us whether a fix is ready. Cites the email and Jira. |
-| **Seed names only** | E1: Aurora pilot - offline status still wrong<br>J1: AUR-142 - Aurora hubs remain offline after reconnect |
-| **Aha in the room** | A tracker status is not a customer commitment. Copilot connects the customer's concern with the team's recorded work, and exposes the missing detail. |
+## Part A: Investigate in Copilot Chat
 
-## Step 2: Has someone already raised a fix?
+### Step 1: How is the sprint going?
 
 | | |
 |---|---|
-| **Time / surface** | 3 min / Copilot Chat / Test_GitHub + Teams |
-| **Query to fire** | Can you find the PR for this item and where it is blocked? |
-| **Expected response** | Finds PR #287 from its reference to AUR-142; the Jira ticket does not supply the PR link. The PR is open and unmerged, with changes requested by Tama. It fixes the old polling service, while the Teams migration discussion confirms the Lakeshore Retail pilot will use the new event-driven service after the November 20 cutover.<br><br>Two things need doing: (1) Triin adapts the fix to the new service; (2) Maria adds and runs the new-service reconnect tests. Tama reviews again after those are done. This is additional work, not just an approval to chase. Cites the PR, review, and Teams discussion. |
-| **Seed names only** | G1: PR #287 - Fix stale offline state after reconnect<br>G2: Tama's review - changes requested<br>T1: Aurora status-service cutover - Lakeshore Retail pilot |
-| **Aha in the room** | The fix exists, but for the old service. Only connecting the code review with the migration discussion reveals why the customer is still blocked. |
+| **Time / surface** | 2 min / Copilot Chat / Jira (synced) |
+| **Query to fire** | What's the status of Aurora Sprint 24? Is anything at risk for the Lakeshore Retail pilot expansion? |
+| **Expected response** | Summarizes the six Sprint 24 items: AUR-133 and AUR-137 are Done; AUR-136 (cutover runbook) and AUR-139 (rollout regression) are In Progress and on track for the November 18 dry run; AUR-151 (custom dashboard filters) is a lower-priority stretch item in To Do. **AUR-142, "Aurora hubs remain offline after reconnect", is the one item at risk**: High priority, labelled at-risk, and Kerry calls it the only Sprint 24 item tied to the November 23 expansion that isn't on track. May connect it to Atul's email. Cites the Jira items. |
+| **Seed names only** | J1-J6: Sprint 24 work items AUR-133, AUR-136, AUR-137, AUR-139, AUR-142, AUR-151 |
+| **Aha in the room** | A synced connector answers a sprint question straight from Jira, and Copilot picks out the one item that matters from a mostly green board. |
 
-## Step 3: Make the sprint impact clear
-
-| | |
-|---|---|
-| **Time / surface** | 4 min / Cowork / Test_Jira sprint-to-slides skill |
-| **Query to fire** | /skill sprint-to-slides<br>Create one PowerPoint slide for Aurora Sprint 24 showing the impact of this fix and what we should move to make room for LT approval. |
-| **Expected response** | Uses Sprint 24 and the newer work breakdown: the bug now needs 24 hours, not the recorded 8. Revised scope is 48 hours against 32 hours of available capacity: a 16-hour gap. Proposes deferring the 16-hour custom-filter enhancement while retaining required rollout regression.<br><br>Produces one slide with customer impact, blocker, scope trade-off, owners, and decision needed. The proposal needs approval; owner availability, sequencing, and release timing remain unconfirmed. |
-| **Seed names only** | J2: Aurora Sprint 24 - scope and capacity<br>J3: AUR-145 - new-service work breakdown<br>S1: Test_Jira sprint-to-slides skill<br>B1: Cited investigation from Step 2 |
-| **Aha in the room** | The partner skill turns engineering context into a decision-ready slide: not "we are busy," but "this is the work that must move." |
-| **Presenter note** | The supplied package includes sprint-to-slides. Its default flow is a report plus a slide outline; this lab requests one .pptx slide only. Verify that narrowed output and the /skill selection in Cowork. Carry the cited Step 2 brief across if needed. |
-
-## Step 4: Align the team and reply to Atul
+### Step 2: What's really going on with AUR-142?
 
 | | |
 |---|---|
-| **Time / surface** | 3 min / Cowork / Teams + Outlook |
-| **Query to fire** | Share this slide in Aurora's engineering channel and ask LT to approve the revised sprint plan. Draft a reply to Atul with our progress and an update on November 20 at 3 pm. |
-| **Expected response** | Prepares a Teams post for Aurora's engineering channel with the slide link, the proposed 16-hour trade-off, and named owners. Asks the engineering leadership team (LT) to approve the scope change and confirm review capacity. Drafts a customer-friendly reply explaining that the fix needs validation for the pilot's service, with Friday, November 20, at 15:00 as the next update.<br><br>Does not expose internal review friction, promise delivery before the expansion, or invent an approved workaround. Shows exact destinations and a real shareable artifact link, or explicitly identifies that upload is still needed. |
-| **Seed names only** | T2: Aurora / Engineering channel, LT group, and lab directory<br>E1: Atul's email thread<br>S1 output: Sprint decision slide |
-| **Aha in the room** | One evidence base becomes two useful communications: an internal decision request and an honest customer update. Emil reviews what leaves Copilot. |
-| **Publication rule** | Default: stop at drafts. If enabled by the facilitator, explicitly approve the Teams post and any upload in the isolated lab tenant. Keep the customer email unsent. |
+| **Time / surface** | 4 min / Copilot Chat / Jira + Confluence (synced) + Test_GitHub |
+| **Query to fire** | What's the current status of AUR-142, and what is it waiting on? Check Jira, Confluence and GitHub. |
+| **Expected response** | Joins three sources:<br>**Jira** (tracking): AUR-142 is In Progress and at risk. Triin's latest comment says the event-driven work depends on a design decision still waiting for platform sign-off, so she can't give a date.<br>**Confluence** (record): the *Lakeshore Retail pilot - delivery commitments* page commits to the November 20 cutover and November 23 expansion, requires reconnected hubs to show Online on the event-driven service, and requires platform sign-off for any change to reconnect handling. No date has been shared with the customer. *ADR-014* is **Proposed, awaiting approval**, with **Tama Surya as decision owner**; Triin asked Tama to decide on October 29.<br>**GitHub** (code): PR #287 is open and unmerged. It fixes only the legacy polling path; Tama requested changes for the event-driven service and new-service tests.<br>**Conclusion:** the blocker is Tama's approval of ADR-014. After that, Triin implements Option B on PR #287, Maria adds event-driven reconnect tests, and Tama re-reviews. Cites the Jira item, both Confluence pages and the PR. |
+| **Seed names only** | J5: AUR-142<br>C2: Lakeshore Retail pilot - delivery commitments<br>C3: ADR-014: Reconnect state handling on the event-driven status service<br>G1: PR #287 - Fix stale offline state after reconnect<br>G2: Tama's review - changes requested |
+| **Aha in the room** | Each tool holds part of the truth: Jira knows it's late, Confluence knows what was promised and who decides, GitHub knows where the code stands. Only together do they show the fix is waiting on one approval. |
+
+## Part B: Act in Cowork
+
+> **Surface switch:** Open Copilot Cowork and start a new task. Cowork may not carry the Chat context, so the Part B prompts are self-contained.
+
+### Step 3: Ask Tama for the decision
+
+| | |
+|---|---|
+| **Time / surface** | 3 min / Cowork / Teams |
+| **Query to fire** | Send Tama Surya a Teams message. Ask Tama to approve ADR-014 so Triin can start the event-driven fix for AUR-142, and to re-review PR #287 once it's updated. Mention the November 20 cutover and include links to the ADR, the Jira item and the PR. |
+| **Expected response** | Drafts a short, polite 1:1 Teams message to Tama: what is waiting (ADR-014, Option B proposed), why it matters (AUR-142 is the only at-risk Sprint 24 item; the pilot moves to the event-driven service on November 20 and expands November 23), what happens next (Triin implements, Maria tests, Tama re-reviews PR #287), and the three links. Shows the recipient and text for approval before sending. |
+| **Seed names only** | Directory: Tama Surya<br>C3: ADR-014 link<br>J5: AUR-142 link<br>G1: PR #287 link |
+| **Aha in the room** | The investigation turns straight into the one action that unblocks the work, sent to the right person with the evidence attached. |
+
+### Step 4: Turn the sprint into a slide
+
+| | |
+|---|---|
+| **Time / surface** | 4 min / Cowork / Test_Rovo `sprint-to-slides` skill |
+| **Query to fire** | /skill sprint-to-slides<br>Create one PowerPoint slide summarizing Aurora Sprint 24 for engineering leadership: what's on track, the one item at risk, what it's waiting on, and the next steps. |
+| **Expected response** | Uses Test_Rovo to read Sprint 24 from Jira (and ADR-014 from Confluence if needed). Produces one slide: sprint goal and dates; five items on track or done; AUR-142 at risk; blocker: ADR-014 awaiting Tama's approval; next steps and owners (Tama approves, Triin implements, Maria tests, Tama re-reviews); key dates November 18 dry run, November 20 cutover, November 23 expansion; sources. Doesn't invent velocity, story points or a delivery date. |
+| **Seed names only** | Sprint 241: Aurora Sprint 24 (board 57)<br>S1: Test_Rovo sprint-to-slides skill |
+| **Aha in the room** | A partner skill in Cowork turns live Atlassian data into a leadership-ready slide in one step. |
+| **Presenter note** | The skill's default flow is a report plus a slide outline, with an optional Confluence archive. This lab asks for one .pptx slide only. Verify that narrowed output and the /skill selection in Cowork. Test_Rovo's Confluence writes are kept per conversation, so an archive doesn't affect other attendees. |
 
 ## Wrap-up (1 minute)
 
-- **Say this:** "We started with a customer email and a stale ticket. Copilot found the real blocker, showed the sprint trade-off, and helped us bring a clear plan to the team and the customer."
-- **Ask the room:** What would we have missed if we had replied using only the Jira status?
+- **Say this:** "We started from a sprint board that looked mostly green. Copilot found the one item at risk, joined Jira, Confluence and GitHub to show it was waiting on a single approval, then Cowork asked for that approval and gave leadership a one-slide update."
+- **Ask the room:** Which of the three sources would you have checked first, and what would you have missed?
 
 ## Facilitator-only readiness
 
 | | |
 |---|---|
-| **Validate access** | Pre-connect Test_Jira and Test_GitHub; verify Jira and sprint access, GitHub search permissions, Outlook/Teams access, and Chat-to-Cowork handoff as an attendee. All recipients must be lab identities. |
-| **Validate GitHub** | Confirm Test_GitHub finds PR #287 from "AUR-142" and returns Tama's changes-requested review, with citations to the PR. The mock also has write tools (comment, review, label, edit), kept per conversation so attendees don't affect each other. Merging is blocked by branch protection while Tama's changes-requested review stands. |
-| **Validate skill** | Package confirms sprint-to-slides, not a tested runtime. Verify one-slide .pptx output, available Jira tools, and a shareable link. Suppress the full report and Confluence archive for this short lab. Test native Teams posting separately; skill instructions are not proof of available tools. |
-| **Dry run / reset** | Measure the full flow. All seeded evidence is dated on or before Oct 30, 2026 (the tenant is loaded once); the cutover, checkpoint and expansion fall after the Nov 17–19 lab. Prompts use no relative days. Isolate generated artifacts/posts by seat; reset drafts and outputs without changing shared evidence. Do not infer merge, release, or approved sprint changes. |
+| **Validate access** | Confirm the Jira and Confluence synced connectors have finished indexing in the lab tenant, and that Test_GitHub and Test_Rovo are connected in Copilot Chat and Cowork. All recipients must be lab identities. |
+| **Validate Atlassian data** | Synced Jira and Confluence items and Test_Rovo all come from `mock_mcp_servers/atlassian/seed_files/seed.json`. Links in citations open the Rovo mock's viewer (`/browse/AUR-142`, `/wiki/spaces/AUR/pages/98457`). |
+| **Validate GitHub** | Confirm Test_GitHub finds PR #287 from "AUR-142" and returns Tama's changes-requested review. Writes are kept per conversation, and merging is blocked by branch protection while the review stands. |
+| **Validate skill** | Verify one-slide .pptx output from sprint-to-slides in Cowork, and that the Teams message is shown for approval before it's sent. |
+| **Dry run / reset** | Measure the full flow. All seeded evidence is dated on or before October 30, 2026 (the tenant is loaded once); the dry run, cutover and expansion fall after the November 17-19 lab. Prompts use no relative days. Teams messages to Tama are real posts in the lab tenant; isolate by seat or keep them as drafts. |
 
-**Feedback incorporated:** Prompts assume Emil has read the email. Copilot discovers the PR independently. Jira only says work has started. Decoys, recovery scripts, and the setup facilitator cue are removed. The blocker is two tasks. Step 2 uses the requested query; Step 3 names sprint-to-slides from the supplied package; Step 4 asks LT for approval in the engineering channel without the extra preview sentence.
+## Appendix A: Jira (synced connector and Test_Rovo)
 
-## Appendix A: Email and Jira seed content
+Project AUR, board 57. Sprint 241, *Aurora Sprint 24*, October 26 - November 20, 2026. Goal: cut the pilot stores over to the event-driven status service on November 20 and have the Lakeshore Retail pilot ready for its November 23 expansion.
 
-Fictional authoring fixtures. Replace link tokens with actual seeded URLs; do not seed literal placeholders.
+| ID | Item | Status | Owner | Signal |
+|---|---|---|---|---|
+| J1 | AUR-133 Publish device heartbeat events to the event-driven status service | Done | Maria Oliva | On track |
+| J2 | AUR-136 Status-service cutover runbook for the pilot stores | In Progress | Kerry Allen | Draft in Confluence; switch order final at the November 18 dry run |
+| J3 | AUR-137 Telemetry gaps on Lakeshore Retail pilot hubs after firmware 4.2 | Done | Triin Lepp | On track |
+| J4 | AUR-139 Rollout regression checks for the status-service cutover | In Progress | Maria Oliva | Two of three runs green; final run after the dry run |
+| J5 | AUR-142 Aurora hubs remain offline after reconnect | In Progress | Triin Lepp | **At risk.** Comments: October 26, "I have started working on the fix."; October 29, Triin: legacy fix in review, event-driven work waits on the design decision, no date until it's approved; October 29, Kerry: only Sprint 24 item tied to November 23 that isn't on track. Jira has the delay signal only, no ETA and no PR link. |
+| J6 | AUR-151 Custom dashboard filters for the store status view | To Do | Triin Lepp | Low-priority stretch, no pilot dependency |
 
-| ID | Field | Content |
+## Appendix B: Confluence (synced connector and Test_Rovo)
+
+Space AUR, *Aurora Engineering*.
+
+| ID | Page | Content |
 |---|---|---|
-| E1 | Email | Subject: Aurora pilot - offline status still wrong. Participants: Atul Manohar (Lakeshore Retail pilot coordinator), Emil Vanggaard (Zava). Use demo-tenant identities. |
-| | Earlier reply | October 26, 14:00 / Emil: "Thanks for flagging the reconnect issue. Engineering is working on a fix, and I will share an update once we have confirmed the validation plan." |
-| | Customer ask | October 29, 08:15 / Atul: "Hi Emil, our pilot stores are still seeing Aurora hubs marked offline after they reconnect. Staff keep restarting devices that are actually working. You mentioned a fix was being worked on. Can we expect it before Monday, November 23, when we expand the pilot? I need to brief our store managers before then. Thanks, Atul." |
-| | Email invariant | No guaranteed delivery date or approved workaround appears in this thread. |
-| J1 | Jira | AUR-142 / Aurora hubs remain offline after reconnect. Project: Aurora. Sprint: Aurora Sprint 24 (October 26 - November 20, 2026). Status: In Progress. Priority: High. Assignee: Triin Lepp. |
-| | Description | Lakeshore Retail pilot hubs remain Offline in the dashboard after a successful network reconnect. Telemetry resumes, but staff restart working devices because the visible state is stale. Pilot expansion is November 23. |
-| | Last update | October 26, 16:00 / Triin: "I have started working on the fix." Do not mention a PR, review, or migration blocker in this update. |
-| | Links / estimate | Link the sprint and AUR-145 breakdown. Do NOT link or name the GitHub PR in the Jira ticket. Record the older remaining estimate as 8 hours. GitHub discovery must use the PR's reference back to AUR-142. |
-| | Acceptance | Reconnected pilot devices show Online on the active service; automated new-service reconnect coverage; no regression in existing reconnect behaviour. |
+| C1 | Aurora Engineering (home) | Links to the pages below; work tracking in Jira AUR board 57; code in GitHub zava-lab/aurora-status; decisions as ADRs. |
+| C2 | Lakeshore Retail pilot - delivery commitments | Record of commitments, owned by Emil. November 20 cutover (Tama) and November 23 expansion (Emil). Must be true for November 23: event-driven service for all pilot stores; reconnected hubs show Online (AUR-142); reconnect tests on the event-driven service; regression checks (AUR-139). Platform sign-off by Tama required for any reconnect or status-state change, recorded on the ADR. No release date shared with the customer. |
+| C3 | ADR-014: Reconnect state handling on the event-driven status service | Status **Proposed - awaiting platform approval**. Decision owner Tama Surya; author Triin Lepp; related AUR-142 and PR #287. Options A (clear Offline on reconnect) and B (reconcile on first heartbeat, needs a schema change and new tests); proposal B. After approval: Triin implements on PR #287, Maria adds tests, Platform re-reviews. Footer comment, October 29, Triin to Tama: ready for decision; work on hold until then. |
+| C4 | Aurora Sprint 24 plan | Sprint goal and committed work (J1-J6); check-in every Thursday at 10:00; dry run November 18. |
+| C5 | Status-service cutover runbook (November 20) | Draft switch order, rollback trigger, Maria on call; final order at the November 18 dry run. |
 
-## Appendix B: Sprint and skill seed content
+## Appendix C: GitHub, email and Teams
 
-| ID | Field | Content |
+| ID | Source | Content |
 |---|---|---|
-| J2 | Snapshot | Aurora Sprint 24, October 26 - November 20. As of October 29, 09:00 lab-tenant time. Capacity covers only work before the Friday, November 20, 15:00 checkpoint. |
-| | Recorded scope | AUR-142 reconnect bug: 8 team-hours (older estimate).<br>AUR-139 rollout regression: 8 team-hours; required for safe cutover; Maria owns it.<br>AUR-151 custom dashboard filters: 16 team-hours; lower-priority enhancement, no contractual dependency; Triin owns it.<br>Total recorded remaining scope: 32 team-hours. |
-| | Capacity | 32 available team-hours before the November 20 checkpoint. Aggregate capacity is not proof of individual availability or sequencing. Confirm the plan with owners before making a commitment. |
-| J3 | Breakdown | AUR-145 / Aurora new-service reconnect work breakdown. Updated October 29, 08:45. Linked from AUR-142. This is newer than the bug's narrative update.<br>Task 1: adapt reconnect fix to the event-driven path; Triin; 12 hours.<br>Task 2: add and run new-service reconnect validation/tests; Maria; 8 hours.<br>Follow-up review after the two tasks; Tama; 4 hours.<br>Total replacement estimate for AUR-142: 24 team-hours. |
-| | Counting rule | Keep AUR-145 outside the sprint total, or explicitly exclude it from totals. Its 24 hours replace AUR-142's 8 hours; do not add both estimates. |
-| | Expected maths | 24 + 8 + 16 = 48 hours revised demand. 48 - 32 = 16 hours over capacity. Deferring AUR-151 removes 16 hours, leaving 32. This is a proposal, not an approved scope change or delivery forecast. Deployment and observation time are not included. |
-| S1 | Skill | Verified in Rovo_CEA 9 (2) 1.zip: manifest.json registers skills/sprint-to-slides; SKILL.md names sprint-to-slides. It queries Jira, supports an optional Teamwork Graph enrichment with a Jira-only fallback, generates a Word report and PowerPoint-ready outline, and optionally archives to Confluence. It allows .pptx or Markdown output; no executed runtime is bundled or verified. |
-| | Slide contract | Lab adaptation: one .pptx slide, "Aurora pilot \| LT approval needed." Include customer impact, blocker, 32-hour capacity versus 48-hour demand, proposed AUR-151 deferral, owners, LT decision, November 20 checkpoint, and sources. Use hours, not invented velocity/history or collaboration metrics. Skip full-report and Confluence publishing. An outline alone does not meet the slide requirement; validate artifact generation before delivery. |
-| B1 | Handoff | Generated from Step 2, not pre-seeded evidence. Include cited facts, timestamps, and actual Outlook/Jira/GitHub/Teams links. Transfer into Cowork if conversation context is not retained. |
-
-## Appendix C: GitHub and Teams seed content
-
-| ID | Field | Content |
-|---|---|---|
-| G1 | PR | PR #287 / Fix stale offline state after reconnect. Example repo: zava-lab/aurora-status; use the actual lab repo. Author: Triin Lepp. Open, unmerged; changes requested; no release recorded. |
-| | PR body | References AUR-142 explicitly with its actual Jira link. Updates the legacy polling status handler so reconnect clears stale Offline state. Includes legacy-path tests. Event-driven status-service coverage is not yet implemented. This reference enables Copilot to discover the PR without a link in Jira. |
-| | Checks | Legacy-path checks pass as of October 28, 17:00. Do not imply new-service coverage or deployment success. |
-| G2 | Review | Tama Surya / October 28, 17:20 / Changes requested: "The legacy-path fix looks reasonable, but Lakeshore Retail moves to the event-driven status service with the November 20 cutover. Two things are needed: implement the equivalent reconnect correction in that path, and add/run the reconnect tests there. Once both are done, request another platform review. I am not approving this version for the pilot." |
-| | Data source | Served by the Test_GitHub mock (`mock_mcp_servers/github/seed_files/seed.json`), with three merged decoy PRs on the same repo. |
-| T1 | Thread | Aurora Engineering team / Platform Migration channel. Thread: Aurora status-service cutover - Lakeshore Retail pilot. |
-| | Migration context | Tama / October 28, 16:00: "The November 20 status-service cutover is still the plan. The Lakeshore Retail expansion on November 23 will use the event-driven service. A fix confined to the legacy polling path will not resolve that pilot's issue." |
-| | Test context | Maria / October 28, 16:10: "We need reconnect coverage on the new path and the rollout regression checks. Passing the old-service tests is not enough to call this ready." |
-| | Decision context | Emil / October 29, 08:30: "Bring a scope proposal before we move sprint work. LT needs to approve any deferral; Tama needs to confirm platform review availability. We have not committed a release date to Lakeshore Retail." |
-| T2 | Destination | Aurora team / Engineering channel. Leadership group: Aurora Engineering LT. Kerry Allen (engineering lead) approves sprint scope; Tama Surya (platform lead) confirms review capacity. Posting a request does not record approval. Directory: Emil Vanggaard, Atul Manohar, Triin Lepp, Maria Oliva, Tama Surya, Kerry Allen; LT group contains Kerry and Tama. Resolve demo identities, channel, and group mentions before delivery; do not guess addresses or IDs. |
-| | Publishing | Use approved tenant storage for a real slide link. A local file path is not a shareable link. If publication is enabled, isolate posts by seat and keep the customer email unsent. |
+| G1 | Test_GitHub | PR #287, *Fix stale offline state after reconnect*, zava-lab/aurora-status. Author Triin Lepp. Open, unmerged. Body references AUR-142; fixes the legacy polling path only; event-driven coverage not implemented. Legacy checks pass as of October 28, 17:00. Three merged decoy PRs on the same repo. |
+| G2 | Test_GitHub | Tama Surya, October 28, changes requested: implement the equivalent correction on the event-driven service, add and run reconnect tests there, then request another platform review. |
+| E1 | Outlook | *Aurora pilot - offline status still wrong*: Atul's report (October 23), Emil's reply that engineering is working on a fix (October 26), Atul asking whether it will be fixed before November 23 (October 29). No date or workaround promised. |
+| T1 | Teams | Aurora Engineering team, Platform Migration channel: Tama confirms the November 20 cutover and that a legacy-only fix won't resolve the pilot's issue; Maria asks for new-path reconnect coverage; Emil says LT approves any deferral and no release date has been committed. |
+| T2 | Teams | Engineering channel (Sprint 24 kickoff from Kerry) and the *Aurora Engineering LT* group chat. Directory: Emil Vanggaard, Atul Manohar, Triin Lepp, Maria Oliva, Tama Surya, Kerry Allen. |

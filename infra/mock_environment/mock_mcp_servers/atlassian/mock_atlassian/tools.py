@@ -1,8 +1,8 @@
 """The 41 Atlassian Rovo MCP tools. Names, descriptions, input schemas and annotations are the real ones, captured
 from the live server and loaded from ``seed_files/tool_schemas.json``.
 
-Jira tools work against the Aurora project. Confluence has no spaces in this mock, and Compass and the user-level
-Teamwork Graph calls fail the way they do for an account without those scopes.
+Jira tools work against the Aurora project and Confluence tools against the Aurora Engineering (AUR) space. Compass
+and the user-level Teamwork Graph calls fail the way they do for an account without those scopes.
 """
 
 from __future__ import annotations
@@ -861,12 +861,26 @@ class RovoSearch(AtlassianTool):
                             issue.get("labels", [])).lower()
             score = sum(3 for t in terms if t in title) + sum(1 for t in terms if t in text)
             if score:
-                scored.append((score, issue))
-        scored.sort(key=lambda x: (-x[0], -int(x[1]["id"])))
+                scored.append((score, -int(issue["id"]), "issue", issue))
+        for page in site.data["confluence"]["pages"]:
+            if page["status"] != "current":
+                continue
+            title, text = page["title"].lower(), page_text(site, page)
+            score = sum(3 for t in terms if t in title) + sum(1 for t in terms if t in text)
+            if score:
+                scored.append((score, -int(page["id"]), "page", page))
+        scored.sort(key=lambda x: (-x[0], x[1]))
         cid = site.data["site"]["cloudId"]
-        results = [{"id": render.issue_ari(site, i), "title": f"{i['key']}: {i['summary']}",
-                    "text": render.snippet(i.get("description")), "url": render.browse_url(i["key"]),
-                    "type": "issue", "metadata": {"cloudId": cid, "searchScope": "generic"}} for _, i in scored[:10]]
+        results = []
+        for _, _, kind, item in scored[:10]:
+            if kind == "issue":
+                results.append({"id": render.issue_ari(site, item), "title": f"{item['key']}: {item['summary']}",
+                                "text": render.snippet(item.get("description")), "url": render.browse_url(item["key"]),
+                                "type": "issue", "metadata": {"cloudId": cid, "searchScope": "generic"}})
+            else:
+                results.append({"id": render.page_ari(site, item), "title": item["title"],
+                                "text": render.snippet(item.get("body")), "url": render.page_url(site, item),
+                                "type": "page", "metadata": {"cloudId": cid, "searchScope": "generic"}})
         return compact({"results": results})
 
 
@@ -877,7 +891,19 @@ class RovoFetch(AtlassianTool):
     def handle(self, site: Site, args: dict, ctx: CallContext) -> Any:
         ident = str(args["id"]).strip()
         if ":confluence:" in ident:
-            raise JiraError({"error": True, "message": "Confluence page not found."})
+            page = site.pages.get(ident.rsplit("/", 1)[-1])
+            if page is None or page["status"] != "current":
+                raise JiraError({"error": True, "message": "Confluence page not found."})
+            space = site.spaces.get(page["spaceId"]) or {}
+            return pretty({"id": render.page_ari(site, page), "title": page["title"], "text": page.get("body") or "",
+                           "url": render.page_url(site, page), "type": "confluence-page",
+                           "metadata": {"cloudId": site.data["site"]["cloudId"], "spaceKey": space.get("key"),
+                                        "spaceName": space.get("name"),
+                                        "author": site.users[page["author"]]["displayName"],
+                                        "lastModifiedBy": site.users[page.get("updatedBy") or page["author"]][
+                                            "displayName"],
+                                        "created": page["created"], "lastModified": page["updated"],
+                                        "version": page["version"]}})
         issue = issue_from_identifier(site, ident)
         if issue is None:
             raise issue_not_found()
@@ -896,15 +922,16 @@ class RovoFetch(AtlassianTool):
                                     "updated": issue["updated"]}})
 
 
-# --- Confluence (no spaces on this site) ---------------------------------------------------------------------------
+# --- Confluence ----------------------------------------------------------------------------------------------------
 
 FORMAT_TOOLS = ("createConfluencePage", "updateConfluencePage")
+# Mock-authored guidance: the live server's HTML guide wasn't captured.
 FORMAT_GUIDE = (
-    "# Confluence page body format\n\n"
-    "Pass the page body as Markdown when contentFormat is \"markdown\" (the default), or as an ADF document when it "
-    "is \"adf\". Markdown supports headings (#), bold (**text**), bullet lists (- item), numbered lists (1. item), "
-    "tables (| a | b |), links ([text](url)) and fenced code blocks. Keep one blank line between blocks. Write real "
-    "content: don't create blank or placeholder pages."
+    "# Confluence page body format (HTML)\n\n"
+    "When contentFormat is \"html\" (the default), write the body as structured HTML. Use <h1>-<h6> for headings, "
+    "<p> for paragraphs, <strong> for bold, <ul>/<ol> with <li> for lists, <table> with <tr>, <th> and <td> for "
+    "tables, and <a href=\"...\"> for links. Don't wrap the body in <html> or <body>. To write Markdown instead, pass "
+    "contentFormat \"markdown\". Write real content: don't create blank or placeholder pages."
 )
 
 
@@ -926,17 +953,258 @@ class FormatGuide(AtlassianTool):
 
 
 def confluence_missing(what: str, ident: Any) -> JiraError:
-    # Mock-defined: there is no Confluence content on this site, so every lookup by ID misses.
+    # Mock-defined wording, modelled on the Confluence v2 REST error body.
     return JiraError({"error": True, "message": compact({"errors": [{"status": 404, "code": "NOT_FOUND",
                                                                      "title": f"{what} {ident} not found",
                                                                      "detail": None}]}), "statusCode": 404})
+
+
+def confluence_bad_request(title: str) -> JiraError:
+    return JiraError({"error": True, "message": compact({"errors": [{"status": 400, "code": "INVALID_REQUEST_PARAMETER",
+                                                                     "title": title, "detail": None}]}),
+                      "statusCode": 400})
+
+
+def wiki_stamp(now: datetime) -> str:
+    return now.strftime("%Y-%m-%dT%H:%M:%S.") + f"{now.microsecond // 1000:03d}Z"
+
+
+def account(site: Site, key: str | None) -> str | None:
+    u = site.users.get(key or "")
+    return u["accountId"] if u else None
+
+
+def find_page(site: Site, ref: Any) -> dict:
+    page = site.pages.get(str(ref or "").strip())
+    if page is None or page["status"] == "deleted":
+        raise confluence_missing("Page", ref)
+    return page
+
+
+def find_space(site: Site, ref: Any) -> dict:
+    space = site.space(str(ref or ""))
+    if space is None:
+        raise confluence_missing("Space", ref)
+    return space
+
+
+def stored_body(value: Any, fmt: str | None) -> str:
+    """Page and comment bodies are stored as markdown, whatever format they arrive in."""
+    if fmt == "adf" or isinstance(value, dict):
+        return as_markdown(value)
+    if fmt == "markdown":
+        return str(value or "")
+    return render.from_html(str(value or ""))
+
+
+def body_obj(text: str, fmt: str | None) -> dict:
+    if fmt == "adf":
+        return {"atlas_doc_format": {"value": compact(render.to_adf(text)), "representation": "atlas_doc_format"}}
+    if fmt == "html":
+        return {"storage": {"value": render.to_html(text), "representation": "storage"}}
+    return {"markdown": {"value": text, "representation": "markdown"}}
+
+
+def space_obj(site: Site, space: dict) -> dict:
+    return {"spaceOwnerId": account(site, space.get("owner")), "authorId": account(site, space.get("author")),
+            "homepageId": space.get("homepageId"), "createdAt": space["created"], "icon": None,
+            "name": space["name"], "key": space["key"], "id": space["id"], "type": space["type"],
+            "description": {"plain": {"value": space.get("description") or "", "representation": "plain"}},
+            "status": space["status"], "_links": {"webui": f"/spaces/{space['key']}"},
+            "currentActiveAlias": space["key"]}
+
+
+def page_obj(site: Site, page: dict, fmt: str | None = "markdown", with_body: bool = True) -> dict:
+    out = {"parentType": "page" if page.get("parentId") else None, "parentId": page.get("parentId"),
+           "spaceId": page["spaceId"], "ownerId": account(site, page["author"]),
+           "lastOwnerId": None, "createdAt": page["created"], "authorId": account(site, page["author"]),
+           "position": int(page["id"]) % 1000, "version": {
+               "number": page["version"], "message": page.get("versionMessage") or "", "minorEdit": False,
+               "authorId": account(site, page.get("updatedBy") or page["author"]), "createdAt": page["updated"]},
+           "title": page["title"], "status": page["status"], "id": page["id"]}
+    if with_body:
+        out["body"] = body_obj(page.get("body") or "", fmt)
+    out["labels"] = {"results": [{"id": str(9000 + i), "name": x, "prefix": "global"}
+                                 for i, x in enumerate(page.get("labels", []))]}
+    path = render.page_path(site, page)
+    out["_links"] = {"editui": f"/pages/resumedraft.action?draftId={page['id']}", "webui": path,
+                     "edituiv2": f"/spaces/{path.split('/')[2]}/pages/edit-v2/{page['id']}",
+                     "tinyui": f"/x/{base64.urlsafe_b64encode(int(page['id']).to_bytes(4, 'little')).decode().rstrip('=')}",
+                     "base": render.wiki_base()}
+    return out
+
+
+def wiki_comment_obj(site: Site, c: dict, fmt: str | None) -> dict:
+    page = site.pages.get(c["pageId"])
+    out = {"id": c["id"], "status": "current", "title": f"Re: {page['title'] if page else ''}",
+           "pageId": c["pageId"], "version": {"createdAt": c.get("updated") or c["created"], "message": "",
+                                              "number": c.get("version", 1), "minorEdit": False,
+                                              "authorId": account(site, c["author"])},
+           "body": body_obj(c["body"], fmt)}
+    if c.get("parentId"):
+        out["parentCommentId"] = c["parentId"]
+    if c["type"] == "inline":
+        out["resolutionStatus"] = c.get("resolutionStatus", "open")
+        out["properties"] = {"inlineMarkerRef": c.get("markerRef", ""),
+                             "inlineOriginalSelection": c.get("selection", "")}
+    out["_links"] = {"webui": f"{render.page_path(site, page) if page else ''}?focusedCommentId={c['id']}"}
+    return out
+
+
+def visible_pages(site: Site, space: dict | None = None) -> list[dict]:
+    return [p for p in site.data["confluence"]["pages"]
+            if p["status"] == "current" and (space is None or p["spaceId"] == space["id"])]
+
+
+def paged(results: list, args: dict, default: int = 25, cap: int = 250) -> list:
+    return results[:max(1, min(int(args.get("limit") or default), cap))]
 
 
 class ConfluenceSpaces(AtlassianTool):
     name = "getConfluenceSpaces"
 
     def handle(self, site: Site, args: dict, ctx: CallContext) -> Any:
-        return pretty({"results": [], "_links": {"base": f"{site_url()}/wiki"}})
+        def as_list(value):
+            if value is None:
+                return None
+            return [str(x).strip() for x in (value if isinstance(value, list) else str(value).split(","))]
+
+        ids, keys = as_list(args.get("ids")), as_list(args.get("keys"))
+        labels = as_list(args.get("labels"))
+        spaces = []
+        for space in site.data["confluence"]["spaces"]:
+            if ids and space["id"] not in ids:
+                continue
+            if keys and space["key"].upper() not in {k.upper() for k in keys}:
+                continue
+            if args.get("type") and space["type"] != args["type"]:
+                continue
+            if args.get("status") and space["status"] != args["status"]:
+                continue
+            if labels and not set(labels) & set(space.get("labels", [])):
+                continue
+            spaces.append(space_obj(site, space))
+        return pretty({"results": paged(spaces, args), "_links": {"base": render.wiki_base()}})
+
+
+# --- CQL -------------------------------------------------------------------------------------------------------------
+
+_CQL_CLAUSE = re.compile(r"""\s*(?P<field>[\w.]+)\s*(?P<op>!=|!~|~|=|<=|>=|<|>|\bnot\s+in\b|\bin\b)\s*
+                             (?P<value>"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|\([^)]*\)|[\w.\-()]+)""", re.I | re.X)
+_STOP = {"the", "and", "or", "of", "to", "for", "a", "an", "in", "on", "is", "what", "with"}
+
+
+def _cql_values(raw: str) -> list[str]:
+    raw = raw.strip()
+    if raw.startswith("("):
+        return [v.strip().strip("\"'") for v in raw[1:-1].split(",") if v.strip()]
+    return [raw.strip("\"'")]
+
+
+def _terms(text: str) -> list[str]:
+    return [t for t in re.findall(r"[\w-]+", text.lower()) if t not in _STOP and len(t) > 1]
+
+
+def page_text(site: Site, page: dict) -> str:
+    comments = [c["body"] for c in site.data["confluence"]["comments"] if c["pageId"] == page["id"]]
+    return " ".join([page["title"], page.get("body") or "", " ".join(page.get("labels", []))] + comments).lower()
+
+
+def _ancestors(site: Site, page: dict) -> list[str]:
+    out, cur = [], page.get("parentId")
+    while cur and cur in site.pages and cur not in out:
+        out.append(cur)
+        cur = site.pages[cur].get("parentId")
+    return out
+
+
+def _clause(site: Site, page: dict, field: str, op: str, values: list[str]) -> tuple[bool, int]:
+    """Whether one CQL clause matches a page, and a relevance score for text clauses."""
+    field, op = field.lower(), op.lower()
+    negate = op in ("!=", "!~") or op.startswith("not")
+    space = site.spaces.get(page["spaceId"]) or {}
+    users = {page["author"], page.get("updatedBy")}
+    score = 0
+    if field == "type":
+        hit = "page" in [v.lower() for v in values]
+    elif field in ("space", "space.key"):
+        hit = space.get("key", "").upper() in [v.upper() for v in values]
+    elif field == "space.id":
+        hit = space.get("id") in values
+    elif field in ("space.title", "space.name"):
+        hit = any(v.lower() in space.get("name", "").lower() for v in values)
+    elif field in ("id", "content", "content.id"):
+        hit = page["id"] in values
+    elif field == "parent":
+        hit = page.get("parentId") in values
+    elif field == "ancestor":
+        hit = bool(set(_ancestors(site, page)) & set(values))
+    elif field in ("label", "labels"):
+        hit = bool({v.lower() for v in values} & {x.lower() for x in page.get("labels", [])})
+    elif field in ("creator", "contributor", "mention", "watcher", "favourite", "favorite"):
+        wanted = set()
+        for v in values:
+            u = site.current_user if v.lower() == "currentuser()" else site.user(v)
+            if u:
+                wanted.add(u["key"])
+        hit = bool(wanted & ({page["author"]} if field == "creator" else users))
+    elif field == "title":
+        title = page["title"].lower()
+        if op in ("=", "!=", "in", "not in"):
+            hit = title in [v.lower() for v in values]
+        else:
+            terms = _terms(" ".join(values))
+            score = sum(3 for t in terms if t in title)
+            hit = bool(terms) and all(t in title for t in terms)
+    elif field in ("text", "sitesearch"):
+        text = page_text(site, page)
+        terms = _terms(" ".join(values))
+        found = [t for t in terms if t in text]
+        score = len(found) + sum(2 for t in found if t in page["title"].lower())
+        hit = bool(terms) and len(found) * 2 >= len(terms)
+    else:
+        hit = True  # created, lastmodified and other fields the mock doesn't model don't filter
+    return (not hit if negate else hit), score
+
+
+def run_cql(site: Site, cql: str) -> list[dict]:
+    text = cql.strip()
+    order = None
+    m = re.search(r"\border\s+by\s+([\w.]+)(\s+(asc|desc))?\s*$", text, re.I)
+    if m:
+        order = (m.group(1).lower(), (m.group(3) or "asc").lower())
+        text = text[:m.start()].strip()
+    groups = [g for g in re.split(r"\s+OR\s+", text, flags=re.I) if g.strip()]
+    parsed = []
+    for g in groups:
+        clauses = []
+        for part in re.split(r"\s+AND\s+", g.strip().strip("()"), flags=re.I):
+            cm = _CQL_CLAUSE.fullmatch(part.strip())
+            if not cm:
+                raise confluence_bad_request(f"Could not parse cql : {cql}")
+            clauses.append((cm.group("field"), re.sub(r"\s+", " ", cm.group("op")), _cql_values(cm.group("value"))))
+        parsed.append(clauses)
+    scored = []
+    for page in visible_pages(site):
+        best = None
+        for clauses in parsed:
+            results = [_clause(site, page, *c) for c in clauses]
+            if all(ok for ok, _ in results):
+                best = max(best or 0, sum(s for _, s in results))
+        if best is not None:
+            scored.append((best, page))
+    if order:
+        key = {"created": "created", "lastmodified": "updated", "title": "title"}.get(order[0], "updated")
+        scored.sort(key=lambda x: x[1][key], reverse=order[1] == "desc")
+    else:
+        scored.sort(key=lambda x: (-x[0], x[1]["updated"]), reverse=False)
+        scored.sort(key=lambda x: -x[0])
+    return [p for _, p in scored]
+
+
+def friendly(stamp: str) -> str:
+    moment = datetime.fromisoformat(stamp.replace("Z", "+00:00"))
+    return f"{moment:%b} {moment.day}, {moment.year}"
 
 
 class ConfluenceCql(AtlassianTool):
@@ -944,27 +1212,230 @@ class ConfluenceCql(AtlassianTool):
 
     def handle(self, site: Site, args: dict, ctx: CallContext) -> Any:
         cql = str(args["cql"])
-        return pretty({"results": [], "start": 0, "limit": int(args.get("limit") or 25), "size": 0, "totalSize": 0,
-                       "cqlQuery": cql, "searchDuration": 41, "archivedResultCount": 0,
-                       "_links": {"base": f"{site_url()}/wiki", "context": "/wiki",
-                                  "self": f"{site_url()}/wiki/rest/api/search?expand=content%2Ccontent.history"
+        limit = max(1, min(int(args.get("limit") or 25), 250))
+        pages = run_cql(site, cql)
+        results = []
+        for page in pages[:limit]:
+            space = site.spaces[page["spaceId"]]
+            author = site.users.get(page["author"])
+            path = render.page_path(site, page)
+            results.append({
+                "content": {"id": page["id"], "type": "page", "status": page["status"], "title": page["title"],
+                            "history": {"latest": True, "createdBy": {
+                                "type": "known", "accountId": author["accountId"], "accountType": "atlassian",
+                                "email": author["email"], "publicName": author["displayName"],
+                                "displayName": author["displayName"], "isExternalCollaborator": False},
+                                "createdDate": page["created"]},
+                            "_links": {"webui": path, "self": f"{render.wiki_base()}/rest/api/content/{page['id']}",
+                                       "tinyui": page_obj(site, page, with_body=False)["_links"]["tinyui"]}},
+                "title": page["title"], "excerpt": render.snippet(page.get("body"), 200),
+                "url": path, "resultGlobalContainer": {"title": space["name"], "displayUrl": f"/spaces/{space['key']}"},
+                "breadcrumbs": [], "entityType": "content", "iconCssClass": "aui-icon content-type-page",
+                "lastModified": page["updated"], "friendlyLastModified": friendly(page["updated"]), "score": 0.0})
+        return pretty({"results": results, "start": 0, "limit": limit, "size": len(results),
+                       "totalSize": len(pages), "cqlQuery": cql, "searchDuration": 41, "archivedResultCount": 0,
+                       "_links": {"base": render.wiki_base(), "context": "/wiki",
+                                  "self": f"{render.wiki_base()}/rest/api/search?expand=content%2Ccontent.history"
                                           f"&cql={quote(cql, safe='').replace('%20', '+')}"}})
 
 
-def confluence_tool(tool_name: str, what: str, arg: str, write: bool = False) -> type:
-    base = WriteTool if write else AtlassianTool
+class ConfluencePage(AtlassianTool):
+    name = "getConfluencePage"
 
-    class ConfluenceTool(base):  # type: ignore[valid-type, misc]
-        name = tool_name
+    def handle(self, site: Site, args: dict, ctx: CallContext) -> Any:
+        page = find_page(site, args["pageId"])
+        return pretty(page_obj(site, page, args.get("contentFormat") or "markdown"))
 
-        def handle(self, site: Site, args: dict, ctx: CallContext) -> Any:
-            raise confluence_missing(what, args.get(arg))
 
-        def mutate(self, site: Site, args: dict, ctx: CallContext) -> Any:
-            raise confluence_missing(what, args.get(arg) or args.get("spaceId"))
+SORTS = {"id": lambda p: int(p["id"]), "created-date": lambda p: p["created"],
+         "modified-date": lambda p: p["updated"], "title": lambda p: p["title"].lower()}
 
-    ConfluenceTool.__name__ = tool_name
-    return ConfluenceTool
+
+class PagesInSpace(AtlassianTool):
+    name = "getPagesInConfluenceSpace"
+
+    def handle(self, site: Site, args: dict, ctx: CallContext) -> Any:
+        space = find_space(site, args["spaceId"])
+        status = args.get("status") or "current"
+        pages = [p for p in site.data["confluence"]["pages"] if p["spaceId"] == space["id"] and p["status"] == status]
+        if args.get("title"):
+            pages = [p for p in pages if str(args["title"]).lower() in p["title"].lower()]
+        sort = str(args.get("sort") or "id")
+        pages.sort(key=SORTS.get(sort.lstrip("-"), SORTS["id"]), reverse=sort.startswith("-"))
+        fmt = args.get("contentFormat")
+        results = [page_obj(site, p, fmt, with_body=bool(fmt)) for p in paged(pages, args)]
+        return pretty({"results": results, "_links": {"base": render.wiki_base()}})
+
+
+class PageDescendants(AtlassianTool):
+    name = "getConfluencePageDescendants"
+
+    def handle(self, site: Site, args: dict, ctx: CallContext) -> Any:
+        root = find_page(site, args["pageId"])
+        max_depth = int(args.get("depth") or 5)
+        out: list[dict] = []
+
+        def walk(parent: dict, depth: int) -> None:
+            children = sorted((p for p in visible_pages(site) if p.get("parentId") == parent["id"]),
+                              key=lambda p: int(p["id"]))
+            for i, child in enumerate(children):
+                out.append({"id": child["id"], "status": child["status"], "title": child["title"], "type": "page",
+                            "parentId": parent["id"], "depth": depth, "childPosition": i})
+                if depth < max_depth:
+                    walk(child, depth + 1)
+
+        walk(root, 1)
+        return pretty({"results": paged(out, args), "_links": {"base": render.wiki_base()}})
+
+
+def comments_for(site: Site, page_id: str, kind: str) -> list[dict]:
+    return [c for c in site.data["confluence"]["comments"] if c["pageId"] == page_id and c["type"] == kind]
+
+
+class PageComments(AtlassianTool):
+    kind = "footer"
+
+    def handle(self, site: Site, args: dict, ctx: CallContext) -> Any:
+        page = find_page(site, args["pageId"])
+        fmt = args.get("contentFormat") or "markdown"
+        all_comments = comments_for(site, page["id"], self.kind)
+        top = [c for c in all_comments if not c.get("parentId")]
+        if self.kind == "inline" and args.get("resolutionStatus"):
+            top = [c for c in top if c.get("resolutionStatus", "open") == args["resolutionStatus"]]
+        sort = str(args.get("sort") or "created-date")
+        top.sort(key=lambda c: c["created"] if "created" in sort else int(c["id"]), reverse=sort.startswith("-"))
+        results = []
+        for c in paged(top, args):
+            item = wiki_comment_obj(site, c, fmt)
+            if args.get("includeReplies"):
+                replies = [r for r in all_comments if r.get("parentId") == c["id"]]
+                item["replies"] = [wiki_comment_obj(site, r, fmt)
+                                   for r in replies[:int(args.get("repliesPerComment") or 25)]]
+            results.append(item)
+        return pretty({"results": results, "_links": {"base": render.wiki_base()}})
+
+
+class FooterComments(PageComments):
+    name = "getConfluencePageFooterComments"
+    kind = "footer"
+
+
+class InlineComments(PageComments):
+    name = "getConfluencePageInlineComments"
+    kind = "inline"
+
+
+class CommentChildren(AtlassianTool):
+    name = "getConfluenceCommentChildren"
+
+    def handle(self, site: Site, args: dict, ctx: CallContext) -> Any:
+        parent = site.wiki_comments.get(str(args["commentId"]))
+        if parent is None or parent["type"] != args.get("commentType", parent["type"]):
+            raise confluence_missing("Comment", args["commentId"])
+        children = [c for c in site.data["confluence"]["comments"] if c.get("parentId") == parent["id"]]
+        return pretty({"results": [wiki_comment_obj(site, c, "markdown") for c in children],
+                       "_links": {"base": render.wiki_base()}})
+
+
+class CreatePage(WriteTool):
+    name = "createConfluencePage"
+
+    def mutate(self, site: Site, args: dict, ctx: CallContext) -> Any:
+        space = find_space(site, args["spaceId"])
+        title = str(args.get("title") or "").strip()
+        if not title:
+            raise confluence_bad_request("A page title is required.")
+        if any(p["title"].lower() == title.lower() and p["spaceId"] == space["id"] for p in visible_pages(site)):
+            raise confluence_bad_request("A page with this title already exists: A page already exists with the same "
+                                         "TITLE in this space")
+        parent = find_page(site, args["parentId"]) if args.get("parentId") else site.pages.get(space["homepageId"])
+        text = stored_body(args["body"], args.get("contentFormat"))
+        if not text.strip():
+            raise confluence_bad_request("The page body can't be empty.")
+        stamp = wiki_stamp(ctx.clock.now)
+        me = site.current_user["key"]
+        page = {"id": site.next_id("page", 98500), "parentId": parent["id"] if parent else None, "title": title,
+                "author": me, "created": stamp, "updatedBy": me, "updated": stamp, "version": 1, "labels": [],
+                "spaceId": space["id"], "status": args.get("status") or "current", "versionMessage": "",
+                "body": text}
+        site.data["confluence"]["pages"].append(page)
+        site.data["created"].append("PAGE:" + page["id"])
+        site.derive()
+        return pretty(page_obj(site, page, args.get("contentFormat") or "html"))
+
+
+class UpdatePage(WriteTool):
+    name = "updateConfluencePage"
+
+    def mutate(self, site: Site, args: dict, ctx: CallContext) -> Any:
+        page = find_page(site, args["pageId"])
+        text = stored_body(args["body"], args.get("contentFormat"))
+        if not text.strip():
+            raise confluence_bad_request("The page body can't be empty.")
+        if args.get("spaceId"):
+            page["spaceId"] = find_space(site, args["spaceId"])["id"]
+        if args.get("parentId"):
+            page["parentId"] = find_page(site, args["parentId"])["id"]
+        if args.get("title"):
+            page["title"] = str(args["title"]).strip()
+        page["body"] = text
+        page["status"] = args.get("status") or "current"
+        page["version"] += 1
+        page["versionMessage"] = str(args.get("versionMessage") or "")
+        page["updated"] = wiki_stamp(ctx.clock.now)
+        page["updatedBy"] = site.current_user["key"]
+        site.derive()
+        return pretty(page_obj(site, page, args.get("contentFormat") or "html", with_body=bool(args.get("includeBody"))))
+
+
+def new_comment(site: Site, args: dict, ctx: CallContext, kind: str) -> dict:
+    parent = None
+    if args.get("parentCommentId"):
+        parent = site.wiki_comments.get(str(args["parentCommentId"]))
+        if parent is None or parent["type"] != kind:
+            raise confluence_missing("Comment", args["parentCommentId"])
+        page = find_page(site, parent["pageId"])
+    elif args.get("pageId"):
+        page = find_page(site, args["pageId"])
+    else:
+        raise confluence_bad_request("Provide pageId for a new comment or parentCommentId for a reply.")
+    text = stored_body(args["body"], args.get("contentFormat"))
+    if not text.strip():
+        raise confluence_bad_request("The comment body can't be empty.")
+    stamp = wiki_stamp(ctx.clock.now)
+    return {"id": site.next_id("wikiComment", 99100), "pageId": page["id"], "type": kind,
+            "parentId": parent["id"] if parent else None, "author": site.current_user["key"], "created": stamp,
+            "updated": stamp, "version": 1, "body": text}
+
+
+class CreateFooterComment(WriteTool):
+    name = "createConfluenceFooterComment"
+
+    def mutate(self, site: Site, args: dict, ctx: CallContext) -> Any:
+        comment = new_comment(site, args, ctx, "footer")
+        site.data["confluence"]["comments"].append(comment)
+        site.derive()
+        return pretty(wiki_comment_obj(site, comment, args.get("contentFormat") or "markdown"))
+
+
+class CreateInlineComment(WriteTool):
+    name = "createConfluenceInlineComment"
+
+    def mutate(self, site: Site, args: dict, ctx: CallContext) -> Any:
+        comment = new_comment(site, args, ctx, "inline")
+        if not comment["parentId"]:
+            props = args.get("inlineCommentProperties") or {}
+            selection = str(props.get("textSelection") or "")
+            if not selection:
+                raise confluence_bad_request("inlineCommentProperties.textSelection is required for a new inline "
+                                             "comment.")
+            if selection not in render.plain_text(site.pages[comment["pageId"]].get("body")):
+                raise confluence_bad_request("The selected text wasn't found in the page. Fetch the page and copy "
+                                             "the text exactly.")
+            comment.update(selection=selection, markerRef=str(uuid.uuid4()), resolutionStatus="open")
+        site.data["confluence"]["comments"].append(comment)
+        site.derive()
+        return pretty(wiki_comment_obj(site, comment, args.get("contentFormat") or "markdown"))
 
 
 # --- Compass (no scope) --------------------------------------------------------------------------------------------
@@ -987,17 +1458,8 @@ def compass_tool(tool_name: str, write: bool = False) -> type:
 
 TOOLS = (
     UserInfo, AccessibleResources, FormatGuide,
-    confluence_tool("getConfluencePage", "Page", "pageId"),
-    ConfluenceCql, ConfluenceSpaces,
-    confluence_tool("getPagesInConfluenceSpace", "Space", "spaceId"),
-    confluence_tool("getConfluencePageFooterComments", "Page", "pageId"),
-    confluence_tool("getConfluencePageInlineComments", "Page", "pageId"),
-    confluence_tool("getConfluenceCommentChildren", "Comment", "commentId"),
-    confluence_tool("getConfluencePageDescendants", "Page", "pageId"),
-    confluence_tool("createConfluencePage", "Space", "spaceId", write=True),
-    confluence_tool("updateConfluencePage", "Page", "pageId", write=True),
-    confluence_tool("createConfluenceFooterComment", "Page", "pageId", write=True),
-    confluence_tool("createConfluenceInlineComment", "Page", "pageId", write=True),
+    ConfluencePage, ConfluenceCql, ConfluenceSpaces, PagesInSpace, FooterComments, InlineComments,
+    CommentChildren, PageDescendants, CreatePage, UpdatePage, CreateFooterComment, CreateInlineComment,
     GetIssue, EditIssue, CreateIssue, GetTransitions, RemoteLinks, VisibleProjects, IssueTypesMetadata,
     IssueTypeFields, AddComment, TransitionIssue, SearchJql, LookupAccount, AddWorklog, LinkTypes, CreateLink,
     compass_tool("getCompassComponents"), compass_tool("getCompassComponent"),

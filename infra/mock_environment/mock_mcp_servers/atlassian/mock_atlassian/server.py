@@ -1,5 +1,5 @@
-"""Jira mock MCP server: the 41 tools of the Atlassian Rovo MCP server over the Zava Aurora project, scoped per
-conversation, with a Jira look-alike viewer next to /mcp."""
+"""Rovo mock MCP server: the 41 tools of the Atlassian Rovo MCP server over the Zava Aurora Jira project and
+Confluence space, scoped per conversation, with Jira and Confluence look-alike viewers next to /mcp."""
 
 from __future__ import annotations
 
@@ -11,15 +11,17 @@ from .store import StateStore
 from .tools import TOOLS, JiraError, load_schemas
 from .web import build_routes
 
-NAME = "jira"
+NAME = "atlassian"
 VERSION = "1.0.0"
 DEFAULT_NOW = "2026-10-29T13:00:00Z"
 INSTRUCTIONS = (
     "Mock of the Atlassian Rovo MCP server for the zava-online site. Jira holds the Aurora (AUR) project with the "
     "active sprint Aurora Sprint 24. Call getAccessibleAtlassianResources for the cloudId, then use the Jira tools "
     "(searchJiraIssuesUsingJql, getJiraIssue, createJiraIssue, editJiraIssue, transitionJiraIssue, "
-    "addCommentToJiraIssue, addWorklogToJiraIssue, createIssueLink). The site has no Confluence spaces and no Compass "
-    "access. Writes are kept per conversation: later reads in the same conversation see them, other conversations "
+    "addCommentToJiraIssue, addWorklogToJiraIssue, createIssueLink). Confluence holds the Aurora Engineering (AUR) "
+    "space with the Lakeshore Retail delivery commitments, ADR-014, the sprint plan and the cutover runbook: use "
+    "searchConfluenceUsingCql, getConfluencePage and the comment tools, or the Rovo search and fetch tools across both "
+    "products. There is no Compass access. Writes are kept per conversation: later reads in the same conversation see them, other conversations "
     "don't, and they reset after about 2 hours idle."
 )
 

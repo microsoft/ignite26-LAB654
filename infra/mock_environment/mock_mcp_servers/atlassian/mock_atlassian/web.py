@@ -8,6 +8,8 @@ Routes (served next to /mcp); every page also exists under ``/v/{token}`` for on
 * ``/browse/{key}``: the work item view. An unscoped link to an item that a live conversation created redirects to
   that conversation's view.
 * ``/ex/jira/{cloudId}/rest/api/3/issue/{idOrKey}``: REST ``self`` links in tool results redirect to the browse page.
+* ``/wiki/spaces/AUR/pages/{id}/{slug}``: a Confluence page with its comments; ``/wiki`` and ``/wiki/spaces/AUR``
+  open the space home page. ``/wiki/rest/api/content/{id}`` and ``/wiki/x/{tiny}`` redirect to the page.
 * Icon URLs used in tool results (issue types, priorities, project avatar) return SVGs.
 """
 
@@ -274,6 +276,14 @@ class View:
     def user(self, key: str | None) -> dict | None:
         return self.site.users.get(key or "")
 
+    def wiki_page(self, page: dict) -> str:
+        return f"{self.prefix}/wiki{render.page_path(self.site, page)}"
+
+    def wiki_home(self) -> str:
+        space = self.site.data["confluence"]["spaces"][0]
+        home = self.site.pages.get(space.get("homepageId") or "")
+        return self.wiki_page(home) if home else f"{self.prefix}/wiki/spaces/{space['key']}"
+
     def active_sprint(self) -> dict | None:
         return next((s for s in self.site.data["sprints"] if s["state"] == "active"), None)
 
@@ -341,10 +351,10 @@ _BADGE_CSS = (".mock-badge{position:fixed;right:16px;bottom:16px;z-index:1000;di
               ".mock-badge .mb-top{font-weight:700;letter-spacing:.06em}.mock-badge .mb-sub{opacity:.92}")
 
 
-def _mock_badge(scoped: bool) -> str:
+def _mock_badge(scoped: bool, product: str = "Jira") -> str:
     state = "Showing this conversation's changes" if scoped else "Showing the original site data"
-    return ('<div class="mock-badge" title="This is a mock Jira page served by a mock MCP server. '
-            f'It is not a real Jira site."><span class="mb-top">MOCK JIRA</span>'
+    return (f'<div class="mock-badge" title="This is a mock Atlassian {product} page served by a mock MCP server. '
+            f'It is not a real Atlassian site."><span class="mb-top">MOCK ATLASSIAN · {product.upper()}</span>'
             f'<span class="mb-sub">{state}</span></div>')
 
 
@@ -590,6 +600,94 @@ def not_found_page(view: View, what: str = "this page") -> str:
     return shell(view, title="Not found", active="", body=body)
 
 
+# --- Confluence ----------------------------------------------------------------------------------------------------
+
+CONFLUENCE_LOGO = ('<svg width="24" height="24" viewBox="0 0 24 24"><path d="M3.2 16.6c-.3.4-.6 1-.8 1.3a.7.7 0 0 0 '
+                   '.2 1l3.6 2.2a.7.7 0 0 0 1-.2c.2-.3.5-.9.9-1.5 2.5-4.1 5-3.6 9.6-1.4l3.6 1.7a.7.7 0 0 0 .9-.3l1.7-'
+                   '3.9a.7.7 0 0 0-.3-.9c-.8-.4-2.3-1.1-3.7-1.8-5.4-2.6-10-2.4-16.7 3.8z" fill="#1868DB"/><path d="M20.8'
+                   ' 7.4c.3-.4.6-1 .8-1.3a.7.7 0 0 0-.2-1L17.8 2.9a.7.7 0 0 0-1 .2c-.2.3-.5.9-.9 1.5-2.5 4.1-5 3.6-9.6 '
+                   '1.4L2.7 4.3a.7.7 0 0 0-.9.3L.1 8.5a.7.7 0 0 0 .3.9c.8.4 2.3 1.1 3.7 1.8 5.4 2.6 10 2.4 16.7-3.8z" '
+                   'fill="#1868DB"/></svg>')
+
+
+def _tree(view: View, current: dict | None) -> str:
+    pages = [p for p in view.site.data["confluence"]["pages"] if p["status"] == "current"]
+
+    def branch(parent_id, depth: int) -> str:
+        out = ""
+        for page in sorted((p for p in pages if p.get("parentId") == parent_id), key=lambda p: int(p["id"])):
+            on = " on" if current and page["id"] == current["id"] else ""
+            out += (f'<a class="nv{on}" style="padding-left:{8 + depth * 16}px" href="{view.wiki_page(page)}">'
+                    f'{_nav_icon("summary")}<span>{e(page["title"])}</span></a>') + branch(page["id"], depth + 1)
+        return out
+
+    return branch(None, 0)
+
+
+def wiki_shell(view: View, *, title: str, current: dict | None, body: str) -> str:
+    space = view.site.data["confluence"]["spaces"][0]
+    me = view.site.current_user
+    notice = f'<div class="notice">{e(view.notice)}</div>' if view.notice else ""
+    return f"""<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport"
+content="width=device-width,initial-scale=1"><title>{e(title)} - {e(space["name"])} - Confluence</title>
+<style>{CSS}{_BADGE_CSS}</style></head><body>
+<header class="top"><div class="tl"><a class="logo" href="{view.wiki_home()}">{CONFLUENCE_LOGO}<span>Confluence</span>
+</a><a class="nv" href="{view.board()}">Jira</a></div><div class="tr">{avatar(me, 28)}</div></header>
+<div class="wrap"><nav class="side"><div class="sh">Space</div><a class="nv proj" href="{view.wiki_home()}">
+<span class="pa">{PROJECT_SVG}</span><span>{e(space["name"])}</span></a><div class="sh">Content</div>
+{_tree(view, current)}</nav><main>{notice}{body}<footer>Mock environment for Microsoft Ignite lab LAB654. Not
+affiliated with Atlassian. Data is fictitious.</footer></main></div>{_wiki_badge(view)}</body></html>"""
+
+
+def _wiki_badge(view: View) -> str:
+    return _mock_badge(view.prefix.startswith("/v/") and not view.notice, "Confluence")
+
+
+def _wiki_comment(view: View, c: dict, replies: list[dict]) -> str:
+    who = view.user(c["author"])
+    quote = (f'<blockquote class="dim">"{e(c["selection"])}"</blockquote>' if c.get("selection") else "")
+    nested = "".join(_wiki_comment(view, r, []) for r in replies)
+    return (f'<div class="act" id="comment-{e(c["id"])}">{avatar(who, 32)}<div class="ab"><div class="ah"><strong>'
+            f'{e(who["displayName"] if who else "Unknown")}</strong><span class="dim">{e(ago(c["created"], view.now))}'
+            f'</span></div>{quote}<div class="md-body">{markdown(c["body"], view)}</div>'
+            f'<div style="margin-left:8px">{nested}</div></div></div>')
+
+
+def wiki_page_view(view: View, page: dict) -> str:
+    site = view.site
+    author, editor = view.user(page["author"]), view.user(page.get("updatedBy") or page["author"])
+    labels = "".join(f'<span class="tag">{e(x)}</span>' for x in page.get("labels", []))
+    comments = [c for c in site.data["confluence"]["comments"] if c["pageId"] == page["id"]]
+    tops = sorted((c for c in comments if not c.get("parentId")), key=lambda c: c["created"])
+    thread = "".join(_wiki_comment(view, c, [r for r in comments if r.get("parentId") == c["id"]]) for c in tops)
+    crumbs, cur = [], site.pages.get(page.get("parentId") or "")
+    while cur:
+        crumbs.insert(0, f'<a href="{view.wiki_page(cur)}">{e(cur["title"])}</a>')
+        cur = site.pages.get(cur.get("parentId") or "")
+    space = site.spaces.get(page["spaceId"]) or {}
+    trail = '<span class="sep">/</span>'.join([f'<a href="{view.wiki_home()}">{e(space.get("name", ""))}</a>', *crumbs])
+    body = f"""<div class="crumbs">{trail}</div><h1 class="title">{e(page["title"])}</h1>
+<div class="ah">{avatar(author, 24)}<span>Owned by <strong>{e(author["displayName"] if author else "")}</strong></span>
+<span class="dim">Last updated {e(full_date(page["updated"]))} by {e(editor["displayName"] if editor else "")} -
+version {page["version"]}</span></div><div class="md-body" style="margin-top:16px">{markdown(page.get("body"), view)}
+</div><div style="margin:16px 0">{labels}</div><h2>Comments</h2>{thread or '<p class="empty">No comments yet.</p>'}"""
+    return wiki_shell(view, title=page["title"], current=page, body=body)
+
+
+def wiki_not_found(view: View) -> str:
+    body = ('<div class="nf"><h1>We can\'t find this page</h1><p>It may have been deleted, or the link may belong to '
+            f'a different conversation.</p><p><a href="{view.wiki_home()}">Go to the space home</a></p></div>')
+    return wiki_shell(view, title="Not found", current=None, body=body)
+
+
+def tiny_to_id(tiny: str) -> str | None:
+    import base64
+    try:
+        return str(int.from_bytes(base64.urlsafe_b64decode(tiny + "=" * (-len(tiny) % 4)), "little"))
+    except (ValueError, TypeError):
+        return None
+
+
 # --- routes --------------------------------------------------------------------------------------------------------
 
 def build_routes(store: StateStore, clock_factory=None) -> list:
@@ -660,6 +758,34 @@ def build_routes(store: StateStore, clock_factory=None) -> list:
         tab = request.query_params.get("activity", "all")
         return html(issue_page(view, issue, tab if tab in ("all", "comments", "worklog") else "all"))
 
+    def wiki_home(request, view):
+        space = view.site.space(request.path_params.get("space", "AUR"))
+        if space is None:
+            return html(wiki_not_found(view), 404)
+        return RedirectResponse(view.wiki_home(), status_code=302)
+
+    def wiki_page(request, view):
+        space = view.site.space(request.path_params["space"])
+        page = view.site.pages.get(request.path_params["id"])
+        if page is None and space is not None and not view.prefix:
+            token = store.token_for_page(request.path_params["id"])
+            if token:
+                return RedirectResponse(f"/v/{token}{request.url.path}", status_code=302)
+        if space is None or page is None or page["status"] != "current" or page["spaceId"] != space["id"]:
+            return html(wiki_not_found(view), 404)
+        return html(wiki_page_view(view, page))
+
+    def wiki_by_id(request, view):
+        ref = request.path_params.get("id") or tiny_to_id(request.path_params.get("tiny", ""))
+        page = view.site.pages.get(ref or "")
+        if page is None and ref and not view.prefix:
+            token = store.token_for_page(ref)
+            if token:
+                return RedirectResponse(f"/v/{token}{request.url.path}", status_code=302)
+        if page is None:
+            return html(wiki_not_found(view), 404)
+        return RedirectResponse(view.wiki_page(page), status_code=302)
+
     async def api_issue(request):
         site = store.seed
         if request.path_params["cid"] != site.data["site"]["cloudId"]:
@@ -698,6 +824,14 @@ def build_routes(store: StateStore, clock_factory=None) -> list:
             Route(base + "/jira/software/projects/{key}/boards/{board}/backlog", page(backlog)),
             Route(base + "/jira/software/projects/{key}/list", page(listing)),
             Route(base + "/browse/{key}", page(browse)),
+            Route(base + "/wiki", page(wiki_home)),
+            Route(base + "/wiki/", page(wiki_home)),
+            Route(base + "/wiki/spaces/{space}", page(wiki_home)),
+            Route(base + "/wiki/spaces/{space}/overview", page(wiki_home)),
+            Route(base + "/wiki/spaces/{space}/pages/{id}", page(wiki_page)),
+            Route(base + "/wiki/spaces/{space}/pages/{id}/{slug}", page(wiki_page)),
+            Route(base + "/wiki/rest/api/content/{id}", page(wiki_by_id)),
+            Route(base + "/wiki/x/{tiny}", page(wiki_by_id)),
         ]
     routes.append(Route("/v/{token}/", page(to_board)))
     return routes

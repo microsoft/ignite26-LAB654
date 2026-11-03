@@ -34,6 +34,18 @@ def build_seed(path: Path = SEED_PATH) -> dict:
         issue.setdefault("resolution", None)
         issue.setdefault("parent", None)
         issue.setdefault("components", [])
+    wiki = data.setdefault("confluence", {})
+    for key in ("spaces", "pages", "comments"):
+        wiki.setdefault(key, [])
+    for page in wiki["pages"]:
+        page.setdefault("parentId", None)
+        page.setdefault("labels", [])
+        page.setdefault("status", "current")
+        page.setdefault("versionMessage", "")
+    for comment in wiki["comments"]:
+        comment.setdefault("parentId", None)
+        comment.setdefault("type", "footer")
+        comment.setdefault("version", 1)
     return data
 
 
@@ -58,6 +70,11 @@ class Site:
         self.priorities_by_id = {p["id"]: p for p in d["priorities"]}
         self.sprints = {s["id"]: s for s in d["sprints"]}
         self.link_types = {t["name"]: t for t in d["linkTypes"]}
+        wiki = d["confluence"]
+        self.spaces = {s["id"]: s for s in wiki["spaces"]}
+        self.spaces_by_key = {s["key"].upper(): s for s in wiki["spaces"]}
+        self.pages = {p["id"]: p for p in wiki["pages"]}
+        self.wiki_comments = {c["id"]: c for c in wiki["comments"]}
 
     @property
     def project(self) -> dict:
@@ -86,6 +103,13 @@ class Site:
             if low in (u["key"], u["email"].lower(), u["displayName"].lower()):
                 return u
         return None
+
+    def space(self, ref: str | None) -> dict | None:
+        """A Confluence space by numeric ID or key (any case)."""
+        if not ref:
+            return None
+        ref = str(ref).strip()
+        return self.spaces.get(ref) or self.spaces_by_key.get(ref.upper())
 
     def next_id(self, kind: str, start: int) -> str:
         counters = self.data["nextIds"]
@@ -210,6 +234,10 @@ class StateStore:
             self._purge()
             conversation_id = self._created.get(key.upper())
             return self.view_token(conversation_id) if conversation_id else None
+
+    def token_for_page(self, page_id: str) -> str | None:
+        """View token of the live conversation that created Confluence page ``page_id``, if any."""
+        return self.token_for_issue("PAGE:" + page_id)
 
     def __len__(self) -> int:
         with self._lock:

@@ -11,7 +11,7 @@ Microsoft 365 app packages for the lab's third-party connectors. Each package is
 | `factset/` | Test_FactSet | None | `https://mock-factset.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` | `gim-home/M365FCCMOSPackages`: `mos-packages/factset/inDev/factset.zip` |
 | `imanage/` | Test_iManage | None | `https://mock-imanage.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` | `gim-home/M365FCCMOSPackages`: `mos-packages/imanage-work/inDev/imanage-work.zip` |
 | `salesforce/` | Test_Salesforce | 37 | `https://mock-salesforce.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` | `gim-home/skill-studio`: `connector-skills-packages/salesforce/MOSified/v0_20260918/withConstraints` |
-| `jira/` | Test_Jira | 4 | `https://mock-jira.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` | Atlassian Rovo package `Rovo_CEA 9 (2) 1.zip` (Rovo for Microsoft Teams, version `2026.04.11`) |
+| `rovo/` | Test_Rovo | 4 | `https://mock-atlassian.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` (Jira and Confluence) | Atlassian Rovo package `Rovo_CEA 9 (2) 1.zip` (Rovo for Microsoft Teams, version `2026.04.11`) |
 | `github/` | Test_GitHub | None | `https://mock-github.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` | `gim-home/M365FCCMOSPackages`: `mos-packages/github/inDev/github.zip` |
 | `zava_expense/` | Test_Zava Expense | 1 | `https://mock-zava-expense.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` | Written for the lab (no real connector); skill `zava-travel-policy` |
 
@@ -27,14 +27,14 @@ Icons and `skills/` are copied unchanged. `addendum.json` (internal publishing r
 | `mcpServerUrl` | Mock server URL | Serves mock data |
 | `authorization` | Removed | Mock servers need no sign-in |
 | `description.full` (iManage only) | Adds a sentence saying it can save new documents and folders to a matter | The mock supports document and folder uploads |
-| `description` (Jira only) | Rewritten to describe the Jira tools in Copilot instead of the Rovo Teams bot | The package ships only the connector and skills |
-| `bots`, `copilotAgents`, `webApplicationInfo`, `permissions`, `supportsChannelFeatures`, `validDomains`, `defaultInstallScope`, `publisherDocsUrl` (Jira only) | Removed | They register Atlassian's real Rovo bot and app, which the mock doesn't provide |
-| `color.png` (Jira only) | Renamed from `color-prod.png` | Matches the other packages |
+| `description` (Rovo only) | Rewritten to describe the Jira and Confluence tools in Copilot instead of the Rovo Teams bot | The package ships only the connector and skills |
+| `bots`, `copilotAgents`, `webApplicationInfo`, `permissions`, `supportsChannelFeatures`, `validDomains`, `defaultInstallScope`, `publisherDocsUrl` (Rovo only) | Removed | They register Atlassian's real Rovo bot and app, which the mock doesn't provide |
+| `color.png` (Rovo only) | Renamed from `color-prod.png` | Matches the other packages |
 | `agentSkills` and `skills/` (GitHub only) | Removed | The source's 4 skills (`github`, `gh-address-comments`, `gh-fix-ci`, `yeet`) run `gh` CLI workflows that fix code, push branches and open pull requests. The mock has no code, branches or CI |
 
 ## Build packages
 
-The ready-to-upload packages are `test_lseg.zip`, `test_moodys.zip`, `test_factset.zip`, `test_imanage.zip`, `test_salesforce.zip`, `test_jira.zip`, `test_github.zip` and `test_zava_expense.zip` in this folder. After changing a plugin, rebuild them:
+The ready-to-upload packages are `test_lseg.zip`, `test_moodys.zip`, `test_factset.zip`, `test_imanage.zip`, `test_salesforce.zip`, `test_rovo.zip`, `test_github.zip` and `test_zava_expense.zip` in this folder. After changing a plugin, rebuild them:
 
 ```powershell
 python infra\mock_environment\mock_plugins\build_plugins.py              # all plugins

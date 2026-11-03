@@ -1,7 +1,7 @@
 {
     "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.29/MicrosoftTeams.schema.json",
     "manifestVersion": "1.29",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "id": "0b0db8d9-c2bc-49c9-b8d9-4358e73ffcd8",
     "developer": {
         "name": "Tezan Sahu",
@@ -10,12 +10,12 @@
         "termsOfUseUrl": "https://github.com/microsoft/ignite26-LAB654"
     },
     "name": {
-        "short": "Test_Jira",
-        "full": "Test_Jira"
+        "short": "Test_Rovo",
+        "full": "Test_Rovo"
     },
     "description": {
         "short": "Access and speed up work across Atlassian apps",
-        "full": "Use Jira in Microsoft 365 Copilot through the Atlassian MCP tools. Search work items, track sprints, and create and update Jira work items without switching apps. An active Atlassian Cloud account may be required to sign in. Responses may include AI-generated content; verify important information. Learn more at https://www.atlassian.com/software/rovo."
+        "full": "Rovo connects people, work and your organization's knowledge across Jira and Confluence. In Microsoft 365 Copilot, search Jira work items and Confluence pages, check sprint progress, create and update Jira work items, draft Confluence pages, and turn a sprint into a stakeholder-ready slide deck, without switching apps. An active Atlassian Cloud subscription with Rovo enabled may be required. Responses may include AI-generated content; verify important information. Learn more at https://www.atlassian.com/software/rovo."
     },
     "icons": {
         "color": "color.png",
@@ -25,11 +25,11 @@
     "agentConnectors": [
         {
             "id": "bf1f1106-77d3-40c2-a3e6-8ce997afb193",
-            "displayName": "Test_Jira",
+            "displayName": "Test_Rovo",
             "description": "Remote MCP server providing tools for Atlassian",
             "toolSource": {
                 "remoteMcpServer": {
-                    "mcpServerUrl": "https://mock-jira.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp"
+                    "mcpServerUrl": "https://mock-atlassian.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp"
                 }
             }
         }

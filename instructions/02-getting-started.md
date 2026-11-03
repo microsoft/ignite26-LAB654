@@ -25,7 +25,7 @@ Sign in as Emil, discover connectors in the catalog, check the ones for your tra
     | Finance | Test_LSEG · Test_FactSet · Test_Moodys |
     | Legal | Test_iManage |
     | Productivity | Test_Salesforce |
-    | Engineering | Test_Jira · Test_GitHub |
+    | Engineering | Jira · Confluence · Test_GitHub · Test_Rovo |
     | Bring your own app (everyone) | Zava Expense: you'll add this one yourself in [module 7](07-custom-mcp.md) |
 
     Outlook, Teams and your Microsoft 365 files are available in every track.

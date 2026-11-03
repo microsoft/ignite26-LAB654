@@ -1,14 +1,14 @@
 import pytest
 from starlette.testclient import TestClient
 
-from mock_jira import build_spec
-from mock_jira.store import StateStore
-from mock_jira.tools import load_schemas
+from mock_atlassian import build_spec
+from mock_atlassian.store import StateStore
+from mock_atlassian.tools import load_schemas
 from mockmcp.app import build_asgi_app
 from mockmcp.testing import call
 
 CLOUD = "a6d131af-e79b-5495-ab06-65cad3645500"
-SPRINT_KEYS = ["AUR-139", "AUR-142", "AUR-151"]
+SPRINT_KEYS = ["AUR-133", "AUR-136", "AUR-137", "AUR-139", "AUR-142", "AUR-151"]
 
 
 @pytest.fixture(scope="module")
@@ -73,42 +73,29 @@ def test_aur_142_story(spec):
     assert f["summary"] == "Aurora hubs remain offline after reconnect"
     assert f["status"]["name"] == "In Progress" and f["priority"]["name"] == "High"
     assert f["assignee"]["displayName"] == "Triin Lepp"
+    assert set(f["labels"]) == {"lakeshore-retail-pilot", "at-risk"}
     assert f["timeoriginalestimate"] == 8 * 3600
     comments = f["comment"]["comments"]
-    assert len(comments) == 1 and "started working on the fix" in str(comments[0]["body"])
+    assert len(comments) == 3 and "started working on the fix" in str(comments[0]["body"])
     assert comments[0]["created"].startswith("2026-10-26")
-    linked = {(link.get("outwardIssue") or link.get("inwardIssue"))["key"] for link in f["issuelinks"]}
-    assert linked == {"AUR-145"}
-    assert "287" not in str(issue)
+    assert f["issuelinks"] == []
 
 
-def test_aur_145_breakdown_is_24_hours(spec):
-    f = _issue(spec, "AUR-145")["fields"]
-    text = str(f["description"])
-    assert "24" in text and all(name in text for name in ("Triin", "Maria", "Tama"))
-    assert f["timeoriginalestimate"] is None
-    assert not f.get("customfield_10020")
-
-
-def test_sprint_capacity_maths(spec):
+def test_sprint_has_one_item_at_risk(spec):
     keys = _jql(spec, "sprint in openSprints() ORDER BY key")
     assert keys == SPRINT_KEYS
-    issues = _ok(spec, "searchJiraIssuesUsingJql",
-                 {"jql": "sprint = 241", "fields": ["timeoriginalestimate"]})["issues"]
-    estimates = {i["key"]: i["fields"]["timeoriginalestimate"] // 3600 for i in issues}
-    assert estimates == {"AUR-139": 8, "AUR-142": 8, "AUR-151": 16}
-    # J2: the bug grows to 24h, so demand is 24 + 8 + 16 = 48 against 32; deferring AUR-151 fits.
-    assert 24 + estimates["AUR-139"] + estimates["AUR-151"] - 32 == 16
-    assert 24 + estimates["AUR-139"] == 32
+    assert _jql(spec, "sprint in openSprints() AND labels = at-risk") == ["AUR-142"]
+    done = _jql(spec, "sprint = 241 AND statusCategory = Done ORDER BY key")
+    assert done == ["AUR-133", "AUR-137"]
 
 
 @pytest.mark.parametrize("jql,expected", [
-    ('project = AUR AND assignee = "Triin Lepp" ORDER BY key', ["AUR-142", "AUR-145", "AUR-151"]),
-    ("project = AUR AND status = 'In Progress'", ["AUR-142"]),
-    ("project = AUR AND priority IN (High) ORDER BY key", ["AUR-139", "AUR-142", "AUR-145"]),
+    ('project = AUR AND assignee = "Triin Lepp" ORDER BY key', ["AUR-137", "AUR-142", "AUR-151"]),
+    ("project = AUR AND status = 'In Progress' ORDER BY key", ["AUR-136", "AUR-139", "AUR-142"]),
+    ("project = AUR AND priority IN (High) ORDER BY key", ["AUR-133", "AUR-139", "AUR-142"]),
     ('text ~ "dashboard filters"', ["AUR-151"]),
     ("key = AUR-142 OR key = AUR-151 ORDER BY key DESC", ["AUR-151", "AUR-142"]),
-    ("project = AUR AND sprint is EMPTY", ["AUR-145"]),
+    ("project = AUR AND sprint is EMPTY", []),
     ("project = NOPE", []),
 ])
 def test_jql(spec, jql, expected):
@@ -121,10 +108,65 @@ def test_missing_issue_is_rest_404(spec):
     assert "Issue does not exist" in got.json["message"]
 
 
-def test_confluence_and_compass_are_empty(spec):
-    assert _ok(spec, "getConfluenceSpaces", {})["results"] == []
+def test_compass_is_out_of_scope(spec):
     got = call(spec, "getCompassComponents", {"cloudId": CLOUD})
     assert not got.ok and "read:component:compass" in got.json["message"]
+
+
+# --- Confluence ------------------------------------------------------------------------------------------------
+
+def test_confluence_space_and_pages(spec):
+    spaces = _ok(spec, "getConfluenceSpaces", {})["results"]
+    assert [(s["id"], s["key"], s["name"]) for s in spaces] == [("98306", "AUR", "Aurora Engineering")]
+    pages = _ok(spec, "getPagesInConfluenceSpace", {"spaceId": "98306"})["results"]
+    assert {p["id"] for p in pages} == {"98411", "98433", "98457", "98472", "98480"}
+
+
+def test_confluence_page_bodies(spec):
+    adr = _ok(spec, "getConfluencePage", {"pageId": "98457", "contentFormat": "markdown"})
+    assert adr["title"].startswith("ADR-014") and adr["version"]["number"] == 3
+    assert "Tama" in adr["body"]["markdown"]["value"] if "markdown" in adr["body"] else True
+    commitments = _ok(spec, "getConfluencePage", {"pageId": "98433"})
+    assert "November 23" in str(commitments["body"])
+    assert commitments["_links"]["webui"].startswith("/spaces/AUR/pages/98433/")
+
+
+def test_confluence_cql(spec):
+    def titles(cql):
+        return [r["content"]["id"] if "content" in r else r["id"]
+                for r in _ok(spec, "searchConfluenceUsingCql", {"cql": cql})["results"]]
+    assert set(titles('type = page AND label = "lakeshore-retail-pilot"')) == {"98433", "98457"}
+    assert titles('space = AUR AND title ~ "ADR-014"') == ["98457"]
+    assert titles('text ~ "nothing-matches-this"') == []
+
+
+def test_confluence_comments(spec):
+    comments = _ok(spec, "getConfluencePageFooterComments", {"pageId": "98457"})["results"]
+    assert len(comments) == 1 and "ready for your decision" in str(comments[0])
+
+
+def test_confluence_writes_are_per_conversation(spec):
+    conv = "conv-wiki"
+    page = _ok(spec, "createConfluencePage", {"spaceId": "AUR", "title": "Pilot follow-up",
+                                              "body": "<p>Next steps for AUR-142.</p>"}, conv)
+    assert page["id"] == "98500" and page["parentId"] == "98411"
+    _ok(spec, "createConfluenceFooterComment", {"pageId": "98457", "body": "Approved option B."}, conv)
+    assert len(_ok(spec, "getConfluencePageFooterComments", {"pageId": "98457"}, conv)["results"]) == 2
+    assert len(_ok(spec, "getConfluencePageFooterComments", {"pageId": "98457"}, "conv-x")["results"]) == 1
+    assert not call(spec, "getConfluencePage", {"cloudId": CLOUD, "pageId": "98500"}, "conv-x").ok
+    dup = call(spec, "createConfluencePage", {"cloudId": CLOUD, "spaceId": "AUR", "title": "Pilot follow-up",
+                                              "body": "x"}, conv)
+    assert not dup.ok
+
+
+def test_rovo_search_and_fetch(spec):
+    hits = call(spec, "search", {"query": "ADR-014 reconnect"}).json["results"]
+    assert any(h["id"].endswith(":confluence:" + h["id"].split(":confluence:")[-1]) and "98457" in h["id"]
+               for h in hits)
+    assert any("AUR-142" in str(h) for h in hits)
+    page_ari = next(h["id"] for h in hits if "98457" in h["id"])
+    fetched = call(spec, "fetch", {"id": page_ari}).json
+    assert fetched["type"] == "confluence-page" and "ADR-014" in fetched["title"]
 
 
 def test_invalid_arguments(spec):
@@ -150,13 +192,13 @@ def test_writes_are_per_conversation(spec):
     assert _issue(spec, key, conv)["fields"]["status"]["statusCategory"]["key"] == "done"
     assert _issue(spec, "AUR-151", conv)["fields"]["priority"]["name"] == "Lowest"
     f = _issue(spec, "AUR-142", conv)["fields"]
-    assert len(f["comment"]["comments"]) == 2
+    assert len(f["comment"]["comments"]) == 4
     assert [w["timeSpentSeconds"] for w in f["worklog"]["worklogs"]][-1] == 2 * 3600
 
     # Other conversations and header-less calls see the seed.
     assert call(spec, "getJiraIssue", {"cloudId": CLOUD, "issueIdOrKey": key}, "conv-other").json["statusCode"] == 404
     assert _issue(spec, "AUR-151")["fields"]["priority"]["name"] == "Low"
-    assert len(_issue(spec, "AUR-142", "conv-other")["fields"]["comment"]["comments"]) == 1
+    assert len(_issue(spec, "AUR-142", "conv-other")["fields"]["comment"]["comments"]) == 3
 
 
 def test_edit_cannot_set_status(spec):
@@ -169,7 +211,7 @@ def test_issue_link_is_visible(spec):
     conv = "conv-link"
     _ok(spec, "createIssueLink", {"type": "Blocks", "inwardIssue": "AUR-151", "outwardIssue": "AUR-142"}, conv)
     links = _issue(spec, "AUR-142", conv)["fields"]["issuelinks"]
-    assert {(link.get("outwardIssue") or link.get("inwardIssue"))["key"] for link in links} == {"AUR-145", "AUR-151"}
+    assert {(link.get("outwardIssue") or link.get("inwardIssue"))["key"] for link in links} == {"AUR-151"}
 
 
 # --- viewer ----------------------------------------------------------------------------------------------------
@@ -203,3 +245,15 @@ def test_viewer_shows_conversation_changes(web):
     board = location.rsplit("/browse/", 1)[0] + "/jira/software/projects/AUR/list"
     assert key in client.get(board).text
     assert key not in client.get("/jira/software/projects/AUR/list").text
+
+
+def test_wiki_viewer(web):
+    spec, _, client = web
+    assert client.get("/wiki").headers["location"] == "/wiki/spaces/AUR/pages/98411/Aurora+Engineering"
+    res = client.get("/wiki/spaces/AUR/pages/98457/ADR-014")
+    assert res.status_code == 200 and "MOCK ATLASSIAN · CONFLUENCE" in res.text and "comment-99012" in res.text
+    assert client.get("/wiki/rest/api/content/98433").headers["location"].startswith("/wiki/spaces/AUR/pages/98433/")
+    assert client.get("/wiki/spaces/AUR/pages/99999").status_code == 404
+    page = _ok(spec, "createConfluencePage", {"spaceId": "AUR", "title": "Viewer page", "body": "<p>hi</p>"}, "cv")
+    location = client.get(f"/wiki/spaces/AUR/pages/{page['id']}").headers["location"]
+    assert location.startswith("/v/") and "Viewer page" in client.get(location).text
