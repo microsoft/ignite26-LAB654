@@ -121,7 +121,6 @@ The same pattern works with other connectors. Try them in your own tenant for si
 
 <table>
   <tr>
-    <td align="center"><img src="images/connectors/linear.svg" alt="Linear" width="200"></td>
     <td align="center"><img src="images/connectors/intercom.svg" alt="Intercom" width="200"></td>
     <td align="center"><img src="images/connectors/zoom.svg" alt="Zoom" width="200"></td>
   </tr>
