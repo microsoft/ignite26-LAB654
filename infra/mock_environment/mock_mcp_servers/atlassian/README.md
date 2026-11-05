@@ -1,6 +1,6 @@
 # Rovo mock server
 
-Mock of the Atlassian Rovo MCP server for the [engineering scenario](../../../../docs/scenarios/engineering/scenario.md) and [lab part 6](../../../../instructions/06-engineering.md). In the lab it appears as the **Test_Rovo** connector. See the [mock servers README](../README.md) for the shared framework and how to run, test and deploy.
+Mock of the Atlassian Rovo MCP server for the [engineering scenario](../../../../docs/scenarios/engineering/scenario.md) and [lab part 6](../../../../instructions/06-engineering.md). In the lab it appears as the **Rovo_Lab** connector. See the [mock servers README](../README.md) for the shared framework and how to run, test and deploy.
 
 It serves one Atlassian site, **zava-online**, with Jira and Confluence:
 
@@ -53,7 +53,7 @@ All 41 tools are the live server's. Their names, descriptions and input schemas 
 | Confluence pages | Space home; *Lakeshore Retail pilot – delivery commitments* (the record of the November 20 and 23 dates); *ADR-014: Reconnect state handling on the event-driven status service* (Proposed, awaiting Tama's approval, linked to AUR-142 and PR #287); *Aurora Sprint 24 plan*; the cutover runbook |
 | Comments | On ADR-014, Triin asks Tama for the decision. On the commitments page, Tama confirms the November 20 cutover |
 
-GitHub (the Test_GitHub mock) holds the rest of the story: PR #287 in `zava-lab/aurora-status`, where Tama requested changes on October 28.
+GitHub (the GitHub_Lab mock) holds the rest of the story: PR #287 in `zava-lab/aurora-status`, where Tama requested changes on October 28.
 
 The data is in `seed_files/seed.json`, written from the scenario. Names come from CELA's approved fictitious names list (see the [mock environment README](../../README.md)). The site's IDs, account IDs and URLs are generated and don't match any real site.
 

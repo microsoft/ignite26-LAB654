@@ -1,26 +1,25 @@
 {
- "_about": "Company universe shared by the LSEG, FactSet and Moody's mock servers. Identifiers listed in each company's 'synthetic' array are made up for the lab; everything else is the public identifier. 'model' and 'price' parameters drive deterministic generation when a request goes beyond the seeded data. 'financials.anchors' are keyed by fiscal-year label (the calendar year most of the fiscal year falls in; NVDA 2025 = FYE Jan 2026). Revenue/EBITDA/net income/net debt are USD millions; margins and ROIC are percentages. NVDA values and the AMD/AVGO gross-margin and ROIC values come from the recorded trace; other history is approximate public data; FY2025+ values for non-NVDA companies and all 'moodys' ratings except NVDA's are synthetic.",
+ "_about": "Company universe shared by the LSEG, FactSet and Moody's mock servers. Company names, tickers and all identifiers (RIC, ISIN, CUSIP, SEDOL, PermIDs, FactSet and Moody's ids) are fictitious, using CELA-approved company names; the financial data was taken from real public companies and left unchanged. 'model' and 'price' parameters drive deterministic generation when a request goes beyond the seeded data. 'financials.anchors' are keyed by fiscal-year label (the calendar year most of the fiscal year falls in; LITW 2025 = FYE Jan 2026). Revenue/EBITDA/net income/net debt are USD millions; margins and ROIC are percentages. LITW values and the ADTM/RLCD gross-margin and ROIC values come from the recorded trace; other history is approximate public data; FY2025+ values for non-LITW companies and all 'moodys' ratings except LITW's are synthetic.",
  "companies": [
   {
-   "ticker": "NVDA",
-   "name": "NVIDIA Corporation",
-   "short_name": "Nvidia",
+   "ticker": "LITW",
+   "name": "Litware, Inc.",
+   "short_name": "Litware",
    "aliases": [
-    "nvidia",
-    "nvidia corp",
-    "nvidia corporation"
+    "litware",
+    "litware inc"
    ],
    "exchange": "NASDAQ",
-   "ric": "NVDA.O",
-   "factset_id": "NVDA-US",
-   "fsym_security_id": "K7TPSX-R",
-   "fsym_entity_id": "00208X-E",
-   "isin": "US67066G1040",
-   "cusip": "67066G104",
-   "sedol": "2379504",
-   "org_permid": 4295914405,
-   "ibes_estpermid": 30064850531,
-   "qa_code": 38665,
+   "ric": "LITW.O",
+   "factset_id": "LITW-US",
+   "fsym_security_id": "L7TWSX-R",
+   "fsym_entity_id": "00L17W-E",
+   "isin": "US9901011075",
+   "cusip": "990101107",
+   "sedol": "9901018",
+   "org_permid": 4299990101,
+   "ibes_estpermid": 30099990101,
+   "qa_code": 99101,
    "synthetic": [],
    "fiscal": {
     "fye_month": 1,
@@ -270,33 +269,35 @@
     "industry_group": "Specialized Semiconductors"
    },
    "moodys": {
-    "org_id": 600053279,
-    "orbis_id": "001736166",
-    "bvd_id": "US943177549",
+    "org_id": 699990101,
+    "orbis_id": "099990101",
+    "bvd_id": "US999990101",
     "rating": "Aa1",
     "outlook": "Positive",
     "synthetic": false
    }
   },
   {
-   "ticker": "AMD",
-   "name": "Advanced Micro Devices, Inc.",
-   "short_name": "AMD",
+   "ticker": "ADTM",
+   "name": "A. Datum Corporation",
+   "short_name": "A. Datum",
    "aliases": [
-    "amd",
-    "advanced micro devices"
+    "a. datum",
+    "a datum",
+    "adatum",
+    "a. datum corporation"
    ],
    "exchange": "NASDAQ",
-   "ric": "AMD.O",
-   "factset_id": "AMD-US",
-   "fsym_security_id": "RT66YK-R",
-   "fsym_entity_id": "000BK7-E",
-   "isin": "US0079031078",
-   "cusip": "007903107",
-   "sedol": "2007849",
-   "org_permid": 4295903297,
-   "ibes_estpermid": 30064817421,
-   "qa_code": 1204,
+   "ric": "ADTM.O",
+   "factset_id": "ADTM-US",
+   "fsym_security_id": "AD66TM-R",
+   "fsym_entity_id": "000AD7-E",
+   "isin": "US9901021058",
+   "cusip": "990102105",
+   "sedol": "9901029",
+   "org_permid": 4299990102,
+   "ibes_estpermid": 30099990102,
+   "qa_code": 99102,
    "synthetic": [
     "ibes_estpermid",
     "qa_code"
@@ -414,33 +415,32 @@
     "industry_group": "Specialized Semiconductors"
    },
    "moodys": {
-    "org_id": 600011093,
-    "orbis_id": "001510118",
-    "bvd_id": "US941692300",
+    "org_id": 699990102,
+    "orbis_id": "099990102",
+    "bvd_id": "US999990102",
     "rating": "A1",
     "outlook": "Stable",
     "synthetic": true
    }
   },
   {
-   "ticker": "AVGO",
-   "name": "Broadcom Inc.",
-   "short_name": "Broadcom",
+   "ticker": "RLCD",
+   "name": "Relecloud",
+   "short_name": "Relecloud",
    "aliases": [
-    "broadcom",
-    "broadcom inc"
+    "relecloud"
    ],
    "exchange": "NASDAQ",
-   "ric": "AVGO.O",
-   "factset_id": "AVGO-US",
-   "fsym_security_id": "B81TLL-R",
-   "fsym_entity_id": "0JCLYY-E",
-   "isin": "US11135F1012",
-   "cusip": "11135F101",
-   "sedol": "BDZ78H9",
-   "org_permid": 5060689053,
-   "ibes_estpermid": 30064839970,
-   "qa_code": 302511,
+   "ric": "RLCD.O",
+   "factset_id": "RLCD-US",
+   "fsym_security_id": "R81CLD-R",
+   "fsym_entity_id": "0RLCDY-E",
+   "isin": "US9901031032",
+   "cusip": "990103103",
+   "sedol": "9901030",
+   "org_permid": 4299990103,
+   "ibes_estpermid": 30099990103,
+   "qa_code": 99103,
    "synthetic": [
     "ibes_estpermid",
     "qa_code"
@@ -558,33 +558,33 @@
     "industry_group": "Analog and Mixed Signal Semiconductors"
    },
    "moodys": {
-    "org_id": 822937808,
-    "orbis_id": "030411892",
-    "bvd_id": "US352376590",
+    "org_id": 699990103,
+    "orbis_id": "099990103",
+    "bvd_id": "US999990103",
     "rating": "A3",
     "outlook": "Positive",
     "synthetic": true
    }
   },
   {
-   "ticker": "INTC",
-   "name": "Intel Corporation",
-   "short_name": "Intel",
+   "ticker": "VANA",
+   "name": "VanArsdel, Ltd.",
+   "short_name": "VanArsdel",
    "aliases": [
-    "intel",
-    "intel corp"
+    "vanarsdel",
+    "vanarsdel ltd"
    ],
    "exchange": "NASDAQ",
-   "ric": "INTC.O",
-   "factset_id": "INTC-US",
-   "fsym_security_id": "H3PJ7P-R",
-   "fsym_entity_id": "000F4Q-E",
-   "isin": "US4581401001",
-   "cusip": "458140100",
-   "sedol": "2463247",
-   "org_permid": 4295906830,
-   "ibes_estpermid": 30064811105,
-   "qa_code": 1918,
+   "ric": "VANA.O",
+   "factset_id": "VANA-US",
+   "fsym_security_id": "V4NA7P-R",
+   "fsym_entity_id": "000V4N-E",
+   "isin": "US9901041015",
+   "cusip": "990104101",
+   "sedol": "9901041",
+   "org_permid": 4299990104,
+   "ibes_estpermid": 30099990104,
+   "qa_code": 99104,
    "synthetic": [
     "fsym_security_id",
     "fsym_entity_id",
@@ -699,34 +699,32 @@
     "industry_group": "Processors"
    },
    "moodys": {
-    "org_id": 600044717,
-    "orbis_id": "001510255",
-    "bvd_id": "US941672743",
+    "org_id": 699990104,
+    "orbis_id": "099990104",
+    "bvd_id": "US999990104",
     "rating": "Baa1",
     "outlook": "Negative",
     "synthetic": true
    }
   },
   {
-   "ticker": "QCOM",
-   "name": "QUALCOMM Incorporated",
-   "short_name": "Qualcomm",
+   "ticker": "ADVW",
+   "name": "Adventure Works",
+   "short_name": "Adventure Works",
    "aliases": [
-    "qualcomm",
-    "qualcomm inc",
-    "qualcomm incorporated"
+    "adventure works"
    ],
    "exchange": "NASDAQ",
-   "ric": "QCOM.O",
-   "factset_id": "QCOM-US",
-   "fsym_security_id": "W7MD4S-R",
-   "fsym_entity_id": "000HNK-E",
-   "isin": "US7475251036",
-   "cusip": "747525103",
-   "sedol": "2714923",
-   "org_permid": 4295907706,
-   "ibes_estpermid": 30064812230,
-   "qa_code": 7417,
+   "ric": "ADVW.O",
+   "factset_id": "ADVW-US",
+   "fsym_security_id": "A7VW4S-R",
+   "fsym_entity_id": "000ADW-E",
+   "isin": "US9901051089",
+   "cusip": "990105108",
+   "sedol": "9901052",
+   "org_permid": 4299990105,
+   "ibes_estpermid": 30099990105,
+   "qa_code": 99105,
    "synthetic": [
     "fsym_security_id",
     "fsym_entity_id",
@@ -841,33 +839,32 @@
     "industry_group": "Communications Semiconductors"
    },
    "moodys": {
-    "org_id": 600038290,
-    "orbis_id": "001507441",
-    "bvd_id": "US953685934",
+    "org_id": 699990105,
+    "orbis_id": "099990105",
+    "bvd_id": "US999990105",
     "rating": "A2",
     "outlook": "Stable",
     "synthetic": true
    }
   },
   {
-   "ticker": "MU",
-   "name": "Micron Technology, Inc.",
-   "short_name": "Micron",
+   "ticker": "WDGV",
+   "name": "Woodgrove",
+   "short_name": "Woodgrove",
    "aliases": [
-    "micron",
-    "micron technology"
+    "woodgrove"
    ],
    "exchange": "NASDAQ",
-   "ric": "MU.O",
-   "factset_id": "MU-US",
-   "fsym_security_id": "V3J0XM-R",
-   "fsym_entity_id": "000GMZ-E",
-   "isin": "US5951121038",
-   "cusip": "595112103",
-   "sedol": "2588184",
-   "org_permid": 4295904863,
-   "ibes_estpermid": 30064814311,
-   "qa_code": 5638,
+   "ric": "WDGV.O",
+   "factset_id": "WDGV-US",
+   "fsym_security_id": "W3DG0V-R",
+   "fsym_entity_id": "000WDG-E",
+   "isin": "US9901061062",
+   "cusip": "990106106",
+   "sedol": "9901063",
+   "org_permid": 4299990106,
+   "ibes_estpermid": 30099990106,
+   "qa_code": 99106,
    "synthetic": [
     "fsym_security_id",
     "fsym_entity_id",
@@ -982,33 +979,32 @@
     "industry_group": "Memory Semiconductors"
    },
    "moodys": {
-    "org_id": 600022460,
-    "orbis_id": "001510602",
-    "bvd_id": "US751618546",
+    "org_id": 699990106,
+    "orbis_id": "099990106",
+    "bvd_id": "US999990106",
     "rating": "Baa2",
     "outlook": "Positive",
     "synthetic": true
    }
   },
   {
-   "ticker": "TXN",
-   "name": "Texas Instruments Incorporated",
-   "short_name": "Texas Instruments",
+   "ticker": "COHO",
+   "name": "Coho",
+   "short_name": "Coho",
    "aliases": [
-    "texas instruments",
-    "ti"
+    "coho"
    ],
    "exchange": "NASDAQ",
-   "ric": "TXN.O",
-   "factset_id": "TXN-US",
-   "fsym_security_id": "R6CHVV-R",
-   "fsym_entity_id": "000J1S-E",
-   "isin": "US8825081040",
-   "cusip": "882508104",
-   "sedol": "2885409",
-   "org_permid": 4295908420,
-   "ibes_estpermid": 30064815207,
-   "qa_code": 8460,
+   "ric": "COHO.O",
+   "factset_id": "COHO-US",
+   "fsym_security_id": "C6OHVV-R",
+   "fsym_entity_id": "000C0H-E",
+   "isin": "US9901071046",
+   "cusip": "990107104",
+   "sedol": "9901074",
+   "org_permid": 4299990107,
+   "ibes_estpermid": 30099990107,
+   "qa_code": 99107,
    "synthetic": [
     "fsym_security_id",
     "fsym_entity_id",
@@ -1122,33 +1118,32 @@
     "industry_group": "Analog and Mixed Signal Semiconductors"
    },
    "moodys": {
-    "org_id": 600048570,
-    "orbis_id": "001510873",
-    "bvd_id": "US750289970",
+    "org_id": 699990107,
+    "orbis_id": "099990107",
+    "bvd_id": "US999990107",
     "rating": "Aa3",
     "outlook": "Stable",
     "synthetic": true
    }
   },
   {
-   "ticker": "MRVL",
-   "name": "Marvell Technology, Inc.",
-   "short_name": "Marvell",
+   "ticker": "LMNA",
+   "name": "Lamna",
+   "short_name": "Lamna",
    "aliases": [
-    "marvell",
-    "marvell technology"
+    "lamna"
    ],
    "exchange": "NASDAQ",
-   "ric": "MRVL.O",
-   "factset_id": "MRVL-US",
-   "fsym_security_id": "B6WRM2-R",
-   "fsym_entity_id": "0FKRK9-E",
-   "isin": "US5738741041",
-   "cusip": "573874104",
-   "sedol": "BNKJSM5",
-   "org_permid": 5079168212,
-   "ibes_estpermid": 30064833804,
-   "qa_code": 290177,
+   "ric": "LMNA.O",
+   "factset_id": "LMNA-US",
+   "fsym_security_id": "L6MNA2-R",
+   "fsym_entity_id": "0LMNA9-E",
+   "isin": "US9901081029",
+   "cusip": "990108102",
+   "sedol": "9901085",
+   "org_permid": 4299990108,
+   "ibes_estpermid": 30099990108,
+   "qa_code": 99108,
    "synthetic": [
     "fsym_security_id",
     "fsym_entity_id",
@@ -1264,9 +1259,9 @@
     "industry_group": "Communications Semiconductors"
    },
    "moodys": {
-    "org_id": 822904356,
-    "orbis_id": "046210877",
-    "bvd_id": "US861732456",
+    "org_id": 699990108,
+    "orbis_id": "099990108",
+    "bvd_id": "US999990108",
     "rating": "Baa3",
     "outlook": "Stable",
     "synthetic": true

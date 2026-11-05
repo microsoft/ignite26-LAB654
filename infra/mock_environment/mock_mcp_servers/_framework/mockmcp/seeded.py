@@ -31,7 +31,7 @@ def stable_hash(*parts: Any) -> int:
 class Seeded:
     """A namespaced, deterministic random source.
 
-    ``Seeded("lseg", "NVDA").uniform(0.9, 1.1, "rev", 2024)`` always returns the same
+    ``Seeded("lseg", "LITW").uniform(0.9, 1.1, "rev", 2024)`` always returns the same
     number. Each call draws from its own RNG keyed by namespace + key, so adding or
     reordering calls elsewhere never changes existing values.
     """

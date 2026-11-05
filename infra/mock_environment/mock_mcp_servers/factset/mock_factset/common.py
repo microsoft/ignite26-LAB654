@@ -192,7 +192,7 @@ def id_list(issues: Issues, args: dict, maximum: int, name: str = "ids") -> list
     if isinstance(raw, str):
         raw = [part for part in raw.split(",")]
     if not isinstance(raw, list) or not raw:
-        issues.add(f"{name} is required: a non-empty array of identifiers such as ['NVDA-US']")
+        issues.add(f"{name} is required: a non-empty array of identifiers such as ['LITW-US']")
         return []
     ids = [str(v).strip() for v in raw if str(v).strip()]
     if len(ids) > maximum:

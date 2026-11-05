@@ -1,7 +1,7 @@
 {
     "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.29/MicrosoftTeams.schema.json",
     "manifestVersion": "1.29",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "id": "ea229aee-a8ce-4b50-aeb8-91b7fc5e8510",
     "developer": {
         "name": "Tezan Sahu",
@@ -10,8 +10,8 @@
         "termsOfUseUrl": "https://github.com/microsoft/ignite26-LAB654"
     },
     "name": {
-        "short": "Test_Moodys",
-        "full": "Test_Moodys"
+        "short": "Moodys_Lab",
+        "full": "Moodys_Lab"
     },
     "description": {
         "short": "Get credit ratings, rating actions, outlooks, and risk research.",
@@ -25,7 +25,7 @@
     "agentConnectors": [
         {
             "id": "50beb2de-a197-472b-aa4b-677e4eea3a2e",
-            "displayName": "Test_Moodys",
+            "displayName": "Moodys_Lab",
             "description": "Use this tool to retrieve Moody's-sourced credit ratings, outlook, upgrades/downgrades, credit opinions, SWOT, ESG/governance, executives, board, ownership, subsidiaries, and Moody's research, filings, and earnings calls for a named company.\nKeywords: rating, credit, entity, ESG, outlook, scorecard, sector, earnings, SWOT, peers",
             "toolSource": {
                 "remoteMcpServer": {

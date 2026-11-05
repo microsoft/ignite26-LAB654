@@ -1,4 +1,4 @@
-# LAB654 · Finance track: Should we buy more NVIDIA?
+# LAB654 · Finance track: Should we buy more Litware?
 
 > Converted from `LAB654_Finance_Track_OnePager.docx`. Wording is preserved; layout is simplified to Markdown.
 >
@@ -19,41 +19,41 @@
 
 ## Persona and scenario
 
-Emil, at Zava, a US car and home insurer. Zava's investment portfolio already owns NVIDIA.
+Emil, at Zava, a US car and home insurer. Zava's investment portfolio already owns Litware.
 
-Kristian, the portfolio manager, asks, "Should we buy more NVIDIA (or Company X)? Bring it to Monday's investment committee."
+Kristian, the portfolio manager, asks, "Should we buy more Litware (or Company X)? Bring it to Monday's investment committee."
 
-Meet Emil. Emil works at Zava, an insurer whose Investment Office invests the premiums it holds to pay future claims. One of the portfolio's biggest holdings is NVIDIA, the company behind most AI chips. Kristian, who runs the portfolio, asks Emil: "Should we buy more NVIDIA? Bring a recommendation to Monday's investment committee", the weekly meeting where senior people approve big investments, and they will challenge the case. A good answer has to hold up: every number sourced, checked across more than one provider, and challenged before the committee does it. Emil builds that case with Copilot in three steps.
+Meet Emil. Emil works at Zava, an insurer whose Investment Office invests the premiums it holds to pay future claims. One of the portfolio's biggest holdings is Litware, the company behind most AI chips. Kristian, who runs the portfolio, asks Emil: "Should we buy more Litware? Bring a recommendation to Monday's investment committee", the weekly meeting where senior people approve big investments, and they will challenge the case. A good answer has to hold up: every number sourced, checked across more than one provider, and challenged before the committee does it. Emil builds that case with Copilot in three steps.
 
 *Not in finance?* This is any business case: is it worth a closer look, what do the numbers say, does my argument survive tough questions, then write it up for the people who decide.
 
 | | |
 |---|---|
 | **The people** | Emil Vanggaard: the Copilot user. · Kristian Stensen, portfolio manager, Zava Investment Office: asks the question. · The investment committee: senior people who approve big investments and will challenge the case. |
-| **The trigger** | Kristian on Teams: "Committee wants a view on NVIDIA Monday. Should we add more? Bring a short memo." |
-| **Why it matters** | The portfolio already holds a lot of NVIDIA, so buying more puts even more policyholders' money on one company. A weak case gets torn apart on Monday. |
+| **The trigger** | Kristian on Teams: "Committee wants a view on Litware Monday. Should we add more? Bring a short memo." |
+| **Why it matters** | The portfolio already holds a lot of Litware, so buying more puts even more policyholders' money on one company. A weak case gets torn apart on Monday. |
 | **What Emil needs for Monday** | 1. Is the business beating expectations? 2. Is it stronger than its rivals? 3. What's the upside and downside at today's price? 4. A view that survives tough questions, written up as a memo. |
 
 ## Flow
 
 | Step | Min | Emil's question | Output |
 |---|---|---|---|
-| 1 · Sense check | 0–4 | Is NVIDIA worth a closer look? | Quick read on earnings and rivals |
-| 2 · Deep dive on the numbers | 4–12 | What do the numbers say, and what's the upside? | NVIDIA Committee Pack workbook: snapshot + scenarios |
+| 1 · Sense check | 0–4 | Is Litware worth a closer look? | Quick read on earnings and rivals |
+| 2 · Deep dive on the numbers | 4–12 | What do the numbers say, and what's the upside? | Litware Committee Pack workbook: snapshot + scenarios |
 | 3 · Back-check and report | 12–18 | Does my view hold up? | Pressure-tested view + committee memo |
 
 ## Prompts
 
 | # | Step | Prompt | Connector / skill |
 |---|---|---|---|
-| | **Step 1 · Sense check: Is NVIDIA worth a closer look?** | | |
-| 1a | Did it beat expectations? | [Copilot App] I'm preparing a recommendation for Monday's investment committee on whether our portfolio should buy more NVIDIA. To start with, Did NVIDIA beat analysts' expectations last quarter? Using LSEG, compare its actual earnings per share and revenue with the analyst consensus, and show the quarter and source. | LSEG |
-| 1b | Is it stronger than rivals? | [Copilot App] Using FactSet, compare how profitable NVIDIA, AMD and Broadcom have been over the past 5 years, using gross margin and return on invested capital (ROIC). | FactSet |
-| 1c | Is it worth a deeper look | [Copilot App] What is NVIDIA's credit rating and outlook according to Moody's and what's driving them? Then, based on everything so far, give me a one-line verdict on whether NVIDIA is worth a deeper look | Moody's |
+| | **Step 1 · Sense check: Is Litware worth a closer look?** | | |
+| 1a | Did it beat expectations? | [Copilot App] I'm preparing a recommendation for Monday's investment committee on whether our portfolio should buy more Litware. To start with, Did Litware beat analysts' expectations last quarter? Using LSEG, compare its actual earnings per share and revenue with the analyst consensus, and show the quarter and source. | LSEG |
+| 1b | Is it stronger than rivals? | [Copilot App] Using FactSet, compare how profitable Litware, A. Datum and Relecloud have been over the past 5 years, using gross margin and return on invested capital (ROIC). | FactSet |
+| 1c | Is it worth a deeper look | [Copilot App] What is Litware's credit rating and outlook according to Moody's and what's driving them? Then, based on everything so far, give me a one-line verdict on whether Litware is worth a deeper look | Moody's |
 | | **Step 2 · Deep dive on the numbers: What do the numbers say?** | | |
-| 2a | Get the numbers in one place | [Copilot App] Using LSEG, create an Excel workbook called "NVIDIA Committee Pack" with an equity research snapshot of NVIDIA: analysts' earnings and revenue forecasts for this year and next (FY1, FY2), how many analysts cover it and how much they disagree, 5 years of financials, and valuation. Cite sources and dates. | LSEG · skill: equity-research |
-| 2b | What's the upside? | [In Excel] Add a "Scenarios" sheet with worst, middle and best cases (bear, base, bull), using the lowest, average and highest FY2 earnings-per-share forecasts from the snapshot and NVIDIA's current share price. Make the price-to-earnings (P/E) multiple an editable input for each case and use formulas to show the implied share price and % upside or downside. | In Excel · workbook + LSEG · wow: change one number and everything updates |
-| 2c | Is it financially sound? | [In Excel] Using Moody's, add a "Credit" sheet with a credit SWOT for NVIDIA (strengths, weaknesses, opportunities and threats) and the factors that could lead to a rating upgrade or downgrade | Moody's · skill: company-anlaysis |
+| 2a | Get the numbers in one place | [Copilot App] Using LSEG, create an Excel workbook called "Litware Committee Pack" with an equity research snapshot of Litware: analysts' earnings and revenue forecasts for this year and next (FY1, FY2), how many analysts cover it and how much they disagree, 5 years of financials, and valuation. Cite sources and dates. | LSEG · skill: equity-research |
+| 2b | What's the upside? | [In Excel] Add a "Scenarios" sheet with worst, middle and best cases (bear, base, bull), using the lowest, average and highest FY2 earnings-per-share forecasts from the snapshot and Litware's current share price. Make the price-to-earnings (P/E) multiple an editable input for each case and use formulas to show the implied share price and % upside or downside. | In Excel · workbook + LSEG · wow: change one number and everything updates |
+| 2c | Is it financially sound? | [In Excel] Using Moody's, add a "Credit" sheet with a credit SWOT for Litware (strengths, weaknesses, opportunities and threats) and the factors that could lead to a rating upgrade or downgrade | Moody's · skill: company-anlaysis |
 | | **Step 3 · Back-check and report: Does my view hold up?** | | |
-| 3a | Pressure-test my view | My view: we should buy more NVIDIA because its strong profits and earnings growth justify its high share price. Using the NVIDIA Committee Pack, LSEG and NVIDIA's Moody's credit rating, pressure-test this view: give the evidence for and against, the strongest case against buying, and the questions the committee is likely to ask. | LSEG + Moody's · skills: equity-research, company-analysis |
-| 3b | Prepare the report | Turn this into a Word memo for the investment committee, reusing the workbook's charts. Cite sources and flag any missing data. | NVIDIA Committee Pack |
+| 3a | Pressure-test my view | My view: we should buy more Litware because its strong profits and earnings growth justify its high share price. Using the Litware Committee Pack, LSEG and Litware's Moody's credit rating, pressure-test this view: give the evidence for and against, the strongest case against buying, and the questions the committee is likely to ask. | LSEG + Moody's · skills: equity-research, company-analysis |
+| 3b | Prepare the report | Turn this into a Word memo for the investment committee, reusing the workbook's charts. Cite sources and flag any missing data. | Litware Committee Pack |

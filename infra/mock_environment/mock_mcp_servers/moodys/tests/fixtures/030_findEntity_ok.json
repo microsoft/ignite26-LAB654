@@ -1,5 +1,5 @@
 {
  "name": "65d58e06-e998-47f8-87a4-66769418fef5-findEntity",
- "input": "{\n  \"data\": \"NVIDIA Corporation\"\n}",
- "result": "{\"entities\":[{\"entityId\":\"b3JnSWQ6NjAwMDUzMjc5I29yYmlzSWQ6MDAxNzM2MTY2I2J2ZElkOlVTOTQzMTc3NTQ5I2RlYWxJZDpudWxsI3RyYW5jaGVJZDpudWxs\",\"orgName\":\"NVIDIA Corporation\",\"isUnrated\":false,\"ticker\":\"NVDA\",\"longTermRating\":\"Aa1\",\"country\":\"UNITED STATES\",\"sector\":\"Corporates, Semiconductors\"}],\"notFound\":[]}"
+ "input": "{\n  \"data\": \"Litware, Inc.\"\n}",
+ "result": "{\"entities\":[{\"entityId\":\"b3JnSWQ6Njk5OTkwMTAxI29yYmlzSWQ6MDk5OTkwMTAxI2J2ZElkOlVTOTk5OTkwMTAxI2RlYWxJZDpudWxsI3RyYW5jaGVJZDpudWxs\",\"orgName\":\"Litware, Inc.\",\"isUnrated\":false,\"ticker\":\"LITW\",\"longTermRating\":\"Aa1\",\"country\":\"UNITED STATES\",\"sector\":\"Corporates, Semiconductors\"}],\"notFound\":[]}"
 }

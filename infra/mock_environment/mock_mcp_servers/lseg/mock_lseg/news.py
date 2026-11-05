@@ -1,6 +1,6 @@
 """``important_company_news``: significant headlines for companies over a date window.
 
-Recorded NVDA headlines replay inside their window. Everything else is built from
+Recorded LITW headlines replay inside their window. Everything else is built from
 the shared finance model so it stays consistent with the other tools: earnings
 releases (on the modelled announcement dates) and large daily price moves.
 """
@@ -30,7 +30,7 @@ class ImportantCompanyNews(Tool):
     title = "LSEG important company news"
     description = (
         "Significant Reuters headlines for one or more companies. companyRics: RIC or comma-separated RICs "
-        "(e.g. 'NVDA.O'). start/end: YYYY-MM-DD window (default: the last 30 days). headlineOnly: true to omit "
+        "(e.g. 'LITW.O'). start/end: YYYY-MM-DD window (default: the last 30 days). headlineOnly: true to omit "
         f"story text. limit: max headlines (default {DEFAULT_LIMIT}). Headlines are returned newest first."
     )
     validate_args = False
@@ -70,7 +70,7 @@ class ImportantCompanyNews(Tool):
             raw = ",".join(map(str, raw))
         rics = [r.strip() for r in raw.split(",") if r.strip()] if isinstance(raw, str) else []
         if not rics:
-            issues.add("companyRics is required (e.g. 'NVDA.O')")
+            issues.add("companyRics is required (e.g. 'LITW.O')")
         end = parse_date(issues, "end", args.get("end")) or ctx.clock.today
         start = parse_date(issues, "start", args.get("start")) or end - timedelta(days=DEFAULT_DAYS)
         if start > end:

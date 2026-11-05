@@ -28,7 +28,7 @@ def _ibes(data_type, **options):
     return {"requests": [{"dataType": data_type, "options": options}]}
 
 
-@pytest.mark.parametrize("ticker", ["AMD", "AVGO", "INTC", "MRVL"])
+@pytest.mark.parametrize("ticker", ["ADTM", "RLCD", "VANA", "LMNA"])
 def test_peers_get_consensus_and_actuals(spec, ticker):
     out = call(spec, "qa_ibes_consensus", {"requests": [
         {"dataType": "qa_ibes_consensus", "options": {"ticker": ticker, "measures": ["Eps", "Rev"], "periodType": "Year", "periodIndexStart": 1, "periodIndexEnd": 3}},
@@ -40,14 +40,14 @@ def test_peers_get_consensus_and_actuals(spec, ticker):
 
 @pytest.mark.parametrize("p_index", [-2, -5, -7])
 def test_older_quarters_resolve(spec, p_index):
-    out = call(spec, "qa_ibes_consensus", _ibes("qa_ibes_actuals", ticker="NVDA", measures=["Eps"], periodType="Quarter", pIndex=p_index))
+    out = call(spec, "qa_ibes_consensus", _ibes("qa_ibes_actuals", ticker="LITW", measures=["Eps"], periodType="Quarter", pIndex=p_index))
     assert out.ok, out.text
 
 
 @pytest.mark.parametrize("args", [
-    {"universe": "AMD.O", "interval": "P1D", "count": 20},
-    {"universe": "NVDA.O", "interval": "P1W", "start": "2026-01-01", "end": "2026-06-30"},
-    {"universe": "INTC.O", "interval": "P3M", "count": 4},
+    {"universe": "ADTM.O", "interval": "P1D", "count": 20},
+    {"universe": "LITW.O", "interval": "P1W", "start": "2026-01-01", "end": "2026-06-30"},
+    {"universe": "VANA.O", "interval": "P3M", "count": 4},
 ])
 def test_pricing_variations(spec, args):
     out = call(spec, "historical_pricing_summaries", args)
@@ -56,17 +56,17 @@ def test_pricing_variations(spec, args):
 
 
 def test_fundamentals_for_a_peer(spec):
-    out = call(spec, "qa_company_fundamentals", _ibes("qa_company_fundamentals", identifier="QCOM", type="Ticker", measures="1001,1100", year="2024,2025", freq="A"))
+    out = call(spec, "qa_company_fundamentals", _ibes("qa_company_fundamentals", identifier="ADVW", type="Ticker", measures="1001,1100", year="2024,2025", freq="A"))
     assert out.ok, out.text
 
 
 def test_news_for_another_window(spec):
-    out = call(spec, "important_company_news", {"companyRics": "AMD.O", "start": "2026-07-01", "end": "2026-08-15"})
+    out = call(spec, "important_company_news", {"companyRics": "ADTM.O", "start": "2026-07-01", "end": "2026-08-15"})
     assert out.ok, out.text
 
 
 @pytest.mark.parametrize("tool,args", [
-    ("historical_pricing_summaries", {"universe": "NVDA.O", "interval": "P1D", "count": -1}),
+    ("historical_pricing_summaries", {"universe": "LITW.O", "interval": "P1D", "count": -1}),
     ("historical_pricing_summaries", {"interval": "P1D"}),
     ("qa_ibes_consensus", {"requests": []}),
 ])
@@ -80,8 +80,8 @@ def test_unknown_ticker_returns_empty_estimates(spec):
 
 
 def test_answers_are_deterministic():
-    assert_deterministic(build_spec, "historical_pricing_summaries", {"universe": "MU.O", "interval": "P1D", "count": 30})
-    assert_deterministic(build_spec, "qa_ibes_consensus", _ibes("qa_ibes_actuals", ticker="TXN", measures=["Eps", "Rev"], periodType="Year", pIndex=-2))
+    assert_deterministic(build_spec, "historical_pricing_summaries", {"universe": "WDGV.O", "interval": "P1D", "count": 30})
+    assert_deterministic(build_spec, "qa_ibes_consensus", _ibes("qa_ibes_actuals", ticker="COHO", measures=["Eps", "Rev"], periodType="Year", pIndex=-2))
 
 
 def test_healthz(spec):
@@ -133,7 +133,7 @@ def test_widgets_are_served_as_self_contained_mcp_apps(spec):
 
 def test_fundamentals_return_structured_content(spec):
     out = call(spec, "qa_company_fundamentals", {"requests": [{"dataType": "qa_company_fundamentals", "options": {
-        "identifier": "NVDA", "type": "Ticker", "measures": "1001,5201", "year": "2024,2025", "freq": "A"}}]})
+        "identifier": "LITW", "type": "Ticker", "measures": "1001,5201", "year": "2024,2025", "freq": "A"}}]})
     assert out.ok, out.text
     assert out.result.structuredContent["data"] == out.json
 

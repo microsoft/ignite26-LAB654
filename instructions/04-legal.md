@@ -1,6 +1,6 @@
 # Legal track: Can we sign on the 10th?
 
-> **Duration:** ~15 minutes | **Connectors:** Work IQ (email and Teams), Test_iManage | **Surfaces:** Word (Copilot with legal skills), Copilot Cowork
+> **Duration:** ~15 minutes | **Connectors:** Work IQ (email and Teams), iManage_Lab | **Surfaces:** Word (Copilot with legal skills), Copilot Cowork
 
 ## What you'll take away
 
@@ -29,7 +29,7 @@ You need the backstory, a redline and a plain-English answer before December 10.
 ## Before you start
 
 - [ ] You completed [Getting started with connectors](02-getting-started.md).
-- [ ] **Test_iManage** shows as connected.
+- [ ] **iManage_Lab** shows as connected.
 - [ ] You can see Luc's message in Teams.
 - [ ] Open **Trey Research Vendor Agreement v4.2** in Word from your OneDrive: `<OneDrive path to Trey Research Vendor Agreement v4.2.docx>`.
 
@@ -57,7 +57,7 @@ Catch me up on the Trey Research deal in five bullets: what Hemanti and Luc aske
 
 ## Step 2: Flag the hard stops
 
-*Same Word chat · Test_iManage · Word legal skills*
+*Same Word chat · iManage_Lab · Word legal skills*
 
 ```text
 Which clauses in this agreement break the hard stops in our AI Procurement Playbook in the Trey Research AI Platform matter in iManage? Add a comment on each one with the playbook section.
@@ -74,7 +74,7 @@ Which clauses in this agreement break the hard stops in our AI Procurement Playb
 
 ## Step 3: Fix the two must-haves
 
-*Same Word chat · Test_iManage · edit contract skill*
+*Same Word chat · iManage_Lab · edit contract skill*
 
 ```text
 Now redline this so we own the fine-tuned model, and Trey Research can't change or retire the model without real notice and our approval. Explain each change in a comment.
@@ -92,7 +92,7 @@ Now redline this so we own the fine-tuned model, and Trey Research can't change 
 
 ## Step 4: Build the negotiation pack
 
-*Copilot Cowork (open it from Word) · Test_iManage · Work IQ*
+*Copilot Cowork (open it from Word) · iManage_Lab · Work IQ*
 
 ```text
 Get me ready for the December 10 session with Trey Research. Turn my redline and the flags into a negotiation list with our playbook fallbacks, check whether it covers what Colorado and New York regulators expect, write a one-page summary for Luc and Hemanti, and draft my reply to Luc. Save it all to the matter.

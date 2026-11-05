@@ -6,7 +6,7 @@ Mock of the LSEG MCP server for the [finance scenario](../../../../docs/scenario
 
 | Prompt | What Copilot asks LSEG for |
 |--------|----------------------------|
-| 1a | NVIDIA's actual EPS and revenue for the last reported quarter vs. the analyst consensus |
+| 1a | Litware's actual EPS and revenue for the last reported quarter vs. the analyst consensus |
 | 2a | An equity research snapshot: FY1/FY2 forecasts, analyst coverage and dispersion, 5 years of financials, valuation |
 | 2b | Low, mean and high FY2 EPS forecasts and the current share price |
 | 3a | The same estimates and valuation, as evidence for and against buying more |
@@ -35,11 +35,11 @@ No plugin manifest change is needed: Copilot discovers widgets from the tool's `
 
 ## Data
 
-- `seed_files/`: the I/B/E/S measure catalogue, Worldscope item definitions, NVIDIA bars and news recorded in the trace, and the coverage list.
-- `_domains/finance`: the shared model for all 8 companies (NVDA, AMD, AVGO, INTC, QCOM, MU, TXN, MRVL). NVIDIA values recorded in the trace are returned verbatim; everything else is generated deterministically from the model.
+- `seed_files/`: the I/B/E/S measure catalogue, Worldscope item definitions, Litware bars and news recorded in the trace, and the coverage list.
+- `_domains/finance`: the shared model for all 8 companies (LITW, ADTM, RLCD, VANA, ADVW, WDGV, COHO, LMNA). Litware values recorded in the trace are returned verbatim; everything else is generated deterministically from the model.
 
 ## Known differences from the live server
 
 - `historical_pricing_summaries` with `interval: P1M, count: 13`: the live server returned only 2 bars; the mock returns all 13. Fixture `036` is marked as an expected failure.
 - `symbology_lookup` wasn't called in the trace, so its schema and output follow LSEG's public description and may differ.
-- Data for companies other than NVIDIA, and NVIDIA data outside what the trace recorded, is synthetic.
+- Data for companies other than Litware, and Litware data outside what the trace recorded, is synthetic.

@@ -1,7 +1,7 @@
 {
   "_about": "Stock splits used by FactSet_GlobalPrices adjust modes. Prices in the finance model are split-adjusted to today; UNSPLIT multiplies earlier prices back by the ratio of every later split. Dates are ex-dates.",
   "splits": {
-    "NVDA": [{"date": "2021-07-20", "ratio": 4}, {"date": "2024-06-10", "ratio": 10}],
-    "AVGO": [{"date": "2024-07-15", "ratio": 10}]
+    "LITW": [{"date": "2021-07-20", "ratio": 4}, {"date": "2024-06-10", "ratio": 10}],
+    "RLCD": [{"date": "2024-07-15", "ratio": 10}]
   }
 }

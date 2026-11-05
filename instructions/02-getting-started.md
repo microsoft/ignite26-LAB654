@@ -22,16 +22,16 @@ Sign in as Emil, discover connectors in the catalog, check the ones for your tra
 
     | Track | Connectors |
     |---|---|
-    | Finance | Test_LSEG · Test_FactSet · Test_Moodys |
-    | Legal | Test_iManage |
-    | Productivity | Test_Salesforce |
-    | Engineering | Jira · Confluence · Test_GitHub · Test_Rovo |
+    | Finance | LSEG_Lab · FactSet_Lab · Moodys_Lab |
+    | Legal | iManage_Lab |
+    | Productivity | Salesforce_Lab |
+    | Engineering | Jira · Confluence · GitHub_Lab · Rovo_Lab |
     | Bring your own app (everyone) | Zava Expense: you'll add this one yourself in [module 7](07-custom-mcp.md) |
 
     Outlook, Teams and your Microsoft 365 files are available in every track.
 
 > [!NOTE]
-> Connectors named `Test_…` are mock versions of the real connectors, built for this lab. They behave like the real ones and come with the same skills, but they serve sample data for the fictional Zava company. You don't need any third-party account to use them. Changes you make with them are visible only in the conversation where you make them.
+> Connectors named `…_Lab` are mock versions of the real connectors, built for this lab. They behave like the real ones and come with the same skills, but they serve sample data for the fictional Zava company. You don't need any third-party account to use them. Changes you make with them are visible only in the conversation where you make them.
 
 ## Step 3: Check your sources are ready
 
@@ -45,7 +45,7 @@ In a real organization, an admin deploys connectors like these once, and people 
 Start a new chat and try a question for your track:
 
 ```text
-Using LSEG, what was NVIDIA's earnings per share last quarter compared with the analyst consensus?
+Using LSEG, what was Litware's earnings per share last quarter compared with the analyst consensus?
 ```
 
 ```text

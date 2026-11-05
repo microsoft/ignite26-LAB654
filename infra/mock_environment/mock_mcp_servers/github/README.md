@@ -1,6 +1,6 @@
 # GitHub mock server
 
-A mock of the GitHub MCP server ([github/github-mcp-server](https://github.com/github/github-mcp-server)). It supports the [engineering scenario](../../../../docs/scenarios/engineering/scenario.md) and [lab part 6](../../../../instructions/06-engineering.md), where it appears as the **Test_GitHub** connector. For the shared framework, and for how to run, test and deploy, see the [mock servers README](../README.md).
+A mock of the GitHub MCP server ([github/github-mcp-server](https://github.com/github/github-mcp-server)). It supports the [engineering scenario](../../../../docs/scenarios/engineering/scenario.md) and [lab part 6](../../../../instructions/06-engineering.md), where it appears as the **GitHub_Lab** connector. For the shared framework, and for how to run, test and deploy, see the [mock servers README](../README.md).
 
 It serves one organization, **zava-lab**, which has one private repository: **aurora-status** (the Aurora hub status service). That repository holds four pull requests and their reviews. Copilot can search and read them, and can comment, review, label and edit them. Each conversation's changes are kept separately and never touch the original data.
 

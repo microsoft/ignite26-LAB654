@@ -8,7 +8,7 @@ from mockmcp.app import build_asgi_app
 from mockmcp.testing import assert_deterministic, call, replay
 
 FIXTURES = sorted((Path(__file__).parent / "fixtures").glob("*.json"))
-PEERS = ["NVDA-US", "AMD-US", "AVGO-US"]
+PEERS = ["LITW-US", "ADTM-US", "RLCD-US"]
 
 
 @pytest.fixture(scope="module")
@@ -27,7 +27,7 @@ def test_replays_recorded_trace(spec, fixture):
     {"periodicity": "LTM"},
 ])
 def test_fundamentals_windows(spec, args):
-    out = call(spec, "FactSet_Fundamentals", {"data_type": "fundamentals", "ids": ["INTC-US", "QCOM-US"], "metrics": ["FF_SALES", "FF_GROSS_MGN"], **args})
+    out = call(spec, "FactSet_Fundamentals", {"data_type": "fundamentals", "ids": ["VANA-US", "ADVW-US"], "metrics": ["FF_SALES", "FF_GROSS_MGN"], **args})
     assert out.ok, out.text
 
 
@@ -37,7 +37,7 @@ def test_metrics_search_finds_other_concepts(spec):
 
 
 def test_entity_reference_for_other_names(spec):
-    out = call(spec, "FactSet_EntityReference", {"data_type": "entity_reference", "ids": ["MU-US", "TXN-US", "MRVL-US"]})
+    out = call(spec, "FactSet_EntityReference", {"data_type": "entity_reference", "ids": ["WDGV-US", "COHO-US", "LMNA-US"]})
     assert out.ok, out.text
 
 
@@ -55,7 +55,7 @@ def test_bad_arguments_are_rejected(spec, args):
 
 
 def test_answers_are_deterministic():
-    assert_deterministic(build_spec, "FactSet_Fundamentals", {"data_type": "fundamentals", "ids": ["MU-US"], "metrics": ["FF_ROIC"], "periodicity": "QTR"})
+    assert_deterministic(build_spec, "FactSet_Fundamentals", {"data_type": "fundamentals", "ids": ["WDGV-US"], "metrics": ["FF_ROIC"], "periodicity": "QTR"})
 
 
 def test_healthz(spec):

@@ -128,7 +128,7 @@
  },
  "observed": [
   {
-   "qaCode": 38665,
+   "qaCode": 99101,
    "item": 1001,
    "freq": "A",
    "year": 2021,
@@ -143,7 +143,7 @@
    "itemName": "NET SALES OR REVENUES"
   },
   {
-   "qaCode": 38665,
+   "qaCode": 99101,
    "item": 1001,
    "freq": "A",
    "year": 2022,
@@ -158,7 +158,7 @@
    "itemName": "NET SALES OR REVENUES"
   },
   {
-   "qaCode": 38665,
+   "qaCode": 99101,
    "item": 1001,
    "freq": "A",
    "year": 2023,
@@ -173,7 +173,7 @@
    "itemName": "NET SALES OR REVENUES"
   },
   {
-   "qaCode": 38665,
+   "qaCode": 99101,
    "item": 1001,
    "freq": "A",
    "year": 2024,
@@ -188,7 +188,7 @@
    "itemName": "NET SALES OR REVENUES"
   },
   {
-   "qaCode": 38665,
+   "qaCode": 99101,
    "item": 1001,
    "freq": "A",
    "year": 2025,
@@ -203,7 +203,7 @@
    "itemName": "NET SALES OR REVENUES"
   },
   {
-   "qaCode": 38665,
+   "qaCode": 99101,
    "item": 1051,
    "freq": "A",
    "year": 2021,
@@ -218,7 +218,7 @@
    "itemName": "COST OF GOODS SOLD (EXCL DEPRECIATION)"
   },
   {
-   "qaCode": 38665,
+   "qaCode": 99101,
    "item": 1051,
    "freq": "A",
    "year": 2022,
@@ -233,7 +233,7 @@
    "itemName": "COST OF GOODS SOLD (EXCL DEPRECIATION)"
   },
   {
-   "qaCode": 38665,
+   "qaCode": 99101,
    "item": 1051,
    "freq": "A",
    "year": 2023,
@@ -248,7 +248,7 @@
    "itemName": "COST OF GOODS SOLD (EXCL DEPRECIATION)"
   },
   {
-   "qaCode": 38665,
+   "qaCode": 99101,
    "item": 1051,
    "freq": "A",
    "year": 2024,
@@ -263,7 +263,7 @@
    "itemName": "COST OF GOODS SOLD (EXCL DEPRECIATION)"
   },
   {
-   "qaCode": 38665,
+   "qaCode": 99101,
    "item": 1051,
    "freq": "A",
    "year": 2025,
@@ -278,7 +278,7 @@
    "itemName": "COST OF GOODS SOLD (EXCL DEPRECIATION)"
   },
   {
-   "qaCode": 38665,
+   "qaCode": 99101,
    "item": 1100,
    "freq": "A",
    "year": 2021,
@@ -293,7 +293,7 @@
    "itemName": "GROSS INCOME"
   },
   {
-   "qaCode": 38665,
+   "qaCode": 99101,
    "item": 1100,
    "freq": "A",
    "year": 2022,
@@ -308,7 +308,7 @@
    "itemName": "GROSS INCOME"
   },
   {
-   "qaCode": 38665,
+   "qaCode": 99101,
    "item": 1100,
    "freq": "A",
    "year": 2023,
@@ -323,7 +323,7 @@
    "itemName": "GROSS INCOME"
   },
   {
-   "qaCode": 38665,
+   "qaCode": 99101,
    "item": 1100,
    "freq": "A",
    "year": 2024,
@@ -338,7 +338,7 @@
    "itemName": "GROSS INCOME"
   },
   {
-   "qaCode": 38665,
+   "qaCode": 99101,
    "item": 1100,
    "freq": "A",
    "year": 2025,
@@ -353,7 +353,7 @@
    "itemName": "GROSS INCOME"
   },
   {
-   "qaCode": 38665,
+   "qaCode": 99101,
    "item": 5101,
    "freq": "A",
    "year": 2021,
@@ -368,7 +368,7 @@
    "itemName": "DIVIDENDS PER SHARE"
   },
   {
-   "qaCode": 38665,
+   "qaCode": 99101,
    "item": 5101,
    "freq": "A",
    "year": 2022,
@@ -383,7 +383,7 @@
    "itemName": "DIVIDENDS PER SHARE"
   },
   {
-   "qaCode": 38665,
+   "qaCode": 99101,
    "item": 5101,
    "freq": "A",
    "year": 2023,
@@ -398,7 +398,7 @@
    "itemName": "DIVIDENDS PER SHARE"
   },
   {
-   "qaCode": 38665,
+   "qaCode": 99101,
    "item": 5101,
    "freq": "A",
    "year": 2024,
@@ -413,7 +413,7 @@
    "itemName": "DIVIDENDS PER SHARE"
   },
   {
-   "qaCode": 38665,
+   "qaCode": 99101,
    "item": 5101,
    "freq": "A",
    "year": 2025,
@@ -428,7 +428,7 @@
    "itemName": "DIVIDENDS PER SHARE"
   },
   {
-   "qaCode": 38665,
+   "qaCode": 99101,
    "item": 5201,
    "freq": "A",
    "year": 2021,
@@ -443,7 +443,7 @@
    "itemName": "EARNINGS PER SHARE"
   },
   {
-   "qaCode": 38665,
+   "qaCode": 99101,
    "item": 5201,
    "freq": "A",
    "year": 2022,
@@ -458,7 +458,7 @@
    "itemName": "EARNINGS PER SHARE"
   },
   {
-   "qaCode": 38665,
+   "qaCode": 99101,
    "item": 5201,
    "freq": "A",
    "year": 2023,
@@ -473,7 +473,7 @@
    "itemName": "EARNINGS PER SHARE"
   },
   {
-   "qaCode": 38665,
+   "qaCode": 99101,
    "item": 5201,
    "freq": "A",
    "year": 2024,
@@ -488,7 +488,7 @@
    "itemName": "EARNINGS PER SHARE"
   },
   {
-   "qaCode": 38665,
+   "qaCode": 99101,
    "item": 5201,
    "freq": "A",
    "year": 2025,
@@ -503,7 +503,7 @@
    "itemName": "EARNINGS PER SHARE"
   },
   {
-   "qaCode": 38665,
+   "qaCode": 99101,
    "item": 5202,
    "freq": "A",
    "year": 2021,
@@ -518,7 +518,7 @@
    "itemName": "EARNINGS PER SHARE - FISCAL PERIOD END"
   },
   {
-   "qaCode": 38665,
+   "qaCode": 99101,
    "item": 5202,
    "freq": "A",
    "year": 2022,
@@ -533,7 +533,7 @@
    "itemName": "EARNINGS PER SHARE - FISCAL PERIOD END"
   },
   {
-   "qaCode": 38665,
+   "qaCode": 99101,
    "item": 5202,
    "freq": "A",
    "year": 2023,
@@ -548,7 +548,7 @@
    "itemName": "EARNINGS PER SHARE - FISCAL PERIOD END"
   },
   {
-   "qaCode": 38665,
+   "qaCode": 99101,
    "item": 5202,
    "freq": "A",
    "year": 2024,
@@ -563,7 +563,7 @@
    "itemName": "EARNINGS PER SHARE - FISCAL PERIOD END"
   },
   {
-   "qaCode": 38665,
+   "qaCode": 99101,
    "item": 5202,
    "freq": "A",
    "year": 2025,

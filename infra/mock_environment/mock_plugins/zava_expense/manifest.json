@@ -1,7 +1,7 @@
 {
     "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.29/MicrosoftTeams.schema.json",
     "manifestVersion": "1.29",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "id": "e731a259-fd8d-41ef-9bd9-2f4e55be756e",
     "developer": {
         "name": "Tezan Sahu",
@@ -10,8 +10,8 @@
         "termsOfUseUrl": "https://github.com/microsoft/ignite26-LAB654"
     },
     "name": {
-        "short": "Test_Zava Expense",
-        "full": "Test_Zava Expense"
+        "short": "Zava Expense_Lab",
+        "full": "Zava Expense_Lab"
     },
     "description": {
         "short": "File, check and track your Zava expense reports.",
@@ -25,7 +25,7 @@
     "agentConnectors": [
         {
             "id": "dfb920af-cd16-423a-a97f-35fd14e8c4b6",
-            "displayName": "Test_Zava Expense",
+            "displayName": "Zava Expense_Lab",
             "description": "Use Zava Expense, Zava's internal expense system, for the signed-in employee's expense reports, corporate card charges, travel policy and travel budget. Use it to list reports and their status, find card charges for a trip, create a report from receipts, check a report against the travel policy, submit it for approval, and compare travel spend with budget.\nKeywords: expenses, expense report, receipts, reimbursement, corporate card, travel policy, hotel cap, per diem, travel budget, approval, Zava",
             "toolSource": {
                 "remoteMcpServer": {

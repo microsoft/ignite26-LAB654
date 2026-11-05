@@ -1,6 +1,6 @@
 # iManage mock server
 
-Mock of the iManage Work MCP server for the [legal scenario](../../../../docs/scenarios/legal/scenario.md) and [lab part 4](../../../../instructions/04-legal.md). In the lab it appears as the **Test_iManage** connector. See the [mock servers README](../README.md) for the shared framework and how to run, test and deploy, and [MOCK_SERVER_ARCHITECTURE.md](../../../../MOCK_SERVER_ARCHITECTURE.md) for the general pattern.
+Mock of the iManage Work MCP server for the [legal scenario](../../../../docs/scenarios/legal/scenario.md) and [lab part 4](../../../../instructions/04-legal.md). In the lab it appears as the **iManage_Lab** connector. See the [mock servers README](../README.md) for the shared framework and how to run, test and deploy, and [MOCK_SERVER_ARCHITECTURE.md](../../../../MOCK_SERVER_ARCHITECTURE.md) for the general pattern.
 
 It serves one matter, **Trey Research – AI Platform Agreement** (`Dev!1870`, client Zava, Inc.), as user **EMIL**. The matter holds only what the lab needs: a `Playbooks` folder with the Zava AI Procurement Playbook, and an empty `Drafts` folder for Copilot's output. The vendor agreement isn't here: Word can't open a document from a mock server, so attendees open it from their OneDrive (source copy in [`docs/scenarios/legal/files/`](../../../../docs/scenarios/legal/files/)). Copilot can search and read the matter, and save new documents and folders to it. Changes are kept per conversation, and every link opens a mock page styled after the iManage Work web client that shows them.
 

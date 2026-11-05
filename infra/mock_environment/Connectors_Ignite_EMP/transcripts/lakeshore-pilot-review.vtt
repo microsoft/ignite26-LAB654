@@ -33,45 +33,53 @@ WEBVTT
 <v Emil Vanggaard>Understood. Is that 20% on the hub alone, or does it include install and support?</v>
 
 9
-00:06:01.000 --> 00:06:10.000
-<v Atul Manohar>Honestly I'm not sure. I've only seen the per-store number.</v>
+00:06:01.000 --> 00:06:13.000
+<v Atul Manohar>Honestly I'm not sure. I've only seen the per-store number, about $2,400.</v>
 
 10
-00:06:35.000 --> 00:06:56.000
-<v Atul Manohar>And Nanami will want the all-in cost. She's joining the pitch, and she'll look at the total for 400 stores, not the sticker price.</v>
+00:06:38.000 --> 00:07:09.000
+<v Emil Vanggaard>That's in line with what we've seen from Boulder at other retailers. The $2,400 is the hub only. Once their install and support are added, it usually lands around $3,250 per store all-in.</v>
 
 11
-00:07:21.000 --> 00:07:33.000
-<v Emil Vanggaard>That's helpful. I'll bring an all-in, per-store and total view for Nanami.</v>
+00:07:34.000 --> 00:08:03.000
+<v Emil Vanggaard>So rather than match the 20%, here's what I can put forward: we hold the discount to 12%, that's $2,640 per store against our $3,000 list, and we bundle install at no extra cost.</v>
 
 12
-00:07:58.000 --> 00:08:28.000
-<v Jahidi Juma>From the IT side, one thing before we go any further. We need a security review before the 400-store rollout. The pilot was a small footprint, so we let it through on a lighter check.</v>
+00:08:28.000 --> 00:08:58.000
+<v Atul Manohar>That's a better conversation than the sticker price. And Nanami will want the all-in cost. She's joining the pitch, and she'll look at the total for 400 stores, not the sticker price.</v>
 
 13
-00:08:53.000 --> 00:09:15.000
-<v Jahidi Juma>For 400 stores I need to see your security documentation, where the data is stored, and confirm nothing captures customer PII in store.</v>
+00:09:23.000 --> 00:09:35.000
+<v Emil Vanggaard>That's helpful. I'll bring an all-in, per-store and total view for Nanami.</v>
 
 14
-00:09:40.000 --> 00:10:00.000
-<v Emil Vanggaard>Absolutely. We have a security and compliance FAQ, and I can set up a session with our team to walk through it with you.</v>
+00:10:00.000 --> 00:10:30.000
+<v Jahidi Juma>From the IT side, one thing before we go any further. We need a security review before the 400-store rollout. The pilot was a small footprint, so we let it through on a lighter check.</v>
 
 15
-00:10:25.000 --> 00:10:38.000
-<v Jahidi Juma>That works. As long as it happens before anything is signed for the full rollout.</v>
+00:10:55.000 --> 00:11:17.000
+<v Jahidi Juma>For 400 stores I need to see your security documentation, where the data is stored, and confirm nothing captures customer PII in store.</v>
 
 16
-00:11:03.000 --> 00:11:28.000
-<v Atul Manohar>One more thing from the stores: the reconnect issue we saw a couple of times. I'll send details separately, but it's not a blocker for this conversation.</v>
+00:11:42.000 --> 00:12:02.000
+<v Emil Vanggaard>Absolutely. We have a security and compliance FAQ, and I can set up a session with our team to walk through it with you.</v>
 
 17
-00:11:53.000 --> 00:12:14.000
-<v Emil Vanggaard>Noted. So next steps: I'll set up the security review with Jahidi, and I'll come to the pitch with the all-in cost for Nanami.</v>
+00:12:27.000 --> 00:12:40.000
+<v Jahidi Juma>That works. As long as it happens before anything is signed for the full rollout.</v>
 
 18
-00:12:39.000 --> 00:12:47.000
-<v Atul Manohar>Sounds good. Thanks, Emil.</v>
+00:13:05.000 --> 00:13:30.000
+<v Atul Manohar>One more thing from the stores: the reconnect issue we saw a couple of times. I'll send details separately, but it's not a blocker for this conversation.</v>
 
 19
-00:13:12.000 --> 00:13:20.000
+00:13:55.000 --> 00:14:16.000
+<v Emil Vanggaard>Noted. So next steps: I'll set up the security review with Jahidi, and I'll come to the pitch with the all-in cost for Nanami.</v>
+
+20
+00:14:41.000 --> 00:14:49.000
+<v Atul Manohar>Sounds good. Thanks, Emil.</v>
+
+21
+00:15:14.000 --> 00:15:22.000
 <v Jahidi Juma>Thanks.</v>

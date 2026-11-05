@@ -1,7 +1,7 @@
 {
     "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.29/MicrosoftTeams.schema.json",
     "manifestVersion": "1.29",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "id": "99c220dc-24e3-4232-8f13-15c468801b58",
     "developer": {
         "name": "Tezan Sahu",
@@ -10,8 +10,8 @@
         "termsOfUseUrl": "https://github.com/microsoft/ignite26-LAB654"
     },
     "name": {
-        "short": "Test_Salesforce",
-        "full": "Test_Salesforce"
+        "short": "Salesforce_Lab",
+        "full": "Salesforce_Lab"
     },
     "description": {
         "short": "Connect to Salesforce through its MCP tools.",
@@ -25,7 +25,7 @@
     "agentConnectors": [
         {
             "id": "39aa0add-74a1-4e87-8fdd-b3a1dc5f1af4",
-            "displayName": "Test_Salesforce",
+            "displayName": "Salesforce_Lab",
             "description": "Use this tool to retrieve and work with Salesforce data through its connected MCP tools.",
             "toolSource": {
                 "remoteMcpServer": {

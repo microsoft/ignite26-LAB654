@@ -1,5 +1,5 @@
 {
  "name": "lseg-historical_pricing_summaries",
- "input": "{\n  \"universe\": \"NVDA.O\",\n  \"interval\": \"P1M\",\n  \"count\": \"13\"\n}",
+ "input": "{\n  \"universe\": \"LITW.O\",\n  \"interval\": \"P1M\",\n  \"count\": \"13\"\n}",
  "result": "{\n  \"message\": \"MCP server 'lseg': ❌ **Validation Error**\\n\\nPlease fix the following issues:\\n• count must be a positive number\\n• count must be a positive integer\\n\\n**Suggested action**: retry with corrected parameter\",\n  \"code\": \"failure\"\n}"
 }

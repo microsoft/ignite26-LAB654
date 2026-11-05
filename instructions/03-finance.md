@@ -1,14 +1,14 @@
-# Finance track: Should we buy more NVIDIA?
+# Finance track: Should we buy more Litware?
 
-> **Duration:** ~20 minutes | **Connectors:** Test_LSEG, Test_FactSet, Test_Moodys | **Surfaces:** Copilot Chat, Copilot Cowork, Excel
+> **Duration:** ~20 minutes | **Connectors:** LSEG_Lab, FactSet_Lab, Moodys_Lab | **Surfaces:** Copilot Chat, Copilot Cowork, Excel
 
 In this module, you'll use the **LSEG**, **FactSet** and **Moody's** connectors to take one investment question from a quick sense check to a committee-ready memo, across Copilot Chat, Copilot Cowork and Excel.
 
 ## The story
 
-Zava, an insurer, invests the premiums it holds, and NVIDIA is one of its biggest holdings. Kristian Stensen, who runs the portfolio, messages you on Teams:
+Zava, an insurer, invests the premiums it holds, and Litware is one of its biggest holdings. Kristian Stensen, who runs the portfolio, messages you on Teams:
 
-> "Committee wants a view on NVIDIA Monday. Should we add more? Bring a short memo."
+> "Committee wants a view on Litware Monday. Should we add more? Bring a short memo."
 
 The committee will challenge the case, so every number has to be sourced and checked. For Monday, you need:
 
@@ -49,12 +49,12 @@ The committee will challenge the case, so every number has to be sourced and che
 ## Before you start
 
 - [ ] You completed [Getting started with connectors](02-getting-started.md).
-- [ ] **Test_LSEG**, **Test_FactSet** and **Test_Moodys** appear in Settings › Sources.
+- [ ] **LSEG_Lab**, **FactSet_Lab** and **Moodys_Lab** appear in Settings › Sources.
 
 | Step | Time | Question | Output |
 |---|---|---|---|
-| 1 · Sense check | ~5 min | Is NVIDIA worth a closer look? | Quick read on earnings, rivals and credit |
-| 2 · Deep dive on the numbers | ~8 min | What do the numbers say, and what's the upside? | "NVIDIA Committee Pack" workbook: snapshot, scenarios, credit |
+| 1 · Sense check | ~5 min | Is Litware worth a closer look? | Quick read on earnings, rivals and credit |
+| 2 · Deep dive on the numbers | ~8 min | What do the numbers say, and what's the upside? | "Litware Committee Pack" workbook: snapshot, scenarios, credit |
 | 3 · Back-check and report | ~7 min | Does my view hold up? | Pressure-tested view and committee memo |
 
 ## Step 1: Sense check
@@ -64,10 +64,10 @@ The committee will challenge the case, so every number has to be sourced and che
 > **Where:** Copilot app. Start a new chat, in either Chat or Cowork mode.
 
 ```text
-I'm preparing a recommendation for Monday's investment committee on whether our portfolio should buy more NVIDIA. To start with, did NVIDIA beat analysts' expectations last quarter? Using LSEG, compare its actual earnings per share and revenue with the analyst consensus, and show the quarter and source.
+I'm preparing a recommendation for Monday's investment committee on whether our portfolio should buy more Litware. To start with, did Litware beat analysts' expectations last quarter? Using LSEG, compare its actual earnings per share and revenue with the analyst consensus, and show the quarter and source.
 ```
 
-**What to look for:** trusted, verified figures straight from LSEG: what NVIDIA earned last quarter against what analysts expected, with LSEG cited as the source.
+**What to look for:** trusted, verified figures straight from LSEG: what Litware earned last quarter against what analysts expected, with LSEG cited as the source.
 
 > [!TIP]
 > LSEG can return charts and analysis cards, not just text: the provider's own experience, inside Copilot.
@@ -77,17 +77,17 @@ I'm preparing a recommendation for Monday's investment committee on whether our 
 > **Where:** Copilot app, in the same chat.
 
 ```text
-Using FactSet, compare how profitable NVIDIA, AMD and Broadcom have been over the past 5 years, using gross margin and return on invested capital (ROIC).
+Using FactSet, compare how profitable Litware, A. Datum and Relecloud have been over the past 5 years, using gross margin and return on invested capital (ROIC).
 ```
 
-**What to look for:** verified profitability figures for NVIDIA, AMD and Broadcom from FactSet, and a clear view of which company is strongest.
+**What to look for:** verified profitability figures for Litware, A. Datum and Relecloud from FactSet, and a clear view of which company is strongest.
 
 ### 1c. Is it worth a deeper look?
 
 > **Where:** Copilot app, in the same chat.
 
 ```text
-What is NVIDIA's credit rating and outlook according to Moody's and what's driving them? Then, based on everything so far, give me a one-line verdict on whether NVIDIA is worth a deeper look.
+What is Litware's credit rating and outlook according to Moody's and what's driving them? Then, based on everything so far, give me a one-line verdict on whether Litware is worth a deeper look.
 ```
 
 **What to look for:** a Moody's rating and outlook with the reasons behind them, then a one-line verdict that draws on all three sources.
@@ -102,23 +102,23 @@ What is NVIDIA's credit rating and outlook according to Moody's and what's drivi
 > **Where:** Copilot app. Start a new chat and select **Cowork** mode, because this is a long-running task. Cowork creates the workbook and saves it to your OneDrive.
 
 ```text
-Using LSEG, create an Excel workbook called "NVIDIA Committee Pack" with an equity research snapshot of NVIDIA: analysts' earnings and revenue forecasts for this year and next (FY1, FY2), how many analysts cover it and how much they disagree, 5 years of financials, and valuation. Cite sources and dates.
+Using LSEG, create an Excel workbook called "Litware Committee Pack" with an equity research snapshot of Litware: analysts' earnings and revenue forecasts for this year and next (FY1, FY2), how many analysts cover it and how much they disagree, 5 years of financials, and valuation. Cite sources and dates.
 ```
 
 **What to look for:**
 
 - Copilot uses LSEG's **equity research** skill. You get the partner's analyst method as well as its data.
-- A workbook named **NVIDIA Committee Pack**, with sources and dates.
+- A workbook named **Litware Committee Pack**, with sources and dates.
 
 > [!TIP]
 > Building the workbook can take a few minutes. Select the thought process to watch what Cowork is doing, or go back to your Step 1 chat and its charts while the task finishes.
 
 ### 2b. What's the upside?
 
-> **Where:** Excel. In the same Cowork chat, select **NVIDIA Committee Pack** to open the workbook next to the chat, then run 2b and 2c there.
+> **Where:** Excel. In the same Cowork chat, select **Litware Committee Pack** to open the workbook next to the chat, then run 2b and 2c there.
 
 ```text
-Using LSEG, add a "Scenarios" sheet with worst, middle and best cases (bear, base, bull), using the lowest, average and highest FY2 earnings-per-share forecasts and NVIDIA's current share price. Make the price-to-earnings (P/E) multiple an editable input for each case and use formulas to show the implied share price and % upside or downside.
+Using LSEG, add a "Scenarios" sheet with worst, middle and best cases (bear, base, bull), using the lowest, average and highest FY2 earnings-per-share forecasts and Litware's current share price. Make the price-to-earnings (P/E) multiple an editable input for each case and use formulas to show the implied share price and % upside or downside.
 ```
 
 **What to look for:** a **Scenarios** sheet built on LSEG's verified forecasts and share price, with LSEG cited as the source.
@@ -131,7 +131,7 @@ Using LSEG, add a "Scenarios" sheet with worst, middle and best cases (bear, bas
 ### 2c. Is it financially sound?
 
 ```text
-Using Moody's, add a "Credit" sheet with a credit SWOT for NVIDIA (strengths, weaknesses, opportunities and threats) and the factors that could lead to a rating upgrade or downgrade.
+Using Moody's, add a "Credit" sheet with a credit SWOT for Litware (strengths, weaknesses, opportunities and threats) and the factors that could lead to a rating upgrade or downgrade.
 ```
 
 **What to look for:** a **Credit** sheet with a SWOT and upgrade and downgrade drivers, sourced from Moody's verified credit research. The Moody's skill works in Excel too, not just in Cowork.
@@ -143,7 +143,7 @@ Using Moody's, add a "Credit" sheet with a credit SWOT for NVIDIA (strengths, we
 ### 3a. Pressure-test your view (stretch goal)
 
 ```text
-My view: we should buy more NVIDIA because its strong profits and earnings growth justify its high share price. Using the NVIDIA Committee Pack and the latest data from LSEG and Moody's, pressure-test this view: give the evidence for and against, the strongest case against buying, and the questions the committee is likely to ask.
+My view: we should buy more Litware because its strong profits and earnings growth justify its high share price. Using the Litware Committee Pack and the latest data from LSEG and Moody's, pressure-test this view: give the evidence for and against, the strongest case against buying, and the questions the committee is likely to ask.
 ```
 
 **What to look for:** evidence on both sides, the strongest counter-argument, and likely committee questions, each backed by sourced figures from LSEG, Moody's and your workbook.
@@ -167,20 +167,20 @@ Turn this into a Word memo for the investment committee, reusing the workbook's 
 |---|---|
 | Copilot answers from general knowledge without a source | Name the connector at the start: "Using LSEG, …" or "Using Moody's, …" |
 | The first answer from a connector is slow | Wait a few seconds and ask again. The test services may need a moment to start. |
-| Copilot asks which company or ticker | Reply "NVIDIA (NVDA)". |
-| Workbook steps don't apply to the right file | Open **NVIDIA Committee Pack** in Excel and run 2b and 2c from Copilot in Excel. |
+| Copilot asks which company or ticker | Reply "Litware (LITW)". |
+| Workbook steps don't apply to the right file | Open **Litware Committee Pack** in Excel and run 2b and 2c from Copilot in Excel. |
 
 ## Checkpoint
 
-- [ ] You compared NVIDIA's results with consensus, rivals and its credit rating.
-- [ ] Your **NVIDIA Committee Pack** has snapshot, **Scenarios** and **Credit** sheets.
+- [ ] You compared Litware's results with consensus, rivals and its credit rating.
+- [ ] Your **Litware Committee Pack** has snapshot, **Scenarios** and **Credit** sheets.
 - [ ] You have a committee memo with sources.
 
 ## Key takeaways
 
 - **Finish a full finance workflow in Copilot.** You went from a first question to a committee memo on trusted data from LSEG, FactSet and Moody's, without leaving Microsoft 365.
 - **Excel analysis on verified data, in minutes.** Copilot built the workbook, scenarios and real formulas from connector data you can trace back to the source.
-- **Reuse it for any company.** Swap NVIDIA for another company and run the same prompts.
+- **Reuse it for any company.** Swap Litware for another company and run the same prompts.
 
 ## More connectors to try
 

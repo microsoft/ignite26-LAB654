@@ -1,7 +1,7 @@
 {
     "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.29/MicrosoftTeams.schema.json",
     "manifestVersion": "1.29",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "id": "05c0c58e-b309-4103-8fee-a9b3899a4bc9",
     "developer": {
         "name": "Tezan Sahu",
@@ -10,8 +10,8 @@
         "termsOfUseUrl": "https://github.com/microsoft/ignite26-LAB654"
     },
     "name": {
-        "short": "Test_GitHub",
-        "full": "Test_GitHub"
+        "short": "GitHub_Lab",
+        "full": "GitHub_Lab"
     },
     "description": {
         "short": "Search your repositories, code, issues, and pull requests.",
@@ -25,7 +25,7 @@
     "agentConnectors": [
         {
             "id": "41641106-74f8-4859-8a4d-ffd7d9aa4518",
-            "displayName": "Test_GitHub",
+            "displayName": "GitHub_Lab",
             "description": "This tool set enables an LLM to read and search information on GitHub, covering repositories, branches, commits, files, users, issues, pull requests and code navigation.\nKeywords: repo, repository, code, source code, readme, markdown, commit, pull request, pr, issue",
             "toolSource": {
                 "remoteMcpServer": {

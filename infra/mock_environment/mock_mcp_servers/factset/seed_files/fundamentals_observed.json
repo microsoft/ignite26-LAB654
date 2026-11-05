@@ -2,8 +2,8 @@
  "_about": "Recorded from a live session on 2026-10-16 (session-trajectory-20261016T085346Z). Verbatim FF_GROSS_MGN and FF_ROIC annual rows. They replay exactly; everything else is generated.",
  "rows": [
   {
-   "requestId": "NVDA-US",
-   "fsymId": "K7TPSX-R",
+   "requestId": "LITW-US",
+   "fsymId": "L7TWSX-R",
    "metric": "FF_GROSS_MGN",
    "periodicity": "ANN",
    "fiscalPeriod": null,
@@ -17,15 +17,15 @@
    "value": 62.3448275862069,
    "audit": {
     "card": {
-     "link": "https://my.apps.factset.com/company-security/audit-card/v1/NVDA-US?formula=FF_GROSS_MGN(ANN%2C20210131%2C20210131%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
+     "link": "https://my.apps.factset.com/company-security/audit-card/v1/LITW-US?formula=FF_GROSS_MGN(ANN%2C20210131%2C20210131%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
      "formula": "FF_GROSS_MGN(ANN,20210131,20210131,,RP,USD)",
-     "identifier": "NVDA-US"
+     "identifier": "LITW-US"
     }
    }
   },
   {
-   "requestId": "NVDA-US",
-   "fsymId": "K7TPSX-R",
+   "requestId": "LITW-US",
+   "fsymId": "L7TWSX-R",
    "metric": "FF_GROSS_MGN",
    "periodicity": "ANN",
    "fiscalPeriod": null,
@@ -39,15 +39,15 @@
    "value": 64.9290332169131,
    "audit": {
     "card": {
-     "link": "https://my.apps.factset.com/company-security/audit-card/v1/NVDA-US?formula=FF_GROSS_MGN(ANN%2C20220131%2C20220131%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
+     "link": "https://my.apps.factset.com/company-security/audit-card/v1/LITW-US?formula=FF_GROSS_MGN(ANN%2C20220131%2C20220131%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
      "formula": "FF_GROSS_MGN(ANN,20220131,20220131,,RP,USD)",
-     "identifier": "NVDA-US"
+     "identifier": "LITW-US"
     }
    }
   },
   {
-   "requestId": "NVDA-US",
-   "fsymId": "K7TPSX-R",
+   "requestId": "LITW-US",
+   "fsymId": "L7TWSX-R",
    "metric": "FF_GROSS_MGN",
    "periodicity": "ANN",
    "fiscalPeriod": null,
@@ -61,15 +61,15 @@
    "value": 56.9288944909913,
    "audit": {
     "card": {
-     "link": "https://my.apps.factset.com/company-security/audit-card/v1/NVDA-US?formula=FF_GROSS_MGN(ANN%2C20230131%2C20230131%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
+     "link": "https://my.apps.factset.com/company-security/audit-card/v1/LITW-US?formula=FF_GROSS_MGN(ANN%2C20230131%2C20230131%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
      "formula": "FF_GROSS_MGN(ANN,20230131,20230131,,RP,USD)",
-     "identifier": "NVDA-US"
+     "identifier": "LITW-US"
     }
    }
   },
   {
-   "requestId": "NVDA-US",
-   "fsymId": "K7TPSX-R",
+   "requestId": "LITW-US",
+   "fsymId": "L7TWSX-R",
    "metric": "FF_GROSS_MGN",
    "periodicity": "ANN",
    "fiscalPeriod": null,
@@ -83,15 +83,15 @@
    "value": 72.717573290437,
    "audit": {
     "card": {
-     "link": "https://my.apps.factset.com/company-security/audit-card/v1/NVDA-US?formula=FF_GROSS_MGN(ANN%2C20240131%2C20240131%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
+     "link": "https://my.apps.factset.com/company-security/audit-card/v1/LITW-US?formula=FF_GROSS_MGN(ANN%2C20240131%2C20240131%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
      "formula": "FF_GROSS_MGN(ANN,20240131,20240131,,RP,USD)",
-     "identifier": "NVDA-US"
+     "identifier": "LITW-US"
     }
    }
   },
   {
-   "requestId": "NVDA-US",
-   "fsymId": "K7TPSX-R",
+   "requestId": "LITW-US",
+   "fsymId": "L7TWSX-R",
    "metric": "FF_GROSS_MGN",
    "periodicity": "ANN",
    "fiscalPeriod": null,
@@ -105,15 +105,15 @@
    "value": 74.9886970581699,
    "audit": {
     "card": {
-     "link": "https://my.apps.factset.com/company-security/audit-card/v1/NVDA-US?formula=FF_GROSS_MGN(ANN%2C20250131%2C20250131%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
+     "link": "https://my.apps.factset.com/company-security/audit-card/v1/LITW-US?formula=FF_GROSS_MGN(ANN%2C20250131%2C20250131%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
      "formula": "FF_GROSS_MGN(ANN,20250131,20250131,,RP,USD)",
-     "identifier": "NVDA-US"
+     "identifier": "LITW-US"
     }
    }
   },
   {
-   "requestId": "NVDA-US",
-   "fsymId": "K7TPSX-R",
+   "requestId": "LITW-US",
+   "fsymId": "L7TWSX-R",
    "metric": "FF_GROSS_MGN",
    "periodicity": "ANN",
    "fiscalPeriod": null,
@@ -127,15 +127,15 @@
    "value": 71.0680843575471,
    "audit": {
     "card": {
-     "link": "https://my.apps.factset.com/company-security/audit-card/v1/NVDA-US?formula=FF_GROSS_MGN(ANN%2C20260131%2C20260131%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
+     "link": "https://my.apps.factset.com/company-security/audit-card/v1/LITW-US?formula=FF_GROSS_MGN(ANN%2C20260131%2C20260131%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
      "formula": "FF_GROSS_MGN(ANN,20260131,20260131,,RP,USD)",
-     "identifier": "NVDA-US"
+     "identifier": "LITW-US"
     }
    }
   },
   {
-   "requestId": "NVDA-US",
-   "fsymId": "K7TPSX-R",
+   "requestId": "LITW-US",
+   "fsymId": "L7TWSX-R",
    "metric": "FF_ROIC",
    "periodicity": "ANN",
    "fiscalPeriod": null,
@@ -149,15 +149,15 @@
    "value": 22.6527570789866,
    "audit": {
     "card": {
-     "link": "https://my.apps.factset.com/company-security/audit-card/v1/NVDA-US?formula=FF_ROIC(ANN%2C20210131%2C20210131%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
+     "link": "https://my.apps.factset.com/company-security/audit-card/v1/LITW-US?formula=FF_ROIC(ANN%2C20210131%2C20210131%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
      "formula": "FF_ROIC(ANN,20210131,20210131,,RP,USD)",
-     "identifier": "NVDA-US"
+     "identifier": "LITW-US"
     }
    }
   },
   {
-   "requestId": "NVDA-US",
-   "fsymId": "K7TPSX-R",
+   "requestId": "LITW-US",
+   "fsymId": "L7TWSX-R",
    "metric": "FF_ROIC",
    "periodicity": "ANN",
    "fiscalPeriod": null,
@@ -171,15 +171,15 @@
    "value": 31.5649781518045,
    "audit": {
     "card": {
-     "link": "https://my.apps.factset.com/company-security/audit-card/v1/NVDA-US?formula=FF_ROIC(ANN%2C20220131%2C20220131%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
+     "link": "https://my.apps.factset.com/company-security/audit-card/v1/LITW-US?formula=FF_ROIC(ANN%2C20220131%2C20220131%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
      "formula": "FF_ROIC(ANN,20220131,20220131,,RP,USD)",
-     "identifier": "NVDA-US"
+     "identifier": "LITW-US"
     }
    }
   },
   {
-   "requestId": "NVDA-US",
-   "fsymId": "K7TPSX-R",
+   "requestId": "LITW-US",
+   "fsymId": "L7TWSX-R",
    "metric": "FF_ROIC",
    "periodicity": "ANN",
    "fiscalPeriod": null,
@@ -193,15 +193,15 @@
    "value": 12.303358918386,
    "audit": {
     "card": {
-     "link": "https://my.apps.factset.com/company-security/audit-card/v1/NVDA-US?formula=FF_ROIC(ANN%2C20230131%2C20230131%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
+     "link": "https://my.apps.factset.com/company-security/audit-card/v1/LITW-US?formula=FF_ROIC(ANN%2C20230131%2C20230131%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
      "formula": "FF_ROIC(ANN,20230131,20230131,,RP,USD)",
-     "identifier": "NVDA-US"
+     "identifier": "LITW-US"
     }
    }
   },
   {
-   "requestId": "NVDA-US",
-   "fsymId": "K7TPSX-R",
+   "requestId": "LITW-US",
+   "fsymId": "L7TWSX-R",
    "metric": "FF_ROIC",
    "periodicity": "ANN",
    "fiscalPeriod": null,
@@ -215,15 +215,15 @@
    "value": 69.8083554221107,
    "audit": {
     "card": {
-     "link": "https://my.apps.factset.com/company-security/audit-card/v1/NVDA-US?formula=FF_ROIC(ANN%2C20240131%2C20240131%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
+     "link": "https://my.apps.factset.com/company-security/audit-card/v1/LITW-US?formula=FF_ROIC(ANN%2C20240131%2C20240131%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
      "formula": "FF_ROIC(ANN,20240131,20240131,,RP,USD)",
-     "identifier": "NVDA-US"
+     "identifier": "LITW-US"
     }
    }
   },
   {
-   "requestId": "NVDA-US",
-   "fsymId": "K7TPSX-R",
+   "requestId": "LITW-US",
+   "fsymId": "L7TWSX-R",
    "metric": "FF_ROIC",
    "periodicity": "ANN",
    "fiscalPeriod": null,
@@ -237,15 +237,15 @@
    "value": 102.745567969549,
    "audit": {
     "card": {
-     "link": "https://my.apps.factset.com/company-security/audit-card/v1/NVDA-US?formula=FF_ROIC(ANN%2C20250131%2C20250131%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
+     "link": "https://my.apps.factset.com/company-security/audit-card/v1/LITW-US?formula=FF_ROIC(ANN%2C20250131%2C20250131%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
      "formula": "FF_ROIC(ANN,20250131,20250131,,RP,USD)",
-     "identifier": "NVDA-US"
+     "identifier": "LITW-US"
     }
    }
   },
   {
-   "requestId": "NVDA-US",
-   "fsymId": "K7TPSX-R",
+   "requestId": "LITW-US",
+   "fsymId": "L7TWSX-R",
    "metric": "FF_ROIC",
    "periodicity": "ANN",
    "fiscalPeriod": null,
@@ -259,15 +259,15 @@
    "value": 93.5673289355252,
    "audit": {
     "card": {
-     "link": "https://my.apps.factset.com/company-security/audit-card/v1/NVDA-US?formula=FF_ROIC(ANN%2C20260131%2C20260131%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
+     "link": "https://my.apps.factset.com/company-security/audit-card/v1/LITW-US?formula=FF_ROIC(ANN%2C20260131%2C20260131%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
      "formula": "FF_ROIC(ANN,20260131,20260131,,RP,USD)",
-     "identifier": "NVDA-US"
+     "identifier": "LITW-US"
     }
    }
   },
   {
-   "requestId": "AMD-US",
-   "fsymId": "RT66YK-R",
+   "requestId": "ADTM-US",
+   "fsymId": "AD66TM-R",
    "metric": "FF_GROSS_MGN",
    "periodicity": "ANN",
    "fiscalPeriod": null,
@@ -281,15 +281,15 @@
    "value": 48.2475355969332,
    "audit": {
     "card": {
-     "link": "https://my.apps.factset.com/company-security/audit-card/v1/AMD-US?formula=FF_GROSS_MGN(ANN%2C20211231%2C20211231%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
+     "link": "https://my.apps.factset.com/company-security/audit-card/v1/ADTM-US?formula=FF_GROSS_MGN(ANN%2C20211231%2C20211231%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
      "formula": "FF_GROSS_MGN(ANN,20211231,20211231,,RP,USD)",
-     "identifier": "AMD-US"
+     "identifier": "ADTM-US"
     }
    }
   },
   {
-   "requestId": "AMD-US",
-   "fsymId": "RT66YK-R",
+   "requestId": "ADTM-US",
+   "fsymId": "AD66TM-R",
    "metric": "FF_GROSS_MGN",
    "periodicity": "ANN",
    "fiscalPeriod": null,
@@ -303,15 +303,15 @@
    "value": 36.0281344010847,
    "audit": {
     "card": {
-     "link": "https://my.apps.factset.com/company-security/audit-card/v1/AMD-US?formula=FF_GROSS_MGN(ANN%2C20221231%2C20221231%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
+     "link": "https://my.apps.factset.com/company-security/audit-card/v1/ADTM-US?formula=FF_GROSS_MGN(ANN%2C20221231%2C20221231%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
      "formula": "FF_GROSS_MGN(ANN,20221231,20221231,,RP,USD)",
-     "identifier": "AMD-US"
+     "identifier": "ADTM-US"
     }
    }
   },
   {
-   "requestId": "AMD-US",
-   "fsymId": "RT66YK-R",
+   "requestId": "ADTM-US",
+   "fsymId": "AD66TM-R",
    "metric": "FF_GROSS_MGN",
    "periodicity": "ANN",
    "fiscalPeriod": null,
@@ -325,15 +325,15 @@
    "value": 37.879188712522,
    "audit": {
     "card": {
-     "link": "https://my.apps.factset.com/company-security/audit-card/v1/AMD-US?formula=FF_GROSS_MGN(ANN%2C20231231%2C20231231%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
+     "link": "https://my.apps.factset.com/company-security/audit-card/v1/ADTM-US?formula=FF_GROSS_MGN(ANN%2C20231231%2C20231231%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
      "formula": "FF_GROSS_MGN(ANN,20231231,20231231,,RP,USD)",
-     "identifier": "AMD-US"
+     "identifier": "ADTM-US"
     }
    }
   },
   {
-   "requestId": "AMD-US",
-   "fsymId": "RT66YK-R",
+   "requestId": "ADTM-US",
+   "fsymId": "AD66TM-R",
    "metric": "FF_GROSS_MGN",
    "periodicity": "ANN",
    "fiscalPeriod": null,
@@ -347,15 +347,15 @@
    "value": 43.7347294938918,
    "audit": {
     "card": {
-     "link": "https://my.apps.factset.com/company-security/audit-card/v1/AMD-US?formula=FF_GROSS_MGN(ANN%2C20241231%2C20241231%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
+     "link": "https://my.apps.factset.com/company-security/audit-card/v1/ADTM-US?formula=FF_GROSS_MGN(ANN%2C20241231%2C20241231%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
      "formula": "FF_GROSS_MGN(ANN,20241231,20241231,,RP,USD)",
-     "identifier": "AMD-US"
+     "identifier": "ADTM-US"
     }
    }
   },
   {
-   "requestId": "AMD-US",
-   "fsymId": "RT66YK-R",
+   "requestId": "ADTM-US",
+   "fsymId": "AD66TM-R",
    "metric": "FF_GROSS_MGN",
    "periodicity": "ANN",
    "fiscalPeriod": null,
@@ -369,15 +369,15 @@
    "value": 45.9915124570571,
    "audit": {
     "card": {
-     "link": "https://my.apps.factset.com/company-security/audit-card/v1/AMD-US?formula=FF_GROSS_MGN(ANN%2C20251231%2C20251231%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
+     "link": "https://my.apps.factset.com/company-security/audit-card/v1/ADTM-US?formula=FF_GROSS_MGN(ANN%2C20251231%2C20251231%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
      "formula": "FF_GROSS_MGN(ANN,20251231,20251231,,RP,USD)",
-     "identifier": "AMD-US"
+     "identifier": "ADTM-US"
     }
    }
   },
   {
-   "requestId": "AMD-US",
-   "fsymId": "RT66YK-R",
+   "requestId": "ADTM-US",
+   "fsymId": "AD66TM-R",
    "metric": "FF_ROIC",
    "periodicity": "ANN",
    "fiscalPeriod": null,
@@ -391,15 +391,15 @@
    "value": 44.4913465597298,
    "audit": {
     "card": {
-     "link": "https://my.apps.factset.com/company-security/audit-card/v1/AMD-US?formula=FF_ROIC(ANN%2C20211231%2C20211231%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
+     "link": "https://my.apps.factset.com/company-security/audit-card/v1/ADTM-US?formula=FF_ROIC(ANN%2C20211231%2C20211231%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
      "formula": "FF_ROIC(ANN,20211231,20211231,,RP,USD)",
-     "identifier": "AMD-US"
+     "identifier": "ADTM-US"
     }
    }
   },
   {
-   "requestId": "AMD-US",
-   "fsymId": "RT66YK-R",
+   "requestId": "ADTM-US",
+   "fsymId": "AD66TM-R",
    "metric": "FF_ROIC",
    "periodicity": "ANN",
    "fiscalPeriod": null,
@@ -413,15 +413,15 @@
    "value": 4.03305886127194,
    "audit": {
     "card": {
-     "link": "https://my.apps.factset.com/company-security/audit-card/v1/AMD-US?formula=FF_ROIC(ANN%2C20221231%2C20221231%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
+     "link": "https://my.apps.factset.com/company-security/audit-card/v1/ADTM-US?formula=FF_ROIC(ANN%2C20221231%2C20221231%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
      "formula": "FF_ROIC(ANN,20221231,20221231,,RP,USD)",
-     "identifier": "AMD-US"
+     "identifier": "ADTM-US"
     }
    }
   },
   {
-   "requestId": "AMD-US",
-   "fsymId": "RT66YK-R",
+   "requestId": "ADTM-US",
+   "fsymId": "AD66TM-R",
    "metric": "FF_ROIC",
    "periodicity": "ANN",
    "fiscalPeriod": null,
@@ -435,15 +435,15 @@
    "value": 1.47550472109678,
    "audit": {
     "card": {
-     "link": "https://my.apps.factset.com/company-security/audit-card/v1/AMD-US?formula=FF_ROIC(ANN%2C20231231%2C20231231%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
+     "link": "https://my.apps.factset.com/company-security/audit-card/v1/ADTM-US?formula=FF_ROIC(ANN%2C20231231%2C20231231%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
      "formula": "FF_ROIC(ANN,20231231,20231231,,RP,USD)",
-     "identifier": "AMD-US"
+     "identifier": "ADTM-US"
     }
    }
   },
   {
-   "requestId": "AMD-US",
-   "fsymId": "RT66YK-R",
+   "requestId": "ADTM-US",
+   "fsymId": "AD66TM-R",
    "metric": "FF_ROIC",
    "periodicity": "ANN",
    "fiscalPeriod": null,
@@ -457,15 +457,15 @@
    "value": 2.78314846850514,
    "audit": {
     "card": {
-     "link": "https://my.apps.factset.com/company-security/audit-card/v1/AMD-US?formula=FF_ROIC(ANN%2C20241231%2C20241231%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
+     "link": "https://my.apps.factset.com/company-security/audit-card/v1/ADTM-US?formula=FF_ROIC(ANN%2C20241231%2C20241231%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
      "formula": "FF_ROIC(ANN,20241231,20241231,,RP,USD)",
-     "identifier": "AMD-US"
+     "identifier": "ADTM-US"
     }
    }
   },
   {
-   "requestId": "AMD-US",
-   "fsymId": "RT66YK-R",
+   "requestId": "ADTM-US",
+   "fsymId": "AD66TM-R",
    "metric": "FF_ROIC",
    "periodicity": "ANN",
    "fiscalPeriod": null,
@@ -479,15 +479,15 @@
    "value": 6.78955404287805,
    "audit": {
     "card": {
-     "link": "https://my.apps.factset.com/company-security/audit-card/v1/AMD-US?formula=FF_ROIC(ANN%2C20251231%2C20251231%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
+     "link": "https://my.apps.factset.com/company-security/audit-card/v1/ADTM-US?formula=FF_ROIC(ANN%2C20251231%2C20251231%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
      "formula": "FF_ROIC(ANN,20251231,20251231,,RP,USD)",
-     "identifier": "AMD-US"
+     "identifier": "ADTM-US"
     }
    }
   },
   {
-   "requestId": "AVGO-US",
-   "fsymId": "B81TLL-R",
+   "requestId": "RLCD-US",
+   "fsymId": "R81CLD-R",
    "metric": "FF_GROSS_MGN",
    "periodicity": "ANN",
    "fiscalPeriod": null,
@@ -501,15 +501,15 @@
    "value": 54.2258652094718,
    "audit": {
     "card": {
-     "link": "https://my.apps.factset.com/company-security/audit-card/v1/AVGO-US?formula=FF_GROSS_MGN(ANN%2C20211031%2C20211031%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
+     "link": "https://my.apps.factset.com/company-security/audit-card/v1/RLCD-US?formula=FF_GROSS_MGN(ANN%2C20211031%2C20211031%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
      "formula": "FF_GROSS_MGN(ANN,20211031,20211031,,RP,USD)",
-     "identifier": "AVGO-US"
+     "identifier": "RLCD-US"
     }
    }
   },
   {
-   "requestId": "AVGO-US",
-   "fsymId": "B81TLL-R",
+   "requestId": "RLCD-US",
+   "fsymId": "R81CLD-R",
    "metric": "FF_GROSS_MGN",
    "periodicity": "ANN",
    "fiscalPeriod": null,
@@ -523,15 +523,15 @@
    "value": 62.0064452007349,
    "audit": {
     "card": {
-     "link": "https://my.apps.factset.com/company-security/audit-card/v1/AVGO-US?formula=FF_GROSS_MGN(ANN%2C20221031%2C20221031%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
+     "link": "https://my.apps.factset.com/company-security/audit-card/v1/RLCD-US?formula=FF_GROSS_MGN(ANN%2C20221031%2C20221031%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
      "formula": "FF_GROSS_MGN(ANN,20221031,20221031,,RP,USD)",
-     "identifier": "AVGO-US"
+     "identifier": "RLCD-US"
     }
    }
   },
   {
-   "requestId": "AVGO-US",
-   "fsymId": "B81TLL-R",
+   "requestId": "RLCD-US",
+   "fsymId": "R81CLD-R",
    "metric": "FF_GROSS_MGN",
    "periodicity": "ANN",
    "fiscalPeriod": null,
@@ -545,15 +545,15 @@
    "value": 65.0492755241631,
    "audit": {
     "card": {
-     "link": "https://my.apps.factset.com/company-security/audit-card/v1/AVGO-US?formula=FF_GROSS_MGN(ANN%2C20231031%2C20231031%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
+     "link": "https://my.apps.factset.com/company-security/audit-card/v1/RLCD-US?formula=FF_GROSS_MGN(ANN%2C20231031%2C20231031%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
      "formula": "FF_GROSS_MGN(ANN,20231031,20231031,,RP,USD)",
-     "identifier": "AVGO-US"
+     "identifier": "RLCD-US"
     }
    }
   },
   {
-   "requestId": "AVGO-US",
-   "fsymId": "B81TLL-R",
+   "requestId": "RLCD-US",
+   "fsymId": "R81CLD-R",
    "metric": "FF_GROSS_MGN",
    "periodicity": "ANN",
    "fiscalPeriod": null,
@@ -567,15 +567,15 @@
    "value": 57.2362042889828,
    "audit": {
     "card": {
-     "link": "https://my.apps.factset.com/company-security/audit-card/v1/AVGO-US?formula=FF_GROSS_MGN(ANN%2C20241031%2C20241031%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
+     "link": "https://my.apps.factset.com/company-security/audit-card/v1/RLCD-US?formula=FF_GROSS_MGN(ANN%2C20241031%2C20241031%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
      "formula": "FF_GROSS_MGN(ANN,20241031,20241031,,RP,USD)",
-     "identifier": "AVGO-US"
+     "identifier": "RLCD-US"
     }
    }
   },
   {
-   "requestId": "AVGO-US",
-   "fsymId": "B81TLL-R",
+   "requestId": "RLCD-US",
+   "fsymId": "R81CLD-R",
    "metric": "FF_GROSS_MGN",
    "periodicity": "ANN",
    "fiscalPeriod": null,
@@ -589,15 +589,15 @@
    "value": 64.7064347989419,
    "audit": {
     "card": {
-     "link": "https://my.apps.factset.com/company-security/audit-card/v1/AVGO-US?formula=FF_GROSS_MGN(ANN%2C20251031%2C20251031%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
+     "link": "https://my.apps.factset.com/company-security/audit-card/v1/RLCD-US?formula=FF_GROSS_MGN(ANN%2C20251031%2C20251031%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
      "formula": "FF_GROSS_MGN(ANN,20251031,20251031,,RP,USD)",
-     "identifier": "AVGO-US"
+     "identifier": "RLCD-US"
     }
    }
   },
   {
-   "requestId": "AVGO-US",
-   "fsymId": "B81TLL-R",
+   "requestId": "RLCD-US",
+   "fsymId": "R81CLD-R",
    "metric": "FF_ROIC",
    "periodicity": "ANN",
    "fiscalPeriod": null,
@@ -611,15 +611,15 @@
    "value": 10.3989131777201,
    "audit": {
     "card": {
-     "link": "https://my.apps.factset.com/company-security/audit-card/v1/AVGO-US?formula=FF_ROIC(ANN%2C20211031%2C20211031%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
+     "link": "https://my.apps.factset.com/company-security/audit-card/v1/RLCD-US?formula=FF_ROIC(ANN%2C20211031%2C20211031%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
      "formula": "FF_ROIC(ANN,20211031,20211031,,RP,USD)",
-     "identifier": "AVGO-US"
+     "identifier": "RLCD-US"
     }
    }
   },
   {
-   "requestId": "AVGO-US",
-   "fsymId": "B81TLL-R",
+   "requestId": "RLCD-US",
+   "fsymId": "R81CLD-R",
    "metric": "FF_ROIC",
    "periodicity": "ANN",
    "fiscalPeriod": null,
@@ -633,15 +633,15 @@
    "value": 18.0935291432529,
    "audit": {
     "card": {
-     "link": "https://my.apps.factset.com/company-security/audit-card/v1/AVGO-US?formula=FF_ROIC(ANN%2C20221031%2C20221031%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
+     "link": "https://my.apps.factset.com/company-security/audit-card/v1/RLCD-US?formula=FF_ROIC(ANN%2C20221031%2C20221031%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
      "formula": "FF_ROIC(ANN,20221031,20221031,,RP,USD)",
-     "identifier": "AVGO-US"
+     "identifier": "RLCD-US"
     }
    }
   },
   {
-   "requestId": "AVGO-US",
-   "fsymId": "B81TLL-R",
+   "requestId": "RLCD-US",
+   "fsymId": "R81CLD-R",
    "metric": "FF_ROIC",
    "periodicity": "ANN",
    "fiscalPeriod": null,
@@ -655,15 +655,15 @@
    "value": 22.6871057909957,
    "audit": {
     "card": {
-     "link": "https://my.apps.factset.com/company-security/audit-card/v1/AVGO-US?formula=FF_ROIC(ANN%2C20231031%2C20231031%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
+     "link": "https://my.apps.factset.com/company-security/audit-card/v1/RLCD-US?formula=FF_ROIC(ANN%2C20231031%2C20231031%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
      "formula": "FF_ROIC(ANN,20231031,20231031,,RP,USD)",
-     "identifier": "AVGO-US"
+     "identifier": "RLCD-US"
     }
    }
   },
   {
-   "requestId": "AVGO-US",
-   "fsymId": "B81TLL-R",
+   "requestId": "RLCD-US",
+   "fsymId": "R81CLD-R",
    "metric": "FF_ROIC",
    "periodicity": "ANN",
    "fiscalPeriod": null,
@@ -677,15 +677,15 @@
    "value": 6.25926001095979,
    "audit": {
     "card": {
-     "link": "https://my.apps.factset.com/company-security/audit-card/v1/AVGO-US?formula=FF_ROIC(ANN%2C20241031%2C20241031%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
+     "link": "https://my.apps.factset.com/company-security/audit-card/v1/RLCD-US?formula=FF_ROIC(ANN%2C20241031%2C20241031%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
      "formula": "FF_ROIC(ANN,20241031,20241031,,RP,USD)",
-     "identifier": "AVGO-US"
+     "identifier": "RLCD-US"
     }
    }
   },
   {
-   "requestId": "AVGO-US",
-   "fsymId": "B81TLL-R",
+   "requestId": "RLCD-US",
+   "fsymId": "R81CLD-R",
    "metric": "FF_ROIC",
    "periodicity": "ANN",
    "fiscalPeriod": null,
@@ -699,9 +699,9 @@
    "value": 16.5438007246766,
    "audit": {
     "card": {
-     "link": "https://my.apps.factset.com/company-security/audit-card/v1/AVGO-US?formula=FF_ROIC(ANN%2C20251031%2C20251031%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
+     "link": "https://my.apps.factset.com/company-security/audit-card/v1/RLCD-US?formula=FF_ROIC(ANN%2C20251031%2C20251031%2C%2CRP%2CUSD)&expandLevel=1&enableSourceLinks=true&navigationTarget=blank",
      "formula": "FF_ROIC(ANN,20251031,20251031,,RP,USD)",
-     "identifier": "AVGO-US"
+     "identifier": "RLCD-US"
     }
    }
   }

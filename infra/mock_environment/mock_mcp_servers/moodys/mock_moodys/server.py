@@ -11,7 +11,7 @@ NAME = "moodys"
 VERSION = "1.0.0"
 INSTRUCTIONS = (
     "Mock of the Moody's MCP server for the LAB654 Ignite lab. Read-only. Call findEntity first and pass the "
-    "returned entities to the other tools. NVIDIA content is recorded; other issuers are synthetic."
+    "returned entities to the other tools. Litware content is recorded; other issuers are synthetic."
 )
 
 

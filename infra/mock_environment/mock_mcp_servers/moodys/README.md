@@ -6,9 +6,9 @@ Mock of the Moody's MCP server for the [finance scenario](../../../../docs/scena
 
 | Prompt | What Copilot asks Moody's for |
 |--------|-------------------------------|
-| 1c | NVIDIA's credit rating and outlook, and what's driving them |
+| 1c | Litware's credit rating and outlook, and what's driving them |
 | 2c | A credit SWOT plus the factors that could lead to an upgrade or downgrade |
-| 3a | NVIDIA's rating, as evidence when pressure-testing the buy case |
+| 3a | Litware's rating, as evidence when pressure-testing the buy case |
 
 ## Tools
 
@@ -23,7 +23,7 @@ Sections: `Summary`, `CreditStrengths`, `CreditChallenges`, `RatingOutlook`, `Fa
 
 ## Data
 
-- `seed_files/ratings.json` and `opinions.json`: NVIDIA's rating history and credit opinion as recorded in the trace.
+- `seed_files/ratings.json` and `opinions.json`: Litware's rating history and credit opinion as recorded in the trace.
 - Other issuers: rating histories and opinions generated from the shared company model. Rating moves follow the outlook (positive outlooks trend up, stable ones don't get downgraded), and opinion text draws on each company's financials. Analyst names are fictional.
 
 ## Known differences from the live server
@@ -31,4 +31,4 @@ Sections: `Summary`, `CreditStrengths`, `CreditChallenges`, `RatingOutlook`, `Fa
 - Moody's tool schemas aren't published, so input schemas are inferred from the calls in the trace.
 - Section names beyond the five seen in the trace are assumptions.
 - `getEntityBeneficiaryOwners` was not called in the trace; its output shape is a guess.
-- Only NVIDIA's content is recorded; all other issuers are synthetic.
+- Only Litware's content is recorded; all other issuers are synthetic.

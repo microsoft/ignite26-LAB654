@@ -108,7 +108,7 @@ class QaIbesConsensus(Tool):
                         "options": {
                             "type": "object",
                             "properties": {
-                                "ticker": {"type": "string", "description": "I/B/E/S ticker, e.g. NVDA."},
+                                "ticker": {"type": "string", "description": "I/B/E/S ticker, e.g. LITW."},
                                 "tickerType": {"type": "string", "description": "Identifier type. Default 'Ticker'."},
                                 "measures": {"type": "array", "items": {"type": "string"}},
                                 "periodType": {"type": "string", "enum": list(PERIOD_TYPES)},

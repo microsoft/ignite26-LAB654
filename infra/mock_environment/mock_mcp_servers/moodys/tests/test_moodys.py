@@ -27,7 +27,7 @@ def test_replays_recorded_trace(spec, fixture):
     assert replay(spec, fixture) == []
 
 
-@pytest.mark.parametrize("name", ["Advanced Micro Devices", "Broadcom", "Intel", "Micron Technology"])
+@pytest.mark.parametrize("name", ["A. Datum", "Relecloud", "VanArsdel", "Woodgrove Technology"])
 def test_other_issuers_have_ratings_and_opinions(spec, name):
     ref = _ref(spec, name)
     ratings = call(spec, "getEntityRatings", {"entities": [ref], "years": 3})
@@ -37,12 +37,12 @@ def test_other_issuers_have_ratings_and_opinions(spec, name):
 
 
 def test_unknown_name_is_reported_not_found(spec):
-    out = call(spec, "findEntity", {"data": ["NVIDIA", "Apple Inc."]})
+    out = call(spec, "findEntity", {"data": ["Litware", "Apple Inc."]})
     assert out.ok and "Apple Inc." in out.text
 
 
 def test_bad_entity_id_falls_back_to_org_name(spec):
-    out = call(spec, "getEntityRatings", {"entities": [{"entityId": "not-an-id", "orgName": "Intel Corporation"}]})
+    out = call(spec, "getEntityRatings", {"entities": [{"entityId": "not-an-id", "orgName": "VanArsdel, Ltd."}]})
     assert out.ok, out.text
 
 
@@ -60,7 +60,7 @@ def test_unknown_entity_is_an_error(spec):
 
 
 def test_answers_are_deterministic(spec):
-    ref = _ref(spec, "QUALCOMM")
+    ref = _ref(spec, "Adventure Works")
     assert_deterministic(build_spec, "getCreditOpinion", {"entities": [ref]})
     assert_deterministic(build_spec, "getEntityRatings", {"entities": [ref], "years": 10})
 

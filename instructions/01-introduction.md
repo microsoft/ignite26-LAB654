@@ -33,10 +33,10 @@ By the end of this lab, you'll be able to:
 
 | Track | The ask | Connectors and tools | Time |
 |---|---|---|---|
-| [Finance](03-finance.md) | Kristian, who runs the Zava investment portfolio: "Should we buy more NVIDIA? Bring a recommendation to Monday's investment committee." | LSEG, FactSet, Moody's · equity research and company analysis skills · Excel, Word | ~18 min |
+| [Finance](03-finance.md) | Kristian, who runs the Zava investment portfolio: "Should we buy more Litware? Bring a recommendation to Monday's investment committee." | LSEG, FactSet, Moody's · equity research and company analysis skills · Excel, Word | ~18 min |
 | [Legal](04-legal.md) | Luc, Chief Underwriting Officer: "Can we sign Trey Research's AI underwriting contract on the 12th?" | Work IQ (email and Teams), iManage · Word legal skills · Copilot Cowork | ~15 min |
-| [Productivity](05-productivity.md) | Pitch the Aurora rollout to all 400 Lakeshore Retail stores on Nov 20, with a CFO in the room and a competitor 20% cheaper. | Test_Salesforce, Teams, Outlook · sales skills · Copilot Cowork | ~10 min (+ stretch) |
-| [Engineering](06-engineering.md) | One Sprint 24 item is at risk, and the customer's pilot expands on Monday. Who is it waiting on? | Jira, Confluence, Test_GitHub, Test_Rovo, Teams · sprint-to-slides skill · Copilot Cowork | ~15 min |
+| [Productivity](05-productivity.md) | Pitch the Aurora rollout to all 400 Lakeshore Retail stores on Nov 20, with a CFO in the room and a competitor 20% cheaper. | Salesforce_Lab, Teams, Outlook · sales skills · Copilot Cowork | ~10 min (+ stretch) |
+| [Engineering](06-engineering.md) | One Sprint 24 item is at risk, and the customer's pilot expands on Monday. Who is it waiting on? | Jira, Confluence, GitHub_Lab, Rovo_Lab, Teams · sprint-to-slides skill · Copilot Cowork | ~15 min |
 | [Bring your own app](07-custom-mcp.md) (everyone) | Your expense tool isn't in any catalog. Connect it yourself, then file a trip from your inbox. | Zava Expense (custom MCP connector) · travel-policy skill · Excel | ~20 min |
 
 ## Key ideas

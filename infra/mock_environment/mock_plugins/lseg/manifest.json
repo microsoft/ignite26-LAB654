@@ -1,7 +1,7 @@
 {
     "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.29/MicrosoftTeams.schema.json",
     "manifestVersion": "1.29",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "id": "fa0fce5b-9586-4440-8e49-887c79cf3496",
     "developer": {
         "name": "Tezan Sahu",
@@ -10,8 +10,8 @@
         "termsOfUseUrl": "https://github.com/microsoft/ignite26-LAB654"
     },
     "name": {
-        "short": "Test_LSEG",
-        "full": "Test_LSEG"
+        "short": "LSEG_Lab",
+        "full": "LSEG_Lab"
     },
     "description": {
         "short": "Get real-time market data, fundamentals, estimates, and pricing.",
@@ -25,7 +25,7 @@
     "agentConnectors": [
         {
             "id": "0857ab4d-f242-43a4-92b0-2df4f9d17d4f",
-            "displayName": "Test_LSEG",
+            "displayName": "LSEG_Lab",
             "description": "Use this LSEG connector to retrieve data for a company, ticker, or instrument: FX spot/forward, bond/future/option/swap pricing, interest-rate/credit/inflation/FX curves, volatility surfaces, analyst estimates, fundamentals, macro and financial news.\nKeywords: LSEG, market data, FX, bonds, equities, interest rate, credit, inflation, Refinitiv, Thomson Reuters, Eikon, IBES, Wall Street expectations, Street consensus, Broker estimates, Analyst estimates, Volatility Surface, Reuters headlines",
             "toolSource": {
                 "remoteMcpServer": {

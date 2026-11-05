@@ -3,12 +3,12 @@
 Conventions (match LSEG Worldscope, LSEG IBES and FactSet as seen in the recorded trace):
 
 * A fiscal year is labelled by the calendar year most of it falls in. A year ending
-  January-May belongs to the previous calendar year: NVIDIA's year ending 25 Jan 2026
+  January-May belongs to the previous calendar year: Litware's year ending 25 Jan 2026
   is fiscal 2025.
 * ``period_end`` is the vendor-normalised month-end (IBES ``date``, FactSet
   ``fiscalEndDate``). ``actual_end`` is the company's real closing date
   (Worldscope ``fiscalPeriodEndDate``, FactSet ``reportDate``), e.g. the last Sunday
-  of January for NVIDIA.
+  of January for Litware.
 * A period counts as reported once its earnings announcement is at or before "now".
 """
 

@@ -1,7 +1,7 @@
 {
     "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.29/MicrosoftTeams.schema.json",
     "manifestVersion": "1.29",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "id": "0b0db8d9-c2bc-49c9-b8d9-4358e73ffcd8",
     "developer": {
         "name": "Tezan Sahu",
@@ -10,8 +10,8 @@
         "termsOfUseUrl": "https://github.com/microsoft/ignite26-LAB654"
     },
     "name": {
-        "short": "Test_Rovo",
-        "full": "Test_Rovo"
+        "short": "Rovo_Lab",
+        "full": "Rovo_Lab"
     },
     "description": {
         "short": "Access and speed up work across Atlassian apps",
@@ -25,7 +25,7 @@
     "agentConnectors": [
         {
             "id": "bf1f1106-77d3-40c2-a3e6-8ce997afb193",
-            "displayName": "Test_Rovo",
+            "displayName": "Rovo_Lab",
             "description": "Remote MCP server providing tools for Atlassian",
             "toolSource": {
                 "remoteMcpServer": {

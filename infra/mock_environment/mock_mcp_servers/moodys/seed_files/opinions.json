@@ -1,19 +1,19 @@
 {
- "_about": "Recorded from a live session on 2026-10-16 (session-trajectory-20261016T085346Z). NVDA opinion is verbatim, split into sections in the order the server returned them. Other companies use synthetic opinions built from templates.",
+ "_about": "Recorded from a live session on 2026-10-16 (session-trajectory-20261016T085346Z). LITW opinion is verbatim, split into sections in the order the server returned them. Other companies use synthetic opinions built from templates.",
  "opinions": {
-  "600053279": {
+  "699990101": {
    "id": "PBC_1495080",
-   "title": "NVIDIA Corporation: Updated opinion after ratings affirmation",
+   "title": "Litware, Inc.: Updated opinion after ratings affirmation",
    "date": "2026-09-01",
-   "header_html": "Title: <h4>NVIDIA Corporation: Updated opinion after ratings affirmation </h4> <p>Credit Opinion - (2026-09-01) </p>  <h6>Our credit view of this issuer reflects its dominant market position and low debt levels.</h6>",
+   "header_html": "Title: <h4>Litware, Inc.: Updated opinion after ratings affirmation </h4> <p>Credit Opinion - (2026-09-01) </p>  <h6>Our credit view of this issuer reflects its dominant market position and low debt levels.</h6>",
    "sections": [
     {
      "title": "Factors that could lead to a downgrade",
-     "html": "<ul><li>Growth in demand for AI infrastructure weakens over an extended period of time </li><li>A shift in financial policy results in a substantial erosion of the company's cash position, a significant increase in debt, or material increases in contingent obligations that expose NVIDIA to long-term risks relative to its financial strength.  </li><li>Escalating geopolitical tensions increase the risk of disruption in NVIDIA's supply chain or material negative impact from regulatory actions which the company is unable to mitigate. </li> </ul>"
+     "html": "<ul><li>Growth in demand for AI infrastructure weakens over an extended period of time </li><li>A shift in financial policy results in a substantial erosion of the company's cash position, a significant increase in debt, or material increases in contingent obligations that expose Litware to long-term risks relative to its financial strength.  </li><li>Escalating geopolitical tensions increase the risk of disruption in Litware's supply chain or material negative impact from regulatory actions which the company is unable to mitigate. </li> </ul>"
     },
     {
      "title": "Rating outlook",
-     "html": "<p>The positive outlook reflects our expectations that NVIDIA will maintain an excellent financial profile, characterized by a robust net cash position, very low debt levels relative to earnings, and strong growth prospects. In addition, we expect the company's contingent obligations to remain low relative to its earnings, funded debt, and cash position.   </p>"
+     "html": "<p>The positive outlook reflects our expectations that Litware will maintain an excellent financial profile, characterized by a robust net cash position, very low debt levels relative to earnings, and strong growth prospects. In addition, we expect the company's contingent obligations to remain low relative to its earnings, funded debt, and cash position.   </p>"
     },
     {
      "title": "Credit challenges",
@@ -21,7 +21,7 @@
     },
     {
      "title": "Summary",
-     "html": "<p>We expect NVIDIA to maintain a dominant market position in accelerated computing technologies. The company is well positioned to benefit from robust growth in global AI infrastructure investment, supported by its track record of industry-leading innovation, strong supply chain capabilities, and broad portfolio of technologies that enable AI computing at scale, including graphics processing units (GPUs), central processing units (CPUs), data center networking, and software. We also expect NVIDIA to sustain an excellent financial profile, characterized by a robust net cash position, strong and rapidly growing profitability, and conservative financial policies. The primary risk to the credit profile stems from the potential for increasing contingent liabilities as NVIDIA proactively facilitates the global buildout of AI infrastructure. The company is expanding the ecosystem beyond large hyperscale customers through various forms of support and by helping alleviate constraints related to land, power, and data center capacity. Although competition is increasing, rapid growth in the AI market mitigates these risks. NVIDIA's significant reliance on manufacturing facilities in Taiwan, amid elevated geopolitical tensions, increases its exposure to geopolitical risk. The company's ability to preserve its market leadership and industry-leading margins will depend on its continued ability to innovate at a rapid pace. </p><p> </p><Artifact id=\"26c9d462-a32e-11f1-b147-485b2b2cf349\"/>"
+     "html": "<p>We expect Litware to maintain a dominant market position in accelerated computing technologies. The company is well positioned to benefit from robust growth in global AI infrastructure investment, supported by its track record of industry-leading innovation, strong supply chain capabilities, and broad portfolio of technologies that enable AI computing at scale, including graphics processing units (GPUs), central processing units (CPUs), data center networking, and software. We also expect Litware to sustain an excellent financial profile, characterized by a robust net cash position, strong and rapidly growing profitability, and conservative financial policies. The primary risk to the credit profile stems from the potential for increasing contingent liabilities as Litware proactively facilitates the global buildout of AI infrastructure. The company is expanding the ecosystem beyond large hyperscale customers through various forms of support and by helping alleviate constraints related to land, power, and data center capacity. Although competition is increasing, rapid growth in the AI market mitigates these risks. Litware's significant reliance on manufacturing facilities in Taiwan, amid elevated geopolitical tensions, increases its exposure to geopolitical risk. The company's ability to preserve its market leadership and industry-leading margins will depend on its continued ability to innovate at a rapid pace. </p><p> </p><Artifact id=\"26c9d462-a32e-11f1-b147-485b2b2cf349\"/>"
     },
     {
      "title": "Credit strengths",

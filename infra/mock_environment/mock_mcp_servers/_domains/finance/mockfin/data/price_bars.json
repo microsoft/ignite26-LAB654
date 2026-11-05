@@ -1,7 +1,7 @@
 {
- "_about": "Recorded from a live session on 2026-10-16 (session-trajectory-20261016T085346Z). Exact daily bars that override generated ones (LSEG historical_pricing_summaries, NVDA.O, P1D).",
+ "_about": "Recorded from a live session on 2026-10-16 (session-trajectory-20261016T085346Z). Exact daily bars that override generated ones (LSEG historical_pricing_summaries, LITW.O, P1D).",
  "daily": {
-  "NVDA": {
+  "LITW": {
    "2026-10-09": {
     "open": 233.835,
     "high": 233.92,

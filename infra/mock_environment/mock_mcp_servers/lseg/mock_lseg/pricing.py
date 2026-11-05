@@ -45,7 +45,7 @@ class HistoricalPricingSummaries(Tool):
     title = "LSEG historical pricing summaries"
     description = (
         "Interday pricing summaries (OHLC, volume, VWAP, bid/ask, turnover) for one or more instruments. "
-        "universe: RIC(s), comma-separated (e.g. 'NVDA.O' or 'NVDA.O,AMD.O'). interval: P1D | P1W | P1M | P3M | P1Y. "
+        "universe: RIC(s), comma-separated (e.g. 'LITW.O' or 'LITW.O,ADTM.O'). interval: P1D | P1W | P1M | P3M | P1Y. "
         "Window: either tenor (e.g. '10D', '3M', '1Y') or start/end dates (YYYY-MM-DD); end defaults to the "
         "latest completed session. count: max rows per instrument, newest first. fields: optional list of "
         "field names to return (e.g. ['TRDPRC_1','ACVOL_UNS'])."
@@ -54,7 +54,7 @@ class HistoricalPricingSummaries(Tool):
     input_schema = {
         "type": "object",
         "properties": {
-            "universe": {"type": "string", "description": "RIC or comma-separated RICs, e.g. NVDA.O"},
+            "universe": {"type": "string", "description": "RIC or comma-separated RICs, e.g. LITW.O"},
             "interval": {"type": "string", "enum": list(INTERVALS), "default": "P1D"},
             "tenor": {"type": "string", "description": "Look-back window, e.g. 10D, 6M, 1Y."},
             "start": {"type": "string", "format": "date"},
@@ -84,7 +84,7 @@ class HistoricalPricingSummaries(Tool):
         universe = args.get("universe")
         rics = [r.strip() for r in universe.split(",") if r.strip()] if isinstance(universe, str) else []
         if not rics:
-            issues.add("universe is required (e.g. 'NVDA.O')")
+            issues.add("universe is required (e.g. 'LITW.O')")
         raw_interval = str(args.get("interval", "P1D")).strip().upper()
         interval = ALIASES.get(raw_interval, raw_interval)
         if interval not in INTERVALS:

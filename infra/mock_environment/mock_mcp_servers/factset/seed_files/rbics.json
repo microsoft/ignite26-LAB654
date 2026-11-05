@@ -1,7 +1,7 @@
 {
  "_about": "Authored. Level 1-4 focus comes from the shared company universe; this file adds the level 5-6 focus and revenue segments (full six-level paths, shares of revenue in the latest fiscal year). Other years drift deterministically around these shares.",
  "companies": {
-  "NVDA": {
+  "LITW": {
    "focus": [
     "Graphics and AI Processors",
     "Data Center AI Accelerators"
@@ -29,7 +29,7 @@
     }
    ]
   },
-  "AMD": {
+  "ADTM": {
    "focus": [
     "Graphics and AI Processors",
     "Data Center AI Accelerators"
@@ -57,7 +57,7 @@
     }
    ]
   },
-  "AVGO": {
+  "RLCD": {
    "focus": [
     "Networking Semiconductors",
     "Custom AI Accelerators (ASICs)"
@@ -85,7 +85,7 @@
     }
    ]
   },
-  "INTC": {
+  "VANA": {
    "focus": [
     "Microprocessors",
     "PC CPUs"
@@ -109,7 +109,7 @@
     }
    ]
   },
-  "QCOM": {
+  "ADVW": {
    "focus": [
     "Wireless Semiconductors",
     "Mobile Application Processors"
@@ -133,7 +133,7 @@
     }
    ]
   },
-  "MU": {
+  "WDGV": {
    "focus": [
     "DRAM",
     "High Bandwidth Memory"
@@ -153,7 +153,7 @@
     }
    ]
   },
-  "TXN": {
+  "COHO": {
    "focus": [
     "Analog Semiconductors",
     "Power Management ICs"
@@ -177,7 +177,7 @@
     }
    ]
   },
-  "MRVL": {
+  "LMNA": {
    "focus": [
     "Networking Semiconductors",
     "Electro-Optics"

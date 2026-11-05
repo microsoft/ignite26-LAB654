@@ -4,7 +4,7 @@
 
 ## Productivity Scenario: Sales pitch prep (v4.1)
 
-Test_Salesforce · Teams · Outlook
+Salesforce_Lab · Teams · Outlook
 
 | **Lab** | Supercharge Copilot: Connect your work data & Get work done with Copilot Connectors (LAB654) |
 |---|---|
@@ -12,7 +12,7 @@ Test_Salesforce · Teams · Outlook
 | **Time budget** | 10 minutes: 3 core steps + 1 stretch |
 | **Surface** | Cowork |
 | **Lab user** | Emil Vanggaard, Zava |
-| **Connectors** | Test_Salesforce (mock MCP) · WorkIQ (Outlook mail and calendar, Teams meeting transcript) |
+| **Connectors** | Salesforce_Lab (mock MCP) · WorkIQ (Outlook mail and calendar, Teams meeting transcript) |
 
 ## 1. Framing
 
@@ -28,7 +28,7 @@ Test_Salesforce · Teams · Outlook
 
 | **Source** | **What learners see it do** | **Under the hood (internal only)** |
 |---|---|---|
-| **Salesforce CRM** | Account, opportunity, contacts, meetings, activity history, win/loss history against Boulder Innovations; logs the follow-up meeting on the opportunity | Test_Salesforce mock MCP + Salesforce skills package (`salesforce_v0_20260918_withConstraints`) |
+| **Salesforce CRM** | Account, opportunity, contacts, meetings, activity history, win/loss history against Boulder Innovations; logs the follow-up meeting on the opportunity | Salesforce_Lab mock MCP + Salesforce skills package (`salesforce_v0_20260918_withConstraints`) |
 | **Teams (1P)** | What the customer said on the pilot review call | WorkIQ (Teams meeting transcript) |
 | **Outlook (1P)** | Customer email that sets up the pitch; the pitch meeting; calendar for the follow-up | WorkIQ |
 
@@ -97,11 +97,11 @@ Run all steps in **one Cowork conversation**: Step 3 reuses the account and agen
 
 | **EXPECTED RESULT** |
 |---|
-| Quotes from the Oct 22 pilot review transcript in Teams: Atul on the Boulder Innovations quote ("about 20% under your list price") and "if you can get close to that we could sign this quarter"; Atul on Nanami wanting the all-in cost; Jahidi on the security review before the 400-store rollout.<br><br>Salesforce win/loss history against Boulder Innovations (Competitor = Boulder Innovations on both):<br>• *Wide World Importers – Aurora 320-store rollout*: Closed Won, $844,800. Won on all-in TCO: Boulder Innovations came to about $3,250 per store all-in against Zava's $2,640, with install bundled and the discount held to 12%.<br>• *Tailspin Toys – Aurora 120-store rollout*: Closed Lost, $360,000, Loss Reason Price. "We led with a discount and never showed the all-in TCO."<br><br>The recommendation: **don't match the 20%**. Lead with the all-in cost for 400 stores and offer 12% plus bundled install. That's the number Nanami asked for. |
+| Quotes from the Oct 22 pilot review transcript in Teams: Atul on the Boulder Innovations quote ("about 20% under your list price", about $2,400 per store) and "if you can get close to that we could sign this quarter"; Emil's breakdown of Boulder's offer (hub only, around $3,250 per store all-in once install and support are added) and his counter-offer (discount held to 12%, $2,640 per store against the $3,000 list, install bundled at no extra cost); Atul on Nanami wanting the all-in cost; Jahidi on the security review before the 400-store rollout.<br><br>Salesforce win/loss history against Boulder Innovations (Competitor = Boulder Innovations on both):<br>• *Wide World Importers – Aurora 320-store rollout*: Closed Won, $844,800. Won on all-in TCO, not sticker price.<br>• *Tailspin Toys – Aurora 120-store rollout*: Closed Lost, $360,000, Loss Reason Price. "We led with a discount and never showed the all-in TCO."<br><br>The recommendation: **don't match the 20%**. Lead with the all-in cost for 400 stores and offer 12% plus bundled install. That's the number Nanami asked for. |
 
 | **WOW MOMENT** |
 |---|
-| Copilot turns a headline price gap into an all-in cost argument, using what won and lost against the same competitor. |
+| One answer combines two sources. The competitor's offer and the counter-offer come from the Teams meeting, and Salesforce shows that leading with all-in cost beat the same competitor while leading with a discount lost. |
 
 | **IF IT GOES WRONG** |
 |---|
@@ -155,13 +155,13 @@ Run all steps in **one Cowork conversation**: Step 3 reuses the account and agen
 |---|
 | Atul, Jahidi and Nanami each use one email address everywhere: Salesforce contact (Atul, Jahidi), Outlook meeting attendee, Atul's email, Teams meeting participant. `call-prep` matches attendees to contacts by exact email. |
 
-### 5.1 Salesforce (Test_Salesforce mock)
+### 5.1 Salesforce (Salesforce_Lab mock)
 
 | **Owner** | Emil's Salesforce user owns the account, all opportunities below and the pitch Event. The skills read `scope: MINE` and stop (they don't widen) if it comes back empty. |
 |---|---|
 | **Account** | *Lakeshore Retail* (Retail, 12,000 employees, Type = Customer, Website = lakeshore-retail.com). |
 | **Opportunities** | • *Lakeshore Retail – Aurora 400-store rollout*: Proposal/Price Quote, $1,200,000 ($3,000 list per store), close Dec 31, Next Step "bring the all-in per-store and total cost". It must be the **only open** opportunity on the account; otherwise `schedule-meeting` asks which one.<br>• *Lakeshore Retail – Aurora pilot (50 stores)*: Closed Won, $150,000. |
-| **Win/loss history** | Two more opportunities owned by Emil, both with Competitor = Boulder Innovations:<br>• *Wide World Importers – Aurora 320-store rollout*: Closed Won, $844,800. Won on all-in TCO: Boulder Innovations about $3,250 per store all-in against Zava's $2,640; install bundled; discount held to 12%.<br>• *Tailspin Toys – Aurora 120-store rollout*: Closed Lost, $360,000, Loss Reason Price. "We led with a discount and never showed the all-in TCO." |
+| **Win/loss history** | Two more opportunities owned by Emil, both with Competitor = Boulder Innovations:<br>• *Wide World Importers – Aurora 320-store rollout*: Closed Won, $844,800. Description: won on all-in TCO, not sticker price. The pricing numbers are **not** in Salesforce; they are in the Teams meeting (5.2).<br>• *Tailspin Toys – Aurora 120-store rollout*: Closed Lost, $360,000, Loss Reason Price. "We led with a discount and never showed the all-in TCO." |
 | **Contacts** | On Lakeshore Retail:<br>• Atul Manohar, Director of Store Operations<br>• Jahidi Juma, IT Security Lead<br>• **Not** Nanami Nakayama: she must show up as new. |
 | **Pitch Event** | Fri Nov 20, 2026, 10:00–11:00 ET (same as the Outlook pitch meeting), "Lakeshore Retail – Aurora expansion pitch". WhoId = Atul; WhatId = the open opportunity. Description lists the attendees with emails: Atul Manohar, Nanami Nakayama (CFO), Jahidi Juma. |
 | **Activity history** | Completed Tasks "Pilot kickoff" and "30-day pilot check-in". Do **not** log the pilot review; that is the stretch. |
@@ -175,6 +175,9 @@ Lines that must be in it:
 - The pilot result, e.g. a 9% attach-rate lift in pilot stores.
 - Atul: Boulder Innovations quoted "about 20% under your list price".
 - Atul: "if you can get close to that we could sign this quarter".
+- Atul: he has only seen the per-store number, about $2,400.
+- Emil, the competitor offer: Boulder's $2,400 is the hub only; with install and support it lands around $3,250 per store all-in.
+- Emil, the counter-offer: hold the discount to 12% ($2,640 per store against the $3,000 list) and bundle install at no extra cost.
 - Jahidi: the security review must happen before the 400-store rollout.
 - Atul: "Nanami will want the all-in cost".
 
@@ -188,7 +191,7 @@ Lines that must be in it:
 
 ## 6. Validation status
 
-The v4 Salesforce calls were tested against the live Test_Salesforce mock on Nov 2, and the whole flow ran in Cowork as Emil: 20 Salesforce calls with no failures, including both writes returning HTTP 201. Verdict: feasible.
+The v4 Salesforce calls were tested against the live Salesforce_Lab mock on Nov 2, and the whole flow ran in Cowork as Emil: 20 Salesforce calls with no failures, including both writes returning HTTP 201. Verdict: feasible.
 
 | **#** | **Watch for** | **Details** |
 |---|---|---|

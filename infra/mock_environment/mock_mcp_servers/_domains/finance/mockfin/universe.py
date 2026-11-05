@@ -130,7 +130,7 @@ class Universe:
         hit = self._index.get(raw.upper())
         if hit:
             return hit
-        # Exchange suffixes: NVDA.OQ, NVDA US, NVDA-US-EQ ...
+        # Exchange suffixes: LITW.OQ, LITW US, LITW-US-EQ ...
         base = re.split(r"[.\s:-]", raw.upper())[0]
         hit = self._index.get(base)
         if hit and base:

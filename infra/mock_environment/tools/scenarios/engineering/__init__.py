@@ -2,8 +2,8 @@
 
 Source: docs/scenarios/engineering/scenario.md. The Atlassian data (Jira project
 AUR, Sprint 24, the Confluence space AUR) comes from the Rovo mock server's seed
-file, so the synced connectors here and the Test_Rovo MCP tools return the same
-records. GitHub data (PR #287) lives only in the Test_GitHub mock server.
+file, so the synced connectors here and the Rovo_Lab MCP tools return the same
+records. GitHub data (PR #287) lives only in the GitHub_Lab mock server.
 This module seeds:
 
 - Jira synced connector: the six Sprint 24 work items, AUR-142 the one at risk
@@ -200,7 +200,7 @@ def channelmessagereplies():
 
 
 # --- Synced connectors: Jira and Confluence ----------------------------------
-# Built from the Rovo mock's seed so the synced copies match what Test_Rovo returns. Links point at the mock's
+# Built from the Rovo mock's seed so the synced copies match what Rovo_Lab returns. Links point at the mock's
 # browse and wiki viewers so citations open.
 
 ROVO_DIR = Path(__file__).resolve().parents[3] / "mock_mcp_servers" / "atlassian"

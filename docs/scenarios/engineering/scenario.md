@@ -4,13 +4,13 @@
 >
 > IGNITE LAB654 | Engineering connectors lab | Fictional lab data
 >
-> **Lab build notes:** Jira and Confluence are **synced connectors** in the lab tenant (`customconnectors_engineering.jsonl` and `confluence_engineering.jsonl`). GitHub and Rovo are **MCP connectors**: Test_GitHub (`mock_mcp_servers/github`) and Test_Rovo (`mock_mcp_servers/atlassian`, plugin `mock_plugins/rovo`, built from *Rovo_CEA 9 (2) 1.zip*). The synced Jira and Confluence items are generated from the Rovo mock's seed file, so all three Atlassian sources return the same records, and their links open in the Rovo mock's viewer.
+> **Lab build notes:** Jira and Confluence are **synced connectors** in the lab tenant (`customconnectors_engineering.jsonl` and `confluence_engineering.jsonl`). GitHub and Rovo are **MCP connectors**: GitHub_Lab (`mock_mcp_servers/github`) and Rovo_Lab (`mock_mcp_servers/atlassian`, plugin `mock_plugins/rovo`, built from *Rovo_CEA 9 (2) 1.zip*). The synced Jira and Confluence items are generated from the Rovo mock's seed file, so all three Atlassian sources return the same records, and their links open in the Rovo mock's viewer.
 
 ## At a glance
 
 | | |
 |---|---|
-| **Experience** | Part A in Copilot Chat: Jira and Confluence (synced) + Test_GitHub. Part B in Cowork: Teams + Test_Rovo `sprint-to-slides` skill. |
+| **Experience** | Part A in Copilot Chat: Jira and Confluence (synced) + GitHub_Lab. Part B in Cowork: Teams + Rovo_Lab `sprint-to-slides` skill. |
 | **Timing** | 15-minute target: setup 2 min; Steps 1-4: 2 / 4 / 3 / 4 min; wrap-up 1 min. Confirm in a dry run. |
 | **Take home** | A cited sprint status, the real blocker behind the at-risk item, a Teams message to the approver, and a sprint status slide. |
 
@@ -40,7 +40,7 @@ Emil opens the Sprint 24 board. Almost everything is on track. One item isn't, a
 
 | | |
 |---|---|
-| **Time / surface** | 4 min / Copilot Chat / Jira + Confluence (synced) + Test_GitHub |
+| **Time / surface** | 4 min / Copilot Chat / Jira + Confluence (synced) + GitHub_Lab |
 | **Query to fire** | What's the current status of AUR-142, and what is it waiting on? Check Jira, Confluence and GitHub. |
 | **Expected response** | Joins three sources:<br>**Jira** (tracking): AUR-142 is In Progress and at risk. Triin's latest comment says the event-driven work depends on a design decision still waiting for platform sign-off, so she can't give a date.<br>**Confluence** (record): the *Lakeshore Retail pilot - delivery commitments* page commits to the November 20 cutover and November 23 expansion, requires reconnected hubs to show Online on the event-driven service, and requires platform sign-off for any change to reconnect handling. No date has been shared with the customer. *ADR-014* is **Proposed, awaiting approval**, with **Tama Surya as decision owner**; Triin asked Tama to decide on October 29.<br>**GitHub** (code): PR #287 is open and unmerged. It fixes only the legacy polling path; Tama requested changes for the event-driven service and new-service tests.<br>**Conclusion:** the blocker is Tama's approval of ADR-014. After that, Triin implements Option B on PR #287, Maria adds event-driven reconnect tests, and Tama re-reviews. Cites the Jira item, both Confluence pages and the PR. |
 | **Seed names only** | J5: AUR-142<br>C2: Lakeshore Retail pilot - delivery commitments<br>C3: ADR-014: Reconnect state handling on the event-driven status service<br>G1: PR #287 - Fix stale offline state after reconnect<br>G2: Tama's review - changes requested |
@@ -64,12 +64,12 @@ Emil opens the Sprint 24 board. Almost everything is on track. One item isn't, a
 
 | | |
 |---|---|
-| **Time / surface** | 4 min / Cowork / Test_Rovo `sprint-to-slides` skill |
+| **Time / surface** | 4 min / Cowork / Rovo_Lab `sprint-to-slides` skill |
 | **Query to fire** | /skill sprint-to-slides<br>Create one PowerPoint slide summarizing Aurora Sprint 24 for engineering leadership: what's on track, the one item at risk, what it's waiting on, and the next steps. |
-| **Expected response** | Uses Test_Rovo to read Sprint 24 from Jira (and ADR-014 from Confluence if needed). Produces one slide: sprint goal and dates; five items on track or done; AUR-142 at risk; blocker: ADR-014 awaiting Tama's approval; next steps and owners (Tama approves, Triin implements, Maria tests, Tama re-reviews); key dates November 18 dry run, November 20 cutover, November 23 expansion; sources. Doesn't invent velocity, story points or a delivery date. |
-| **Seed names only** | Sprint 241: Aurora Sprint 24 (board 57)<br>S1: Test_Rovo sprint-to-slides skill |
+| **Expected response** | Uses Rovo_Lab to read Sprint 24 from Jira (and ADR-014 from Confluence if needed). Produces one slide: sprint goal and dates; five items on track or done; AUR-142 at risk; blocker: ADR-014 awaiting Tama's approval; next steps and owners (Tama approves, Triin implements, Maria tests, Tama re-reviews); key dates November 18 dry run, November 20 cutover, November 23 expansion; sources. Doesn't invent velocity, story points or a delivery date. |
+| **Seed names only** | Sprint 241: Aurora Sprint 24 (board 57)<br>S1: Rovo_Lab sprint-to-slides skill |
 | **Aha in the room** | A partner skill in Cowork turns live Atlassian data into a leadership-ready slide in one step. |
-| **Presenter note** | The skill's default flow is a report plus a slide outline, with an optional Confluence archive. This lab asks for one .pptx slide only. Verify that narrowed output and the /skill selection in Cowork. Test_Rovo's Confluence writes are kept per conversation, so an archive doesn't affect other attendees. |
+| **Presenter note** | The skill's default flow is a report plus a slide outline, with an optional Confluence archive. This lab asks for one .pptx slide only. Verify that narrowed output and the /skill selection in Cowork. Rovo_Lab's Confluence writes are kept per conversation, so an archive doesn't affect other attendees. |
 
 ## Wrap-up (1 minute)
 
@@ -80,13 +80,13 @@ Emil opens the Sprint 24 board. Almost everything is on track. One item isn't, a
 
 | | |
 |---|---|
-| **Validate access** | Confirm the Jira and Confluence synced connectors have finished indexing in the lab tenant, and that Test_GitHub and Test_Rovo are connected in Copilot Chat and Cowork. All recipients must be lab identities. |
-| **Validate Atlassian data** | Synced Jira and Confluence items and Test_Rovo all come from `mock_mcp_servers/atlassian/seed_files/seed.json`. Links in citations open the Rovo mock's viewer (`/browse/AUR-142`, `/wiki/spaces/AUR/pages/98457`). |
-| **Validate GitHub** | Confirm Test_GitHub finds PR #287 from "AUR-142" and returns Tama's changes-requested review. Writes are kept per conversation, and merging is blocked by branch protection while the review stands. |
+| **Validate access** | Confirm the Jira and Confluence synced connectors have finished indexing in the lab tenant, and that GitHub_Lab and Rovo_Lab are connected in Copilot Chat and Cowork. All recipients must be lab identities. |
+| **Validate Atlassian data** | Synced Jira and Confluence items and Rovo_Lab all come from `mock_mcp_servers/atlassian/seed_files/seed.json`. Links in citations open the Rovo mock's viewer (`/browse/AUR-142`, `/wiki/spaces/AUR/pages/98457`). |
+| **Validate GitHub** | Confirm GitHub_Lab finds PR #287 from "AUR-142" and returns Tama's changes-requested review. Writes are kept per conversation, and merging is blocked by branch protection while the review stands. |
 | **Validate skill** | Verify one-slide .pptx output from sprint-to-slides in Cowork, and that the Teams message is shown for approval before it's sent. |
 | **Dry run / reset** | Measure the full flow. All seeded evidence is dated on or before October 30, 2026 (the tenant is loaded once); the dry run, cutover and expansion fall after the November 17-19 lab. Prompts use no relative days. Teams messages to Tama are real posts in the lab tenant; isolate by seat or keep them as drafts. |
 
-## Appendix A: Jira (synced connector and Test_Rovo)
+## Appendix A: Jira (synced connector and Rovo_Lab)
 
 Project AUR, board 57. Sprint 241, *Aurora Sprint 24*, October 26 - November 20, 2026. Goal: cut the pilot stores over to the event-driven status service on November 20 and have the Lakeshore Retail pilot ready for its November 23 expansion.
 
@@ -99,7 +99,7 @@ Project AUR, board 57. Sprint 241, *Aurora Sprint 24*, October 26 - November 20,
 | J5 | AUR-142 Aurora hubs remain offline after reconnect | In Progress | Triin Lepp | **At risk.** Comments: October 26, "I have started working on the fix."; October 29, Triin: legacy fix in review, event-driven work waits on the design decision, no date until it's approved; October 29, Kerry: only Sprint 24 item tied to November 23 that isn't on track. Jira has the delay signal only, no ETA and no PR link. |
 | J6 | AUR-151 Custom dashboard filters for the store status view | To Do | Triin Lepp | Low-priority stretch, no pilot dependency |
 
-## Appendix B: Confluence (synced connector and Test_Rovo)
+## Appendix B: Confluence (synced connector and Rovo_Lab)
 
 Space AUR, *Aurora Engineering*.
 
@@ -115,8 +115,8 @@ Space AUR, *Aurora Engineering*.
 
 | ID | Source | Content |
 |---|---|---|
-| G1 | Test_GitHub | PR #287, *Fix stale offline state after reconnect*, zava-lab/aurora-status. Author Triin Lepp. Open, unmerged. Body references AUR-142; fixes the legacy polling path only; event-driven coverage not implemented. Legacy checks pass as of October 28, 17:00. Three merged decoy PRs on the same repo. |
-| G2 | Test_GitHub | Tama Surya, October 28, changes requested: implement the equivalent correction on the event-driven service, add and run reconnect tests there, then request another platform review. |
+| G1 | GitHub_Lab | PR #287, *Fix stale offline state after reconnect*, zava-lab/aurora-status. Author Triin Lepp. Open, unmerged. Body references AUR-142; fixes the legacy polling path only; event-driven coverage not implemented. Legacy checks pass as of October 28, 17:00. Three merged decoy PRs on the same repo. |
+| G2 | GitHub_Lab | Tama Surya, October 28, changes requested: implement the equivalent correction on the event-driven service, add and run reconnect tests there, then request another platform review. |
 | E1 | Outlook | *Aurora pilot - offline status still wrong*: Atul's report (October 23), Emil's reply that engineering is working on a fix (October 26), Atul asking whether it will be fixed before November 23 (October 29). No date or workaround promised. |
 | T1 | Teams | Aurora Engineering team, Platform Migration channel: Tama confirms the November 20 cutover and that a legacy-only fix won't resolve the pilot's issue; Maria asks for new-path reconnect coverage; Emil says LT approves any deferral and no release date has been committed. |
 | T2 | Teams | Engineering channel (Sprint 24 kickoff from Kerry) and the *Aurora Engineering LT* group chat. Directory: Emil Vanggaard, Atul Manohar, Triin Lepp, Maria Oliva, Tama Surya, Kerry Allen. |

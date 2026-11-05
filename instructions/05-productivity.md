@@ -1,6 +1,6 @@
 # Productivity track: Sales pitch prep
 
-> **Duration:** ~10 minutes (+ stretch) | **Connectors:** Test_Salesforce, Teams, Outlook | **Surface:** Copilot Cowork
+> **Duration:** ~10 minutes (+ stretch) | **Connectors:** Salesforce_Lab, Teams, Outlook | **Surface:** Copilot Cowork
 
 ## What you'll take away
 
@@ -20,14 +20,14 @@ You'll prep the call, handle the price objection and book the security review, w
 ## Before you start
 
 - [ ] You completed [Getting started with connectors](02-getting-started.md).
-- [ ] **Test_Salesforce** shows as connected.
+- [ ] **Salesforce_Lab** shows as connected.
 - [ ] Open **Copilot Cowork** and start a new task. Run every step in this one conversation: Step 3 reuses what Copilot learned in Steps 1 and 2, and your Salesforce changes are kept only within that conversation.
 
-To see what Copilot will read, open the [Lakeshore Retail account](https://mock-salesforce.yellowsand-9530f5dc.eastus.azurecontainerapps.io/lightning/r/Account/001Hp0000000001IAA/view) in Test_Salesforce.
+To see what Copilot will read, open the [Lakeshore Retail account](https://mock-salesforce.yellowsand-9530f5dc.eastus.azurecontainerapps.io/lightning/r/Account/001Hp0000000001IAA/view) in Salesforce_Lab.
 
 ## Step 1: Prep the call
 
-*Copilot Cowork · Test_Salesforce call-prep skill · Outlook*
+*Copilot Cowork · Salesforce_Lab call-prep skill · Outlook*
 
 ```text
 Prep me for my Lakeshore Retail expansion pitch.
@@ -47,7 +47,7 @@ The layout can vary between runs. The content is what matters.
 
 ## Step 2: Handle the price objection
 
-*Same conversation · Teams meeting transcript · Test_Salesforce win/loss history*
+*Same conversation · Teams meeting transcript · Salesforce_Lab win/loss history*
 
 ```text
 Lakeshore Retail says Boulder Innovations is 20% cheaper. How should I handle that? Use what they said on the pilot review call and our win/loss history against Boulder Innovations.
@@ -55,17 +55,21 @@ Lakeshore Retail says Boulder Innovations is 20% cheaper. How should I handle th
 
 **What to look for:**
 
-- Quotes from the Oct 22 pilot review transcript in Teams: Atul on the Boulder Innovations quote ("about 20% under your list price") and "sign this quarter", Atul on Nanami wanting the all-in cost, and Jahidi on the security review before the 400-store rollout.
-- The win in Salesforce: [*Wide World Importers – Aurora 320-store rollout*](https://mock-salesforce.yellowsand-9530f5dc.eastus.azurecontainerapps.io/lightning/r/Opportunity/006Hp0000000003IAA/view), Closed Won, $844,800 against Boulder Innovations. Boulder Innovations came to about $3,250 per store all-in, against Zava's $2,640, with install bundled and the discount held to 12%.
+- From the Oct 22 pilot review transcript in Teams:
+  - Atul on the Boulder Innovations quote ("about 20% under your list price", about $2,400 per store) and "sign this quarter".
+  - Your breakdown of Boulder's offer: the $2,400 is the hub only, and it lands around $3,250 per store all-in once install and support are added.
+  - Your counter-offer: hold the discount to 12% ($2,640 per store against the $3,000 list) and bundle install at no extra cost.
+  - Atul on Nanami wanting the all-in cost, and Jahidi on the security review before the 400-store rollout.
+- The win in Salesforce: [*Wide World Importers – Aurora 320-store rollout*](https://mock-salesforce.yellowsand-9530f5dc.eastus.azurecontainerapps.io/lightning/r/Opportunity/006Hp0000000003IAA/view), Closed Won, $844,800 against Boulder Innovations, won on all-in TCO rather than sticker price.
 - The loss: [*Tailspin Toys – Aurora 120-store rollout*](https://mock-salesforce.yellowsand-9530f5dc.eastus.azurecontainerapps.io/lightning/r/Opportunity/006Hp0000000004IAA/view), Closed Lost on price: "We led with a discount and never showed the all-in TCO."
 - The recommendation: **don't match the 20%**. Lead with the all-in cost for 400 stores, and offer 12% plus bundled install. That's the number Nanami asked for.
 
 > [!TIP]
-> Copilot used what won and lost against the same competitor to turn a headline price gap into an all-in cost argument.
+> Copilot combined two sources for one answer. The numbers came from the Teams meeting, and the proof that the approach works came from Salesforce, where Zava beat the same competitor on all-in cost and lost to it when it led with a discount.
 
 ## Step 3: Book the security review and log it
 
-*Same conversation · Test_Salesforce schedule-meeting skill · Outlook calendar · write actions*
+*Same conversation · Salesforce_Lab schedule-meeting skill · Outlook calendar · write actions*
 
 ```text
 Send Jahidi and Atul a calendar invite for a 45-minute Aurora security review next week, and log it on the Lakeshore Retail opportunity.
@@ -85,7 +89,7 @@ Send Jahidi and Atul a calendar invite for a 45-minute Aurora security review ne
 
 ## Stretch: Log the pilot review call
 
-*Same conversation · Test_Salesforce log-activity skill · write action*
+*Same conversation · Salesforce_Lab log-activity skill · write action*
 
 ```text
 Log the pilot review call on the Lakeshore Retail opportunity.

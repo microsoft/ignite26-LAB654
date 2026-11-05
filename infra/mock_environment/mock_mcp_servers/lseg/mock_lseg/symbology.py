@@ -21,7 +21,7 @@ class SymbologyLookup(Tool):
     title = "LSEG symbology lookup"
     description = (
         "Convert instrument or company identifiers between types. values: identifier(s), comma-separated or "
-        f"an array (e.g. 'NVDA' or ['US67066G1040']). from: optional input type, auto-detected if omitted. "
+        f"an array (e.g. 'LITW' or ['US9901011075']). from: optional input type, auto-detected if omitted. "
         f"to: output types (default {DEFAULT_TO}). Types: {', '.join(TYPES)}."
     )
     validate_args = False
@@ -48,7 +48,7 @@ class SymbologyLookup(Tool):
         values = raw if isinstance(raw, list) else str(raw or "").split(",")
         values = [str(v).strip() for v in values if str(v).strip()]
         if not values:
-            issues.add("values is required (e.g. 'NVDA')")
+            issues.add("values is required (e.g. 'LITW')")
         elif len(values) > MAX_VALUES:
             issues.add(f"values must contain at most {MAX_VALUES} identifiers")
         source = args.get("from")

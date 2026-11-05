@@ -6,10 +6,10 @@
 
 | Track | Connectors | What Copilot finished |
 |---|---|---|
-| Finance | LSEG, FactSet, Moody's | An NVIDIA investment committee pack in Excel and a memo in Word |
+| Finance | LSEG, FactSet, Moody's | A Litware investment committee pack in Excel and a memo in Word |
 | Legal | Work IQ, iManage | Flags and a redline in Word, then a negotiation pack in Cowork |
-| Productivity | Test_Salesforce, Teams, Outlook | A call brief, a grounded answer to a price objection, and a booked and logged meeting |
-| Engineering | Jira, Confluence, Test_GitHub, Test_Rovo, Teams | The sprint's one at-risk item and what it's waiting on, a Teams message to the approver, and a sprint slide |
+| Productivity | Salesforce_Lab, Teams, Outlook | A call brief, a grounded answer to a price objection, and a booked and logged meeting |
+| Engineering | Jira, Confluence, GitHub_Lab, Rovo_Lab, Teams | The sprint's one at-risk item and what it's waiting on, a Teams message to the approver, and a sprint slide |
 | Bring your own app | Zava Expense (custom MCP) | An expense report checked, fixed and submitted, plus a spend summary in Excel |
 
 ## Key takeaways
@@ -35,7 +35,7 @@ Enable the connectors that matter most to your organization. Start with the syst
 ## Try it on your own
 
 - Try another track.
-- **Finance:** swap NVIDIA for another company and rerun the prompts.
+- **Finance:** swap Litware for another company and rerun the prompts.
 - **Productivity:** run the stretch step and send the pre-read draft.
 
 ## Continue your learning

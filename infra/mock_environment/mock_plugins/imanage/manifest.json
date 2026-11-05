@@ -1,7 +1,7 @@
 {
     "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.29/MicrosoftTeams.schema.json",
     "manifestVersion": "1.29",
-    "version": "1.2.1",
+    "version": "1.2.2",
     "id": "a995d0ac-4143-4d1c-b58c-053d2a39f519",
     "developer": {
         "name": "Tezan Sahu",
@@ -10,8 +10,8 @@
         "termsOfUseUrl": "https://github.com/microsoft/ignite26-LAB654"
     },
     "name": {
-        "short": "Test_iManage",
-        "full": "Test_iManage"
+        "short": "iManage_Lab",
+        "full": "iManage_Lab"
     },
     "description": {
         "short": "Search your documents, matters, folders, and recent activity.",
@@ -25,7 +25,7 @@
     "agentConnectors": [
         {
             "id": "b280ab9c-6aa5-44be-ae2c-fb3588123df9",
-            "displayName": "Test_iManage",
+            "displayName": "iManage_Lab",
             "description": "Use this tool to search and retrieve content from iManage Work, including documents, matters, folders, libraries, users, workspace templates, document versions, and recent user actions.\nKeywords: imanage, imanage work, imanage cloud, work 10, imanage10, file, folder, archive, brief, dossier, matter, record, portfolio, repository, briefcase",
             "toolSource": {
                 "remoteMcpServer": {

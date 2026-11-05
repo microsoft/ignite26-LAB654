@@ -25,7 +25,7 @@ class QaCompanyFundamentals(Tool):
     title = "LSEG Worldscope company fundamentals"
     description = (
         "Retrieve Worldscope company fundamentals (QA Direct) by item code. Each request: "
-        "{dataType:'qa_company_fundamentals', options:{identifier (ticker, e.g. 'NVDA'), type ('Ticker'), "
+        "{dataType:'qa_company_fundamentals', options:{identifier (ticker, e.g. 'LITW'), type ('Ticker'), "
         "measures (comma-separated Worldscope item codes, e.g. '1001,1100,5201'), year (comma-separated fiscal "
         "years, e.g. '2023,2024,2025'), freq ('A' annual | 'Q' quarterly)}}. Common items: 1001 net sales, "
         "1051 COGS, 1100 gross income, 1250 operating income, 1551 net income, 2999 total assets, "

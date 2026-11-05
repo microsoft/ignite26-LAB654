@@ -1,6 +1,6 @@
 # Engineering track: One item at risk. Who is it waiting on?
 
-> **Duration:** ~15 minutes | **Connectors:** Jira and Confluence (synced), Test_GitHub, Test_Rovo, Teams | **Surfaces:** Copilot Chat, Copilot Cowork
+> **Duration:** ~15 minutes | **Connectors:** Jira and Confluence (synced), GitHub_Lab, Rovo_Lab, Teams | **Surfaces:** Copilot Chat, Copilot Cowork
 
 ## What you'll take away
 
@@ -30,7 +30,7 @@ You won't change any code or ship a release. In **Copilot Chat** you'll investig
 ## Before you start
 
 - [ ] You completed [Getting started with connectors](02-getting-started.md).
-- [ ] **Test_GitHub** and **Test_Rovo** show as connected.
+- [ ] **GitHub_Lab** and **Rovo_Lab** show as connected.
 - [ ] The **Jira** and **Confluence** synced connectors are available in your tenant (your facilitator set them up).
 
 To see what Copilot will read, open the [Aurora Sprint 24 board](https://mock-atlassian.yellowsand-9530f5dc.eastus.azurecontainerapps.io/jira/software/projects/AUR/boards/57), the [ADR-014 page](https://mock-atlassian.yellowsand-9530f5dc.eastus.azurecontainerapps.io/wiki/spaces/AUR/pages/98457) in Confluence, and the [aurora-status pull requests](https://mock-github.yellowsand-9530f5dc.eastus.azurecontainerapps.io/zava-lab/aurora-status/pulls) in GitHub.
@@ -56,7 +56,7 @@ What's the status of Aurora Sprint 24? Is anything at risk for the Lakeshore Ret
 
 ### Step 2: What's really going on with AUR-142?
 
-*Same chat · Jira · Confluence · Test_GitHub*
+*Same chat · Jira · Confluence · GitHub_Lab*
 
 ```text
 What's the current status of AUR-142, and what is it waiting on? Check Jira, Confluence and GitHub.
@@ -94,7 +94,7 @@ Send Tama Surya a Teams message. Ask Tama to approve ADR-014 so Triin can start 
 
 ### Step 4: Turn the sprint into a slide
 
-*Same Cowork task · Test_Rovo sprint-to-slides skill*
+*Same Cowork task · Rovo_Lab sprint-to-slides skill*
 
 ```text
 /skill sprint-to-slides

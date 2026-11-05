@@ -1,6 +1,6 @@
 # Salesforce mock server
 
-Mock of the Salesforce Hosted MCP server for the [productivity scenario](../../../../docs/scenarios/productivity/scenario.md) and [lab part 5](../../../../instructions/05-productivity.md). In the lab it appears as the **Test_Salesforce** connector. See the [mock servers README](../README.md) for the shared framework and how to run, test and deploy.
+Mock of the Salesforce Hosted MCP server for the [productivity scenario](../../../../docs/scenarios/productivity/scenario.md) and [lab part 5](../../../../instructions/05-productivity.md). In the lab it appears as the **Salesforce_Lab** connector. See the [mock servers README](../README.md) for the shared framework and how to run, test and deploy.
 
 It serves a small Sales Cloud org for **Zava**. Emil Vanggaard owns the Lakeshore Retail account and its open opportunity, and the pitch meeting is logged on it. Copilot can read the org with SOQL, GraphQL, search and sObject reads, and create, update or delete records. Changes are kept per conversation, and a Lightning Experience look-alike viewer shows them.
 

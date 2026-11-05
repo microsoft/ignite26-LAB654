@@ -1,7 +1,7 @@
 """Productivity scenario tenant seed data (sales pitch prep, Lakeshore Retail).
 
 Source: docs/scenarios/productivity/scenario.md section 5. Salesforce data lives
-in the Test_Salesforce mock server, not here. This module seeds:
+in the Salesforce_Lab mock server, not here. This module seeds:
 
 - Atul's pre-pitch email to Emil (Nanami is not cc'd: she has no email history)
 - The pitch meeting (Fri Nov 20, 2026), busy blocks Nov 23-25 and out of office
@@ -157,8 +157,10 @@ _CUES = [
     ("Atul Manohar", "That's where I need to be straight with you. We've had Boulder Innovations in as well, and they quoted about 20% under your list price."),
     ("Atul Manohar", "If you can get close to that we could sign this quarter. I'd rather stay with Aurora, the pilot has gone well, but price is going to come up."),
     ("Emil Vanggaard", "Understood. Is that 20% on the hub alone, or does it include install and support?"),
-    ("Atul Manohar", "Honestly I'm not sure. I've only seen the per-store number."),
-    ("Atul Manohar", "And Nanami will want the all-in cost. She's joining the pitch, and she'll look at the total for 400 stores, not the sticker price."),
+    ("Atul Manohar", "Honestly I'm not sure. I've only seen the per-store number, about $2,400."),
+    ("Emil Vanggaard", "That's in line with what we've seen from Boulder at other retailers. The $2,400 is the hub only. Once their install and support are added, it usually lands around $3,250 per store all-in."),
+    ("Emil Vanggaard", "So rather than match the 20%, here's what I can put forward: we hold the discount to 12%, that's $2,640 per store against our $3,000 list, and we bundle install at no extra cost."),
+    ("Atul Manohar", "That's a better conversation than the sticker price. And Nanami will want the all-in cost. She's joining the pitch, and she'll look at the total for 400 stores, not the sticker price."),
     ("Emil Vanggaard", "That's helpful. I'll bring an all-in, per-store and total view for Nanami."),
     ("Jahidi Juma", "From the IT side, one thing before we go any further. We need a security review before the 400-store rollout. The pilot was a small footprint, so we let it through on a lighter check."),
     ("Jahidi Juma", "For 400 stores I need to see your security documentation, where the data is stored, and confirm nothing captures customer PII in store."),

@@ -6,14 +6,14 @@ Microsoft 365 app packages for the lab's third-party connectors. Each package is
 
 | Folder | Name | Skills | Mock MCP server | Source |
 |---|---|---|---|---|
-| `lseg/` | Test_LSEG | 8 | `https://mock-lseg.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` | `gim-home/skill-studio`: `connector-skills-packages/lseg/MOSified/v0_20260918/basic` |
-| `moodys/` | Test_Moodys | 7 | `https://mock-moodys.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` | `gim-home/skill-studio`: `connector-skills-packages/moodys/MOSified/v0_20260918/withConstraints` |
-| `factset/` | Test_FactSet | None | `https://mock-factset.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` | `gim-home/M365FCCMOSPackages`: `mos-packages/factset/inDev/factset.zip` |
-| `imanage/` | Test_iManage | None | `https://mock-imanage.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` | `gim-home/M365FCCMOSPackages`: `mos-packages/imanage-work/inDev/imanage-work.zip` |
-| `salesforce/` | Test_Salesforce | 37 | `https://mock-salesforce.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` | `gim-home/skill-studio`: `connector-skills-packages/salesforce/MOSified/v0_20260918/withConstraints` |
-| `rovo/` | Test_Rovo | 4 | `https://mock-atlassian.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` (Jira and Confluence) | Atlassian Rovo package `Rovo_CEA 9 (2) 1.zip` (Rovo for Microsoft Teams, version `2026.04.11`) |
-| `github/` | Test_GitHub | None | `https://mock-github.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` | `gim-home/M365FCCMOSPackages`: `mos-packages/github/inDev/github.zip` |
-| `zava_expense/` | Test_Zava Expense | 1 | `https://mock-zava-expense.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` | Written for the lab (no real connector); skill `zava-travel-policy` |
+| `lseg/` | LSEG_Lab | 8 | `https://mock-lseg.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` | `gim-home/skill-studio`: `connector-skills-packages/lseg/MOSified/v0_20260918/basic` |
+| `moodys/` | Moodys_Lab | 7 | `https://mock-moodys.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` | `gim-home/skill-studio`: `connector-skills-packages/moodys/MOSified/v0_20260918/withConstraints` |
+| `factset/` | FactSet_Lab | None | `https://mock-factset.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` | `gim-home/M365FCCMOSPackages`: `mos-packages/factset/inDev/factset.zip` |
+| `imanage/` | iManage_Lab | None | `https://mock-imanage.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` | `gim-home/M365FCCMOSPackages`: `mos-packages/imanage-work/inDev/imanage-work.zip` |
+| `salesforce/` | Salesforce_Lab | 37 | `https://mock-salesforce.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` | `gim-home/skill-studio`: `connector-skills-packages/salesforce/MOSified/v0_20260918/withConstraints` |
+| `rovo/` | Rovo_Lab | 4 | `https://mock-atlassian.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` (Jira and Confluence) | Atlassian Rovo package `Rovo_CEA 9 (2) 1.zip` (Rovo for Microsoft Teams, version `2026.04.11`) |
+| `github/` | GitHub_Lab | None | `https://mock-github.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` | `gim-home/M365FCCMOSPackages`: `mos-packages/github/inDev/github.zip` |
+| `zava_expense/` | Zava Expense_Lab | 1 | `https://mock-zava-expense.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` | Written for the lab (no real connector); skill `zava-travel-policy` |
 
 ## Changes from the source packages
 
@@ -21,7 +21,7 @@ Icons and `skills/` are copied unchanged. `addendum.json` (internal publishing r
 
 | Field | Change | Why |
 |---|---|---|
-| `name`, `agentConnectors[].displayName` | `Test_<connector>` | Shows it is a test server |
+| `name`, `agentConnectors[].displayName` | `<connector>_Lab` | Shows it is a lab mock server |
 | `id`, `agentConnectors[].id` | New GUIDs | Avoids clashing with the real package in the same tenant |
 | `developer` | Tezan Sahu, with this repo's URL for the website, privacy and terms links | Not published by Microsoft or the data provider |
 | `mcpServerUrl` | Mock server URL | Serves mock data |
@@ -34,7 +34,7 @@ Icons and `skills/` are copied unchanged. `addendum.json` (internal publishing r
 
 ## Build packages
 
-The ready-to-upload packages are `test_lseg.zip`, `test_moodys.zip`, `test_factset.zip`, `test_imanage.zip`, `test_salesforce.zip`, `test_rovo.zip`, `test_github.zip` and `test_zava_expense.zip` in this folder. After changing a plugin, rebuild them:
+The ready-to-upload packages are `lseg_lab.zip`, `moodys_lab.zip`, `factset_lab.zip`, `imanage_lab.zip`, `salesforce_lab.zip`, `rovo_lab.zip`, `github_lab.zip` and `zava_expense_lab.zip` in this folder. After changing a plugin, rebuild them:
 
 ```powershell
 python infra\mock_environment\mock_plugins\build_plugins.py              # all plugins
@@ -42,6 +42,6 @@ python infra\mock_environment\mock_plugins\build_plugins.py lseg moodys  # selec
 python infra\mock_environment\mock_plugins\build_plugins.py --list       # list plugins
 ```
 
-Any subfolder with a `manifest.json` counts as a plugin. The script checks the manifest, icons and skill folders before building `test_<folder>.zip`, with `manifest.json` at the root.
+Any subfolder with a `manifest.json` counts as a plugin. The script checks the manifest, icons and skill folders before building `<folder>_lab.zip`, with `manifest.json` at the root.
 
 If a mock server URL changes, update `mcpServerUrl` in that package's `manifest.json` and bump `version`.

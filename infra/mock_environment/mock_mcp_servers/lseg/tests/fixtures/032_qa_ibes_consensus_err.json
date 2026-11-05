@@ -1,5 +1,5 @@
 {
  "name": "lseg-qa_ibes_consensus",
- "input": "{\n  \"requests\": \"[{\\\"dataType\\\": \\\"qa_ibes_consensus\\\", \\\"options\\\": {\\\"ticker\\\": \\\"NVDA\\\", \\\"tickerType\\\": \\\"Ticker\\\", \\\"measures\\\": [\\\"Eps\\\", \\\"Rev\\\"], \\\"periodType\\\": \\\"Quarter\\\", \\\"periodIndexStart\\\": 1, \\\"periodIndexEnd\\\": 2}}]\"\n}",
+ "input": "{\n  \"requests\": \"[{\\\"dataType\\\": \\\"qa_ibes_consensus\\\", \\\"options\\\": {\\\"ticker\\\": \\\"LITW\\\", \\\"tickerType\\\": \\\"Ticker\\\", \\\"measures\\\": [\\\"Eps\\\", \\\"Rev\\\"], \\\"periodType\\\": \\\"Quarter\\\", \\\"periodIndexStart\\\": 1, \\\"periodIndexEnd\\\": 2}}]\"\n}",
  "result": "{\n  \"message\": \"MCP server 'lseg': ❌ **Validation Error**\\n\\nPlease fix the following issues:\\n• requests must be an array of QA IBES operations. Valid request example: {\\\"requests\\\":[{\\\"dataType\\\":\\\"qa_ibes_consensus\\\",\\\"options\\\":{\\\"ticker\\\":\\\"MSFT\\\",\\\"measures\\\":[\\\"Eps\\\",\\\"Rev\\\"],\\\"periodType\\\":\\\"Year\\\",\\\"periodIndexStart\\\":1,\\\"periodIndexEnd\\\":3}}]}\\n\\n**Suggested action**: retry with corrected parameter\",\n  \"code\": \"failure\"\n}"
 }

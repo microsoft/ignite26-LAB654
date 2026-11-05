@@ -1,7 +1,7 @@
 """Build Microsoft 365 app package ZIPs for the mock plugins.
 
 Every subfolder with a manifest.json is a plugin. Each builds to
-test_<folder>.zip next to this script, with manifest.json at the root.
+<folder>_lab.zip next to this script, with manifest.json at the root.
 
 Usage:
     python build_plugins.py              # build all plugins
@@ -45,7 +45,7 @@ def validate(plugin_dir: Path) -> list[str]:
 def build(name: str) -> Path:
     plugin_dir = ROOT / name
     files = sorted(f for f in plugin_dir.rglob("*") if f.is_file())
-    out = ROOT / f"test_{name}.zip"
+    out = ROOT / f"{name}_lab.zip"
     with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as zf:
         for f in files:
             info = zipfile.ZipInfo(f.relative_to(plugin_dir).as_posix(), FIXED_DATE)

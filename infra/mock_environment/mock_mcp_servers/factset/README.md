@@ -6,7 +6,7 @@ Mock of the FactSet MCP server for the [finance scenario](../../../../docs/scena
 
 | Prompt | What Copilot asks FactSet for |
 |--------|-------------------------------|
-| 1b | 5-year gross margin and ROIC for NVIDIA, AMD and Broadcom |
+| 1b | 5-year gross margin and ROIC for Litware, A. Datum and Relecloud |
 | 1c | Indirectly: the one-line verdict draws on 1b |
 
 ## Tools

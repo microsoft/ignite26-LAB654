@@ -1,10 +1,10 @@
-"""Finance scenario tenant seed data (NVIDIA investment committee).
+"""Finance scenario tenant seed data (Litware investment committee).
 
 Source: docs/scenarios/finance/scenario.md (LAB654_Finance_Track_OnePager.docx).
 The one-pager asks for only one piece of M365 data:
 
 - Trigger 1:1 chat, Kristian to Emil, Friday 4:00 PM: "Committee wants a view
-  on NVIDIA Monday. Should we add more? Bring a short memo."
+  on Litware Monday. Should we add more? Bring a short memo."
 
 Everything else (earnings, consensus, peer margins, credit ratings) comes from
 the LSEG, FactSet and Moody's connectors, and the workbook and memo are created
@@ -59,7 +59,7 @@ def chats():
                     "ChatMessageId": "1",
                     "From": KRISTIAN,
                     "ContentType": "text",
-                    "Content": "Committee wants a view on NVIDIA Monday. Should we add more? Bring a short memo.",
+                    "Content": "Committee wants a view on Litware Monday. Should we add more? Bring a short memo.",
                     "SentDateTime": utc(16, 0),
                 }
             ],

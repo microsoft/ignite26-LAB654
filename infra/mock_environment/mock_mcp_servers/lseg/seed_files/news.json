@@ -1,7 +1,7 @@
 {
- "_about": "Recorded from a live session on 2026-10-16 (session-trajectory-20261016T085346Z). NVDA headlines are verbatim. Other companies get templated, clearly generic headlines (see mock_lseg/news.py).",
+ "_about": "Recorded from a live session on 2026-10-16 (session-trajectory-20261016T085346Z). LITW headlines are verbatim. Other companies get templated, clearly generic headlines (see mock_lseg/news.py).",
  "headlines": {
-  "NVDA": [
+  "LITW": [
    {
     "source": "RTRS",
     "language": "en",
@@ -15,7 +15,7 @@
    {
     "source": "RTRS",
     "language": "en",
-    "headlineText": "BRIEF-Adobe & NVIDIA Expand Collaboration To Speed Agentic Creation",
+    "headlineText": "BRIEF-Adobe & Litware Expand Collaboration To Speed Agentic Creation",
     "story": "",
     "firstCreated": "2026-10-15T18:17:18Z",
     "versionCreated": "2026-10-15T18:17:18Z",
@@ -35,7 +35,7 @@
    {
     "source": "RTRS",
     "language": "en",
-    "headlineText": "BRIEF-Nvidia CEO Huang Says Coreweave Improving, No Backstop Needed- Bloomberg News",
+    "headlineText": "BRIEF-Litware CEO Ryo Tanaka Says Coreweave Improving, No Backstop Needed- Bloomberg News",
     "story": "",
     "firstCreated": "2026-10-15T15:38:47Z",
     "versionCreated": "2026-10-15T15:38:47Z",
@@ -45,7 +45,7 @@
    {
     "source": "RTRS",
     "language": "en",
-    "headlineText": "BRIEF-Multiverse Computing Launches Comet 60B In Collaboration With NVIDIA",
+    "headlineText": "BRIEF-Multiverse Computing Launches Comet 60B In Collaboration With Litware",
     "story": "",
     "firstCreated": "2026-10-15T15:37:27Z",
     "versionCreated": "2026-10-15T15:37:27Z",
@@ -55,7 +55,7 @@
    {
     "source": "RTRS",
     "language": "en",
-    "headlineText": "BRIEF-German Government Plans Partnership With Nvidia on AI, Handelsblatt Reports",
+    "headlineText": "BRIEF-German Government Plans Partnership With Litware on AI, Handelsblatt Reports",
     "story": "",
     "firstCreated": "2026-10-15T14:48:37Z",
     "versionCreated": "2026-10-15T15:05:09Z",
@@ -65,7 +65,7 @@
    {
     "source": "RTRS",
     "language": "en",
-    "headlineText": "Nvidia, Apple each gave $25 million for Trump's ballroom, Washington Post reports",
+    "headlineText": "Litware gives $25 million to university AI research fund, Washington Post reports",
     "story": "",
     "firstCreated": "2026-10-15T13:50:17Z",
     "versionCreated": "2026-10-15T14:03:07Z",
@@ -85,7 +85,7 @@
    {
     "source": "RTRS",
     "language": "en",
-    "headlineText": "BRIEF-NVIDIA Introduces Cupotential CUDA-X Library, Accelerates GPU Workflows By 2-3x In Early Access",
+    "headlineText": "BRIEF-Litware Introduces Potentia Compute-X Library, Accelerates GPU Workflows By 2-3x In Early Access",
     "story": "",
     "firstCreated": "2026-10-14T16:15:17Z",
     "versionCreated": "2026-10-14T16:15:17Z",
@@ -95,7 +95,7 @@
    {
     "source": "RTRS",
     "language": "en",
-    "headlineText": "BRIEF-ChipAgents Collaborates With NVIDIA To Launch Build-A-Chip-Bench For Autonomous Chip Design & Implementation",
+    "headlineText": "BRIEF-ChipAgents Collaborates With Litware To Launch Build-A-Chip-Bench For Autonomous Chip Design & Implementation",
     "story": "",
     "firstCreated": "2026-10-14T16:14:22Z",
     "versionCreated": "2026-10-14T16:14:22Z",

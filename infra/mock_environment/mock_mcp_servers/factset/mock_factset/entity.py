@@ -24,7 +24,7 @@ class FactsetEntityReference(Tool):
     description = (
         "Validate company identity: entity and parent ids, security id, profile, headquarters and RBICS "
         f"classification. data_type: 'entity_reference'. ids: up to {MAX_IDS} identifiers "
-        "(ticker-region such as 'NVDA-US', FactSet ids, ISIN or CUSIP)."
+        "(ticker-region such as 'LITW-US', FactSet ids, ISIN or CUSIP)."
     )
     validate_args = False
     input_schema = {
