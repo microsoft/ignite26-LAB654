@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 950 310" width="950" height="310" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#8A8A8A"/>
+    </marker>
+    <style>
+      .label { font-size: 10.5px; font-weight: 700; fill: #6B6B6B; letter-spacing: 0.8px; }
+      .where { font-size: 14px; font-weight: 600; fill: #1F1F1F; }
+      .hint { font-size: 12px; fill: #555555; }
+      .get { font-size: 13px; fill: #1F1F1F; }
+      .step { font-size: 12px; fill: #FFFFFF; fill-opacity: 0.9; }
+      .title { font-size: 15px; font-weight: 700; fill: #FFFFFF; }
+    </style>
+  </defs>
+  <rect x="0" y="0" width="950" height="310" fill="#FFFFFF"/>
+  <rect x='20' y='20' width='205' height='210' rx='10' fill='#FFFFFF' stroke='#D6D6D6'/>
+  <path d='M20,76 V30 a10,10 0 0 1 10,-10 H215 a10,10 0 0 1 10,10 V76 z' fill='#0F6CBD'/>
+  <text x='34' y='42' class='step'>Step 1</text><text x='34' y='64' class='title'>Sense check</text>
+  <text x='34' y='100' class='label'>WHERE</text><text x='34' y='120' class='where'>Copilot app</text><text x='34' y='137' class='hint'>New chat, Chat or Cowork</text>
+  <text x='34' y='166' class='label'>YOU GET</text><text x='34' y='186' class='get'>A one-line, verified</text><text x='34' y='203' class='get'>verdict on whether to</text><text x='34' y='220' class='get'>invest more</text>
+  <line x1='229' y1='125' x2='251' y2='125' stroke='#8A8A8A' stroke-width='2' marker-end='url(#arrow)'/>
+  <rect x='255' y='20' width='205' height='210' rx='10' fill='#FFFFFF' stroke='#D6D6D6'/>
+  <path d='M255,76 V30 a10,10 0 0 1 10,-10 H450 a10,10 0 0 1 10,10 V76 z' fill='#0F6CBD'/>
+  <text x='269' y='42' class='step'>Step 2a</text><text x='269' y='64' class='title'>Build the workbook</text>
+  <text x='269' y='100' class='label'>WHERE</text><text x='269' y='120' class='where'>Copilot app</text><text x='269' y='137' class='hint'>New chat, Cowork mode</text>
+  <text x='269' y='166' class='label'>YOU GET</text><text x='269' y='186' class='get'>A verified, populated</text><text x='269' y='203' class='get'>Excel workbook</text>
+  <line x1='464' y1='125' x2='486' y2='125' stroke='#8A8A8A' stroke-width='2' marker-end='url(#arrow)'/>
+  <rect x='490' y='20' width='205' height='210' rx='10' fill='#FFFFFF' stroke='#D6D6D6'/>
+  <path d='M490,76 V30 a10,10 0 0 1 10,-10 H685 a10,10 0 0 1 10,10 V76 z' fill='#107C41'/>
+  <text x='504' y='42' class='step'>Steps 2b and 2c</text><text x='504' y='64' class='title'>Scenarios and credit</text>
+  <text x='504' y='100' class='label'>WHERE</text><text x='504' y='120' class='where'>Excel</text><text x='504' y='137' class='hint'>Open the Copilot pane</text>
+  <text x='504' y='166' class='label'>YOU GET</text><text x='504' y='186' class='get'>Verified scenarios and</text><text x='504' y='203' class='get'>credit analysis, added</text><text x='504' y='220' class='get'>to the workbook</text>
+  <line x1='699' y1='125' x2='721' y2='125' stroke='#8A8A8A' stroke-width='2' marker-end='url(#arrow)'/>
+  <rect x='725' y='20' width='205' height='210' rx='10' fill='#FFFFFF' stroke='#D6D6D6'/>
+  <path d='M725,76 V30 a10,10 0 0 1 10,-10 H920 a10,10 0 0 1 10,10 V76 z' fill='#0F6CBD'/>
+  <text x='739' y='42' class='step'>Step 3</text><text x='739' y='64' class='title'>Back-check and report</text>
+  <text x='739' y='100' class='label'>WHERE</text><text x='739' y='120' class='where'>Copilot app</text><text x='739' y='137' class='hint'>Your Step 1 chat</text>
+  <text x='739' y='166' class='label'>YOU GET</text><text x='739' y='186' class='get'>A pressure-tested view</text><text x='739' y='203' class='get'>and a memo with every</text><text x='739' y='220' class='get'>number cited</text>
+  <rect x="20" y="248" width="910" height="44" rx="10" fill="#F3F7FC" stroke="#D6E2F2"/>
+  <text x="475" y="275" text-anchor="middle" font-size="13.5" fill="#1F1F1F"><tspan font-weight="700">LSEG, FactSet and Moody's</tspan> work in every step and every surface: <tspan font-weight="700">connect once, use everywhere.</tspan></text>
+</svg>
