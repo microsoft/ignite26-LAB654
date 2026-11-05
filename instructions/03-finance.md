@@ -115,7 +115,7 @@ Using LSEG, create an Excel workbook called "NVIDIA Committee Pack" with an equi
 
 ### 2b. What's the upside?
 
-> **Where:** Excel. Open **NVIDIA Committee Pack**, then open the **Copilot** pane. Run 2b and 2c there.
+> **Where:** Excel. In the same Cowork chat, select **NVIDIA Committee Pack** to open the workbook next to the chat, then run 2b and 2c there.
 
 ```text
 Using LSEG, add a "Scenarios" sheet with worst, middle and best cases (bear, base, bull), using the lowest, average and highest FY2 earnings-per-share forecasts and NVIDIA's current share price. Make the price-to-earnings (P/E) multiple an editable input for each case and use formulas to show the implied share price and % upside or downside.
