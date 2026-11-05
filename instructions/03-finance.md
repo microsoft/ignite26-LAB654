@@ -6,7 +6,7 @@ In this module, you'll use the **LSEG**, **FactSet** and **Moody's** connectors 
 
 ## The story
 
-Zava, an insurer, invests the premiums it holds, and Litware is one of its biggest holdings. Kristian Stensen, who runs the portfolio, messages you on Teams:
+Zava, an insurer, invests the premiums it holds, and Litware, a chipmaker, is one of its biggest holdings. Kristian Stensen, who runs the portfolio, messages you on Teams:
 
 > "Committee wants a view on Litware Monday. Should we add more? Bring a short memo."
 
@@ -168,7 +168,7 @@ Turn this into a Word memo for the investment committee, reusing the workbook's 
 | Copilot answers from general knowledge without a source | Name the connector at the start: "Using LSEG, …" or "Using Moody's, …" |
 | The first answer from a connector is slow | Wait a few seconds and ask again. The test services may need a moment to start. |
 | Copilot asks which company or ticker | Reply "Litware (LITW)". |
-| Workbook steps don't apply to the right file | Open **Litware Committee Pack** in Excel and run 2b and 2c from Copilot in Excel. |
+| Workbook steps don't apply to the right file | Open **Litware Committee Pack** next to your Cowork chat and start the prompt with "In Litware Committee Pack, …". |
 
 ## Checkpoint
 
