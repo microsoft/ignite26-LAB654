@@ -2,12 +2,6 @@
 
 > **Duration:** ~10 minutes (+ stretch) | **Connectors:** Salesforce_Lab, Teams, Outlook | **Surface:** Copilot Cowork
 
-## What you'll take away
-
-- **A skill that knows how sales teams work:** Salesforce's call-prep skill builds a brief from your real account data.
-- **Grounded answers, not guesses:** Copilot quotes what the customer said and uses your own win/loss history to shape the response.
-- **From answer to action:** one prompt books a meeting and logs it in your CRM, with your yes before each change.
-
 ## The story
 
 You're **Emil Vanggaard** at Zava, and you own the **Lakeshore Retail** account. Lakeshore Retail has piloted the **Aurora** smart-home hub in 50 stores for six weeks, ahead of the public launch event on Dec 8. Your next step is the **expansion pitch** to roll it out to all 400 stores.
@@ -16,6 +10,16 @@ You're **Emil Vanggaard** at Zava, and you own the **Lakeshore Retail** account.
 - On the Teams pilot review call, Atul said a competitor, Boulder Innovations, quoted about 20% under your list price.
 
 You'll prep the call, handle the price objection and book the security review, without leaving Copilot.
+
+## What you'll take away
+
+- **A skill that knows how sales teams work:** Salesforce's call-prep skill builds a brief from your real account data.
+- **Grounded answers, not guesses:** Copilot quotes what the customer said and uses your own win/loss history to shape the response.
+- **From answer to action:** one prompt books a meeting and logs it in your CRM, with your yes before each change.
+
+## How the track flows
+
+![All steps run in one Copilot Cowork task: Step 1 gives a call brief; Step 2 a grounded answer from the Teams call and win/loss history; Step 3 an Outlook invite and a Salesforce activity after you approve each; the stretch step logs the pilot review call](images/productivity-workflow.svg)
 
 ## Before you start
 
