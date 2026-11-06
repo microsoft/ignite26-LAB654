@@ -10,7 +10,7 @@ Each mock MCP server runs as its own Azure Container App. All of them share one 
 | FactSet | `mock-factset` | `mock-factset:v1` | `https://mock-factset.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` |
 | Moody's | `mock-moodys` | `mock-moodys:v2` | `https://mock-moodys.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` |
 | iManage | `mock-imanage` | `mock-imanage:v3` | `https://mock-imanage.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` |
-| Salesforce | `mock-salesforce` | `mock-salesforce:v4` | `https://mock-salesforce.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` |
+| Salesforce | `mock-salesforce` | `mock-salesforce:v5` | `https://mock-salesforce.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` |
 | Rovo (Jira + Confluence) | `mock-atlassian` | `mock-atlassian:v1` | `https://mock-atlassian.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` |
 | GitHub | `mock-github` | `mock-github:v2` | `https://mock-github.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` |
 | Zava Expense | `mock-zava-expense` | `mock-zava-expense:v1` | `https://mock-zava-expense.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` |

@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any
 
 from mockmcp import CallContext, InvalidParams, Tool, ToolOutput
+from mockmcp.schema import validate
 
 from . import catalog, rest, widget
 from .store import StateStore
@@ -63,8 +64,20 @@ class DispatchReadonlyTool(DispatchTool):
 class DisplayWidgetTool(SalesforceTool):
     name = "display_widget"
     ui_resource = widget.RESOURCE_URI
+    # Models sometimes send widgetDefinition as a JSON string; parse it before schema validation.
+    validate_args = False
 
     def run(self, args: dict, ctx: CallContext) -> Any:
+        definition = args.get("widgetDefinition")
+        if isinstance(definition, str):
+            try:
+                args = {**args, "widgetDefinition": json.loads(definition)}
+            except ValueError as exc:
+                pos = getattr(exc, "pos", 0) or 0
+                raise InvalidParams([f"widgetDefinition: not valid JSON ({exc}) near "
+                                     f"'{definition[max(0, pos - 60):pos + 20]}'. Fix the JSON and call "
+                                     "display_widget again, passing widgetDefinition as an object, not a string"])
+        validate(args, self.input_schema)
         if args["resourceType"] == "salesforce_widget":
             uri = args.get("widget_resource_uri") or ""
             # The mock org registers no Lightning Types, so named widgets can't be resolved.

@@ -26,7 +26,7 @@ You'll prep the call, handle the price objection and book the security review, w
 - [ ] You completed [Getting started with connectors](02-getting-started.md).
 - [ ] **Salesforce_Lab** shows as connected.
 - [ ] Open **Copilot Cowork** and start a new task. Run every step in this one conversation: Step 3 reuses what Copilot learned in Steps 1 and 2, and your Salesforce changes are kept only within that conversation.
-
+- [ ] In Cowork, select **Customize** and turn on **Salesforce_Lab**. Then turn off the **Fabric IQ** plugin, which is on by default.
 To see what Copilot will read, open the [Lakeshore Retail account](https://mock-salesforce.yellowsand-9530f5dc.eastus.azurecontainerapps.io/lightning/r/Account/001Hp0000000001IAA/view) in Salesforce_Lab.
 
 ## Step 1: Prep the call
@@ -34,7 +34,7 @@ To see what Copilot will read, open the [Lakeshore Retail account](https://mock-
 *Copilot Cowork · Salesforce_Lab call-prep skill · Outlook*
 
 ```text
-Prep me for my Lakeshore Retail expansion pitch.
+Use Salesforce to prep me for my Lakeshore Retail expansion pitch.
 ```
 
 **What to look for:**

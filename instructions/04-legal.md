@@ -98,6 +98,9 @@ Now redline this so we own the fine-tuned model, and Trey Research can't change 
 
 *Copilot Cowork (open it from Word) · iManage_Lab · Work IQ*
 
+> [!IMPORTANT]
+> In Cowork, select **Customize** and turn on **iManage_Lab**. Then turn off the **Fabric IQ** plugin, which is on by default.
+
 ```text
 Get me ready for the December 10 session with Trey Research. Turn my redline and the flags into a negotiation list with our playbook fallbacks, check whether it covers what Colorado and New York regulators expect, write a one-page summary for Luc and Hemanti, and draft my reply to Luc. Save it all to the matter.
 ```

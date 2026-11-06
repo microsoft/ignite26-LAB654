@@ -80,6 +80,8 @@ What's the current status of AUR-142, and what is it waiting on? Check Jira, Con
 
 Open **Copilot Cowork** and start a new task. Cowork may not have your Chat conversation, so these prompts include the context they need.
 
+> [!IMPORTANT]
+> In Cowork, select **Customize** and turn on **Jira**, **Confluence**, **GitHub_Lab** and **Rovo_Lab**. Then turn off the **Fabric IQ** plugin, which is on by default.
 ### Step 3: Ask Tama for the decision
 
 *Copilot Cowork · Teams*

@@ -142,6 +142,23 @@ def test_display_widget_named_type_unsupported(spec):
     assert not got.ok
 
 
+def test_display_widget_accepts_json_string(spec):
+    definition = {"type": "table", "columns": ["Name"], "rows": [{"Name": "Lakeshore Retail"}]}
+    got = call(spec, "display_widget", {"resourceType": "dynamic", "widgetDefinition": json.dumps(definition)})
+    assert got.ok and got.structured == {"widgetDefinition": definition}
+
+
+def test_display_widget_malformed_string_asks_for_retry(spec):
+    got = call(spec, "display_widget", {"resourceType": "dynamic", "widgetDefinition": '{"renderer":{}}},"x":1}'})
+    assert not got.ok
+    assert "not valid JSON" in got.text and "call display_widget again" in got.text
+
+
+def test_display_widget_still_validates_schema(spec):
+    assert not call(spec, "display_widget", {"resourceType": "bogus", "widgetDefinition": {}}).ok
+    assert not call(spec, "display_widget", {"resourceType": "dynamic", "widgetDefinition": 5}).ok
+
+
 # --- Lightning viewer ------------------------------------------------------------------------------------------
 
 @pytest.mark.parametrize("path", [

@@ -63,6 +63,9 @@ The committee will challenge the case, so every number has to be sourced and che
 
 > **Where:** Copilot app. Start a new chat, in either Chat or Cowork mode.
 
+> [!IMPORTANT]
+> The first time you use Cowork, select **Customize** and turn on **LSEG_Lab**, **FactSet_Lab** and **Moodys_Lab**. Then turn off the **Fabric IQ** plugin, which is on by default.
+
 ```text
 I'm preparing a recommendation for Monday's investment committee on whether our portfolio should buy more Litware. To start with, did Litware beat analysts' expectations last quarter? Using LSEG, compare its actual earnings per share and revenue with the analyst consensus, and show the quarter and source.
 ```
