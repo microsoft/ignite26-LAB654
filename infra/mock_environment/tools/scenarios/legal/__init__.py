@@ -6,10 +6,11 @@ what the kit asks to load into Outlook and Teams goes into the tenant:
 - Hemanti's business-priorities email to Emil, cc Luc (lab date - 14 days)
 - Group chat "Trey Research deal" with 3 messages (lab date - 6 days, a Tuesday)
 - Trigger 1:1 chat, Luc to Emil (lab date, 8:07 AM ET)
+- Trey Research Vendor Agreement v4.2 (the shortened lab edition) in Emil's
+  OneDrive, received Friday, lab date - 10 days. Word opens it from there.
 
-The kit's documents (agreement, exhibits, playbook) live only in iManage, so
-they're under mock_mcp_servers/imanage/seed_files, not in the tenant. The kit
-needs no calendar items.
+The playbook lives only in iManage (mock_mcp_servers/imanage/seed_files), not
+in the tenant. The kit needs no calendar items.
 
 LAB_DATE is the Monday of Luc's trigger chat. Every tenant item is dated on
 or before it, so it must be before the tenant is ingested. NEGOTIATION_DATE
@@ -21,6 +22,7 @@ edit these by hand: run redate.py in this folder, which rewrites all of them.
 
 from __future__ import annotations
 
+import shutil
 from datetime import date, datetime, time, timedelta, timezone
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -87,7 +89,7 @@ def users():
 def emails():
     return [
         {
-            "EmailId": "legal-email-001",
+            "EmailId": "legal-email-001-v2",
             "EmailAction": "Send",
             "Sender": HEMANTI,
             "ToRecipients": [{"Recipient": EMIL}],
@@ -121,7 +123,7 @@ def chats():
                      "Agreed. And we don't go to the table without owning the fine-tuned model.",
                      utc(-6, 10, 20)),
                 _msg(3, EMIL,
-                     "Understood. Their paper came in on Friday and it's in the matter. I'll review it against "
+                     "Understood. Their paper came in on Friday and it's in my OneDrive. I'll review it against "
                      f"the playbook before the session on the {ordinal(NEGOTIATION_DATE)}.",
                      utc(-6, 10, 31)),
             ],
@@ -146,5 +148,27 @@ def events():
     return []
 
 
+AGREEMENT = "Trey Research Vendor Agreement v4.2.docx"
+AGREEMENT_SRC = Path(__file__).resolve().parents[5] / "docs" / "scenarios" / "legal" / "files" / AGREEMENT
+AGREEMENT_LOCATION = f"files/legal/{AGREEMENT}"
+
+
 def files():
-    return []
+    return [
+        {
+            "FileId": "legal-file-001-v3",
+            "FileName": f"Trey Research/{AGREEMENT}",
+            "FileLocation": AGREEMENT_LOCATION,
+            "Owner": EMIL,
+            "CreatedDate": utc(-10, 9, 40),
+            "LastModifiedDate": utc(-10, 9, 52),
+            "DestinationType": "onedrive",
+        }
+    ]
+
+
+def build_documents(files_dir: Path) -> list[Path]:
+    dest = files_dir.parent / AGREEMENT_LOCATION
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(AGREEMENT_SRC, dest)
+    return [dest]

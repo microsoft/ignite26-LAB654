@@ -35,7 +35,7 @@ You need the backstory, a redline and a plain-English answer before December 10.
 - [ ] You completed [Getting started with connectors](02-getting-started.md).
 - [ ] **iManage_Lab** shows as connected.
 - [ ] You can see Luc's message in Teams.
-- [ ] Open **Trey Research Vendor Agreement v4.2** in Word from your OneDrive: `<OneDrive path to Trey Research Vendor Agreement v4.2.docx>`.
+- [ ] Open **Trey Research Vendor Agreement v4.2** in Word from your OneDrive. It's in the **Trey Research** folder.
 
 The iManage matter [Trey Research – AI Platform Agreement](https://mock-imanage.yellowsand-9530f5dc.eastus.azurecontainerapps.io/work/link/w/Dev!1870) holds the [Zava AI Procurement Playbook v2.1](https://mock-imanage.yellowsand-9530f5dc.eastus.azurecontainerapps.io/work/link/d/DEV!252567.1): Zava's rules for what it will and won't accept in AI contracts. Open it to see what Copilot will read. Its **Drafts** folder is empty until Step 4.
 

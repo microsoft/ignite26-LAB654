@@ -1,0 +1,56 @@
+[
+  {
+    "UPN": "emil",
+    "DARequests": [
+      {
+        "Name": "GitHub_Lab",
+        "ManifestId": "05c0c58e-b309-4103-8fee-a9b3899a4bc9",
+        "ManifestLocation": "DAConfig/github_lab.zip",
+        "ActionType": "Install",
+        "Version": "1.0.1"
+      },
+      {
+        "Name": "Rovo_Lab",
+        "ManifestId": "0b0db8d9-c2bc-49c9-b8d9-4358e73ffcd8",
+        "ManifestLocation": "DAConfig/rovo_lab.zip",
+        "ActionType": "Install",
+        "Version": "1.1.1"
+      },
+      {
+        "Name": "iManage_Lab",
+        "ManifestId": "a995d0ac-4143-4d1c-b58c-053d2a39f519",
+        "ManifestLocation": "DAConfig/imanage_lab.zip",
+        "ActionType": "Install",
+        "Version": "1.2.2"
+      },
+      {
+        "Name": "FactSet_Lab",
+        "ManifestId": "46928d76-7a18-4dc6-b4dd-1c734a20a937",
+        "ManifestLocation": "DAConfig/factset_lab.zip",
+        "ActionType": "Install",
+        "Version": "1.1.1"
+      },
+      {
+        "Name": "LSEG_Lab",
+        "ManifestId": "fa0fce5b-9586-4440-8e49-887c79cf3496",
+        "ManifestLocation": "DAConfig/lseg_lab.zip",
+        "ActionType": "Install",
+        "Version": "1.1.1"
+      },
+      {
+        "Name": "Salesforce_Lab",
+        "ManifestId": "99c220dc-24e3-4232-8f13-15c468801b58",
+        "ManifestLocation": "DAConfig/salesforce_lab.zip",
+        "ActionType": "Install",
+        "Version": "1.1.1"
+      },
+      {
+        "Name": "Moodys_Lab",
+        "ManifestId": "ea229aee-a8ce-4b50-aeb8-91b7fc5e8510",
+        "ManifestLocation": "DAConfig/moodys_lab.zip",
+        "ActionType": "Install",
+        "Version": "1.1.1"
+      }
+    ]
+  }
+]

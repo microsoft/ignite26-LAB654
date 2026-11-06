@@ -71,7 +71,7 @@ ATUL_EMAIL = """<p>Hi Emil,</p>
 def emails():
     return [
         {
-            "EmailId": "prod-email-001",
+            "EmailId": "prod-email-001-v2",
             "EmailAction": "Send",
             "Sender": ATUL,
             "ToRecipients": [{"Recipient": EMIL}],

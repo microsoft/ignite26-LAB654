@@ -1,6 +1,6 @@
 [
   {
-    "EmailId": "legal-email-001",
+    "EmailId": "legal-email-001-v2",
     "EmailAction": "Send",
     "Sender": "hemanti",
     "ToRecipients": [
@@ -20,7 +20,7 @@
     "BccRecipients": []
   },
   {
-    "EmailId": "prod-email-001",
+    "EmailId": "prod-email-001-v2",
     "EmailAction": "Send",
     "Sender": "atul",
     "ToRecipients": [
@@ -36,7 +36,7 @@
     "BccRecipients": []
   },
   {
-    "EmailId": "eng-email-001",
+    "EmailId": "eng-email-001-v2",
     "EmailAction": "Send",
     "Sender": "atul",
     "ToRecipients": [
@@ -52,7 +52,7 @@
     "BccRecipients": []
   },
   {
-    "EmailId": "eng-email-002",
+    "EmailId": "eng-email-002-v2",
     "EmailAction": "Reply",
     "Sender": "emil",
     "ToRecipients": [
@@ -65,11 +65,11 @@
     "Body": "<p>Thanks for flagging the reconnect issue. Engineering is working on a fix, and I will share an update once we have confirmed the validation plan.</p><p>Emil</p>",
     "BodyType": "html",
     "Timestamp": "2026-10-26T18:00:00Z",
-    "ReferenceEmailId": "eng-email-001",
+    "ReferenceEmailId": "eng-email-001-v2",
     "BccRecipients": []
   },
   {
-    "EmailId": "eng-email-003",
+    "EmailId": "eng-email-003-v2",
     "EmailAction": "Reply",
     "Sender": "atul",
     "ToRecipients": [
@@ -82,11 +82,11 @@
     "Body": "<p>Hi Emil, our pilot stores are still seeing Aurora hubs marked offline after they reconnect. Staff keep restarting devices that are actually working. You mentioned a fix was being worked on. Can we expect it before Monday, November 23, when we expand the pilot? I need to brief our store managers before then. Thanks, Atul.</p>",
     "BodyType": "html",
     "Timestamp": "2026-10-29T12:15:00Z",
-    "ReferenceEmailId": "eng-email-002",
+    "ReferenceEmailId": "eng-email-002-v2",
     "BccRecipients": []
   },
   {
-    "EmailId": "exp-email-001",
+    "EmailId": "exp-email-001-v2",
     "EmailAction": "Send",
     "Sender": "alaskareceipts",
     "ToRecipients": [
@@ -96,13 +96,13 @@
     ],
     "CcRecipients": [],
     "Subject": "Your receipt: Seattle (SEA) round trip, confirmation KXQ4TZ",
-    "Body": "<p>Passenger: Emil Vanggaard. JFK–SEA October 26, SEA–JFK October 29. Economy. Total charged to card ending 4417: $486.40.</p>",
+    "Body": "<div style='font-family:Segoe UI,Arial,sans-serif;font-size:14px;color:#222'><h2 style='margin:0 0 8px'>Alaska Airlines receipt</h2><p>Passenger: Emil Vanggaard. Confirmation code KXQ4TZ. Ticket issued October 19, 2026.<br>JFK to SEA, Monday, October 26, 2026, Economy.<br>SEA to JFK, Thursday, October 29, 2026, Economy.</p><table style='border-collapse:collapse;margin:8px 0'><tr><td style='padding:3px 24px 3px 0'>Base fare</td><td style='padding:3px 0;text-align:right'>$412.56</td></tr><tr><td style='padding:3px 24px 3px 0'>Taxes, fees and charges</td><td style='padding:3px 0;text-align:right'>$73.84</td></tr><tr><td style='padding:6px 24px 3px 0;border-top:1px solid #999'><b>Total charged</b></td><td style='padding:6px 0 3px;border-top:1px solid #999;text-align:right'><b>$486.40</b></td></tr></table><p>Paid with Zava corporate Visa ending 4417.</p><p style='color:#666;font-size:12px'>This is your receipt. Keep it for your expense report.</p></div>",
     "BodyType": "html",
     "Timestamp": "2026-10-19T22:12:00Z",
     "BccRecipients": []
   },
   {
-    "EmailId": "exp-email-002",
+    "EmailId": "exp-email-002-v2",
     "EmailAction": "Send",
     "Sender": "yellowcabreceipts",
     "ToRecipients": [
@@ -112,13 +112,13 @@
     ],
     "CcRecipients": [],
     "Subject": "Seattle Yellow Cab — trip receipt",
-    "Body": "<p>SEA airport to The Westin Seattle, October 26. Fare $48.75, tip $10.00. Total $58.75.</p>",
+    "Body": "<div style='font-family:Segoe UI,Arial,sans-serif;font-size:14px;color:#222'><h2 style='margin:0 0 8px'>Seattle Yellow Cab trip receipt</h2><p>Monday, October 26, 2026. Seattle-Tacoma International Airport (SEA) to The Westin Seattle, 1900 5th Avenue.</p><table style='border-collapse:collapse;margin:8px 0'><tr><td style='padding:3px 24px 3px 0'>Fare</td><td style='padding:3px 0;text-align:right'>$48.75</td></tr><tr><td style='padding:3px 24px 3px 0'>Tip</td><td style='padding:3px 0;text-align:right'>$10.00</td></tr><tr><td style='padding:6px 24px 3px 0;border-top:1px solid #999'><b>Total charged</b></td><td style='padding:6px 0 3px;border-top:1px solid #999;text-align:right'><b>$58.75</b></td></tr></table><p>Paid with Zava corporate Visa ending 4417.</p><p style='color:#666;font-size:12px'>Cab 2214. Thank you for riding with Seattle Yellow Cab.</p></div>",
     "BodyType": "html",
     "Timestamp": "2026-10-26T20:48:00Z",
     "BccRecipients": []
   },
   {
-    "EmailId": "exp-email-003",
+    "EmailId": "exp-email-003-v2",
     "EmailAction": "Send",
     "Sender": "canlisreservations",
     "ToRecipients": [
@@ -128,13 +128,13 @@
     ],
     "CcRecipients": [],
     "Subject": "Your receipt from Canlis — party of 5",
-    "Body": "<p>Dinner for 5 on October 27. Food $392.00, beverages $64.00, tax $46.00, gratuity $38.00. Total $540.00.</p>",
+    "Body": "<div style='font-family:Segoe UI,Arial,sans-serif;font-size:14px;color:#222'><h2 style='margin:0 0 8px'>Canlis receipt</h2><p>Tuesday, October 27, 2026. Dinner for 5. Reservation name: Emil Vanggaard.</p><table style='border-collapse:collapse;margin:8px 0'><tr><td style='padding:3px 24px 3px 0'>Food</td><td style='padding:3px 0;text-align:right'>$392.00</td></tr><tr><td style='padding:3px 24px 3px 0'>Beverages</td><td style='padding:3px 0;text-align:right'>$64.00</td></tr><tr><td style='padding:3px 24px 3px 0'>Sales tax</td><td style='padding:3px 0;text-align:right'>$46.00</td></tr><tr><td style='padding:3px 24px 3px 0'>Gratuity</td><td style='padding:3px 0;text-align:right'>$38.00</td></tr><tr><td style='padding:6px 24px 3px 0;border-top:1px solid #999'><b>Total charged</b></td><td style='padding:6px 0 3px;border-top:1px solid #999;text-align:right'><b>$540.00</b></td></tr></table><p>Paid with Zava corporate Visa ending 4417.</p><p style='color:#666;font-size:12px'>Canlis, 2576 Aurora Avenue North, Seattle, WA. Thank you for dining with us.</p></div>",
     "BodyType": "html",
     "Timestamp": "2026-10-28T03:55:00Z",
     "BccRecipients": []
   },
   {
-    "EmailId": "exp-email-004",
+    "EmailId": "exp-email-004-v2",
     "EmailAction": "Send",
     "Sender": "dintaifungreceipts",
     "ToRecipients": [
@@ -144,13 +144,13 @@
     ],
     "CcRecipients": [],
     "Subject": "Your Din Tai Fung receipt",
-    "Body": "<p>Table for 1 on October 28. Total $48.20.</p>",
+    "Body": "<div style='font-family:Segoe UI,Arial,sans-serif;font-size:14px;color:#222'><h2 style='margin:0 0 8px'>Din Tai Fung receipt</h2><p>Wednesday, October 28, 2026. Table for 1. Din Tai Fung, Pacific Place, Seattle.</p><table style='border-collapse:collapse;margin:8px 0'><tr><td style='padding:3px 24px 3px 0'>Kurobuta pork xiao long bao (10)</td><td style='padding:3px 0;text-align:right'>$16.50</td></tr><tr><td style='padding:3px 24px 3px 0'>Shrimp fried rice</td><td style='padding:3px 0;text-align:right'>$15.50</td></tr><tr><td style='padding:3px 24px 3px 0'>Sautéed string beans with garlic</td><td style='padding:3px 0;text-align:right'>$11.70</td></tr><tr><td style='padding:3px 24px 3px 0'>Sales tax</td><td style='padding:3px 0;text-align:right'>$4.50</td></tr><tr><td style='padding:6px 24px 3px 0;border-top:1px solid #999'><b>Total charged</b></td><td style='padding:6px 0 3px;border-top:1px solid #999;text-align:right'><b>$48.20</b></td></tr></table><p>Paid with Zava corporate Visa ending 4417.</p><p style='color:#666;font-size:12px'>Thank you for dining at Din Tai Fung.</p></div>",
     "BodyType": "html",
     "Timestamp": "2026-10-29T02:10:00Z",
     "BccRecipients": []
   },
   {
-    "EmailId": "exp-email-005",
+    "EmailId": "exp-email-005-v2",
     "EmailAction": "Send",
     "Sender": "westinfolio",
     "ToRecipients": [
@@ -160,13 +160,13 @@
     ],
     "CcRecipients": [],
     "Subject": "Your folio from The Westin Seattle",
-    "Body": "<p>Guest: Emil Vanggaard. Arrive October 26, depart October 29. Room rate: October 26 $239.00, October 27 $239.00, October 28 $389.00 (city-wide convention rate). Total $867.00.</p>",
+    "Body": "<div style='font-family:Segoe UI,Arial,sans-serif;font-size:14px;color:#222'><h2 style='margin:0 0 8px'>The Westin Seattle: guest folio</h2><p>Guest: Emil Vanggaard. Arrive Monday, October 26, 2026. Depart Thursday, October 29, 2026. 3 nights. Room rates include taxes.</p><table style='border-collapse:collapse;margin:8px 0'><tr><td style='padding:3px 24px 3px 0'>Room, night of October 26</td><td style='padding:3px 0;text-align:right'>$239.00</td></tr><tr><td style='padding:3px 24px 3px 0'>Room, night of October 27</td><td style='padding:3px 0;text-align:right'>$239.00</td></tr><tr><td style='padding:3px 24px 3px 0'>Room, night of October 28 (city-wide convention rate)</td><td style='padding:3px 0;text-align:right'>$389.00</td></tr><tr><td style='padding:6px 24px 3px 0;border-top:1px solid #999'><b>Total charged</b></td><td style='padding:6px 0 3px;border-top:1px solid #999;text-align:right'><b>$867.00</b></td></tr></table><p>Paid with Zava corporate Visa ending 4417.</p><p style='color:#666;font-size:12px'>The Westin Seattle, 1900 5th Avenue, Seattle, WA 98101.</p></div>",
     "BodyType": "html",
     "Timestamp": "2026-10-29T13:30:00Z",
     "BccRecipients": []
   },
   {
-    "EmailId": "exp-email-006",
+    "EmailId": "exp-email-006-v2",
     "EmailAction": "Send",
     "Sender": "uberreceipts",
     "ToRecipients": [
@@ -176,13 +176,13 @@
     ],
     "CcRecipients": [],
     "Subject": "Your Thursday morning trip with Uber",
-    "Body": "<p>The Westin Seattle to SEA airport, October 29. Total $52.30.</p>",
+    "Body": "<div style='font-family:Segoe UI,Arial,sans-serif;font-size:14px;color:#222'><h2 style='margin:0 0 8px'>Thanks for riding, Emil</h2><p>Thursday, October 29, 2026. The Westin Seattle to Seattle-Tacoma International Airport (SEA). UberX, 14.2 miles, 31 minutes.</p><table style='border-collapse:collapse;margin:8px 0'><tr><td style='padding:3px 24px 3px 0'>Trip fare</td><td style='padding:3px 0;text-align:right'>$44.80</td></tr><tr><td style='padding:3px 24px 3px 0'>Booking fee</td><td style='padding:3px 0;text-align:right'>$3.50</td></tr><tr><td style='padding:3px 24px 3px 0'>Tip</td><td style='padding:3px 0;text-align:right'>$4.00</td></tr><tr><td style='padding:6px 24px 3px 0;border-top:1px solid #999'><b>Total charged</b></td><td style='padding:6px 0 3px;border-top:1px solid #999;text-align:right'><b>$52.30</b></td></tr></table><p>Paid with Zava corporate Visa ending 4417.</p><p style='color:#666;font-size:12px'>Uber Technologies, Inc.</p></div>",
     "BodyType": "html",
     "Timestamp": "2026-10-29T14:25:00Z",
     "BccRecipients": []
   },
   {
-    "EmailId": "exp-email-007",
+    "EmailId": "exp-email-007-v2",
     "EmailAction": "Send",
     "Sender": "zavaexpense",
     "ToRecipients": [
@@ -192,7 +192,7 @@
     ],
     "CcRecipients": [],
     "Subject": "Reminder: submit your Seattle trip expenses by Friday, November 20",
-    "Body": "<p>Hi Emil, you have 8 unreported card charges from October 5 to October 29. Please submit them in Zava Expense by Friday, November 20.</p>",
+    "Body": "<div style='font-family:Segoe UI,Arial,sans-serif;font-size:14px;color:#222'><p>Hi Emil,</p><p>You have 8 unreported corporate card charges from your Seattle trip (October 19 to October 29). Please submit them in Zava Expense by <b>Friday, November 20</b>.</p><p>Remember that every expense of $25 or more needs an itemized receipt.</p><p>Zava Expense</p></div>",
     "BodyType": "html",
     "Timestamp": "2026-10-30T12:00:00Z",
     "BccRecipients": []

@@ -1,7 +1,7 @@
 [
   {
-    "ChannelMessageId": "eng-msg-t1",
-    "ChannelId": "eng-ch-platform-migration",
+    "ChannelMessageId": "eng-msg-t1-v2",
+    "ChannelId": "eng-ch-platform-migration-v2",
     "From": "tama",
     "Subject": "Aurora status-service cutover - Lakeshore Retail pilot",
     "ContentType": "text",
@@ -9,8 +9,8 @@
     "SentDateTime": "2026-10-28T20:00:00Z"
   },
   {
-    "ChannelMessageId": "eng-msg-sprint24",
-    "ChannelId": "eng-ch-engineering",
+    "ChannelMessageId": "eng-msg-sprint24-v2",
+    "ChannelId": "eng-ch-engineering-v2",
     "From": "kerry",
     "Subject": "Aurora Sprint 24 has started",
     "ContentType": "text",

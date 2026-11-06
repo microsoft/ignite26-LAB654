@@ -14,6 +14,10 @@ extras:
 - customconnectors(): custom synced connections such as the Jira connector
   (customconnectors/customconnectors_<scenario>.jsonl, one connection per line)
 
+The seven preinstalled mock connector packages are copied from mock_plugins
+to DAConfig and assigned to Emil through das.config.json. Zava Expense is
+excluded so attendees can install it in the custom MCP exercise.
+
 The package is rebuilt from scratch on every run. Then run validate_package.py.
 """
 
@@ -23,6 +27,7 @@ import json
 import shutil
 import sys
 from pathlib import Path
+from zipfile import ZipFile
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
@@ -30,6 +35,8 @@ sys.path.insert(0, str(HERE))
 from scenarios import engineering, expense, finance, legal, productivity  # noqa: E402
 
 PACKAGE_DIR = HERE.parent / "Connectors_Ignite_EMP"
+PLUGINS_DIR = HERE.parent / "mock_plugins"
+DA_PLUGINS = ("github", "rovo", "imanage", "factset", "lseg", "salesforce", "moodys")
 
 SCENARIOS = [legal, finance, productivity, engineering, expense]
 
@@ -54,6 +61,7 @@ ENTITY_FILES = {
     "channelmessages": "channelmessages.config.json",
     "channelmessagereplies": "channelmessagereplies.config.json",
     "onlinemeetings": "onlinemeetings.config.json",
+    "das": "das.config.json",
 }
 
 # Connector (3P) types use a different layout: <type>/<type>_<name>.jsonl, one
@@ -61,7 +69,7 @@ ENTITY_FILES = {
 CONNECTOR_TYPES = {"confluence": "confluencepages", "customconnectors": "customconnectors"}
 
 # Generated directories cleared on every rebuild.
-GENERATED_DIRS = [*CONNECTOR_TYPES, "transcripts"]
+GENERATED_DIRS = [*CONNECTOR_TYPES, "transcripts", "files", "DAConfig"]
 
 
 def _merge_users(lists):
@@ -93,6 +101,25 @@ def _write_jsonl(path: Path, items) -> None:
     path.write_text("".join(json.dumps(i, ensure_ascii=False) + "\n" for i in items), encoding="utf-8")
 
 
+def _build_das() -> list[dict]:
+    destination = PACKAGE_DIR / "DAConfig"
+    destination.mkdir(parents=True, exist_ok=True)
+    requests = []
+    for plugin in DA_PLUGINS:
+        source = PLUGINS_DIR / f"{plugin}_lab.zip"
+        with ZipFile(source) as archive:
+            manifest = json.loads(archive.read("manifest.json"))
+        shutil.copyfile(source, destination / source.name)
+        requests.append({
+            "Name": manifest["name"]["short"],
+            "ManifestId": manifest["id"],
+            "ManifestLocation": f"DAConfig/{source.name}",
+            "ActionType": "Install",
+            "Version": manifest["version"],
+        })
+    return [{"UPN": legal.EMIL, "DARequests": requests}]
+
+
 def main() -> None:
     PACKAGE_DIR.mkdir(parents=True, exist_ok=True)
     for p in PACKAGE_DIR.glob("*.config.json"):
@@ -110,6 +137,7 @@ def main() -> None:
         if u["MailNickName"] == "emil":
             u["Manager"] = "hannes"
     data["emails"] = [_normalize_email(e) for e in data["emails"]]
+    data["das"] = _build_das()
 
     _write(PACKAGE_DIR / "config.json", CONFIG)
     for key, name in ENTITY_FILES.items():

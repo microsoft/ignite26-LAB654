@@ -1,6 +1,6 @@
 """Bring-your-own-app (Zava Expense) tenant seed data.
 
-Source: the expense trial's "seattle_trip" receipt emails, with dates fixed to the lab calendar: Emil's Seattle trip runs
+Email bodies come from the provided receipt .eml files (receipt_emails/). Dates follow the lab calendar: Emil's Seattle trip runs
 Mon Oct 26 - Thu Oct 29, 2026, with the airfare booked Oct 19 and the submission
 reminder on Oct 30.
 
@@ -10,6 +10,8 @@ Operations) are Zava users referenced by the expense mock.
 """
 
 from __future__ import annotations
+
+from pathlib import Path
 
 from ..legal import EMIL, TEAMS_ONLY, _user
 from ..productivity import at, ext_user
@@ -43,45 +45,31 @@ def users():
     ]
 
 
-D0, D1, D2, D3 = "October 26", "October 27", "October 28", "October 29"
+BODIES = Path(__file__).with_name("receipt_emails")
 
+# (sender, subject, body file, Eastern send time). Bodies are the HTML from the
+# provided receipt .eml files, stored in receipt_emails/.
 RECEIPTS = [
-    (ALASKA, "Your receipt: Seattle (SEA) round trip, confirmation KXQ4TZ",
-     f"Passenger: Emil Vanggaard. JFK–SEA {D0}, SEA–JFK {D3}. Economy. Total charged to card ending 4417: $486.40.",
-     at(10, 19, 18, 12)),
-    (YELLOWCAB, "Seattle Yellow Cab — trip receipt",
-     f"SEA airport to The Westin Seattle, {D0}. Fare $48.75, tip $10.00. Total $58.75.",
-     at(10, 26, 16, 48)),
-    (CANLIS, "Your receipt from Canlis — party of 5",
-     f"Dinner for 5 on {D1}. Food $392.00, beverages $64.00, tax $46.00, gratuity $38.00. Total $540.00.",
-     at(10, 27, 23, 55)),
-    (DTF, "Your Din Tai Fung receipt",
-     f"Table for 1 on {D2}. Total $48.20.",
-     at(10, 28, 22, 10)),
-    (WESTIN, "Your folio from The Westin Seattle",
-     f"Guest: Emil Vanggaard. Arrive {D0}, depart {D3}. Room rate: {D0} $239.00, {D1} $239.00, {D2} $389.00 "
-     "(city-wide convention rate). Total $867.00.",
-     at(10, 29, 9, 30)),
-    (UBER, "Your Thursday morning trip with Uber",
-     f"The Westin Seattle to SEA airport, {D3}. Total $52.30.",
-     at(10, 29, 10, 25)),
-    (EXPENSE, "Reminder: submit your Seattle trip expenses by Friday, November 20",
-     f"Hi Emil, you have 8 unreported card charges from October 5 to {D3}. Please submit them in Zava "
-     "Expense by Friday, November 20.",
-     at(10, 30, 8, 0)),
+    (ALASKA, "Your receipt: Seattle (SEA) round trip, confirmation KXQ4TZ", "1.html", at(10, 19, 18, 12)),
+    (YELLOWCAB, "Seattle Yellow Cab — trip receipt", "2.html", at(10, 26, 16, 48)),
+    (CANLIS, "Your receipt from Canlis — party of 5", "3.html", at(10, 27, 23, 55)),
+    (DTF, "Your Din Tai Fung receipt", "4.html", at(10, 28, 22, 10)),
+    (WESTIN, "Your folio from The Westin Seattle", "5.html", at(10, 29, 9, 30)),
+    (UBER, "Your Thursday morning trip with Uber", "6.html", at(10, 29, 10, 25)),
+    (EXPENSE, "Reminder: submit your Seattle trip expenses by Friday, November 20", "7.html", at(10, 30, 8, 0)),
 ]
 
 
 def emails():
     return [
         {
-            "EmailId": f"exp-email-{i:03d}",
+            "EmailId": f"exp-email-{i:03d}-v2",
             "EmailAction": "Send",
             "Sender": sender,
             "ToRecipients": [{"Recipient": EMIL}],
             "CcRecipients": [],
             "Subject": subject,
-            "Body": f"<p>{body}</p>",
+            "Body": (BODIES / body).read_text(encoding="utf-8").strip(),
             "BodyType": "html",
             "Timestamp": ts,
         }

@@ -2,7 +2,7 @@
 
 > Source: *654 Legal Lab scenario v3 (short) - updated.docx*. Converted to Markdown for reference; formatting differs from the original, wording is preserved. Replaces the earlier five-step legal scenario.
 >
-> Prompts run in Word with *Trey Research Vendor Agreement v4.2.docx* opened from the iManage matter. Seed content comes from *legal v1 seed kit 1.zip*; see [seed_kit.md](seed_kit.md).
+> Prompts run in Word with *Trey Research Vendor Agreement v4.2.docx* opened from Emil's OneDrive. Seed content comes from *legal v1 seed kit 1.zip*; see [seed_kit.md](seed_kit.md).
 
 ## The setup and what the room takes away
 
@@ -31,7 +31,7 @@
 
 - **Outlook:** Hemanti's email to Emil (cc Luc), two weeks earlier: the business's ranked must-haves.
 - **Teams:** group chat (Luc: no more short-notice model retirements; Hemanti: we must own the fine-tuned model) and Luc's trigger message on the morning.
-- **OneDrive (each attendee):** Trey Research Vendor Agreement v4.2, uploaded before the lab from [`files/`](files/). Shortened lab edition, original section numbers. Word opens it from here; it can't open a document from the mock iManage server.
+- **OneDrive (Emil):** Trey Research Vendor Agreement v4.2 in the `Trey Research` folder, seeded in the tenant from [`files/`](files/) and owned by Emil. Shortened lab edition, original section numbers. Word opens it from here; it can't open a document from the mock iManage server.
 - **iManage matter "Trey Research – AI Platform Agreement":** AI Procurement Playbook v2.1 (Playbooks); Drafts empty for Cowork's output.
 
 ## Before the lab
@@ -39,7 +39,7 @@
 - iManage connector enabled for Copilot in Word and Cowork; iManage plugin added in Cowork, web search allowed, with write access to Drafts.
 - Word desktop with the Legal plugin on. Say "redline … so that" or "which clauses break", not "review against the playbook": that phrase starts the upload-a-playbook review.
 - Dry-run and time each step: Word steps take about 2–3 minutes each; Cowork runs in the background (have a finished run ready to show).
-- Reset between runs: clear the comments and redline (re-upload the original to OneDrive), start a new conversation (the mock keeps Drafts per conversation), delete sent emails. Run Catch up on a clean copy, before Flag and Fix.
+- Reset between runs: clear the comments and redline (restore the seeded version from the file's version history in OneDrive), start a new conversation (the mock keeps Drafts per conversation), delete sent emails. Run Catch up on a clean copy, before Flag and Fix.
 - Seed dates must match the agreement (effective 13 December, session on the 10th). Everything seeded is dated on or before Oct 30 (email Oct 12, group chat Oct 20, trigger Oct 26); the negotiation and go-live fall after the Nov 17–19 lab. Move them together with `infra/mock_environment/tools/scenarios/legal/redate.py`.
 
 ---

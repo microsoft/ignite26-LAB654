@@ -53,6 +53,7 @@ The ids keep the numbering of the recorded matter (`Dev!1871` and `Dev!1873` wer
 
 ## Data
 
+- The playbook and the agreement source copy use the shortened lab editions supplied on 6 November 2026. Their existing filenames and document links are unchanged.
 - `seed_files/TreyResearch-AIPlatform_matter/`: the matter as files, taken from the legal seed kit. `matter.json` holds the client, matter name and each document's profile.
 - `seed_files/workspace.json`: the matter the server loads, with extracted document text. `seed_files/tool_schemas.json`: the live tool names, descriptions and input schemas. Both are built by `scripts/build_seed.py`. Rebuild after changing the matter files.
 - `tests/fixtures/`: the seven recorded responses with Office's wrapper removed, the fictitious names swapped in and the recorded matter's extra folders dropped, built by `scripts/build_trace_fixtures.py`. The tests check the mock's keys, key order and value types against them.

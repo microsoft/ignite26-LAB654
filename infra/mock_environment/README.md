@@ -12,10 +12,20 @@ Synthetic tenant data for testing the LAB654 scenarios (legal, finance, producti
 | `Connectors_Ignite_EMP/files/` | Enterprise documents for `files.config.json`. Created only when a scenario puts files in the tenant. The legal scenario has none. |
 | `mock_mcp_servers/` | Mock MCP servers for third-party connectors, each with a `seed_files/` folder. See [its README](mock_mcp_servers/README.md). |
 | `mock_plugins/` | Microsoft 365 app packages for the connectors, pointed at the mock MCP servers. See [its README](mock_plugins/README.md). |
+| `Connectors_Ignite_EMP/DAConfig/` | Copies of the seven mock connector ZIPs, referenced by `das.config.json` with install requests for `emil`. Zava Expense is excluded for the custom MCP exercise. |
 | `tools/` | The generator, validator and schema refresh scripts. |
 | `tools/scenarios/` | One module per scenario holding its tenant seed data, plus `<scenario>_content/` for source content such as email bodies. |
 
 The package files are generated, so make changes in `tools/scenarios/<scenario>.py` and rebuild rather than editing the JSON directly.
+
+The tenant builder copies the existing GitHub, Rovo, iManage, FactSet, LSEG,
+Salesforce and Moody's packages from `mock_plugins/` and reads each ZIP's app
+manifest ID, name and version into `das.config.json`. Original ZIPs stay in
+`mock_plugins/`; rebuild those first when changing a plugin, then rebuild the
+tenant package. These are connector-only app packages, not declarative agents.
+The local JSON schema accepts their install requests, but COEP's custom ZIP
+validator describes required declarative-agent files, so support for installing
+connector-only packages through this route must be confirmed with COEP.
 
 ## Names
 

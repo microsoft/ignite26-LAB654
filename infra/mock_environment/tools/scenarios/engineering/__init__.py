@@ -63,20 +63,20 @@ def _email(eid, action, sender, to, subject, body, ts, ref=None):
 
 def emails():
     return [
-        _email("eng-email-001", "Send", ATUL, EMIL, E1_SUBJECT,
+        _email("eng-email-001-v2", "Send", ATUL, EMIL, E1_SUBJECT,
                "<p>Hi Emil,</p><p>Some of our Aurora pilot stores are seeing hubs stay marked offline in the "
                "dashboard after they reconnect to the network. Could your team take a look?</p><p>Thanks,<br>Atul</p>",
                at(10, 23, 11, 5)),
-        _email("eng-email-002", "Reply", EMIL, ATUL, f"RE: {E1_SUBJECT}",
+        _email("eng-email-002-v2", "Reply", EMIL, ATUL, f"RE: {E1_SUBJECT}",
                "<p>Thanks for flagging the reconnect issue. Engineering is working on a fix, and I will share an "
                "update once we have confirmed the validation plan.</p><p>Emil</p>",
-               at(10, 26, 14, 0), ref="eng-email-001"),
-        _email("eng-email-003", "Reply", ATUL, EMIL, f"RE: {E1_SUBJECT}",
+               at(10, 26, 14, 0), ref="eng-email-001-v2"),
+        _email("eng-email-003-v2", "Reply", ATUL, EMIL, f"RE: {E1_SUBJECT}",
                "<p>Hi Emil, our pilot stores are still seeing Aurora hubs marked offline after they reconnect. "
                "Staff keep restarting devices that are actually working. You mentioned a fix was being worked on. "
                "Can we expect it before Monday, November 23, when we expand the pilot? I need to brief our store "
                "managers before then. Thanks, Atul.</p>",
-               at(10, 29, 8, 15), ref="eng-email-002"),
+               at(10, 29, 8, 15), ref="eng-email-002-v2"),
     ]
 
 
@@ -106,10 +106,10 @@ def files():
 
 # --- Teams: Aurora Engineering team ------------------------------------------
 
-TEAM_ID = "eng-team-aurora"
-CH_MIGRATION, CH_ENGINEERING = "eng-ch-platform-migration", "eng-ch-engineering"
+TEAM_ID = "eng-team-aurora-v2"
+CH_MIGRATION, CH_ENGINEERING = "eng-ch-platform-migration-v2", "eng-ch-engineering-v2"
 MEMBERS = [TRIIN, MARIA, KERRY, TAMA]
-T1_ROOT = "eng-msg-t1"
+T1_ROOT = "eng-msg-t1-v2"
 
 
 def teams():
@@ -164,7 +164,7 @@ def channelmessages():
             "SentDateTime": at(10, 28, 16, 0),
         },
         {
-            "ChannelMessageId": "eng-msg-sprint24",
+            "ChannelMessageId": "eng-msg-sprint24-v2",
             "ChannelId": CH_ENGINEERING,
             "From": KERRY,
             "Subject": "Aurora Sprint 24 has started",
@@ -179,7 +179,7 @@ def channelmessages():
 def channelmessagereplies():
     return [
         {
-            "ChannelMessageReplyId": "eng-reply-t1-1",
+            "ChannelMessageReplyId": "eng-reply-t1-1-v2",
             "ChannelMessageId": T1_ROOT,
             "From": MARIA,
             "ContentType": "text",
@@ -188,9 +188,9 @@ def channelmessagereplies():
             "SentDateTime": at(10, 28, 16, 10),
         },
         {
-            "ChannelMessageReplyId": "eng-reply-t1-2",
+            "ChannelMessageReplyId": "eng-reply-t1-2-v2",
             "ChannelMessageId": T1_ROOT,
-            "From": EMIL,
+            "From": KERRY,
             "ContentType": "text",
             "Content": "Bring a scope proposal before we move sprint work. LT needs to approve any deferral. We "
                        "have not committed a release date to Lakeshore Retail.",
