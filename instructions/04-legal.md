@@ -2,12 +2,6 @@
 
 > **Duration:** ~15 minutes | **Connectors:** Work IQ (email and Teams), iManage_Lab | **Surfaces:** Word (Copilot with legal skills), Copilot Cowork
 
-## What you'll take away
-
-- **Word legal skills** flag and redline a contract inside the document, with a reason on every change.
-- **Connectors bring the matter to the work:** the backstory from Outlook and Teams, the matter and playbook from iManage. Nothing is uploaded.
-- **Cowork legal skills** turn the redline into a negotiation pack, and wait for your approval before anything is sent.
-
 ## The story
 
 Zava, a US car and home insurer, wants **Trey Research's** AI to make up to 4 million underwriting decisions a month: a five-year, **$14.75 million** deal. Regulators in Colorado and New York hold the insurer responsible for vendor AI. Zava trains the AI on its own claims data, so it must own what gets built.
@@ -25,6 +19,16 @@ Luc has pinged you on Teams:
 > "Morning Emil. Have you had a chance to look at Trey Research's contract? We'd like to sign at the session with them on the 10th so we can go live on the 13th. Anything you need from me?"
 
 You need the backstory, a redline and a plain-English answer before December 10. You'll use three prompts in one Word chat and one in Cowork, and you'll approve everything.
+
+## What you'll take away
+
+- **Word legal skills** flag and redline a contract inside the document, with a reason on every change.
+- **Connectors bring the matter to the work:** the backstory from Outlook and Teams, the matter and playbook from iManage. Nothing is uploaded.
+- **Cowork legal skills** turn the redline into a negotiation pack, and wait for your approval before anything is sent.
+
+## How the track flows
+
+![Steps 1 to 3 in the Word Copilot pane give the backstory, comments on clauses that break the playbook, and tracked changes; Step 4 in Cowork, opened from Word, gives a negotiation list, a one-pager and a reply to Luc saved to iManage](images/legal-workflow.svg)
 
 ## Before you start
 

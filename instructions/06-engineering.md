@@ -2,12 +2,6 @@
 
 > **Duration:** ~15 minutes | **Connectors:** Jira and Confluence (synced), GitHub_Lab, Rovo_Lab, Teams | **Surfaces:** Copilot Chat, Copilot Cowork
 
-## What you'll take away
-
-- **Synced connectors answer from the source of record:** Copilot reads the sprint straight from Jira and spots the one item that isn't on track.
-- **The real blocker is spread across tools:** Jira knows the item is late, Confluence knows what was promised and who decides, and GitHub knows where the code stands. Together they show what the work is waiting on.
-- **From investigation to action:** in Cowork, Copilot asks the right person for the decision and a partner skill turns the sprint into a leadership slide.
-
 ## The story
 
 You're **Emil Vanggaard**, product manager for Aurora at Zava. Aurora is a smart-home hub that retail stores use to track devices. Lakeshore Retail is piloting it, and on **Monday, November 23**, every pilot store goes live.
@@ -26,6 +20,16 @@ You open the Sprint 24 board. Almost everything is on track. One item isn't, and
 | Kerry Allen | Engineering lead; runs the sprint. |
 
 You won't change any code or ship a release. In **Copilot Chat** you'll investigate. Then you'll switch to **Copilot Cowork** to act.
+
+## What you'll take away
+
+- **Synced connectors answer from the source of record:** Copilot reads the sprint straight from Jira and spots the one item that isn't on track.
+- **The real blocker is spread across tools:** Jira knows the item is late, Confluence knows what was promised and who decides, and GitHub knows where the code stands. Together they show what the work is waiting on.
+- **From investigation to action:** in Cowork, Copilot asks the right person for the decision and a partner skill turns the sprint into a leadership slide.
+
+## How the track flows
+
+![Steps 1 and 2 in Copilot Chat find the at-risk item and what it's waiting on across Jira, Confluence and GitHub; Steps 3 and 4 in Copilot Cowork send Tama a Teams message and create a one-slide sprint update](images/engineering-workflow.svg)
 
 ## Before you start
 
