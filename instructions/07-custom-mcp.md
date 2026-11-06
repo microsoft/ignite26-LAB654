@@ -41,9 +41,9 @@ Zava Expense is a custom line-of-business app, so it isn't in the connector cata
    | Description | `Zava's in-house expense app. Use it to see the signed-in employee's expense reports and why any were rejected or returned, find corporate card charges for a trip, create a report from receipts, check it against the Zava travel policy, submit it for manager approval, and compare travel spend with budget.` |
    | Base URL | `https://mock-zava-expense.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` |
    | Developer name | `Zava` |
-   | Website URL | `https://github.com/microsoft/ignite26-LAB654` |
-   | Privacy URL | `https://www.microsoft.com/privacy/privacystatement` |
-   | Terms of use URL | `https://www.microsoft.com/legal/terms-of-use` |
+   | Website URL | `https://contoso.com` |
+   | Privacy URL | `https://contoso.com/privacy` |
+   | Terms of use URL | `https://contoso.com/terms` |
    | Authentication | **No Auth** |
 
    (This lab uses **No Auth** so you can connect quickly. In your own tenant, choose the authentication your app needs, such as **Microsoft Entra SSO** or **OAuth 2.0**.)
