@@ -18,7 +18,7 @@ You're also just back from a client trip to Seattle for the Fabrikam, Inc. partn
 
 ## How the track flows
 
-![Set up your own app in the admin center through a custom MCP server, then Steps 1 to 4 in one Copilot chat](images/custom-workflow.svg)
+![Set up your own app in the admin center through a custom MCP server, then Steps 1 to 4 in one Copilot chat](images/custom-lob-workflow.svg)
 
 ## Before you start
 
