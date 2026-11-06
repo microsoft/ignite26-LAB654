@@ -73,7 +73,7 @@ I'm preparing a recommendation for Monday's investment committee on whether our 
 > LSEG can return charts and analysis cards, not just text: the provider's own experience, inside Copilot.
 
 > [!TIP]
-> If Copilot doesn't give the response you expect, select the model name at the top of the chat, switch to a GPT-5.6 model such as **GPT-5.6 Sol Think**, and send the prompt again.
+> If Copilot doesn't give the response you expect, select the model name at the top of the chat, switch from **Auto** to a GPT model that isn't a quick-response one, and send the prompt again.
 
 ### 1b. Is it stronger than its rivals?
 
@@ -169,7 +169,7 @@ Turn this into a Word memo for the investment committee, reusing the workbook's 
 | What happens | Try this |
 |---|---|
 | Copilot answers from general knowledge without a source | Name the connector at the start: "Using LSEG, …" or "Using Moody's, …" |
-| Copilot doesn't give the response you expect | Select the model name at the top of the chat, switch to a GPT-5.6 model such as **GPT-5.6 Sol Think**, and send the prompt again. |
+| Copilot doesn't give the response you expect | Select the model name at the top of the chat, switch from **Auto** to a GPT model that isn't a quick-response one, and send the prompt again. |
 | The first answer from a connector is slow | Wait a few seconds and ask again. The test services may need a moment to start. |
 | Copilot asks which company or ticker | Reply "Litware (LITW)". |
 | Workbook steps don't apply to the right file | Open **Litware Committee Pack** next to your Cowork chat and start the prompt with "In Litware Committee Pack, …". |
