@@ -21,6 +21,7 @@ You'll prep the call, handle the price objection and book the security review, w
 
 - [ ] You completed [Getting started with connectors](02-getting-started.md).
 - [ ] **Salesforce_Lab** shows as connected.
+- [ ] In **Copilot Cowork**, open **Customize** and check that **Salesforce_Lab** is turned **On**. If it's off, Copilot can't use the Salesforce skills.
 - [ ] Open **Copilot Cowork** and start a new task. Run every step in this one conversation: Step 3 reuses what Copilot learned in Steps 1 and 2, and your Salesforce changes are kept only within that conversation.
 
 To see what Copilot will read, open the [Lakeshore Retail account](https://mock-salesforce.yellowsand-9530f5dc.eastus.azurecontainerapps.io/lightning/r/Account/001Hp0000000001IAA/view) in Salesforce_Lab.
@@ -95,7 +96,7 @@ Send Jahidi and Atul a calendar invite for a 45-minute Aurora security review ne
 Log the pilot review call on the Lakeshore Retail opportunity.
 ```
 
-After one confirmation, Copilot logs a completed meeting task dated Oct 22 on the opportunity, with the attendees and key points from the transcript. Open the opportunity's **Activity** tab to see it.
+After one confirmation, Copilot logs the call as a completed activity on the opportunity, with the attendees and key points from the transcript. Open the opportunity's **Activity** tab to see it.
 
 If Copilot can't find the transcript, it asks whether to log the basics now or wait for notes. It marks anything it doesn't know as "[not recorded – add notes]" rather than making it up.
 
@@ -110,6 +111,8 @@ Prefer not to make changes? Try `Draft an email to Atul and Nanami ahead of the 
 | Step 2 answers from general knowledge | Reply: "Use the Teams transcript of the Lakeshore Retail pilot review and our closed deals against Boulder Innovations in Salesforce." |
 | Slot picking runs long | Reply: "The first slot." |
 | Copilot asks whether to email or invite | Reply: "Send the invite." |
+| Copilot doesn't use the Salesforce skills | In Copilot Cowork, open **Customize** and turn **Salesforce_Lab** **On**, then send the prompt again. |
+| A **Create connection** card from Power Platform appears | Select **Cancel**. Salesforce_Lab is already connected for you. |
 
 ## Checkpoint
 
