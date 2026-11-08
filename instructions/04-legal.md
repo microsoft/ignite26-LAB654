@@ -56,13 +56,14 @@ Catch me up on the Trey Research deal in five bullets: what Hemanti and Luc aske
 
 **What to look for:**
 
-- Hemanti's ranked priorities, with model ownership as her red line.
-- Luc's worry: a model retired on two weeks' notice stopped quoting for a week.
-- What's agreed (own the fine-tuned model, no disruption to live underwriting) and what's open (will Trey Research accept any of it before the 10th).
+- Hemanti's ask: Zava must own the fine-tuned model ("we don't go to the table without it").
+- Luc's ask: no more abrupt model retirements. The last vendor gave two weeks' notice and Zava couldn't quote for a week.
+- What's still open: the draft meets neither ask. Trey Research owns models trained on Zava's data (§9.1), and can change or retire a model on 15 days' notice with no Zava veto (§§7.2–7.5).
+- Other gaps Copilot may list: the six-month liability cap, patent-only indemnity, no audit rights, and data returned only in Trey Research's format.
 - Each bullet links to Hemanti's email or the Teams chat.
 
 > [!TIP]
-> Luc only asked "can we sign?" Copilot pulled the backstory from an older email and a Teams chat without you leaving the contract. Notice that the 10th is a negotiation, not a signing.
+> Luc only asked "can we sign?" Copilot pulled the backstory from an older email and a Teams chat, then checked it against the open draft, without you leaving the contract. It may also spot that Hemanti's email assumes flat fees while the draft adds a 5% yearly increase.
 
 ## Step 2: Flag the hard stops
 
