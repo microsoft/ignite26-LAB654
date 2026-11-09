@@ -44,7 +44,7 @@ The committee will challenge the case, so every number has to be sourced and che
 
 ## How the track flows
 
-![Step 1 in the Copilot gives a verified verdict; Step 2a in the Copilot in Cowork mode builds the workbook; Steps 2b and 2c in Excel add scenarios and credit analysis; Step 3 back in the Copilot gives a pressure-tested view and memo](images/finance-workflow.svg)
+![Step 1 in Copilot gives a verified verdict; Step 2a in Copilot in Cowork mode builds the workbook; Steps 2b and 2c in Excel add scenarios and credit analysis; Step 3 back in Copilot gives a pressure-tested view and memo](images/finance-workflow.svg)
 
 ## Before you start
 
