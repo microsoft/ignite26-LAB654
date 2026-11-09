@@ -26,7 +26,7 @@ Every run writes a log to `reset-lab.log` next to the script, or to `%TEMP%` if 
 1. Copy all three files to `C:\LabFiles\` on the VM, then commit the VM changes in Skillable.
 2. In the Skillable instructions, add a command link that runs the script with the seat's sign-in name:
 
-   ``@[Reset my lab environment](`C:\LabFiles\reset-lab.bat <seat sign-in name>`){Shell visible}``
+   ``@[Reset my lab environment](`C:\LabFiles\reset-lab.bat @lab.CloudCredential(Ignite-LAB654).Username`){Shell visible}``
 
    Command links need Integration Services on the VM.
 
