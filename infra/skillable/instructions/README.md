@@ -5,7 +5,7 @@ This folder holds the version of the lab manual that runs in the Skillable lab e
 - [`lab-instructions.md`](lab-instructions.md): every page in one file, with `===` between pages. Paste it into the Skillable instructions editor.
 - [`images/`](images/): the images the instructions use. They include the five workflow diagrams, the Contoso Authenticator App screenshots and the app icon.
 
-The GitHub version of the manual, in the parent [`instructions/`](../README.md) folder, is the source of truth for the lab content. When you change it, update this file to match.
+The GitHub version of the manual, in the [`instructions/`](../../../instructions/README.md) folder, is the source of truth for the lab content. When you change it, update this file to match.
 
 ## Set up the instructions in Skillable
 
@@ -24,12 +24,11 @@ The GitHub version of the manual, in the parent [`instructions/`](../README.md) 
 | Command link | ``@[text](`Start-Process "url"`){PowerShell}`` | Opens mock data pages in the virtual machine's browser, and runs the reset script (`{Shell visible}`). Plain links open on the attendee's own computer. Needs Integration Services on the virtual machine. |
 | Task checkbox | `1. []` and `- []` | Tracks attendee progress. |
 | Blocks | `> [!Alert]`, `> [!Note]`, `> [!Hint]`, `> [!Knowledge]`, `> [+Help]` | Replace the GitHub `[!IMPORTANT]`, `[!NOTE]` and `[!TIP]` callouts. |
-| Lab tokens | `@lab.Title`, `@lab.CloudCredential(...)`, `@lab.Variable(TAP)`, `@lab.VirtualMachine(...)` | Show the lab title and the attendee's sign-in details. |
+| Lab tokens | `@lab.Title`, `@lab.CloudCredential(Ignite-LAB654).Username`, `@lab.CloudCredential(Ignite-LAB654).Password`, `@lab.VirtualMachine(...)` | Show the lab title and the seat's username and TAP. The reset link passes the same username token to the reset script. |
 
-## Open items
+## Reset script
 
-- The username line on the first page uses a placeholder account and will change.
-- The **Prepare a clean environment** page runs the reset script from `C:\LabFiles\` on the VM. The scripts and their setup are in [`infra/skillable/`](../../infra/skillable/README.md) (pending in PR #27). The reset link passes a fixed sign-in name for now. Switch it to the Skillable username token once the username line is final.
+The **Prepare a clean environment** page runs `C:\LabFiles\reset-lab.bat` on the VM. The scripts and their VM and tenant setup are in [`infra/skillable/`](../README.md).
 
 ## Reference
 

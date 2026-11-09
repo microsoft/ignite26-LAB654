@@ -1,8 +1,8 @@
 @lab.Title
 
-Username: +++AlexW@@lab.CloudCredential(WWLM365E7).TenantName+++
+Username: +++@lab.CloudCredential(Ignite-LAB654).Username+++
 
-TAP: +++@lab.Variable(TAP)+++
+TAP: +++@lab.CloudCredential(Ignite-LAB654).Password+++
 
 ## Welcome to Your Lab Environment
 
@@ -109,7 +109,7 @@ When you're signed in to Copilot, select **Next**.
 
 Someone may have used this lab account before you. Reset it so you start from the original files.
 
-1. [] Select @[Reset my lab environment](`C:\LabFiles\reset-lab.bat emil@a830edad9050849coeplTx9Ux16.onmicrosoft.com`){Shell visible}. A command window opens, and a browser tab opens to sign you in.
+1. [] Select @[Reset my lab environment](`C:\LabFiles\reset-lab.bat @lab.CloudCredential(Ignite-LAB654).Username`){Shell visible}. A command window opens, and a browser tab opens to sign you in.
 1. [] If the browser asks you to pick an account, select your lab account. If it asks you to approve permissions for _Microsoft Graph Command Line Tools_, select **Accept**.
 1. [] When the tab says _Lab clean-up signed in_, close the tab.
 1. [] In the command window, wait for _Your lab environment is clean_. The window closes by itself.
