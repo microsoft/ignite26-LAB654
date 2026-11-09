@@ -29,7 +29,7 @@ The GitHub version of the manual, in the parent [`instructions/`](../README.md) 
 ## Open items
 
 - The username line on the first page uses a placeholder account and will change.
-- The first page has a placeholder alert for the clean-up batch script. Replace it with the script step.
+- The **Prepare a clean environment** page, after the sign-in verification page, has a placeholder alert for the clean-up batch script. Replace it with the script step.
 
 ## Reference
 

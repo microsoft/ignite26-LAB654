@@ -10,10 +10,6 @@ To begin, log into the virtual machine using the following credentials: +++@lab.
 
 **Note:** Text formatted as an +++example+++ represents type text. Clicking on this text will automatically insert it to prevent any typing errors.
 
-## Prepare a clean environment
-
-> [!Alert] PLACEHOLDER FOR LAB AUTHORS: add the step that runs the clean-up batch script here, then delete this alert.
-
 ## Sign in to Copilot
 
 You'll do the whole lab in Microsoft 365 Copilot on the web, signed in with the lab account above.
@@ -105,7 +101,13 @@ You're on the page for the Microsoft Authenticator phone app. In the browser, go
 
 !IMAGE[The error Failed to parse QR code: Invalid OTP URI, next to a QR code page that mentions the Microsoft Authenticator app.](instructions360859/mfa-12-invalid-otp-uri.png "Invalid OTP URI")
 
-When you're signed in to Copilot, select **Next** to start the lab.
+When you're signed in to Copilot, select **Next**.
+
+===
+
+# Prepare a clean environment
+
+> [!Alert] PLACEHOLDER FOR LAB AUTHORS: add the step that runs the clean-up batch script here, then delete this alert.
 
 ===
 
