@@ -107,7 +107,21 @@ When you're signed in to Copilot, select **Next**.
 
 # Prepare a clean environment
 
-> [!Alert] PLACEHOLDER FOR LAB AUTHORS: add the step that runs the clean-up batch script here, then delete this alert.
+Someone may have used this lab account before you. Reset it so you start from the original files.
+
+1. [] Select @[Reset my lab environment](`C:\LabFiles\reset-lab.bat emil@a830edad9050849coeplTx9Ux16.onmicrosoft.com`){Shell visible}. A command window opens, and a browser tab opens to sign you in.
+1. [] If the browser asks you to pick an account, select your lab account. If it asks you to approve permissions for _Microsoft Graph Command Line Tools_, select **Accept**.
+1. [] When the tab says _Lab clean-up signed in_, close the tab.
+1. [] In the command window, wait for _Your lab environment is clean_. The window closes by itself.
+
+> [!Note] The reset changes only your own account. You can run it again later if you want to start a track over.
+
+> [+Help] If the reset doesn't finish, select to see what to do.
+>
+> - _Signed in as another account_: in the browser, sign in with the Username at the top of the first page, then select the reset link again.
+> - Nothing happens, or you see any other message: ask a proctor.
+
+When the reset finishes, select **Next** to start the lab.
 
 ===
 
@@ -354,7 +368,7 @@ When you're done, go to [Bring your own app](#bring-your-own-app-zava-expense), 
 
 # Legal: Can we sign on the 10th?
 
-_About 15 minutes · Work IQ (email and Teams), iManage_Lab · Word with legal skills, Copilot Cowork_
+_About 15 minutes · Work IQ (email and Teams), iManage_Lab · Word (Copilot), Copilot Cowork_
 
 Zava wants Trey Research's AI to make up to 4 million underwriting decisions a month: a five-year, $14.75 million deal. Regulators in Colorado and New York hold the insurer responsible for vendor AI. Zava trains the AI on its own claims data, so it must own what gets built.
 
@@ -370,9 +384,9 @@ Luc has pinged you on Teams:
 
 > Morning Emil. Have you had a chance to look at Trey Research's contract? We'd like to sign at the session with them on the 10th so we can go live on the 13th. Anything you need from me?
 
-You'll use three prompts in one Word chat and one in Cowork, and you'll approve everything.
+You'll use three prompts in one Word chat and one in Cowork, plus an optional fifth, and you'll approve everything.
 
-!IMAGE[Steps 1 to 3 in the Word Copilot pane give the backstory, comments on clauses that break the playbook, and tracked changes. Step 4 in Cowork, opened from Word, gives a negotiation list, a one-pager and a reply to Luc saved to iManage.](instructions360859/legal-workflow.png "How the legal track flows")
+!IMAGE[Steps 1 to 3 in the Word Copilot pane give the backstory, comments on clauses that break the playbook, and tracked changes. Step 4 in Cowork, opened from Word, gives a one-page negotiation sheet and a prep invite for Luc and Hemanti. Optional Step 5 saves the sheet to iManage.](instructions360859/legal-workflow.png "How the legal track flows")
 
 ## Before you start
 
@@ -387,7 +401,7 @@ You'll use three prompts in one Word chat and one in Cowork, and you'll approve 
 1. [] Double-click **Trey Research Vendor Agreement v4.2** to open it in Word.
 1. [] In Word, select the **Copilot** icon in the top-right corner to open the Copilot pane.
 
-> [!Knowledge] The iManage matter @[Trey Research – AI Platform Agreement](`Start-Process "https://mock-imanage.yellowsand-9530f5dc.eastus.azurecontainerapps.io/work/link/w/Dev!1870"`){PowerShell} holds the @[Zava AI Procurement Playbook v2.1](`Start-Process "https://mock-imanage.yellowsand-9530f5dc.eastus.azurecontainerapps.io/work/link/d/DEV!252567.1"`){PowerShell}: Zava's rules for what it will and won't accept in AI contracts. Open it to see what Copilot will read. Its Drafts folder is empty until Step 4.
+> [!Knowledge] The iManage matter @[Trey Research – AI Platform Agreement](`Start-Process "https://mock-imanage.yellowsand-9530f5dc.eastus.azurecontainerapps.io/work/link/w/Dev!1870"`){PowerShell} holds the @[Zava AI Procurement Playbook v2.1](`Start-Process "https://mock-imanage.yellowsand-9530f5dc.eastus.azurecontainerapps.io/work/link/d/DEV!252567.1"`){PowerShell}: Zava's rules for what it will and won't accept in AI contracts. Open it to see what Copilot will read. Its Drafts folder is empty until Step 5.
 
 ## Step 1: Catch up
 
@@ -402,40 +416,55 @@ _Word, Copilot pane, Work IQ_
     - Hemanti's ask: Zava must own the fine-tuned model.
     - Luc's ask: no more abrupt model retirements. The last vendor gave two weeks' notice and Zava couldn't quote for a week.
     - What's still open: the draft meets neither ask. Trey Research owns models trained on Zava's data (§9.1), and can change or retire a model on 15 days' notice with no Zava veto (§§7.2–7.5).
+    - Other gaps in the draft, such as the six-month liability cap, patent-only indemnity, no audit rights, and data returned only in Trey Research's format.
     - Links from each bullet to Hemanti's email or the Teams chat.
 
     > [!Knowledge] Luc only asked if you can sign. Copilot pulled the backstory from an older email and a Teams chat, then checked it against the open draft, without you leaving the contract.
 
 ## Step 2: Flag the hard stops
 
-_Same Word chat, iManage_Lab, Word legal skills_
+_Same Word chat, iManage_Lab_
 
 1. [] In the same Copilot pane, enter:
 
-    +++Which clauses in this agreement break the hard stops in our AI Procurement Playbook in the Trey Research AI Platform matter in iManage? Add a comment on each one with the playbook section.+++
+    +++Which clauses in this agreement break the hard stops in our Zava AI Procurement Playbook in iManage? Add one short comment on each with the playbook section.+++
 
-1. [] Check that you see eight comment suggestions covering all six hard stops, each citing the playbook section and its hard-stop number.
-1. [] Select **Apply 8 suggestions**.
+1. [] When the **Let Copilot access iManage_Lab?** card appears, select the arrow next to **Approve**, then **Approve all in this chat**.
 
-    > [!Hint] Say _which clauses break_, not _review against the playbook_. That second phrase starts a different flow that asks you to upload a playbook.
+    > [!Alert] Don't select Approve on its own. Approve all in this chat covers this step and Step 3, so you won't be asked again for each call.
+
+    !IMAGE[The Let Copilot access iManage_Lab card, with the arrow next to Approve opened to show Approve all in this chat.](instructions360859/legal-imanage-approve-all.png "Approve all in this chat")
+
+1. [] Scroll through the agreement as Copilot works. If Word shows a **Done** bar at the bottom, select it when Copilot finishes.
+1. [] Check that all six of the playbook's hard stops are flagged, each with a short comment that names the hard stop and cites the playbook section:
+
+    - Outputs Zava doesn't own.
+    - Liability with nothing uncapped.
+    - Capped subcontractor liability.
+    - Data returned only in Trey Research's format.
+    - Arbitration in Austin.
+    - A class-action waiver.
+
+1. [] Select a **Zava AI Procurement Playbook** citation in Copilot's answer to open the playbook in iManage and check the section yourself.
+
+    > [!Knowledge] The playbook never left iManage, and nothing was uploaded. Copilot read Zava's rules where they live and applied them to the contract in front of you.
 
 ## Step 3: Fix the two must-haves
 
-_Same Word chat, iManage_Lab, edit contract skill_
+_Same Word chat, iManage_Lab_
 
 1. [] In the same Copilot pane, enter:
 
-    +++Now redline this so we own the fine-tuned model, and Trey Research can't change or retire the model without real notice and our approval. Explain each change in a comment.+++
+    +++Now redline this so we own the fine-tuned model and get 60 days' notice and our approval before any model change or retirement. Keep the edits minimal, with one short comment on each.+++
 
-1. [] Check that you see eight tracked changes, each with a comment:
+1. [] Scroll through the agreement as Copilot works. If Word shows a **Done** bar at the bottom, select it when Copilot finishes.
+1. [] Check that each change appears as a tracked change with a short comment:
 
-    - Zava owns fine-tuned models, delivered in a portable format (§9.1).
-    - 60 days' detailed notice and Zava approval before any model change or retirement (§§7.2–7.4).
-    - Retired versions kept for 12 months, with migration help (§7.5).
+    - Zava owns the models fine-tuned on its data, including their weights, while Trey Research keeps its base technology (§9.1).
+    - Trey Research can't change or retire a model without 60 days' notice and Zava's written approval, and continuing to use the platform doesn't count as approval (Section 7).
+    - The comments from Step 2 are still there.
 
-1. [] Apply the first two changes, then select **Apply 6 suggestions**.
-
-    > [!Knowledge] One business sentence, no section numbers. Copilot found the clauses itself and wrote in the playbook's positions.
+    > [!Knowledge] One business sentence, no section numbers. Copilot found the clauses itself and wrote in the positions. Hemanti's and Luc's must-haves are now contract language.
 
 ## Step 4: Build the negotiation pack
 
@@ -445,33 +474,46 @@ _Copilot Cowork opened from Word, iManage_Lab, Work IQ_
 
 1. [] Open Cowork from Word, then enter:
 
-    +++Get me ready for the December 10 session with Trey Research. Turn my redline and the flags into a negotiation list with our playbook fallbacks, check whether it covers what Colorado and New York regulators expect, write a one-page summary for Luc and Hemanti, and draft my reply to Luc. Save it all to the matter.+++
+    +++Get me ready for the December 10 session with Trey Research. Make a one-sheet negotiation list with just my redline, the hard-stop flags and the top gaps against what Colorado and New York insurance regulators expect against our playbook in iManage. Then send Luc and Hemanti a 30-minute prep invite for this week with a five-line summary as agenda.+++
 
-1. [] Check that Cowork produces:
+1. [] Check that Cowork creates a one-page negotiation sheet in your OneDrive with:
 
-    - A negotiation list with one row per change or flag, the playbook fallback, and _do not concede_ on hard stops.
-    - A regulator check against the Colorado and New York rules.
-    - A one-pager for Luc and Hemanti: the 10th is a negotiation, not a signing.
-    - A reply to Luc, held for your approval, with files saved to the matter's Drafts folder.
+    - The six hard stops, each with the playbook section it breaks and no fallback.
+    - Your other redline positions. Cowork notes that your model-change redline goes further than the playbook asks, and suggests the fallback.
+    - The top gaps against New York's and Colorado's AI rules for insurers, such as no audit rights, no bias testing and no duty to cooperate with regulators, each linked to the regulation.
 
-1. [] Open Cowork's review list, check the one-pager and approve the reply to Luc.
+1. [] In the **Regulatory cooperation** row, compare what regulators expect with the playbook ask.
+1. [] When the **Create calendar event?** card appears for a 30-minute prep meeting with Luc and Hemanti, check the five-line agenda and approve it.
 
-    > [!Knowledge] Cowork keeps working in the background. One request becomes four deliverables across iManage and Outlook, and nothing is sent until you approve it.
+    > [!Knowledge] New York expects AI vendors to cooperate with regulators. Zava's playbook only asks to be told about an inquiry. Cowork put the regulations and the playbook side by side, so you can see that the playbook needs updating, not just the contract.
+
+## Step 5 (optional): File it in the matter
+
+_Same Cowork chat, iManage_Lab_
+
+1. [] In the same Cowork chat, enter:
+
+    +++Save the negotiation sheet to the Drafts folder of the Trey Research matter in iManage.+++
+
+1. [] When the **iManage_Lab** approval card appears, approve it.
+1. [] Open the link to the saved file to see the negotiation sheet in the matter's Drafts folder.
+
+    > [!Knowledge] Cowork writes back to iManage too, so the work product lands in the matter alongside the playbook.
 
 ## If it goes wrong
 
 | What happens | Try this |
 |:---|:---|
 | Step 1 doesn't find Hemanti's email or the Teams chat | Ask +++What did Hemanti send me about Trey Research?+++ then rerun Step 1. |
-| Copilot asks you to upload a playbook | Rephrase with _which clauses break the hard stops in our AI Procurement Playbook in iManage_. |
-| Suggestions don't appear as comments or tracked changes | Make sure the agreement is the active document, then rerun the step. |
-| Cowork is still working | Carry on, and come back to the review list when it's done. |
+| Comments or tracked changes don't appear in the agreement | Make sure the agreement is the active document, then rerun the step. |
+| Cowork says it can't find the playbook | Select **Customize**, check that **iManage_Lab** is on, then rerun Step 4. |
 
 ## Checkpoint
 
 - [] Your catch-up linked to Hemanti's email and the Teams chat.
 - [] The agreement has comments on the hard stops and a redline for the two must-haves.
-- [] The negotiation list, one-pager and reply are in Drafts, and you approved the reply.
+- [] Cowork produced a one-page negotiation sheet and a prep invite for Luc and Hemanti.
+- [] (Optional) The negotiation sheet is in the matter's Drafts folder.
 
 Copilot did the reading, the redlining and the drafting across email, Teams and iManage. You stayed the lawyer: every change has a reason, and nothing went out without your approval.
 
@@ -819,7 +861,7 @@ This step submits the report, so Copilot asks for your approval first.
 | Track | What Copilot finished |
 |:---|:---|
 | Finance | A Litware committee pack in Excel and a memo in Word, from LSEG, FactSet and Moody's |
-| Legal | Flags and a redline in Word, then a negotiation pack in Cowork, from Work IQ and iManage |
+| Legal | Flags and a redline in Word, then a negotiation sheet and a prep invite in Cowork, from Work IQ and iManage |
 | Productivity | A call brief, a grounded answer to a price objection, and a booked and logged meeting, from Salesforce, Teams and Outlook |
 | Engineering | The sprint's one at-risk item and what it's waiting on, a Teams message and a sprint slide, from Jira, Confluence and GitHub |
 | Bring your own app | An expense report checked, fixed and submitted, plus a spend summary in Excel, from Zava Expense |

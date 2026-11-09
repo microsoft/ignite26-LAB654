@@ -21,7 +21,7 @@ The GitHub version of the manual, in the parent [`instructions/`](../README.md) 
 |---|---|---|
 | Page break | `===` | One page per part of the lab. Each page starts with a `#` heading, which labels the **Next** button. |
 | Type text | `+++text+++` | Types prompts, URLs and form values into the virtual machine with one click. |
-| Command link | ``@[text](`Start-Process "url"`){PowerShell}`` | Opens mock data pages in the virtual machine's browser. Plain links open on the attendee's own computer. Needs Integration Services on the virtual machine. |
+| Command link | ``@[text](`Start-Process "url"`){PowerShell}`` | Opens mock data pages in the virtual machine's browser, and runs the reset script (`{Shell visible}`). Plain links open on the attendee's own computer. Needs Integration Services on the virtual machine. |
 | Task checkbox | `1. []` and `- []` | Tracks attendee progress. |
 | Blocks | `> [!Alert]`, `> [!Note]`, `> [!Hint]`, `> [!Knowledge]`, `> [+Help]` | Replace the GitHub `[!IMPORTANT]`, `[!NOTE]` and `[!TIP]` callouts. |
 | Lab tokens | `@lab.Title`, `@lab.CloudCredential(...)`, `@lab.Variable(TAP)`, `@lab.VirtualMachine(...)` | Show the lab title and the attendee's sign-in details. |
@@ -29,7 +29,7 @@ The GitHub version of the manual, in the parent [`instructions/`](../README.md) 
 ## Open items
 
 - The username line on the first page uses a placeholder account and will change.
-- The **Prepare a clean environment** page, after the sign-in verification page, has a placeholder alert for the clean-up batch script. Replace it with the script step.
+- The **Prepare a clean environment** page runs the reset script from `C:\LabFiles\` on the VM. The scripts and their setup are in [`infra/skillable/`](../../infra/skillable/README.md) (pending in PR #27). The reset link passes a fixed sign-in name for now. Switch it to the Skillable username token once the username line is final.
 
 ## Reference
 
