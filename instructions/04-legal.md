@@ -24,11 +24,11 @@ You need the backstory, a redline and a plain-English answer before December 10.
 
 - **Copilot in Word** flags and redlines a contract inside the document, with a reason on every change.
 - **Connectors bring the matter to the work:** the backstory from Outlook and Teams, the matter and playbook from iManage. Nothing is uploaded.
-- **Cowork legal skills** turn the redline into a negotiation pack, and wait for your approval before anything is sent.
+- **Copilot Cowork** turns the redline into a negotiation sheet and a prep invite, checks them against the playbook and the regulators, and waits for your approval before anything is sent.
 
 ## How the track flows
 
-![Steps 1 to 3 in the Word Copilot pane give the backstory, comments on clauses that break the playbook, and tracked changes; Step 4 in Cowork, opened from Word, gives a negotiation list, a one-pager and a Teams reply to Luc; optional Step 5 saves the list to iManage](images/legal-workflow.svg)
+![Steps 1 to 3 in the Word Copilot pane give the backstory, comments on clauses that break the playbook, and tracked changes; Step 4 in Cowork, opened from Word, gives a one-page negotiation sheet and a prep invite for Luc and Hemanti; optional Step 5 saves the sheet to iManage](images/legal-workflow.svg)
 
 ## Before you start
 
@@ -59,7 +59,7 @@ Catch me up on the Trey Research deal in five bullets: what Hemanti and Luc aske
 - Hemanti's ask: Zava must own the fine-tuned model ("we don't go to the table without it").
 - Luc's ask: no more abrupt model retirements. The last vendor gave two weeks' notice and Zava couldn't quote for a week.
 - What's still open: the draft meets neither ask. Trey Research owns models trained on Zava's data (§9.1), and can change or retire a model on 15 days' notice with no Zava veto (§§7.2–7.5).
-- Other gaps Copilot may list: the six-month liability cap, patent-only indemnity, no audit rights, and data returned only in Trey Research's format.
+- Other gaps in the draft, such as the six-month liability cap, patent-only indemnity, no audit rights, and data returned only in Trey Research's format.
 - Each bullet links to Hemanti's email or the Teams chat.
 
 > [!TIP]
@@ -134,31 +134,31 @@ Get me ready for the December 10 session with Trey Research. Make a one-sheet ne
 *Same Cowork chat · iManage_Lab*
 
 ```text
-Save the negotiation list to the Drafts folder of the Trey Research matter in iManage.
+Save the negotiation sheet to the Drafts folder of the Trey Research matter in iManage.
 ```
 
 **What to look for:**
 
 - One **iManage_Lab** approval card. Approve it.
-- A link to the saved file. Open it to see the negotiation list in the matter's **Drafts** folder.
+- A link to the saved file. Open it to see the negotiation sheet in the matter's **Drafts** folder.
 
 > [!TIP]
 > Cowork writes back to iManage too, so the work product lands in the matter alongside the playbook.
 
 ## If it goes wrong
 
-| What happens | What to do |
+| What happens | Try this |
 |---|---|
 | Step 1 doesn't find Hemanti's email or the Teams chat | Ask: "What did Hemanti send me about Trey Research?" then rerun Step 1. |
-| Suggestions don't appear as comments or tracked changes | Make sure the agreement is the active document, then rerun the step. |
-| Cowork is still working | Carry on. Come back to the review list when it's done. |
+| Comments or tracked changes don't appear in the agreement | Make sure the agreement is the active document, then rerun the step. |
+| Cowork says it can't find the playbook | Select **Customize**, check that **iManage_Lab** is on, then rerun Step 4. |
 
 ## Checkpoint
 
 - [ ] Your catch-up linked to Hemanti's email and the Teams chat.
 - [ ] The agreement has comments on the hard stops and a redline for the two must-haves.
-- [ ] Cowork produced the negotiation list, one-pager and Teams reply, and you approved the reply.
-- [ ] (Optional) The negotiation list is in the matter's Drafts folder.
+- [ ] Cowork produced a one-page negotiation sheet and a prep invite for Luc and Hemanti.
+- [ ] (Optional) The negotiation sheet is in the matter's Drafts folder.
 
 **What you take away:** Copilot did the reading, the redlining and the drafting across email, Teams and iManage. You stayed the lawyer: every change has a reason, and nothing went out without your approval.
 
