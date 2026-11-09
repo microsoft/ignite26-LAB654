@@ -1,6 +1,6 @@
 # LAB654 lab manual
 
-**Copilot Connectors: Connect once and bring your enterprise knowledge to every workflow**
+**Copilot Connectors: Connect once. Use enterprise knowledge everywhere.**
 
 Welcome! In this hands-on lab you'll connect trusted data sources to Microsoft 365 Copilot, then use connectors, skills and write actions to finish real workflows. Pick the track closest to your work, then bring your own app to Copilot.
 
