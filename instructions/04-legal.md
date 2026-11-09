@@ -114,20 +114,20 @@ Now redline this so we own the fine-tuned model and get 60 days' notice and our 
 > In Cowork, select **Customize** and turn on **iManage_Lab**. Then turn off the **Fabric IQ** plugin, which is on by default.
 
 ```text
-Get me ready for the December 10 session with Trey Research. Turn my redline and the flags into a negotiation list with our playbook fallbacks, check whether it covers what Colorado and New York regulators expect, write a one-page summary for Luc and Hemanti, and draft a Teams reply to Luc's message.
+Get me ready for the December 10 session with Trey Research. Make a one-sheet negotiation list with just my redline, the hard-stop flags and the top gaps against what Colorado and New York insurance regulators expect against our playbook in iManage. Then send Luc and Hemanti a 30-minute prep invite for this week with a five-line summary as agenda.
 ```
 
 **What to look for:**
 
-- A negotiation list with one row per change or flag, the playbook fallback, and "do not concede" on hard stops.
-- A regulator check against the Colorado and New York rules: no audit right, no bias testing and no regulator cooperation clause, and the playbook itself has no regulator-cooperation clause.
-- A one-pager: "The 10th is a negotiation, not a signing; three asks."
-- A Teams reply to Luc, held for your approval.
-
-Open Cowork's review list, check the one-pager (the regulator points link to the published regulations) and approve the reply to Luc.
+- A one-page negotiation sheet in your OneDrive with:
+  - The six hard stops, each with the playbook section it breaks and no fallback.
+  - Your other redline positions. Cowork notes that your model-change redline goes further than the playbook asks, and suggests the fallback.
+  - The top gaps against New York's and Colorado's AI rules for insurers, such as no audit rights, no bias testing and no duty to cooperate with regulators, each linked to the regulation.
+- In the **Regulatory cooperation** row, compare what regulators expect with the playbook ask.
+- A **Create calendar event?** card for a 30-minute prep meeting with Luc and Hemanti, with a five-line agenda.
 
 > [!TIP]
-> Cowork keeps working in the background. One request becomes four deliverables drawn from iManage, Outlook and Teams, and nothing is sent until you approve it.
+> New York expects AI vendors to cooperate with regulators. Zava's playbook only asks to be told about an inquiry. Cowork put the regulations and the playbook side by side, so you can see that the playbook needs updating, not just the contract.
 
 ## Step 5 (optional): File it in the matter
 
