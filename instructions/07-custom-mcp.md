@@ -57,7 +57,7 @@ Zava Expense is a custom line-of-business app, so it isn't in the connector cata
 
 ## Step 1: Check where you stand
 
-> **Where:** Copilot app. Start a new chat and run Steps 1 to 4 in it. Each new chat starts from the original data.
+> **Where:** Copilot. Start a new chat and run Steps 1 to 4 in it. Each new chat starts from the original data.
 
 ```text
 Using Zava Expense, show me my open expense reports. Were any of them rejected or sent back, and why?
@@ -75,7 +75,7 @@ Using Zava Expense, show me my open expense reports. Were any of them rejected o
 
 ## Step 2: File the trip
 
-> **Where:** Copilot app, in the same chat. Copilot reads your Outlook inbox and writes to Zava Expense.
+> **Where:** Copilot, in the same chat. Copilot reads your Outlook inbox and writes to Zava Expense.
 
 ```text
 Find the receipts from my Seattle trip in my inbox and use them to create a Zava Expense report for the Fabrikam, Inc. partnership review. Check the report against our travel policy, but don't submit it yet.
@@ -89,7 +89,7 @@ Find the receipts from my Seattle trip in my inbox and use them to create a Zava
 
 ## Step 3: Fix and submit
 
-> **Where:** Copilot app, in the same chat. This step submits the report, so Copilot asks for your approval first.
+> **Where:** Copilot, in the same chat. This step submits the report, so Copilot asks for your approval first.
 
 ```text
 Add a justification for the $389 Westin night: a city-wide convention pushed up hotel rates, and no hotel near the Fabrikam, Inc. office was under the cap. Then submit the report to my manager.
@@ -111,7 +111,7 @@ ER-2001 is pending approval, and Hannes Niemi is the approver.
 
 ## Step 4: Review your spend
 
-> **Where:** Copilot app, in the same chat. Copilot creates the Excel workbook for you.
+> **Where:** Copilot, in the same chat. Copilot creates the Excel workbook for you.
 
 ```text
 How am I doing against my Q4 travel budget? Put it in an Excel workbook with a chart.
