@@ -17,5 +17,2171 @@
         "TranscriptFile": "transcripts/lakeshore-pilot-review.vtt"
       }
     ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e001",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e001",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil001",
+    "Participants": [
+      "emil001",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e001.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e002",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e002",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil002",
+    "Participants": [
+      "emil002",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e002.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e003",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e003",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil003",
+    "Participants": [
+      "emil003",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e003.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e004",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e004",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil004",
+    "Participants": [
+      "emil004",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e004.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e005",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e005",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil005",
+    "Participants": [
+      "emil005",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e005.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e006",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e006",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil006",
+    "Participants": [
+      "emil006",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e006.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e007",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e007",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil007",
+    "Participants": [
+      "emil007",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e007.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e008",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e008",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil008",
+    "Participants": [
+      "emil008",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e008.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e009",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e009",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil009",
+    "Participants": [
+      "emil009",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e009.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e010",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e010",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil010",
+    "Participants": [
+      "emil010",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e010.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e011",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e011",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil011",
+    "Participants": [
+      "emil011",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e011.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e012",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e012",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil012",
+    "Participants": [
+      "emil012",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e012.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e013",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e013",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil013",
+    "Participants": [
+      "emil013",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e013.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e014",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e014",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil014",
+    "Participants": [
+      "emil014",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e014.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e015",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e015",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil015",
+    "Participants": [
+      "emil015",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e015.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e016",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e016",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil016",
+    "Participants": [
+      "emil016",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e016.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e017",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e017",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil017",
+    "Participants": [
+      "emil017",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e017.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e018",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e018",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil018",
+    "Participants": [
+      "emil018",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e018.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e019",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e019",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil019",
+    "Participants": [
+      "emil019",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e019.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e020",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e020",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil020",
+    "Participants": [
+      "emil020",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e020.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e021",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e021",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil021",
+    "Participants": [
+      "emil021",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e021.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e022",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e022",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil022",
+    "Participants": [
+      "emil022",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e022.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e023",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e023",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil023",
+    "Participants": [
+      "emil023",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e023.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e024",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e024",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil024",
+    "Participants": [
+      "emil024",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e024.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e025",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e025",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil025",
+    "Participants": [
+      "emil025",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e025.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e026",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e026",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil026",
+    "Participants": [
+      "emil026",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e026.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e027",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e027",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil027",
+    "Participants": [
+      "emil027",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e027.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e028",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e028",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil028",
+    "Participants": [
+      "emil028",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e028.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e029",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e029",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil029",
+    "Participants": [
+      "emil029",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e029.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e030",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e030",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil030",
+    "Participants": [
+      "emil030",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e030.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e031",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e031",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil031",
+    "Participants": [
+      "emil031",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e031.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e032",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e032",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil032",
+    "Participants": [
+      "emil032",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e032.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e033",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e033",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil033",
+    "Participants": [
+      "emil033",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e033.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e034",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e034",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil034",
+    "Participants": [
+      "emil034",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e034.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e035",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e035",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil035",
+    "Participants": [
+      "emil035",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e035.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e036",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e036",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil036",
+    "Participants": [
+      "emil036",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e036.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e037",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e037",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil037",
+    "Participants": [
+      "emil037",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e037.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e038",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e038",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil038",
+    "Participants": [
+      "emil038",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e038.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e039",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e039",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil039",
+    "Participants": [
+      "emil039",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e039.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e040",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e040",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil040",
+    "Participants": [
+      "emil040",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e040.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e041",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e041",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil041",
+    "Participants": [
+      "emil041",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e041.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e042",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e042",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil042",
+    "Participants": [
+      "emil042",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e042.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e043",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e043",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil043",
+    "Participants": [
+      "emil043",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e043.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e044",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e044",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil044",
+    "Participants": [
+      "emil044",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e044.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e045",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e045",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil045",
+    "Participants": [
+      "emil045",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e045.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e046",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e046",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil046",
+    "Participants": [
+      "emil046",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e046.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e047",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e047",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil047",
+    "Participants": [
+      "emil047",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e047.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e048",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e048",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil048",
+    "Participants": [
+      "emil048",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e048.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e049",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e049",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil049",
+    "Participants": [
+      "emil049",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e049.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e050",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e050",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil050",
+    "Participants": [
+      "emil050",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e050.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e051",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e051",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil051",
+    "Participants": [
+      "emil051",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e051.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e052",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e052",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil052",
+    "Participants": [
+      "emil052",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e052.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e053",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e053",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil053",
+    "Participants": [
+      "emil053",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e053.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e054",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e054",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil054",
+    "Participants": [
+      "emil054",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e054.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e055",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e055",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil055",
+    "Participants": [
+      "emil055",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e055.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e056",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e056",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil056",
+    "Participants": [
+      "emil056",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e056.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e057",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e057",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil057",
+    "Participants": [
+      "emil057",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e057.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e058",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e058",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil058",
+    "Participants": [
+      "emil058",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e058.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e059",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e059",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil059",
+    "Participants": [
+      "emil059",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e059.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e060",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e060",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil060",
+    "Participants": [
+      "emil060",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e060.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e061",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e061",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil061",
+    "Participants": [
+      "emil061",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e061.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e062",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e062",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil062",
+    "Participants": [
+      "emil062",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e062.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e063",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e063",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil063",
+    "Participants": [
+      "emil063",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e063.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e064",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e064",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil064",
+    "Participants": [
+      "emil064",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e064.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e065",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e065",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil065",
+    "Participants": [
+      "emil065",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e065.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e066",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e066",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil066",
+    "Participants": [
+      "emil066",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e066.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e067",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e067",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil067",
+    "Participants": [
+      "emil067",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e067.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e068",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e068",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil068",
+    "Participants": [
+      "emil068",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e068.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e069",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e069",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil069",
+    "Participants": [
+      "emil069",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e069.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e070",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e070",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil070",
+    "Participants": [
+      "emil070",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e070.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e071",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e071",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil071",
+    "Participants": [
+      "emil071",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e071.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e072",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e072",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil072",
+    "Participants": [
+      "emil072",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e072.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e073",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e073",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil073",
+    "Participants": [
+      "emil073",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e073.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e074",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e074",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil074",
+    "Participants": [
+      "emil074",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e074.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e075",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e075",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil075",
+    "Participants": [
+      "emil075",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e075.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e076",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e076",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil076",
+    "Participants": [
+      "emil076",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e076.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e077",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e077",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil077",
+    "Participants": [
+      "emil077",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e077.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e078",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e078",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil078",
+    "Participants": [
+      "emil078",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e078.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e079",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e079",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil079",
+    "Participants": [
+      "emil079",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e079.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e080",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e080",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil080",
+    "Participants": [
+      "emil080",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e080.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e081",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e081",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil081",
+    "Participants": [
+      "emil081",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e081.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e082",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e082",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil082",
+    "Participants": [
+      "emil082",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e082.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e083",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e083",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil083",
+    "Participants": [
+      "emil083",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e083.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e084",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e084",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil084",
+    "Participants": [
+      "emil084",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e084.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e085",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e085",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil085",
+    "Participants": [
+      "emil085",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e085.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e086",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e086",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil086",
+    "Participants": [
+      "emil086",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e086.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e087",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e087",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil087",
+    "Participants": [
+      "emil087",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e087.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e088",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e088",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil088",
+    "Participants": [
+      "emil088",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e088.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e089",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e089",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil089",
+    "Participants": [
+      "emil089",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e089.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e090",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e090",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil090",
+    "Participants": [
+      "emil090",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e090.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e091",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e091",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil091",
+    "Participants": [
+      "emil091",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e091.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e092",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e092",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil092",
+    "Participants": [
+      "emil092",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e092.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e093",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e093",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil093",
+    "Participants": [
+      "emil093",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e093.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e094",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e094",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil094",
+    "Participants": [
+      "emil094",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e094.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e095",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e095",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil095",
+    "Participants": [
+      "emil095",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e095.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e096",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e096",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil096",
+    "Participants": [
+      "emil096",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e096.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e097",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e097",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil097",
+    "Participants": [
+      "emil097",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e097.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e098",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e098",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil098",
+    "Participants": [
+      "emil098",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e098.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e099",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e099",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil099",
+    "Participants": [
+      "emil099",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e099.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e100",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e100",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil100",
+    "Participants": [
+      "emil100",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e100.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e101",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e101",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil101",
+    "Participants": [
+      "emil101",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e101.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e102",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e102",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil102",
+    "Participants": [
+      "emil102",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e102.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e103",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e103",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil103",
+    "Participants": [
+      "emil103",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e103.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e104",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e104",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil104",
+    "Participants": [
+      "emil104",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e104.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e105",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e105",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil105",
+    "Participants": [
+      "emil105",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e105.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e106",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e106",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil106",
+    "Participants": [
+      "emil106",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e106.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e107",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e107",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil107",
+    "Participants": [
+      "emil107",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e107.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e108",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e108",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil108",
+    "Participants": [
+      "emil108",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e108.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e109",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e109",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil109",
+    "Participants": [
+      "emil109",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e109.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e110",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e110",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil110",
+    "Participants": [
+      "emil110",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e110.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e111",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e111",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil111",
+    "Participants": [
+      "emil111",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e111.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e112",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e112",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil112",
+    "Participants": [
+      "emil112",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e112.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e113",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e113",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil113",
+    "Participants": [
+      "emil113",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e113.vtt"
+      }
+    ]
+  },
+  {
+    "OnlineMeetingId": "prod-meeting-pilot-review-e114",
+    "OnlineMeetingType": "Event",
+    "EventId": "prod-event-pilot-review-e114",
+    "StartDateTime": "2026-10-22T18:00:00Z",
+    "EndDateTime": "2026-10-22T18:15:00Z",
+    "Owner": "emil114",
+    "Participants": [
+      "emil114",
+      "atul",
+      "jahidi"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/lakeshore-pilot-review-e114.vtt"
+      }
+    ]
   }
 ]
