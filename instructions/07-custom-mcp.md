@@ -53,7 +53,7 @@ Zava Expense is a custom line-of-business app, so it isn't in the connector cata
 
 4. Select **Save**.
 5. Under **Staged rollout**, make Zava Expense available to yourself. It now appears under **Your connections**, next to the catalog connectors. Changes can take up to 10 minutes.
-6. In the Microsoft 365 Copilot app, open **… › Settings › Sources** and connect **Zava Expense**.
+6. In Microsoft 365 Copilot in the browser, open **… › Settings › Sources** and connect **Zava Expense**.
 
 ## Step 1: Check where you stand
 

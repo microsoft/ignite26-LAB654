@@ -9,7 +9,7 @@ Sign in as Emil, discover connectors in the catalog, check the ones for your tra
 ## Step 1: Sign in
 
 1. Sign in to the lab computer with the credentials on your **seat card**.
-2. Open the **Microsoft 365 Copilot** app and sign in with the Emil Vanggaard account from your seat card.
+2. In the browser, go to **Microsoft 365 Copilot** at [m365.cloud.microsoft](https://m365.cloud.microsoft) and sign in with the Emil Vanggaard account from your seat card.
 
 > [!TIP]
 > If a sign-in popup is blocked at any point in the lab, allow popups for the Copilot site and try again.

@@ -46,7 +46,7 @@ The lab runs in a demo tenant where you play **Emil Vanggaard** at **Zava**, a f
 If you're following along during a live session:
 
 1. Sign in to the lab computer with the credentials on your **seat card**.
-2. Open the **Microsoft 365 Copilot** app and sign in with the Emil Vanggaard account from your seat card.
+2. In the browser, go to **Microsoft 365 Copilot** at [m365.cloud.microsoft](https://m365.cloud.microsoft) and sign in with the Emil Vanggaard account from your seat card.
 3. Open the [lab manual](instructions/README.md) beside Copilot and start with the [Introduction](instructions/01-introduction.md).
 
 #### On your own
