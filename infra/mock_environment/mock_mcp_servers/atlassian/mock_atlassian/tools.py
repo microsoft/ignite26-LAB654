@@ -16,7 +16,7 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import quote, unquote, urlparse
 
-from mockmcp import CallContext, InvalidParams, Tool, ToolError
+from mockmcp import CallContext, InvalidParams, Tool, ToolError, ToolOutput
 
 from . import jql, render
 from .render import api, site_url
@@ -258,6 +258,75 @@ def issue_payload(site: Site, issue: dict, fields: list[str] | None = None, fmt:
     return decorate(site, render.issue_obj(site, issue, fields, fmt, expand))
 
 
+# --- Jira MCP App widget -------------------------------------------------------------------------------------------
+# The live server attaches its "jira-widget" MCP App to getJiraIssue and searchJiraIssuesUsingJql only. Tool _meta,
+# resource CSP and the structuredContent shape below mirror what it returns.
+
+WIDGET_URI = "ui://widget/jira-widget.html"
+OPENAI_WIDGET_URI = "ui://widget/open-ai/jira-widget.html"
+WIDGET_RESOURCE_DOMAINS = [
+    "https://api.atlassian.com", "https://api.stg.atlassian.com", "https://*.prod.public.atl-paas.net",
+    "https://*.staging.public.atl-paas.net", "https://atlassian-mcp-micros.ddev.frontend.public.atl-paas.net",
+    "https://atlassian-mcp-micros.stg-east.frontend.public.atl-paas.net",
+    "https://atlassian-mcp-micros.prod-east.frontend.public.atl-paas.net", "https://*.prod.atl-paas.net",
+    "https://*.staging.atl-paas.net",
+]
+WIDGET_CONNECT_DOMAINS = ["https://as.staging.atl-paas.net", "https://as.atlassian.com"]
+WIDGET_CSP = {"resourceDomains": WIDGET_RESOURCE_DOMAINS, "connectDomains": WIDGET_CONNECT_DOMAINS}
+OPENAI_WIDGET_CSP = {"resource_domains": WIDGET_RESOURCE_DOMAINS, "connect_domains": WIDGET_CONNECT_DOMAINS}
+WIDGET_TOOL_META = {
+    "ui": {"resourceUri": WIDGET_URI, "prefersBorder": True, "csp": WIDGET_CSP},
+    "openai/outputTemplate": OPENAI_WIDGET_URI,
+    "openai/toolInvocation/invoking": "Preparing",
+    "openai/toolInvocation/invoked": "Ready",
+    "openai/widgetPrefersBorder": True,
+    "openai/widgetDescription": "Displaying",
+    "openai/widgetAccessible": True,
+    "openai/resultCanProduceWidget": True,
+    "openai/widgetCSP": OPENAI_WIDGET_CSP,
+}
+WIDGET_FEATURE_FLAGS = {
+    "mcp-app-v2-primary": True, "ken-4811-4724-jira-mcp-status-assignee-fields": False, "mcp-ui-local-cache": False,
+    "jira-mcp-app-loading-skeleton-and-error-case": False, "jira-mcp-app-shared-row-components": True,
+    "claude_mcp_ui_theme_fix_jac-99665": True,
+}
+WIDGET_ISSUE_FIELDS = ["*all"]
+
+
+def widget_context(site: Site, tool: str) -> dict:
+    return {"atlassianAccountId": site.current_user["accountId"], "cloudId": site.data["site"]["cloudId"],
+            "toolsExposure": "primary", "clientName": "microsoft.com", "mcpClientName": "unknown", "toolName": tool,
+            "endpoint": "v2:streamable-http", "invocationId": str(uuid.uuid4()), "env": "prod",
+            "featureFlags": dict(WIDGET_FEATURE_FLAGS)}
+
+
+def widget_search_node(site: Site, issue: dict) -> dict:
+    status = render.status_obj(site, issue["status"])
+    fields: dict[str, Any] = {"summary": issue["summary"]}
+    priority = render.priority_obj(site, issue.get("priority"))
+    if priority:
+        fields["priority"] = {k: priority[k] for k in ("iconUrl", "name", "id")}
+    fields["status"] = {"name": status["name"], "id": status["id"],
+                        "statusCategory": {k: status["statusCategory"][k] for k in ("id", "key", "colorName", "name")}}
+    return {"expand": render.PRETTY_EXPAND, "id": issue["id"], "key": issue["key"], "fields": fields,
+            "webUrl": render.browse_url(issue["key"])}
+
+
+def widget_search(site: Site, jql_text: str, page: list[dict], next_token: str | None) -> dict:
+    return {"issues": {"nodes": [widget_search_node(site, i) for i in page],
+                       "webUrl": f"{site_url()}{render.VIEW_SCOPE.get()}/issues?jql={quote(jql_text, safe='')}",
+                       "pageInfo": {"hasNextPage": next_token is not None, "endCursor": next_token}},
+            "context": widget_context(site, "searchJiraIssuesUsingJql")}
+
+
+def widget_issue(site: Site, issue: dict, fmt: str | None) -> dict:
+    node = issue_payload(site, issue, WIDGET_ISSUE_FIELDS, fmt)
+    node.pop("self", None)
+    node["descriptionEditable"] = True
+    node["webUrl"] = render.browse_url(issue["key"])
+    return {"issues": {"nodes": [node]}, "context": widget_context(site, "getJiraIssue")}
+
+
 # --- tool base -----------------------------------------------------------------------------------------------------
 
 class AtlassianTool(Tool):
@@ -363,20 +432,26 @@ class LookupAccount(AtlassianTool):
 
 class GetIssue(AtlassianTool):
     name = "getJiraIssue"
+    ui_resource = WIDGET_URI
+    tool_meta = WIDGET_TOOL_META
 
     def handle(self, site: Site, args: dict, ctx: CallContext) -> Any:
         issue = find_issue(site, args["issueIdOrKey"])
-        return pretty(issue_payload(site, issue, args.get("fields"), args.get("responseContentFormat"),
-                                    args.get("expand")))
+        fmt = args.get("responseContentFormat")
+        text = pretty(issue_payload(site, issue, args.get("fields"), fmt, args.get("expand")))
+        return ToolOutput(text, widget_issue(site, issue, fmt))
 
 
 class SearchJql(AtlassianTool):
     name = "searchJiraIssuesUsingJql"
+    ui_resource = WIDGET_URI
+    tool_meta = WIDGET_TOOL_META
 
     def handle(self, site: Site, args: dict, ctx: CallContext) -> Any:
         mode = args.get("searchResultMode") or "issues"
+        query = str(args.get("jql") or "")
         try:
-            found = jql.search(site, str(args.get("jql") or ""), ctx.clock.now)
+            found = jql.search(site, query, ctx.clock.now)
         except (jql.JqlError, KeyError, ValueError):
             # The live server answers an invalid query or unknown field with an empty, final page.
             return pretty({"issues": [], "isLast": True} if mode != "count" else {"issues": [], "totalCount": 0})
@@ -400,7 +475,7 @@ class SearchJql(AtlassianTool):
             out["isLast"] = True
         if mode == "all":
             out["totalCount"] = len(found)
-        return pretty(out)
+        return ToolOutput(pretty(out), widget_search(site, query, page, out.get("nextPageToken")))
 
 
 class GetTransitions(AtlassianTool):

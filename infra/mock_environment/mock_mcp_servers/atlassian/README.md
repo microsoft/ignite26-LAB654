@@ -74,6 +74,22 @@ The data is in `seed_files/seed.json`, written from the scenario. Names come fro
 - Every page also exists under `/v/{token}/...`, which shows one conversation's changes. Issue links in tool results use it. Opening a conversation's new issue or page without the token redirects to the token URL. An expired token shows the seed with a notice.
 - `/ex/jira/{cloudId}/rest/api/3/issue/{id}` (the `self` links in tool results) redirects to the issue page, and `/wiki/rest/api/content/{id}` and `/wiki/x/{tiny}` redirect to the Confluence page. Priority icons and issue type and project avatars are served at the paths the tool results point to.
 
+## Widgets
+
+`getJiraIssue` and `searchJiraIssuesUsingJql` are MCP Apps tools, as on the live server. Their `_meta` and the UI resources' `_meta` (CSP, `prefersBorder`, `openai/*` keys) match the capture.
+
+| Resource | Purpose |
+|----------|---------|
+| `ui://widget/jira-widget.html` | MCP Apps widget (`text/html;profile=mcp-app`) |
+| `ui://widget/open-ai/jira-widget.html` | The same widget under the `openai/outputTemplate` URI |
+
+- Results carry `structuredContent`. Search: `{issues: {nodes, webUrl, pageInfo}, context}`. Single issue: `{issues: {nodes}, context}`, with `descriptionEditable` and `webUrl` on the node.
+- The widget is one self-contained HTML file (`mock_atlassian/ui/jira-widget.html`); the live server loads a remote bundle.
+- Text content keeps the mock's existing shape. The live server wraps it in `{"data": ...}`.
+- The `view` argument (`compact`, `evidence`, `full`) is accepted and ignored.
+- Errors carry no `structuredContent`.
+- `/issues?jql=...` (the search `webUrl`) redirects to the list view.
+
 ## Run and test
 
 From `infra/mock_environment/mock_mcp_servers`:

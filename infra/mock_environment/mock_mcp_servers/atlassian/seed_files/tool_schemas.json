@@ -1029,6 +1029,15 @@
             "model_tool_call"
           ],
           "description": "Invocation attribution. Set to jira_mcp_card when called from a Jira MCP Widget UI; omit or set to model_tool_call for model/tool-loop calls."
+        },
+        "view": {
+          "type": "string",
+          "enum": [
+            "compact",
+            "evidence",
+            "full"
+          ],
+          "description": "Output view preset. Default: \"compact\". Options: \"compact\", \"evidence\", \"full\". compact = minimal fields for scanning; evidence = decision-relevant detail; full = complete response."
         }
       },
       "required": [
@@ -1719,6 +1728,15 @@
             "model_tool_call"
           ],
           "description": "Invocation attribution. Set to jira_mcp_card when called from a Jira MCP Widget UI; omit or set to model_tool_call for model/tool-loop calls."
+        },
+        "view": {
+          "type": "string",
+          "enum": [
+            "compact",
+            "evidence",
+            "full"
+          ],
+          "description": "Output view preset. Default: \"compact\". Options: \"compact\", \"evidence\", \"full\". compact = minimal fields for scanning; evidence = decision-relevant detail; full = complete response."
         }
       },
       "required": [

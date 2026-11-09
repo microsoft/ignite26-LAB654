@@ -257,3 +257,81 @@ def test_wiki_viewer(web):
     page = _ok(spec, "createConfluencePage", {"spaceId": "AUR", "title": "Viewer page", "body": "<p>hi</p>"}, "cv")
     location = client.get(f"/wiki/spaces/AUR/pages/{page['id']}").headers["location"]
     assert location.startswith("/v/") and "Viewer page" in client.get(location).text
+
+
+# --- Jira MCP App widget ---------------------------------------------------------------------------------------
+
+WIDGET_TOOLS = {"getJiraIssue", "searchJiraIssuesUsingJql"}
+
+
+def test_widget_tool_meta_matches_live(spec):
+    from mock_atlassian.tools import WIDGET_CSP, WIDGET_TOOL_META
+
+    meta = {t.name: (t.meta or {}) for t in spec.list_tools()}
+    for name in WIDGET_TOOLS:
+        assert meta[name]["ui"] == {"resourceUri": "ui://widget/jira-widget.html", "prefersBorder": True,
+                                    "csp": WIDGET_CSP}
+        assert meta[name]["openai/outputTemplate"] == "ui://widget/open-ai/jira-widget.html"
+        assert all(meta[name][k] == v for k, v in WIDGET_TOOL_META.items())
+    assert all("ui" not in m for n, m in meta.items() if n not in WIDGET_TOOLS)
+
+
+def test_widget_resources_are_self_contained_mcp_apps(spec):
+    import asyncio
+    import re
+
+    from mcp import types
+    from mockmcp import UI_MIME_TYPE
+    from mockmcp.app import build_server
+
+    uris = {"ui://widget/jira-widget.html", "ui://widget/open-ai/jira-widget.html"}
+    assert {str(r.uri) for r in spec.list_resources()} == uris
+    handler = build_server(spec).request_handlers[types.ReadResourceRequest]
+    for uri in uris:
+        req = types.ReadResourceRequest(method="resources/read", params=types.ReadResourceRequestParams(uri=uri))
+        contents = asyncio.run(handler(req)).root.contents
+        assert len(contents) == 1 and contents[0].mimeType == UI_MIME_TYPE == "text/html;profile=mcp-app"
+        meta = contents[0].meta or {}
+        assert meta["ui"]["prefersBorder"] is True and "connectDomains" in meta["ui"]["csp"]
+        html = contents[0].text
+        assert html.lstrip().lower().startswith("<!doctype html>") and "ui/initialize" in html
+        assert "if (!initialized) return;" in html
+        assert not re.search(r"""(src|href)\s*=\s*["']?(https?:)?//""", html), uri
+
+
+def test_search_returns_widget_structured_content(spec):
+    got = call(spec, "searchJiraIssuesUsingJql",
+               {"cloudId": CLOUD, "jql": "project = AUR AND sprint in openSprints()", "fields": ["summary"]})
+    assert got.ok, got.text
+    sc = got.structured
+    assert set(sc) == {"issues", "context"} and set(sc["issues"]) == {"nodes", "webUrl", "pageInfo"}
+    assert [n["key"] for n in sc["issues"]["nodes"]] == [i["key"] for i in got.json["issues"]]
+    node = sc["issues"]["nodes"][0]
+    assert set(node) == {"expand", "id", "key", "fields", "webUrl"} and "/browse/" in node["webUrl"]
+    assert {"summary", "status"} <= set(node["fields"]) and "statusCategory" in node["fields"]["status"]
+    assert "/issues?jql=" in sc["issues"]["webUrl"]
+    assert set(sc["issues"]["pageInfo"]) == {"hasNextPage", "endCursor"}
+    ctx = sc["context"]
+    assert ctx["cloudId"] == CLOUD and ctx["toolName"] == "searchJiraIssuesUsingJql"
+    assert ctx["endpoint"] == "v2:streamable-http" and ctx["featureFlags"]["mcp-app-v2-primary"] is True
+
+
+def test_get_issue_returns_single_card_structured_content(spec):
+    got = call(spec, "getJiraIssue", {"cloudId": CLOUD, "issueIdOrKey": "AUR-142", "view": "full"})
+    assert got.ok, got.text
+    sc = got.structured
+    assert set(sc["issues"]) == {"nodes"} and len(sc["issues"]["nodes"]) == 1
+    node = sc["issues"]["nodes"][0]
+    assert node["key"] == "AUR-142" and node["descriptionEditable"] is True and "self" not in node
+    assert node["webUrl"].endswith("/browse/AUR-142") and sc["context"]["toolName"] == "getJiraIssue"
+
+
+def test_errors_carry_no_widget_payload(spec):
+    got = call(spec, "getJiraIssue", {"cloudId": CLOUD, "issueIdOrKey": "AUR-99999"})
+    assert not got.ok and got.structured is None
+
+
+def test_issues_route_redirects_to_project_list(web):
+    _, _, client = web
+    r = client.get("/issues", params={"jql": "project = AUR"}, follow_redirects=False)
+    assert r.status_code == 302 and r.headers["location"].endswith("/list")

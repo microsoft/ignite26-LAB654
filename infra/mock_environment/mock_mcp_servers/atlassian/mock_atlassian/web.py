@@ -730,6 +730,10 @@ def build_routes(store: StateStore, clock_factory=None) -> list:
     def to_board(request, view):
         return RedirectResponse(view.board(), status_code=302)
 
+    def to_list(request, view):
+        # Jira's /issues?jql=... search page; the mock viewer shows the project list instead.
+        return RedirectResponse(view.list(), status_code=302)
+
     def board(request, view):
         if not project_ok(request, view):
             return html(not_found_page(view, "this board"), 404)
@@ -823,6 +827,7 @@ def build_routes(store: StateStore, clock_factory=None) -> list:
             Route(base + "/jira/software/projects/{key}/boards/{board}", page(board)),
             Route(base + "/jira/software/projects/{key}/boards/{board}/backlog", page(backlog)),
             Route(base + "/jira/software/projects/{key}/list", page(listing)),
+            Route(base + "/issues", page(to_list)),
             Route(base + "/browse/{key}", page(browse)),
             Route(base + "/wiki", page(wiki_home)),
             Route(base + "/wiki/", page(wiki_home)),
