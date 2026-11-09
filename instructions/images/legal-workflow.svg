@@ -35,7 +35,7 @@
   <path d='M725,76 V30 a10,10 0 0 1 10,-10 H920 a10,10 0 0 1 10,10 V76 z' fill='#0F6CBD'/>
   <text x='739' y='42' class='step'>Step 4</text><text x='739' y='64' class='title'>Negotiation pack</text>
   <text x='739' y='100' class='label'>WHERE</text><text x='739' y='120' class='where'>Copilot</text><text x='739' y='137' class='hint'>Cowork, opened from Word</text>
-  <text x='739' y='166' class='label'>YOU GET</text><text x='739' y='186' class='get'>A negotiation list, a</text><text x='739' y='203' class='get'>one-pager and a reply to</text><text x='739' y='220' class='get'>Luc, saved to iManage</text>
+  <text x='739' y='166' class='label'>YOU GET</text><text x='739' y='186' class='get'>A negotiation list, a</text><text x='739' y='203' class='get'>one-pager and a Teams</text><text x='739' y='220' class='get'>reply to Luc</text>
   <rect x="20" y="248" width="910" height="44" rx="10" fill="#F3F7FC" stroke="#D6E2F2"/>
   <text x="475" y="275" text-anchor="middle" font-size="13.5" fill="#1F1F1F"><tspan font-weight="700">Work IQ and iManage</tspan> bring the matter into Word and Cowork: <tspan font-weight="700">nothing is uploaded, and nothing is sent until you approve.</tspan></text>
 </svg>
