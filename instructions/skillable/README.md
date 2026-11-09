@@ -3,7 +3,7 @@
 This folder holds the version of the lab manual that runs in the Skillable lab environment, in the instructions pane beside the virtual machine.
 
 - [`lab-instructions.md`](lab-instructions.md): every page in one file, with `===` between pages. Paste it into the Skillable instructions editor.
-- [`images/`](images/): the images the instructions use. They include the five workflow diagrams, the Contoso Authenticator App screenshots and the app icon.
+- [`images/`](images/): the images the instructions use. They include the five workflow diagrams, the Contoso Authenticator App screenshots, the app icon and the Ignite feedback slide.
 
 The GitHub version of the manual, in the parent [`instructions/`](../README.md) folder, is the source of truth for the lab content. When you change it, update this file to match.
 

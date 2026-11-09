@@ -844,6 +844,15 @@ Every connector you used today, including your own app, is managed in the same p
 
 Enable the connectors that matter most to your organization. Start with the systems where your people spend their day, such as your CRM, ticketing, code, documents and line-of-business apps.
 
+## Share your feedback
+
+!IMAGE[LAB654 feedback slide. Scan the first QR code to rate the session on the Ignite page, at aka.ms/ignite2026-feedback. Scan the second QR code to open an issue in the lab repo, at aka.ms/ignite2026-LAB654.](instructions360859/lab654-feedback.png "LAB654 feedback")
+
+Your feedback helps us improve this lab for future events.
+
+- **Rate the session.** Give your satisfaction score and written feedback about the lab at [aka.ms/ignite2026-feedback](https://aka.ms/ignite2026-feedback).
+- **Suggest changes to the content.** For ideas to improve the lab content or docs, open an issue at [aka.ms/ignite2026-LAB654](https://aka.ms/ignite2026-LAB654).
+
 ## Keep learning
 
 - [Ignite 2026 next steps](https://aka.ms/ignite26-next-steps)
