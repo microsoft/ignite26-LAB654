@@ -31,6 +31,8 @@ class UiResource:
     description: str | None = None
     prefers_border: bool = True
     csp: dict[str, list[str]] = field(default_factory=dict)
+    # Extra resource ``_meta`` keys (e.g. ``openai/widgetCSP``), deep-merged over the generated ``ui`` key.
+    extra_meta: dict[str, Any] = field(default_factory=dict)
 
     def __post_init__(self) -> None:
         if not self.uri.startswith("ui://"):
@@ -41,7 +43,18 @@ class UiResource:
         ui: dict[str, Any] = {"prefersBorder": self.prefers_border}
         if self.csp:
             ui["csp"] = self.csp
-        return {"ui": ui}
+        return merge_meta({"ui": ui}, self.extra_meta)
+
+
+def merge_meta(base: dict[str, Any], extra: dict[str, Any] | None) -> dict[str, Any]:
+    """Deep-merge ``extra`` into a copy of ``base``; nested dicts merge, other values replace."""
+    out = dict(base)
+    for key, value in (extra or {}).items():
+        if isinstance(value, dict) and isinstance(out.get(key), dict):
+            out[key] = merge_meta(out[key], value)
+        else:
+            out[key] = value
+    return out
 
 
 def load_html(folder: Path, filename: str) -> str:

@@ -73,6 +73,8 @@ class Tool(ABC):
     validate_args: bool = True
     annotations: dict = READ_ONLY
     ui_resource: str | None = None  # ``ui://`` URI of an MCP Apps widget for this tool's results
+    # Extra tools/list ``_meta`` keys (e.g. ``openai/*``), deep-merged over the generated ``ui`` keys.
+    tool_meta: dict | None = None
 
     @abstractmethod
     def run(self, args: dict, ctx: CallContext) -> Any | ToolOutput: ...

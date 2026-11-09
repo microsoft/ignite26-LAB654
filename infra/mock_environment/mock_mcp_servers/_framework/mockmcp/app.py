@@ -28,7 +28,7 @@ from mcp.server.lowlevel.helper_types import ReadResourceContents
 from .errors import InvalidParams, NotEntitled, ToolError, UpstreamError
 from .schema import validate
 from .tool import CallContext, Clock, Tool, ToolOutput
-from .ui import UI_MIME_TYPE, UiResource
+from .ui import UI_MIME_TYPE, UiResource, merge_meta
 
 log = logging.getLogger("mockmcp")
 
@@ -94,9 +94,10 @@ class ServerSpec:
                 inputSchema=t.input_schema,
                 annotations=types.ToolAnnotations(**t.annotations),
                 # "ui/resourceUri" is the pre-2026 flat key; some hosts still read it.
-                _meta={"ui": {"resourceUri": t.ui_resource}, "ui/resourceUri": t.ui_resource}
+                _meta=merge_meta({"ui": {"resourceUri": t.ui_resource}, "ui/resourceUri": t.ui_resource},
+                                 t.tool_meta)
                 if t.ui_resource
-                else None,
+                else (t.tool_meta or None),
             )
             for t in self.tools
         ]
