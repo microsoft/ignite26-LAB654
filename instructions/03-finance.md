@@ -44,7 +44,7 @@ The committee will challenge the case, so every number has to be sourced and che
 
 ## How the track flows
 
-![Step 1 in the Copilot app gives a verified verdict; Step 2a in the Copilot app in Cowork mode builds the workbook; Steps 2b and 2c in Excel add scenarios and credit analysis; Step 3 back in the Copilot app gives a pressure-tested view and memo](images/finance-workflow.svg)
+![Step 1 in Copilot gives a verified verdict; Step 2a in Copilot in Cowork mode builds the workbook; Steps 2b and 2c in Excel add scenarios and credit analysis; Step 3 back in Copilot gives a pressure-tested view and memo](images/finance-workflow.svg)
 
 ## Before you start
 
@@ -61,7 +61,7 @@ The committee will challenge the case, so every number has to be sourced and che
 
 ### 1a. Did it beat expectations?
 
-> **Where:** Copilot app. Start a new chat, in either Chat or Cowork mode.
+> **Where:** Copilot. Start a new chat, in either Chat or Cowork mode.
 
 > [!IMPORTANT]
 > The first time you use Cowork, select **Customize** and turn on **LSEG_Lab**, **FactSet_Lab** and **Moodys_Lab**. Then turn off the **Fabric IQ** plugin, which is on by default.
@@ -80,7 +80,7 @@ I'm preparing a recommendation for Monday's investment committee on whether our 
 
 ### 1b. Is it stronger than its rivals?
 
-> **Where:** Copilot app, in the same chat.
+> **Where:** Copilot, in the same chat.
 
 ```text
 Using FactSet, compare how profitable Litware, A. Datum and Relecloud have been over the past 5 years, using gross margin and return on invested capital (ROIC).
@@ -90,7 +90,7 @@ Using FactSet, compare how profitable Litware, A. Datum and Relecloud have been 
 
 ### 1c. Is it worth a deeper look?
 
-> **Where:** Copilot app, in the same chat.
+> **Where:** Copilot, in the same chat.
 
 ```text
 What is Litware's credit rating and outlook according to Moody's and what's driving them? Then, based on everything so far, give me a one-line verdict on whether Litware is worth a deeper look.
@@ -105,7 +105,7 @@ What is Litware's credit rating and outlook according to Moody's and what's driv
 
 ### 2a. Get the numbers in one place
 
-> **Where:** Copilot app. Start a new chat and select **Cowork** mode, because this is a long-running task. Cowork creates the workbook and saves it to your OneDrive.
+> **Where:** Copilot. Start a new chat and select **Cowork** mode, because this is a long-running task. Cowork creates the workbook and saves it to your OneDrive.
 
 ```text
 Using LSEG, create an Excel workbook called "Litware Committee Pack" with an equity research snapshot of Litware: analysts' earnings and revenue forecasts for this year and next (FY1, FY2), how many analysts cover it and how much they disagree, 5 years of financials, and valuation. Cite sources and dates.
@@ -144,7 +144,7 @@ Using Moody's, add a "Credit" sheet with a credit SWOT for Litware (strengths, w
 
 ## Step 3: Back-check and report
 
-> **Where:** Copilot app. Go back to your chat from Step 1.
+> **Where:** Copilot. Go back to your chat from Step 1.
 
 ### 3a. Pressure-test your view (stretch goal)
 
