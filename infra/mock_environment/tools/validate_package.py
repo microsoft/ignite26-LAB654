@@ -368,6 +368,7 @@ def vtt_check(path: Path, allowed: set[str], where: str) -> None:
 def online_meeting_checks(pkg: Path, data: dict, users: dict, user) -> None:
     events = {e["EventId"]: e for e in data.get("events", [])}
     seen = set()
+    used_transcripts: set[str] = set()
     for om in data.get("onlinemeetings", []):
         w = f"onlinemeetings[{om['OnlineMeetingId']}]"
         if om["OnlineMeetingId"] in seen:
@@ -391,6 +392,9 @@ def online_meeting_checks(pkg: Path, data: dict, users: dict, user) -> None:
         group = {ev["Sender"]} | {a["Email"] for f in ("RequiredAttendees", "OptionalAttendees") for a in ev.get(f) or []}
         names = {users[n]["DisplayName"] for n in group if n in users} | group
         for t in om.get("Transcripts") or []:
+            if t["TranscriptFile"] in used_transcripts:
+                err(f"{w}: transcript {t['TranscriptFile']} is already used by another meeting")
+            used_transcripts.add(t["TranscriptFile"])
             f = pkg / t["TranscriptFile"]
             if not f.is_file():
                 err(f"{w}: transcript {t['TranscriptFile']} missing")

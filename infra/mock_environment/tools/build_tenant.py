@@ -18,6 +18,12 @@ The seven preinstalled mock connector packages are copied from mock_plugins
 to DAConfig and assigned to Emil through das.config.json. Zava Expense is
 excluded so attendees can install it in the custom MCP exercise.
 
+Scenarios are written for a single attendee account, "emil". _expand_emils keeps
+every original record unchanged and adds EMIL_COUNT extra lab accounts
+(emil001...): every email, chat, event, online meeting, file and plugin set
+involving Emil is copied per account with an ID suffix (-e001...), and the extra
+accounts join the shared team (still owned by "emil") and its channels as members.
+
 The package is rebuilt from scratch on every run. Then run validate_package.py.
 """
 
@@ -26,7 +32,7 @@ from __future__ import annotations
 import json
 import shutil
 import sys
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from zipfile import ZipFile
 
 HERE = Path(__file__).resolve().parent
@@ -101,6 +107,69 @@ def _write_jsonl(path: Path, items) -> None:
     path.write_text("".join(json.dumps(i, ensure_ascii=False) + "\n" for i in items), encoding="utf-8")
 
 
+EMIL_COUNT = 114
+# Per-Emil copies get these ID fields suffixed; references to them are remapped.
+COPIED_IDS = {
+    "emails": "EmailId",
+    "chats": "ChatId",
+    "events": "EventId",
+    "onlinemeetings": "OnlineMeetingId",
+    "files": "FileId",
+}
+
+
+def _emil(n: int) -> str:
+    return f"{legal.EMIL}{n:03d}"
+
+
+def _replace(o, mapping: dict[str, str]):
+    if isinstance(o, dict):
+        return {k: _replace(v, mapping) for k, v in o.items()}
+    if isinstance(o, list):
+        return [_replace(v, mapping) for v in o]
+    return mapping.get(o, o) if isinstance(o, str) else o
+
+
+def _involves_emil(o) -> bool:
+    if isinstance(o, dict):
+        return any(_involves_emil(v) for v in o.values())
+    if isinstance(o, list):
+        return any(_involves_emil(v) for v in o)
+    return o == legal.EMIL
+
+
+def _expand_emils(data: dict) -> None:
+    emils = [_emil(n) for n in range(1, EMIL_COUNT + 1)]
+    template = next(u for u in data["users"] if u["MailNickName"] == legal.EMIL)
+    copy = {k: v for k, v in template.items() if k != "PhoneNumber"}
+    data["users"] += [{**copy, "MailNickName": e} for e in emils]
+
+    per_emil = {k: [r for r in data[k] if _involves_emil(r)] for k in COPIED_IDS}
+    ids = [r[COPIED_IDS[k]] for k, rows in per_emil.items() for r in rows]
+    # COEP rejects a transcript shared by several meetings, so each Emil gets his own copy.
+    paths = [t["TranscriptFile"] for m in per_emil["onlinemeetings"] for t in m.get("Transcripts") or []]
+    data["copies"] = []
+    for n, e in enumerate(emils, 1):
+        mapping = {legal.EMIL: e, **{i: f"{i}-e{n:03d}" for i in ids}}
+        for p in paths:
+            src = PurePosixPath(p)
+            dst = src.with_stem(f"{src.stem}-e{n:03d}")
+            mapping[p] = str(dst)
+            data["copies"].append((p, str(dst)))
+        for k, rows in per_emil.items():
+            data[k] += [_replace(r, mapping) for r in rows]
+
+    for t in data["teams"]:
+        if _involves_emil(t):
+            t["Members"] = (t.get("Members") or []) + emils
+    for c in data["channels"]:
+        if legal.EMIL in c.get("Members", []):
+            c["Members"] = c["Members"] + emils
+    if _involves_emil([data[k] for k in ("channelmessages", "channelmessagereplies")]):
+        raise ValueError("Emil must not post channel messages; channels are shared by all Emils")
+    data["das"] += [{**d, "UPN": e} for d in data["das"] for e in emils]
+
+
 def _build_das() -> list[dict]:
     destination = PACKAGE_DIR / "DAConfig"
     destination.mkdir(parents=True, exist_ok=True)
@@ -138,6 +207,7 @@ def main() -> None:
             u["Manager"] = "hannes"
     data["emails"] = [_normalize_email(e) for e in data["emails"]]
     data["das"] = _build_das()
+    _expand_emils(data)
 
     _write(PACKAGE_DIR / "config.json", CONFIG)
     for key, name in ENTITY_FILES.items():
@@ -165,6 +235,10 @@ def main() -> None:
         build = getattr(s, "build_documents", None)
         for p in build(files_dir) if build else []:
             print(f"wrote {p.relative_to(PACKAGE_DIR)}")
+    for src, dst in data["copies"]:
+        (PACKAGE_DIR / dst).parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(PACKAGE_DIR / src, PACKAGE_DIR / dst)
+    print(f"per-Emil transcript copies: {len(data['copies'])}")
     for key in [*ENTITY_FILES, *CONNECTOR_TYPES, "transcripts"]:
         print(f"{key}: {len(data[key])}")
 
