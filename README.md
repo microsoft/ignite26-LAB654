@@ -87,21 +87,27 @@ For more information, visit the [Learn MCP Server repo](https://aka.ms/learnmcp)
         <sub><b>Danny Yao</b></sub></a><br />
             <a href="https://github.com/dannyyaou" title="talk">📢</a>
     </td>
-    <td align="center">
-        <sub><b>Gargy Shekhar</b></sub>
+    <td align="center"><a href="https://github.com/GargyShekhar2512">
+        <img src="https://github.com/GargyShekhar2512.png" width="100px;" alt="Gargy Shekhar"/><br />
+        <sub><b>Gargy Shekhar</b></sub></a><br />
+            <a href="https://github.com/GargyShekhar2512" title="talk">📢</a>
     </td>
 </tr>
 <tr>
-    <td align="center"><a href="https://github.com/anparanjape">
-        <img src="https://github.com/anparanjape.png" width="100px;" alt="Anshuman Paranjape"/><br />
+    <td align="center"><a href="https://github.com/Anshuman2702">
+        <img src="https://github.com/Anshuman2702.png" width="100px;" alt="Anshuman Paranjape"/><br />
         <sub><b>Anshuman Paranjape</b></sub></a><br />
-            <a href="https://github.com/anparanjape" title="talk">📢</a>
+            <a href="https://github.com/Anshuman2702" title="talk">📢</a>
     </td>
-    <td align="center">
-        <sub><b>Shiladitya Saha</b></sub>
+    <td align="center"><a href="https://github.com/shiladityamsft">
+        <img src="https://github.com/shiladityamsft.png" width="100px;" alt="Shiladitya Saha"/><br />
+        <sub><b>Shiladitya Saha</b></sub></a><br />
+            <a href="https://github.com/shiladityamsft" title="talk">📢</a>
     </td>
-    <td align="center">
-        <sub><b>Krishan Nagpal</b></sub>
+    <td align="center"><a href="https://github.com/krishan-nagpal">
+        <img src="https://github.com/krishan-nagpal.png" width="100px;" alt="Krishan Nagpal"/><br />
+        <sub><b>Krishan Nagpal</b></sub></a><br />
+            <a href="https://github.com/krishan-nagpal" title="talk">📢</a>
     </td>
 </tr></table>
 
