@@ -1,0 +1,9 @@
+{
+  "Tenant": {
+    "Ring": "SDFv2",
+    "VirtualTenantName": "Connectors_BRK220_Demo",
+    "Tags": "Ignite2026,BRK220",
+    "IsShared": false
+  },
+  "TenantCount": 1
+}

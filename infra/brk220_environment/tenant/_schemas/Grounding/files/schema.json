@@ -1,0 +1,250 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Manufactured Files schema",
+  "title": "Files",
+  "type": "array",
+  "uniqueItems": true,
+  "minItems": 1,
+  "items": {
+    "$ref": "#/$defs/File"
+  },
+  "$defs": {
+    "File": {
+      "description": "The File JSON Schema is structured to represent a File, capturing key information required for managing it.",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "CreatedDate": {
+          "description": "The date and time when the file was initially created. This follows the ISO 8601 pattern.",
+          "type": "string",
+          "pattern": "^[1-9][0-9]{3}-(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9]|3[0-1])T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+        },
+        "FileId": {
+          "description": "A unique numeric identifier for the file, useful for tracking and reference.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 50
+        },
+        "FileLocation": {
+          "description": "The URL or path where the file is stored, often pointing to a location in SharePoint, OneDrive, or Teams.",
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^files(/[^%\\\\:*?\"<>|\\x00-\\x1f/]+)+$"
+        },
+        "FileName": {
+          "description": "The destination full path where the file will be uploaded to in a SharePoint site or OneDrive (e.g., 'Documents/Reports/Q3_Milestones_Update.docx'). The last segment after '/' must match the actual file name in FileLocation.",
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^%\\\\:*?\"<>|\\x00-\\x1f]+$"
+        },
+        "LastModifiedDate": {
+          "description": "The date and time when the file was last modified. This follows the ISO 8601 pattern.",
+          "type": "string",
+          "pattern": "^[1-9][0-9]{3}-(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9]|3[0-1])T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+        },
+        "Owner": {
+          "type": "string",
+          "minLength": 1,
+          "description": "User MailNickName only",
+          "pattern": "^[\\w\\-\\.]+$"
+        },
+        "SharedWith": {
+          "description": "A list of users the file is shared with.",
+          "type": [
+            "array",
+            "null"
+          ],
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/Share"
+          }
+        },
+        "FileDestination": {
+          "description": "The destination of the file. This field is not in use for now.",
+          "type": "string",
+          "maxLength": 260
+        },
+        "DestinationType": {
+          "description": "The type of destination for the file, which can be 'onedrive', 'site', or 'channel'.",
+          "enum": [
+            "onedrive",
+            "site"
+          ]
+        },
+        "FileSharedLinks": {
+          "description": "A list of file shared link config, if any.",
+          "type": [
+            "array",
+            "null"
+          ],
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/FileSharedLink"
+          }
+        },
+        "Actions": {
+          "description": "A list of possible actions a customer can execute on a document.",
+          "type": [
+            "array",
+            "null"
+          ],
+          "uniqueItems": false,
+          "items": {
+            "$ref": "#/$defs/Action"
+          }
+        },
+        "FileSharedConfig": {
+          "description": "Configuration for sharing the file.",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "RequireSignIn": {
+              "description": "Indicates whether sign-in is required to access the shared file.",
+              "type": "boolean"
+            },
+            "SendInvitation": {
+              "description": "Indicates whether to send an invitation email to users when the file is shared.",
+              "type": "boolean"
+            }
+          }
+        },
+        "DestinationSiteName": {
+          "description": "The name of the destination site, only applicable when DestinationType is site.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "CreatedDate",
+        "FileId",
+        "FileLocation",
+        "FileName",
+        "Owner",
+        "DestinationType"
+      ]
+    },
+    "MailNickNameOrEmail": {
+      "type": "string",
+      "minLength": 1,
+      "description": "User MailNickName or external full email address",
+      "oneOf": [
+        {
+          "pattern": "^[\\w\\-\\.]+$",
+          "not": {
+            "pattern": "@"
+          }
+        },
+        {
+          "pattern": "^[\\w\\-\\.]+@[\\w\\-\\.]+\\.[a-zA-Z]{2,}$"
+        }
+      ]
+    },
+    "Share": {
+      "description": "Information describing the sharing of a file.",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "Email": {
+          "description": "The MailNickNameOrEmail of the user the file is shared with.",
+          "$ref": "#/$defs/MailNickNameOrEmail"
+        },
+        "PermissionLevel": {
+          "description": "The level of access the user has.",
+          "enum": [
+            "edit",
+            "view"
+          ]
+        }
+      },
+      "required": [
+        "Email",
+        "PermissionLevel"
+      ]
+    },
+    "FileSharedLink": {
+      "description": "Information describing the file shared link.",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "SharedLinkId": {
+          "description": "The unique identifier of the shared link.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 50
+        },
+        "Type": {
+          "description": "The level of access the user has.",
+          "enum": [
+            "edit",
+            "view"
+          ]
+        },
+        "ExpirationDateTime": {
+          "description": "The date and time when the shared link will expire, if applicable.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "RetainInheritedPermissions": {
+          "description": "Indicates whether the shared link retains inherited permissions from the parent item.",
+          "type": "boolean"
+        },
+        "Scope": {
+          "description": "The scope of the shared link.",
+          "enum": [
+            "anonymous",
+            "organization",
+            "users"
+          ]
+        }
+      },
+      "required": [
+        "SharedLinkId",
+        "Type"
+      ]
+    },
+    "Action": {
+      "description": "An action that can be performed on the file. By now we support only docx, xlsx and pptx documents.",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "ActionId": {
+          "description": "A unique identifier for the action, useful for tracking and reference.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 50
+        },
+        "Operation": {
+          "description": "The type of operation (e.g., view, edit, comment, open).",
+          "type": "string",
+          "minLength": 1
+        },
+        "Operator": {
+          "description": "The user performing the action.",
+          "type": "string",
+          "minLength": 1
+        },
+        "Content": {
+          "description": "Additional content for the action (e.g., comment text).",
+          "type": "string",
+          "pattern": "^[^\\u0000-\\u0008\\u000B\\u000C\\u000E-\\u001F\\u007F-\\u0084\\u0086-\\u009F\\uFFFE\\uFFFF]*$"
+        }
+      },
+      "required": [
+        "Operation",
+        "Operator"
+      ],
+      "if": {
+        "properties": {
+          "Operation": {
+            "const": "comment"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "Content"
+        ]
+      }
+    }
+  }
+}

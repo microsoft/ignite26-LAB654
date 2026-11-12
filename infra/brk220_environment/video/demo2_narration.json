@@ -1,0 +1,126 @@
+{
+ "segments": [
+  {
+   "range": [
+    355.0,
+    385.2
+   ],
+   "id": "intro",
+   "text": "Megan has the full picture. Now she turns it into completed work, with one instruction: assign owners to the latency tickets, send the proposal, and draft the contract."
+  },
+  {
+   "range": [
+    385.2,
+    459.0
+   ],
+   "id": "plan",
+   "text": "The renewal-prep skill plans the work and stops before the first write. It suggests Arjun Kumar, who fixed Contoso's last two EU latency incidents, and shows the exact change and work note for Jira."
+  },
+  {
+   "range": [
+    459.5,
+    535.0
+   ],
+   "id": "approve",
+   "text": "Megan approves. This isn't just reading. Copilot writes back into Jira through Rovo, and asks permission for each call, so every change happens under Megan's identity, with her sign-off.",
+   "caption": "Writing to Jira via Rovo · each call approved by Megan"
+  },
+  {
+   "range": [
+    985.0,
+    1012.0
+   ],
+   "id": "jiradone",
+   "text": "Both tickets are now assigned to Arjun, with the work note.",
+   "caption": "Written to Jira via Rovo · INC-40211 and INC-40302 assigned"
+  },
+  {
+   "range": [
+    1012.0,
+    1126.0
+   ],
+   "id": "email",
+   "text": "Next, the proposal. It holds the five percent cap from email, speaks to Contoso's budget pressure, commits to the SSO dates in Product's approved wording, and names Arjun as the owner. Megan keeps it as a draft for now."
+  },
+  {
+   "range": [
+    1126.0,
+    1299.0
+   ],
+   "id": "contract",
+   "text": "Then the contract. Copilot reads the current order form and the renewal template from OneDrive, and drafts the renewal in Word: twenty twenty-seven, two point five two million, plus five percent, with the roadmap commitment in writing, ready for Legal."
+  },
+  {
+   "range": [
+    1299.0,
+    1375.0
+   ],
+   "id": "sfprev",
+   "text": "Finally, a write back to Salesforce. Because the proposal is still a draft, Copilot keeps the stage as it is, and proposes only the new amount and next step."
+  },
+  {
+   "range": [
+    1375.0,
+    1500.0
+   ],
+   "id": "sfdone",
+   "text": "One more approval, and the opportunity is updated.",
+   "caption": "Writing to Salesforce · approved by Megan"
+  },
+  {
+   "range": [
+    1641.5,
+    1649.5
+   ],
+   "id": "jira",
+   "text": "And these are real write-backs into the third-party systems. In Jira, the ticket now belongs to Arjun Kumar, with Megan's note.",
+   "caption": "Written back to Jira via Rovo · assignee and work note",
+   "boxes": [
+    [
+     1050,
+     198,
+     356,
+     40
+    ],
+    [
+     268,
+     506,
+     752,
+     74
+    ]
+   ]
+  },
+  {
+   "range": [
+    1650.5,
+    1663.0
+   ],
+   "id": "sfview",
+   "text": "In Salesforce, the renewal shows two point five two million and the new next step. From scattered context to completed work, across Jira, Outlook, Word and Salesforce, in one conversation.",
+   "caption": "Written back to Salesforce · amount and next step",
+   "boxes": [
+    [
+     238,
+     174,
+     104,
+     38
+    ],
+    [
+     483,
+     416,
+     434,
+     42
+    ],
+    [
+     483,
+     514,
+     434,
+     86
+    ]
+   ]
+  }
+ ],
+ "out": "BRK220_Demo2_Contoso_close_out.mp4",
+ "voice": "en-US-AndrewNeural",
+ "rec": "rec3.webm"
+}

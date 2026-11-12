@@ -1,0 +1,10 @@
+[
+  {
+    "name": "1.0.0",
+    "description": "Sample data for das version 1.0.0",
+    "content": "[\r\n  {\r\n    \"UPN\": \"john.doe\",\r\n    \"DARequests\": [\r\n      {\r\n        \"Name\": \"Sales Assistant\",\r\n        \"ManifestId\": \"12345678-1234-1234-1234-123456789012\",\r\n        \"ManifestLocation\": \"DAConfig/agents/sales-assistant.zip\",\r\n        \"ActionType\": \"Install\"\r\n      }\r\n    ]\r\n  }\r\n]",
+    "format": "Json",
+    "jsonContent": "[\r\n  {\r\n    \"UPN\": \"john.doe\",\r\n    \"DARequests\": [\r\n      {\r\n        \"Name\": \"Sales Assistant\",\r\n        \"ManifestId\": \"12345678-1234-1234-1234-123456789012\",\r\n        \"ManifestLocation\": \"DAConfig/agents/sales-assistant.zip\",\r\n        \"ActionType\": \"Install\"\r\n      }\r\n    ]\r\n  }\r\n]",
+    "version": "1.0.0"
+  }
+]

@@ -1,0 +1,625 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "description": "Manufactured Chats schema",
+  "title": "Chats",
+  "type": "array",
+  "uniqueItems": true,
+  "items": {
+    "$ref": "#/$defs/Chat"
+  },
+  "$defs": {
+    "Chat": {
+      "description": "The Chat JSON Schema is designed to capture a chat, which is a collection of chat messages between one or more participants.",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "ChatId": {
+          "description": "An identifier for each chat, useful for tracking and reference.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 50
+        },
+        "ChatType": {
+          "description": "The type of the chat. Possible values are OneOnOne, Group and Meeting.",
+          "enum": [
+            "OneOnOne",
+            "Group",
+            "Meeting"
+          ]
+        },
+        "ChatMessages": {
+          "description": "A list of messages in the chat.",
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/ChatMessage"
+          }
+        },
+        "ChatName": {
+          "description": "The name of the chat. Only allowed for Group chats.",
+          "type": "string",
+          "maxLength": 250,
+          "pattern": "^[^:]*$"
+        },
+        "EventId": {
+          "description": "The identifier of the meeting that this chat is for.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 50
+        },
+        "Members": {
+          "description": "The members of the chat.",
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "description": "Identifier of the members of the chat.",
+            "$ref": "#/$defs/MailNickName"
+          },
+          "minItems": 1,
+          "maxItems": 250
+        },
+        "CreatedDateTime": {
+          "description": "The date and time of when the Chat was created. This follows the ISO 8601 pattern.",
+          "type": "string",
+          "pattern": "^[1-9][0-9]{3}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](?:\\.\\d{1,3})?Z$"
+        }
+      },
+      "required": [
+        "ChatId",
+        "ChatType",
+        "ChatMessages",
+        "Members"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "ChatType": {
+                "const": "Meeting"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "EventId"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "ChatType": {
+                "const": "OneOnOne"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "Members": {
+                "minItems": 2,
+                "maxItems": 2
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ChatMessage": {
+      "description": "Represents an individual chat message within a chat.",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "ChatMessageId": {
+          "description": "An identifier for each chat message, useful for tracking and reference. Only required if it will be used in a quote.",
+          "type": "string",
+          "minLength": 1
+        },
+        "From": {
+          "description": "Identifier of the sender of the message. Usually is the MailNickName of the user.",
+          "$ref": "#/$defs/MailNickName"
+        },
+        "ContentType": {
+          "description": "The type of the content. Possible values are text and html and image/png.",
+          "enum": [
+            "html",
+            "text"
+          ]
+        },
+        "Content": {
+          "description": "The content of the message. When ContentType is 'html', the content MUST be well-formed HTML. All HTML tags must be properly closed with '>'. For example, use '<p>text</p>' not '<ptext'. Wrap the entire message in a '<p>' tag: '<p>message text here</p>'.",
+          "type": "string",
+          "minLength": 1
+        },
+        "SentDateTime": {
+          "description": "Timestamp of when the chat message was sent. This follows the ISO 8601 pattern.",
+          "type": "string",
+          "pattern": "^[1-9][0-9]{3}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](?:\\.\\d{1,3})?Z$"
+        },
+        "QuoteChatMessageId": {
+          "description": "The Id of the chat message to be used in the quote.",
+          "type": "string",
+          "minLength": 0
+        },
+        "Importance": {
+          "description": "Importance of the chat message. Allowed values map to Microsoft Graph ChatMessageImportance enum.",
+          "type": "string",
+          "enum": [
+            "normal",
+            "high",
+            "urgent"
+          ]
+        },
+        "ReadBy": {
+          "description": "List of people who read the message.",
+          "type": [
+            "array",
+            "null"
+          ],
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/MailNickName"
+          }
+        },
+        "Placeholders": {
+          "description": "List of placeholders in the message content.",
+          "type": [
+            "array",
+            "null"
+          ],
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/Placeholder"
+          }
+        },
+        "Reactions": {
+          "description": "List of reaction operations in the message content.",
+          "type": [
+            "array",
+            "null"
+          ],
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/ReactionRequest"
+          }
+        }
+      },
+      "required": [
+        "ChatMessageId",
+        "From",
+        "ContentType",
+        "Content"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "Placeholders": {
+                "type": "array",
+                "minItems": 1
+              }
+            },
+            "required": [
+              "Placeholders"
+            ]
+          },
+          "then": {
+            "properties": {
+              "ContentType": {
+                "const": "html"
+              }
+            },
+            "required": [
+              "ContentType"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "ContentType": {
+                "const": "html"
+              }
+            },
+            "required": [
+              "ContentType"
+            ]
+          },
+          "then": {
+            "properties": {
+              "Content": {
+                "allOf": [
+                  {
+                    "not": {
+                      "pattern": "<\\s*[A-Za-z][A-Za-z0-9:-]*[^>]*\\s+[Ii][Tt][Ee][Mm][Tt][Yy][Pp][Ee]\\s*=.*>"
+                    }
+                  },
+                  {
+                    "not": {
+                      "pattern": "<\\s*[Ii][Mm][Gg]\\b[^>]*>"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "Placeholder": {
+      "description": "Represents a placeholder in a message that can be of various types (Hyperlink, Attachment, Image, Mention, etc.)",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "PlaceholderId": {
+          "description": "Unique identifier for the placeholder",
+          "type": "string",
+          "minLength": 1
+        },
+        "Type": {
+          "description": "The type of placeholder",
+          "type": "string",
+          "enum": [
+            "hyperlink",
+            "attachment",
+            "loop",
+            "mention",
+            "img"
+          ]
+        },
+        "HyperLinkContent": {
+          "description": "Content when Type is 'hyperlink'",
+          "$ref": "#/$defs/HyperLinkContent"
+        }
+      },
+      "required": [
+        "PlaceholderId",
+        "HyperLinkContent",
+        "Type"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "Type": {
+                "const": "hyperlink"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "HyperLinkContent"
+            ],
+            "properties": {
+              "HyperLinkContent": {
+                "anyOf": [
+                  {
+                    "required": [
+                      "HrefUrl",
+                      "DisplayText"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "FileId",
+                      "SharedLinkId",
+                      "FileOwner",
+                      "DisplayText"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "LoopId",
+                      "LoopLinkType",
+                      "DisplayText"
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "Type": {
+                "const": "attachment"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "HyperLinkContent": {
+                "required": [
+                  "FileId",
+                  "SharedLinkId",
+                  "FileOwner",
+                  "DisplayText"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "Type": {
+                "const": "loop"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "HyperLinkContent": {
+                "required": [
+                  "LoopId",
+                  "LoopLinkType",
+                  "DisplayText"
+                ],
+                "properties": {
+                  "LoopLinkType": {
+                    "const": "component"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "Type": {
+                "const": "mention"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "HyperLinkContent"
+            ],
+            "properties": {
+              "HyperLinkContent": {
+                "required": [
+                  "MentionId",
+                  "UserIdentityType",
+                  "MentionIdentifier",
+                  "DisplayText"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "Type": {
+                "const": "img"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "HyperLinkContent": {
+                "required": [
+                  "ImageFullPath",
+                  "ImageContentType",
+                  "HostedContentId"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "HyperLinkContent": {
+      "description": "Content for a hyperlink placeholder",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "DisplayText": {
+          "description": "Text to display for the hyperlink",
+          "type": "string",
+          "minLength": 1
+        },
+        "HrefUrl": {
+          "description": "The URL that the hyperlink points to",
+          "type": "string"
+        },
+        "FileId": {
+          "description": "ID of a file if the hyperlink references a file",
+          "type": "string"
+        },
+        "SharedLinkId": {
+          "description": "ID of a shared link",
+          "type": "string"
+        },
+        "FileOwner": {
+          "description": "Owner of the file",
+          "type": "string"
+        },
+        "UserIdentityType": {
+          "description": "Type of user identity, e.g., 'aadUser' for Azure AD users",
+          "type": "string",
+          "enum": [
+            "aadUser"
+          ]
+        },
+        "MentionId": {
+          "description": "Unique identifier for the mention",
+          "type": "integer"
+        },
+        "MentionIdentifier": {
+          "description": "Identifier for the mention, typically for aadUser, it should be user's mailnickname",
+          "type": "string",
+          "minLength": 1
+        },
+        "ImageFullPath": {
+          "description": "Full path of the image. It should be placed in the folder \"files\".",
+          "type": "string",
+          "pattern": "^files(/[^%\\\\:*?\"<>|\\x00-\\x1f/]+)+$"
+        },
+        "ImageContentType": {
+          "type": "string",
+          "enum": [
+            "image/png",
+            "image/jpg"
+          ]
+        },
+        "HostedContentId": {
+          "description": "Unique identifier for Image hosted content.",
+          "type": "string",
+          "minLength": 1
+        },
+        "LoopId": {
+          "description": "ID of a loop if the hyperlink references a loop",
+          "type": "string"
+        },
+        "LoopLinkType": {
+          "description": "Type of loop link",
+          "type": "string",
+          "enum": [
+            "component",
+            "page"
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "HrefUrl",
+            "DisplayText"
+          ],
+          "not": {
+            "required": [
+              "FileId",
+              "SharedLinkId",
+              "FileOwner",
+              "ImageFullPath",
+              "ImageContentType",
+              "HostedContentId",
+              "UserIdentityType",
+              "MentionIdentifier",
+              "LoopId",
+              "LoopLinkType"
+            ]
+          }
+        },
+        {
+          "required": [
+            "FileId",
+            "SharedLinkId",
+            "FileOwner",
+            "DisplayText"
+          ],
+          "not": {
+            "required": [
+              "HrefUrl",
+              "ImageFullPath",
+              "ImageContentType",
+              "HostedContentId",
+              "UserIdentityType",
+              "MentionIdentifier",
+              "LoopId",
+              "LoopLinkType"
+            ]
+          }
+        },
+        {
+          "required": [
+            "MentionId",
+            "UserIdentityType",
+            "MentionIdentifier",
+            "DisplayText"
+          ],
+          "not": {
+            "required": [
+              "HrefUrl",
+              "FileId",
+              "SharedLinkId",
+              "FileOwner",
+              "ImageFullPath",
+              "ImageContentType",
+              "HostedContentId",
+              "LoopId",
+              "LoopLinkType"
+            ]
+          }
+        },
+        {
+          "required": [
+            "ImageFullPath",
+            "ImageContentType",
+            "HostedContentId"
+          ],
+          "not": {
+            "required": [
+              "HrefUrl",
+              "FileId",
+              "SharedLinkId",
+              "FileOwner",
+              "UserIdentityType",
+              "MentionIdentifier",
+              "LoopId",
+              "LoopLinkType"
+            ]
+          }
+        },
+        {
+          "required": [
+            "LoopId",
+            "LoopLinkType",
+            "DisplayText"
+          ],
+          "not": {
+            "required": [
+              "HrefUrl",
+              "FileId",
+              "SharedLinkId",
+              "FileOwner",
+              "ImageFullPath",
+              "ImageContentType",
+              "HostedContentId",
+              "UserIdentityType",
+              "MentionIdentifier"
+            ]
+          }
+        }
+      ]
+    },
+    "MailNickName": {
+      "description": "User MailNickName only (full email address is not supported)",
+      "type": "string",
+      "minLength": 1,
+      "allOf": [
+        {
+          "not": {
+            "pattern": ".*'.*"
+          }
+        },
+        {
+          "not": {
+            "pattern": "@"
+          }
+        }
+      ],
+      "pattern": "^(?![.-])[A-Za-z0-9_]+([.-][A-Za-z0-9_]+)*$"
+    },
+    "ReactionRequest": {
+      "description": "Reaction of a chat message",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "Reaction": {
+          "description": "Reaction like heart, thumbup.",
+          "type": "string",
+          "minLength": 1,
+          "pattern": "(?:(?:\\uD83C[\\uDDE6-\\uDDFF]){2}|(?:(?:[\\u231A-\\u231B\\u23E9-\\u23F3\\u23F8-\\u23FA\\u24C2\\u25AA-\\u25AB\\u25B6\\u25C0\\u25FB-\\u25FE\\u2600-\\u27BF\\u2934-\\u2935\\u2B05-\\u2B55\\u3030\\u303D])|\\uD83C[\\uDC00-\\uDFFF]|\\uD83D[\\uDC00-\\uDFFF]|\\uD83E[\\uDD00-\\uDFFF])\\uFE0F?(?:\\uD83C[\\uDFFB-\\uDFFF])?(?:\\u200D(?:[\\u2640\\u2642]|\\u2764\\uFE0F?|\\uD83C[\\uDC00-\\uDFFF]|\\uD83D[\\uDC00-\\uDFFF]|\\uD83E[\\uDD00-\\uDFFF])\\uFE0F?(?:\\uD83C[\\uDFFB-\\uDFFF])?)*)"
+        },
+        "Sender": {
+          "description": "UPN of the sender of the reaction.",
+          "$ref": "#/$defs/MailNickName"
+        }
+      }
+    }
+  }
+}

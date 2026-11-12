@@ -1,0 +1,57 @@
+[
+  {
+    "ChatId": "brk220-chat-escalation",
+    "ChatType": "Group",
+    "ChatName": "Contoso escalation",
+    "Members": [
+      "isaiah",
+      "megan",
+      "alex"
+    ],
+    "CreatedDateTime": "2026-11-04T14:57:00Z",
+    "ChatMessages": [
+      {
+        "ChatMessageId": "1",
+        "From": "isaiah",
+        "ContentType": "text",
+        "Content": "Heads-up: Lidia (Contoso's CIO) called me this morning to escalate latency in the EU region. Their Frankfurt workloads are seeing API calls take 4 to 6 seconds during business hours, and their morning export batch is failing with gateway timeouts. It's been going on for about a week.",
+        "SentDateTime": "2026-11-04T14:58:00Z"
+      },
+      {
+        "ChatMessageId": "2",
+        "From": "isaiah",
+        "ContentType": "text",
+        "Content": "She was blunt: if this isn't owned and fixed before the renewal, she'll back Daniel on looking at Fabrikam. Fabrikam went back to them last week with 20% off and free migration.",
+        "SentDateTime": "2026-11-04T15:01:00Z"
+      },
+      {
+        "ChatMessageId": "3",
+        "From": "alex",
+        "ContentType": "text",
+        "Content": "Six weeks to renewal. Megan, who's on this?",
+        "SentDateTime": "2026-11-04T15:06:00Z"
+      },
+      {
+        "ChatMessageId": "4",
+        "From": "megan",
+        "ContentType": "text",
+        "Content": "Not sure yet. I'll check what Support has open, get owners on it and pull the renewal plan together.",
+        "SentDateTime": "2026-11-04T15:09:00Z"
+      },
+      {
+        "ChatMessageId": "5",
+        "From": "alex",
+        "ContentType": "text",
+        "Content": "Good. Don't chase Fabrikam's number. Remember Adatum: we matched a discount in the last week with P1s sitting unassigned and lost them anyway. Hold the cap you agreed with Daniel; anything below it needs my approval.",
+        "SentDateTime": "2026-11-04T15:12:00Z"
+      },
+      {
+        "ChatMessageId": "6",
+        "From": "isaiah",
+        "ContentType": "text",
+        "Content": "I'll ask Contoso's ops team to file the export timeouts as their own ticket so Support can triage both.",
+        "SentDateTime": "2026-11-04T15:15:00Z"
+      }
+    ]
+  }
+]

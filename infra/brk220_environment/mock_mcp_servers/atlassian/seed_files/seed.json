@@ -1,0 +1,572 @@
+{
+  "_source": "infra/brk220_environment/scenario.md (Contoso Ltd renewal). Jira project INC holds Northwind's customer incidents; Confluence holds the Customer Success space (Contoso account overview and Q3 QBR actions) and the Product space (identity roadmap). Emails use {domain}, replaced at load with TENANT_EMAIL_DOMAIN.",
+  "_anchor": "2026-11-18",
+  "site": {
+    "name": "northwind-ltd",
+    "cloudId": "3f6c2a1e-8b4d-5c7e-9a2f-1d0b7e4c6a58",
+    "statusActivationId": "c2e8f4a6-1b3d-5e7f-8a9c-0d2e4f6a8b1c",
+    "avatarUrl": "https://settings-cdn-bifrost.prod-east.frontend.public.atl-paas.net/assets/avatars/240/rocket.png",
+    "confluenceScopes": [
+      "read:comment:confluence",
+      "read:confluence-user",
+      "read:page:confluence",
+      "read:space:confluence",
+      "search:confluence",
+      "write:comment:confluence",
+      "write:page:confluence"
+    ],
+    "jiraScopes": [
+      "read:jira-work",
+      "write:jira-work"
+    ]
+  },
+  "currentUser": "megan",
+  "users": [
+    {
+      "key": "megan",
+      "accountId": "712020:5b1e9c3a-7d2f-5a84-b6c1-0e9f3d7a2c45",
+      "displayName": "Megan Bowen",
+      "email": "megan@{domain}",
+      "initials": "MB",
+      "teamType": "Sales",
+      "createdAt": "2025-02-03T15:04:11.218Z"
+    },
+    {
+      "key": "arjun",
+      "accountId": "712020:9c4d2e7f-1a6b-5c38-8d0e-4f2a7b9c1d63",
+      "displayName": "Arjun Kumar",
+      "email": "arjun@{domain}",
+      "initials": "AK",
+      "teamType": "Customer support",
+      "createdAt": "2025-02-03T15:06:42.502Z"
+    },
+    {
+      "key": "rosa",
+      "accountId": "712020:2e7a4c9d-6b1f-5e03-a8c2-7d4f1b6e9a20",
+      "displayName": "Rosa Diaz",
+      "email": "rosa@{domain}",
+      "initials": "RD",
+      "teamType": "Customer support",
+      "createdAt": "2025-02-03T15:07:15.877Z"
+    },
+    {
+      "key": "mei",
+      "accountId": "712020:7f3b1d8e-4c2a-5b96-9e0d-3a6c8f2b4e71",
+      "displayName": "Mei Lin",
+      "email": "mei@{domain}",
+      "initials": "ML",
+      "teamType": "Customer support",
+      "createdAt": "2025-04-14T13:22:09.664Z"
+    },
+    {
+      "key": "isaiah",
+      "accountId": "712020:4a8e6c2b-9d1f-5a07-b3e5-8c1a4d7f2b96",
+      "displayName": "Isaiah Langer",
+      "email": "isaiah@{domain}",
+      "initials": "IL",
+      "teamType": "Customer success",
+      "createdAt": "2025-02-03T15:09:55.130Z"
+    }
+  ],
+  "project": {
+    "id": "10050",
+    "key": "INC",
+    "name": "Northwind Support",
+    "description": "Customer incidents for the Northwind Platform: API, identity and data services. Customer is tracked with a customer-<name> label.",
+    "lead": "arjun",
+    "avatarId": 10412,
+    "projectTypeKey": "software",
+    "simplified": true,
+    "style": "next-gen",
+    "boardId": 12
+  },
+  "issueTypes": [
+    {
+      "id": "10901",
+      "name": "Incident",
+      "description": "A customer-impacting problem with the Northwind Platform.",
+      "avatarId": 10303,
+      "subtask": false,
+      "hierarchyLevel": 0,
+      "entityId": "8d1f4b2a-6c3e-5a97-b0d4-2e7f9c1a5b38"
+    },
+    {
+      "id": "10902",
+      "name": "Task",
+      "description": "Tasks track small, distinct pieces of work.",
+      "avatarId": 10318,
+      "subtask": false,
+      "hierarchyLevel": 0,
+      "entityId": "1b6e3d9f-2a4c-5e81-9f7b-6c0d2a8e4f15"
+    },
+    {
+      "id": "10903",
+      "name": "Subtask",
+      "description": "Subtasks track small pieces of work that are part of a larger task.",
+      "avatarId": 10316,
+      "subtask": true,
+      "hierarchyLevel": -1,
+      "entityId": "5c2a8f1d-7e3b-5d06-a4c9-1f8e3b6d2a74"
+    }
+  ],
+  "statuses": [
+    {
+      "id": "10756",
+      "name": "To Do",
+      "category": 2
+    },
+    {
+      "id": "10757",
+      "name": "In Progress",
+      "category": 4
+    },
+    {
+      "id": "10758",
+      "name": "Done",
+      "category": 3
+    }
+  ],
+  "transitions": [
+    {
+      "id": "11",
+      "name": "To Do",
+      "to": "10756"
+    },
+    {
+      "id": "21",
+      "name": "In Progress",
+      "to": "10757"
+    },
+    {
+      "id": "31",
+      "name": "Done",
+      "to": "10758"
+    }
+  ],
+  "priorities": [
+    {
+      "id": "1",
+      "name": "Highest",
+      "icon": "highest_new.svg"
+    },
+    {
+      "id": "2",
+      "name": "High",
+      "icon": "high_new.svg"
+    },
+    {
+      "id": "3",
+      "name": "Medium",
+      "icon": "medium_new.svg"
+    },
+    {
+      "id": "4",
+      "name": "Low",
+      "icon": "low_new.svg"
+    },
+    {
+      "id": "5",
+      "name": "Lowest",
+      "icon": "lowest_new.svg"
+    }
+  ],
+  "linkTypes": [
+    {
+      "id": "10000",
+      "name": "Blocks",
+      "inward": "is blocked by",
+      "outward": "blocks"
+    },
+    {
+      "id": "10002",
+      "name": "Duplicate",
+      "inward": "is duplicated by",
+      "outward": "duplicates"
+    },
+    {
+      "id": "10003",
+      "name": "Relates",
+      "inward": "relates to",
+      "outward": "relates to"
+    }
+  ],
+  "sprints": [],
+  "issues": [
+    {
+      "id": "40211",
+      "key": "INC-40211",
+      "type": "Incident",
+      "summary": "Contoso Ltd: API latency in EU region, p95 above 4 s during business hours",
+      "description": "Contoso Ltd's Frankfurt workloads see `/v2/orders` and `/v2/inventory` calls take 4 to 6 seconds (p95) between 08:00 and 17:00 CET. Their nightly integration jobs time out and retry. Started around October 26.\n\n**Customer impact**\n\n- Order sync to Contoso's ERP runs late every morning.\n- Contoso IT operations reported it; the CIO has escalated.\n\n**Environment**\n\n- Region: EU West (Frankfurt)\n- Tenant: contoso-ltd-prod",
+      "status": "To Do",
+      "priority": "Highest",
+      "assignee": null,
+      "reporter": "isaiah",
+      "labels": [
+        "customer-contoso",
+        "latency",
+        "eu-region"
+      ],
+      "sprint": null,
+      "estimateHours": null,
+      "created": "2026-11-09T08:42:17.221+0000",
+      "updated": "2026-11-12T16:05:40.112+0000",
+      "comments": [
+        {
+          "id": "51201",
+          "author": "isaiah",
+          "body": "Contoso's CIO, Lidia Holloway, has escalated this directly. Their renewal is December 31. Can EU Platform pick this up?",
+          "created": "2026-11-10T09:15:02.441+0000"
+        },
+        {
+          "id": "51207",
+          "author": "mei",
+          "body": "Triage: no owner yet in the EU Platform queue this week. Leaving unassigned for the queue lead.",
+          "created": "2026-11-12T16:05:40.112+0000"
+        }
+      ],
+      "links": []
+    },
+    {
+      "id": "40188",
+      "key": "INC-40188",
+      "type": "Incident",
+      "summary": "Contoso Ltd: intermittent SSO login failures (SAML assertion rejected)",
+      "description": "About 3% of Contoso Ltd sign-ins fail with `SAML assertion expired` from two subsidiaries' identity providers.\n\n**Environment**\n\n- Tenant: contoso-ltd-prod\n- Identity provider: Contoso's Entra ID federation",
+      "status": "In Progress",
+      "priority": "Highest",
+      "assignee": "rosa",
+      "reporter": "isaiah",
+      "labels": [
+        "customer-contoso",
+        "sso"
+      ],
+      "sprint": null,
+      "estimateHours": null,
+      "created": "2026-11-06T14:20:33.064+0000",
+      "updated": "2026-11-16T11:40:52.719+0000",
+      "comments": [
+        {
+          "id": "51188",
+          "author": "rosa",
+          "body": "Reproduced. Assertions are rejected when the subsidiary IdP clock is more than 90 seconds ahead. Testing a wider skew tolerance in staging.",
+          "created": "2026-11-16T11:40:52.719+0000"
+        }
+      ],
+      "links": []
+    },
+    {
+      "id": "40302",
+      "key": "INC-40302",
+      "type": "Incident",
+      "summary": "Contoso Ltd: EU API gateway timeouts on bulk export endpoint",
+      "description": "The EU West gateway returns 504s on `/v2/exports` during Contoso's morning batch window (07:00 to 09:00 CET). Same time window as the latency in INC-40211.\n\n**Environment**\n\n- Region: EU West (Frankfurt)\n- Tenant: contoso-ltd-prod",
+      "status": "To Do",
+      "priority": "High",
+      "assignee": null,
+      "reporter": "isaiah",
+      "labels": [
+        "customer-contoso",
+        "latency",
+        "eu-region"
+      ],
+      "sprint": null,
+      "estimateHours": null,
+      "created": "2026-11-14T10:05:12.341+0000",
+      "updated": "2026-11-14T10:05:12.341+0000",
+      "comments": [],
+      "links": []
+    },
+    {
+      "id": "40260",
+      "key": "INC-40260",
+      "type": "Incident",
+      "summary": "Contoso Pharmaceuticals: report export fails for datasets over 2 GB",
+      "description": "Contoso Pharmaceuticals (a separate customer from Contoso Ltd) can't export compliance reports larger than 2 GB.",
+      "status": "In Progress",
+      "priority": "Medium",
+      "assignee": "mei",
+      "reporter": "mei",
+      "labels": [
+        "customer-contoso-pharma",
+        "exports"
+      ],
+      "sprint": null,
+      "estimateHours": null,
+      "created": "2026-11-11T13:30:00.000+0000",
+      "updated": "2026-11-17T09:10:00.000+0000",
+      "comments": [],
+      "links": []
+    },
+    {
+      "id": "40295",
+      "key": "INC-40295",
+      "type": "Incident",
+      "summary": "Tailwind Traders: webhook delivery retries in US East",
+      "description": "Webhook deliveries to Tailwind Traders retry up to three times before succeeding.",
+      "status": "To Do",
+      "priority": "Medium",
+      "assignee": null,
+      "reporter": "mei",
+      "labels": [
+        "customer-tailwind",
+        "webhooks"
+      ],
+      "sprint": null,
+      "estimateHours": null,
+      "created": "2026-11-13T15:45:00.000+0000",
+      "updated": "2026-11-13T15:45:00.000+0000",
+      "comments": [],
+      "links": []
+    },
+    {
+      "id": "39412",
+      "key": "INC-39412",
+      "type": "Incident",
+      "summary": "Contoso Ltd: elevated latency on EU reporting API",
+      "description": "Contoso Ltd reporting API calls in EU West took 3 to 5 seconds (p95) after a traffic spike.",
+      "status": "Done",
+      "priority": "High",
+      "assignee": "arjun",
+      "reporter": "isaiah",
+      "labels": [
+        "customer-contoso",
+        "latency",
+        "eu-region"
+      ],
+      "sprint": null,
+      "estimateHours": null,
+      "created": "2026-03-10T09:02:00.000+0000",
+      "updated": "2026-03-12T17:40:00.000+0000",
+      "comments": [
+        {
+          "id": "39431",
+          "author": "arjun",
+          "body": "Root cause: connection pool exhaustion on the EU West gateway. Raised the pool size and added an autoscaling rule. Contoso confirms p95 is back under 400 ms. Resolving.",
+          "created": "2026-03-12T17:40:00.000+0000"
+        }
+      ],
+      "links": [],
+      "resolution": {
+        "id": "10000",
+        "description": "Work has been completed on this work item.",
+        "name": "Done"
+      }
+    },
+    {
+      "id": "39750",
+      "key": "INC-39750",
+      "type": "Incident",
+      "summary": "Contoso Ltd: EU API latency after gateway certificate rotation",
+      "description": "After the June certificate rotation, Contoso Ltd's EU West API calls slowed to 2 to 3 seconds (p95).",
+      "status": "Done",
+      "priority": "High",
+      "assignee": "arjun",
+      "reporter": "isaiah",
+      "labels": [
+        "customer-contoso",
+        "latency",
+        "eu-region"
+      ],
+      "sprint": null,
+      "estimateHours": null,
+      "created": "2026-06-22T08:15:00.000+0000",
+      "updated": "2026-06-23T14:05:00.000+0000",
+      "comments": [
+        {
+          "id": "39761",
+          "author": "arjun",
+          "body": "TLS session resumption was disabled by the rotation. Re-enabled it on the EU West gateway; latency is back to baseline. Added a check to the rotation runbook.",
+          "created": "2026-06-23T14:05:00.000+0000"
+        }
+      ],
+      "links": [],
+      "resolution": {
+        "id": "10000",
+        "description": "Work has been completed on this work item.",
+        "name": "Done"
+      }
+    },
+    {
+      "id": "39881",
+      "key": "INC-39881",
+      "type": "Incident",
+      "summary": "Contoso Ltd: SSO metadata refresh failing for one subsidiary",
+      "description": "Federation metadata refresh failed for one Contoso subsidiary after their certificate change.",
+      "status": "Done",
+      "priority": "Medium",
+      "assignee": "rosa",
+      "reporter": "isaiah",
+      "labels": [
+        "customer-contoso",
+        "sso"
+      ],
+      "sprint": null,
+      "estimateHours": null,
+      "created": "2026-08-04T10:00:00.000+0000",
+      "updated": "2026-08-05T12:30:00.000+0000",
+      "comments": [],
+      "links": [],
+      "resolution": {
+        "id": "10000",
+        "description": "Work has been completed on this work item.",
+        "name": "Done"
+      }
+    },
+    {
+      "id": "39960",
+      "key": "INC-39960",
+      "type": "Incident",
+      "summary": "Adatum Corporation: API latency in US East",
+      "description": "Adatum Corporation saw 2-second p95 API latency in US East during a database failover.",
+      "status": "Done",
+      "priority": "High",
+      "assignee": "mei",
+      "reporter": "mei",
+      "labels": [
+        "customer-adatum",
+        "latency"
+      ],
+      "sprint": null,
+      "estimateHours": null,
+      "created": "2026-09-02T14:00:00.000+0000",
+      "updated": "2026-09-03T18:20:00.000+0000",
+      "comments": [],
+      "links": [],
+      "resolution": {
+        "id": "10000",
+        "description": "Work has been completed on this work item.",
+        "name": "Done"
+      }
+    }
+  ],
+  "confluence": {
+    "spaces": [
+      {
+        "id": "131072",
+        "key": "CS",
+        "name": "Customer Success",
+        "type": "global",
+        "status": "current",
+        "homepageId": "131073",
+        "description": "Account overviews, QBR notes and open customer asks for Northwind's strategic accounts.",
+        "author": "isaiah",
+        "owner": "isaiah",
+        "created": "2025-02-10T09:10:00.000Z",
+        "labels": [
+          "customer-success"
+        ],
+        "icon": "/wiki/download/attachments/131072/CS?version=1"
+      },
+      {
+        "id": "131200",
+        "key": "PROD",
+        "name": "Product Roadmap",
+        "type": "global",
+        "status": "current",
+        "homepageId": "131201",
+        "description": "Northwind Platform roadmap and the dates Product has approved for customer commitments.",
+        "author": "isaiah",
+        "owner": "isaiah",
+        "created": "2025-02-10T09:20:00.000Z",
+        "labels": [
+          "roadmap"
+        ],
+        "icon": "/wiki/download/attachments/131200/PROD?version=1"
+      }
+    ],
+    "pages": [
+      {
+        "id": "131073",
+        "parentId": null,
+        "title": "Customer Success",
+        "author": "isaiah",
+        "created": "2025-02-10T09:12:00.000Z",
+        "updatedBy": "isaiah",
+        "updated": "2026-10-01T09:05:00.000Z",
+        "version": 7,
+        "labels": [],
+        "body": "Home of Northwind Customer Success: account overviews, QBR action items and open customer asks.\n\n## Strategic accounts\n\n- Contoso Ltd – account overview\n- Q3 QBR – Contoso Ltd action items\n\n## Where things live\n\n| What | Where |\n|---|---|\n| Contracts and opportunities | Salesforce |\n| Customer incidents | Jira project INC (label customer-<name>) |\n| Roadmap commitments | Product Roadmap space |",
+        "spaceId": "131072",
+        "status": "current"
+      },
+      {
+        "id": "131090",
+        "parentId": "131073",
+        "title": "Contoso Ltd – account overview",
+        "author": "isaiah",
+        "created": "2025-02-12T10:00:00.000Z",
+        "updatedBy": "isaiah",
+        "updated": "2026-10-01T15:20:00.000Z",
+        "version": 12,
+        "labels": [
+          "contoso-ltd",
+          "strategic-account"
+        ],
+        "body": "Contoso Ltd is a manufacturing group with 14 subsidiaries. Not to be confused with Contoso Pharmaceuticals, a separate customer.\n\n| Field | Value |\n|---|---|\n| Account executive | Megan Bowen |\n| Customer success manager | Isaiah Langer |\n| Executive sponsor | Lidia Holloway, CIO |\n| Procurement | Daniel Okafor, Head of Procurement |\n| Region | EU West (Frankfurt) and US East |\n| Contract | $2.4M a year, term ends December 31, 2026 (see Salesforce) |\n\n## Open customer asks\n\n| Ask | Raised | Status | Committed date |\n|---|---|---|---|\n| **SSO roadmap commitment**: SCIM 2.0 user provisioning and per-subsidiary conditional access for all 14 subsidiaries, in writing with the renewal | Q3 QBR, September 29 | **Open** | None yet |\n| Quarterly EU usage report | Q2 QBR | Done | Delivered monthly since July |\n\n## Health\n\n- Usage up 22% year over year.\n- Support: two EU latency incidents in 2026, both resolved by Arjun Kumar (INC-39412, INC-39750).",
+        "spaceId": "131072",
+        "status": "current"
+      },
+      {
+        "id": "131105",
+        "parentId": "131073",
+        "title": "Q3 QBR – Contoso Ltd action items",
+        "author": "megan",
+        "created": "2026-09-30T09:30:00.000Z",
+        "updatedBy": "megan",
+        "updated": "2026-09-30T09:30:00.000Z",
+        "version": 1,
+        "labels": [
+          "contoso-ltd",
+          "qbr"
+        ],
+        "body": "Action items from the Q3 QBR with Contoso Ltd on September 29. Full notes are in Megan's OneDrive (Contoso Q3 QBR notes).\n\n| # | Action | Owner | Status |\n|---|---|---|---|\n| 1 | Written SSO roadmap commitment: SCIM 2.0 provisioning and per-subsidiary conditional access | Megan Bowen with Product | **Open, no committed date** |\n| 2 | Renewal pricing options before the end of October | Megan Bowen | Done (October 8) |\n| 3 | EU capacity review for 2027 growth | Isaiah Langer | Done |",
+        "spaceId": "131072",
+        "status": "current"
+      },
+      {
+        "id": "131201",
+        "parentId": null,
+        "title": "Product Roadmap",
+        "author": "isaiah",
+        "created": "2025-02-10T09:22:00.000Z",
+        "updatedBy": "isaiah",
+        "updated": "2026-10-20T09:00:00.000Z",
+        "version": 3,
+        "labels": [],
+        "body": "Northwind Platform roadmap. Only dates marked **Committable** can go into customer proposals or contracts.\n\n- Identity and SSO roadmap (H1 2027)",
+        "spaceId": "131200",
+        "status": "current"
+      },
+      {
+        "id": "131230",
+        "parentId": "131201",
+        "title": "Identity and SSO roadmap (H1 2027)",
+        "author": "isaiah",
+        "created": "2026-10-20T09:10:00.000Z",
+        "updatedBy": "isaiah",
+        "updated": "2026-10-20T09:10:00.000Z",
+        "version": 1,
+        "labels": [
+          "roadmap",
+          "sso",
+          "identity"
+        ],
+        "body": "Approved by Product leadership on October 20, 2026.\n\n| Capability | Target | Committable to customers |\n|---|---|---|\n| SCIM 2.0 user and group provisioning (GA) | March 31, 2027 | **Yes** |\n| Per-subsidiary conditional access policies | Q2 2027 (by June 30, 2027) | **Yes, as a target quarter** |\n| Passkey sign-in | H2 2027 | No |\n\nWording for proposals: \"Northwind will make SCIM 2.0 provisioning generally available by March 31, 2027, and per-subsidiary conditional access in Q2 2027.\"",
+        "spaceId": "131200",
+        "status": "current"
+      }
+    ],
+    "comments": [
+      {
+        "id": "132010",
+        "pageId": "131090",
+        "type": "footer",
+        "parentId": null,
+        "author": "isaiah",
+        "created": "2026-11-06T16:10:00.000Z",
+        "body": "Lidia asked about the SSO commitment again on today's call. She wants it in writing with the renewal proposal."
+      }
+    ]
+  }
+}

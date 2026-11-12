@@ -1,0 +1,137 @@
+{
+  "typeName": "das",
+  "rules": [
+    {
+      "ruleId": "e70e7666-3f24-49d4-843e-46c40d0f2dee",
+      "name": "UPN is unique",
+      "description": "UPN is unique",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "unique": {
+          "var": "UPN",
+          "caseSensitive": true
+        }
+      },
+      "metadata": {
+        "field": "UPN",
+        "expression": "All values of 'UPN' must be unique"
+      },
+      "category": "Uniqueness",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "790d93fb-9c10-43bf-a3ff-221d14fa033e",
+      "name": "Manifest files exist",
+      "description": "Manifest files exist",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "fileExistence": {
+          "field": "DARequests.ManifestLocation",
+          "caseSensitive": false
+        }
+      },
+      "metadata": {
+        "field": "DARequests.ManifestLocation",
+        "expression": "All file paths in 'DARequests.ManifestLocation' must exist in the ZIP archive (case-insensitive)"
+      },
+      "category": "FileExistence",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "38740ebd-e01d-4a34-a5d2-65fb547617d2",
+      "name": "UPN exist in user list",
+      "description": "UPN exist in user list",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "das",
+          "sourceField": "UPN",
+          "targetType": "users",
+          "targetField": "MailNickName"
+        }
+      },
+      "metadata": {
+        "field": "UPN",
+        "expression": "For each 'das.UPN', a matching 'users.MailNickName' must exist"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "c5a8f7e2-1d34-4b89-9012-abcdef123456",
+      "name": "Manifest ID has consistent location",
+      "description": "Validates that the same ManifestId always references the same ManifestLocation across all DA requests",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "manifest-id-location-consistency-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "DARequests.ManifestId",
+        "expression": "Each ManifestId must have the same ManifestLocation across all DA requests"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "6e6afeee-5891-4251-8b2b-2ffc1fd1a0d5",
+      "name": "Manifest zip content is valid",
+      "description": "Validates ManifestLocation zip format and required declarative agent files",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "manifest-location-zip-content-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "DARequests.ManifestLocation",
+        "expression": "ManifestLocation must be a valid zip containing manifest.json, declarative agent files, and valid capabilities definitions"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "666565b6-b6e5-4ce6-a986-339dc5fb11e8",
+      "name": "DA user should have copilot license",
+      "description": "DA user should have copilot license",
+      "severity": "Warning",
+      "scope": "CrossFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "da-user-copilot-license"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'da-user-copilot-license'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "197fa540-cbd4-46ec-a294-678633aa24eb",
+      "name": "UPN shouldn't be a shared mailbox",
+      "description": "UPN shouldn't be a shared mailbox",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "da-upn-user-reference-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'da-upn-user-reference-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    }
+  ],
+  "jsonLogicVersion": "2.0"
+}

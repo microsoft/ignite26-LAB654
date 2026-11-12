@@ -1,0 +1,1333 @@
+{
+  "typeName": "emails",
+  "rules": [
+    {
+      "ruleId": "6b7c8d9e-0f1a-4b2c-3d4e-5f6a7b8c9d0e",
+      "name": "Unique Email IDs",
+      "description": "Each email must have a unique EmailId within the file",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "unique": {
+          "var": "EmailId",
+          "caseSensitive": true
+        }
+      },
+      "metadata": {
+        "field": "EmailId",
+        "expression": "all EmailId values must be unique"
+      },
+      "category": "Uniqueness",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "e5ca6e33-5443-4972-b4a9-474d520407ab",
+      "name": "Referenced Email Exists",
+      "description": "ReferenceEmailId must point to an existing EmailId in the same file",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "emails",
+          "sourceField": "ReferenceEmailId",
+          "targetType": "emails",
+          "targetField": "EmailId"
+        }
+      },
+      "metadata": {
+        "field": "ReferenceEmailId",
+        "expression": "For each 'email.ReferenceEmailId', a matching 'email.EmailId' must exist"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "f4a2b8c1-7d3e-4f9a-b5c6-8e1d2f3a4b5c",
+      "name": "No Circular Email References",
+      "description": "ReferenceEmailId chains must not form cycles (e.g., Email A references B, B references A)",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "circularDependency": {
+          "identifierField": "EmailId",
+          "dependencyField": "ReferenceEmailId",
+          "allowSelfReference": false
+        }
+      },
+      "metadata": {
+        "field": "ReferenceEmailId",
+        "expression": "No circular dependencies in 'ReferenceEmailId' referencing 'EmailId' (self-reference not allowed)"
+      },
+      "category": "CircularDependency",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "dacb5796-b4de-4db7-8c5d-1ce0e56174f0",
+      "name": "Timestamp Must Be Past",
+      "description": "Email Timestamp must be a past datetime (before current time)",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "EmailId",
+            "operator": "is_not_null",
+            "valueType": "string"
+          },
+          "then": {
+            "field": "Timestamp",
+            "operator": "is_past",
+            "valueType": "datetime"
+          }
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "If 'EmailId' is_not_null , then 'Timestamp' is_past"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "bda3ec9d-a23d-4549-ba97-9b37db246b8f",
+      "name": "Sender Must Exist in Users",
+      "description": "All email Senders must exist in Users",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "emails",
+          "sourceField": "Sender",
+          "targetType": "users",
+          "targetField": "MailNickName"
+        }
+      },
+      "metadata": {
+        "field": "Sender",
+        "expression": "For each 'emails.Sender', a matching 'user.MailNickName' must exist"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "6023acde-6ffa-4f48-bf5c-d12c2eaa9167",
+      "name": "Impersonation Permission Check - SendAs",
+      "description": "Verify sender has SendAs permission in Users when From differs from Sender",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "and": [
+              {
+                "field": "From",
+                "operator": "is_not_null",
+                "valueType": "string"
+              },
+              {
+                "field": "Sender",
+                "operator": "!=",
+                "valueType": "string",
+                "compareField": "From"
+              },
+              {
+                "field": "TypeOfImpersonation",
+                "operator": "==",
+                "valueType": "string",
+                "value": "SendAs"
+              }
+            ]
+          },
+          "then": {
+            "field": "MailboxPermissions.SendAs",
+            "operator": "contains",
+            "valueType": "string",
+            "targetType": "users",
+            "sourceField": "Sender",
+            "where": {
+              "targetField": "MailNickName",
+              "operator": "==",
+              "valueType": "string",
+              "sourceField": "From"
+            }
+          }
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "If ('From' is_not_null) AND ('Sender' != 'From') AND ('TypeOfImpersonation' == SendAs), then 'MailboxPermissions.SendAs' contains source 'Sender' in 'user'"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "e2bc9bcf-1d5f-4408-ae3b-e6639316ddfc",
+      "name": "From Must Exist in Users",
+      "description": "All email From must exist in Users",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "emails",
+          "sourceField": "From",
+          "targetType": "users",
+          "targetField": "MailNickName"
+        }
+      },
+      "metadata": {
+        "field": "From",
+        "expression": "For each 'emails.From', a matching 'users.MailNickName' must exist"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "c9356c73-57e7-4239-a88c-bb3046779886",
+      "name": "Impersonation Permission Check - SendOnBehalf",
+      "description": "Verify sender has SendOnBehalf permission in Users when From differs from Sender",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "and": [
+              {
+                "field": "From",
+                "operator": "is_not_null",
+                "valueType": "string"
+              },
+              {
+                "field": "From",
+                "operator": "!=",
+                "valueType": "string",
+                "compareField": "Sender"
+              },
+              {
+                "field": "TypeOfImpersonation",
+                "operator": "==",
+                "valueType": "string",
+                "value": "SendOnBehalf"
+              }
+            ]
+          },
+          "then": {
+            "field": "MailboxPermissions.SendOnBehalf",
+            "operator": "contains",
+            "valueType": "string",
+            "targetType": "users",
+            "sourceField": "Sender",
+            "where": {
+              "targetField": "MailNickName",
+              "operator": "==",
+              "valueType": "string",
+              "sourceField": "From"
+            }
+          }
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "If ('From' is_not_null) AND ('From' != 'Sender') AND ('TypeOfImpersonation' == SendOnBehalf), then 'MailboxPermissions.SendOnBehalf' contains source 'Sender' in 'users'"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "9cba36c6-cc3b-4e7c-a04e-63a6ca326d30",
+      "name": "Placeholder Consistency",
+      "description": "Placeholders used in Body must be defined in Placeholders array with unique IDs",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "emails",
+          "sourceField": "Body",
+          "targetType": "emails",
+          "targetField": "Placeholders.PlaceholderId",
+          "sourceExtractPattern": "\\{placeholder:([^}]+)\\}",
+          "sameItemLookup": true
+        }
+      },
+      "metadata": {
+        "field": "Body",
+        "expression": "For each 'Body' (extracted via pattern: \\{placeholder:([^}]+)\\}), a matching value must exist in 'Placeholders.PlaceholderId' within the same item"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "86691692-c6a6-4c60-ac6a-edfeef752f0d",
+      "name": "Attachment Files Must Exist",
+      "description": "All files referenced in Attachments must exist in the data package",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "fileExistence": {
+          "field": "Attachments",
+          "caseSensitive": true
+        }
+      },
+      "metadata": {
+        "field": "Attachments",
+        "expression": "All file paths in 'Attachments' must exist in the ZIP archive (case-sensitive)"
+      },
+      "category": "FileExistence",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "e527f9bf-13ab-4cd9-8ff6-44d00c0eae72",
+      "name": "FileId in Placeholders must exists in files",
+      "description": "FileId in Placeholders must exists in files FileId",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "emails",
+          "sourceField": "Placeholders.HyperLinkContent.FileId",
+          "targetType": "files",
+          "targetField": "FileId"
+        }
+      },
+      "metadata": {
+        "field": "Placeholders.HyperLinkContent.FileId",
+        "expression": "For each 'emails.Placeholders.HyperLinkContent.FileId', a matching 'files.FileId' must exist"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "55ecd2d6-d95a-4511-be64-d71b55785174",
+      "name": "File share integrity check.",
+      "description": "Test if file share links are valid. The FileId must exist in the files, and the Owner and SharedLinkId must match.",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "integrityCheck": {
+          "source": {
+            "arrayField": "Placeholders.HyperLinkContent",
+            "keyField": "FileId"
+          },
+          "target": {
+            "logicType": "or",
+            "conditions": [
+              {
+                "type": "array-exists",
+                "targetType": "files",
+                "keyField": "FileId",
+                "additionalConditions": [
+                  {
+                    "field": "Owner",
+                    "operator": "==",
+                    "isSourceFieldRef": true,
+                    "sourceField": "FileOwner",
+                    "useCurrentSourceItem": true
+                  },
+                  {
+                    "field": "FileSharedLinks.SharedLinkId",
+                    "operator": "contains",
+                    "isSourceFieldRef": true,
+                    "sourceField": "SharedLinkId",
+                    "useCurrentSourceItem": true
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "field": "Placeholders.HyperLinkContent.FileId",
+        "expression": "Each value from 'Placeholders.HyperLinkContent.FileId' must exists in '' with matching 'FileId' and Owner==undefined AND FileSharedLinks.SharedLinkIdcontainsundefined"
+      },
+      "category": "IntegrityCheck",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "90ad1ed0-fdb4-40a9-a536-45860be92da6",
+      "name": "Placeholder must exist in email body",
+      "description": "Defined placeholders must exist in email body",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "emails",
+          "sourceField": "Placeholders.PlaceholderId",
+          "targetType": "emails",
+          "targetField": "Body",
+          "targetExtractPattern": "\\{placeholder:([^}]+)\\}",
+          "sameItemLookup": true
+        }
+      },
+      "metadata": {
+        "field": "Placeholders.PlaceholderId",
+        "expression": "For each 'Placeholders.PlaceholderId', a matching value must exist in 'Body' (extracted via pattern: \\{placeholder:([^}]+)\\}) within the same item"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "cc1cd182-e541-4799-a4bc-6e47a42e57b4",
+      "name": "Email sender must exist in the referenced email recipients or sender",
+      "description": "Email sender must exist in the referenced email ToRecipients or CcRecipients or BccRecpients or Sender",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "integrityCheck": {
+          "source": {
+            "keyField": "ReferenceEmailId"
+          },
+          "target": {
+            "logicType": "or",
+            "conditions": [
+              {
+                "type": "array-exists",
+                "targetType": "emails",
+                "keyField": "EmailId",
+                "additionalConditions": [
+                  {
+                    "field": "ToRecipients.Recipient",
+                    "operator": "contains",
+                    "isSourceFieldRef": true,
+                    "sourceField": "Sender",
+                    "useCurrentSourceItem": true
+                  }
+                ]
+              },
+              {
+                "type": "array-exists",
+                "targetType": "emails",
+                "keyField": "EmailId",
+                "additionalConditions": [
+                  {
+                    "field": "CcRecipients.Recipient",
+                    "operator": "contains",
+                    "isSourceFieldRef": true,
+                    "sourceField": "Sender",
+                    "useCurrentSourceItem": true
+                  }
+                ]
+              },
+              {
+                "type": "array-exists",
+                "targetType": "emails",
+                "keyField": "EmailId",
+                "additionalConditions": [
+                  {
+                    "field": "BccRecipients.Recipient",
+                    "operator": "contains",
+                    "isSourceFieldRef": true,
+                    "sourceField": "Sender",
+                    "useCurrentSourceItem": true
+                  }
+                ]
+              },
+              {
+                "type": "array-exists",
+                "targetType": "emails",
+                "keyField": "EmailId",
+                "additionalConditions": [
+                  {
+                    "field": "Sender",
+                    "operator": "==",
+                    "isSourceFieldRef": true,
+                    "sourceField": "Sender",
+                    "useCurrentSourceItem": true
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "field": "ReferenceEmailId",
+        "expression": "Each value from 'ReferenceEmailId' must exists in 'undefined' with matching 'EmailId' and ToRecipients.RecipientcontainscurrentItem.Sender OR exists in 'undefined' with matching 'EmailId' and CcRecipients.RecipientcontainscurrentItem.Sender OR exists in 'undefined' with matching 'EmailId' and BccRecipients.RecipientcontainscurrentItem.Sender OR exists in 'undefined' with matching 'EmailId' and Sender==currentItem.Sender"
+      },
+      "category": "IntegrityCheck",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d",
+      "name": "Email Total Size Limit",
+      "description": "The total size of email body and all attachments must be less than 35MB",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "sizeConstraint": {
+          "bodyField": "Body",
+          "attachmentField": "Attachments",
+          "maxSizeBytes": 36700160,
+          "operator": "<"
+        }
+      },
+      "metadata": {
+        "field": "Body, Attachments",
+        "expression": "Total size of 'Body' + all files in 'Attachments' must be < 35MB (36700160 bytes)"
+      },
+      "category": "SizeConstraint",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "a01fa21c-b6e0-4a03-8c1a-fc309a324c79",
+      "name": "Email ToRecipients must exist in user or group",
+      "description": "Email ToRecipients must exist in user or group\n",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "emails",
+          "sourceField": "ToRecipients.Recipient",
+          "targets": [
+            {
+              "targetField": "MailNickName",
+              "targetType": "users"
+            },
+            {
+              "targetField": "mailNickname",
+              "targetType": "groups"
+            }
+          ],
+          "targetsLogicType": "or"
+        }
+      },
+      "metadata": {
+        "field": "ToRecipients.Recipient",
+        "expression": "For each 'emails.ToRecipients.Recipient', a matching 'users.MailNickName' or 'groups.mailNickname' must exist"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "852fd725-89a6-4177-8824-ce00af987a3f",
+      "name": "Email CcRecipients must exist in user or group",
+      "description": "Email CcRecipients must exist in user or group",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "emails",
+          "sourceField": "CcRecipients.Recipient",
+          "targets": [
+            {
+              "targetField": "MailNickName",
+              "targetType": "users"
+            },
+            {
+              "targetField": "mailNickname",
+              "targetType": "groups"
+            }
+          ],
+          "targetsLogicType": "or"
+        }
+      },
+      "metadata": {
+        "field": "CcRecipients.Recipient",
+        "expression": "For each 'emails.CcRecipients.Recipient', a matching 'users.MailNickName' or 'groups.mailNickname' must exist"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "b9193825-3bef-4b6a-a2a7-877d41e8726c",
+      "name": "Email BccRecipients must exist in user or group",
+      "description": "Email BccRecipients must exist in user or group",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "emails",
+          "sourceField": "BccRecipients.Recipient",
+          "targets": [
+            {
+              "targetField": "MailNickName",
+              "targetType": "users"
+            },
+            {
+              "targetField": "mailNickname",
+              "targetType": "groups"
+            }
+          ],
+          "targetsLogicType": "or"
+        }
+      },
+      "metadata": {
+        "field": "BccRecipients.Recipient",
+        "expression": "For each 'emails.BccRecipients.Recipient', a matching 'users.MailNickName' or 'groups.mailNickname' must exist"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "b2d4f6a8-1c3e-5d7f-9a0b-2c4d6e8f0a1b",
+      "name": "Sender Recipient Rate Limit",
+      "description": "A sender cannot address more than 10,000 recipients in a single config file (sum of To + Cc + Bcc across all emails)",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "countLimit": {
+          "groupByField": "Sender",
+          "countFields": [
+            "ToRecipients",
+            "CcRecipients",
+            "BccRecipients"
+          ],
+          "maxCount": 10000
+        }
+      },
+      "metadata": {
+        "field": "Sender",
+        "expression": "Each sender must not address more than 10,000 recipients (To+Cc+Bcc) in a config file",
+        "reference": "https://learn.microsoft.com/en-us/office365/servicedescriptions/exchange-online-service-description/exchange-online-limits#sending-limits-1"
+      },
+      "category": "CountLimit",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "3f7c1a2b-4d5e-6f7a-8b9c-0d1e2f3a4b5c",
+      "name": "ToRecipients Categories Must Be Unique (Case-Insensitive)",
+      "description": "Each ToRecipient's Categories list must not contain duplicate values (case-insensitive comparison)",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "unique": {
+          "var": "ToRecipients.Categories",
+          "scopePath": "ToRecipients",
+          "caseSensitive": false,
+          "perItem": true
+        }
+      },
+      "metadata": {
+        "field": "ToRecipients.Categories",
+        "expression": "All Categories values within each ToRecipient must be unique (case-insensitive)"
+      },
+      "category": "Uniqueness",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "7b8c9d0e-1f2a-3b4c-5d6e-7f8a9b0c1d2e",
+      "name": "CcRecipients Categories Must Be Unique (Case-Insensitive)",
+      "description": "Each CcRecipient's Categories list must not contain duplicate values (case-insensitive comparison)",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "unique": {
+          "var": "CcRecipients.Categories",
+          "scopePath": "CcRecipients",
+          "caseSensitive": false,
+          "perItem": true
+        }
+      },
+      "metadata": {
+        "field": "CcRecipients.Categories",
+        "expression": "All Categories values within each CcRecipient must be unique (case-insensitive)"
+      },
+      "category": "Uniqueness",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "c1d2e3f4-a5b6-7c8d-9e0f-1a2b3c4d5e6f",
+      "name": "BccRecipients Categories Must Be Unique (Case-Insensitive)",
+      "description": "Each BccRecipient's Categories list must not contain duplicate values (case-insensitive comparison)",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "unique": {
+          "var": "BccRecipients.Categories",
+          "scopePath": "BccRecipients",
+          "caseSensitive": false,
+          "perItem": true
+        }
+      },
+      "metadata": {
+        "field": "BccRecipients.Categories",
+        "expression": "All Categories values within each BccRecipient must be unique (case-insensitive)"
+      },
+      "category": "Uniqueness",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "0393aa0e-e369-41ca-8445-02b6ebb951cd",
+      "name": "Mention Identifier must in Members",
+      "description": "Mention Identifier must in Members",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "emails",
+          "sourceField": "Placeholders.HyperLinkContent.MentionIdentifier",
+          "targetType": "users",
+          "targetField": "MailNickName",
+          "sourceExtractPattern": "^([^@]+)$"
+        }
+      },
+      "metadata": {
+        "field": "Placeholders.HyperLinkContent.MentionIdentifier",
+        "expression": "For each 'emails.Placeholders.HyperLinkContent.MentionIdentifier' (extracted via pattern: ^([^@]+)$), a matching 'users.MailNickName' must exist"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "32d168f0-f8e0-4e6f-8611-261e947ccbaf",
+      "name": "Sender and Recipients Must Not Be Shared Mailboxes",
+      "description": "Email senders and recipients should be a shared mailbox.",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "email-participants-user-reference-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'email-participants-user-reference-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": false
+    },
+    {
+      "ruleId": "7e56c5e5-ea94-416f-9e01-8a570a780542",
+      "name": "Email senders shouldn't be a shared mailbox",
+      "description": "Email senders shouldn't be a shared mailbox",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "email-sender-user-reference-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'email-sender-user-reference-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "46af2afb-b13f-4785-8f70-35bc37cbc6ad",
+      "name": "Shared mailbox FullAccess at least have a user if it's a recipient",
+      "description": "Shared mailbox FullAccess at least have a user if it's a recipient",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "email-recipient-shared-mailbox-full-access-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'email-recipient-shared-mailbox-full-access-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "28f41f8c-caa4-4ed3-9978-255cc3ff2ca3",
+      "name": "Embedded images emails' BodyType should be HTML",
+      "description": "Embedded images emails' BodyType should be HTML",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "email-embedded-image-body-type-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'email-embedded-image-body-type-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "fbf31cf2-6df9-4b78-96da-fc85563c5e09",
+      "name": "Embedded images should be existed and be valid",
+      "description": "Embedded images should be existed and be valid",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "email-embedded-image-content-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'email-embedded-image-content-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "91578f2a-f2ff-488c-9fdf-d2ccb7d42977",
+      "name": "Embedded images email size limitation",
+      "description": "Count the size of email content, embedded images, and attachments, the size should be less than 35MB.",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "email-transmitted-size-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'email-transmitted-size-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "779e1997-7e64-4a7a-b0f1-bf144d88dbbd",
+      "name": "ToRecipient should not have Flag, IsRead, Folder, Categories when it is group",
+      "description": "ToRecipient should not have Flag, IsRead, Folder, Categories when it is group",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "IsGroup",
+            "operator": "==",
+            "valueType": "boolean",
+            "value": "true"
+          },
+          "then": {
+            "and": [
+              {
+                "field": "Flag",
+                "operator": "is_null",
+                "valueType": "string"
+              },
+              {
+                "field": "IsRead",
+                "operator": "is_null",
+                "valueType": "boolean"
+              },
+              {
+                "field": "Folder",
+                "operator": "is_null",
+                "valueType": "string"
+              },
+              {
+                "field": "Categories",
+                "operator": "is_null",
+                "valueType": "array"
+              }
+            ]
+          },
+          "arrayScope": "ToRecipients"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "For each 'ToRecipients' element: IF 'IsGroup' == true THEN ('Flag' is_null) AND ('IsRead' is_null) AND ('Folder' is_null) AND ('Categories' is_null)"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "1cf4e9d2-7628-4192-afc6-f8d7c4677320",
+      "name": "CcRecipient should not have Flag, IsRead, Folder, Categories when it is group",
+      "description": "CcRecipient should not have Flag, IsRead, Folder, Categories when it is group",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "IsGroup",
+            "operator": "==",
+            "valueType": "boolean",
+            "value": "true"
+          },
+          "then": {
+            "and": [
+              {
+                "field": "Flag",
+                "operator": "is_null",
+                "valueType": "string"
+              },
+              {
+                "field": "IsRead",
+                "operator": "is_null",
+                "valueType": "boolean"
+              },
+              {
+                "field": "Folder",
+                "operator": "is_null",
+                "valueType": "string"
+              },
+              {
+                "field": "Categories",
+                "operator": "is_null",
+                "valueType": "array"
+              }
+            ]
+          },
+          "arrayScope": "CcRecipients"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "For each 'CcRecipients' element: IF 'IsGroup' == true THEN ('Flag' is_null) AND ('IsRead' is_null) AND ('Folder' is_null) AND ('Categories' is_null)"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "cbae886e-6f1d-470e-851f-9d2741f4690e",
+      "name": "BccRecipient should not have Flag, IsRead, Folder, Categories when it is group",
+      "description": "BccRecipient should not have Flag, IsRead, Folder, Categories when it is group",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "IsGroup",
+            "operator": "==",
+            "valueType": "boolean",
+            "value": "true"
+          },
+          "then": {
+            "and": [
+              {
+                "field": "Flag",
+                "operator": "is_null",
+                "valueType": "string"
+              },
+              {
+                "field": "IsRead",
+                "operator": "is_null",
+                "valueType": "boolean"
+              },
+              {
+                "field": "Folder",
+                "operator": "is_null",
+                "valueType": "string"
+              },
+              {
+                "field": "Categories",
+                "operator": "is_null",
+                "valueType": "array"
+              }
+            ]
+          },
+          "arrayScope": "BccRecipients"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "For each 'BccRecipients' element: IF 'IsGroup' == true THEN ('Flag' is_null) AND ('IsRead' is_null) AND ('Folder' is_null) AND ('Categories' is_null)"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "861988e0-607b-4aa1-8f10-4e15238bef66",
+      "name": "Don't refer a draft email",
+      "description": "Don't refer a draft email",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "integrityCheck": {
+          "source": {
+            "field": "ReferenceEmailId"
+          },
+          "target": {
+            "logicType": "or",
+            "conditions": [
+              {
+                "type": "array-exists",
+                "targetType": "emails",
+                "keyField": "EmailId",
+                "additionalConditions": [
+                  {
+                    "field": "IsDraft",
+                    "operator": "is_null",
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "type": "array-exists",
+                "targetType": "emails",
+                "keyField": "EmailId",
+                "additionalConditions": [
+                  {
+                    "field": "IsDraft",
+                    "operator": "==",
+                    "value": "false"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "field": "ReferenceEmailId",
+        "expression": "Each value from 'ReferenceEmailId' must exists in '' with matching 'EmailId' and IsDraftis_null OR exists in '' with matching 'EmailId' and IsDraft==false"
+      },
+      "category": "IntegrityCheck",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "7726b85b-f223-4a7f-9a5e-d5c8efd0be9c",
+      "name": "Placeholder mention identifier shouldn't be a shared mailbox",
+      "description": "Placeholder mention identifier shouldn't be a shared mailbox",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "email-mention-user-reference-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'email-mention-user-reference-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "8d4d7a20-4e32-4f82-846c-c97dda608b89",
+      "name": "ToRecipient Must Exist in Users When IsGroup is Unspecified",
+      "description": "",
+      "severity": "Warning",
+      "scope": "CrossFile",
+      "logic": {
+        "integrityCheck": {
+          "source": {
+            "arrayField": "ToRecipients",
+            "keyField": "Recipient",
+            "filterConditions": [
+              {
+                "field": "IsGroup",
+                "operator": "is_null",
+                "value": ""
+              }
+            ]
+          },
+          "target": {
+            "logicType": "or",
+            "conditions": [
+              {
+                "type": "field-match",
+                "targetType": "users",
+                "field": "MailNickName"
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "field": "ToRecipients.Recipient",
+        "expression": "Each value from 'ToRecipients.Recipient' (where IsGroupis_null) must equals 'MailNickName'"
+      },
+      "category": "IntegrityCheck",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "66030f55-39a8-41f7-adb9-0d59f9ae5817",
+      "name": "ToRecipient Must Exist in Users When IsGroup is False",
+      "description": "",
+      "severity": "Warning",
+      "scope": "CrossFile",
+      "logic": {
+        "integrityCheck": {
+          "source": {
+            "arrayField": "ToRecipients",
+            "keyField": "Recipient",
+            "filterConditions": [
+              {
+                "field": "IsGroup",
+                "operator": "==",
+                "value": "false"
+              }
+            ]
+          },
+          "target": {
+            "logicType": "or",
+            "conditions": [
+              {
+                "type": "field-match",
+                "targetType": "users",
+                "field": "MailNickName"
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "field": "ToRecipients.Recipient",
+        "expression": "Each value from 'ToRecipients.Recipient' (where IsGroup==false) must equals 'MailNickName'"
+      },
+      "category": "IntegrityCheck",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "a4002c65-a7ae-43aa-8beb-cd31b44eb120",
+      "name": "ToRecipient Must Exist in Groups When IsGroup is True",
+      "description": "",
+      "severity": "Warning",
+      "scope": "CrossFile",
+      "logic": {
+        "integrityCheck": {
+          "source": {
+            "arrayField": "ToRecipients",
+            "keyField": "Recipient",
+            "filterConditions": [
+              {
+                "field": "IsGroup",
+                "operator": "==",
+                "value": "true"
+              }
+            ]
+          },
+          "target": {
+            "logicType": "or",
+            "conditions": [
+              {
+                "type": "field-match",
+                "targetType": "groups",
+                "field": "mailNickname"
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "field": "ToRecipients.Recipient",
+        "expression": "Each value from 'ToRecipients.Recipient' (where IsGroup==true) must equals 'mailNickname'"
+      },
+      "category": "IntegrityCheck",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "fda41880-2e01-49e7-8795-de81eb41285c",
+      "name": "CcRecipient Must Exist in Users When IsGroup is Unspecified",
+      "description": "",
+      "severity": "Warning",
+      "scope": "CrossFile",
+      "logic": {
+        "integrityCheck": {
+          "source": {
+            "arrayField": "CcRecipients",
+            "keyField": "Recipient",
+            "filterConditions": [
+              {
+                "field": "IsGroup",
+                "operator": "is_null",
+                "value": ""
+              }
+            ]
+          },
+          "target": {
+            "logicType": "or",
+            "conditions": [
+              {
+                "type": "field-match",
+                "targetType": "users",
+                "field": "MailNickName"
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "field": "CcRecipients.Recipient",
+        "expression": "Each value from 'CcRecipients.Recipient' (where IsGroupis_null) must equals 'MailNickName'"
+      },
+      "category": "IntegrityCheck",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "60e95bf2-03d1-4eba-a953-e995a6845fa1",
+      "name": "CcRecipient Must Exist in Users When IsGroup is False",
+      "description": "",
+      "severity": "Warning",
+      "scope": "CrossFile",
+      "logic": {
+        "integrityCheck": {
+          "source": {
+            "arrayField": "CcRecipients",
+            "keyField": "Recipient",
+            "filterConditions": [
+              {
+                "field": "IsGroup",
+                "operator": "==",
+                "value": "false"
+              }
+            ]
+          },
+          "target": {
+            "logicType": "or",
+            "conditions": [
+              {
+                "type": "field-match",
+                "targetType": "users",
+                "field": "MailNickName"
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "field": "CcRecipients.Recipient",
+        "expression": "Each value from 'CcRecipients.Recipient' (where IsGroup==false) must equals 'MailNickName'"
+      },
+      "category": "IntegrityCheck",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "23134b4d-e734-4068-8abb-27c21037f7e1",
+      "name": "CcRecipient Must Exist in Groups When IsGroup is True",
+      "description": "",
+      "severity": "Warning",
+      "scope": "CrossFile",
+      "logic": {
+        "integrityCheck": {
+          "source": {
+            "arrayField": "CcRecipients",
+            "keyField": "Recipient",
+            "filterConditions": [
+              {
+                "field": "IsGroup",
+                "operator": "==",
+                "value": "true"
+              }
+            ]
+          },
+          "target": {
+            "logicType": "or",
+            "conditions": [
+              {
+                "type": "field-match",
+                "targetType": "groups",
+                "field": "mailNickname"
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "field": "CcRecipients.Recipient",
+        "expression": "Each value from 'CcRecipients.Recipient' (where IsGroup==true) must equals 'mailNickname'"
+      },
+      "category": "IntegrityCheck",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "fb438b0c-4e04-4b42-bcad-cc9b2c4412f5",
+      "name": "BccRecipient Must Exist in Users When IsGroup is Unspecified",
+      "description": "",
+      "severity": "Warning",
+      "scope": "CrossFile",
+      "logic": {
+        "integrityCheck": {
+          "source": {
+            "arrayField": "BccRecipients",
+            "keyField": "Recipient",
+            "filterConditions": [
+              {
+                "field": "IsGroup",
+                "operator": "is_null",
+                "value": ""
+              }
+            ]
+          },
+          "target": {
+            "logicType": "or",
+            "conditions": [
+              {
+                "type": "field-match",
+                "targetType": "users",
+                "field": "MailNickName"
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "field": "BccRecipients.Recipient",
+        "expression": "Each value from 'BccRecipients.Recipient' (where IsGroupis_null) must equals 'MailNickName'"
+      },
+      "category": "IntegrityCheck",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "2b8afbd6-e190-4ab5-bc6f-ad9e020c9ac3",
+      "name": "BccRecipient Must Exist in Users When IsGroup is False",
+      "description": "",
+      "severity": "Warning",
+      "scope": "CrossFile",
+      "logic": {
+        "integrityCheck": {
+          "source": {
+            "arrayField": "BccRecipients",
+            "keyField": "Recipient",
+            "filterConditions": [
+              {
+                "field": "IsGroup",
+                "operator": "==",
+                "value": "false"
+              }
+            ]
+          },
+          "target": {
+            "logicType": "or",
+            "conditions": [
+              {
+                "type": "field-match",
+                "targetType": "users",
+                "field": "MailNickName"
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "field": "BccRecipients.Recipient",
+        "expression": "Each value from 'BccRecipients.Recipient' (where IsGroup==false) must equals 'MailNickName'"
+      },
+      "category": "IntegrityCheck",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "ee73e676-1eeb-484e-b04d-ccac6a4ae1fa",
+      "name": "BccRecipient Must Exist in Groups When IsGroup is True",
+      "description": "",
+      "severity": "Warning",
+      "scope": "CrossFile",
+      "logic": {
+        "integrityCheck": {
+          "source": {
+            "arrayField": "BccRecipients",
+            "keyField": "Recipient",
+            "filterConditions": [
+              {
+                "field": "IsGroup",
+                "operator": "==",
+                "value": "true"
+              }
+            ]
+          },
+          "target": {
+            "logicType": "or",
+            "conditions": [
+              {
+                "type": "field-match",
+                "targetType": "groups",
+                "field": "mailNickname"
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "field": "BccRecipients.Recipient",
+        "expression": "Each value from 'BccRecipients.Recipient' (where IsGroup==true) must equals 'mailNickname'"
+      },
+      "category": "IntegrityCheck",
+      "isEnabled": true
+    }
+  ],
+  "jsonLogicVersion": "2.0"
+}

@@ -1,0 +1,109 @@
+[
+  {
+    "MailNickName": "megan",
+    "DisplayName": "Megan Bowen",
+    "FirstName": "Megan",
+    "LastName": "Bowen",
+    "JobTitle": "Account Executive",
+    "Department": "Sales",
+    "CompanyName": "Northwind Ltd",
+    "UsageLocation": "US",
+    "OfficeLocation": "New York, USA",
+    "Licenses": [
+      "Microsoft 365 Copilot",
+      "Microsoft Teams Enterprise",
+      "Office 365 E5 (no Teams)"
+    ],
+    "Manager": "alex"
+  },
+  {
+    "MailNickName": "alex",
+    "DisplayName": "Alex Wilber",
+    "FirstName": "Alex",
+    "LastName": "Wilber",
+    "JobTitle": "Regional Sales Director",
+    "Department": "Sales",
+    "CompanyName": "Northwind Ltd",
+    "UsageLocation": "US",
+    "OfficeLocation": "New York, USA",
+    "Licenses": [
+      "Microsoft Teams Enterprise",
+      "Office 365 E5 (no Teams)"
+    ]
+  },
+  {
+    "MailNickName": "isaiah",
+    "DisplayName": "Isaiah Langer",
+    "FirstName": "Isaiah",
+    "LastName": "Langer",
+    "JobTitle": "Customer Success Manager",
+    "Department": "Customer Success",
+    "CompanyName": "Northwind Ltd",
+    "UsageLocation": "US",
+    "OfficeLocation": "New York, USA",
+    "Licenses": [
+      "Microsoft Teams Enterprise",
+      "Office 365 E5 (no Teams)"
+    ]
+  },
+  {
+    "MailNickName": "arjun",
+    "DisplayName": "Arjun Kumar",
+    "FirstName": "Arjun",
+    "LastName": "Kumar",
+    "JobTitle": "Senior Support Engineer, EU Platform",
+    "Department": "Support",
+    "CompanyName": "Northwind Ltd",
+    "UsageLocation": "IE",
+    "OfficeLocation": "Dublin, Ireland",
+    "Licenses": [
+      "Microsoft Teams Enterprise",
+      "Office 365 E5 (no Teams)"
+    ]
+  },
+  {
+    "MailNickName": "rosa",
+    "DisplayName": "Rosa Diaz",
+    "FirstName": "Rosa",
+    "LastName": "Diaz",
+    "JobTitle": "Support Engineer",
+    "Department": "Support",
+    "CompanyName": "Northwind Ltd",
+    "UsageLocation": "US",
+    "OfficeLocation": "New York, USA",
+    "Licenses": [
+      "Microsoft Teams Enterprise",
+      "Office 365 E5 (no Teams)"
+    ]
+  },
+  {
+    "MailNickName": "lidia",
+    "DisplayName": "Lidia Holloway",
+    "FirstName": "Lidia",
+    "LastName": "Holloway",
+    "JobTitle": "Chief Information Officer",
+    "Department": "IT",
+    "CompanyName": "Contoso Ltd",
+    "UsageLocation": "DE",
+    "OfficeLocation": "Munich, Germany",
+    "Licenses": [
+      "Microsoft Teams Enterprise",
+      "Office 365 E5 (no Teams)"
+    ]
+  },
+  {
+    "MailNickName": "daniel",
+    "DisplayName": "Daniel Okafor",
+    "FirstName": "Daniel",
+    "LastName": "Okafor",
+    "JobTitle": "Head of Procurement",
+    "Department": "Procurement",
+    "CompanyName": "Contoso Ltd",
+    "UsageLocation": "DE",
+    "OfficeLocation": "Munich, Germany",
+    "Licenses": [
+      "Microsoft Teams Enterprise",
+      "Office 365 E5 (no Teams)"
+    ]
+  }
+]

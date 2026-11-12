@@ -1,0 +1,37 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.29/MicrosoftTeams.schema.json",
+    "manifestVersion": "1.29",
+    "version": "1.0.2",
+    "id": "d8ced556-1f27-401f-a76d-25c0fb6a08c8",
+    "developer": {
+        "name": "BRK220 demo",
+        "websiteUrl": "https://github.com/gim-home/3pcxp_evals",
+        "privacyUrl": "https://github.com/gim-home/3pcxp_evals",
+        "termsOfUseUrl": "https://github.com/gim-home/3pcxp_evals"
+    },
+    "name": {
+        "short": "Rovo",
+        "full": "Rovo"
+    },
+    "description": {
+        "short": "Access and speed up work across Atlassian apps",
+        "full": "Rovo connects people, work and your organization's knowledge across Jira and Confluence. In Microsoft 365 Copilot, search Jira work items and Confluence pages, check customer incidents, assign and comment on Jira work items, and read the knowledge your teams keep in Confluence, without switching apps. Learn more at https://www.atlassian.com/software/rovo."
+    },
+    "icons": {
+        "color": "color.png",
+        "outline": "outline.png"
+    },
+    "accentColor": "#0052CC",
+    "agentConnectors": [
+        {
+            "id": "4c97303a-42ec-443b-b971-eb39c5242234",
+            "displayName": "Rovo",
+            "description": "Remote MCP server providing tools for Atlassian Jira and Confluence",
+            "toolSource": {
+                "remoteMcpServer": {
+                    "mcpServerUrl": "https://northwind-atlassian.salmonstone-078b8962.eastus.azurecontainerapps.io/mcp"
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,480 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Manufactured Users schema",
+  "title": "Users",
+  "type": "array",
+  "maxItems": 1000,
+  "uniqueItems": true,
+  "items": {
+    "$ref": "#/$defs/User"
+  },
+  "$defs": {
+    "WorkingHours": {
+      "description": "An object that defines the user's working hours and days.",
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "DaysOfWeek": {
+          "description": "An array of days the user works, e.g., ['Monday', 'Tuesday'].",
+          "type": [
+            "array",
+            "null"
+          ],
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday",
+              "Sunday"
+            ]
+          }
+        },
+        "StartTime": {
+          "description": "The start time of the user's workday in HH:MM format, e.g., '09:00'.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d)?$"
+        },
+        "EndTime": {
+          "description": "The end time of the user's workday in HH:MM format, e.g., '17:00'.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d)?$"
+        },
+        "TimeZone": {
+          "description": "The user's time zone as an IANA identifier (e.g., 'America/Chicago') or a Windows time zone name (e.g., 'Central Standard Time'). Max length per Microsoft Graph mailboxSettings.workingHours.timeZone.name is 128 characters.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 0,
+          "maxLength": 128
+        }
+      }
+    },
+    "MailboxSettings": {
+      "description": "An object that encapsulates the user's mailbox settings.",
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "WorkingHours": {
+          "$ref": "#/$defs/WorkingHours"
+        }
+      }
+    },
+    "Address": {
+      "description": "An object that encapsulates the user's physical address details.",
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "City": {
+          "description": "The city where the user is located, e.g., 'Chicago'. Max length per Microsoft Graph user.city is 128 characters.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 0,
+          "maxLength": 128
+        },
+        "Country": {
+          "description": "The country, e.g., 'USA'. Max length per Microsoft Graph user.country is 128 characters.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 0,
+          "maxLength": 128
+        },
+        "PostalCode": {
+          "description": "The postal code, e.g., '60601'. Max length per Microsoft Graph user.postalCode is 40 characters.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 0,
+          "maxLength": 40
+        },
+        "State": {
+          "description": "The state or province, e.g., 'IL'. Max length per Microsoft Graph user.state is 128 characters.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 0,
+          "maxLength": 128
+        },
+        "Street": {
+          "description": "The street address, e.g., '200 N LaSalle St'. Max length per Microsoft Graph user.streetAddress is 1024 characters.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 0,
+          "maxLength": 1024
+        }
+      },
+      "required": [
+        "City",
+        "Country",
+        "PostalCode",
+        "State",
+        "Street"
+      ]
+    },
+    "MailboxPermissions": {
+      "description": "Mailbox permissions for the user.",
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "FullAccess": {
+          "description": "The list of users who have FullAccess permissions on the mailbox.",
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/$defs/MailNickNameOnly"
+          }
+        },
+        "SendAs": {
+          "description": "The list of users who have SendAs permissions on the mailbox.",
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/$defs/MailNickNameOnly"
+          }
+        },
+        "SendOnBehalf": {
+          "description": "The list of users who have SendOnBehalf permissions on the mailbox.",
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/$defs/MailNickNameOnly"
+          }
+        }
+      }
+    },
+    "PeopleSkillEntry": {
+      "description": "A People Skills entry with identifier, display name, and tag",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "description": "Skill identifier (i.e 'urn:li:skill:1706')",
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "description": "Display name (not sent to API)",
+          "type": "string",
+          "minLength": 1
+        },
+        "tag": {
+          "description": "Exact tag for this skill",
+          "type": "string",
+          "enum": [
+            "UserConfirmed",
+            "Suggested"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "tag"
+      ]
+    },
+    "User": {
+      "description": "The User JSON Schema is designed to capture essential details for creating and managing user accounts within an Azure environment or any enterprise-level system.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "Address": {
+          "$ref": "#/$defs/Address"
+        },
+        "MailboxSettings": {
+          "$ref": "#/$defs/MailboxSettings"
+        },
+        "CompanyName": {
+          "description": "The name of the company the user works for, e.g., 'Meinbizchat'. Max length per Microsoft Graph user.companyName is 64 characters.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 0,
+          "maxLength": 64
+        },
+        "Department": {
+          "description": "The department the user belongs to, e.g., 'Engineering'. Max length per Microsoft Graph user.department is 64 characters.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 0,
+          "maxLength": 64
+        },
+        "DisplayName": {
+          "description": "The full name displayed in directories and communications, e.g., 'Jennifer Taylor'. Max length per Microsoft Graph user.displayName is 256 characters.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "FirstName": {
+          "description": "The user's given name, e.g., 'Jennifer'. Max length per Microsoft Graph user.givenName is 64 characters.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "JobTitle": {
+          "description": "The user's position within the company, e.g., 'Software Development Manager'. Max length per Microsoft Graph user.jobTitle is 128 characters.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 0,
+          "maxLength": 128
+        },
+        "LastName": {
+          "description": "The user's family name, e.g., 'Taylor'. Max length per Microsoft Graph user.surname is 64 characters.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "Licenses": {
+          "description": "A list of licenses assigned to the user in Azure.",
+          "type": [
+            "array",
+            "null"
+          ],
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "Microsoft 365 Copilot",
+              "Microsoft Teams Enterprise",
+              "Office 365 E5 (no Teams)"
+            ]
+          }
+        },
+        "IsSharedMailbox": {
+          "description": "Indicates whether the user/mailbox is a shared mailbox.",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "IsArchiveMailboxEnabled": {
+          "description": "Indicates whether EMP should enable an Exchange Online archive mailbox for this user. Defaults to false when omitted or null.",
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "default": false
+        },
+        "MailNickName": {
+          "description": "The username portion of user's UPN (which typically follows the format example@domain.com). This is a unique identifier for the user in Azure. For the UPN example@domain.com the username is 'example'.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^(?!\\.)(?!.*\\.\\.)(?!.*\\.$)[^#@ ,\"()']+$"
+        },
+        "Manager": {
+          "description": "The MailNickName of the user's manager, e.g., 'robertscott'.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 0,
+          "pattern": "^(?!\\.)(?!.*\\.\\.)(?!.*\\.$)[^#@ ,\"()]*$"
+        },
+        "OfficeLocation": {
+          "description": "The physical location of the user's office, e.g., 'Chicago, IL'. Max length per Microsoft Graph user.officeLocation is 128 characters.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 0,
+          "maxLength": 128
+        },
+        "UsageLocation": {
+          "description": "The country code representing the location where the user is primarily based, e.g., 'US'.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^(?:AD|AE|AF|AG|AI|AL|AM|AO|AQ|AR|AS|AT|AU|AW|AX|AZ|BA|BB|BD|BE|BF|BG|BH|BI|BJ|BL|BM|BN|BO|BQ|BR|BS|BT|BV|BW|BY|BZ|CA|CC|CD|CF|CG|CH|CI|CK|CL|CM|CN|CO|CR|CU|CV|CW|CX|CY|CZ|DE|DJ|DK|DM|DO|DZ|EC|EE|EG|EH|ER|ES|ET|FI|FJ|FK|FM|FO|FR|GA|GB|GD|GE|GF|GG|GH|GI|GL|GM|GN|GP|GQ|GR|GS|GT|GU|GW|GY|HK|HM|HN|HR|HT|HU|ID|IE|IL|IM|IN|IO|IQ|IR|IS|IT|JE|JM|JO|JP|KE|KG|KH|KI|KM|KN|KP|KR|KW|KY|KZ|LA|LB|LC|LI|LK|LR|LS|LT|LU|LV|LY|MA|MC|MD|ME|MF|MG|MH|MK|ML|MM|MN|MO|MP|MQ|MR|MS|MT|MU|MV|MW|MX|MY|MZ|NA|NC|NE|NF|NG|NI|NL|NO|NP|NR|NU|NZ|OM|PA|PE|PF|PG|PH|PK|PL|PM|PN|PR|PS|PT|PW|PY|QA|RE|RO|RS|RU|RW|SA|SB|SC|SD|SE|SG|SH|SI|SJ|SK|SL|SM|SN|SO|SR|SS|ST|SV|SX|SY|SZ|TC|TD|TF|TG|TH|TJ|TK|TL|TM|TN|TO|TR|TT|TV|TW|TZ|UA|UG|UM|US|UY|UZ|VA|VC|VE|VG|VI|VN|VU|WF|WS|YE|YT|ZA|ZM|ZW)$"
+        },
+        "PhoneNumber": {
+          "description": "The user phone number, e.g., '+1 425 555 0109'. Max length per Microsoft Graph user.mobilePhone / businessPhones entry is 64 characters.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^\\+?[1-9]\\d{0,2}[\\s\\-]?\\(?\\d{1,4}\\)?[\\s\\-]?\\d{1,4}[\\s\\-]?\\d{1,9}$",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "MailboxPermissions": {
+          "$ref": "#/$defs/MailboxPermissions"
+        },
+        "PeopleSkills": {
+          "description": "People Skills from VivaSkills (not Graph Profile Skills).",
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/$defs/PeopleSkillEntry"
+          }
+        },
+        "IdentityType": {
+          "description": "Identifies the account type associated with the user. Supported values: AAD, MSA. Defaults to AAD if not provided.",
+          "type": "string",
+          "enum": [
+            "AAD",
+            "MSA"
+          ],
+          "default": "AAD"
+        },
+        "EmailAddress": {
+          "description": "Full email address associated with the user. Primarily used for MSA accounts where the MailNickName may not uniquely identify the account.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "email",
+          "minLength": 3,
+          "maxLength": 320
+        },
+        "Photo": {
+          "description": "Package-relative path to the user's JPEG profile photo in the FileContent dataset.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "pattern": "^(?!/)(?![A-Za-z]:)(?!.*(?:^|/)\\.\\.?(?:/|$))(?!.*//)[^\\\\]+\\.[jJ][pP](?:[eE])?[gG]$"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "IsSharedMailbox"
+            ],
+            "properties": {
+              "IsSharedMailbox": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "MailNickName",
+              "DisplayName",
+              "IsSharedMailbox"
+            ],
+            "properties": {
+              "Licenses": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "if": {
+              "properties": {
+                "IdentityType": {
+                  "const": "MSA"
+                }
+              },
+              "required": [
+                "IdentityType"
+              ]
+            },
+            "then": {
+              "required": [
+                "MailNickName",
+                "EmailAddress"
+              ],
+              "properties": {
+                "EmailAddress": {
+                  "type": "string",
+                  "format": "email",
+                  "minLength": 3,
+                  "maxLength": 320
+                }
+              }
+            },
+            "else": {
+              "required": [
+                "MailNickName",
+                "UsageLocation",
+                "DisplayName",
+                "FirstName",
+                "LastName",
+                "Licenses"
+              ],
+              "properties": {
+                "Licenses": {
+                  "type": "array",
+                  "contains": {
+                    "const": "Office 365 E5 (no Teams)"
+                  },
+                  "minContains": 1
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "IsArchiveMailboxEnabled"
+            ]
+          },
+          "then": {
+            "properties": {
+              "IdentityType": {
+                "const": "AAD"
+              },
+              "IsSharedMailbox": {
+                "const": false
+              }
+            }
+          }
+        }
+      ]
+    },
+    "MailNickNameOnly": {
+      "description": "User MailNickName only, without email address",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "pattern": "^(?!\\.)(?!.*\\.\\.)(?!.*\\.$)[^#@ ,\"()']+$"
+    }
+  }
+}

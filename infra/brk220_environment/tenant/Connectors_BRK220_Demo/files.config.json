@@ -1,0 +1,29 @@
+[
+  {
+    "FileId": "brk220-file-001",
+    "FileName": "Contoso/Contoso Ltd - Q3 QBR notes.docx",
+    "FileLocation": "files/brk220/Contoso Ltd - Q3 QBR notes.docx",
+    "Owner": "megan",
+    "CreatedDate": "2026-09-30T13:20:00Z",
+    "LastModifiedDate": "2026-09-30T13:41:00Z",
+    "DestinationType": "onedrive"
+  },
+  {
+    "FileId": "brk220-file-002",
+    "FileName": "Contoso/Contoso Ltd - Order Form NW-OF-2025-0142.docx",
+    "FileLocation": "files/brk220/Contoso Ltd - Order Form NW-OF-2025-0142.docx",
+    "Owner": "megan",
+    "CreatedDate": "2024-12-16T19:00:00Z",
+    "LastModifiedDate": "2024-12-16T19:05:00Z",
+    "DestinationType": "onedrive"
+  },
+  {
+    "FileId": "brk220-file-003",
+    "FileName": "Templates/Northwind Renewal Order Form template.docx",
+    "FileLocation": "files/brk220/Northwind Renewal Order Form template.docx",
+    "Owner": "megan",
+    "CreatedDate": "2026-03-02T16:00:00Z",
+    "LastModifiedDate": "2026-03-02T16:30:00Z",
+    "DestinationType": "onedrive"
+  }
+]
