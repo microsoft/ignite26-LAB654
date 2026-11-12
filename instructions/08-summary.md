@@ -7,7 +7,7 @@
 | Track | Connectors | What Copilot finished |
 |---|---|---|
 | Finance | LSEG, FactSet, Moody's | A Litware investment committee pack in Excel and a memo in Word |
-| Legal | Work IQ, iManage | Flags and a redline in Word, then a negotiation pack in Cowork |
+| Legal | Work IQ, iManage | Comments, a redline and a negotiation pack in Cowork |
 | Productivity | Salesforce_Lab, Teams, Outlook | A call brief, a grounded answer to a price objection, and a booked and logged meeting |
 | Engineering | Jira, Confluence, GitHub_Lab, Rovo_Lab, Teams | The sprint's one at-risk item and what it's waiting on, a Teams message to the approver, and a sprint slide |
 | Bring your own app | Zava Expense (custom MCP) | An expense report checked, fixed and submitted, plus a spend summary in Excel |
