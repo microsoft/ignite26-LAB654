@@ -18,13 +18,12 @@ Do not copy the credentials into this repository.
 
 ## Steps
 
-1. Go to [entra.microsoft.com](https://entra.microsoft.com) and sign in as the admin.
-2. In the left rail, under **Entra ID**, select **Multifactor authentication**. This opens **Per-user multifactor authentication**.
-3. In the search box, filter for `emil`.
-4. Keep scrolling down until `emil114` is listed, so every lab account is loaded.
-5. Select all the listed accounts with the checkbox in the column header.
-6. Select **User MFA settings**.
-7. Check **Require selected users to provide contact methods again**.
-8. Select **Save**.
+1. Open [Per-user multifactor authentication](https://entra.microsoft.com/#view/Microsoft_AAD_AuthenticationMethods/MultifactorAuthenticationConfig.ReactView/tabId/users) in the Microsoft Entra admin center, signed in as the admin.
+2. In the search box, filter for `emil`.
+3. Keep scrolling down until `emil114` is listed, so every lab account is loaded.
+4. Select all the listed accounts with the checkbox in the column header.
+5. Select **User MFA settings**.
+6. Check **Require selected users to provide contact methods again**.
+7. Select **Save**.
 
 ![Per-user multifactor authentication with all emil accounts selected and the User MFA settings panel open](images/entra-user-mfa-settings.png)
