@@ -12,7 +12,7 @@ COEP tenant seed data for LAB654: users, mail, chats, Teams channels, meetings, 
 
 - [Connectors_Ignite_EMP_WW_2, version 1.0](https://seval.microsoft.com/tenant/detail/Connectors_Ignite_EMP_WW_2/1.0) (Worldwide ring)
 - 114 lab users, `emil001` to `emil114`, plus `emil` for instructors and curators
-- After every lab run, reset MFA for the lab accounts: see [Between lab runs](../BETWEEN_LABS.md)
+- After every lab run, reset MFA for the lab accounts. For this and other tenant fixes (reset script consent, blocked Skillable IP ranges), see [Lab tenant troubleshooting](../TENANT_TROUBLESHOOTING.md)
 
 ### Local testing for the crew
 
