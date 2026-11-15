@@ -34,8 +34,20 @@ You won't change any code or ship a release. In **Copilot Chat** you'll investig
 ## Before you start
 
 - [ ] You completed [Getting started with connectors](02-getting-started.md).
-- [ ] **GitHub_Lab** and **Rovo_Lab** show as connected.
-- [ ] The **Jira** and **Confluence** synced connectors are available in your tenant (your facilitator set them up).
+
+First, check that Atul's email is waiting for you in Outlook.
+
+> [!NOTE]
+> Jira tracks the team's work items, Confluence holds its design pages, and GitHub holds its code and pull requests. **Jira** and **Confluence** are synced connectors: their content is indexed into Microsoft 365 ahead of time. **GitHub_Lab** and **Rovo_Lab** are the lab versions of the GitHub and Atlassian Rovo connectors. **Rovo** is Atlassian's MCP server: one connector that reaches Jira and Confluence together. When Cowork uses Rovo_Lab, the cards say Rovo, but they show Jira and Confluence data inside.
+
+### Read Atul's email in Outlook
+
+1. Select **Microsoft Edge** on the taskbar, then go to [outlook.cloud.microsoft](https://outlook.cloud.microsoft/).
+2. In the search box at the top, enter `Aurora pilot - offline status still wrong` and press Enter.
+3. Open the email from **Atul Manohar** titled *Aurora pilot - offline status still wrong*, and scroll to his latest message.
+4. Check that it says pilot stores still see Aurora hubs marked offline after they reconnect, and that staff keep restarting devices that are working.
+
+   ![Outlook on the web with Aurora pilot - offline status still wrong in the search box. Atul Manohar's email thread is open, with his latest message about hubs still marked offline highlighted](images/engineering-outlook-atul-email.png)
 
 To see what Copilot will read, open the [Aurora Sprint 24 board](https://mock-atlassian.yellowsand-9530f5dc.eastus.azurecontainerapps.io/jira/software/projects/AUR/boards/57), the [ADR-014 page](https://mock-atlassian.yellowsand-9530f5dc.eastus.azurecontainerapps.io/wiki/spaces/AUR/pages/98457) in Confluence, and the [aurora-status pull requests](https://mock-github.yellowsand-9530f5dc.eastus.azurecontainerapps.io/zava-lab/aurora-status/pulls) in GitHub.
 
@@ -45,22 +57,31 @@ To see what Copilot will read, open the [Aurora Sprint 24 board](https://mock-at
 
 *Copilot Chat · Jira*
 
-```text
-What's the status of Aurora Sprint 24? Is anything at risk for the Lakeshore Retail pilot expansion?
-```
+1. Open a new browser tab and go to [copilot.cloud.microsoft](https://copilot.cloud.microsoft/).
+2. In Copilot, select **Chat** at the top of the left pane, then select **New chat**.
+
+   ![The Copilot left pane with the Chat tab selected and New chat highlighted below it](images/copilot-new-chat.png)
+
+3. Enter:
+
+   ```text
+   What's the status of Aurora Sprint 24? Is anything at risk for the Lakeshore Retail pilot expansion?
+   ```
 
 **What to look for:**
 
-- A summary of the six Sprint 24 items. Two are done, the cutover runbook and regression checks are on track, and custom dashboard filters is a low-priority stretch item.
-- One item is at risk: [**AUR-142**](https://mock-atlassian.yellowsand-9530f5dc.eastus.azurecontainerapps.io/browse/AUR-142), *Aurora hubs remain offline after reconnect*. Kerry notes it's the only Sprint 24 item tied to the November 23 expansion that isn't on track.
+- A summary of the Sprint 24 items.
+- One item at risk: [**AUR-142**](https://mock-atlassian.yellowsand-9530f5dc.eastus.azurecontainerapps.io/browse/AUR-142), *Aurora hubs remain offline after reconnect*.
 - Citations to the Jira items.
 
 > [!TIP]
-> The board is mostly green, and Copilot picks out the one item that matters to your customer.
+> Most of the sprint is on track. Copilot picks out the one item that matters to your customer.
 
 ### Step 2: What's really going on with AUR-142?
 
 *Same chat · Jira · Confluence · GitHub_Lab*
+
+In the same chat, enter:
 
 ```text
 What's the current status of AUR-142, and what is it waiting on? Check Jira, Confluence and GitHub.
@@ -78,23 +99,40 @@ What's the current status of AUR-142, and what is it waiting on? Check Jira, Con
 
 ## Part B: Act in Copilot Cowork
 
-Open **Copilot Cowork** and start a new task. Cowork may not have your Chat conversation, so these prompts include the context they need.
+### Set up Copilot Cowork
 
-> [!IMPORTANT]
-> In Cowork, select **Customize** and turn on **GitHub_Lab** and **Rovo_Lab**. Then turn off the **Fabric IQ** plugin, which is on by default.
+Cowork uses only the plugins you turn on, so first turn on GitHub_Lab and Rovo_Lab.
+
+1. In Copilot, select **Cowork** at the top of the left pane.
+2. In the left pane, select **Customize**.
+3. Next to **Added**, select **Manage all**.
+
+   ![The Cowork Customize page, with Customize highlighted in the left pane and Manage all highlighted next to the Added list of connectors](images/cowork-customize.png)
+
+4. Turn on **GitHub_Lab** and **Rovo_Lab**.
+5. Turn off **Fabric IQ**, which is on by default. Leave every other plugin off.
+
+   ![The Added list in Cowork Customize, with Rovo_Lab and GitHub_Lab turned on and Fabric IQ, Moodys_Lab, Salesforce_Lab, LSEG_Lab, FactSet_Lab and iManage_Lab turned off](images/engineering-cowork-customize.png)
+
+6. In the left pane, select **New task**. Cowork may not have your Chat conversation, so these prompts include the context they need.
+
+   ![The Copilot left pane with the Cowork tab selected and New task highlighted below it](images/copilot-new-cowork-task.png)
+
+You don't need to turn on Teams or PowerPoint. Cowork has them built in.
 
 ### Step 3: Ask Tama for the decision
 
 *Copilot Cowork · Teams*
 
-```text
-Send Tama Surya a Teams message. Ask Tama to approve ADR-014 so Triin can start the event-driven fix for AUR-142, and to re-review PR #287 once it's updated. Mention the November 20 cutover and include links to the ADR, the Jira item and the PR.
-```
+1. In the new task, enter:
 
-**What to look for:**
+   ```text
+   Send Tama Surya a Teams message. Ask Tama to approve ADR-014 so Triin can start the event-driven fix for AUR-142, and to re-review PR #287 once it's updated. Mention the November 20 cutover and include links to the ADR, the Jira item and the PR.
+   ```
 
-- A short Teams message to Tama: what's waiting, why it matters for November 20 and November 23, what happens after approval, and the three links.
-- Cowork shows you the recipient and the message before sending. Check it, then approve.
+2. When Cowork shows the Teams message for confirmation, check the recipient and the message, then select **Send**.
+
+**What to look for:** a short Teams message to Tama: what's waiting, why it matters for November 20 and November 23, what happens after approval, and the three links.
 
 > [!TIP]
 > The investigation became one clear ask, sent to the right person with the evidence attached.
@@ -103,16 +141,25 @@ Send Tama Surya a Teams message. Ask Tama to approve ADR-014 so Triin can start 
 
 *Same Cowork task · Rovo_Lab sprint-to-slides skill*
 
-```text
-/skill sprint-to-slides
-Create one PowerPoint slide summarizing Aurora Sprint 24 for engineering leadership: what's on track, the one item at risk, what it's waiting on, and the next steps.
-```
+1. In the same task, type `/sprint-to-slides` in the message box.
+2. In the list that appears, select **/sprint-to-slides** (from Rovo_Lab) to apply the skill.
+
+   ![The Cowork message box with /sprint-to-slides typed, and the /sprint-to-slides skill from Rovo_Lab highlighted in the list below](images/engineering-cowork-skill-picker.png)
+
+3. Press **Shift+Enter** for a new line, then enter:
+
+   ```text
+   Create one PowerPoint slide summarizing Aurora Sprint 24 for engineering leadership: what's on track, the one item at risk, what it's waiting on, and the next steps.
+   ```
 
 **What to look for:**
 
 - One slide with the sprint goal and dates, the items on track, AUR-142 at risk, the blocker (ADR-014 waiting on Tama), and next steps with owners.
 - Key dates: November 18 dry run, November 20 cutover, November 23 expansion.
 - No invented delivery date, velocity or story points.
+
+> [!TIP]
+> **You chose the skill.** A skill is a set of expert instructions that comes with a connector. Here you named one with a slash command. Rovo's **sprint-to-slides** skill tells Cowork how a project manager reports on a sprint: read the sprint from Jira, sort what's done, on track and at risk, find the blocker, and turn it into a slide.
 
 > [!TIP]
 > A partner skill turned live Jira and Confluence data into a leadership-ready slide in one step.
@@ -124,7 +171,7 @@ Create one PowerPoint slide summarizing Aurora Sprint 24 for engineering leaders
 | Step 1 doesn't find the sprint | Ask: "Search Jira for the Aurora Sprint 24 work items." |
 | Step 2 misses the Confluence or GitHub part | Ask: "Find ADR-014 in Confluence" or "Search GitHub for a pull request that references AUR-142." |
 | The skill returns an outline, not a slide | Reply: "Create the .pptx file with one slide." |
-| Cowork sends without showing you the message | Tell your facilitator. Messages should always ask for approval first. |
+| Cowork sends without showing you the message | Tell a proctor. Messages should always ask for approval first. |
 
 ## Checkpoint
 
@@ -134,6 +181,9 @@ Create one PowerPoint slide summarizing Aurora Sprint 24 for engineering leaders
 - [ ] You have one sprint slide for leadership.
 
 **What you take away:** You started with a mostly green sprint board. Copilot found the one item at risk, joined Jira, Confluence and GitHub to show what it was waiting on, then Cowork asked for the decision and gave leadership a one-slide update.
+
+> [!TIP]
+> In this track, you called a skill by name with a slash command. Copilot can also pick a skill for you based on what you ask. To see that, try the [finance track](03-finance.md).
 
 ## More connectors to try
 

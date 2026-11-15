@@ -33,23 +33,42 @@ You need the backstory, a redline and a plain-English answer before December 10.
 ## Before you start
 
 - [ ] You completed [Getting started with connectors](02-getting-started.md).
-- [ ] **iManage_Lab** shows as connected in Copilot **Settings** > **Sources**.
-- [ ] You can see Luc's message in Teams: open [Teams](https://teams.cloud.microsoft/), select **Chat**, then **Luc Lacombe**.
+
+First, check that Luc's message is waiting for you in Teams. Then you'll set up Cowork.
+
+> [!NOTE]
+> iManage is a document management system that law firms and legal teams use to store contracts, playbooks and other matter documents. **iManage_Lab** is the lab version of the iManage connector.
+
+### Read Luc's message in Teams
+
+1. Select **Microsoft Edge** on the taskbar, then go to [teams.cloud.microsoft](https://teams.cloud.microsoft/).
+2. In the left rail, select **Chat**.
+3. Under **Chats**, select **Luc Lacombe**.
+4. Check that you see Luc's message asking whether you've looked at Trey Research's contract and whether you can sign on the 10th.
+
+   ![Microsoft Teams on the web with the Chat view open. Luc Lacombe is selected under Chats, and his message about signing Trey Research's contract on the 10th is shown in the conversation](images/legal-teams-luc-message.png)
 
 The iManage matter [Trey Research – AI Platform Agreement](https://mock-imanage.yellowsand-9530f5dc.eastus.azurecontainerapps.io/work/link/w/Dev!1870) holds the [Zava AI Procurement Playbook v2.1](https://mock-imanage.yellowsand-9530f5dc.eastus.azurecontainerapps.io/work/link/d/DEV!252567.1): Zava's rules for what it will and won't accept in AI contracts. Open it to see what Cowork will read. Section 14 lists six hard stops, positions Zava never concedes. Its **Drafts** folder is empty until Step 5.
 
 ### Set up Copilot Cowork
 
-Cowork uses only the plugins you turn on.
+Cowork uses only the plugins you turn on, so first turn on iManage_Lab.
 
-1. Open [Microsoft 365 Copilot](https://copilot.cloud.microsoft/) and select **Cowork** at the top of the left pane.
-2. In the left pane, select **Customize**. Next to **Added**, select **Manage all**.
-3. Turn on **iManage_Lab**.
-4. Turn off **Fabric IQ**, which is on by default. Leave every other plugin off.
+1. Open a new browser tab and go to [copilot.cloud.microsoft](https://copilot.cloud.microsoft/).
+2. Select **Cowork** at the top of the left pane.
+3. In the left pane, select **Customize**.
+4. Next to **Added**, select **Manage all**.
+
+   ![The Cowork Customize page, with Customize highlighted in the left pane and Manage all highlighted next to the Added list of connectors](images/cowork-customize.png)
+
+5. Turn on **iManage_Lab**.
+6. Turn off **Fabric IQ**, which is on by default. Leave every other plugin off.
 
    ![The Added list in Cowork Customize, with iManage_Lab turned on and Fabric IQ, Moodys_Lab, Salesforce_Lab, LSEG_Lab, FactSet_Lab, Rovo_Lab and GitHub_Lab turned off](images/legal-cowork-customize.png)
 
-5. In the left pane, select **New task**.
+7. In the left pane, select **New task**.
+
+   ![The Copilot left pane with the Cowork tab selected and New task highlighted below it](images/copilot-new-cowork-task.png)
 
 You don't need to turn on Outlook, Teams or Word. Cowork has them built in.
 
@@ -142,7 +161,7 @@ This step can take a few minutes while Cowork reads the clauses and makes the ed
 
 Now check the agreement itself:
 
-1. In the answer, select the **Trey Research Vendor Agreement v4.2.docx** link. The agreement opens next to the chat.
+1. In the answer, select the **Trey Research Vendor Agreement v4.2.docx** link. The agreement opens in Word next to the chat.
 2. Scroll to **Section 7** and **Section 9**. Deleted text is struck through and new text is underlined, in red. The comment markers in the right margin hold Cowork's comments from Steps 2 and 3.
 
    ![The agreement open next to the Cowork chat, with tracked changes in red in Section 7.4 and Section 9.1 and comment markers in the right margin](images/legal-cowork-redline.png)

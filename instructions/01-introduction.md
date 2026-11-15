@@ -16,7 +16,7 @@ By the end of this lab, you'll be able to:
 
 1. **Discover and connect** the right connectors from the catalog, and use connected data wherever it's supported in Microsoft 365.
 2. **Ground Copilot** in trusted business and partner data, with citations back to each source.
-3. **Finish the work, not just the search:** use skills and write actions to produce a call brief, a sprint decision slide, a committee pack or a contract redline, and bring your own app with a custom connector.
+3. **Finish the work, not just the search:** use skills and write actions to produce a call brief, a sprint slide, a committee pack or a contract redline, and bring your own app with a custom connector.
 
 ## Your role: Emil Vanggaard at Zava
 
@@ -33,7 +33,7 @@ By the end of this lab, you'll be able to:
 
 | Track | The ask | Connectors and tools | Time |
 |---|---|---|---|
-| [Finance](03-finance.md) | Kristian, who runs the Zava investment portfolio: "Should we buy more Litware? Bring a recommendation to Monday's investment committee." | LSEG, FactSet, Moody's · equity research and company analysis skills · Excel, Word | ~18 min |
+| [Finance](03-finance.md) | Kristian, who runs the Zava investment portfolio: "Should we buy more Litware? Bring a recommendation to Monday's investment committee." | LSEG, FactSet, Moody's · equity research and company analysis skills · Copilot Chat, Copilot Cowork | ~20 min |
 | [Legal](04-legal.md) | Luc, Chief Underwriting Officer: "Can we sign Trey Research's AI underwriting contract on the 10th?" | Work IQ (email and Teams), iManage · Copilot Cowork | ~20 min |
 | [Productivity](05-productivity.md) | Pitch the Aurora rollout to all 400 Lakeshore Retail stores on Nov 20, with a CFO in the room and a competitor 20% cheaper. | Salesforce_Lab, Teams, Outlook · sales skills · Copilot Cowork | ~10 min (+ stretch) |
 | [Engineering](06-engineering.md) | One Sprint 24 item is at risk, and the customer's pilot expands on Monday. Who is it waiting on? | Jira, Confluence, GitHub_Lab, Rovo_Lab, Teams · sprint-to-slides skill · Copilot Cowork | ~15 min |
@@ -48,11 +48,11 @@ Some connectors index content into Microsoft 365 ahead of time; others call the 
 ### Skills, plugins and write actions
 
 - **Connector skills** package a partner's expertise, such as how sales teams prep a call or how analysts assess credit. Copilot loads a skill when your request needs it, so you get the partner's method as well as their data.
-- **Plugins** bundle a connector and its skills into one package that an admin deploys once. After that, they work across the Copilot experiences that support them.
+- **Plugins** are one package that an admin deploys once. A plugin can bundle connectors (data and tools), skills (the method) and agents (focused assistants you chat with directly). This lab focuses on connectors and skills.
 - **Write actions** let Copilot change things in the source system, such as logging a meeting on a Salesforce opportunity or saving a draft to a document matter. You see a confirmation first, and nothing changes until you approve it.
 
 > [!NOTE]
-> This lab runs in a demo tenant with fictional people and companies. Financial and legal outputs are for the exercise only. They aren't investment or legal advice.
+> This lab runs in a demo tenant with fictional people, companies and data. Financial and legal outputs are for the exercise only. They aren't investment or legal advice.
 
 ---
 
