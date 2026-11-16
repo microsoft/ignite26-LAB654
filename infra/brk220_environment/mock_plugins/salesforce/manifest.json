@@ -1,0 +1,42 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.29/MicrosoftTeams.schema.json",
+    "manifestVersion": "1.29",
+    "version": "1.0.2",
+    "id": "ac5c1ce6-4e71-4ec9-8f52-e984443721ed",
+    "developer": {
+        "name": "BRK220 demo",
+        "websiteUrl": "https://github.com/gim-home/3pcxp_evals",
+        "privacyUrl": "https://github.com/gim-home/3pcxp_evals",
+        "termsOfUseUrl": "https://github.com/gim-home/3pcxp_evals"
+    },
+    "name": {
+        "short": "Salesforce",
+        "full": "Salesforce"
+    },
+    "description": {
+        "short": "Connect to Salesforce through its MCP tools.",
+        "full": "Use Salesforce in Microsoft 365 Copilot to work with its connected MCP tools and services, with a renewal-prep skill that briefs you on a renewal and closes out its risks across Salesforce, Jira, Confluence and Microsoft 365. Responses may include AI-generated content; verify important information."
+    },
+    "icons": {
+        "color": "color.png",
+        "outline": "outline.png"
+    },
+    "accentColor": "#10A0E0",
+    "agentConnectors": [
+        {
+            "id": "4a772080-3e8e-4c61-b05e-693494006715",
+            "displayName": "Salesforce",
+            "description": "Use this tool to retrieve and work with Salesforce data through its connected MCP tools.",
+            "toolSource": {
+                "remoteMcpServer": {
+                    "mcpServerUrl": "https://northwind-salesforce.salmonstone-078b8962.eastus.azurecontainerapps.io/mcp"
+                }
+            }
+        }
+    ],
+    "agentSkills": [
+        {
+            "folder": "./skills/renewal-prep"
+        }
+    ]
+}

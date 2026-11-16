@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Manufactured DAs schema",
+  "title": "DAs",
+  "type": "array",
+  "uniqueItems": true,
+  "items": {
+    "$ref": "#/$defs/DA"
+  },
+  "$defs": {
+    "DA": {
+      "description": "The DA JSON Schema is designed to capture a DA, which is a collection of UPN and DARequests.",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "UPN": {
+          "description": "UPN",
+          "$ref": "#/$defs/MailNickNameOrEmail",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "DARequests": {
+          "description": "A list of DA request.",
+          "type": [
+            "array",
+            "null"
+          ],
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/DARequest"
+          }
+        }
+      },
+      "required": [
+        "UPN",
+        "DARequests"
+      ]
+    },
+    "DARequest": {
+      "description": "Represents a request of DA.",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "Name": {
+          "description": "An identifier for DA request name.",
+          "type": "string",
+          "minLength": 1
+        },
+        "ManifestId": {
+          "description": "Identifier of manifest id.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "ManifestLocation": {
+          "description": "Identifier of manifest location.",
+          "type": "string",
+          "pattern": "^(files|DAConfig)[/\\\\][^\\s]*\\.(zip|ZIP)$",
+          "minLength": 1
+        },
+        "ActionType": {
+          "description": "The type of DA request action.",
+          "type": "string",
+          "enum": [
+            "Install",
+            "Uninstall",
+            "Update"
+          ]
+        },
+        "Version": {
+          "description": "Optional DA package version.",
+          "type": "string",
+          "maxLength": 10
+        }
+      },
+      "required": [
+        "Name",
+        "ManifestId",
+        "ManifestLocation",
+        "ActionType"
+      ]
+    },
+    "MailNickNameOrEmail": {
+      "description": "User MailNickName or external full email address",
+      "type": "string",
+      "minLength": 1,
+      "oneOf": [
+        {
+          "pattern": "^[\\w\\-\\.]+$",
+          "not": {
+            "pattern": "@"
+          }
+        },
+        {
+          "pattern": "^[\\w\\-\\.]+@[\\w\\-\\.]+\\.[a-zA-Z]{2,}$"
+        }
+      ]
+    }
+  }
+}

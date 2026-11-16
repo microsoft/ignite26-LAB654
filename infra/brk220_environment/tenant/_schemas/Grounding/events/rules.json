@@ -1,0 +1,1122 @@
+{
+  "typeName": "events",
+  "rules": [
+    {
+      "ruleId": "ada3ee94-ecb8-4fb7-bfb1-94ce368d1083",
+      "name": "Unique Virtual Event IDs",
+      "description": "Each event must have a unique virtual EventId within the file \"events.config.json\"",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "unique": {
+          "var": "EventId",
+          "caseSensitive": true
+        }
+      },
+      "metadata": {
+        "field": "EventId",
+        "expression": "All values of 'EventId' must be unique"
+      },
+      "category": "Uniqueness",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "e5f04a6e-ac2e-4f7c-a729-336515801718",
+      "name": "StartDateTime Before EndDateTime",
+      "description": "Event StartDateTime must be before or equal to EndDateTime",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "and": [
+              {
+                "field": "StartDateTime",
+                "operator": "is_not_null",
+                "valueType": "string"
+              },
+              {
+                "field": "EndDateTime",
+                "operator": "is_not_null",
+                "valueType": "string"
+              }
+            ]
+          },
+          "then": {
+            "field": "EndDateTime",
+            "operator": ">=",
+            "valueType": "datetime",
+            "compareField": "StartDateTime"
+          }
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "IF ('StartDateTime' is_not_null) AND ('EndDateTime' is_not_null) THEN 'EndDateTime' >= 'StartDateTime'"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "53b44644-5fa9-403e-bac9-87990ccf7117",
+      "name": "Recurrence Range Start Before End",
+      "description": "When recurrence range type is 'endDate', StartDate must be before or equal to EndDate",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "and": [
+              {
+                "field": "Recurrence.RecurrenceRange.StartDate",
+                "operator": "is_not_null",
+                "valueType": "string"
+              },
+              {
+                "field": "Recurrence.RecurrenceRange.EndDate",
+                "operator": "is_not_null",
+                "valueType": "string"
+              }
+            ]
+          },
+          "then": {
+            "field": "Recurrence.RecurrenceRange.EndDate",
+            "operator": ">=",
+            "valueType": "datetime",
+            "compareField": "Recurrence.RecurrenceRange.StartDate"
+          }
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "IF ('Recurrence.RecurrenceRange.StartDate' is_not_null) AND ('Recurrence.RecurrenceRange.EndDate' is_not_null) THEN 'Recurrence.RecurrenceRange.EndDate' >= 'Recurrence.RecurrenceRange.StartDate'"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "8490a6b9-e4a1-4b93-9fa5-cacfbae59cfc",
+      "name": "Unique Placeholder IDs",
+      "description": "PlaceholderId must be unique within each event's Placeholders array",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "unique_by_group": {
+          "var": "Placeholders.PlaceholderId",
+          "groupBy": "EventId",
+          "caseSensitive": true
+        }
+      },
+      "metadata": {
+        "field": "Placeholders.PlaceholderId",
+        "expression": "All values of 'Placeholders.PlaceholderId' must be unique within each 'EventId'"
+      },
+      "category": "Uniqueness",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "aa768904-2cbe-4087-8b27-12b221553f12",
+      "name": "Placeholder ID Referenced in Body",
+      "description": "Placeholders referenced in event Body must exist in Placeholders array",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "events",
+          "sourceField": "Body",
+          "targetType": "events",
+          "targetField": "Placeholders.PlaceholderId",
+          "sourceExtractPattern": "\\{placeholder:([^}]+)\\}",
+          "sameItemLookup": true
+        }
+      },
+      "metadata": {
+        "field": "Body",
+        "expression": "For each 'Body' (extracted via pattern: \\{placeholder:([^}]+)\\}), a matching value must exist in 'Placeholders.PlaceholderId' within the same item"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "e238d8c9-d9fe-4b5f-ba00-25574afb48b2",
+      "name": "Attachment Files Must Exist",
+      "description": "All files referenced in Attachments must exist in the data package",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "fileExistence": {
+          "field": "Attachments",
+          "caseSensitive": true
+        }
+      },
+      "metadata": {
+        "field": "Attachments",
+        "expression": "All file paths in 'Attachments' must exist in the ZIP archive (case-sensitive)"
+      },
+      "category": "FileExistence",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "46b6cbc5-2936-4527-b24a-e3931a7b157c",
+      "name": "File share integrity check.",
+      "description": "Validate if file share links are valid: the FileId must exist in the files.config.json, and the FileOwner and SharedLinkId must match.",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "integrityCheck": {
+          "source": {
+            "arrayField": "Placeholders.HyperLinkContent",
+            "keyField": "FileId"
+          },
+          "target": {
+            "logicType": "or",
+            "conditions": [
+              {
+                "type": "array-exists",
+                "targetType": "files",
+                "keyField": "FileId",
+                "additionalConditions": [
+                  {
+                    "field": "FileSharedLinks.SharedLinkId",
+                    "operator": "contains",
+                    "isSourceFieldRef": true,
+                    "sourceField": "SharedLinkId",
+                    "useCurrentSourceItem": true
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "field": "Placeholders.HyperLinkContent.FileId",
+        "expression": "Each value from 'Placeholders.HyperLinkContent.FileId' must exists in 'undefined' with matching 'FileId' and FileSharedLinks.SharedLinkIdcontainscurrentItem.SharedLinkId"
+      },
+      "category": "IntegrityCheck",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "ba540ea5-a542-44c2-9cd7-d9431aa7e6c2",
+      "name": "Event Sender Must Exist in Users",
+      "description": "Event Senders must exist in Users",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "events",
+          "sourceField": "Sender",
+          "targetType": "users",
+          "targetField": "MailNickName"
+        }
+      },
+      "metadata": {
+        "field": "Sender",
+        "expression": "For each 'events.Sender', a matching 'users.MailNickName' must exist"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "7e3847ff-a5c5-49d7-b36c-8c4860812cda",
+      "name": "Event RequiredAttendees Must Exist in Users",
+      "description": "Event RequiredAttendees Must Exist in Users",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "events",
+          "sourceField": "RequiredAttendees.Email",
+          "targetType": "users",
+          "targetField": "MailNickName",
+          "sourceExtractPattern": "^([^@]+)$"
+        }
+      },
+      "metadata": {
+        "field": "RequiredAttendees.Email",
+        "expression": "For each 'events.RequiredAttendees.Email' (extracted via pattern: ^([^@]+)$), a matching 'users.MailNickName' must exist"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "07b3c5bd-509a-48ee-ac30-58febdfc6359",
+      "name": "Event OptionalAttendees must exist in Users",
+      "description": "Event OptionalAttendees must exist in Users",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "events",
+          "sourceField": "OptionalAttendees.Email",
+          "targetType": "users",
+          "targetField": "MailNickName",
+          "sourceExtractPattern": "^([^@]+)$"
+        }
+      },
+      "metadata": {
+        "field": "OptionalAttendees.Email",
+        "expression": "For each 'events.OptionalAttendees.Email' (extracted via pattern: ^([^@]+)$), a matching 'users.MailNickName' must exist"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "f5b8c9d1-4e2a-4c7f-9b3d-8a1e6f7c2b5e",
+      "name": "Attachment Files Size Limit",
+      "description": "Total size of all attachment files must be less than 3MB per event",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "sizeConstraint": {
+          "attachmentField": "Attachments",
+          "maxSizeBytes": 3145728,
+          "operator": "<"
+        }
+      },
+      "metadata": {
+        "field": "Attachments",
+        "expression": "Total size of 'Attachments' must be < 3.0MB"
+      },
+      "category": "SizeConstraint",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "8e1d23b5-48db-4ccd-bb91-9d037d7237ca",
+      "name": "AllDayEvent TimeZone Check",
+      "description": "Make sure: if IsAllDay = true, then both TimeZone field in events.config.json and the corresponding Sender's MailboxSettings.WorkingHours.TimeZone in users.config.json must exist and have the same value",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "all-day-event-timezone-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'all-day-event-timezone-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "b2e267c4-7be8-d784-f620-e51b7bdb6472",
+      "name": "Unsupported property 'OptionalAttendees.Attended'",
+      "description": "'OptionalAttendees.Attended' is an unsupported legacy property and should not be used.",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "OptionalAttendees.Attended",
+            "operator": "is_not_null"
+          },
+          "then": {
+            "field": "OptionalAttendees.Attended",
+            "operator": "is_null"
+          }
+        }
+      },
+      "metadata": {
+        "field": "OptionalAttendees.Attended",
+        "expression": "WARN when 'OptionalAttendees.Attended' is present"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "790005a7-27d3-2a5b-a9a1-93aba6f16356",
+      "name": "Unsupported property 'OptionalAttendees.Type'",
+      "description": "'OptionalAttendees.Type' is an unsupported legacy property and should not be used.",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "OptionalAttendees.Type",
+            "operator": "is_not_null"
+          },
+          "then": {
+            "field": "OptionalAttendees.Type",
+            "operator": "is_null"
+          }
+        }
+      },
+      "metadata": {
+        "field": "OptionalAttendees.Type",
+        "expression": "WARN when 'OptionalAttendees.Type' is present"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "df48ed78-891b-653f-b868-53089fb09fb8",
+      "name": "Unsupported property 'OptionalAttendees.MailNickName'",
+      "description": "'OptionalAttendees.MailNickName' is an unsupported legacy property. Use 'Email' instead.",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "OptionalAttendees.MailNickName",
+            "operator": "is_not_null"
+          },
+          "then": {
+            "field": "OptionalAttendees.MailNickName",
+            "operator": "is_null"
+          }
+        }
+      },
+      "metadata": {
+        "field": "OptionalAttendees.MailNickName",
+        "expression": "WARN when 'OptionalAttendees.MailNickName' is present"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "1c89d1bd-2c31-e9b2-43c8-f7961bd002a3",
+      "name": "Unsupported property 'RequiredAttendees.Attended'",
+      "description": "'RequiredAttendees.Attended' is an unsupported legacy property and should not be used.",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "RequiredAttendees.Attended",
+            "operator": "is_not_null"
+          },
+          "then": {
+            "field": "RequiredAttendees.Attended",
+            "operator": "is_null"
+          }
+        }
+      },
+      "metadata": {
+        "field": "RequiredAttendees.Attended",
+        "expression": "WARN when 'RequiredAttendees.Attended' is present"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "6fdbacc5-b017-5632-7519-fccff39b8aba",
+      "name": "Unsupported property 'RequiredAttendees.Type'",
+      "description": "'RequiredAttendees.Type' is an unsupported legacy property and should not be used.",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "RequiredAttendees.Type",
+            "operator": "is_not_null"
+          },
+          "then": {
+            "field": "RequiredAttendees.Type",
+            "operator": "is_null"
+          }
+        }
+      },
+      "metadata": {
+        "field": "RequiredAttendees.Type",
+        "expression": "WARN when 'RequiredAttendees.Type' is present"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "f40bc0ed-be9a-642e-294e-f8cbda64c743",
+      "name": "Unsupported property 'RequiredAttendees.MailNickName'",
+      "description": "'RequiredAttendees.MailNickName' is an unsupported legacy property. Use 'Email' instead.",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "RequiredAttendees.MailNickName",
+            "operator": "is_not_null"
+          },
+          "then": {
+            "field": "RequiredAttendees.MailNickName",
+            "operator": "is_null"
+          }
+        }
+      },
+      "metadata": {
+        "field": "RequiredAttendees.MailNickName",
+        "expression": "WARN when 'RequiredAttendees.MailNickName' is present"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "270986fe-5bfb-b8d2-b620-29dd72083a23",
+      "name": "Unsupported property 'RequiredAttendeesAccepted'",
+      "description": "'RequiredAttendeesAccepted' is an unsupported legacy property and should not be used.",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "RequiredAttendeesAccepted",
+            "operator": "is_not_null"
+          },
+          "then": {
+            "field": "RequiredAttendeesAccepted",
+            "operator": "is_null"
+          }
+        }
+      },
+      "metadata": {
+        "field": "RequiredAttendeesAccepted",
+        "expression": "WARN when 'RequiredAttendeesAccepted' is present"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "155436cd-8fc6-3ec8-e8ae-968db73d4ccf",
+      "name": "Unsupported property 'Location'",
+      "description": "'Location' is an unsupported legacy property. Use 'Locations' or 'LocationsV2' instead.",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "Location",
+            "operator": "is_not_null"
+          },
+          "then": {
+            "field": "Location",
+            "operator": "is_null"
+          }
+        }
+      },
+      "metadata": {
+        "field": "Location",
+        "expression": "WARN when 'Location' is present"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "522ee08b-ca45-c3de-18a4-577346d53a70",
+      "name": "Unsupported property 'Organizer'",
+      "description": "'Organizer' is an unsupported legacy property. Use 'Sender' instead.",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "Organizer",
+            "operator": "is_not_null"
+          },
+          "then": {
+            "field": "Organizer",
+            "operator": "is_null"
+          }
+        }
+      },
+      "metadata": {
+        "field": "Organizer",
+        "expression": "WARN when 'Organizer' is present"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "541784fe-ebe2-f016-2cd6-40fb05f7c892",
+      "name": "Unsupported property 'OnlineMeetingUrl'",
+      "description": "'OnlineMeetingUrl' is an unsupported legacy property and should not be used.",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "OnlineMeetingUrl",
+            "operator": "is_not_null"
+          },
+          "then": {
+            "field": "OnlineMeetingUrl",
+            "operator": "is_null"
+          }
+        }
+      },
+      "metadata": {
+        "field": "OnlineMeetingUrl",
+        "expression": "WARN when 'OnlineMeetingUrl' is present"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "b034a917-63b0-6a11-bc00-23a69bcfd396",
+      "name": "Unsupported property 'Id'",
+      "description": "'Id' is an unsupported legacy property. Use 'EventId' instead.",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "Id",
+            "operator": "is_not_null"
+          },
+          "then": {
+            "field": "Id",
+            "operator": "is_null"
+          }
+        }
+      },
+      "metadata": {
+        "field": "Id",
+        "expression": "WARN when 'Id' is present"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "bfbb7796-422b-6d4b-733b-6fa259e60551",
+      "name": "Unsupported property 'Attendees'",
+      "description": "'Attendees' is an unsupported legacy property. Use 'RequiredAttendees' or 'OptionalAttendees' instead.",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "Attendees",
+            "operator": "is_not_null"
+          },
+          "then": {
+            "field": "Attendees",
+            "operator": "is_null"
+          }
+        }
+      },
+      "metadata": {
+        "field": "Attendees",
+        "expression": "WARN when 'Attendees' is present"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "bfb5f93a-0058-580b-2211-8956fb787a5c",
+      "name": "Unsupported property 'subject'",
+      "description": "'subject' is an unsupported legacy property. Use 'Subject' instead.",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "subject",
+            "operator": "is_not_null"
+          },
+          "then": {
+            "field": "subject",
+            "operator": "is_null"
+          }
+        }
+      },
+      "metadata": {
+        "field": "subject",
+        "expression": "WARN when 'subject' is present"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "729db51d-7a12-efc8-740e-2fba2eb756ae",
+      "name": "Unsupported property 'startUtc'",
+      "description": "'startUtc' is an unsupported legacy property. Use 'StartDateTime' instead.",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "startUtc",
+            "operator": "is_not_null"
+          },
+          "then": {
+            "field": "startUtc",
+            "operator": "is_null"
+          }
+        }
+      },
+      "metadata": {
+        "field": "startUtc",
+        "expression": "WARN when 'startUtc' is present"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "f76212ff-a17a-e5bd-7189-3b387f14c7f5",
+      "name": "Unsupported property 'seriesId'",
+      "description": "'seriesId' is an unsupported legacy property and should not be used.",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "seriesId",
+            "operator": "is_not_null"
+          },
+          "then": {
+            "field": "seriesId",
+            "operator": "is_null"
+          }
+        }
+      },
+      "metadata": {
+        "field": "seriesId",
+        "expression": "WARN when 'seriesId' is present"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "c877efb3-c45e-d56c-22e4-19df701db0ea",
+      "name": "Unsupported property 'ResponseRequested'",
+      "description": "'ResponseRequested' is an unsupported legacy property and should not be used.",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "ResponseRequested",
+            "operator": "is_not_null"
+          },
+          "then": {
+            "field": "ResponseRequested",
+            "operator": "is_null"
+          }
+        }
+      },
+      "metadata": {
+        "field": "ResponseRequested",
+        "expression": "WARN when 'ResponseRequested' is present"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "3282ad27-08db-a399-2d6e-7e7bcf233eb8",
+      "name": "Unsupported property 'recurring'",
+      "description": "'recurring' is an unsupported legacy property. Use 'Recurrence' instead.",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "recurring",
+            "operator": "is_not_null"
+          },
+          "then": {
+            "field": "recurring",
+            "operator": "is_null"
+          }
+        }
+      },
+      "metadata": {
+        "field": "recurring",
+        "expression": "WARN when 'recurring' is present"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "2f616a0e-7b96-247a-6810-632f1f358bce",
+      "name": "Unsupported property 'endUtc'",
+      "description": "'endUtc' is an unsupported legacy property. Use 'EndDateTime' instead.",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "endUtc",
+            "operator": "is_not_null"
+          },
+          "then": {
+            "field": "endUtc",
+            "operator": "is_null"
+          }
+        }
+      },
+      "metadata": {
+        "field": "endUtc",
+        "expression": "WARN when 'endUtc' is present"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "23ccad68-3825-644a-f567-c9145d282186",
+      "name": "Unsupported property 'boundaryCase'",
+      "description": "'boundaryCase' is an unsupported legacy property and should not be used.",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "boundaryCase",
+            "operator": "is_not_null"
+          },
+          "then": {
+            "field": "boundaryCase",
+            "operator": "is_null"
+          }
+        }
+      },
+      "metadata": {
+        "field": "boundaryCase",
+        "expression": "WARN when 'boundaryCase' is present"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "3c9af7e7-a742-12ea-a773-c3d80b9d22a3",
+      "name": "Unsupported property 'typeOfEntity'",
+      "description": "'typeOfEntity' is an unsupported legacy property and should not be used.",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "typeOfEntity",
+            "operator": "is_not_null"
+          },
+          "then": {
+            "field": "typeOfEntity",
+            "operator": "is_null"
+          }
+        }
+      },
+      "metadata": {
+        "field": "typeOfEntity",
+        "expression": "WARN when 'typeOfEntity' is present"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "fcf03e9e-0923-1fe7-e8e3-e03638f3d2f1",
+      "name": "Unsupported property 'Sender_Email'",
+      "description": "'Sender_Email' is an unsupported legacy property and should not be used.",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "Sender_Email",
+            "operator": "is_not_null"
+          },
+          "then": {
+            "field": "Sender_Email",
+            "operator": "is_null"
+          }
+        }
+      },
+      "metadata": {
+        "field": "Sender_Email",
+        "expression": "WARN when 'Sender_Email' is present"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "3cbafd8c-2f3b-0a8d-81f8-237ff53aa053",
+      "name": "Unsupported property 'Start'",
+      "description": "'Start' is an unsupported legacy property. Use 'StartDateTime' instead.",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "Start",
+            "operator": "is_not_null"
+          },
+          "then": {
+            "field": "Start",
+            "operator": "is_null"
+          }
+        }
+      },
+      "metadata": {
+        "field": "Start",
+        "expression": "WARN when 'Start' is present"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "4584121d-640f-88c7-699a-a924116255da",
+      "name": "Unsupported property 'Owner'",
+      "description": "'Owner' is an unsupported legacy property and should not be used.",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "Owner",
+            "operator": "is_not_null"
+          },
+          "then": {
+            "field": "Owner",
+            "operator": "is_null"
+          }
+        }
+      },
+      "metadata": {
+        "field": "Owner",
+        "expression": "WARN when 'Owner' is present"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "a5ac4107-a885-c2b4-8f74-aca0452a09c3",
+      "name": "Unsupported property 'IsOnline'",
+      "description": "'IsOnline' is an unsupported legacy property. Use 'IsOnlineMeeting' instead.",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "IsOnline",
+            "operator": "is_not_null"
+          },
+          "then": {
+            "field": "IsOnline",
+            "operator": "is_null"
+          }
+        }
+      },
+      "metadata": {
+        "field": "IsOnline",
+        "expression": "WARN when 'IsOnline' is present"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "41bf2c72-8693-bd04-b7f7-7e07e85cb4eb",
+      "name": "Unsupported property 'End'",
+      "description": "'End' is an unsupported legacy property. Use 'EndDateTime' instead.",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "End",
+            "operator": "is_not_null"
+          },
+          "then": {
+            "field": "End",
+            "operator": "is_null"
+          }
+        }
+      },
+      "metadata": {
+        "field": "End",
+        "expression": "WARN when 'End' is present"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "4280c000-5172-934e-85a8-e66c795790d3",
+      "name": "Unsupported property 'MailNickName'",
+      "description": "'MailNickName' is an unsupported legacy property and should not be used.",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "MailNickName",
+            "operator": "is_not_null"
+          },
+          "then": {
+            "field": "MailNickName",
+            "operator": "is_null"
+          }
+        }
+      },
+      "metadata": {
+        "field": "MailNickName",
+        "expression": "WARN when 'MailNickName' is present"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "318a2089-f98d-dc0d-f44f-08231a72798e",
+      "name": "Unsupported property 'IsReminderSet'",
+      "description": "'IsReminderSet' is an unsupported legacy property and should not be used.",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "IsReminderSet",
+            "operator": "is_not_null"
+          },
+          "then": {
+            "field": "IsReminderSet",
+            "operator": "is_null"
+          }
+        }
+      },
+      "metadata": {
+        "field": "IsReminderSet",
+        "expression": "WARN when 'IsReminderSet' is present"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "d8c66df2-3554-298b-7eda-bd13acfb92b1",
+      "name": "Unsupported property 'IsOrganizer'",
+      "description": "'IsOrganizer' is an unsupported legacy property and should not be used.",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "IsOrganizer",
+            "operator": "is_not_null"
+          },
+          "then": {
+            "field": "IsOrganizer",
+            "operator": "is_null"
+          }
+        }
+      },
+      "metadata": {
+        "field": "IsOrganizer",
+        "expression": "WARN when 'IsOrganizer' is present"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "ba09024c-bd4b-b065-1383-ac4ddc75bf1f",
+      "name": "Unsupported property 'IsCancelled'",
+      "description": "'IsCancelled' is an unsupported legacy property and should not be used.",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "IsCancelled",
+            "operator": "is_not_null"
+          },
+          "then": {
+            "field": "IsCancelled",
+            "operator": "is_null"
+          }
+        }
+      },
+      "metadata": {
+        "field": "IsCancelled",
+        "expression": "WARN when 'IsCancelled' is present"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "94a2dd42-6c36-e347-a883-de0168723e59",
+      "name": "Unsupported property 'type'",
+      "description": "'type' is an unsupported legacy property and should not be used.",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "type",
+            "operator": "is_not_null"
+          },
+          "then": {
+            "field": "type",
+            "operator": "is_null"
+          }
+        }
+      },
+      "metadata": {
+        "field": "type",
+        "expression": "WARN when 'type' is present"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "f171d185-78b3-4ccd-a0cf-8602a721ba36",
+      "name": "Event attachment must not be empty",
+      "description": "Each file referenced in an event's Attachments array must be non-empty (zero-byte attachments are not allowed).",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "event-attachment-empty-content-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "Attachments",
+        "expression": "Execute custom validator 'event-attachment-empty-content-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "43909d23-0272-2209-b1f9-05bf16bf24d0",
+      "name": "Unsupported properties are detected in grounding data",
+      "description": "Report unsupported properties that are not declared by the schema definition used for validation",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {},
+      "metadata": {
+        "expression": "All properties must be declared by the selected schema version",
+        "field": ""
+      },
+      "category": "UnsupportedProperty",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "48d61a07-75ae-4f69-822b-f3b2bb5dc201",
+      "name": "Recurring Event Date Consistency Validation Within Series Range",
+      "description": "Invalid scenario: when a recurring event's StartDateTime falls before the recurrence start date or after the final occurrence of a numbered recurrence series.",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "calendar-event-recurrence"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'calendar-event-recurrence'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "595d157d-c631-46b1-91a9-1e639b723529",
+      "name": "Event participants shouldn't be a shared mailbox",
+      "description": "Event participants shouldn't be a shared mailbox",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "event-participants-user-reference-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'event-participants-user-reference-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    }
+  ],
+  "jsonLogicVersion": "2.0"
+}

@@ -1,0 +1,596 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Manufactured Emails schema",
+  "title": "Emails",
+  "type": "array",
+  "uniqueItems": true,
+  "items": {
+    "$ref": "#/$defs/Email"
+  },
+  "$defs": {
+    "Email": {
+      "description": "The Email JSON Schema is structured to represent an Email, capturing key information required for managing it.",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "Attachments": {
+          "description": "A list of file attachments included in the email.",
+          "type": [
+            "array",
+            "null"
+          ],
+          "uniqueItems": true,
+          "items": {
+            "description": "Attachments should be placed in the folder \"files\".",
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^files(/[^%\\\\:*?\"<>|\\x00-\\x1f/]+)+$"
+          }
+        },
+        "BccRecipients": {
+          "description": "List of Bcc recipients of the email.",
+          "type": [
+            "array",
+            "null"
+          ],
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/MailRecipient"
+          }
+        },
+        "Body": {
+          "description": "The body of the email. Each email contains relevant text reflecting the conversation's progression.",
+          "type": "string",
+          "minLength": 0
+        },
+        "CcRecipients": {
+          "description": "List of Cc recipients of the email.",
+          "type": [
+            "array",
+            "null"
+          ],
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/MailRecipient"
+          }
+        },
+        "EmailAction": {
+          "description": "Represents the interaction with the email.",
+          "enum": [
+            "Send",
+            "Reply",
+            "ReplyAll",
+            "Forward"
+          ]
+        },
+        "EmailId": {
+          "description": "An identifier for each email in the thread, useful for tracking and reference.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "ReferenceEmailId": {
+          "description": "The 'EmailId' of the email this message is replying to or forwarding, useful for tracking and reference.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 0
+        },
+        "Sender": {
+          "description": "The MailNickName address of the person who sent the email.",
+          "type": "string",
+          "minLength": 1
+        },
+        "Subject": {
+          "description": "The subject of the email. The reply and forward emails have 'RE:' and 'FW:' prefixes to indicate their type.",
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 255
+        },
+        "Timestamp": {
+          "description": "The date and time the email was sent. This follows the ISO 8601 pattern.",
+          "type": "string",
+          "pattern": "^[1-9][0-9]{3}-(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9]|3[0-1])T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+        },
+        "ToRecipients": {
+          "description": "List of To recipients of the email.",
+          "type": [
+            "array",
+            "null"
+          ],
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/MailRecipient"
+          }
+        },
+        "Folder": {
+          "description": "The folder in which the email is stored by the sender. Can be a nested folder path separated by '/'.",
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[\\w\\s-]+(\\/[\\w\\s-]+)*$"
+        },
+        "Importance": {
+          "description": "The importance of the email. The possible values are: Low, Normal, and High.",
+          "enum": [
+            "Low",
+            "Normal",
+            "High"
+          ]
+        },
+        "Flag": {
+          "description": "The flag value that indicates the status for follow-up for an item. Possible values are NotFlagged, Complete, and Flagged.",
+          "enum": [
+            "NotFlagged",
+            "Complete",
+            "Flagged"
+          ]
+        },
+        "IsDraft": {
+          "description": "Indicates whether the email is a draft.",
+          "type": "boolean"
+        },
+        "TypeOfImpersonation": {
+          "description": "The type of impersonation used in the email. Used in conjunction with 'From'. The possible values are: SendAs, and SendOnBehalf.",
+          "enum": [
+            "SendAs",
+            "SendOnBehalf",
+            "FullAccess"
+          ]
+        },
+        "From": {
+          "description": "The MailNickName address of the person who is impersonating the Sender of the email. Used in conjunction with 'TypeOfImpersonation'.",
+          "type": "string",
+          "minLength": 1
+        },
+        "BodyType": {
+          "description": "The type of the body content. Possible values are text and html.",
+          "enum": [
+            "html",
+            "text"
+          ]
+        },
+        "Placeholders": {
+          "description": "List of placeholders in the message content.",
+          "type": [
+            "array",
+            "null"
+          ],
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/Placeholder"
+          }
+        }
+      },
+      "required": [
+        "EmailAction",
+        "EmailId",
+        "Sender",
+        "Subject",
+        "Timestamp"
+      ],
+      "anyOf": [
+        {
+          "properties": {
+            "BccRecipients": {
+              "type": "array",
+              "minItems": 1
+            }
+          },
+          "required": [
+            "BccRecipients"
+          ]
+        },
+        {
+          "properties": {
+            "CcRecipients": {
+              "type": "array",
+              "minItems": 1
+            }
+          },
+          "required": [
+            "CcRecipients"
+          ]
+        },
+        {
+          "properties": {
+            "ToRecipients": {
+              "type": "array",
+              "minItems": 1
+            }
+          },
+          "required": [
+            "ToRecipients"
+          ]
+        }
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "ReferenceEmailId": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "ReferenceEmailId"
+            ]
+          },
+          "then": {
+            "not": {
+              "properties": {
+                "EmailAction": {
+                  "const": "Send"
+                }
+              },
+              "required": [
+                "EmailAction"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "Placeholders": {
+                "type": "array",
+                "minItems": 1
+              }
+            },
+            "required": [
+              "Placeholders"
+            ]
+          },
+          "then": {
+            "properties": {
+              "BodyType": {
+                "const": "html"
+              }
+            },
+            "required": [
+              "BodyType"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "EmailAction": {
+                "enum": [
+                  "Reply",
+                  "ReplyAll",
+                  "Forward"
+                ]
+              }
+            },
+            "required": [
+              "EmailAction"
+            ]
+          },
+          "then": {
+            "properties": {
+              "ReferenceEmailId": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "ReferenceEmailId"
+            ]
+          }
+        }
+      ],
+      "dependentRequired": {
+        "From": [
+          "TypeOfImpersonation"
+        ],
+        "TypeOfImpersonation": [
+          "From"
+        ]
+      }
+    },
+    "MailRecipient": {
+      "description": "Recipient of the email.",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "Recipient": {
+          "$ref": "#/$defs/MailNickNameOrEmail"
+        },
+        "IsRead": {
+          "description": "Indicates whether the email has been read.",
+          "type": "boolean"
+        },
+        "Flag": {
+          "description": "The flag value that indicates the status for follow-up for an item. Possible values are NotFlagged, Complete, and Flagged.",
+          "enum": [
+            "NotFlagged",
+            "Complete",
+            "Flagged"
+          ]
+        },
+        "Folder": {
+          "description": "The folder in which the email is stored by the recipient. Can be a nested folder path separated by '/'.",
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[\\w\\s&()\\[\\]+\\-]+(?:\\/[\\w\\s&()\\[\\]+\\-]+)*$"
+        },
+        "IsGroup": {
+          "default": false,
+          "description": "Indicates whether the recipient is a group.",
+          "type": "boolean"
+        },
+        "Categories": {
+          "description": "List of categories (tags) assigned to this email by the recipient. Each category name must be 1–255 characters with no leading or trailing whitespace. Duplicate values are not allowed (case-insensitive). Maximum 20 categories per recipient.",
+          "type": [
+            "array",
+            "null"
+          ],
+          "maxItems": 20,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 255,
+            "pattern": "^\\S(.*\\S)?$"
+          }
+        }
+      },
+      "required": [
+        "Recipient"
+      ]
+    },
+    "Placeholder": {
+      "description": "Represents a placeholder in a message that can be of various types (Hyperlink, Attachment, Image, Mention, etc.)",
+      "type": "object",
+      "properties": {
+        "PlaceholderId": {
+          "description": "Unique identifier for the placeholder",
+          "type": "string",
+          "minLength": 1
+        },
+        "Type": {
+          "description": "The type of placeholder",
+          "type": "string",
+          "enum": [
+            "hyperlink",
+            "mention",
+            "image"
+          ]
+        },
+        "HyperLinkContent": {
+          "description": "Content when Type is 'hyperlink'",
+          "$ref": "#/$defs/HyperLinkContent"
+        },
+        "ImageContent": {
+          "description": "Content when Type is 'image'",
+          "$ref": "#/$defs/ImageContent"
+        }
+      },
+      "required": [
+        "PlaceholderId",
+        "Type"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "Type": {
+                "const": "hyperlink"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "HyperLinkContent"
+            ],
+            "properties": {
+              "HyperLinkContent": {
+                "not": {
+                  "anyOf": [
+                    {
+                      "required": [
+                        "UserIdentityType"
+                      ]
+                    },
+                    {
+                      "required": [
+                        "MentionId"
+                      ]
+                    },
+                    {
+                      "required": [
+                        "MentionIdentifier"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "Type": {
+                "const": "mention"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "HyperLinkContent"
+            ],
+            "properties": {
+              "HyperLinkContent": {
+                "not": {
+                  "anyOf": [
+                    {
+                      "required": [
+                        "HrefUrl"
+                      ]
+                    },
+                    {
+                      "required": [
+                        "FileId"
+                      ]
+                    },
+                    {
+                      "required": [
+                        "SharedLinkId"
+                      ]
+                    },
+                    {
+                      "required": [
+                        "FileOwner"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "Type": {
+                "const": "image"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "ImageContent"
+            ]
+          }
+        }
+      ]
+    },
+    "ImageContent": {
+      "description": "Content for an embedded image placeholder",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "FilePath": {
+          "description": "Path to the embedded image under the files folder.",
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^files(/[^%\\\\:*?\"<>|\\x00-\\x1f/]+)+$"
+        },
+        "AltText": {
+          "description": "Alternative text for the embedded image. Defaults to the file name when omitted.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "FilePath"
+      ]
+    },
+    "HyperLinkContent": {
+      "description": "Content for a hyperlink placeholder",
+      "type": "object",
+      "properties": {
+        "DisplayText": {
+          "description": "Text to display for the hyperlink",
+          "type": "string",
+          "minLength": 1
+        },
+        "HrefUrl": {
+          "description": "The URL that the hyperlink points to",
+          "type": "string"
+        },
+        "FileId": {
+          "description": "ID of a file if the hyperlink references a file",
+          "type": "string"
+        },
+        "SharedLinkId": {
+          "description": "ID of a shared link",
+          "type": "string"
+        },
+        "FileOwner": {
+          "description": "Owner of the file",
+          "type": "string"
+        },
+        "UserIdentityType": {
+          "description": "Type of user identity, e.g., 'aadUser' for Azure AD users",
+          "type": "string",
+          "enum": [
+            "aadUser"
+          ]
+        },
+        "MentionId": {
+          "description": "Unique identifier for the mention",
+          "type": "integer"
+        },
+        "MentionIdentifier": {
+          "description": "Identifier for the mention, typically for aadUser, it should be user's mailnickname",
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "DisplayText"
+      ],
+      "oneOf": [
+        {
+          "required": [
+            "HrefUrl"
+          ],
+          "not": {
+            "required": [
+              "FileId",
+              "SharedLinkId",
+              "FileOwner"
+            ]
+          }
+        },
+        {
+          "required": [
+            "FileId",
+            "SharedLinkId",
+            "FileOwner"
+          ],
+          "not": {
+            "required": [
+              "HrefUrl"
+            ]
+          }
+        },
+        {
+          "required": [
+            "UserIdentityType",
+            "MentionIdentifier",
+            "MentionId"
+          ],
+          "not": {
+            "required": [
+              "HrefUrl",
+              "FileId",
+              "SharedLinkId",
+              "FileOwner"
+            ]
+          }
+        }
+      ]
+    },
+    "MailNickNameOrEmail": {
+      "description": "User MailNickName or external full email address",
+      "type": "string",
+      "minLength": 1,
+      "oneOf": [
+        {
+          "pattern": "^[\\w\\-\\.]+$",
+          "not": {
+            "pattern": "@"
+          }
+        },
+        {
+          "pattern": "^[\\w\\-\\.]+@[\\w\\-\\.]+\\.[a-zA-Z]{2,}$"
+        }
+      ]
+    }
+  }
+}

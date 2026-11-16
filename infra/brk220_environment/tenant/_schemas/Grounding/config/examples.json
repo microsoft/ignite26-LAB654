@@ -1,0 +1,10 @@
+[
+  {
+    "name": "1.0.0",
+    "description": "Sample data for config version 1.0.0",
+    "content": "{\r\n  \"Tenant\": {\r\n    \"Ring\": \"Production\",\r\n    \"VirtualTenantName\": \"ContosoVirtualTenant\",\r\n    \"Tags\": \"ProjectAlpha,Testing\",\r\n    \"IsShared\": false\r\n  },\r\n  \"Group\": {\r\n    \"Count\": 3,\r\n    \"Name\": \"TestGroup\",\r\n    \"StartIndex\": 0\r\n  },\r\n  \"TenantCount\": 1,\r\n  \"SecurityGroupId\": \"sg-12345\"\r\n}",
+    "format": "Json",
+    "jsonContent": "{\r\n  \"Tenant\": {\r\n    \"Ring\": \"Production\",\r\n    \"VirtualTenantName\": \"ContosoVirtualTenant\",\r\n    \"Tags\": \"ProjectAlpha,Testing\",\r\n    \"IsShared\": false\r\n  },\r\n  \"Group\": {\r\n    \"Count\": 3,\r\n    \"Name\": \"TestGroup\",\r\n    \"StartIndex\": 0\r\n  },\r\n  \"TenantCount\": 1,\r\n  \"SecurityGroupId\": \"sg-12345\"\r\n}",
+    "version": "1.0.0"
+  }
+]

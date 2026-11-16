@@ -1,0 +1,28 @@
+[
+  {
+    "EventId": "brk220-event-qbr",
+    "Subject": "Contoso Ltd – Q3 QBR",
+    "Body": "Quarterly business review with Contoso Ltd: Q3 usage, support, 2027 plans and the renewal timeline.",
+    "StartDateTime": "2026-09-29T13:00:00Z",
+    "EndDateTime": "2026-09-29T13:45:00Z",
+    "Sender": "megan",
+    "TimeZone": "UTC",
+    "ShowAs": "busy",
+    "RequiredAttendees": [
+      {
+        "Email": "isaiah",
+        "Operation": "Accepted"
+      },
+      {
+        "Email": "lidia",
+        "Operation": "Accepted"
+      },
+      {
+        "Email": "daniel",
+        "Operation": "Accepted"
+      }
+    ],
+    "IsOnlineMeeting": true,
+    "OnlineMeetingProvider": "teamsForBusiness"
+  }
+]

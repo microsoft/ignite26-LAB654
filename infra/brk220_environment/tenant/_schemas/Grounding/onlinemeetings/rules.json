@@ -1,0 +1,697 @@
+{
+  "typeName": "onlinemeetings",
+  "rules": [
+    {
+      "ruleId": "09a7c12b-b1cf-4414-b682-fa83bfa8b486",
+      "name": "Unique OnlineMeetingId",
+      "description": "OnlineMeetingId must be unique. ",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "unique": {
+          "var": "OnlineMeetingId",
+          "caseSensitive": true
+        }
+      },
+      "metadata": {
+        "field": "OnlineMeetingId",
+        "expression": "All values of 'OnlineMeetingId' must be unique"
+      },
+      "category": "Uniqueness",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "0ec5242c-a36d-498a-830d-7108c4c2cbc3",
+      "name": "Online meeting StartDateTime should earlier than EndDateTime",
+      "description": "Online meeting StartDateTime should earlier than EndDateTime",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "and": [
+              {
+                "field": "StartDateTime",
+                "operator": "is_not_null",
+                "valueType": "string"
+              },
+              {
+                "field": "EndDateTime",
+                "operator": "is_not_null",
+                "valueType": "string"
+              }
+            ]
+          },
+          "then": {
+            "field": "EndDateTime",
+            "operator": ">",
+            "valueType": "datetime",
+            "compareField": "StartDateTime"
+          }
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "IF ('StartDateTime' is_not_null) AND ('EndDateTime' is_not_null) THEN 'EndDateTime' > 'StartDateTime'"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "ba3b47f8-6778-4b7e-ae9b-10b90b43d9fb",
+      "name": "Owner must be Event Sender",
+      "description": "Owner must be Event Sender",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "integrityCheck": {
+          "source": {
+            "field": "EventId"
+          },
+          "target": {
+            "logicType": "or",
+            "conditions": [
+              {
+                "type": "array-exists",
+                "targetType": "events",
+                "keyField": "EventId",
+                "additionalConditions": [
+                  {
+                    "field": "Sender",
+                    "operator": "==",
+                    "isSourceFieldRef": true,
+                    "sourceField": "Owner"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "field": "EventId",
+        "expression": "Each value from 'EventId' must exists in '' with matching 'EventId' and Sender==source.Owner"
+      },
+      "category": "IntegrityCheck",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "a1f22f68-2f38-47fc-9046-da40bd6719bd",
+      "name": "Internal Participants must exist in Users",
+      "description": "Internal Participants must exist in Users",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "onlinemeetings",
+          "sourceField": "Participants",
+          "targetType": "users",
+          "targetField": "MailNickName"
+        }
+      },
+      "metadata": {
+        "field": "Participants",
+        "expression": "For each 'onlinemeetings.Participants', a matching 'users.MailNickName' must exist"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "cea0cdda-5861-416e-9195-54e02335a984",
+      "name": "Transcript Files must exist",
+      "description": "All transcript files must exist in the data package",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "fileExistence": {
+          "field": "Transcripts.TranscriptFile",
+          "caseSensitive": false
+        }
+      },
+      "metadata": {
+        "field": "Transcripts.TranscriptFile",
+        "expression": "All file paths in 'Transcripts.TranscriptFile' must exist in the ZIP archive (case-insensitive)"
+      },
+      "category": "FileExistence",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "16b82cde-995c-4210-876c-3a0bd46f03d6",
+      "name": "EventId must exist in Events",
+      "description": "EventId must exist in Events",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "onlinemeetings",
+          "sourceField": "EventId",
+          "targetType": "events",
+          "targetField": "EventId"
+        }
+      },
+      "metadata": {
+        "field": "EventId",
+        "expression": "For each 'onlinemeetings.EventId', a matching 'events.EventId' must exist"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "f847d6e7-e12c-4de8-a04e-4097eaa7ed8c",
+      "name": "ChatId must exist in Chats",
+      "description": "ChatId must exist in Chats",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "onlinemeetings",
+          "sourceField": "ChatId",
+          "targetType": "chats",
+          "targetField": "ChatId"
+        }
+      },
+      "metadata": {
+        "field": "ChatId",
+        "expression": "For each 'onlinemeetings.ChatId', a matching 'chats.ChatId' must exist"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "fd42a2e2-db6c-4ea0-bd1e-6e2f7cf5798f",
+      "name": "Transcript custom validation. ",
+      "description": "1. Validate the speakers in script file exist in event group. \n2. Validate if current script file has a valid format. ",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "transcript-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'transcript-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "fc0fd770-784f-4bf7-812b-8c74592e0440",
+      "name": "ChannelId must exist in Channels",
+      "description": "ChannelId must exist in Channels",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "onlinemeetings",
+          "sourceField": "ChannelId",
+          "targetType": "channels",
+          "targetField": "ChannelId"
+        }
+      },
+      "metadata": {
+        "field": "ChannelId",
+        "expression": "For each 'onlinemeetings.ChannelId', a matching 'channels.ChannelId' must exist"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "3f3f6b13-1c69-4414-8a82-bdf7efb95485",
+      "name": "Only Event Meetings Can Be Ingested",
+      "description": "Only meetings represented as calendar events are eligible for ingestion. Non‑event meetings are ignored.",
+      "severity": "Info",
+      "scope": "SingleFile",
+      "logic": {
+        "conditionalAssertion": {
+          "if": {
+            "field": "OnlineMeetingId",
+            "operator": "is_not_null",
+            "valueType": "string",
+            "value": ""
+          },
+          "then": {
+            "field": "OnlineMeetingType",
+            "operator": "==",
+            "valueType": "string",
+            "value": "Event"
+          }
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "IF 'OnlineMeetingId' is_not_null THEN 'OnlineMeetingType' == Event"
+      },
+      "category": "ConditionalAssertion",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "93b3dc85-18a6-4c9b-a704-d2584c2bdc6b",
+      "name": "Referenced Event Must Be an Online Meeting",
+      "description": "Referenced Event Must Be an Online Meeting",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "integrityCheck": {
+          "source": {
+            "field": "EventId"
+          },
+          "target": {
+            "logicType": "and",
+            "conditions": [
+              {
+                "type": "array-exists",
+                "targetType": "events",
+                "keyField": "EventId",
+                "additionalConditions": [
+                  {
+                    "field": "IsOnlineMeeting",
+                    "operator": "==",
+                    "value": "true"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "field": "EventId",
+        "expression": "Each value from 'EventId' must exists in '' with matching 'EventId' and IsOnlineMeeting==true"
+      },
+      "category": "IntegrityCheck",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "37ae001f-4323-4a72-ab95-b3bcf398c769",
+      "name": "WebVTT Format Validation",
+      "description": "",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "webvtt-format-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'webvtt-format-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "4b9b8b5d-596e-4cf7-9b17-7a7212e52f02",
+      "name": "WebVTT: File must start with WEBVTT signature",
+      "description": "",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "webvtt-format-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'webvtt-format-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "a39c9437-c34d-425d-93f3-7c6aaaeab463",
+      "name": "WebVTT: Blank line required after signature",
+      "description": "",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "webvtt-format-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'webvtt-format-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "6099f4a2-8af3-41d0-bcf8-f89e6f195810",
+      "name": "WebVTT: No duplicate WEBVTT identifier",
+      "description": "",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "webvtt-format-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'webvtt-format-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "5c510e10-8b39-4acf-9990-92806879d893",
+      "name": "WebVTT: STYLE blocks must appear before cues",
+      "description": "",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "webvtt-format-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'webvtt-format-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "5a7603b7-6036-4132-bf8c-ae17a0954b09",
+      "name": "WebVTT: No timestamp arrow in NOTE blocks",
+      "description": "",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "webvtt-format-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'webvtt-format-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "4e56fcbf-ad97-4bab-9779-48d70759f40f",
+      "name": "WebVTT: No timestamp arrow in STYLE blocks",
+      "description": "",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "webvtt-format-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'webvtt-format-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "8dec5e02-ed33-41c7-9350-2dc1ee347af7",
+      "name": "WebVTT: Cue identifier must not be standalone",
+      "description": "",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "webvtt-format-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'webvtt-format-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "99f088bc-a5b6-4a91-8d06-83604f5b7768",
+      "name": "WebVTT: Cue ID must be followed by timestamp",
+      "description": "",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "webvtt-format-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'webvtt-format-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "9d4dac76-d92e-47d7-b26b-679fb1022c80",
+      "name": "WebVTT: Valid timestamp format required",
+      "description": "",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "webvtt-format-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'webvtt-format-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "b430ac37-3e4d-462b-a588-c6043f05d422",
+      "name": "WebVTT: Whitespace required around timestamp arrow",
+      "description": "",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "webvtt-format-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'webvtt-format-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "029fcb9c-a992-4a4f-8dee-5b3371205b40",
+      "name": "WebVTT: Start time must not equal end time",
+      "description": "",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "webvtt-format-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'webvtt-format-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "ccd5bb8f-d938-4874-a4f7-7a9bed0964ee",
+      "name": "WebVTT: End time must be greater than start time",
+      "description": "",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "webvtt-format-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'webvtt-format-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "315162e0-6001-47b7-a49b-54205d09046a",
+      "name": "WebVTT: Cues must be in non-decreasing order",
+      "description": "",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "webvtt-format-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'webvtt-format-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "9f642889-b047-40be-a486-18586b1e3184",
+      "name": "WebVTT: Blank line required between cues",
+      "description": "",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "webvtt-format-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'webvtt-format-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "a06f2be8-f953-4218-b634-b6ea727afdf4",
+      "name": "WebVTT: File must contain at least one cue",
+      "description": "",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "webvtt-format-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'webvtt-format-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "f3f338da-f536-4c0c-9395-2c3d9a9f09a4",
+      "name": "WebVTT: No unrecognizable blocks",
+      "description": "",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "webvtt-format-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'webvtt-format-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "8c1769ec-508f-41a8-871b-9e6ce02a6c33",
+      "name": "WebVTT: Valid cue settings required",
+      "description": "",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "webvtt-format-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'webvtt-format-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "eb977c40-b98a-42f8-a803-663e5fc1b0b8",
+      "name": "WebVTT: Valid cue text markup required",
+      "description": "",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "webvtt-format-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'webvtt-format-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "880fe3a5-f46d-4dd3-8eb7-95f9b9b51f86",
+      "name": "WebVTT: No blank lines inside cue text content",
+      "description": "",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "webvtt-format-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'webvtt-format-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "1166e39b-a079-4b9f-87fe-6d2e718f38f0",
+      "name": "Number of participants should not be larger than 15",
+      "description": "If the number of participants is larger than 15, we will emit warnings for existing eval sets and errors for new eval sets. ",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "online-meeting-participants-max-items-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'online-meeting-participants-max-items-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "47aa032a-332d-7ad0-8e76-626df988501e",
+      "name": "Unsupported properties are detected in grounding data",
+      "description": "Report unsupported properties that are not declared by the schema definition used for validation",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {},
+      "metadata": {
+        "expression": "All properties must be declared by the selected schema version",
+        "field": ""
+      },
+      "category": "UnsupportedProperty",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "cd652cfc-de8b-4182-ace8-3fe99e444e7d",
+      "name": "OnlineMeeting participants shouldn't be a shared mailbox",
+      "description": "OnlineMeeting participants shouldn't be a shared mailbox",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "online-meeting-participants-user-reference-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'online-meeting-participants-user-reference-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    }
+  ],
+  "jsonLogicVersion": "2.0"
+}

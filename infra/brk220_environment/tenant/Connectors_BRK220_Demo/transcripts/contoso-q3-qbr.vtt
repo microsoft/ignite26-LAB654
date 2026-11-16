@@ -1,0 +1,65 @@
+WEBVTT
+
+1
+00:00:04.000 --> 00:00:20.000
+<v Megan Bowen>Thanks for joining, everyone. Today: Q3 usage, support, your 2027 plans and the renewal timeline.</v>
+
+2
+00:00:50.000 --> 00:01:08.000
+<v Isaiah Langer>Usage is up 22% year over year. EU West now carries about 60% of your traffic, mostly the Frankfurt workloads.</v>
+
+3
+00:01:38.000 --> 00:02:06.000
+<v Lidia Holloway>The platform has been solid this year. My one big ask is identity. We're rolling out Entra conditional access across all 14 subsidiaries in the first half of next year.</v>
+
+4
+00:02:36.000 --> 00:03:01.000
+<v Lidia Holloway>For that we need SCIM provisioning and per-subsidiary conditional access from Northwind. Before we renew, I need a roadmap commitment for both, in writing.</v>
+
+5
+00:03:31.000 --> 00:03:45.000
+<v Megan Bowen>Understood. I'll take that to our Product team and come back with dates we can commit to.</v>
+
+6
+00:04:15.000 --> 00:04:45.000
+<v Daniel Okafor>On the renewal, I'll be direct. Our CFO has asked every vendor for flat or lower pricing next year. Market conditions are tough: our order volumes are down and energy costs are up.</v>
+
+7
+00:05:15.000 --> 00:05:32.000
+<v Daniel Okafor>And Fabrikam came in last month. They quoted about 15% under what we pay you today, on a three-year term.</v>
+
+8
+00:06:02.000 --> 00:06:16.000
+<v Megan Bowen>Is that like for like? Does it include EU data residency and a one-hour P1 response?</v>
+
+9
+00:06:46.000 --> 00:06:59.000
+<v Daniel Okafor>I'm not sure. I've only seen the headline number. But our CFO has seen it too.</v>
+
+10
+00:07:29.000 --> 00:07:54.000
+<v Lidia Holloway>For me, switching isn't attractive. Migrating 14 subsidiaries is a year of pain. But I need the platform to stay fast, and I need the SSO piece delivered.</v>
+
+11
+00:08:24.000 --> 00:08:42.000
+<v Daniel Okafor>Your contract allows up to a 7% uplift. Seven won't fly. Anything above flat needs a good story for our CFO.</v>
+
+12
+00:09:12.000 --> 00:09:36.000
+<v Megan Bowen>I won't promise a discount today. Let me come back in early October with options. What matters most to you: price, or the SSO commitment and service?</v>
+
+13
+00:10:06.000 --> 00:10:18.000
+<v Daniel Okafor>Both. Price gets it past my CFO. Lidia's SSO commitment gets it past IT.</v>
+
+14
+00:10:48.000 --> 00:11:04.000
+<v Lidia Holloway>And support responsiveness. If P1s sit without an owner, that's what will make me listen to Fabrikam.</v>
+
+15
+00:11:34.000 --> 00:11:58.000
+<v Megan Bowen>Noted. Next steps: I'll send pricing options early October and work on the SSO commitment, and Isaiah will keep the monthly EU usage report coming.</v>
+
+16
+00:12:28.000 --> 00:12:36.000
+<v Daniel Okafor>Sounds good. Thanks, Megan.</v>

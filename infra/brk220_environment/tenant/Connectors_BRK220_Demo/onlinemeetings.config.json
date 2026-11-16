@@ -1,0 +1,22 @@
+[
+  {
+    "OnlineMeetingId": "brk220-meeting-qbr",
+    "OnlineMeetingType": "Event",
+    "EventId": "brk220-event-qbr",
+    "StartDateTime": "2026-09-29T13:00:00Z",
+    "EndDateTime": "2026-09-29T13:45:00Z",
+    "Owner": "megan",
+    "Participants": [
+      "megan",
+      "isaiah",
+      "lidia",
+      "daniel"
+    ],
+    "Transcripts": [
+      {
+        "LanguageTag": "en",
+        "TranscriptFile": "transcripts/contoso-q3-qbr.vtt"
+      }
+    ]
+  }
+]

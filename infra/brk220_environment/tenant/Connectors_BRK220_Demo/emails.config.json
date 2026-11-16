@@ -1,0 +1,85 @@
+[
+  {
+    "EmailId": "brk220-email-001",
+    "EmailAction": "Send",
+    "Sender": "megan",
+    "ToRecipients": [
+      {
+        "Recipient": "daniel"
+      }
+    ],
+    "CcRecipients": [
+      {
+        "Recipient": "isaiah"
+      }
+    ],
+    "Subject": "Contoso renewal – pricing options",
+    "BodyType": "html",
+    "Timestamp": "2026-10-06T14:12:00Z",
+    "Body": "<p>Hi Daniel,</p><p>Thanks again for the candid conversation at the QBR. As promised, here is where I've landed on pricing for the FY27 renewal.</p><p>Your current order form allows an uplift of up to 7% at renewal. Given the market conditions you described, I'm proposing to <strong>cap the uplift at 5%</strong> for the renewal term. Everything else stays as it is today: all 14 subsidiaries, EU data residency and our 1-hour P1 response.</p><p>I'm also working with our Product team on the SSO roadmap commitment Lidia asked for, so we can put it in writing in the formal proposal.</p><p>Best,<br>Megan</p><p>Megan Bowen<br>Account Executive, Northwind Ltd</p>",
+    "BccRecipients": []
+  },
+  {
+    "EmailId": "brk220-email-002",
+    "EmailAction": "Reply",
+    "ReferenceEmailId": "brk220-email-001",
+    "Sender": "daniel",
+    "ToRecipients": [
+      {
+        "Recipient": "megan"
+      }
+    ],
+    "CcRecipients": [
+      {
+        "Recipient": "isaiah"
+      }
+    ],
+    "Subject": "RE: Contoso renewal – pricing options",
+    "BodyType": "html",
+    "Timestamp": "2026-10-07T08:40:00Z",
+    "Body": "<p>Hi Megan,</p><p>Thanks for this. I have to be honest: Fabrikam's offer is about 15% below what we pay you today, and our CFO has seen it. Any increase is a hard sell while our order volumes are down.</p><p>Is there more room here?</p><p>Daniel</p>",
+    "BccRecipients": []
+  },
+  {
+    "EmailId": "brk220-email-003",
+    "EmailAction": "Reply",
+    "ReferenceEmailId": "brk220-email-002",
+    "Sender": "megan",
+    "ToRecipients": [
+      {
+        "Recipient": "daniel"
+      }
+    ],
+    "CcRecipients": [
+      {
+        "Recipient": "isaiah"
+      }
+    ],
+    "Subject": "RE: Contoso renewal – pricing options",
+    "BodyType": "html",
+    "Timestamp": "2026-10-08T13:05:00Z",
+    "Body": "<p>Hi Daniel,</p><p>I understand the pressure. I can't match a discount, and I don't think a like-for-like comparison gets you there: Fabrikam's headline number doesn't include EU data residency or a 1-hour P1 response, and moving 14 subsidiaries is a long migration.</p><p>What I can do is hold the cap at <strong>5%</strong>, below the 7% in the contract, and put the SSO roadmap commitment in writing in the proposal. Can we agree on that?</p><p>Best,<br>Megan</p>",
+    "BccRecipients": []
+  },
+  {
+    "EmailId": "brk220-email-004",
+    "EmailAction": "Reply",
+    "ReferenceEmailId": "brk220-email-003",
+    "Sender": "daniel",
+    "ToRecipients": [
+      {
+        "Recipient": "megan"
+      }
+    ],
+    "CcRecipients": [
+      {
+        "Recipient": "isaiah"
+      }
+    ],
+    "Subject": "RE: Contoso renewal – pricing options",
+    "BodyType": "html",
+    "Timestamp": "2026-10-08T16:30:00Z",
+    "Body": "<p>Megan,</p><p>Agreed: we can work with a <strong>5% cap</strong> on the renewal uplift. Please send the formal renewal proposal before the end of November, with the SSO roadmap commitment in writing, and I'll take it to our CFO.</p><p>Daniel</p>",
+    "BccRecipients": []
+  }
+]

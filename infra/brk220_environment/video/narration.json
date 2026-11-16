@@ -1,0 +1,95 @@
+{
+  "segments": [
+    {
+      "range": [
+        5.0,
+        22.0
+      ],
+      "id": "intro",
+      "text": "Megan's Contoso renewal is seven weeks out, and the context is scattered across Salesforce, Jira, Confluence, and her own email, meetings and chats. She asks Copilot one question."
+    },
+    {
+      "range": [
+        22.0,
+        76.5
+      ],
+      "id": "working",
+      "text": "Copilot picks up her renewal-prep skill. It reads the contract and win-loss history from Salesforce, and live incidents from Jira through Rovo, both over MCP. The Confluence connector brings in the account page and the product roadmap, and Work IQ adds her email, the QBR, and the Teams escalation."
+    },
+    {
+      "range": [
+        76.5,
+        92.0
+      ],
+      "id": "answer",
+      "text": "In about a minute, she has one brief, and every line is cited."
+    },
+    {
+      "range": [
+        158.1,
+        168.7
+      ],
+      "id": "bottom",
+      "text": "The bottom line starts with her email: Daniel, the buyer, accepted a five percent cap."
+    },
+    {
+      "range": [
+        168.7,
+        178.3
+      ],
+      "id": "kpi",
+      "text": "The contract, two point four million a year, renewing December thirty-first, comes from the live Salesforce opportunity."
+    },
+    {
+      "range": [
+        178.3,
+        189.0
+      ],
+      "id": "incidents",
+      "text": "The incidents come live from Jira, through Rovo. Three are open, two are Highest priority, and the two EU tickets have no owner."
+    },
+    {
+      "range": [
+        189.0,
+        208.1
+      ],
+      "id": "service",
+      "text": "Now Copilot connects the dots. The CIO's escalation in Teams describes Frankfurt latency and failing exports, and that matches these exact unassigned Jira tickets. Neither system could tell Megan that on its own."
+    },
+    {
+      "range": [
+        208.1,
+        218.5
+      ],
+      "id": "price",
+      "text": "Here's the twist. Fabrikam is now offering twenty percent off. But Megan's own win-loss history in Salesforce says matching late lost Adatum, while holding price and fixing service kept Tailwind. So she holds the five percent cap."
+    },
+    {
+      "range": [
+        218.5,
+        226.5
+      ],
+      "id": "ask",
+      "text": "And the CIO's open SSO ask, with the dates Product has approved, comes from Confluence."
+    },
+    {
+      "range": [
+        255.3,
+        287.2
+      ],
+      "id": "conf1",
+      "text": "Here's that page in Confluence, synced into Microsoft 365 by the Confluence connector. The SSO commitment is still open, with no date."
+    },
+    {
+      "range": [
+        287.2,
+        307.0
+      ],
+      "id": "conf2",
+      "text": "And the product roadmap gives the dates Megan can commit to: SCIM by March thirty-first, and conditional access in Q2. Megan has the full picture. Next, she closes the gaps."
+    }
+  ],
+  "out": "BRK220_Demo1_Contoso_renewal_brief.mp4",
+  "voice": "en-US-AndrewNeural",
+  "rec": "rec3.webm"
+}

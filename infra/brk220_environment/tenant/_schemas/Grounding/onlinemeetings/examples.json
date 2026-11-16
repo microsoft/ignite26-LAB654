@@ -1,0 +1,18 @@
+[
+  {
+    "name": "1.0.0",
+    "description": "Sample data for onlinemeetings version 1.0.0",
+    "content": "[\r\n  {\r\n    \"OnlineMeetingId\": \"meeting-001\",\r\n    \"OnlineMeetingType\": \"Event\",\r\n    \"EventId\": \"event-001\",\r\n    \"StartDateTime\": \"2025-01-25T10:00:00Z\",\r\n    \"EndDateTime\": \"2025-01-25T11:00:00Z\",\r\n    \"Owner\": \"john.doe\",\r\n    \"Participants\": [\r\n      \"john.doe\",\r\n      \"jane.smith\",\r\n      \"bob.johnson\"\r\n    ],\r\n    \"Transcripts\": [\r\n      {\r\n        \"LanguageTag\": \"en\",\r\n        \"TranscriptFile\": \"meeting-001-transcript.vtt\"\r\n      }\r\n    ]\r\n  }\r\n]",
+    "format": "Json",
+    "jsonContent": "[\r\n  {\r\n    \"OnlineMeetingId\": \"meeting-001\",\r\n    \"OnlineMeetingType\": \"Event\",\r\n    \"EventId\": \"event-001\",\r\n    \"StartDateTime\": \"2025-01-25T10:00:00Z\",\r\n    \"EndDateTime\": \"2025-01-25T11:00:00Z\",\r\n    \"Owner\": \"john.doe\",\r\n    \"Participants\": [\r\n      \"john.doe\",\r\n      \"jane.smith\",\r\n      \"bob.johnson\"\r\n    ],\r\n    \"Transcripts\": [\r\n      {\r\n        \"LanguageTag\": \"en\",\r\n        \"TranscriptFile\": \"meeting-001-transcript.vtt\"\r\n      }\r\n    ]\r\n  }\r\n]",
+    "version": "1.0.0"
+  },
+  {
+    "name": "example_66d08ba8-c4af-4a90-8c57-c52423176386_0",
+    "description": "Sample data for onlinemeetings version 1.0.0",
+    "content": "[\r\n  {\r\n    \"OnlineMeetingId\": \"meeting-001\",\r\n    \"OnlineMeetingType\": \"Event\",\r\n    \"EventId\": \"event-001\",\r\n    \"StartDateTime\": \"2025-01-25T10:00:00Z\",\r\n    \"EndDateTime\": \"2025-01-25T11:00:00Z\",\r\n    \"Owner\": \"john.doe\",\r\n    \"Participants\": [\r\n      \"john.doe\",\r\n      \"jane.smith\",\r\n      \"bob.johnson\"\r\n    ],\r\n    \"Transcripts\": [\r\n      {\r\n        \"LanguageTag\": \"en\",\r\n        \"TranscriptFile\": \"transcripts/meeting-001-transcript.vtt\"\r\n      }\r\n    ]\r\n  }\r\n]",
+    "format": "Json",
+    "jsonContent": "[\r\n  {\r\n    \"OnlineMeetingId\": \"meeting-001\",\r\n    \"OnlineMeetingType\": \"Event\",\r\n    \"EventId\": \"event-001\",\r\n    \"StartDateTime\": \"2025-01-25T10:00:00Z\",\r\n    \"EndDateTime\": \"2025-01-25T11:00:00Z\",\r\n    \"Owner\": \"john.doe\",\r\n    \"Participants\": [\r\n      \"john.doe\",\r\n      \"jane.smith\",\r\n      \"bob.johnson\"\r\n    ],\r\n    \"Transcripts\": [\r\n      {\r\n        \"LanguageTag\": \"en\",\r\n        \"TranscriptFile\": \"transcripts/meeting-001-transcript.vtt\"\r\n      }\r\n    ]\r\n  }\r\n]",
+    "version": "1.0.0"
+  }
+]

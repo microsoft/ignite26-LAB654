@@ -1,0 +1,21 @@
+[
+  {
+    "UPN": "megan",
+    "DARequests": [
+      {
+        "Name": "Rovo",
+        "ManifestId": "d8ced556-1f27-401f-a76d-25c0fb6a08c8",
+        "ManifestLocation": "DAConfig/rovo_brk220.zip",
+        "ActionType": "Install",
+        "Version": "1.0.2"
+      },
+      {
+        "Name": "Salesforce",
+        "ManifestId": "ac5c1ce6-4e71-4ec9-8f52-e984443721ed",
+        "ManifestLocation": "DAConfig/salesforce_brk220.zip",
+        "ActionType": "Install",
+        "Version": "1.0.2"
+      }
+    ]
+  }
+]

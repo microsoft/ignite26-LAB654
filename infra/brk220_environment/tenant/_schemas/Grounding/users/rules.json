@@ -1,0 +1,306 @@
+{
+  "typeName": "users",
+  "rules": [
+    {
+      "ruleId": "a1b2c3d4-e5f6-4789-abcd-ef0123456789",
+      "name": "Unique MailNickName",
+      "description": "Each user must have a unique MailNickName within the file",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "unique": {
+          "var": "MailNickName",
+          "caseSensitive": false
+        }
+      },
+      "metadata": {
+        "field": "MailNickName",
+        "expression": "all MailNickName values must be unique"
+      },
+      "category": "Uniqueness",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "b2c3d4e5-f6a7-4890-bcde-f01234567890",
+      "name": "Manager Exists in Users",
+      "description": "Manager must reference an existing MailNickName in the same file",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "users",
+          "sourceField": "Manager",
+          "targetType": "users",
+          "targetField": "MailNickName"
+        }
+      },
+      "metadata": {
+        "field": "Manager",
+        "expression": "if Manager is not empty, it must exist in MailNickName list"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "c3d4e5f6-a7b8-4901-cdef-012345678901",
+      "name": "SendAs Permission Users Exist",
+      "description": "All users in MailboxPermission.SendAs must exist in the user list",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "users",
+          "sourceField": "MailboxPermissions.SendAs",
+          "targetType": "users",
+          "targetField": "MailNickName"
+        }
+      },
+      "metadata": {
+        "field": "MailboxPermissions.SendAs",
+        "expression": "all SendAs users must exist in MailNickName list"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "d4e5f6a7-b8c9-4012-def0-123456789012",
+      "name": "SendOnBehalf Permission Users Exist",
+      "description": "All users in MailboxPermission.SendOnBehalf must exist in the user list",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "crossTypeIntegrity": {
+          "sourceType": "users",
+          "sourceField": "MailboxPermissions.SendOnBehalf",
+          "targetType": "users",
+          "targetField": "MailNickName"
+        }
+      },
+      "metadata": {
+        "field": "MailboxPermissions.SendOnBehalf",
+        "expression": "all SendOnBehalf users must exist in MailNickName list"
+      },
+      "category": "ReferentialIntegrity",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "ae179227-5634-4d86-ad27-af93b0f66af3",
+      "name": "Manager chain circular check",
+      "description": "Validate that the manager relationship does not reference the same person as both employee and manager, and ensure there are no circular reporting chains.",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "circularDependency": {
+          "identifierField": "MailNickName",
+          "dependencyField": "Manager",
+          "allowSelfReference": false
+        }
+      },
+      "metadata": {
+        "expression": "No circular dependencies in 'Manager' referencing 'MailNickName' (self-reference not allowed)",
+        "field": "Manager"
+      },
+      "category": "CircularDependency",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "e5f6a7b8-c9d0-4123-ef01-234567890123",
+      "name": "MailNickName Reserved Words",
+      "description": "MailNickName must not be a reserved word (e.g., 'admin'). The check is case-insensitive.",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "users-mailnickname-reserved-words-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "MailNickName",
+        "expression": "Execute custom validator 'users-mailnickname-reserved-words-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "a4885248-4570-47fa-9645-a093e0b99712",
+      "name": "Copilot License number should smaller than 1000",
+      "description": "Copilot License number should smaller than 1000",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "users-copilot-license-limit-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'users-copilot-license-limit-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "f6a7b8c9-d0e1-4234-f012-345678901234",
+      "name": "WorkingHours TimeZone is a recognized identifier",
+      "description": "MailboxSettings.WorkingHours.TimeZone, when provided, must be a recognized IANA (e.g., 'America/Los_Angeles') or Windows (e.g., 'Pacific Standard Time') time zone identifier accepted by Microsoft Graph mailboxSettings.workingHours.timeZone.",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "users-workinghours-timezone-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "MailboxSettings.WorkingHours.TimeZone",
+        "expression": "Execute custom validator 'users-workinghours-timezone-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "23ffe701-299d-48e6-a45b-f8c162932916",
+      "name": "Mailbox Permission Users Exist",
+      "description": "All users in MailboxPermission.SendAs/SendOnBehalf/FullAccess must exist in the user list and shouldn't be a shared mailbox.",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "users-mailbox-permissions-user-reference-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'users-mailbox-permissions-user-reference-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "e7fff0b1-b73d-4d0e-83e4-6aff6eda1a31",
+      "name": "Manager cannot be a shared mailbox",
+      "description": "Manager cannot be a shared mailbox",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "users-manager-user-reference-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'users-manager-user-reference-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "e54987e2-6669-4074-9474-a7341ae4a28c",
+      "name": "Phone number should be unique",
+      "description": "Phone number should be unique",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {
+        "unique": {
+          "var": "PhoneNumber",
+          "caseSensitive": false
+        }
+      },
+      "metadata": {
+        "field": "PhoneNumber",
+        "expression": "All values of 'PhoneNumber' must be unique (case-insensitive)"
+      },
+      "category": "Uniqueness",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "499aa6a5-2cc7-41a1-99a6-2f7fed7bf610",
+      "name": "MSA users are referenced only by supported entities",
+      "description": "Users with IdentityType 'MSA' may only be referenced by emails, events, files, contacts, or the Manager field of another user.",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "users-msa-supported-entities-validator-v1"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'users-msa-supported-entities-validator-v1'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "7c139550-5408-c438-dcec-27b36758df74",
+      "name": "Unsupported properties are detected in grounding data",
+      "description": "Report unsupported properties that are not declared by the schema definition used for validation",
+      "severity": "Warning",
+      "scope": "SingleFile",
+      "logic": {},
+      "metadata": {
+        "expression": "All properties must be declared by the selected schema version",
+        "field": ""
+      },
+      "category": "UnsupportedProperty",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "a8968102-b030-46f8-b463-ae80401bc7a4",
+      "name": "User Working Hour EndTime should bigger than StartTime",
+      "description": "User Working Hour EndTime should bigger than StartTime",
+      "severity": "Error",
+      "scope": "SingleFile",
+      "logic": {
+        "customValidator": {
+          "validatorId": "users-working-hours"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Execute custom validator 'users-working-hours'"
+      },
+      "category": "CustomValidator",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "82cdb8d1-aabe-4400-99cf-a2dbe51b51fa",
+      "name": "User Photo File Must Exist",
+      "description": "The picture file must exist if present on the photo property of a user",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "fileExistence": {
+          "field": "Photo",
+          "caseSensitive": true
+        }
+      },
+      "metadata": {
+        "field": "Photo",
+        "expression": "All file paths in 'Photo' must exist in the ZIP archive (case-sensitive)"
+      },
+      "category": "FileExistence",
+      "isEnabled": true
+    },
+    {
+      "ruleId": "2d93cd34-a47d-4a21-8be8-46670ecd9f64",
+      "name": "User Photo Must Be Smaller than 4 MB",
+      "description": "Total size of 'Photo' must be < 4.0MB",
+      "severity": "Error",
+      "scope": "CrossFile",
+      "logic": {
+        "sizeConstraint": {
+          "attachmentField": "Photo",
+          "maxSizeBytes": 4194304,
+          "operator": "<"
+        }
+      },
+      "metadata": {
+        "field": "",
+        "expression": "Total size of 'Photo' must be < 4.0MB"
+      },
+      "category": "SizeConstraint",
+      "isEnabled": true
+    }
+  ],
+  "jsonLogicVersion": "2.0"
+}

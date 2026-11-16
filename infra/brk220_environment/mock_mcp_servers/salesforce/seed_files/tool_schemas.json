@@ -1,0 +1,184 @@
+[
+  {
+    "name": "describe",
+    "description": "Get full detail for one item by id. Always call this after discover and before any dispatch: a discover card carries no steps and no request schema. Accepts only ids returned by discover or describe. A recipe id ('sor_id') returns the recipe's ordered steps, inputs, and the operation ids each step calls. An operation id returns that endpoint's OpenAPI detail (method, parameters, request and response schemas, inlined) plus the recipes that use it. A returned 'path' is dispatch-ready: copy it into dispatch's 'url' unchanged. A recipe step's 'api' is 'METHOD path': use the METHOD as dispatch's 'method' and pass only the path as 'url'.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The qualified operation ID (e.g., 'setup.platform.named-credential.getNamedCredentials') or SOR ID (e.g., 'SlackSetupAssistant') to describe. Bare operation IDs are accepted as a fallback."
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "discover",
+    "description": "Search the library of Salesforce recipes: step-by-step procedures for an org's setup (permissions, security, integrations, features, org preferences, platform operations) and its business data (finding, summarizing, or updating records such as accounts, contacts, opportunities, cases, and activity). Always call this first for any request that inspects, changes, or operates Salesforce in this org, including requests that never name a Salesforce tool or API. Returns ranked recipes as lightweight cards ('sor_id', summary, step count, Setup links); pass a card's 'sor_id' as describe's 'id' for its steps and operation ids.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "Natural language description of what you want to do, as a full phrase. Matched by embedding similarity against a one-line summary of each recipe, so describe the kind of task, not the specific instance: name the outcome and the Salesforce objects or features involved. Leave out record, company, and person names, IDs, and field values; they are not indexed and pull results toward unrelated recipes. Describe what you want, not how to get it. Class names, operation ids, and API names are not indexed."
+        },
+        "limit": {
+          "type": "integer",
+          "description": "Maximum number of results to return.",
+          "minimum": 1,
+          "maximum": 50,
+          "default": 10
+        },
+        "domain": {
+          "type": "string",
+          "description": "Optional AIP-103 domain filter (e.g., 'platform', 'commerce', 'service'). Leave unset to search all domains."
+        },
+        "resultType": {
+          "type": "string",
+          "description": "Optional filter: 'endpoint' for individual API operations, 'sor' for multi-step Setup Operation Recipes. Leave unset to search both.",
+          "enum": [
+            "endpoint",
+            "sor"
+          ]
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "dispatch",
+    "description": "Execute an API call against this Salesforce org that changes state (POST, PUT, PATCH, DELETE), or any method when dispatch_readonly is unavailable. For GET requests use dispatch_readonly instead. Pass 'method' plus 'url' exactly as the 'path' from a describe result, or a recipe step's 'api', which is 'METHOD path'. Take the request body shape from describe's schema. When the user's persona is clear, pass 'userType': 'builder' if developing, administering, or customizing the org, else 'business'.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "The relative API path to call, copied from the 'path' of a describe result or a recipe step's 'api'. Examples: '/headless/invoke/platform/named-credential', '/services/data/v66.0/connect/communities'. Send it exactly as returned, including any version segment: no host, no edits, not an absolute https:// URL."
+        },
+        "method": {
+          "type": "string",
+          "description": "HTTP method to use: the method describe reports for this path (a recipe step's 'api' is 'METHOD path').",
+          "enum": [
+            "GET",
+            "POST",
+            "PUT",
+            "DELETE",
+            "PATCH"
+          ]
+        },
+        "headers": {
+          "type": "object",
+          "description": "Optional HTTP headers as key-value pairs. The call is already authenticated as the running user, so do not set an Authorization header.",
+          "additionalProperties": true
+        },
+        "body": {
+          "type": "object",
+          "description": "Optional request body (for POST, PUT, PATCH methods). Build it from the request schema describe returns for this operation. Do not invent field names."
+        },
+        "queryParams": {
+          "type": "object",
+          "description": "Optional query parameters as key-value pairs. Pass them here instead of appending a query string to 'url'.",
+          "additionalProperties": true
+        },
+        "userType": {
+          "type": "string",
+          "description": "Optional persona hint from the user's intent: 'builder' for a developer/admin building or customizing the org, 'business' for a business user performing an operational task. Advisory only.",
+          "enum": [
+            "builder",
+            "business"
+          ]
+        }
+      },
+      "required": [
+        "url",
+        "method"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "dispatch_readonly",
+    "description": "Execute a read-only (GET) API call against this Salesforce org. Prefer this over dispatch for every GET. Pass 'url' exactly as the 'path' from a describe result, or a recipe step's 'api', which is 'GET path'. Only GET is allowed; use dispatch for POST, PUT, PATCH, or DELETE.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "The relative API path to call, copied from the 'path' of a describe result or a recipe step's 'api'. Examples: '/headless/invoke/platform/named-credential', '/services/data/v66.0/connect/communities'. Send it exactly as returned, including any version segment: no host, no edits, not an absolute https:// URL."
+        },
+        "method": {
+          "type": "string",
+          "description": "HTTP method to use (restricted to GET for read-only access). Use the general dispatch tool for any other method.",
+          "enum": [
+            "GET"
+          ]
+        },
+        "headers": {
+          "type": "object",
+          "description": "Optional HTTP headers as key-value pairs. The call is already authenticated as the running user, so do not set an Authorization header.",
+          "additionalProperties": true
+        },
+        "body": {
+          "type": "object",
+          "description": "Optional request body (for POST, PUT, PATCH methods). Build it from the request schema describe returns for this operation. Do not invent field names."
+        },
+        "queryParams": {
+          "type": "object",
+          "description": "Optional query parameters as key-value pairs. Pass them here instead of appending a query string to 'url'.",
+          "additionalProperties": true
+        },
+        "userType": {
+          "type": "string",
+          "description": "Optional persona hint from the user's intent: 'builder' for a developer/admin building or customizing the org, 'business' for a business user performing an operational task. Advisory only.",
+          "enum": [
+            "builder",
+            "business"
+          ]
+        }
+      },
+      "required": [
+        "url",
+        "method"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "display_widget",
+    "description": "Render a Salesforce widget from a widget definition using the native widget renderer. In \"dynamic\" mode you author the widget definition yourself (a renderer envelope of tile blocks) and pass it as a top-level `widgetDefinition` (a sibling of resourceType). In \"salesforce_widget\" mode you name a pre-registered widget by its `widget_resource_uri` (`ui://widget/lightningType/c__<typeName>`, the identifier Core returns at runtime) and pass its `props`; the server builds the widget definition for you by resolving that resource URI via the Lightning Types connect API. Either way the server hands the widget definition to the renderer, which paints it natively. The resolved widget definition is also returned in structuredContent under `widgetDefinition` (an echo of what you authored in \"dynamic\" mode, the hydrated definition the server built in \"salesforce_widget\" mode). This tool follows the MCP Apps (MCP-UI) specification: the widget is delivered as a UI resource that the host mounts and renders. It only works in hosts that support the MCP Apps UI extension; in clients that do not negotiate MCP Apps support the widget will not render (nothing is painted), so only call it when the host supports MCP Apps UI.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "resourceType": {
+          "enum": [
+            "dynamic",
+            "salesforce_widget"
+          ],
+          "description": "Which render mode. \"dynamic\": author the widget definition yourself and pass it as `widgetDefinition`. \"salesforce_widget\": name a pre-registered widget by `widget_resource_uri` and pass its `props`; the server builds the widget definition. Required."
+        },
+        "widgetDefinition": {
+          "type": "object",
+          "description": "Used with resourceType \"dynamic\": the Mosaic widget definition you authored, as a declarative renderer envelope: { \"renderer\": { \"componentOverrides\": { \"$\": { \"type\": \"mosaic\", \"definition\": \"tile/mosaic\", \"children\": [ <tile blocks> ] } } } }. Each tile block is { \"definition\": \"tile/<name>\", \"attributes\": {...}, \"children\": [...] }."
+        },
+        "widget_resource_uri": {
+          "type": "string",
+          "description": "Used with resourceType \"salesforce_widget\": which pre-registered widget to render, addressed by its resource URI (`ui://widget/lightningType/c__<typeName>`, the identifier Core returns at runtime). The server builds that widget's definition from `props`."
+        },
+        "props": {
+          "type": "object",
+          "description": "Used with resourceType \"salesforce_widget\": the data bound into the chosen widget (its field values). Missing fields are skipped."
+        }
+      },
+      "required": [
+        "resourceType"
+      ]
+    }
+  }
+]
