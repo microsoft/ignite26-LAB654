@@ -64,7 +64,7 @@ Cowork uses only the plugins you turn on, so first turn on iManage_Lab.
 5. Turn on **iManage_Lab**.
 6. Turn off **Fabric IQ**, which is on by default. Leave every other plugin off.
 
-   ![The Added list in Cowork Customize, with iManage_Lab turned on and Fabric IQ, Moodys_Lab, Salesforce_Lab, LSEG_Lab, FactSet_Lab, Rovo_Lab and GitHub_Lab turned off](images/legal-cowork-customize.png)
+   ![The Added list in Cowork Customize, with iManage_Lab turned on and Fabric IQ, Moodys_Lab, SalesDesk_Lab, LSEG_Lab, FactSet_Lab, EngHub_Lab and GitHub_Lab turned off](images/legal-cowork-customize.png)
 
 7. In the left pane, select **New task**.
 
@@ -89,11 +89,8 @@ Cowork shows its work as it goes. Select **items complete** above the answer to 
 **What to look for:**
 
 - The steps show Cowork getting Hemanti's email from **Outlook** and reading the chat in **Teams**.
-- What's riding on it: a five-year, $14,750,000 deal for up to 4 million underwriting decisions a month, with the session on December 10.
-- Hemanti's ask: Zava must own the fine-tuned model weights. She calls it the #1 business priority.
-- Luc's ask: no more abrupt model retirements. The last vendor retired its model on two weeks' notice, and Zava couldn't quote for a week.
-- What's been decided: owning the model is a requirement before negotiating ("we don't go to the table without owning the fine-tuned model").
-- What's still open: your review of the draft against the playbook, and a prep call with Hemanti and Luc before December 10.
+- The catch-up covers both asks: **Hemanti** wants Zava to own the fine-tuned model, and **Luc** wants protection from sudden model changes.
+- It says what's decided and what's still open before December 10.
 - **Sources** under the answer link to Hemanti's email and the Teams chat.
 
 > [!TIP]
@@ -121,18 +118,8 @@ Before it changes the document, Cowork shows an **Edit file?** card with the num
 **What to look for:**
 
 - The answer says Trey Research's draft breaks all six hard stops in the playbook, and that each clause now has a short comment in the agreement, posted under your name.
-- A table maps each hard stop (Playbook §14) to the clauses that break it:
-
-  | Hard stop | Clauses |
-  |---|---|
-  | Zava solely owns outputs (§2.2) | 3.2 and 9.2 Output License |
-  | No cap on liability for fraud, wilful misconduct, gross negligence or the IP indemnity (§5.3) | 16.2 Aggregate Liability Cap and 16.3 Application |
-  | Trey Research fully liable for its subcontractors (§10.2) | 14.2 Subcontractor Liability |
-  | No mandatory arbitration (§12.3) | 22.2: JAMS arbitration in Austin |
-  | No class-action waiver (§12.4) | 22.4 |
-  | Data returned in open formats (§11.2) | 20.2 Data Return |
-
-- Serious gaps that aren't hard stops, including §9.1 (Trey Research owns every fine-tuned model: Hemanti's concern) and §7.4 (15 days' notice of model changes with no Zava approval: Luc's concern).
+- A table matching each hard stop in the playbook to the Trey Research clause that breaks it, with the playbook section cited.
+- Other serious gaps, including model ownership (Hemanti's concern) and model-change notice (Luc's concern). You'll fix both in Step 3.
 
 ![Cowork's answer: Trey's draft breaks all six hard stops in the playbook, with a table of each hard stop, the Trey clause that breaks it and the problem](images/legal-cowork-hard-stops.png)
 
@@ -154,10 +141,8 @@ This step can take a few minutes while Cowork reads the clauses and makes the ed
 **What to look for:**
 
 - The answer lists the tracked changes, each with a short comment citing the playbook:
-  - **§9.1:** Zava owns every model fine-tuned or retrained on its data, with its weights and parameters. Trey Research hands the weights over in a portable format, such as ONNX, and keeps its platform and base models.
-  - **§7.4:** the notice period goes from 15 to 60 days, it covers any model change, and Trey Research can't make a change without Zava's prior written approval.
-  - **§7.2 and §7.3:** "at any time" is deleted, so neither updates nor retirements can bypass §7.4.
-- Related clauses it left alone because you asked for minimal edits, such as §3.4 and §7.5, with a note on why you might clean them up.
+  - **Model ownership:** Zava owns models trained on its data, and Trey Research must hand them over.
+  - **Model changes:** longer notice and Zava's approval before any change or retirement.
 
 Now check the agreement itself:
 
@@ -185,8 +170,8 @@ The **Steps** list in the **Workspace** panel shows the plan: check the playbook
 
 When the sheet is ready, Cowork shows a **Create calendar event?** card. Nothing is sent until you select **Send**.
 
-1. Check the date and time. To change them, select **Pick custom time**.
-2. Check that **Attendees** shows **Hemanti Baishya** and **Luc Lacombe**, and that the agenda has five lines: your redline, change control, the six hard stops, the Colorado and New York gaps, and fallbacks and walk-away points.
+1. Check that **Attendees** shows **Hemanti Baishya** and **Luc Lacombe**, at a time that works. To change it, select **Pick custom time**.
+2. Check that the agenda covers your redline, the hard stops and the regulator gaps.
 3. Select **Send**.
 
    ![The Create calendar event card: a 30-minute slot, the title Trey Research – Dec 10 negotiation prep, Hemanti Baishya and Luc Lacombe as attendees, a numbered agenda, and the Cancel and Send buttons. The negotiation list Word document is below the card](images/legal-cowork-invite.png)
@@ -194,9 +179,7 @@ When the sheet is ready, Cowork shows a **Create calendar event?** card. Nothing
 **What to look for:**
 
 - A Word document named **Trey Research Negotiation List** under **Output** in the **Workspace** panel, saved to your OneDrive. Select it to open it next to the chat.
-- **1. Our redline:** your two positions, each with the playbook section and a fallback.
-- **2. Hard stops:** the six clauses with Trey Research's text and the playbook section. No fallback: a refusal goes to the General Counsel.
-- **3. Top regulator gaps (Colorado Division of Insurance, New York DFS):** each gap in the draft, what regulators expect, and Zava's ask from the playbook, such as bias testing, model documentation, audit rights and regulator inquiries.
+- The one-sheet covers your redline, the hard stops and the regulator gaps (Colorado and New York), with the playbook cited throughout.
 - A short summary of the invite. The invite can't carry an attachment, so Cowork suggests sharing the sheet with Luc and Hemanti before the call.
 
 ![The Trey Research Negotiation List for December 10, 2026, open next to the chat, with tables for the redline, the hard stops and the top regulator gaps](images/legal-cowork-negotiation-sheet.png)
@@ -240,8 +223,11 @@ Save the negotiation sheet to the Drafts folder of the Trey Research matter in i
 
 **What you take away:** Cowork did the reading, the redlining and the drafting across email, Teams and iManage. You stayed the lawyer: every change has a reason, and nothing went out without your approval.
 
-> [!NOTE]
-> Fictional parties adapted from the Harvey lab (MIT license). Not legal advice.
+## Key takeaways
+
+- **Matter information from your source of record.** Copilot works with your matter information right where it lives, in the matter management system you already use, while keeping privileged access in place.
+- **Up-to-date legal research in context.** Copilot researches what applies to the matter, such as what regulators expect, and grounds it in the matter's own documents.
+- **Drafts and redlines, ready for review.** Copilot drafts and redlines contracts with ease, so lawyers can review and decide.
 
 ## More connectors to try
 
@@ -249,8 +235,7 @@ The same pattern works with other connectors. Try them in your own tenant for si
 
 <table>
   <tr>
-    <td align="center"><img src="images/connectors/lexisnexis.svg" alt="LexisNexis" width="200"></td>
-    <td align="center"><img src="images/connectors/legal-data-hunter.svg" alt="Legal Data Hunter" width="200"></td>
+    <td align="center"><img src="images/connectors/harvey.svg" alt="Harvey" width="200"></td>
   </tr>
 </table>
 
@@ -263,3 +248,5 @@ Want to flag and redline the agreement from the Copilot pane in Word instead? Fo
 ---
 
 **Next:** [Bring your own app](07-custom-mcp.md), or try another track ([Finance](03-finance.md) · [Productivity](05-productivity.md) · [Engineering](06-engineering.md))
+
+<sub>Fictional parties adapted from HLAB (MIT license). Not legal advice.</sub>
