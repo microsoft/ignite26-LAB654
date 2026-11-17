@@ -59,10 +59,8 @@ Catch me up on the Trey Research deal in five bullets: what Hemanti and Luc aske
 
 **What to look for:**
 
-- Hemanti's ask: Zava must own the fine-tuned model ("we don't go to the table without it").
-- Luc's ask: no more abrupt model retirements. The last vendor gave two weeks' notice and Zava couldn't quote for a week.
-- What's still open: the draft meets neither ask. Trey Research owns models trained on Zava's data (§9.1), and can change or retire a model on 15 days' notice with no Zava veto (§§7.2–7.5).
-- Other gaps in the draft, such as the six-month liability cap, patent-only indemnity, no audit rights, and data returned only in Trey Research's format.
+- The catch-up covers both asks: **Hemanti** wants Zava to own the fine-tuned model, and **Luc** wants protection from sudden model changes.
+- It says what's still open, including where the draft falls short of both asks.
 - Each bullet links to Hemanti's email or the Teams chat.
 
 > [!TIP]
@@ -84,8 +82,7 @@ Which clauses in this agreement break the hard stops in our Zava AI Procurement 
 **What to look for:**
 
 - Scroll through the agreement as Copilot works. Comments appear on the clauses one by one, each tied to the playbook it's reading from iManage. If Word shows a **Done** bar at the bottom, select it when Copilot finishes.
-- Every one of the playbook's six hard stops is flagged: outputs Zava doesn't own, liability with nothing uncapped, capped subcontractor liability, data returned only in Trey Research's format, arbitration in Austin, and a class-action waiver.
-- Each short comment names the hard stop the clause breaks and cites the playbook section.
+- All six of the playbook's hard stops are flagged, each with a short comment that cites the playbook section.
 - Select a **Zava AI Procurement Playbook** citation in Copilot's answer to open the playbook in iManage and check the section yourself.
 
 > [!TIP]
@@ -102,8 +99,7 @@ Now redline this so we own the fine-tuned model and get 60 days' notice and our 
 **What to look for:**
 
 - Scroll through the agreement as Copilot works. Each change appears as a tracked change with a short comment. If Word shows a **Done** bar at the bottom, select it when Copilot finishes.
-- Zava owns the models fine-tuned on its data, including their weights, while Trey Research keeps its base technology (§9.1).
-- Trey Research can't change or retire a model without 60 days' notice and Zava's written approval, and continuing to use the platform doesn't count as approval (Section 7).
+- Tracked changes for both must-haves: Zava owns models trained on its data, and Trey Research needs longer notice and Zava's approval before any model change or retirement.
 - The comments from Step 2 are still there.
 
 > [!TIP]
@@ -122,12 +118,9 @@ Get me ready for the December 10 session with Trey Research. Make a one-sheet ne
 
 **What to look for:**
 
-- A one-page negotiation sheet in your OneDrive with:
-  - The six hard stops, each with the playbook section it breaks and no fallback.
-  - Your other redline positions. Cowork notes that your model-change redline goes further than the playbook asks, and suggests the fallback.
-  - The top gaps against New York's and Colorado's AI rules for insurers, such as no audit rights, no bias testing and no duty to cooperate with regulators, each linked to the regulation.
+- A one-page negotiation sheet in your OneDrive that covers your redline, the hard stops and the regulator gaps (Colorado and New York), with the playbook cited throughout.
 - In the **Regulatory cooperation** row, compare what regulators expect with the playbook ask.
-- A **Create calendar event?** card for a 30-minute prep meeting with Luc and Hemanti, with a five-line agenda.
+- A **Create calendar event?** card for a 30-minute prep meeting with Luc and Hemanti, with a short agenda.
 
 > [!TIP]
 > New York expects AI vendors to cooperate with regulators. Zava's playbook only asks to be told about an inquiry. Cowork put the regulations and the playbook side by side, so you can see that the playbook needs updating, not just the contract.
@@ -165,8 +158,11 @@ Save the negotiation sheet to the Drafts folder of the Trey Research matter in i
 
 **What you take away:** Copilot did the reading, the redlining and the drafting across email, Teams and iManage. You stayed the lawyer: every change has a reason, and nothing went out without your approval.
 
-> [!NOTE]
-> Fictional parties adapted from the Harvey lab (MIT license). Not legal advice.
+## Key takeaways
+
+- **Matter information from your source of record.** Copilot works with your matter information right where it lives, in the matter management system you already use, while keeping privileged access in place.
+- **Up-to-date legal research in context.** Copilot researches what applies to the matter, such as what regulators expect, and grounds it in the matter's own documents.
+- **Drafts and redlines, ready for review.** Copilot drafts and redlines contracts with ease, so lawyers can review and decide.
 
 ## More connectors to try
 
@@ -183,3 +179,5 @@ The same pattern works with other connectors. Try them in your own tenant for si
 ---
 
 **Next:** [Bring your own app](07-custom-mcp.md), or try another track ([Finance](03-finance.md) · [Productivity](05-productivity.md) · [Engineering](06-engineering.md))
+
+<sub>Fictional parties adapted from HLAB (MIT license). Not legal advice.</sub>

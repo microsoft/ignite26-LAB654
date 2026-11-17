@@ -617,9 +617,9 @@ Copilot did the reading, the redlining and the drafting across email, Teams and 
 
 Other connectors that fit this pattern: LexisNexis and Legal Data Hunter.
 
-> [!Note] Fictional parties adapted from the Harvey lab (MIT license). Not legal advice.
-
 When you're done, go to [Bring your own app](#bring-your-own-app-zava-expense), or [choose another track](#choose-your-track).
+
+<sub>Fictional parties adapted from HLAB (MIT license). Not legal advice.</sub>
 
 ===
 
