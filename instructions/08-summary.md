@@ -7,7 +7,7 @@
 | Track | Connectors | What Copilot finished |
 |---|---|---|
 | Finance | LSEG, FactSet, Moody's | A Litware investment committee pack in Excel and a memo in Word |
-| Legal | Work IQ, iManage | Flags and a redline in Word, then a negotiation pack in Cowork |
+| Legal | Work IQ, iManage | Comments and a redline in the contract, a negotiation sheet and a prep invite, all in Cowork |
 | Productivity | SalesDesk_Lab, Teams, Outlook | A call brief, a grounded answer to a price objection, and a booked and logged meeting |
 | Engineering | GitHub_Lab, EngHub_Lab, Teams | The sprint's one at-risk item and what it's waiting on, a Teams message to the approver, and a sprint slide |
 | Bring your own app | Zava Expense (custom MCP) | An expense report checked, fixed and submitted, plus a spend summary in Excel |
@@ -37,6 +37,15 @@ Enable the connectors that matter most to your organization. Start with the syst
 - Try another track.
 - **Finance:** swap Litware for another company and rerun the prompts.
 - **Productivity:** run the stretch step and send the pre-read draft.
+
+## Share your feedback
+
+![LAB654 feedback slide. Scan the first QR code to rate the session on the Ignite page, at aka.ms/ignite2026-feedback. Scan the second QR code to open an issue in the lab repo, at aka.ms/ignite2026-LAB654](images/lab654-feedback.png)
+
+Your feedback helps us improve this lab for future events.
+
+- **Rate the session.** Give your satisfaction score and written feedback about the lab at [aka.ms/ignite2026-feedback](https://aka.ms/ignite2026-feedback).
+- **Suggest changes to the content.** For ideas to improve the lab content or docs, open an issue at [aka.ms/ignite2026-LAB654](https://aka.ms/ignite2026-LAB654).
 
 ## Continue your learning
 

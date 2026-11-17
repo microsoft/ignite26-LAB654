@@ -2,4 +2,4 @@
 
 Use this folder for deployment or runtime infrastructure, including Skillable-specific files when needed.
 
-- [`mock_environment/`](mock_environment/README.md): the lab's synthetic environment. It holds the COEP tenant package (enterprise data), the COEP schemas and build tools, and the mock MCP servers behind the connectors.
+- [`skillable/`](skillable/README.md): scripts that reset a lab seat's OneDrive (Cowork task folders and the Trey Research agreement) before each attendee starts.

@@ -1,29 +1,3 @@
-## Before you're done
-
-This repo has been created for your Microsoft Ignite 2026 session. Here's how to get it ready.
-
-**Easiest path — use the agent (recommended):**
-
-- Open GitHub Copilot Chat and say `help me initialize repo`. The agent will walk you through getting the README populated.
-- When you're ready to publish, say `help me finalize repo`. The agent will clean up unused folders, validate everything, and remove this "Before you're done" section and other extra stuff that attendees don't need to see.
-- Curious how it works? Read the [agent workflow](.github/AGENT-WORKFLOW.md).
-
-**Doing it manually?**
-
-Fill in the sections below yourself, then:
-
-- Delete any placeholder folders you don't need (`data/`, `infra/`, etc.)
-- Delete this "Before you're done" section
-- Delete `.github/agents/`, `.github/tests/`, `.github/copilot-instructions.md`, and `.github/AGENT-WORKFLOW.md` — these are template tooling, not part of your published repo
-
-**Folder conventions:**
-
-- Attendee step-by-step guidance goes in `instructions/`. If you use MkDocs or a docs site instead, put it in `docs/` and link to it from this README.
-- Reference material and background reading go in `docs/`.
-- You can add a `.devcontainer/` folder if needed.
-
----
-
 <a name="start-building"></a>
 
 <p align="center">
@@ -67,11 +41,11 @@ By the end of this session, you will be able to:
 
 ### 💻 Technologies used
 
-- Microsoft 365 Copilot (Copilot Chat and Copilot Cowork)
-- Copilot connectors, connector skills and write actions
-- Model Context Protocol (MCP) custom connectors in the Microsoft 365 admin center
-- Word, Excel, PowerPoint, Outlook and Teams
-- Partner connectors: LSEG, FactSet, Moody's, iManage, SalesDesk, GitHub and EngHub
+- [Microsoft 365 Copilot (Copilot Chat and Copilot Cowork)](https://learn.microsoft.com/en-us/copilot/plan/copilot-overview)
+- [Copilot connectors, connector skills and write actions](https://learn.microsoft.com/en-us/microsoft-365/copilot/connectors/overview)
+- [Model Context Protocol (MCP) custom connectors in the Microsoft 365 admin center](https://learn.microsoft.com/en-us/microsoft-365/copilot/connectors/set-up-custom-federated-connectors)
+- [Word, Excel, PowerPoint, Outlook and Teams](https://learn.microsoft.com/en-us/office365/servicedescriptions/office-365-platform-service-description/microsoft-365-copilot)
+- [Partner connectors: LSEG, FactSet, Moody's, iManage, SalesDesk, GitHub and EngHub](https://learn.microsoft.com/en-us/microsoft-365/copilot/connectors/connectors-gallery)
 
 ### 📚 Continue your learning
 
@@ -85,8 +59,6 @@ Pick your next step based on your learning style:
 | **[Microsoft Foundry Community](https://aka.ms/MicrosoftFoundryDiscord-Ignite26)** | Connect with other learners and experts in our Discord community |
 
 ### 🌟 Microsoft Learn MCP Server
-
-<!-- Remove this section if the Microsoft Learn MCP Server is not relevant to the session. -->
 
 The Microsoft Learn MCP Server gives your AI agent direct access to Microsoft's official documentation — grounded, up-to-date answers about the topics in this session.
 
@@ -103,8 +75,6 @@ For more information, visit the [Learn MCP Server repo](https://aka.ms/learnmcp)
 
 ### 👥 Content owners
 
-<!-- TODO: Replace the placeholder GitHub links and images for Gargy Shekhar, Shiladitya Saha and Krishan Nagpal. -->
-
 <table>
 <tr>
     <td align="center"><a href="https://github.com/tezansahu">
@@ -117,27 +87,27 @@ For more information, visit the [Learn MCP Server repo](https://aka.ms/learnmcp)
         <sub><b>Danny Yao</b></sub></a><br />
             <a href="https://github.com/dannyyaou" title="talk">📢</a>
     </td>
-    <td align="center"><a href="https://github.com/yourGitHubHandle">
-        <img src="https://github.com/yourGitHubHandle.png" width="100px;" alt="Gargy Shekhar"/><br />
+    <td align="center"><a href="https://github.com/GargyShekhar2512">
+        <img src="https://github.com/GargyShekhar2512.png" width="100px;" alt="Gargy Shekhar"/><br />
         <sub><b>Gargy Shekhar</b></sub></a><br />
-            <a href="https://github.com/yourGitHubHandle" title="talk">📢</a>
+            <a href="https://github.com/GargyShekhar2512" title="talk">📢</a>
     </td>
 </tr>
 <tr>
-    <td align="center"><a href="https://github.com/anparanjape">
-        <img src="https://github.com/anparanjape.png" width="100px;" alt="Anshuman Paranjape"/><br />
+    <td align="center"><a href="https://github.com/Anshuman2702">
+        <img src="https://github.com/Anshuman2702.png" width="100px;" alt="Anshuman Paranjape"/><br />
         <sub><b>Anshuman Paranjape</b></sub></a><br />
-            <a href="https://github.com/anparanjape" title="talk">📢</a>
+            <a href="https://github.com/Anshuman2702" title="talk">📢</a>
     </td>
-    <td align="center"><a href="https://github.com/yourGitHubHandle">
-        <img src="https://github.com/yourGitHubHandle.png" width="100px;" alt="Shiladitya Saha"/><br />
+    <td align="center"><a href="https://github.com/shiladityamsft">
+        <img src="https://github.com/shiladityamsft.png" width="100px;" alt="Shiladitya Saha"/><br />
         <sub><b>Shiladitya Saha</b></sub></a><br />
-            <a href="https://github.com/yourGitHubHandle" title="talk">📢</a>
+            <a href="https://github.com/shiladityamsft" title="talk">📢</a>
     </td>
-    <td align="center"><a href="https://github.com/yourGitHubHandle">
-        <img src="https://github.com/yourGitHubHandle.png" width="100px;" alt="Krishan Nagpal"/><br />
+    <td align="center"><a href="https://github.com/krishan-nagpal">
+        <img src="https://github.com/krishan-nagpal.png" width="100px;" alt="Krishan Nagpal"/><br />
         <sub><b>Krishan Nagpal</b></sub></a><br />
-            <a href="https://github.com/yourGitHubHandle" title="talk">📢</a>
+            <a href="https://github.com/krishan-nagpal" title="talk">📢</a>
     </td>
 </tr></table>
 

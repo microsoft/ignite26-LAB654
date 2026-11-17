@@ -24,14 +24,50 @@ You'll prep the call, handle the price objection and book the security review, w
 ## Before you start
 
 - [ ] You completed [Getting started with connectors](02-getting-started.md).
-- [ ] **SalesDesk_Lab** shows as connected.
-- [ ] Open **Copilot Cowork** and start a new task. Run every step in this one conversation: Step 3 reuses what Copilot learned in Steps 1 and 2, and your SalesDesk changes are kept only within that conversation.
-- [ ] In Cowork, select **Customize** and turn on **SalesDesk_Lab**. Then turn off the **Fabric IQ** plugin, which is on by default.
+
+First, check that Atul's email is waiting for you in Outlook. Then you'll set up Cowork.
+
+> [!NOTE]
+> SalesDesk is a customer relationship management (CRM) system that sales teams use to track accounts, contacts and deals. **SalesDesk_Lab** is the lab version of the SalesDesk connector.
+
+### Read Atul's email in Outlook
+
+1. Select **Microsoft Edge** on the taskbar, then go to [outlook.cloud.microsoft](https://outlook.cloud.microsoft/).
+2. In the search box at the top, enter `Aurora expansion pitch` and press Enter.
+3. Open the email from **Atul Manohar** titled *Aurora expansion pitch – Nanami joining, security docs*.
+4. Check that it says Nanami, Lakeshore Retail's CFO, wants the all-in cost for 400 stores, and that Jahidi in IT wants Zava's security documentation first.
+
+   ![Outlook on the web with Aurora expansion pitch in the search box. Atul Manohar's email, Aurora expansion pitch – Nanami joining, security docs, is open, with the paragraphs about Nanami's all-in cost request and Jahidi's security documentation request highlighted](images/productivity-outlook-atul-email.png)
+
 To see what Copilot will read, open the [Lakeshore Retail account](https://mock-salesdesk.yellowsand-9530f5dc.eastus.azurecontainerapps.io/lightning/r/Account/001Hp0000000001IAA/view) in SalesDesk_Lab.
+
+### Set up Copilot Cowork
+
+Cowork uses only the plugins you turn on, so first turn on SalesDesk_Lab.
+
+1. Open a new browser tab and go to [copilot.cloud.microsoft](https://copilot.cloud.microsoft/).
+2. Select **Cowork** at the top of the left pane.
+3. In the left pane, select **Customize**.
+4. Next to **Added**, select **Manage all**.
+
+   ![The Cowork Customize page, with Customize highlighted in the left pane and Manage all highlighted next to the Added list of connectors](images/cowork-customize.png)
+
+5. Turn on **SalesDesk_Lab**.
+6. Turn off **Fabric IQ**, which is on by default. Leave every other plugin off.
+
+   ![The Added list in Cowork Customize, with SalesDesk_Lab turned on and Fabric IQ, Moodys_Lab, LSEG_Lab, FactSet_Lab, iManage_Lab, EngHub_Lab and GitHub_Lab turned off](images/productivity-cowork-customize.png)
+
+7. In the left pane, select **New task**. Run every step in this one task: Step 3 reuses what Copilot learned in Steps 1 and 2, and your SalesDesk changes are kept only within this task.
+
+   ![The Copilot left pane with the Cowork tab selected and New task highlighted below it](images/copilot-new-cowork-task.png)
+
+You don't need to turn on Outlook or Teams. Cowork has them built in.
 
 ## Step 1: Prep the call
 
 *Copilot Cowork · SalesDesk_Lab call-prep skill · Outlook*
+
+In the Cowork task, enter:
 
 ```text
 Use SalesDesk to prep me for my Lakeshore Retail expansion pitch.
@@ -39,7 +75,7 @@ Use SalesDesk to prep me for my Lakeshore Retail expansion pitch.
 
 **What to look for:**
 
-- The meeting: *Lakeshore Retail – Aurora expansion pitch*, Friday, Nov 20, 10:00–11:00 ET.
+- The meeting: *Lakeshore Retail – Aurora expansion pitch* on Friday, November 20.
 - The deal: the [*Lakeshore Retail – Aurora 400-store rollout*](https://mock-salesdesk.yellowsand-9530f5dc.eastus.azurecontainerapps.io/lightning/r/Opportunity/006Hp0000000001IAA/view) opportunity, Proposal/Price Quote, $1,200,000, closing Dec 31. Next step: bring the all-in per-store and total cost.
 - Who's in the room: Atul (champion), Jahidi (IT security; wants the security docs first) and Nanami (CFO; wants the all-in cost). Nanami isn't a SalesDesk contact yet, so Copilot flags her as new.
 - What to cover: the price comparison, the security review and next steps.
@@ -51,7 +87,9 @@ The layout can vary between runs. The content is what matters.
 
 ## Step 2: Handle the price objection
 
-*Same conversation · Teams meeting transcript · SalesDesk_Lab win/loss history*
+*Same Cowork task · Teams meeting transcript · SalesDesk_Lab win/loss history*
+
+In the same task, enter:
 
 ```text
 Lakeshore Retail says Boulder Innovations is 20% cheaper. How should I handle that? Use what they said on the pilot review call and our win/loss history against Boulder Innovations.
@@ -73,7 +111,9 @@ Lakeshore Retail says Boulder Innovations is 20% cheaper. How should I handle th
 
 ## Step 3: Book the security review and log it
 
-*Same conversation · SalesDesk_Lab schedule-meeting skill · Outlook calendar · write actions*
+*Same Cowork task · SalesDesk_Lab schedule-meeting skill · Outlook calendar · write actions*
+
+In the same task, enter:
 
 ```text
 Send Jahidi and Atul a calendar invite for a 45-minute Aurora security review next week, and log it on the Lakeshore Retail opportunity.
@@ -93,7 +133,9 @@ Send Jahidi and Atul a calendar invite for a 45-minute Aurora security review ne
 
 ## Stretch: Log the pilot review call
 
-*Same conversation · SalesDesk_Lab log-activity skill · write action*
+*Same Cowork task · SalesDesk_Lab log-activity skill · write action*
+
+In the same task, enter:
 
 ```text
 Log the pilot review call on the Lakeshore Retail opportunity.
