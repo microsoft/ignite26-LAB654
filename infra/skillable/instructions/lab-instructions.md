@@ -1,43 +1,33 @@
 @lab.Title
 
-Username: +++@lab.CloudCredential(Ignite-LAB654).Username+++
+## Welcome to your lab environment
 
-TAP: +++@lab.CloudCredential(Ignite-LAB654).Password+++
-
-## Welcome to Your Lab Environment
-
-To begin, log into the virtual machine using the following credentials: +++@lab.VirtualMachine(Win11-Pro-Base).Password+++
+To begin, sign in to the virtual machine with this password: +++@lab.VirtualMachine(ignite26lab654).Password+++
 
 **Note:** Text formatted as an +++example+++ represents type text. Clicking on this text will automatically insert it to prevent any typing errors.
 
-## Sign in to Copilot
-
-You'll do the whole lab in Microsoft 365 Copilot on the web, signed in with the lab account above.
-
-1. [] In the virtual machine, open the browser and go to +++https://copilot.cloud.microsoft/+++.
-1. [] Sign in with the **Username** at the top of this page.
-1. [] When you're asked for a Temporary Access Pass, enter the **TAP** at the top of this page.
-1. [] If you see _Let's keep your account secure_ or you're asked for a code, select **Next** at the bottom of these instructions and follow the steps on the next page.
-
-> [!Hint] If a sign-in popup is blocked at any point, allow popups for the Copilot site and try again.
+**Note:** Copilot prompts are formatted as ++example prompt++. Select a prompt to copy it, then paste it into Copilot with Ctrl+V.
 
 > [!Note] This lab runs in a demo tenant with fictional people, companies and data. Financial and legal outputs are for the exercise only. They aren't investment or legal advice.
 
-===
+## Sign in to Copilot
 
-# Verify your sign-in
+1. [] On the taskbar at the bottom of the virtual machine, select **Microsoft Edge**.
 
-Your lab account may ask for a second check (multi-factor authentication) when you sign in. Use the **Contoso Authenticator App** on the virtual machine desktop to get the code. You don't need your phone.
+    !IMAGE[The Windows taskbar, with the Microsoft Edge icon highlighted.](instructions360859/taskbar-edge.png "Microsoft Edge on the taskbar"){400}
 
-!IMAGE[Contoso Authenticator App icon: a blue floppy disk with a yellow and blue snake logo.](instructions360859/contoso-authenticator-icon.png "Contoso Authenticator App icon"){64}
-
-If you weren't asked to verify your sign-in, select **Next** to skip this page.
-
-## Set up the app the first time
-
+1. [] In Edge, go to +++https://copilot.cloud.microsoft/+++.
+1. [] Sign in with this username: +++@lab.CloudCredential(Ignite-LAB654).Username+++
+1. [] When you're asked for a password, enter: +++@lab.CloudCredential(Ignite-LAB654).Password+++
 1. [] On the _Let's keep your account secure_ page, select **Next**.
 
     !IMAGE[The Let's keep your account secure page, with a Next button in the lower-right corner.](instructions360859/mfa-01-keep-account-secure.png "Let's keep your account secure")
+
+> [!Hint] If a sign-in popup is blocked at any point, allow popups for the Copilot site and try again.
+
+> [!Knowledge] Your lab account asks for a second sign-in check (multi-factor authentication). You'll set it up next with **Contoso Authenticator App**, an app on the virtual machine desktop. You don't need your phone.
+
+## Set up the authenticator app
 
 1. [] On the _Install Microsoft Authenticator_ page, select **Set up a different authentication app**.
 
@@ -54,6 +44,12 @@ If you weren't asked to verify your sign-in, select **Next** to skip this page.
     !IMAGE[The Scan the QR code page, showing a QR code and a Next button.](instructions360859/mfa-04-scan-qr-code-page.png "Scan the QR code")
 
 1. [] On the virtual machine desktop, open **Contoso Authenticator App**.
+
+    !IMAGE[The virtual machine desktop, with the Contoso Authenticator App icon highlighted below Visual Studio Code.](instructions360859/rebrand-desktop-authenticator.png "Contoso Authenticator App on the desktop"){500}
+
+    > [!Alert] If a _Windows protected your PC_ window appears, select **More info**, then **Run anyway**. The app is safe to run in this lab.
+
+    !IMAGE[The Windows protected your PC window from Microsoft Defender SmartScreen, with a More info link under the message and a Don't run button.](instructions360859/mfa-05a-smartscreen.png "Windows protected your PC")
 
     !IMAGE[The Contoso Authenticator App window, titled OTP Accounts, with a Scan QR from Screen button.](instructions360859/mfa-05-authenticator-app.png "Contoso Authenticator App")
 
@@ -75,9 +71,7 @@ If you weren't asked to verify your sign-in, select **Next** to skip this page.
 
     !IMAGE[The Authenticator app added page, with a Done button in the lower-right corner.](instructions360859/mfa-09-app-added.png "Authenticator app added")
 
-## Enter a code when you're asked again
-
-1. [] Open **Contoso Authenticator App** from the desktop, select **Copy** next to your account, then paste the code in the browser.
+1. [] Finish any remaining sign-in prompts until Copilot opens.
 
 > [!Note] Codes change regularly, and the app shows when the next one arrives. If a code is rejected, copy the new one and try again.
 
@@ -109,19 +103,26 @@ When you're signed in to Copilot, select **Next**.
 
 Someone may have used this lab account before you. Reset it so you start from the original files.
 
-1. [] Select @[Reset my lab environment](`C:\LabFiles\reset-lab.bat @lab.CloudCredential(Ignite-LAB654).Username`){Shell visible}. A command window opens, and a browser tab opens to sign you in.
-1. [] If the browser asks you to pick an account, select your lab account. If it asks you to approve permissions for _Microsoft Graph Command Line Tools_, select **Accept**.
-1. [] When the tab says _Lab clean-up signed in_, close the tab.
-1. [] In the command window, wait for _Your lab environment is clean_. The window closes by itself.
+1. [] Select @[Reset my lab environment](`C:\LabFiles\reset-lab.bat @lab.CloudCredential(Ignite-LAB654).Username`){Shell visible}. 
 
-> [!Note] The reset changes only your own account. You can run it again later if you want to start a track over.
+    > [!Hint] The script can take up to 30 seconds to start. If nothing happens after 30 seconds, select the link again.
 
-> [+Help] If the reset doesn't finish, select to see what to do.
+1. [] On the sign-in page, check that your username is filled in: +++@lab.CloudCredential(Ignite-LAB654).Username+++
+1. [] Enter your password, then select **Next**: +++@lab.CloudCredential(Ignite-LAB654).Password+++
+1. [] When you're asked for a code, go back to **Contoso Authenticator App**. If you closed it, open it again from the desktop.
+
+    !IMAGE[The virtual machine desktop, with the Contoso Authenticator App icon highlighted below Visual Studio Code.](instructions360859/rebrand-desktop-authenticator.png "Contoso Authenticator App on the desktop"){500}
+
+1. [] In the app, select **Copy** next to your account. In the browser, paste the code, then select **Next**.
+1. [] Within a few seconds, the tab says _Lab clean-up signed in_. Close the tab.
+
+    !IMAGE[A browser tab on localhost showing Lab clean-up signed in. You can close this tab.](instructions360859/rebrand-reset-signed-in.png "Lab clean-up signed in"){500}
+
+
+> [+Help] If the reset doesn't finish, expand this to see what to do.
 >
-> - _Signed in as another account_: in the browser, sign in with the Username at the top of the first page, then select the reset link again.
+> - _Signed in as another account_: in the browser, sign out, then select the reset link again and sign in with your lab account.
 > - Nothing happens, or you see any other message: ask a proctor.
-
-When the reset finishes, select **Next** to start the lab.
 
 ===
 
@@ -152,13 +153,13 @@ Zava is a fictional US insurer that also builds Aurora, a smart-home hub sold th
 
 ## Key ideas
 
-**Connectors.** Some connectors index content into Microsoft 365 ahead of time; others call the source live, signed in as you. Copilot picks the right source for your question, respects what you're allowed to see and cites where each answer came from.
+**Connectors.** Connectors call the source live, signed in as you. Copilot picks the right source for your question, respects what you're allowed to see and cites where each answer came from.
 
 **Connector skills.** A skill packages a partner's expertise, such as how sales teams prep a call or how analysts assess credit. Copilot loads a skill when your request needs it, so you get the partner's method as well as their data.
 
-**Plugins.** A plugin bundles a connector and its skills into one package that an admin deploys once. After that, it works across the Copilot experiences that support it.
+**Plugins.** A plugin is one package that an admin deploys once. It can bundle connectors (data and tools), skills (the method) and agents (focused assistants you chat with directly). This lab focuses on connectors and skills.
 
-**Write actions.** Copilot can change things in the source system, such as logging a meeting on a Salesforce opportunity or saving a draft to a document matter. You see a confirmation first, and nothing changes until you approve it.
+**Write actions.** Copilot can change things in the source system, such as logging a meeting on a SalesDesk opportunity or saving a draft to a document matter. You see a confirmation first, and nothing changes until you approve it.
 
 ===
 
@@ -168,37 +169,55 @@ In this part, you'll find connectors in the catalog, check that the ones for you
 
 ## Discover connectors
 
-1. [] In Copilot, open **Settings** and then **Sources**.
+1. [] If Copilot isn't open, select **Microsoft Edge** on the taskbar, then go to +++https://copilot.cloud.microsoft/+++.
+1. [] In Copilot, select the three dots (**...**) in the top-right corner, then select **Settings**.
+
+    !IMAGE[The menu under the three dots in the top-right corner of Copilot, with Settings highlighted.](instructions360859/copilot-settings-menu.png "Open Settings")
+
+1. [] In **Settings**, select **Sources**.
+
+    !IMAGE[The Settings window with Sources selected in the left pane, listing connectors such as HubSpot, Intercom and Legal Data Hunter.](instructions360859/rebrand-copilot-settings-sources.png "Sources in Settings"){600}
 1. [] Browse the catalog. It has more than 300 connectors, from CRM and ticketing to code, wikis and market data.
 1. [] Find the connectors for the track you'll take:
 
     | Track | Connectors |
     |:---|:---|
-    | Finance | LSEG_Lab, FactSet_Lab, Moodys_Lab |
-    | Legal | iManage_Lab |
-    | Productivity | Salesforce_Lab |
-    | Engineering | Jira, Confluence, GitHub_Lab, Rovo_Lab |
-    | Bring your own app (everyone) | Zava Expense, which you'll add yourself later |
+    | Finance | +++LSEG_Lab+++, +++FactSet_Lab+++, +++Moodys_Lab+++ |
+    | Legal | +++iManage_Lab+++ |
+    | Productivity | +++SalesDesk_Lab+++ |
+    | Engineering | +++GitHub_Lab+++, +++EngHub_Lab+++ |
+    | Bring your own app (everyone) | Zava Expense (you'll add it yourself later) |
 
     Outlook, Teams and your Microsoft 365 files are available in every track.
 
-> [!Note] Connectors named _…_Lab_ are mock versions of the real connectors, built for this lab. They behave like the real ones and come with the same skills, but they serve sample data for Zava. You don't need a third-party account to use them. Changes you make with them are visible only in the conversation where you make them.
+> [!Note] All the connectors above are mock versions of the real connectors, built for this lab. They behave like the real ones and come with the same skills, but they serve sample data for Zava. You don't need a third-party account to use them. Changes you make with them are visible only in the conversation where you make them.
 
 ## Check your sources are ready
 
-1. [] Confirm that the connectors for your track show as **Connected**.
-1. [] If one shows **Connect** instead, select it and follow the prompts. If it still doesn't connect, ask a proctor.
+1. [] Close **Settings**.
+1. [] In Copilot, select the plus icon (**+**) at the left of the message box, then select **Change data sources**.
+1. [] In **Select sources**, check that **Microsoft 365 data** and the connectors for your track are turned on. They're all on by default.
 
-In a real organization, an admin deploys connectors like these once, and people sign in to them with their own accounts. In this lab, that setup has been done for you.
+    !IMAGE[The Select sources window, with Microsoft 365 data, EngHub_Lab, FactSet_Lab, GitHub_Lab, iManage_Lab, LSEG_Lab and Moodys_Lab all turned on.](instructions360859/rebrand-copilot-select-sources.png "Select sources"){500}
+
+1. [] If one of your track's connectors is off, turn it on. Then close **Select sources**.
+
+> [!Knowledge] In a real organization, an admin deploys connectors like these once, and people sign in to them with their own accounts. In this lab, that setup has been done for you.
 
 ## Ask your first grounded question
 
-1. [] Start a new chat, then select the question for your track:
+Each question below needs facts from a system you'd normally open on its own: market data, a document management system, a CRM record or an EngHub ticket. Without connectors, you'd search that system and copy the answer across. With connectors, Copilot fetches it for you and cites where it came from.
 
-    - Finance: +++Using LSEG, what was Litware's earnings per share last quarter compared with the analyst consensus?+++
-    - Legal: +++What did Hemanti send me about Trey Research?+++
-    - Productivity: +++What's the stage and amount of the Lakeshore Retail opportunity in Salesforce?+++
-    - Engineering: +++What's the status of Jira issue AUR-142?+++
+1. [] In Copilot, select **Chat** at the top of the left pane, then select **New chat**.
+
+    !IMAGE[The Copilot left pane with the Chat tab selected and New chat highlighted below it.](instructions360859/copilot-new-chat.png "Start a new chat"){600}
+
+1. [] Select the question for your track:
+
+    - Finance: ++Using LSEG, what was Litware's earnings per share last quarter compared with the analyst consensus?++
+    - Legal: ++Using iManage, what are the hard stops in the Zava AI Procurement Playbook?++
+    - Productivity: ++What's the stage and amount of the Lakeshore Retail opportunity in SalesDesk?++
+    - Engineering: ++What's the status of EngHub work item AUR-142?++
 
 1. [] Check that the answer cites its source, such as the connector name, a record, a page or a link.
 
@@ -220,12 +239,14 @@ Pick the track closest to your work. Each track takes about 15 to 20 minutes. Se
 After your track, everyone goes to [Bring your own app](#bring-your-own-app-zava-expense).
 
 > [!Hint] If Copilot doesn't give the response you expect in any track, select the model name at the top of the chat, switch from _Auto_ to a GPT model that isn't a quick-response one, and send the prompt again.
+>
+> !IMAGE[The model menu opened from Auto at the top of the chat, with GPT selected and a list of GPT models: GPT-5.6 Sol Quick response, GPT-6, GPT-5.6 Sol Think deeper and GPT-6.1 Sol.](instructions360859/copilot-model-picker-gpt.png "Switch to a GPT model"){600}
 
 ===
 
 # Finance: Should we buy more Litware?
 
-_About 20 minutes · LSEG_Lab, FactSet_Lab, Moodys_Lab · Copilot Chat, Copilot Cowork, Excel_
+_About 20 minutes · LSEG_Lab, FactSet_Lab, Moodys_Lab · Copilot Cowork_
 
 You'll use the LSEG, FactSet and Moody's connectors to take one investment question from a quick sense check to a committee-ready memo.
 
@@ -247,41 +268,74 @@ The committee will challenge the case, so every number has to be sourced and che
 > - _Credit rating_: a grade for how likely a company is to repay its debts.
 > - _SWOT_: strengths, weaknesses, opportunities and threats.
 
-!IMAGE[Step 1 in Copilot gives a verified verdict. Step 2a in Copilot in Cowork mode builds the workbook. Steps 2b and 2c in Excel add scenarios and credit analysis. Step 3 back in Copilot gives a pressure-tested view and memo.](instructions360859/finance-workflow.png "How the finance track flows")
+!IMAGE[All steps run in one Cowork task. Step 1 gives a verified verdict. Steps 2 and 3 build the workbook, add scenarios and credit analysis, then give a pressure-tested view and memo.](instructions360859/rebrand-finance-workflow.png "How the finance track flows")
 
 ## Before you start
 
-- [] **LSEG_Lab**, **FactSet_Lab** and **Moodys_Lab** appear in **Settings** › **Sources**.
+First, check that Kristian's message is waiting for you in Teams.
+
+> [!Knowledge] LSEG, FactSet and Moody's are financial data providers that investment teams use for market data, company fundamentals and credit ratings. **LSEG_Lab**, **FactSet_Lab** and **Moodys_Lab** are the lab versions of their connectors.
+
+### Read Kristian's message in Teams
+
+1. [] Select **Microsoft Edge** on the taskbar, then go to +++https://teams.cloud.microsoft/+++.
+1. [] In the left rail, select **Chat**.
+1. [] Under **Chats**, select **Kristian Stensen**.
+1. [] Check that you see Kristian's message: _Committee wants a view on Litware Monday. Should we add more? Bring a short memo._
+
+    !IMAGE[Microsoft Teams on the web with the Chat view open. Kristian Stensen is selected under Chats, and his message asking for a view on Litware for Monday's committee is shown in the conversation.](instructions360859/finance-teams-kristian-message.png "Kristian's message in Teams"){600}
+
+### Turn on the finance connectors in Cowork
+
+You'll run every step of this track in one Copilot Cowork task. Cowork can run long tasks, like building a workbook, and saves what it creates to your OneDrive. It uses only the plugins you turn on, so first turn on the finance connectors.
+
+1. [] Open a new browser tab and go to +++https://copilot.cloud.microsoft/+++.
+1. [] In Copilot, select **Cowork** at the top of the left pane.
+1. [] In the left pane, select **Customize**.
+1. [] Next to **Added**, select **Manage all**.
+
+    !IMAGE[The Cowork Customize page, with Customize highlighted in the left pane and Manage all highlighted next to the Added list of connectors.](instructions360859/rebrand-cowork-customize.png "Open Customize, then Manage all"){600}
+
+1. [] Turn on **LSEG_Lab**, **FactSet_Lab** and **Moodys_Lab**.
+1. [] Turn off **Fabric IQ**, which is on by default.
+
+    !IMAGE[The Added list in Cowork Customize, with Moodys_Lab, LSEG_Lab and FactSet_Lab turned on and Fabric IQ turned off.](instructions360859/rebrand-cowork-customize-finance.png "Turn on the finance connectors"){600}
 
 ## Step 1: Run a sense check
 
 ### 1a. Check whether Litware beat expectations
 
-> [!Alert] The first time you use Cowork, select **Customize** and turn on LSEG_Lab, FactSet_Lab and Moodys_Lab. Then turn off the Fabric IQ plugin, which is on by default.
+1. [] In the left pane, select **New task**.
 
-1. [] In Copilot, start a new chat in either Chat or Cowork mode, then enter:
+    !IMAGE[The Copilot left pane with the Cowork tab selected and New task highlighted below it.](instructions360859/copilot-new-cowork-task.png "Start a new Cowork task"){600}
 
-    +++I'm preparing a recommendation for Monday's investment committee on whether our portfolio should buy more Litware. To start with, did Litware beat analysts' expectations last quarter? Using LSEG, compare its actual earnings per share and revenue with the analyst consensus, and show the quarter and source.+++
+1. [] Enter:
+
+    ++I'm preparing a recommendation for Monday's investment committee on whether our portfolio should buy more Litware. To start with, did Litware beat analysts' expectations last quarter? Using LSEG, compare its actual earnings per share and revenue with the analyst consensus, and show the quarter and source.++
 
 1. [] Check that you see what Litware earned last quarter against what analysts expected, with LSEG cited as the source.
 
     > [!Knowledge] LSEG can return charts and analysis cards, not just text: the provider's own experience, inside Copilot.
 
+    > [!Hint] **A skill was used here.** A skill is a set of expert instructions that comes with a connector. You didn't ask for it: Copilot picked LSEG's **equity-research** skill because you asked to compare results with analyst forecasts. The skill tells Copilot how an analyst does this: pull consensus estimates and actuals, then show the gap in a clear table.
+
 ### 1b. Compare Litware with its rivals
 
-1. [] In the same chat, enter:
+1. [] In the same Cowork task, enter:
 
-    +++Using FactSet, compare how profitable Litware, A. Datum and Relecloud have been over the past 5 years, using gross margin and return on invested capital (ROIC).+++
+    ++Using FactSet, compare how profitable Litware, A. Datum and Relecloud have been over the past 5 years, using gross margin and return on invested capital (ROIC).++
 
 1. [] Check that you see FactSet profitability figures for all three companies and a clear view of which is strongest.
 
 ### 1c. Decide if it's worth a deeper look
 
-1. [] In the same chat, enter:
+1. [] In the same Cowork task, enter:
 
-    +++What is Litware's credit rating and outlook according to Moody's and what's driving them? Then, based on everything so far, give me a one-line verdict on whether Litware is worth a deeper look.+++
+    ++What is Litware's credit rating and outlook according to Moody's and what's driving them? Then, based on everything so far, give me a one-line verdict on whether Litware is worth a deeper look.++
 
 1. [] Check that you see a Moody's rating and outlook with the reasons behind them, then a one-line verdict that draws on all three sources.
+
+    > [!Hint] **Another skill, picked for you.** Copilot used Moody's **company-analysis** skill because you asked about a credit rating and what's driving it. The skill tells Copilot to find the company in Moody's first, then read its rating, outlook and credit opinion, without inventing any numbers.
 
     > [!Knowledge] Three connectors, one conversation. Copilot keeps the context, so the verdict builds on the LSEG and FactSet answers above it.
 
@@ -289,33 +343,31 @@ The committee will challenge the case, so every number has to be sourced and che
 
 ### 2a. Build the committee workbook
 
-This is a long-running task, so you'll use Cowork. Cowork creates the workbook and saves it to your OneDrive.
+1. [] In the same Cowork task, enter:
 
-1. [] In Copilot, start a new chat, select **Cowork** mode, then enter:
+    ++Using LSEG, create an Excel workbook called "Litware Committee Pack" with an equity research snapshot of Litware: analysts' earnings and revenue forecasts for this year and next (FY1, FY2), how many analysts cover it and how much they disagree, 5 years of financials, and valuation. Cite sources and dates.++
 
-    +++Using LSEG, create an Excel workbook called "Litware Committee Pack" with an equity research snapshot of Litware: analysts' earnings and revenue forecasts for this year and next (FY1, FY2), how many analysts cover it and how much they disagree, 5 years of financials, and valuation. Cite sources and dates.+++
+1. [] Check that Cowork uses LSEG's equity research skill and creates a workbook named **Litware Committee Pack**, with sources and dates.
 
-1. [] Check that Copilot uses LSEG's equity research skill and creates a workbook named **Litware Committee Pack**, with sources and dates.
-
-    > [!Hint] Building the workbook can take a few minutes. Select the thought process to watch what Cowork is doing, or go back to your Step 1 chat while the task finishes.
+    > [!Hint] Building the workbook can take a few minutes. Select the thought process to watch what Cowork is doing.
 
 ### 2b. Model the upside
 
-1. [] In the same Cowork chat, select **Litware Committee Pack** to open the workbook next to the chat.
-1. [] In Copilot in Excel, enter:
+1. [] In the same Cowork task, enter:
 
-    +++Using LSEG, add a "Scenarios" sheet with worst, middle and best cases (bear, base, bull), using the lowest, average and highest FY2 earnings-per-share forecasts and Litware's current share price. Make the price-to-earnings (P/E) multiple an editable input for each case and use formulas to show the implied share price and % upside or downside.+++
+    ++Using LSEG, add a "Scenarios" sheet with worst, middle and best cases (bear, base, bull), using the lowest, average and highest FY2 earnings-per-share forecasts and Litware's current share price. Make the price-to-earnings (P/E) multiple an editable input for each case and use formulas to show the implied share price and % upside or downside.++
 
 1. [] Check that a **Scenarios** sheet appears, built on LSEG forecasts and share price, with LSEG cited.
+1. [] Select **Litware Committee Pack** in the task to open the workbook next to the chat and check the new sheet.
 1. [] On the **Scenarios** sheet, change one P/E multiple and watch the implied price and upside update.
 
-    > [!Knowledge] You didn't re-explain anything. Copilot in Excel picked up the context from the workbook, and these are real formulas you can check.
+    > [!Knowledge] You didn't re-explain anything. Cowork kept the context from the task, and these are real formulas you can check.
 
 ### 2c. Check that it's financially sound
 
-1. [] In Copilot in Excel, enter:
+1. [] In the same Cowork task, enter:
 
-    +++Using Moody's, add a "Credit" sheet with a credit SWOT for Litware (strengths, weaknesses, opportunities and threats) and the factors that could lead to a rating upgrade or downgrade.+++
+    ++Using Moody's, add a "Credit" sheet with a credit SWOT for Litware (strengths, weaknesses, opportunities and threats) and the factors that could lead to a rating upgrade or downgrade.++
 
 1. [] Check that a **Credit** sheet appears with a SWOT and upgrade and downgrade drivers, sourced from Moody's.
 
@@ -323,9 +375,9 @@ This is a long-running task, so you'll use Cowork. Cowork creates the workbook a
 
 ### 3a. Pressure-test your view (stretch goal)
 
-1. [] In Copilot, go back to your chat from Step 1, then enter:
+1. [] In the same Cowork task, continuing from Step 2, enter:
 
-    +++My view: we should buy more Litware because its strong profits and earnings growth justify its high share price. Using the Litware Committee Pack and the latest data from LSEG and Moody's, pressure-test this view: give the evidence for and against, the strongest case against buying, and the questions the committee is likely to ask.+++
+    ++My view: we should buy more Litware because its strong profits and earnings growth justify its high share price. Using the Litware Committee Pack and the latest data from LSEG and Moody's, pressure-test this view: give the evidence for and against, the strongest case against buying, and the questions the committee is likely to ask.++
 
 1. [] Check that you see evidence on both sides, the strongest counter-argument and likely committee questions, each backed by sourced figures.
 
@@ -333,9 +385,9 @@ This is a long-running task, so you'll use Cowork. Cowork creates the workbook a
 
 ### 3b. Write the committee memo
 
-1. [] In the same chat, enter:
+1. [] In the same Cowork task, enter:
 
-    +++Turn this into a Word memo for the investment committee, reusing the workbook's charts. Cite LSEG, FactSet and Moody's as the source for every number, and flag any missing data.+++
+    ++Turn this into a Word memo for the investment committee, reusing the workbook's charts. Cite LSEG, FactSet and Moody's as the source for every number, and flag any missing data.++
 
 1. [] Check that every number in the memo is cited, the workbook charts are reused and any gaps in the data are flagged.
 
@@ -345,8 +397,8 @@ This is a long-running task, so you'll use Cowork. Cowork creates the workbook a
 |:---|:---|
 | Copilot answers without a source | Start the prompt with _Using LSEG_ or _Using Moody's_. |
 | The first answer from a connector is slow | Wait a few seconds and ask again. |
-| Copilot asks which company or ticker | Reply +++Litware (LITW)+++. |
-| Workbook steps don't apply to the right file | Open **Litware Committee Pack** next to your Cowork chat and start the prompt with _In Litware Committee Pack_. |
+| Copilot asks which company or ticker | Reply ++Litware (LITW)++. |
+| Workbook steps don't apply to the right file | In the same Cowork task, start the prompt with _In Litware Committee Pack_. |
 
 ## Checkpoint
 
@@ -360,7 +412,15 @@ This is a long-running task, so you'll use Cowork. Cowork creates the workbook a
 - **Excel analysis on verified data, in minutes**, with real formulas you can trace back to the source.
 - **Reusable for any company.** Swap Litware for another company and run the same prompts.
 
-Other connectors that fit this pattern: S&P Global and Morningstar.
+The same pattern works with other connectors. Try them in your own tenant for similar scenarios.
+
+| S&P Global | Morningstar |
+|:---:|:---:|
+| !IMAGE[S&P Global logo](instructions360859/connector-sp-global.png "S&P Global"){200} | !IMAGE[Morningstar logo](instructions360859/connector-morningstar.png "Morningstar"){200} |
+
+_Logos are trademarks of their respective owners._
+
+> [!Hint] In this track, Copilot picked skills for you based on what you asked. You can also call a skill by name with a slash command. To try that, take the [engineering track](#engineering-find-whats-blocking).
 
 When you're done, go to [Bring your own app](#bring-your-own-app-zava-expense), or [choose another track](#choose-your-track).
 
@@ -368,7 +428,7 @@ When you're done, go to [Bring your own app](#bring-your-own-app-zava-expense), 
 
 # Legal: Can we sign on the 10th?
 
-_About 15 minutes · Work IQ (email and Teams), iManage_Lab · Word (Copilot), Copilot Cowork_
+_About 20 minutes · Work IQ (email and Teams), iManage_Lab · Copilot Cowork_
 
 Zava wants Trey Research's AI to make up to 4 million underwriting decisions a month: a five-year, $14.75 million deal. Regulators in Colorado and New York hold the insurer responsible for vendor AI. Zava trains the AI on its own claims data, so it must own what gets built.
 
@@ -384,116 +444,153 @@ Luc has pinged you on Teams:
 
 > Morning Emil. Have you had a chance to look at Trey Research's contract? We'd like to sign at the session with them on the 10th so we can go live on the 13th. Anything you need from me?
 
-You'll use three prompts in one Word chat and one in Cowork, plus an optional fifth, and you'll approve everything.
+You'll do it all in one Copilot Cowork task: four prompts, plus an optional fifth. Cowork reads your email and Teams, reads the playbook in iManage, and works on the agreement in your OneDrive, opening it right next to the chat. You approve every edit and every invite.
 
-!IMAGE[Steps 1 to 3 in the Word Copilot pane give the backstory, comments on clauses that break the playbook, and tracked changes. Step 4 in Cowork, opened from Word, gives a one-page negotiation sheet and a prep invite for Luc and Hemanti. Optional Step 5 saves the sheet to iManage.](instructions360859/legal-workflow.png "How the legal track flows")
+!IMAGE[Steps 1 to 4 run in one Copilot Cowork task. Step 1 gives the backstory from email and Teams, Step 2 adds comments on clauses that break the playbook, Step 3 adds tracked changes for the two must-haves, and Step 4 gives a one-page negotiation sheet and a prep invite for Luc and Hemanti. Optional Step 5 saves the sheet to iManage.](instructions360859/legal-cowork-workflow.png "How the legal track flows")
 
 ## Before you start
 
-- [] **iManage_Lab** shows as connected.
-- [] You can see Luc's message in Teams.
+First, check that Luc's message is waiting for you in Teams. Then you'll set up Cowork.
 
-## Open the agreement in Word
+> [!Knowledge] iManage is a document management system that law firms and legal teams use to store contracts, playbooks and other matter documents. **iManage_Lab** is the lab version of the iManage connector.
 
-1. [] In Copilot, select the app launcher (the 3×3 grid of dots) in the top-left corner.
-1. [] Select **More apps**, then **OneDrive**.
-1. [] In the left pane, select **My files**, then open the **Trey Research** folder.
-1. [] Double-click **Trey Research Vendor Agreement v4.2** to open it in Word.
-1. [] In Word, select the **Copilot** icon in the top-right corner to open the Copilot pane.
+### Read Luc's message in Teams
 
-> [!Knowledge] The iManage matter @[Trey Research – AI Platform Agreement](`Start-Process "https://mock-imanage.yellowsand-9530f5dc.eastus.azurecontainerapps.io/work/link/w/Dev!1870"`){PowerShell} holds the @[Zava AI Procurement Playbook v2.1](`Start-Process "https://mock-imanage.yellowsand-9530f5dc.eastus.azurecontainerapps.io/work/link/d/DEV!252567.1"`){PowerShell}: Zava's rules for what it will and won't accept in AI contracts. Open it to see what Copilot will read. Its Drafts folder is empty until Step 5.
+1. [] Select **Microsoft Edge** on the taskbar, then go to +++https://teams.cloud.microsoft/+++.
+1. [] In the left rail, select **Chat**.
+1. [] Under **Chats**, select **Luc Lacombe**.
+1. [] Check that you see Luc's message asking whether you've looked at Trey Research's contract and whether you can sign on the 10th.
+
+    !IMAGE[Microsoft Teams on the web with the Chat view open. Luc Lacombe is selected under Chats, and his message about signing Trey Research's contract on the 10th is shown in the conversation.](instructions360859/legal-teams-luc-message.png "Luc's message in Teams"){600}
+
+> [!Knowledge] The iManage matter @[Trey Research – AI Platform Agreement](`Start-Process "https://mock-imanage.yellowsand-9530f5dc.eastus.azurecontainerapps.io/work/link/w/Dev!1870"`){PowerShell} holds the @[Zava AI Procurement Playbook v2.1](`Start-Process "https://mock-imanage.yellowsand-9530f5dc.eastus.azurecontainerapps.io/work/link/d/DEV!252567.1"`){PowerShell}: Zava's rules for what it will and won't accept in AI contracts. Open it to see what Cowork will read. Section 14 lists six hard stops, positions Zava never concedes. Its Drafts folder is empty until Step 5.
+
+### Set up Copilot Cowork
+
+Cowork uses only the plugins you turn on, so first turn on iManage_Lab.
+
+1. [] Open a new browser tab and go to +++https://copilot.cloud.microsoft/+++.
+1. [] Select **Cowork** at the top of the left pane.
+1. [] In the left pane, select **Customize**.
+1. [] Next to **Added**, select **Manage all**.
+
+    !IMAGE[The Cowork Customize page, with Customize highlighted in the left pane and Manage all highlighted next to the Added list of connectors.](instructions360859/rebrand-cowork-customize.png "Open Customize, then Manage all"){600}
+
+1. [] Turn on **iManage_Lab**.
+1. [] Turn off **Fabric IQ**, which is on by default. Leave every other plugin off.
+
+    !IMAGE[The Added list in Cowork Customize, with iManage_Lab turned on and Fabric IQ, Moodys_Lab, SalesDesk_Lab, LSEG_Lab, FactSet_Lab, EngHub_Lab and GitHub_Lab turned off.](instructions360859/rebrand-legal-cowork-customize.png "Turn on iManage_Lab"){600}
+
+1. [] In the left pane, select **New task**.
+
+    !IMAGE[The Copilot left pane with the Cowork tab selected and New task highlighted below it.](instructions360859/copilot-new-cowork-task.png "Start a new Cowork task"){600}
+
+> [!Knowledge] You don't need to turn on Outlook, Teams or Word. Cowork has them built in.
 
 ## Step 1: Catch up
 
-_Word, Copilot pane, Work IQ_
+_Copilot Cowork, new task, Work IQ (Outlook and Teams)_
 
-1. [] With the agreement open, in the Copilot pane, enter:
+1. [] In the new task, enter:
 
-    +++Catch me up on the Trey Research deal in five bullets: what Hemanti and Luc asked for, what we've decided, and what's still open.+++
+    ++Catch me up on the Trey Research deal in five bullets: what Hemanti and Luc asked for, what we've decided, and what's still open.++
 
-1. [] Check that the catch-up includes:
+1. [] When the answer appears, select **items complete** above it to expand Cowork's steps. Check that Cowork got Hemanti's email from **Outlook** and read the chat in **Teams**.
 
-    - Hemanti's ask: Zava must own the fine-tuned model.
-    - Luc's ask: no more abrupt model retirements. The last vendor gave two weeks' notice and Zava couldn't quote for a week.
-    - What's still open: the draft meets neither ask. Trey Research owns models trained on Zava's data (§9.1), and can change or retire a model on 15 days' notice with no Zava veto (§§7.2–7.5).
-    - Other gaps in the draft, such as the six-month liability cap, patent-only indemnity, no audit rights, and data returned only in Trey Research's format.
-    - Links from each bullet to Hemanti's email or the Teams chat.
+    !IMAGE[Cowork's steps for the catch-up: searching for the Trey Research deal across email, Teams, files and calendar, searching people for Hemanti and Luc, getting Hemanti's email from Outlook and listing the Teams chat messages. Below, the answer starts with I based this on Hemanti's 12 Oct email and your 20 Oct Teams chat with her and Luc.](instructions360859/legal-cowork-catch-up.png "Cowork's steps for the catch-up"){600}
 
-    > [!Knowledge] Luc only asked if you can sign. Copilot pulled the backstory from an older email and a Teams chat, then checked it against the open draft, without you leaving the contract.
+1. [] Check that the catch-up:
+
+    - Covers both asks: **Hemanti** wants Zava to own the fine-tuned model, and **Luc** wants protection from sudden model changes.
+    - Says what's decided and what's still open before December 10.
+    - Lists **Sources** under the answer, linking to Hemanti's email and the Teams chat.
+
+    > [!Knowledge] Luc only asked if you can sign. Cowork pulled the backstory from an older email and a Teams chat, so you know what the business needs before you open the contract.
 
 ## Step 2: Flag the hard stops
 
-_Same Word chat, iManage_Lab_
+_Same Cowork task, iManage_Lab, Word_
 
-1. [] In the same Copilot pane, enter:
+1. [] In the same task, enter:
 
-    +++Which clauses in this agreement break the hard stops in our Zava AI Procurement Playbook in iManage? Add one short comment on each with the playbook section.+++
+    ++Which clauses in the Trey Research Vendor Agreement v4.2 in my OneDrive break the hard stops in our Zava AI Procurement Playbook in iManage? Add one short comment on each in the document, citing the playbook section.++
 
-1. [] When the **Let Copilot access iManage_Lab?** card appears, select the arrow next to **Approve**, then **Approve all in this chat**.
+1. [] Check that **iManage_Lab** appears under **Plugins** in the **Workspace** panel on the right. Cowork is reading the playbook from iManage.
+1. [] When the **Edit file?** card appears, select **Always allow: edits to this file**.
 
-    > [!Alert] Don't select Approve on its own. Approve all in this chat covers this step and Step 3, so you won't be asked again for each call.
+    > [!Alert] Choose Always allow: edits to this file. It covers this step and Step 3, so you won't be asked again for each edit. Changes are saved to the agreement in your OneDrive as they're made.
 
-    !IMAGE[The Let Copilot access iManage_Lab card, with the arrow next to Approve opened to show Approve all in this chat.](instructions360859/legal-imanage-approve-all.png "Approve all in this chat")
+    !IMAGE[The Edit file card for Trey Research Vendor Agreement v4.2, with 8 proposed changes, Add comment 8, and the Cancel and Always allow: edits to this file buttons. iManage_Lab is listed under Plugins in the Workspace panel.](instructions360859/legal-cowork-edit-file.png "Always allow edits to this file"){600}
 
-1. [] Scroll through the agreement as Copilot works. If Word shows a **Done** bar at the bottom, select it when Copilot finishes.
-1. [] Check that all six of the playbook's hard stops are flagged, each with a short comment that names the hard stop and cites the playbook section:
+1. [] Check that the answer says Trey Research's draft breaks all six hard stops, and that each clause now has a short comment in the agreement, posted under your name.
+1. [] Check that the answer has a table matching each hard stop in the playbook to the Trey Research clause that breaks it, with the playbook section cited.
 
-    - Outputs Zava doesn't own.
-    - Liability with nothing uncapped.
-    - Capped subcontractor liability.
-    - Data returned only in Trey Research's format.
-    - Arbitration in Austin.
-    - A class-action waiver.
+    !IMAGE[Cowork's answer: Trey's draft breaks all six hard stops in the playbook, with a table of each hard stop, the Trey clause that breaks it and the problem.](instructions360859/legal-cowork-hard-stops.png "Six hard stops flagged"){600}
 
-1. [] Select a **Zava AI Procurement Playbook** citation in Copilot's answer to open the playbook in iManage and check the section yourself.
+1. [] Below the table, find the other serious gaps, including model ownership (Hemanti's concern) and model-change notice (Luc's concern). You'll fix both in Step 3.
 
-    > [!Knowledge] The playbook never left iManage, and nothing was uploaded. Copilot read Zava's rules where they live and applied them to the contract in front of you.
+    > [!Knowledge] The playbook never left iManage, and nothing was uploaded. Cowork read Zava's rules where they live and applied them to the contract in your OneDrive.
 
 ## Step 3: Fix the two must-haves
 
-_Same Word chat, iManage_Lab_
+_Same Cowork task, iManage_Lab, Word_
 
-1. [] In the same Copilot pane, enter:
+1. [] In the same task, enter:
 
-    +++Now redline this so we own the fine-tuned model and get 60 days' notice and our approval before any model change or retirement. Keep the edits minimal, with one short comment on each.+++
+    ++Now redline that agreement so we own the fine-tuned model and get 60 days' notice and our approval before any model change or retirement. Use tracked changes, keep the edits minimal, with one short comment on each.++
 
-1. [] Scroll through the agreement as Copilot works. If Word shows a **Done** bar at the bottom, select it when Copilot finishes.
-1. [] Check that each change appears as a tracked change with a short comment:
+    > [!Hint] This step can take a few minutes while Cowork reads the clauses and makes the edits.
 
-    - Zava owns the models fine-tuned on its data, including their weights, while Trey Research keeps its base technology (§9.1).
-    - Trey Research can't change or retire a model without 60 days' notice and Zava's written approval, and continuing to use the platform doesn't count as approval (Section 7).
-    - The comments from Step 2 are still there.
+1. [] Check that the answer lists the tracked changes, each with a short comment citing the playbook:
 
-    > [!Knowledge] One business sentence, no section numbers. Copilot found the clauses itself and wrote in the positions. Hemanti's and Luc's must-haves are now contract language.
+    - **Model ownership:** Zava owns models trained on its data, and Trey Research must hand them over.
+    - **Model changes:** longer notice and Zava's approval before any change or retirement.
+
+1. [] In the answer, select the **Trey Research Vendor Agreement v4.2.docx** link. The agreement opens in Word next to the chat.
+1. [] Scroll to **Section 7** and **Section 9**. Check that deleted text is struck through and new text is underlined, in red, and that comment markers appear in the right margin.
+
+    !IMAGE[The agreement open in Word next to the Cowork chat, with tracked changes in red in Section 7.4 and Section 9.1 and comment markers in the right margin.](instructions360859/legal-cowork-redline.png "The redline in the agreement")
+
+1. [] Select **X** in the top-right corner of the agreement to go back to the chat.
+
+    > [!Knowledge] One business sentence, no section numbers. Cowork found the clauses itself and wrote in the positions. Hemanti's and Luc's must-haves are now contract language.
 
 ## Step 4: Build the negotiation pack
 
-_Copilot Cowork opened from Word, iManage_Lab, Work IQ_
+_Same Cowork task, iManage_Lab, Work IQ (Calendar)_
 
-> [!Alert] In Cowork, select **Customize** and turn on iManage_Lab. Then turn off the Fabric IQ plugin, which is on by default.
+1. [] In the same task, enter:
 
-1. [] Open Cowork from Word, then enter:
+    ++Get me ready for the December 10 session with Trey Research. Make a one-sheet negotiation list with just my redline, the hard-stop flags and the top gaps against what Colorado and New York insurance regulators expect against our playbook in iManage. Then send Luc and Hemanti a 30-minute prep invite for this week with a five-line summary as agenda.++
 
-    +++Get me ready for the December 10 session with Trey Research. Make a one-sheet negotiation list with just my redline, the hard-stop flags and the top gaps against what Colorado and New York insurance regulators expect against our playbook in iManage. Then send Luc and Hemanti a 30-minute prep invite for this week with a five-line summary as agenda.+++
+1. [] Check the **Steps** list in the **Workspace** panel: check the playbook and regulator expectations (Colorado, New York), build the one-sheet negotiation list, and send the prep invite.
+1. [] When the **Create calendar event?** card appears, check it before you send it:
 
-1. [] Check that Cowork creates a one-page negotiation sheet in your OneDrive with:
+    - **Attendees:** Hemanti Baishya and Luc Lacombe, at a time that works. To change it, select **Pick custom time**.
+    - A short agenda that covers your redline, the hard stops and the regulator gaps.
 
-    - The six hard stops, each with the playbook section it breaks and no fallback.
-    - Your other redline positions. Cowork notes that your model-change redline goes further than the playbook asks, and suggests the fallback.
-    - The top gaps against New York's and Colorado's AI rules for insurers, such as no audit rights, no bias testing and no duty to cooperate with regulators, each linked to the regulation.
+    !IMAGE[The Create calendar event card: a 30-minute slot, the title Trey Research – Dec 10 negotiation prep, Hemanti Baishya and Luc Lacombe as attendees, a numbered agenda, and the Cancel and Send buttons. The negotiation list Word document is below the card.](instructions360859/legal-cowork-invite.png "Check the invite, then send it")
 
-1. [] In the **Regulatory cooperation** row, compare what regulators expect with the playbook ask.
-1. [] When the **Create calendar event?** card appears for a 30-minute prep meeting with Luc and Hemanti, check the five-line agenda and approve it.
+1. [] Select **Send**.
 
-    > [!Knowledge] New York expects AI vendors to cooperate with regulators. Zava's playbook only asks to be told about an inquiry. Cowork put the regulations and the playbook side by side, so you can see that the playbook needs updating, not just the contract.
+    > [!Alert] Nothing is sent until you select Send. Cowork asks before it sends anything on your behalf.
+
+1. [] Under **Output** in the **Workspace** panel, select **Trey Research Negotiation List** to open it in Word next to the chat.
+1. [] Check that the one-sheet covers your redline, the hard stops and the regulator gaps (Colorado and New York), with the playbook cited throughout.
+
+    !IMAGE[The Trey Research Negotiation List for December 10, 2026, open in Word next to the chat, with tables for the redline, the hard stops and the top regulator gaps.](instructions360859/legal-cowork-negotiation-sheet.png "The negotiation sheet")
+
+1. [] In the regulator gaps, compare **What regulators expect** with **Our ask (Playbook)**.
+
+    > [!Knowledge] Where the regulators expect more than the playbook asks, the playbook needs updating, not just the contract. Cowork put the regulations and the playbook side by side so you can see it.
 
 ## Step 5 (optional): File it in the matter
 
-_Same Cowork chat, iManage_Lab_
+_Same Cowork task, iManage_Lab_
 
-1. [] In the same Cowork chat, enter:
+1. [] In the same task, enter:
 
-    +++Save the negotiation sheet to the Drafts folder of the Trey Research matter in iManage.+++
+    ++Save the negotiation sheet to the Drafts folder of the Trey Research matter in iManage.++
 
 1. [] When the **iManage_Lab** approval card appears, approve it.
 1. [] Open the link to the saved file to see the negotiation sheet in the matter's Drafts folder.
@@ -504,30 +601,45 @@ _Same Cowork chat, iManage_Lab_
 
 | What happens | Try this |
 |:---|:---|
-| Step 1 doesn't find Hemanti's email or the Teams chat | Ask +++What did Hemanti send me about Trey Research?+++ then rerun Step 1. |
-| Comments or tracked changes don't appear in the agreement | Make sure the agreement is the active document, then rerun the step. |
-| Cowork says it can't find the playbook | Select **Customize**, check that **iManage_Lab** is on, then rerun Step 4. |
+| Step 1 doesn't find Hemanti's email or the Teams chat | Ask ++What did Hemanti send me about Trey Research?++ then rerun Step 1. |
+| Cowork says it can't find the playbook | Select **Customize**, check that **iManage_Lab** is on, then rerun the step. |
+| Cowork asks for permission to use iManage_Lab | Approve it. |
+| Cowork can't find the agreement | Check that **Trey Research Vendor Agreement v4.2** is in the **Trey Research** folder of your OneDrive, then rerun the step. |
+| You don't see the comments or tracked changes | Close the agreement and open it again from the link in Cowork's answer. |
+| Cowork asks you to approve each edit in Step 3 | Select **Always allow: edits to this file** on the next **Edit file?** card. |
 
 ## Checkpoint
 
-- [] Your catch-up linked to Hemanti's email and the Teams chat.
+- [] Your catch-up came from Hemanti's email and the Teams chat.
 - [] The agreement has comments on the hard stops and a redline for the two must-haves.
 - [] Cowork produced a one-page negotiation sheet and a prep invite for Luc and Hemanti.
 - [] (Optional) The negotiation sheet is in the matter's Drafts folder.
 
-Copilot did the reading, the redlining and the drafting across email, Teams and iManage. You stayed the lawyer: every change has a reason, and nothing went out without your approval.
+Cowork did the reading, the redlining and the drafting across email, Teams and iManage. You stayed the lawyer: every change has a reason, and nothing went out without your approval.
 
-Other connectors that fit this pattern: LexisNexis and Legal Data Hunter.
+## What you take away
 
-> [!Note] Fictional parties adapted from the Harvey lab (MIT license). Not legal advice.
+- **Matter information from your source of record.** Copilot works with your matter information right where it lives, in the matter management system you already use, while keeping privileged access in place.
+- **Up-to-date legal research in context.** Copilot researches what applies to the matter, such as what regulators expect, and grounds it in the matter's own documents.
+- **Drafts and redlines, ready for review.** Copilot drafts and redlines contracts with ease, so lawyers can review and decide.
+
+The same pattern works with other connectors. Try them in your own tenant for similar scenarios.
+
+| Harvey |
+|:---:|
+| !IMAGE[Harvey logo](instructions360859/rebrand-connector-harvey.png "Harvey"){200} |
+
+_Logos are trademarks of their respective owners._
 
 When you're done, go to [Bring your own app](#bring-your-own-app-zava-expense), or [choose another track](#choose-your-track).
+
+<sub>Fictional parties adapted from HLAB (MIT license). Not legal advice.</sub>
 
 ===
 
 # Productivity: Prep a sales pitch
 
-_About 10 minutes, plus a stretch step · Salesforce_Lab, Teams, Outlook · Copilot Cowork_
+_About 10 minutes, plus a stretch step · SalesDesk_Lab, Teams, Outlook · Copilot Cowork_
 
 You own the Lakeshore Retail account. Lakeshore Retail has piloted the Aurora smart-home hub in 50 stores for six weeks, ahead of the public launch event on December 8. Your next step is the expansion pitch to roll it out to all 400 stores.
 
@@ -536,40 +648,71 @@ You own the Lakeshore Retail account. Lakeshore Retail has piloted the Aurora sm
 
 You'll prep the call, handle the price objection and book the security review, without leaving Copilot.
 
-!IMAGE[All steps run in one Copilot Cowork task. Step 1 gives a call brief. Step 2 gives a grounded answer from the Teams call and win and loss history. Step 3 creates an Outlook invite and a Salesforce activity after you approve each. The stretch step logs the pilot review call.](instructions360859/productivity-workflow.png "How the productivity track flows")
+!IMAGE[All steps run in one Copilot Cowork task. Step 1 gives a call brief. Step 2 gives a grounded answer from the Teams call and win and loss history. Step 3 creates an Outlook invite and a SalesDesk activity after you approve each. The stretch step logs the pilot review call.](instructions360859/rebrand-productivity-workflow.png "How the productivity track flows")
 
 ## Before you start
 
-- [] **Salesforce_Lab** shows as connected.
-- [] Open **Copilot Cowork** and start a new task. Run every step in this one conversation, because your Salesforce changes are kept only within it.
-- [] In Cowork, select **Customize** and turn on **Salesforce_Lab**. Then turn off the **Fabric IQ** plugin, which is on by default.
+First, check that Atul's email is waiting for you in Outlook. Then you'll set up Cowork.
 
-> [!Knowledge] To see what Copilot will read, open the @[Lakeshore Retail account](`Start-Process "https://mock-salesforce.yellowsand-9530f5dc.eastus.azurecontainerapps.io/lightning/r/Account/001Hp0000000001IAA/view"`){PowerShell} in Salesforce_Lab.
+> [!Knowledge] SalesDesk is a customer relationship management (CRM) system that sales teams use to track accounts, contacts and deals. **SalesDesk_Lab** is the lab version of the SalesDesk connector.
+
+### Read Atul's email in Outlook
+
+1. [] Select **Microsoft Edge** on the taskbar, then go to +++https://outlook.cloud.microsoft/+++.
+1. [] In the search box at the top, paste ++Aurora expansion pitch++ and press Enter.
+1. [] Open the email from **Atul Manohar** titled _Aurora expansion pitch – Nanami joining, security docs_.
+1. [] Check that it says Nanami, Lakeshore Retail's CFO, wants the all-in cost for 400 stores, and that Jahidi in IT wants Zava's security documentation first.
+
+    !IMAGE[Outlook on the web with Aurora expansion pitch in the search box. Atul Manohar's email, Aurora expansion pitch – Nanami joining, security docs, is open, with the paragraphs about Nanami's all-in cost request and Jahidi's security documentation request highlighted.](instructions360859/productivity-outlook-atul-email.png "Atul's email in Outlook"){600}
+
+> [!Knowledge] To see what Copilot will read, open the @[Lakeshore Retail account](`Start-Process "https://mock-salesdesk.yellowsand-9530f5dc.eastus.azurecontainerapps.io/lightning/r/Account/001Hp0000000001IAA/view"`){PowerShell} in SalesDesk_Lab.
+
+### Set up Copilot Cowork
+
+Cowork uses only the plugins you turn on, so first turn on SalesDesk_Lab.
+
+1. [] Open a new browser tab and go to +++https://copilot.cloud.microsoft/+++.
+1. [] Select **Cowork** at the top of the left pane.
+1. [] In the left pane, select **Customize**.
+1. [] Next to **Added**, select **Manage all**.
+
+    !IMAGE[The Cowork Customize page, with Customize highlighted in the left pane and Manage all highlighted next to the Added list of connectors.](instructions360859/rebrand-cowork-customize.png "Open Customize, then Manage all"){600}
+
+1. [] Turn on **SalesDesk_Lab**.
+1. [] Turn off **Fabric IQ**, which is on by default. Leave every other plugin off.
+
+    !IMAGE[The Added list in Cowork Customize, with SalesDesk_Lab turned on and Fabric IQ, Moodys_Lab, LSEG_Lab, FactSet_Lab, iManage_Lab, EngHub_Lab and GitHub_Lab turned off.](instructions360859/rebrand-productivity-cowork-customize.png "Turn on SalesDesk_Lab"){600}
+
+1. [] In the left pane, select **New task**. Run every step in this one task, because your SalesDesk changes are kept only within it.
+
+    !IMAGE[The Copilot left pane with the Cowork tab selected and New task highlighted below it.](instructions360859/copilot-new-cowork-task.png "Start a new Cowork task"){600}
+
+> [!Knowledge] You don't need to turn on Outlook or Teams. Cowork has them built in.
 
 ## Step 1: Prep the call
 
-_Copilot Cowork, Salesforce_Lab call-prep skill, Outlook_
+_Copilot Cowork, SalesDesk_Lab call-prep skill, Outlook_
 
 1. [] In the Cowork task, enter:
 
-    +++Use Salesforce to prep me for my Lakeshore Retail expansion pitch.+++
+    ++Use SalesDesk to prep me for my Lakeshore Retail expansion pitch.++
 
 1. [] Check that the brief includes:
 
-    - The meeting: _Lakeshore Retail – Aurora expansion pitch_, Friday, November 20, 10:00–11:00 ET.
+    - The meeting: _Lakeshore Retail – Aurora expansion pitch_ on Friday, November 20.
     - The deal: the _Lakeshore Retail – Aurora 400-store rollout_ opportunity, Proposal/Price Quote, $1,200,000, closing December 31.
-    - Who's in the room: Atul (champion), Jahidi (IT security) and Nanami (CFO). Nanami isn't a Salesforce contact yet, so Copilot flags her as new.
+    - Who's in the room: Atul (champion), Jahidi (IT security) and Nanami (CFO). Nanami isn't a SalesDesk contact yet, so Copilot flags her as new.
     - What to cover: the price comparison, the security review and next steps.
 
     > [!Knowledge] The layout can vary between runs. The content is what matters. One prompt turned the CRM and your inbox into a brief that already points to the pitch's two risks.
 
 ## Step 2: Handle the price objection
 
-_Same conversation, Teams meeting transcript, Salesforce_Lab win and loss history_
+_Same conversation, Teams meeting transcript, SalesDesk_Lab win and loss history_
 
 1. [] In the same task, enter:
 
-    +++Lakeshore Retail says Boulder Innovations is 20% cheaper. How should I handle that? Use what they said on the pilot review call and our win/loss history against Boulder Innovations.+++
+    ++Lakeshore Retail says Boulder Innovations is 20% cheaper. How should I handle that? Use what they said on the pilot review call and our win/loss history against Boulder Innovations.++
 
 1. [] Check that the answer includes:
 
@@ -578,20 +721,20 @@ _Same conversation, Teams meeting transcript, Salesforce_Lab win and loss histor
     - The loss: _Tailspin Toys – Aurora 120-store rollout_, lost on price after leading with a discount.
     - The recommendation: don't match the 20%. Lead with the all-in cost for 400 stores, and offer 12% plus bundled install.
 
-    > [!Knowledge] The numbers came from the Teams meeting, and the proof that the approach works came from Salesforce.
+    > [!Knowledge] The numbers came from the Teams meeting, and the proof that the approach works came from SalesDesk.
 
 ## Step 3: Book the security review and log it
 
-_Same conversation, Salesforce_Lab schedule-meeting skill, Outlook calendar, write actions_
+_Same conversation, SalesDesk_Lab schedule-meeting skill, Outlook calendar, write actions_
 
 1. [] In the same task, enter:
 
-    +++Send Jahidi and Atul a calendar invite for a 45-minute Aurora security review next week, and log it on the Lakeshore Retail opportunity.+++
+    ++Send Jahidi and Atul a calendar invite for a 45-minute Aurora security review next week, and log it on the Lakeshore Retail opportunity.++
 
 1. [] Review the two or three free slots Copilot proposes for next week.
 1. [] At the first confirmation, check the invite preview and approve it. Copilot creates the Outlook invite.
-1. [] At the second confirmation, check the Salesforce activity preview and approve it. Copilot logs it on the opportunity.
-1. [] Open the link to the Salesforce record and check that the changes from your conversation appear.
+1. [] At the second confirmation, check the SalesDesk activity preview and approve it. Copilot logs it on the opportunity.
+1. [] Open the link to the SalesDesk record and check that the changes from your conversation appear.
 
     > [!Note] _Next week_ follows today's date, so the proposed slots depend on when you run the lab.
 
@@ -599,21 +742,21 @@ _Same conversation, Salesforce_Lab schedule-meeting skill, Outlook calendar, wri
 
 1. [] In the same task, enter:
 
-    +++Log the pilot review call on the Lakeshore Retail opportunity.+++
+    ++Log the pilot review call on the Lakeshore Retail opportunity.++
 
 1. [] Approve the confirmation, then open the opportunity's **Activity** tab to see the completed meeting task dated October 22.
 
-> [!Hint] Prefer not to make changes? Try +++Draft an email to Atul and Nanami ahead of the pitch to confirm the agenda.+++ It stays an Outlook draft.
+> [!Hint] Prefer not to make changes? Try ++Draft an email to Atul and Nanami ahead of the pitch to confirm the agenda.++ It stays an Outlook draft.
 
 ## If it goes wrong
 
 | What happens | Try this |
 |:---|:---|
-| Copilot asks which account or meeting | Reply +++The Lakeshore Retail expansion pitch.+++ |
-| The brief doesn't mention Nanami | Ask +++Who's on the call, and what does each of them care about?+++ |
-| Step 2 answers from general knowledge | Reply +++Use the Teams transcript of the Lakeshore Retail pilot review and our closed deals against Boulder Innovations in Salesforce.+++ |
-| Slot picking runs long | Reply +++The first slot.+++ |
-| Copilot asks whether to email or invite | Reply +++Send the invite.+++ |
+| Copilot asks which account or meeting | Reply ++The Lakeshore Retail expansion pitch.++ |
+| The brief doesn't mention Nanami | Ask ++Who's on the call, and what does each of them care about?++ |
+| Step 2 answers from general knowledge | Reply ++Use the Teams transcript of the Lakeshore Retail pilot review and our closed deals against Boulder Innovations in SalesDesk.++ |
+| Slot picking runs long | Reply ++The first slot.++ |
+| Copilot asks whether to email or invite | Reply ++Send the invite.++ |
 
 ## Checkpoint
 
@@ -623,7 +766,13 @@ _Same conversation, Salesforce_Lab schedule-meeting skill, Outlook calendar, wri
 
 Copilot moved from finding information to finishing the job: a brief, a grounded answer, a booked meeting and an updated CRM, with you approving each change.
 
-Other connectors that fit this pattern: Notion, Intercom and Zoom.
+The same pattern works with other connectors. Try them in your own tenant for similar scenarios.
+
+| Notion | Intercom | Zoom |
+|:---:|:---:|:---:|
+| !IMAGE[Notion logo](instructions360859/connector-notion.png "Notion"){200} | !IMAGE[Intercom logo](instructions360859/connector-intercom.png "Intercom"){200} | !IMAGE[Zoom logo](instructions360859/connector-zoom.png "Zoom"){200} |
+
+_Logos are trademarks of their respective owners._
 
 When you're done, go to [Bring your own app](#bring-your-own-app-zava-expense), or [choose another track](#choose-your-track).
 
@@ -631,7 +780,7 @@ When you're done, go to [Bring your own app](#bring-your-own-app-zava-expense), 
 
 # Engineering: Find what's blocking
 
-_About 15 minutes · Jira and Confluence (synced), GitHub_Lab, Rovo_Lab, Teams · Copilot Chat, Copilot Cowork_
+_About 15 minutes · GitHub_Lab, EngHub_Lab, Teams · Copilot Chat, Copilot Cowork_
 
 You're the product manager for Aurora, a smart-home hub that retail stores use to track devices. Lakeshore Retail is piloting it, and on Monday, November 23, every pilot store goes live.
 
@@ -648,39 +797,54 @@ Atul, the pilot coordinator, has emailed again: hubs keep showing _Offline_ afte
 
 You won't change any code. You'll investigate in Copilot Chat, then switch to Copilot Cowork to act.
 
-!IMAGE[Steps 1 and 2 in Copilot Chat find the at-risk item and what it's waiting on across Jira, Confluence and GitHub. Steps 3 and 4 in Copilot Cowork send Tama a Teams message and create a one-slide sprint update.](instructions360859/engineering-workflow.png "How the engineering track flows")
+!IMAGE[Steps 1 and 2 in Copilot Chat find the at-risk item and what it's waiting on across EngHub, EngHub Docs and GitHub. Steps 3 and 4 in Copilot Cowork send Tama a Teams message and create a one-slide sprint update.](instructions360859/rebrand-engineering-workflow.png "How the engineering track flows")
 
 ## Before you start
 
-- [] **GitHub_Lab** and **Rovo_Lab** show as connected.
-- [] The **Jira** and **Confluence** synced connectors are available in your tenant.
+First, check that Atul's email is waiting for you in Outlook.
 
-> [!Knowledge] To see what Copilot will read, open the @[Aurora Sprint 24 board](`Start-Process "https://mock-atlassian.yellowsand-9530f5dc.eastus.azurecontainerapps.io/jira/software/projects/AUR/boards/57"`){PowerShell}, the @[ADR-014 page](`Start-Process "https://mock-atlassian.yellowsand-9530f5dc.eastus.azurecontainerapps.io/wiki/spaces/AUR/pages/98457"`){PowerShell} in Confluence and the @[aurora-status pull requests](`Start-Process "https://mock-github.yellowsand-9530f5dc.eastus.azurecontainerapps.io/zava-lab/aurora-status/pulls"`){PowerShell} in GitHub.
+> [!Knowledge] EngHub tracks the team's work items, EngHub Docs holds its design pages, and GitHub holds its code and pull requests. **GitHub_Lab** and **EngHub_Lab** are the lab versions of the GitHub and EngHub connectors. **EngHub_Lab** is EngHub's MCP server: one connector that reaches EngHub and EngHub Docs together.
+
+### Read Atul's email in Outlook
+
+1. [] Select **Microsoft Edge** on the taskbar, then go to +++https://outlook.cloud.microsoft/+++.
+1. [] In the search box at the top, paste ++Aurora pilot - offline status still wrong++ and press Enter.
+1. [] Open the email from **Atul Manohar** titled _Aurora pilot - offline status still wrong_, and scroll to his latest message.
+1. [] Check that it says pilot stores still see Aurora hubs marked offline after they reconnect, and that staff keep restarting devices that are working.
+
+    !IMAGE[Outlook on the web with Aurora pilot - offline status still wrong in the search box. Atul Manohar's email thread is open, with his latest message about hubs still marked offline highlighted.](instructions360859/engineering-outlook-atul-email.png "Atul's email in Outlook"){600}
+
+> [!Knowledge] To see what Copilot will read, open the @[Aurora Sprint 24 board](`Start-Process "https://mock-enghub.yellowsand-9530f5dc.eastus.azurecontainerapps.io/"`){PowerShell}, the @[ADR-014 page](`Start-Process "https://mock-enghub.yellowsand-9530f5dc.eastus.azurecontainerapps.io/wiki/spaces/AUR/pages/98457"`){PowerShell} in EngHub Docs and the @[aurora-status pull requests](`Start-Process "https://mock-github.yellowsand-9530f5dc.eastus.azurecontainerapps.io/zava-lab/aurora-status/pulls"`){PowerShell} in GitHub.
 
 ## Step 1: Check how the sprint is going
 
-_Copilot Chat, Jira_
+_Copilot Chat, EngHub_Lab_
 
-1. [] In Copilot, start a new chat, then enter:
+1. [] Open a new browser tab and go to +++https://copilot.cloud.microsoft/+++.
+1. [] In Copilot, select **Chat** at the top of the left pane, then select **New chat**.
 
-    +++What's the status of Aurora Sprint 24? Is anything at risk for the Lakeshore Retail pilot expansion?+++
+    !IMAGE[The Copilot left pane with the Chat tab selected and New chat highlighted below it.](instructions360859/copilot-new-chat.png "Start a new chat"){600}
 
-1. [] Check that you see a summary of the six Sprint 24 items, with one at risk: AUR-142, _Aurora hubs remain offline after reconnect_, with citations to the Jira items.
+1. [] Enter:
 
-    > [!Knowledge] The board is mostly green, and Copilot picks out the one item that matters to your customer.
+    ++What's the status of Aurora Sprint 24? Is anything at risk for the Lakeshore Retail pilot expansion?++
+
+1. [] Check that you see a summary of the Sprint 24 items, with one at risk: AUR-142, _Aurora hubs remain offline after reconnect_, with citations to the EngHub items.
+
+    > [!Knowledge] Most of the sprint is on track. Copilot picks out the one item that matters to your customer.
 
 ## Step 2: Find what AUR-142 is waiting on
 
-_Same chat, Jira, Confluence, GitHub_Lab_
+_Same chat, EngHub_Lab, GitHub_Lab_
 
 1. [] In the same chat, enter:
 
-    +++What's the current status of AUR-142, and what is it waiting on? Check Jira, Confluence and GitHub.+++
+    ++What's the current status of AUR-142, and what is it waiting on? Check EngHub, EngHub Docs and GitHub.++
 
 1. [] Check that the answer joins all three sources:
 
-    - Jira: AUR-142 is In Progress and at risk. Triin can't give a date until a design decision gets platform sign-off.
-    - Confluence: the pilot moves to the event-driven status service on November 20, and ADR-014 is still _Proposed_, with Tama Surya as the decision owner.
+    - EngHub: AUR-142 is In Progress and at risk. Triin can't give a date until a design decision gets platform sign-off.
+    - EngHub Docs: the pilot moves to the event-driven status service on November 20, and ADR-014 is still _Proposed_, with Tama Surya as the decision owner.
     - GitHub: PR #287 is open. It fixes only the old polling service, and Tama requested changes.
     - The answer: the fix is waiting on Tama's approval of ADR-014.
 
@@ -690,34 +854,61 @@ _Same chat, Jira, Confluence, GitHub_Lab_
 
 _Copilot Cowork, Teams_
 
-> [!Alert] In Cowork, select **Customize** and turn on GitHub_Lab and Rovo_Lab. Then turn off the Fabric IQ plugin, which is on by default.
+### Set up Copilot Cowork
 
-1. [] Open **Copilot Cowork** and start a new task. Cowork may not have your Chat conversation, so these prompts include the context they need.
+Cowork uses only the plugins you turn on, so first turn on GitHub_Lab and EngHub_Lab.
+
+1. [] In Copilot, select **Cowork** at the top of the left pane.
+1. [] In the left pane, select **Customize**.
+1. [] Next to **Added**, select **Manage all**.
+
+    !IMAGE[The Cowork Customize page, with Customize highlighted in the left pane and Manage all highlighted next to the Added list of connectors.](instructions360859/rebrand-cowork-customize.png "Open Customize, then Manage all"){600}
+
+1. [] Turn on **GitHub_Lab** and **EngHub_Lab**.
+1. [] Turn off **Fabric IQ**, which is on by default. Leave every other plugin off.
+
+    !IMAGE[The Added list in Cowork Customize, with EngHub_Lab and GitHub_Lab turned on and Fabric IQ, Moodys_Lab, SalesDesk_Lab, LSEG_Lab, FactSet_Lab and iManage_Lab turned off.](instructions360859/rebrand-engineering-cowork-customize.png "Turn on GitHub_Lab and EngHub_Lab"){600}
+
+1. [] In the left pane, select **New task**. Cowork may not have your Chat conversation, so these prompts include the context they need.
+
+    !IMAGE[The Copilot left pane with the Cowork tab selected and New task highlighted below it.](instructions360859/copilot-new-cowork-task.png "Start a new Cowork task"){600}
+
+> [!Knowledge] You don't need to turn on Teams or PowerPoint. Cowork has them built in.
+
+### Send the message
+
 1. [] Enter:
 
-    +++Send Tama Surya a Teams message. Ask Tama to approve ADR-014 so Triin can start the event-driven fix for AUR-142, and to re-review PR #287 once it's updated. Mention the November 20 cutover and include links to the ADR, the Jira item and the PR.+++
+    ++Send Tama Surya a Teams message. Ask Tama to approve ADR-014 so Triin can start the event-driven fix for AUR-142, and to re-review PR #287 once it's updated. Mention the November 20 cutover and include links to the ADR, the EngHub item and the PR.++
 
-1. [] Check the recipient and the message, then approve it.
+1. [] When Cowork shows the Teams message for confirmation, check the recipient and the message, then select **Send**.
 
 ## Step 4: Turn the sprint into a slide
 
-_Same Cowork task, Rovo_Lab sprint-to-slides skill_
+_Same Cowork task, EngHub_Lab sprint-to-slides skill_
 
-1. [] In the same task, enter +++/skill sprint-to-slides+++, press Shift+Enter for a new line, then enter:
+1. [] In the same task, type +++/sprint-to-slides+++ in the message box.
+1. [] In the list that appears, select **/sprint-to-slides** (from EngHub_Lab) to apply the skill.
 
-    +++Create one PowerPoint slide summarizing Aurora Sprint 24 for engineering leadership: what's on track, the one item at risk, what it's waiting on, and the next steps.+++
+    !IMAGE[The Cowork message box with /sprint-to-slides typed, and the /sprint-to-slides skill from EngHub_Lab highlighted in the list below.](instructions360859/rebrand-engineering-cowork-skill-picker.png "Select the sprint-to-slides skill"){600}
+
+1. [] Press Shift+Enter for a new line, then paste:
+
+    ++Create one PowerPoint slide summarizing Aurora Sprint 24 for engineering leadership: what's on track, the one item at risk, what it's waiting on, and the next steps.++
 
 1. [] Check that the slide shows the sprint goal and dates, AUR-142 at risk, the blocker (ADR-014 waiting on Tama), next steps with owners, and no invented delivery date.
 
-    > [!Knowledge] A partner skill turned live Jira and Confluence data into a leadership-ready slide in one step.
+    > [!Hint] **You chose the skill.** A skill is a set of expert instructions that comes with a connector. Here you named one with a slash command. EngHub's **sprint-to-slides** skill tells Cowork how a project manager reports on a sprint: read the sprint from EngHub, sort what's done, on track and at risk, find the blocker, and turn it into a slide.
+
+    > [!Knowledge] A partner skill turned live EngHub and EngHub Docs data into a leadership-ready slide in one step.
 
 ## If it goes wrong
 
 | What happens | Try this |
 |:---|:---|
-| Step 1 doesn't find the sprint | Ask +++Search Jira for the Aurora Sprint 24 work items.+++ |
-| Step 2 misses Confluence or GitHub | Ask +++Find ADR-014 in Confluence+++ or +++Search GitHub for a pull request that references AUR-142.+++ |
-| The skill returns an outline, not a slide | Reply +++Create the .pptx file with one slide.+++ |
+| Step 1 doesn't find the sprint | Ask ++Search EngHub for the Aurora Sprint 24 work items.++ |
+| Step 2 misses EngHub Docs or GitHub | Ask ++Find ADR-014 in EngHub Docs++ or ++Search GitHub for a pull request that references AUR-142.++ |
+| The skill returns an outline, not a slide | Reply ++Create the .pptx file with one slide.++ |
 | Cowork sends without showing you the message | Tell a proctor. Messages should always ask for approval first. |
 
 ## Checkpoint
@@ -727,9 +918,17 @@ _Same Cowork task, Rovo_Lab sprint-to-slides skill_
 - [] A Teams message to Tama is sent or ready for your approval.
 - [] You have one sprint slide for leadership.
 
-Copilot found the one item at risk, joined Jira, Confluence and GitHub to show what it was waiting on, then Cowork asked for the decision and gave leadership a one-slide update.
+Copilot found the one item at risk, joined EngHub, EngHub Docs and GitHub to show what it was waiting on, then Cowork asked for the decision and gave leadership a one-slide update.
 
-Other connectors that fit this pattern: Azure DevOps, Linear and Webflow.
+The same pattern works with other connectors. Try them in your own tenant for similar scenarios.
+
+| Atlassian | Azure DevOps | Linear | Webflow |
+|:---:|:---:|:---:|:---:|
+| !IMAGE[Atlassian logo](instructions360859/rebrand-connector-atlassian.png "Atlassian"){200} | !IMAGE[Azure DevOps logo](instructions360859/connector-azure-devops.png "Azure DevOps"){200} | !IMAGE[Linear logo](instructions360859/connector-linear.png "Linear"){200} | !IMAGE[Webflow logo](instructions360859/connector-webflow.png "Webflow"){200} |
+
+_Logos are trademarks of their respective owners._
+
+> [!Hint] In this track, you called a skill by name with a slash command. Copilot can also pick a skill for you based on what you ask. To see that, try the [finance track](#finance-should-we-buy-more-litware).
 
 When you're done, go to [Bring your own app](#bring-your-own-app-zava-expense), or [choose another track](#choose-your-track).
 
@@ -761,37 +960,56 @@ Zava Expense isn't in the connector catalog. Zava's app team has already made it
 
     | Field | Enter |
     |:---|:---|
-    | Display name | +++Zava Expense+++ |
-    | Description | +++Zava's in-house expense app. Use it to see the signed-in employee's expense reports and why any were rejected or returned, find corporate card charges for a trip, create a report from receipts, check it against the Zava travel policy, submit it for manager approval, and compare travel spend with budget.+++ |
-    | Base URL | +++https://mock-zava-expense.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp+++ |
-    | Developer name | +++Zava+++ |
-    | Website URL | +++https://contoso.com+++ |
-    | Privacy URL | +++https://contoso.com/privacy+++ |
-    | Terms of use URL | +++https://contoso.com/terms+++ |
-    | Authentication | No Auth |
+    | Display name | ++Zava Expense - <your name>++ _(keep it under 30 characters)_ |
+    | Description | ++Zava's in-house expense app. Use it to see the signed-in employee's expense reports and why any were rejected or returned, find corporate card charges for a trip, create a report from receipts, check it against the Zava travel policy, submit it for manager approval, and compare travel spend with budget.++ |
+    | MCP Endpoint URL | ++https://mock-zava-expense.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp++ |
+    | Developer name | ++Zava++ |
+    | Website URL | ++https://zava-online.com++ |
+    | Privacy URL | ++https://zava-online.com/privacy++ |
+    | Terms of use URL | ++https://zava-online.com/terms++ |
+    | Authentication type | None |
 
     > [!Knowledge] Copilot reads the description to decide when to use Zava Expense and what to ask it. A good description says, in plain words, what data the app holds and what it can do.
 
-    > [!Note] This lab uses _No Auth_ so you can connect quickly. In your own tenant, choose the authentication your app needs, such as Microsoft Entra SSO or OAuth 2.0.
+    > [!Note] This lab uses _None_ so you can connect quickly. In your own tenant, choose the authentication your app needs, such as Microsoft Entra SSO or OAuth 2.0.
 
-1. [] Save the connector.
-1. [] Under **Staged rollout**, make Zava Expense available to yourself. It now appears under **Your connections**, next to the catalog connectors.
+1. [] Select the **Notice** checkbox, then select **Create**.
 
-    > [!Note] Changes can take up to 10 minutes to appear.
+    !IMAGE[The bottom of the Connect to MCP server form, with Authentication type set to None, the Notice checkbox selected and the Create button highlighted.](instructions360859/byoa-connector-notice-create.png "Select Notice, then Create"){600}
 
-1. [] In Copilot, open **Settings** › **Sources** and connect **Zava Expense**.
+1. [] Wait about a minute while the connection is set up. When you see **Success**, select **Done**.
 
-===
+    !IMAGE[The Success page, showing Created connection for Zava Expense and Linking data source with Your data source is linked and ready to use, and the Done button highlighted.](instructions360859/byoa-connector-done.png "Select Done"){600}
 
-# File your Seattle trip
+1. [] Select the **Your connections** tab, then select the connection you just created: **Zava Expense - @lab.User.FirstName**.
+1. [] In the details pane on the right, scroll down to **Enable/disable this source for users**. Check that **Allow information from this connection to appear in Copilot** is turned **On**. If it isn't, turn it on and select **Save**.
+
+    > [!Note] The setting can take a few seconds to appear. Wait for it before you check.
+
+    !IMAGE[The Your connections tab in the Microsoft 365 admin center, with a Zava Expense connection selected and its details pane open. Under Enable/disable this source for users, Allow information from this connection to appear in Copilot is turned On.](instructions360859/byoa-connector-enabled.png "Check the connection is on"){600}
+
+## File your Seattle trip
 
 Run Steps 1 to 4 in one new chat. Each new chat starts from the original data.
 
-## Step 1: Check where you stand
+### Turn on Zava Expense in Copilot
 
-1. [] In Copilot, start a new chat, then enter:
+1. [] Leave the Microsoft 365 admin center. Open a new browser tab and go to Copilot at +++https://copilot.cloud.microsoft/+++.
+1. [] In Copilot, select the three dots (**...**) in the top-right corner, then select **Settings**.
+1. [] In **Settings**, select **Sources**. In the search box, type +++zava+++, then select **Connect** next to **Zava Expense - @lab.User.FirstName**.
+1. [] In the **Connect to Zava Expense** window, select **Continue to Zava Expense**. Once connected, close **Settings**.
 
-    +++Using Zava Expense, show me my open expense reports. Were any of them rejected or sent back, and why?+++
+    !IMAGE[Copilot Settings with Sources open and zava in the search box. The Connect to Zava Expense window is open, with the Continue to Zava Expense button highlighted.](instructions360859/byoa-copilot-connect-zava.png "Continue to Zava Expense"){600}
+
+### Step 1: Check where you stand
+
+1. [] In Copilot, select **Chat** at the top of the left pane, then select **New chat**.
+
+    !IMAGE[The Copilot left pane with the Chat tab selected and New chat highlighted below it.](instructions360859/copilot-new-chat.png "Start a new chat"){600}
+
+1. [] Enter:
+
+    ++Using Zava Expense, show me my open expense reports. Were any of them rejected or sent back, and why?++
 
 1. [] Check that you see four open reports:
 
@@ -799,35 +1017,36 @@ Run Steps 1 to 4 in one new chat. Each new chat starts from the original data.
     - ER-1046 was returned: it has no business purpose.
     - ER-1045 (Austin, $631.50) and ER-1051 (October local expenses, $953.09) are pending approval.
 
-## Step 2: File the trip
+### Step 2: File the trip
 
 1. [] In the same chat, enter:
 
-    +++Find the receipts from my Seattle trip in my inbox and use them to create a Zava Expense report for the Fabrikam, Inc. partnership review. Check the report against our travel policy, but don't submit it yet.+++
+    ++Find the receipts from my Seattle trip in my inbox and use them to create a Zava Expense report for the Fabrikam, Inc. partnership review. Check the report against our travel policy, but don't submit it yet.++
 
+1. [] When Copilot asks you to confirm creating the expense report in Zava Expense, check the details and approve it.
 1. [] Check that Copilot creates draft report ER-2001 with six items totalling $2,052.65 and flags:
 
     - Blocking: the Westin charged $389 for the night of October 28, which is $139 over the $250 Seattle cap.
     - Warning: the $52.30 Uber ride was charged twice (TX-10111). Copilot suggests asking Ebere Ibeabuchi in Finance Operations to reverse it.
 
-## Step 3: Fix and submit
+### Step 3: Fix and submit
 
 This step submits the report, so Copilot asks for your approval first.
 
 1. [] In the same chat, enter:
 
-    +++Add a justification for the $389 Westin night: a city-wide convention pushed up hotel rates, and no hotel near the Fabrikam, Inc. office was under the cap. Then submit the report to my manager.+++
+    ++Add a justification for the $389 Westin night: a city-wide convention pushed up hotel rates, and no hotel near the Fabrikam, Inc. office was under the cap. Then submit the report to my manager.++
 
 1. [] Check that Copilot reruns the policy check with no blocking issues and one justified exception.
 1. [] When the approval card appears, approve it.
 1. [] Check that Copilot confirms ER-2001 ($2,052.65) was submitted to Hannes Niemi.
-1. [] Check the status: +++Has my Seattle report gone through? Who's approving it?+++
+1. [] Check the status: ++Has my Seattle report gone through? Who's approving it?++
 
-## Step 4: Review your spend
+### Step 4: Review your spend
 
 1. [] In the same chat, enter:
 
-    +++How am I doing against my Q4 travel budget? Put it in an Excel workbook with a chart.+++
+    ++How am I doing against my Q4 travel budget? Put it in an Excel workbook with a chart.++
 
 1. [] Check that you've spent $4,309.55 of $6,800 (63%), you're over budget on meals and entertainment (106%) and ground transport (111%), and Copilot creates an Excel workbook with a chart.
 
@@ -838,7 +1057,7 @@ This step submits the report, so Copilot asks for your approval first.
 | Zava Expense doesn't appear in Sources | Check that staged rollout includes you, wait a few minutes, then refresh Copilot. |
 | Copilot doesn't use Zava Expense | Start the prompt with _Using Zava Expense_. |
 | Copilot says Zava Expense isn't responding | Wait 15 seconds, then send the same prompt again in the same chat. |
-| Step 2 misses some receipts | Ask +++Find all my Seattle receipts from October in my inbox.+++ |
+| Step 2 misses some receipts | Ask ++Find all my Seattle receipts from October in my inbox.++ |
 
 ## Checkpoint
 
@@ -861,9 +1080,9 @@ This step submits the report, so Copilot asks for your approval first.
 | Track | What Copilot finished |
 |:---|:---|
 | Finance | A Litware committee pack in Excel and a memo in Word, from LSEG, FactSet and Moody's |
-| Legal | Flags and a redline in Word, then a negotiation sheet and a prep invite in Cowork, from Work IQ and iManage |
-| Productivity | A call brief, a grounded answer to a price objection, and a booked and logged meeting, from Salesforce, Teams and Outlook |
-| Engineering | The sprint's one at-risk item and what it's waiting on, a Teams message and a sprint slide, from Jira, Confluence and GitHub |
+| Legal | Comments and a redline in the contract, a negotiation sheet and a prep invite, all in Cowork, from Work IQ and iManage |
+| Productivity | A call brief, a grounded answer to a price objection, and a booked and logged meeting, from SalesDesk, Teams and Outlook |
+| Engineering | The sprint's one at-risk item and what it's waiting on, a Teams message and a sprint slide, from EngHub, EngHub Docs and GitHub |
 | Bring your own app | An expense report checked, fixed and submitted, plus a spend summary in Excel, from Zava Expense |
 
 ## Key takeaways
@@ -885,6 +1104,15 @@ Every connector you used today, including your own app, is managed in the same p
 ## Your next step
 
 Enable the connectors that matter most to your organization. Start with the systems where your people spend their day, such as your CRM, ticketing, code, documents and line-of-business apps.
+
+## Share your feedback
+
+!IMAGE[LAB654 feedback slide. Scan the first QR code to rate the session on the Ignite page, at aka.ms/ignite2026-feedback. Scan the second QR code to open an issue in the lab repo, at aka.ms/ignite2026-LAB654.](instructions360859/lab654-feedback.png "LAB654 feedback")
+
+Your feedback helps us improve this lab for future events.
+
+- **Rate the session.** Give your satisfaction score and written feedback about the lab at [aka.ms/ignite2026-feedback](https://aka.ms/ignite2026-feedback).
+- **Suggest changes to the content.** For ideas to improve the lab content or docs, open an issue at [aka.ms/ignite2026-LAB654](https://aka.ms/ignite2026-LAB654).
 
 ## Keep learning
 

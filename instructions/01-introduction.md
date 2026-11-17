@@ -35,21 +35,21 @@ By the end of this lab, you'll be able to:
 |---|---|---|---|
 | [Finance](03-finance.md) | Kristian, who runs the Zava investment portfolio: "Should we buy more Litware? Bring a recommendation to Monday's investment committee." | LSEG, FactSet, Moody's · equity research and company analysis skills · Copilot Chat, Copilot Cowork | ~20 min |
 | [Legal](04-legal.md) | Luc, Chief Underwriting Officer: "Can we sign Trey Research's AI underwriting contract on the 10th?" | Work IQ (email and Teams), iManage · Copilot Cowork | ~20 min |
-| [Productivity](05-productivity.md) | Pitch the Aurora rollout to all 400 Lakeshore Retail stores on Nov 20, with a CFO in the room and a competitor 20% cheaper. | Salesforce_Lab, Teams, Outlook · sales skills · Copilot Cowork | ~10 min (+ stretch) |
-| [Engineering](06-engineering.md) | One Sprint 24 item is at risk, and the customer's pilot expands on Monday. Who is it waiting on? | Jira, Confluence, GitHub_Lab, Rovo_Lab, Teams · sprint-to-slides skill · Copilot Cowork | ~15 min |
+| [Productivity](05-productivity.md) | Pitch the Aurora rollout to all 400 Lakeshore Retail stores on Nov 20, with a CFO in the room and a competitor 20% cheaper. | SalesDesk_Lab, Teams, Outlook · sales skills · Copilot Cowork | ~10 min (+ stretch) |
+| [Engineering](06-engineering.md) | One Sprint 24 item is at risk, and the customer's pilot expands on Monday. Who is it waiting on? | GitHub_Lab, EngHub_Lab, Teams · sprint-to-slides skill · Copilot Cowork | ~15 min |
 | [Bring your own app](07-custom-mcp.md) (everyone) | Your expense tool isn't in any catalog. Connect it yourself, then file a trip from your inbox. | Zava Expense (custom MCP connector) · travel-policy skill · Excel | ~20 min |
 
 ## Key ideas
 
 ### Connectors
 
-Some connectors index content into Microsoft 365 ahead of time; others call the source live, signed in as you. You don't need to know which is which. Copilot picks the right source for your question, respects what you're allowed to see, and cites where each answer came from.
+Connectors call the source live, signed in as you. Copilot picks the right source for your question, respects what you're allowed to see, and cites where each answer came from.
 
 ### Skills, plugins and write actions
 
 - **Connector skills** package a partner's expertise, such as how sales teams prep a call or how analysts assess credit. Copilot loads a skill when your request needs it, so you get the partner's method as well as their data.
 - **Plugins** are one package that an admin deploys once. A plugin can bundle connectors (data and tools), skills (the method) and agents (focused assistants you chat with directly). This lab focuses on connectors and skills.
-- **Write actions** let Copilot change things in the source system, such as logging a meeting on a Salesforce opportunity or saving a draft to a document matter. You see a confirmation first, and nothing changes until you approve it.
+- **Write actions** let Copilot change things in the source system, such as logging a meeting on a SalesDesk opportunity or saving a draft to a document matter. You see a confirmation first, and nothing changes until you approve it.
 
 > [!NOTE]
 > This lab runs in a demo tenant with fictional people, companies and data. Financial and legal outputs are for the exercise only. They aren't investment or legal advice.
