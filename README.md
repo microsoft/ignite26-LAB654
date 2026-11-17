@@ -71,7 +71,7 @@ By the end of this session, you will be able to:
 - Copilot connectors, connector skills and write actions
 - Model Context Protocol (MCP) custom connectors in the Microsoft 365 admin center
 - Word, Excel, PowerPoint, Outlook and Teams
-- Partner connectors: LSEG, FactSet, Moody's, iManage, Salesforce, Jira, Confluence, GitHub and Atlassian Rovo
+- Partner connectors: LSEG, FactSet, Moody's, iManage, SalesDesk, GitHub and EngHub
 
 ### 📚 Continue your learning
 

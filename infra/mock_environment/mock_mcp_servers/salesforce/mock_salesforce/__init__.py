@@ -1,5 +1,0 @@
-"""Mock Salesforce Hosted MCP server."""
-
-from .server import build_spec
-
-__all__ = ["build_spec"]

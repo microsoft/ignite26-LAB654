@@ -18,8 +18,8 @@ Synthetic tenant data for testing the LAB654 scenarios (legal, finance, producti
 
 The package files are generated, so make changes in `tools/scenarios/<scenario>.py` and rebuild rather than editing the JSON directly.
 
-The tenant builder copies the existing GitHub, Rovo, iManage, FactSet, LSEG,
-Salesforce and Moody's packages from `mock_plugins/` and reads each ZIP's app
+The tenant builder copies the existing GitHub, EngHub, iManage, FactSet, LSEG,
+SalesDesk and Moody's packages from `mock_plugins/` and reads each ZIP's app
 manifest ID, name and version into `das.config.json`. Original ZIPs stay in
 `mock_plugins/`; rebuild those first when changing a plugin, then rebuild the
 tenant package. These are connector-only app packages, not declarative agents.
@@ -79,8 +79,8 @@ To get a token, sign in to the portal and copy the `Authorization` bearer value 
 |----------|--------|-------------|----------------|
 | Legal | [scenario](../../docs/scenarios/legal/scenario.md), [seed kit](../../docs/scenarios/legal/seed_kit.md) | `tools/scenarios/legal/`: 3 users, 1 email, 2 chats | Data spec: `mock_mcp_servers/imanage/seed_files/` |
 | Finance | [scenario](../../docs/scenarios/finance/scenario.md) | `tools/scenarios/finance/`: 1 user (+ Emil), 1 chat | Built: `mock_mcp_servers/lseg/`, `factset/`, `moodys/` |
-| Productivity | [scenario](../../docs/scenarios/productivity/scenario.md) | `tools/scenarios/productivity/`: 4 users (+ Emil), 1 email, 8 events, 1 online meeting and transcript | Built: `mock_mcp_servers/salesforce/` |
-| Engineering | [scenario](../../docs/scenarios/engineering/scenario.md) | `tools/scenarios/engineering/`: 4 users (+ Emil), 3 emails, 1 chat, 1 team, 2 channels, 2 channel messages and 2 replies | Synced: `customconnectors_engineering.jsonl` (Jira), `confluence_engineering.jsonl`. Built: `mock_mcp_servers/atlassian/` (Rovo), `github/` |
+| Productivity | [scenario](../../docs/scenarios/productivity/scenario.md) | `tools/scenarios/productivity/`: 4 users (+ Emil), 1 email, 8 events, 1 online meeting and transcript | Built: `mock_mcp_servers/salesdesk/` |
+| Engineering | [scenario](../../docs/scenarios/engineering/scenario.md) | `tools/scenarios/engineering/`: 4 users (+ Emil), 3 emails, 1 chat, 1 team, 2 channels, 2 channel messages and 2 replies | Built: `mock_mcp_servers/enghub/`, `github/` |
 | Custom MCP (expense) | [scenario](../../docs/scenarios/custom-mcp/scenario.md) | `tools/scenarios/expense/`: 9 users (2 people, Zava Expense and 6 receipt senders), 7 emails | Pending: Zava Expense mock |
 
 To add a scenario, create a module or package under `tools/scenarios/` that exposes `users()`, `emails()`, `chats()`, `events()` and `files()`, and optionally the other hooks listed in `build_tenant.py` (`teams()`, `channels()`, `onlinemeetings()`, `transcripts()`, `build_documents(files_dir)` and others). Then add it to `SCENARIOS` in `build_tenant.py`.
@@ -92,8 +92,8 @@ To add a scenario, create a module or package under `tools/scenarios/` that expo
 - External people (Andreea Bojin and Vira Sokur at Trey Research) have no accounts and appear only in documents.
 - Finance: the asset manager becomes the Zava Investment Office, which invests the insurer's reserves. Kristian is a Zava employee in Stamford with mailbox and Teams only.
 - Finance: Kristian's trigger message is pinned to Fri Oct 9, 2026, 4:00 PM ET (`ASK_DATE` in `tools/scenarios/finance/__init__.py`). The investment committee isn't seeded as people or a meeting because the one-pager doesn't name its members or time.
-- Productivity: the Lakeshore Retail people (Atul Manohar, Jahidi Juma, Nanami Nakayama) are tenant accounts so their email and meeting validate; Zoe Armstrong is at Zava. They have mailbox and Teams only. Salesforce data lives in the Salesforce_Lab mock, not the tenant.
+- Productivity: the Lakeshore Retail people (Atul Manohar, Jahidi Juma, Nanami Nakayama) are tenant accounts so their email and meeting validate; Zoe Armstrong is at Zava. They have mailbox and Teams only. SalesDesk data lives in the SalesDesk_Lab mock, not the tenant.
 - Productivity: the recorded "Lakeshore Retail - Aurora pilot review" Teams meeting is a past event with an online meeting and its `.vtt` transcript. The pitch is Fri Nov 20, 2026, with busy blocks Nov 23-25 and out of office Nov 26-27, so "next week" slots look real during lab week.
-- Engineering: Jira and Confluence data (Sprint 24, AUR-142 at risk, ADR-014) comes from the Rovo mock's seed file (`mock_mcp_servers/atlassian/seed_files/seed.json`). The tenant build turns it into the Jira and Confluence synced connectors, and Rovo_Lab serves the same records over MCP. Synced item links open the Rovo mock's viewer. GitHub data (PR #287, Tama's changes-requested review and merged decoy PRs) lives in the GitHub_Lab mock, where writes are kept per conversation.
+- Engineering: EngHub and EngHub Docs data (Sprint 24, AUR-142 at risk, ADR-014) comes from the EngHub mock's seed file (`mock_mcp_servers/enghub/seed_files/seed.json`), and EngHub_Lab serves it over MCP. There are no synced connectors. GitHub data (PR #287, Tama's changes-requested review and merged decoy PRs) lives in the GitHub_Lab mock, where writes are kept per conversation.
 - Expense: Emil's Seattle trip runs Mon Oct 26 - Thu Oct 29, 2026. Receipt senders are tenant users whose display names are the merchant names, so the emails pass schema checks. Hannes Niemi (manager) and Ebere Ibeabuchi (Finance Operations) are the Zava users the expense mock routes to.
 - All tracks except legal and finance: seeded evidence is dated on or before Fri Oct 30, 2026; anything still to come is on or after Fri Nov 20, 2026.

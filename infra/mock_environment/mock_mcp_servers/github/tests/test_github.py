@@ -55,7 +55,7 @@ def test_annotations_follow_the_real_server(spec):
 
 # --- pull requests -------------------------------------------------------------------------------------------------
 
-def test_search_by_jira_key_finds_287(spec):
+def test_search_by_work_item_key_finds_287(spec):
     got = ok(spec, "search_pull_requests", {"query": "AUR-142"})
     assert got["total_count"] == 1
     item = got["items"][0]

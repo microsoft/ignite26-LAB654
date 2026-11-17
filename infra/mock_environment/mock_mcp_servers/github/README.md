@@ -37,7 +37,7 @@ Version 1 of this mock had read-only tools. Version 2 adds the live server's wri
 |------|------|
 | `add_issue_comment` | Adds a comment to a pull request's conversation, and/or a reaction to the pull request or to a comment (`comment_id`) |
 | `update_issue_comment` | Edits a comment's body |
-| `issue_write` | `update` edits a pull request's title, body, labels, assignees and state, because GitHub treats pull requests as issues. `create` fails with "Issues are disabled for this repo", because the team tracks work in Jira |
+| `issue_write` | `update` edits a pull request's title, body, labels, assignees and state, because GitHub treats pull requests as issues. `create` fails with "Issues are disabled for this repo", because the team tracks work in EngHub |
 | `label_write` | Creates, updates and deletes repository labels |
 | `pull_request_review_write` | `create` (with an `event`, or pending without one), `submit_pending`, `delete_pending`, `resolve_thread` and `unresolve_thread` |
 | `add_comment_to_pending_review` | Adds a file or line comment to your pending review |
@@ -53,7 +53,7 @@ Rules follow GitHub: you can't approve or request changes on your own pull reque
 | Tools | Why |
 |-------|-----|
 | `create_pull_request`, `update_pull_request_branch`, `create_pull_request_with_copilot` | The seed has no branches or commits |
-| `sub_issue_write` and other issue-only tools | Issues are disabled. Work is tracked in Jira |
+| `sub_issue_write` and other issue-only tools | Issues are disabled. Work is tracked in EngHub |
 | File, branch, repository, Actions, gist, notification and security tools | The seed has no such data |
 
 ### Output

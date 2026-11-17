@@ -24,8 +24,8 @@ Sign in as Emil, discover connectors in the catalog, check the ones for your tra
     |---|---|
     | Finance | LSEG_Lab · FactSet_Lab · Moodys_Lab |
     | Legal | iManage_Lab |
-    | Productivity | Salesforce_Lab |
-    | Engineering | Jira · Confluence · GitHub_Lab · Rovo_Lab |
+    | Productivity | SalesDesk_Lab |
+    | Engineering | GitHub_Lab · EngHub_Lab |
     | Bring your own app (everyone) | Zava Expense: you'll add this one yourself in [module 7](07-custom-mcp.md) |
 
     Outlook, Teams and your Microsoft 365 files are available in every track.
@@ -53,11 +53,11 @@ What did Hemanti send me about Trey Research?
 ```
 
 ```text
-What's the stage and amount of the Lakeshore Retail opportunity in Salesforce?
+What's the stage and amount of the Lakeshore Retail opportunity in SalesDesk?
 ```
 
 ```text
-What's the status of Jira issue AUR-142?
+What's the status of EngHub work item AUR-142?
 ```
 
 **What to look for:**

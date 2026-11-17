@@ -1,7 +1,7 @@
 """Productivity scenario tenant seed data (sales pitch prep, Lakeshore Retail).
 
-Source: docs/scenarios/productivity/scenario.md section 5. Salesforce data lives
-in the Salesforce_Lab mock server, not here. This module seeds:
+Source: docs/scenarios/productivity/scenario.md section 5. SalesDesk data lives
+in the SalesDesk_Lab mock server, not here. This module seeds:
 
 - Atul's pre-pitch email to Emil (Nanami is not cc'd: she has no email history)
 - The pitch meeting (Fri Nov 20, 2026), busy blocks Nov 23-25 and out of office

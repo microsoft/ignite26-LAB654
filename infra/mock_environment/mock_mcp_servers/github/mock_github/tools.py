@@ -742,7 +742,7 @@ class IssueWrite(GitHubTool):
         repo = store.repo(owner, name)
         base = f"/repos/{owner}/{name}"
         if method == "create":
-            # The lab repository tracks its work in Jira, so GitHub Issues are turned off for it.
+            # The lab repository tracks its work in EngHub, so GitHub Issues are turned off for it.
             if repo is None:
                 raise api_error("failed to create issue", "POST", f"{base}/issues")
             raise api_error("failed to create issue", "POST", f"{base}/issues", 410,

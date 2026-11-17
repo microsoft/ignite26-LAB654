@@ -1,0 +1,51 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.29/MicrosoftTeams.schema.json",
+    "manifestVersion": "1.29",
+    "version": "1.0.0",
+    "id": "b2cdcfdd-c930-4b5e-8c5c-27662f9932e2",
+    "developer": {
+        "name": "Tezan Sahu",
+        "websiteUrl": "https://github.com/microsoft/ignite26-LAB654",
+        "privacyUrl": "https://github.com/microsoft/ignite26-LAB654",
+        "termsOfUseUrl": "https://github.com/microsoft/ignite26-LAB654"
+    },
+    "name": {
+        "short": "EngHub_Lab",
+        "full": "EngHub_Lab"
+    },
+    "description": {
+        "short": "Access and speed up work across EngHub apps",
+        "full": "EngHub connects people, work and your organization's knowledge across EngHub and EngHub Docs. In Microsoft 365 Copilot, search EngHub work items and EngHub Docs pages, check sprint progress, create and update EngHub work items, draft EngHub Docs pages, and turn a sprint into a stakeholder-ready slide deck, without switching apps. An active EngHub Cloud subscription with EngHub enabled may be required. Responses may include AI-generated content; verify important information."
+    },
+    "icons": {
+        "color": "color.png",
+        "outline": "outline.png"
+    },
+    "accentColor": "#0F766E",
+    "agentConnectors": [
+        {
+            "id": "8291632b-d47a-45d1-ae14-22fdbd031d88",
+            "displayName": "EngHub_Lab",
+            "description": "Remote MCP server providing tools for EngHub",
+            "toolSource": {
+                "remoteMcpServer": {
+                    "mcpServerUrl": "https://mock-enghub.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp"
+                }
+            }
+        }
+    ],
+    "agentSkills": [
+        {
+            "folder": "./skills/brief-to-teams"
+        },
+        {
+            "folder": "./skills/sharepoint-to-backlog"
+        },
+        {
+            "folder": "./skills/sprint-to-slides"
+        },
+        {
+            "folder": "./skills/teams-meeting-to-work"
+        }
+    ]
+}

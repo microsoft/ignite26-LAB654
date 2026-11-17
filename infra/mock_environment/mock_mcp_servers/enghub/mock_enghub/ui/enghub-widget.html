@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EngHub</title>
+<style>
+  :root {
+    --bg: #ffffff; --fg: #172b4d; --muted: #626f86; --line: #dcdfe4; --hover: #f1f2f4; --link: #0e7490;
+    --lz-gray-bg: #dcdfe4; --lz-gray-fg: #44546f; --lz-blue-bg: #cce0ff; --lz-blue-fg: #0055cc;
+    --lz-green-bg: #baf3db; --lz-green-fg: #216e4e;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  [data-theme="dark"] {
+    --bg: #1d2125; --fg: #b6c2cf; --muted: #8c9bab; --line: #384048; --hover: #282e33; --link: #2dd4bf;
+    --lz-gray-bg: #38414a; --lz-gray-fg: #9fadbc; --lz-blue-bg: #09326c; --lz-blue-fg: #85b8ff;
+    --lz-green-bg: #164b35; --lz-green-fg: #7ee2b8;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); font-size: 14px; line-height: 20px; }
+  a { color: var(--link); text-decoration: none; cursor: pointer; }
+  a:hover { text-decoration: underline; }
+  .hd { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+  .brand { display: flex; align-items: center; gap: 8px; font-weight: 600; }
+  .brand svg { width: 20px; height: 20px; }
+  .count { color: var(--muted); font-weight: 400; }
+  .row { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-bottom: 1px solid var(--line); cursor: pointer; }
+  .row:last-child { border-bottom: 0; }
+  .row:hover { background: var(--hover); }
+  .row .sum { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .key { color: var(--muted); white-space: nowrap; font-size: 12px; }
+  .lz { display: inline-block; padding: 0 4px; border-radius: 3px; font-size: 11px; font-weight: 700; line-height: 16px;
+        text-transform: uppercase; white-space: nowrap; max-width: 140px; overflow: hidden; text-overflow: ellipsis;
+        background: var(--lz-gray-bg); color: var(--lz-gray-fg); }
+  .lz.yellow { background: var(--lz-blue-bg); color: var(--lz-blue-fg); }
+  .lz.green { background: var(--lz-green-bg); color: var(--lz-green-fg); }
+  .ico { width: 16px; height: 16px; flex: none; }
+  .ft { padding: 8px 12px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; display: flex; justify-content: space-between; }
+  .card { padding: 12px; }
+  .card .title { display: flex; align-items: flex-start; gap: 8px; font-size: 16px; font-weight: 600; line-height: 22px; }
+  .card .title .ico { margin-top: 3px; }
+  .meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 8px; color: var(--muted); font-size: 12px; }
+  .dot { opacity: .6; }
+  .av { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%;
+        background: #6e5dc6; color: #fff; font-size: 9px; font-weight: 700; }
+  .av.none { background: var(--lz-gray-bg); color: var(--lz-gray-fg); }
+  .empty { padding: 16px 12px; color: var(--muted); }
+</style>
+</head>
+<body>
+<div id="app"><div class="empty">Waiting for EngHub results…</div></div>
+<script>
+(function () {
+  "use strict";
+  var LOGO = '<svg viewBox="0 0 96 96" aria-hidden="true"><defs><linearGradient id="ehw" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0D9488"/><stop offset="1" stop-color="#0E7490"/></linearGradient></defs><rect width="96" height="96" rx="22" fill="url(#ehw)"/><g stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-opacity=".85"><line x1="48" y1="48" x2="26" y2="26"/><line x1="48" y1="48" x2="70" y2="26"/><line x1="48" y1="48" x2="26" y2="70"/><line x1="48" y1="48" x2="70" y2="70"/></g><circle cx="48" cy="48" r="13" fill="#fff"/><circle cx="48" cy="48" r="5.5" fill="#F97316"/><rect x="17" y="17" width="18" height="18" rx="5" fill="#fff"/><rect x="61" y="17" width="18" height="18" rx="5" fill="#fff"/><rect x="17" y="61" width="18" height="18" rx="5" fill="#fff"/><rect x="61" y="61" width="18" height="18" rx="5" fill="#fff"/></svg>';
+  var TYPE_ICONS = {
+    bug: '<svg class="ico" viewBox="0 0 16 16"><rect width="16" height="16" rx="2" fill="#e5493a"/><circle cx="8" cy="8" r="3.5" fill="#fff"/></svg>',
+    story: '<svg class="ico" viewBox="0 0 16 16"><rect width="16" height="16" rx="2" fill="#63ba3c"/><path d="M5 4h6v8l-3-2-3 2z" fill="#fff"/></svg>',
+    epic: '<svg class="ico" viewBox="0 0 16 16"><rect width="16" height="16" rx="2" fill="#904ee2"/><path d="M9 3 5 9h3l-1 4 4-6H8z" fill="#fff"/></svg>',
+    subtask: '<svg class="ico" viewBox="0 0 16 16"><rect width="16" height="16" rx="2" fill="#4bade8"/><rect x="4" y="4" width="4" height="4" fill="none" stroke="#fff" stroke-width="1.4"/><rect x="8" y="8" width="4" height="4" fill="#fff"/></svg>',
+    task: '<svg class="ico" viewBox="0 0 16 16"><rect width="16" height="16" rx="2" fill="#4bade8"/><path d="m4.5 8.2 2.3 2.3 4.7-5" fill="none" stroke="#fff" stroke-width="1.8"/></svg>'
+  };
+  var app = document.getElementById("app");
+
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function typeIcon(fields) {
+    var n = ((fields && fields.issuetype && fields.issuetype.name) || "task").toLowerCase().replace(/[^a-z]/g, "");
+    return TYPE_ICONS[n] || TYPE_ICONS.task;
+  }
+  function lozenge(status) {
+    if (!status) return "";
+    var color = (status.statusCategory && status.statusCategory.colorName) || "blue-gray";
+    return '<span class="lz ' + esc(color) + '" title="' + esc(status.name) + '">' + esc(status.name) + "</span>";
+  }
+  function initials(name) {
+    var p = String(name || "").trim().split(/\s+/);
+    return ((p[0] || "").charAt(0) + (p.length > 1 ? p[p.length - 1].charAt(0) : "")).toUpperCase();
+  }
+  function header(label, count) {
+    return '<div class="hd"><div class="brand">' + LOGO + "<span>" + esc(label) +
+      (count != null ? ' <span class="count">(' + count + ")</span>" : "") + "</span></div></div>";
+  }
+
+  function renderList(issues) {
+    var nodes = issues.nodes || [];
+    var html = header("EngHub issues", nodes.length);
+    if (!nodes.length) html += '<div class="empty">No issues match this search.</div>';
+    nodes.forEach(function (n) {
+      var f = n.fields || {};
+      html += '<div class="row" data-href="' + esc(n.webUrl) + '">' + typeIcon(f) +
+        '<span class="sum" title="' + esc(f.summary) + '">' + esc(f.summary) + "</span>" +
+        '<span class="key">' + esc(n.key) + "</span>" + lozenge(f.status) + "</div>";
+    });
+    var more = issues.pageInfo && issues.pageInfo.hasNextPage;
+    html += '<div class="ft"><span>' + (more ? "More results available" : "") + "</span>" +
+      (issues.webUrl ? '<a data-href="' + esc(issues.webUrl) + '">Open in EngHub</a>' : "") + "</div>";
+    return html;
+  }
+
+  function renderCard(n) {
+    var f = n.fields || {};
+    var project = f.project && f.project.name;
+    var who = f.assignee && f.assignee.displayName;
+    var html = header("EngHub", null) + '<div class="card"><div class="title">' + typeIcon(f) +
+      '<a data-href="' + esc(n.webUrl) + '">' + esc(f.summary) + '</a></div><div class="meta">';
+    if (project) html += "<span>" + esc(project) + '</span><span class="dot">•</span>';
+    html += "<span>" + esc(n.key) + '</span><span class="dot">•</span>';
+    html += who ? '<span class="av" title="' + esc(who) + '">' + esc(initials(who)) + "</span>"
+                : '<span class="av none" title="Unassigned">?</span>';
+    html += lozenge(f.status) + "</div></div>";
+    return html;
+  }
+
+  function render(sc) {
+    try {
+      var issues = sc && sc.issues;
+      if (!issues || !issues.nodes) { app.innerHTML = '<div class="empty">No EngHub data to display.</div>'; return; }
+      var single = !("pageInfo" in issues) && !("webUrl" in issues) && issues.nodes.length === 1;
+      app.innerHTML = single ? renderCard(issues.nodes[0]) : renderList(issues);
+    } catch (err) {
+      app.innerHTML = '<div class="empty">Couldn\'t render this widget (' + esc((err && err.message) || err) + ").</div>";
+    }
+  }
+  function fromResult(result) { if (result && result.structuredContent) render(result.structuredContent); }
+
+  app.addEventListener("click", function (e) {
+    var el = e.target.closest ? e.target.closest("[data-href]") : null;
+    if (!el) return;
+    e.preventDefault();
+    openLink(el.getAttribute("data-href"));
+  });
+
+  /* ---------- MCP Apps bridge ---------- */
+  var seq = 0, pending = {}, initialized = false;
+  function post(msg) { if (window.parent && window.parent !== window) window.parent.postMessage(msg, "*"); }
+  function request(method, params) {
+    var id = ++seq;
+    post({ jsonrpc: "2.0", id: id, method: method, params: params || {} });
+    return new Promise(function (resolve, reject) {
+      pending[id] = { resolve: resolve, reject: reject };
+      setTimeout(function () { if (pending[id]) { delete pending[id]; reject(new Error(method + " timed out")); } }, 15000);
+    });
+  }
+  function notify(method, params) { post({ jsonrpc: "2.0", method: method, params: params || {} }); }
+  function openLink(url) {
+    if (!url) return;
+    var oa = window.openai;
+    if (oa && oa.openExternal) { oa.openExternal({ href: url }); return; }
+    if (initialized) request("ui/open-link", { url: url }).catch(function () { window.open(url, "_blank", "noopener"); });
+    else window.open(url, "_blank", "noopener");
+  }
+  function applyContext(ctx) {
+    if (!ctx) return;
+    if (ctx.theme) document.documentElement.setAttribute("data-theme", ctx.theme);
+    var vars = ctx.styles && ctx.styles.variables;
+    for (var k in vars || {}) if (vars[k] != null) document.documentElement.style.setProperty(k, vars[k]);
+  }
+  window.addEventListener("message", function (e) {
+    var m = e.data;
+    if (!m || m.jsonrpc !== "2.0") return;
+    if (m.method == null && m.id != null && pending[m.id]) { var p = pending[m.id]; delete pending[m.id]; if (m.error) p.reject(m.error); else p.resolve(m.result); return; }
+    switch (m.method) {
+      case "ui/notifications/tool-input": break;
+      case "ui/notifications/tool-result": fromResult(m.params); break;
+      case "ui/notifications/host-context-changed": applyContext(m.params); break;
+      case "ui/resource-teardown": post({ jsonrpc: "2.0", id: m.id, result: {} }); break;
+      default: if (m.id != null && m.method) post({ jsonrpc: "2.0", id: m.id, error: { code: -32601, message: "Method not found" } });
+    }
+  });
+  /* Hosts must not receive View notifications before the ui/initialize handshake completes. */
+  function reportSize() { if (!initialized) return; var r = document.body.getBoundingClientRect(); notify("ui/notifications/size-changed", { width: Math.ceil(Math.max(r.width, document.body.scrollWidth)), height: Math.ceil(r.height) }); }
+  if (window.ResizeObserver) new ResizeObserver(reportSize).observe(document.body);
+  var oa = window.openai;
+  if (oa && oa.toolOutput) render(oa.toolOutput);
+  window.addEventListener("openai:set_globals", function (e) { var g = (e.detail && e.detail.globals) || {}; if (g.theme) applyContext({ theme: g.theme }); if (g.toolOutput) render(g.toolOutput); });
+  var info = { name: "enghub-mock-widget", version: "1.0.0" };
+  if (window.parent && window.parent !== window) {
+    request("ui/initialize", { appInfo: info, clientInfo: info, appCapabilities: { availableDisplayModes: ["inline"] }, protocolVersion: "2026-01-26" })
+      .then(function (res) { applyContext(res && res.hostContext); notify("ui/notifications/initialized", {}); initialized = true; reportSize(); })
+      .catch(function (err) {
+        if (window.console) console.error("[enghub-mock-widget] ui/initialize failed:", err);
+        var empty = document.querySelector("#app .empty");
+        if (empty && /^Waiting/.test(empty.textContent)) empty.textContent = "Couldn't connect to the host (" + ((err && err.message) || err) + ").";
+      });
+  }
+  window.__renderWidget = render;
+})();
+</script>
+</body>
+</html>
