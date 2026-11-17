@@ -19,21 +19,15 @@ To begin, sign in to the virtual machine with this password: +++@lab.VirtualMach
 1. [] In Edge, go to +++https://copilot.cloud.microsoft/+++.
 1. [] Sign in with this username: +++@lab.CloudCredential(Ignite-LAB654).Username+++
 1. [] When you're asked for a password, enter: +++@lab.CloudCredential(Ignite-LAB654).Password+++
-1. [] If you see _Let's keep your account secure_ or you're asked for a code, follow the steps in **Verify your sign-in** below. If not, you're signed in: skip to the end of this page.
-
-> [!Hint] If a sign-in popup is blocked at any point, allow popups for the Copilot site and try again.
-
-## Verify your sign-in
-
-Your lab account may ask for a second check (multi-factor authentication) when you sign in. Use the **Contoso Authenticator App** on the virtual machine desktop to get the code. You don't need your phone.
-
-!IMAGE[Contoso Authenticator App icon: a blue floppy disk with a yellow and blue snake logo.](instructions360859/contoso-authenticator-icon.png "Contoso Authenticator App icon"){64}
-
-### Set up the app the first time
-
 1. [] On the _Let's keep your account secure_ page, select **Next**.
 
     !IMAGE[The Let's keep your account secure page, with a Next button in the lower-right corner.](instructions360859/mfa-01-keep-account-secure.png "Let's keep your account secure")
+
+> [!Hint] If a sign-in popup is blocked at any point, allow popups for the Copilot site and try again.
+
+> [!Knowledge] Your lab account asks for a second sign-in check (multi-factor authentication). You'll set it up next with **Contoso Authenticator App**, an app on the virtual machine desktop. You don't need your phone.
+
+## Set up the authenticator app
 
 1. [] On the _Install Microsoft Authenticator_ page, select **Set up a different authentication app**.
 
@@ -50,6 +44,8 @@ Your lab account may ask for a second check (multi-factor authentication) when y
     !IMAGE[The Scan the QR code page, showing a QR code and a Next button.](instructions360859/mfa-04-scan-qr-code-page.png "Scan the QR code")
 
 1. [] On the virtual machine desktop, open **Contoso Authenticator App**.
+
+    !IMAGE[The virtual machine desktop, with the Contoso Authenticator App icon highlighted below Visual Studio Code.](instructions360859/rebrand-desktop-authenticator.png "Contoso Authenticator App on the desktop"){500}
 
     > [!Alert] If a _Windows protected your PC_ window appears, select **More info**, then **Run anyway**. The app is safe to run in this lab.
 
@@ -75,27 +71,25 @@ Your lab account may ask for a second check (multi-factor authentication) when y
 
     !IMAGE[The Authenticator app added page, with a Done button in the lower-right corner.](instructions360859/mfa-09-app-added.png "Authenticator app added")
 
-### Enter a code when you're asked again
-
-1. [] Open **Contoso Authenticator App** from the desktop, select **Copy** next to your account, then paste the code in the browser.
+1. [] Finish any remaining sign-in prompts until Copilot opens.
 
 > [!Note] Codes change regularly, and the app shows when the next one arrives. If a code is rejected, copy the new one and try again.
 
-### If it goes wrong
+## If it goes wrong
 
-#### The app says No QR code found on screen
+### The app says No QR code found on screen
 
 The app window is probably covering the QR code. Move the app window away from the QR code, then select **Scan QR from Screen** again.
 
 !IMAGE[The Contoso Authenticator App window covering part of the QR code, with the error No QR code found on screen.](instructions360859/mfa-10-no-qr-found.png "No QR code found on screen")
 
-#### Scanning still doesn't work
+### Scanning still doesn't work
 
 Zoom the browser to 120% so the QR code is larger, then select **Scan QR from Screen** again.
 
 !IMAGE[The browser zoomed in so the QR code is larger and fully visible next to the Contoso Authenticator App window.](instructions360859/mfa-11-zoom-in.png "Zoom the browser")
 
-#### The app says Failed to parse QR code: Invalid OTP URI
+### The app says Failed to parse QR code: Invalid OTP URI
 
 You're on the page for the Microsoft Authenticator phone app. In the browser, go back, select **Set up a different authentication app** and scan the new QR code.
 
@@ -109,19 +103,26 @@ When you're signed in to Copilot, select **Next**.
 
 Someone may have used this lab account before you. Reset it so you start from the original files.
 
-1. [] Select @[Reset my lab environment](`C:\LabFiles\reset-lab.bat @lab.CloudCredential(Ignite-LAB654).Username`){Shell visible}. A command window opens, and a browser tab opens to sign you in.
-1. [] If the browser asks you to pick an account, select your lab account. If it asks you to approve permissions for _Microsoft Graph Command Line Tools_, select **Accept**.
-1. [] When the tab says _Lab clean-up signed in_, close the tab.
-1. [] In the command window, wait for _Your lab environment is clean_. The window closes by itself.
+1. [] Select @[Reset my lab environment](`C:\LabFiles\reset-lab.bat @lab.CloudCredential(Ignite-LAB654).Username`){Shell visible}. 
 
-> [!Note] The reset changes only your own account. You can run it again later if you want to start a track over.
+    > [!Hint] The script can take up to 30 seconds to start. If nothing happens after 30 seconds, select the link again.
 
-> [+Help] If the reset doesn't finish, select to see what to do.
+1. [] On the sign-in page, check that your username is filled in: +++@lab.CloudCredential(Ignite-LAB654).Username+++
+1. [] Enter your password, then select **Next**: +++@lab.CloudCredential(Ignite-LAB654).Password+++
+1. [] When you're asked for a code, go back to **Contoso Authenticator App**. If you closed it, open it again from the desktop.
+
+    !IMAGE[The virtual machine desktop, with the Contoso Authenticator App icon highlighted below Visual Studio Code.](instructions360859/rebrand-desktop-authenticator.png "Contoso Authenticator App on the desktop"){500}
+
+1. [] In the app, select **Copy** next to your account. In the browser, paste the code, then select **Next**.
+1. [] Within a few seconds, the tab says _Lab clean-up signed in_. Close the tab.
+
+    !IMAGE[A browser tab on localhost showing Lab clean-up signed in. You can close this tab.](instructions360859/rebrand-reset-signed-in.png "Lab clean-up signed in"){500}
+
+
+> [+Help] If the reset doesn't finish, expand this to see what to do.
 >
-> - _Signed in as another account_: in the browser, sign in with your lab username +++@lab.CloudCredential(Ignite-LAB654).Username+++ and password +++@lab.CloudCredential(Ignite-LAB654).Password+++, then select the reset link again.
+> - _Signed in as another account_: in the browser, sign out, then select the reset link again and sign in with your lab account.
 > - Nothing happens, or you see any other message: ask a proctor.
-
-When the reset finishes, select **Next** to start the lab.
 
 ===
 
