@@ -38,7 +38,7 @@ You won't change any code or ship a release. In **Copilot Chat** you'll investig
 First, check that Atul's email is waiting for you in Outlook.
 
 > [!NOTE]
-> EngHub tracks the team's work items, EngHub Docs holds its design pages, and GitHub holds its code and pull requests. **GitHub_Lab** and **EngHub_Lab** are the lab versions of the GitHub and EngHub connectors. **EngHub_Lab** is EngHub's MCP server: one connector that reaches EngHub and EngHub Docs together. When Cowork uses EngHub_Lab, the cards say EngHub, but they show EngHub and EngHub Docs data inside.
+> EngHub tracks the team's work items, EngHub Docs holds its design pages, and GitHub holds its code and pull requests. **GitHub_Lab** and **EngHub_Lab** are the lab versions of the GitHub and EngHub connectors. **EngHub_Lab** is EngHub's MCP server: one connector that reaches EngHub and EngHub Docs together.
 
 ### Read Atul's email in Outlook
 
@@ -191,6 +191,7 @@ The same pattern works with other connectors. Try them in your own tenant for si
 
 <table>
   <tr>
+    <td align="center"><img src="images/connectors/atlassian.svg" alt="Atlassian" width="200"></td>
     <td align="center"><img src="images/connectors/azure-devops.svg" alt="Azure DevOps" width="200"></td>
     <td align="center"><img src="images/connectors/linear.svg" alt="Linear" width="200"></td>
     <td align="center"><img src="images/connectors/webflow.svg" alt="Webflow" width="200"></td>

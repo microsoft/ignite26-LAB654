@@ -174,8 +174,7 @@ The same pattern works with other connectors. Try them in your own tenant for si
 
 <table>
   <tr>
-    <td align="center"><img src="images/connectors/lexisnexis.svg" alt="LexisNexis" width="200"></td>
-    <td align="center"><img src="images/connectors/legal-data-hunter.svg" alt="Legal Data Hunter" width="200"></td>
+    <td align="center"><img src="images/connectors/harvey.svg" alt="Harvey" width="200"></td>
   </tr>
 </table>
 

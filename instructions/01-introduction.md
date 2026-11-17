@@ -43,7 +43,7 @@ By the end of this lab, you'll be able to:
 
 ### Connectors
 
-Some connectors index content into Microsoft 365 ahead of time; others call the source live, signed in as you. You don't need to know which is which. Copilot picks the right source for your question, respects what you're allowed to see, and cites where each answer came from.
+Connectors call the source live, signed in as you. Copilot picks the right source for your question, respects what you're allowed to see, and cites where each answer came from.
 
 ### Skills, plugins and write actions
 

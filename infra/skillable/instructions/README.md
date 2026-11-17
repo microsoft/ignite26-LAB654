@@ -3,7 +3,8 @@
 This folder holds the version of the lab manual that runs in the Skillable lab environment, in the instructions pane beside the virtual machine.
 
 - [`lab-instructions.md`](lab-instructions.md): every page in one file, with `===` between pages. Paste it into the Skillable instructions editor.
-- [`images/`](images/): the images the instructions use. They include the five workflow diagrams, the Contoso Authenticator App screenshots and the app icon.
+- [`lab-instructions-legal-word.md`](lab-instructions-legal-word.md): an earlier copy of the full file, where Steps 1 to 3 of the legal track run in the Copilot pane in Word desktop. Kept for reference only; don't paste it into the editor.
+- [`images/`](images/): the images the instructions use. They include the workflow diagrams, the Contoso Authenticator App screenshots and the app icon, screenshots of Copilot (new chat, Settings, Cowork Customize and the model picker), Teams and the legal track in Cowork, and the Ignite feedback slide. The Word desktop sign-in screenshots (`word-*.png`) and `legal-workflow.png` and `legal-imanage-approve-all.png` are used only by the earlier copy.
 
 The GitHub version of the manual, in the [`instructions/`](../../../instructions/README.md) folder, is the source of truth for the lab content. When you change it, update this file to match.
 
