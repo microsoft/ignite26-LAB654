@@ -46,20 +46,19 @@ To see what Copilot will read, open the [Lakeshore Retail account](https://mock-
 Cowork uses only the plugins you turn on, so first turn on SalesDesk_Lab.
 
 1. Open a new browser tab and go to [copilot.cloud.microsoft](https://copilot.cloud.microsoft/).
-2. Select **Cowork** at the top of the left pane.
-3. In the left pane, select **Customize**.
-4. Next to **Added**, select **Manage all**.
+2. In the left pane, select **Plugins**.
+3. At the top of the **Plugins** page, select **Cowork**. Then, next to **Added**, select **Manage all**.
 
-   ![The Cowork Customize page, with Customize highlighted in the left pane and Manage all highlighted next to the Added list of connectors](images/cowork-customize.png)
+   ![The Plugins page, with Plugins highlighted in the left pane, Cowork selected at the top and Manage all highlighted next to the Added list](images/harness-plugins-cowork.png)
 
-5. Turn on **SalesDesk_Lab**.
-6. Turn off **Fabric IQ**, which is on by default. Leave every other plugin off.
+4. Turn on **SalesDesk_Lab**.
+5. Turn off **Fabric IQ**, which is on by default. Leave every other plugin off.
 
-   ![The Added list in Cowork Customize, with SalesDesk_Lab turned on and Fabric IQ, Moodys_Lab, LSEG_Lab, FactSet_Lab, iManage_Lab, EngHub_Lab and GitHub_Lab turned off](images/productivity-cowork-customize.png)
+   ![The Added list of plugins, with SalesDesk_Lab turned on and Fabric IQ turned off](images/harness-plugins-productivity.png)
 
-7. In the left pane, select **New task**. Run every step in this one task: Step 3 reuses what Copilot learned in Steps 1 and 2, and your SalesDesk changes are kept only within this task.
+6. In the left pane, select **New**. In the message box, select **Cowork**. Run every step in this one task: Step 3 reuses what Copilot learned in Steps 1 and 2, and your SalesDesk changes are kept only within this task.
 
-   ![The Copilot left pane with the Cowork tab selected and New task highlighted below it](images/copilot-new-cowork-task.png)
+   ![Copilot with New highlighted in the left pane and Cowork selected in the message box](images/harness-new-cowork.png)
 
 You don't need to turn on Outlook or Teams. Cowork has them built in.
 
