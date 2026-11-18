@@ -12,6 +12,7 @@ Each mock MCP server runs as its own Azure Container App. All of them share one 
 | iManage | `mock-imanage` | `mock-imanage:v4` | `https://mock-imanage.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` |
 | SalesDesk | `mock-salesdesk` | `mock-salesdesk:v2` | `https://mock-salesdesk.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` |
 | EngHub | `mock-enghub` | `mock-enghub:v1` | `https://mock-enghub.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` |
+| Rovo (Jira + Confluence) | `mock-atlassian` | `mock-atlassian:v2` | `https://mock-atlassian.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` |
 | GitHub | `mock-github` | `mock-github:v3` | `https://mock-github.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` |
 | Zava Expense | `mock-zava-expense` | `mock-zava-expense:v1` | `https://mock-zava-expense.yellowsand-9530f5dc.eastus.azurecontainerapps.io/mcp` |
 

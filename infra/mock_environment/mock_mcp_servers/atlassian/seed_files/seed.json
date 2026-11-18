@@ -1,0 +1,544 @@
+{
+  "_source": "docs/scenarios/engineering/scenario.md (Sprint 24, AUR-142 at risk, Confluence space AUR). Single source of truth for Atlassian data: the Rovo mock serves it and tools/scenarios/engineering builds the synced Jira and Confluence connector packages from it. Names are from the CELA-approved list used for the tenant.",
+  "site": {
+    "name": "zava-online",
+    "cloudId": "a6d131af-e79b-5495-ab06-65cad3645500",
+    "statusActivationId": "ead1adbe-46f5-50a7-b9e5-74d3234d36f6",
+    "avatarUrl": "https://settings-cdn-bifrost.prod-east.frontend.public.atl-paas.net/assets/avatars/240/rocket.png",
+    "confluenceScopes": [
+      "read:comment:confluence",
+      "read:confluence-user",
+      "read:page:confluence",
+      "read:space:confluence",
+      "search:confluence",
+      "write:comment:confluence",
+      "write:page:confluence"
+    ],
+    "jiraScopes": [
+      "read:jira-work",
+      "write:jira-work"
+    ]
+  },
+  "currentUser": "emil",
+  "users": [
+    {
+      "key": "emil",
+      "accountId": "712020:ac6ec882-d8f6-545b-a935-2543379b5997",
+      "displayName": "Emil Vanggaard",
+      "email": "emil@zava-online.com",
+      "initials": "EV",
+      "teamType": "Product management",
+      "createdAt": "2025-03-04T14:12:09.218Z"
+    },
+    {
+      "key": "triin",
+      "accountId": "712020:8684f2c6-a616-5b7d-8ce8-b4701490acf2",
+      "displayName": "Triin Lepp",
+      "email": "triin@zava-online.com",
+      "initials": "TL",
+      "teamType": "Software engineering",
+      "createdAt": "2025-03-04T14:15:41.502Z"
+    },
+    {
+      "key": "maria",
+      "accountId": "712020:028e23f5-2d8e-5029-9999-6ffb9cdf4572",
+      "displayName": "Maria Oliva",
+      "email": "maria@zava-online.com",
+      "initials": "MO",
+      "teamType": "Software engineering",
+      "createdAt": "2025-03-04T14:16:02.877Z"
+    },
+    {
+      "key": "kerry",
+      "accountId": "712020:8180e15f-5f8a-51e6-90c8-d4b30177dd5f",
+      "displayName": "Kerry Allen",
+      "email": "kerry@zava-online.com",
+      "initials": "KA",
+      "teamType": "Software engineering",
+      "createdAt": "2025-03-04T14:10:27.664Z"
+    },
+    {
+      "key": "tama",
+      "accountId": "712020:198d488e-7e89-50d1-9fe3-f349fd590434",
+      "displayName": "Tama Surya",
+      "email": "tama@zava-online.com",
+      "initials": "TS",
+      "teamType": "Software engineering",
+      "createdAt": "2025-03-04T14:17:55.130Z"
+    }
+  ],
+  "project": {
+    "id": "10040",
+    "key": "AUR",
+    "name": "Aurora",
+    "description": "Aurora smart-home hub platform: device status, the store operations dashboard and the status service.",
+    "lead": "kerry",
+    "avatarId": 10411,
+    "projectTypeKey": "software",
+    "simplified": true,
+    "style": "next-gen",
+    "boardId": 57
+  },
+  "issueTypes": [
+    {
+      "id": "10796",
+      "name": "Task",
+      "description": "Tasks track small, distinct pieces of work.",
+      "avatarId": 10318,
+      "subtask": false,
+      "hierarchyLevel": 0,
+      "entityId": "1c371cb9-ee78-50c6-a2a3-99eccd3ab0ae"
+    },
+    {
+      "id": "10797",
+      "name": "Bug",
+      "description": "Bugs track problems or errors.",
+      "avatarId": 10303,
+      "subtask": false,
+      "hierarchyLevel": 0,
+      "entityId": "46a62eb7-da39-5134-b557-e02f4dfe63a9"
+    },
+    {
+      "id": "10798",
+      "name": "Story",
+      "description": "Stories track functionality or features expressed as user goals.",
+      "avatarId": 10315,
+      "subtask": false,
+      "hierarchyLevel": 0,
+      "entityId": "ddd801b9-65d6-5f11-b29e-4418021a02df"
+    },
+    {
+      "id": "10799",
+      "name": "Epic",
+      "description": "Epics track collections of related bugs, stories, and tasks.",
+      "avatarId": 10307,
+      "subtask": false,
+      "hierarchyLevel": 1,
+      "entityId": "4b84acfd-c582-570f-af5f-64f4413bcb58"
+    },
+    {
+      "id": "10800",
+      "name": "Subtask",
+      "description": "Subtasks track small pieces of work that are part of a larger task.",
+      "avatarId": 10316,
+      "subtask": true,
+      "hierarchyLevel": -1,
+      "entityId": "13e08d7e-86f9-52d3-8b9a-75255bdd76cc"
+    }
+  ],
+  "statuses": [
+    {
+      "id": "10756",
+      "name": "To Do",
+      "category": 2
+    },
+    {
+      "id": "10757",
+      "name": "In Progress",
+      "category": 4
+    },
+    {
+      "id": "10758",
+      "name": "Done",
+      "category": 3
+    }
+  ],
+  "transitions": [
+    {
+      "id": "11",
+      "name": "To Do",
+      "to": "10756"
+    },
+    {
+      "id": "21",
+      "name": "In Progress",
+      "to": "10757"
+    },
+    {
+      "id": "31",
+      "name": "Done",
+      "to": "10758"
+    }
+  ],
+  "priorities": [
+    {
+      "id": "1",
+      "name": "Highest",
+      "icon": "highest_new.svg"
+    },
+    {
+      "id": "2",
+      "name": "High",
+      "icon": "high_new.svg"
+    },
+    {
+      "id": "3",
+      "name": "Medium",
+      "icon": "medium_new.svg"
+    },
+    {
+      "id": "4",
+      "name": "Low",
+      "icon": "low_new.svg"
+    },
+    {
+      "id": "5",
+      "name": "Lowest",
+      "icon": "lowest_new.svg"
+    }
+  ],
+  "linkTypes": [
+    {
+      "id": "10000",
+      "name": "Blocks",
+      "inward": "is blocked by",
+      "outward": "blocks"
+    },
+    {
+      "id": "10001",
+      "name": "Cloners",
+      "inward": "is cloned by",
+      "outward": "clones"
+    },
+    {
+      "id": "10002",
+      "name": "Duplicate",
+      "inward": "is duplicated by",
+      "outward": "duplicates"
+    },
+    {
+      "id": "10003",
+      "name": "Relates",
+      "inward": "relates to",
+      "outward": "relates to"
+    }
+  ],
+  "sprints": [
+    {
+      "id": 241,
+      "name": "Aurora Sprint 24",
+      "state": "active",
+      "boardId": 57,
+      "goal": "Cut the Aurora pilot stores over to the event-driven status service on Friday, November 20, and have the Lakeshore Retail pilot ready for its Monday, November 23 expansion.",
+      "startDate": "2026-10-26T13:00:00.000Z",
+      "endDate": "2026-11-20T20:00:00.000Z"
+    }
+  ],
+  "issues": [
+    {
+      "id": "10133",
+      "key": "AUR-133",
+      "type": "Task",
+      "summary": "Publish device heartbeat events to the event-driven status service",
+      "description": "Publish hub heartbeat events to the event-driven status service so it can derive Online and Offline without polling.\n\nShipped with the heartbeat publisher in aurora-status.",
+      "status": "Done",
+      "priority": "High",
+      "assignee": "maria",
+      "reporter": "kerry",
+      "labels": [
+        "status-service-cutover"
+      ],
+      "sprint": 241,
+      "estimateHours": 8,
+      "created": "2026-10-19T10:12:40.221+0000",
+      "updated": "2026-10-27T15:02:11.480+0000",
+      "comments": [
+        {
+          "id": "10401",
+          "author": "maria",
+          "body": "Heartbeat publisher is live in staging and production. Closing.",
+          "created": "2026-10-27T15:02:11.480+0000"
+        }
+      ],
+      "links": [],
+      "resolution": {
+        "id": "10000",
+        "description": "Work has been completed on this work item.",
+        "name": "Done"
+      }
+    },
+    {
+      "id": "10136",
+      "key": "AUR-136",
+      "type": "Task",
+      "summary": "Status-service cutover runbook for the pilot stores",
+      "description": "Write the November 20 cutover runbook for the pilot store group: switch order, health checks, rollback trigger and owner on call.\n\nRunbook lives in the Aurora Engineering Confluence space.",
+      "status": "In Progress",
+      "priority": "Medium",
+      "assignee": "kerry",
+      "reporter": "kerry",
+      "labels": [
+        "status-service-cutover"
+      ],
+      "sprint": 241,
+      "estimateHours": 6,
+      "created": "2026-10-20T09:44:18.902+0000",
+      "updated": "2026-10-28T11:30:05.317+0000",
+      "comments": [
+        {
+          "id": "10411",
+          "author": "kerry",
+          "body": "Draft is up in Confluence. Rollback section reviewed with Maria; switch order to finalise at the Nov 18 dry run.",
+          "created": "2026-10-28T11:30:05.317+0000"
+        }
+      ],
+      "links": []
+    },
+    {
+      "id": "10137",
+      "key": "AUR-137",
+      "type": "Bug",
+      "summary": "Telemetry gaps on Lakeshore Retail pilot hubs after firmware 4.2",
+      "description": "Some Lakeshore Retail pilot hubs on firmware 4.2 drop telemetry for up to 20 minutes after a store's nightly network restart.\n\n**Acceptance criteria**\n\n- No telemetry gap longer than one heartbeat interval after a network restart.",
+      "status": "Done",
+      "priority": "Highest",
+      "assignee": "triin",
+      "reporter": "emil",
+      "labels": [
+        "lakeshore-retail-pilot"
+      ],
+      "sprint": 241,
+      "estimateHours": 5,
+      "created": "2026-10-26T15:20:33.064+0000",
+      "updated": "2026-10-28T17:45:52.719+0000",
+      "comments": [
+        {
+          "id": "10414",
+          "author": "triin",
+          "body": "Blocked: waiting on the 4.2.1 firmware build from the device team. Nothing more we can do on our side today.",
+          "created": "2026-10-27T10:05:41.300+0000"
+        },
+        {
+          "id": "10418",
+          "author": "kerry",
+          "body": "Escalated to the device team lead. 4.2.1 is promised for tomorrow morning.",
+          "created": "2026-10-27T12:18:09.554+0000"
+        },
+        {
+          "id": "10423",
+          "author": "triin",
+          "body": "4.2.1 is rolled out to all pilot hubs. Telemetry gaps are gone after last night's restart. Resolving.",
+          "created": "2026-10-28T17:45:52.719+0000"
+        }
+      ],
+      "links": [],
+      "resolution": {
+        "id": "10000",
+        "description": "Work has been completed on this work item.",
+        "name": "Done"
+      }
+    },
+    {
+      "id": "10139",
+      "key": "AUR-139",
+      "type": "Task",
+      "summary": "Rollout regression checks for the status-service cutover",
+      "description": "Run the rollout regression checks on the event-driven status service before the November 20 cutover.\n\nRequired for a safe cutover.",
+      "status": "In Progress",
+      "priority": "High",
+      "assignee": "maria",
+      "reporter": "kerry",
+      "labels": [
+        "status-service-cutover"
+      ],
+      "sprint": 241,
+      "estimateHours": 8,
+      "created": "2026-10-21T15:05:12.341+0000",
+      "updated": "2026-10-28T16:40:27.006+0000",
+      "comments": [
+        {
+          "id": "10419",
+          "author": "maria",
+          "body": "Two of three regression runs are green on staging. Final run is scheduled after the Nov 18 dry run.",
+          "created": "2026-10-28T16:40:27.006+0000"
+        }
+      ],
+      "links": []
+    },
+    {
+      "id": "10142",
+      "key": "AUR-142",
+      "type": "Bug",
+      "summary": "Aurora hubs remain offline after reconnect",
+      "description": "Lakeshore Retail pilot hubs remain Offline in the dashboard after a successful network reconnect. Telemetry resumes, but staff restart working devices because the visible state is stale. Pilot expansion is November 23.\n\n**Acceptance criteria**\n\n- Reconnected pilot devices show Online on the active service.\n- Automated new-service reconnect coverage.\n- No regression in existing reconnect behaviour.",
+      "status": "In Progress",
+      "priority": "High",
+      "assignee": "triin",
+      "reporter": "emil",
+      "labels": [
+        "lakeshore-retail-pilot",
+        "at-risk"
+      ],
+      "sprint": 241,
+      "estimateHours": 8,
+      "created": "2026-10-23T14:41:27.905+0000",
+      "updated": "2026-10-29T09:40:12.633+0000",
+      "comments": [
+        {
+          "id": "10421",
+          "author": "triin",
+          "body": "I have started working on the fix.",
+          "created": "2026-10-26T20:00:00.000+0000"
+        },
+        {
+          "id": "10426",
+          "author": "triin",
+          "body": "Legacy-path fix is in review. Platform review asked for the same correction on the event-driven status service, because the pilot stores move to it at the November 20 cutover. That work depends on the reconnect-state design decision, which is still waiting for platform sign-off. Flagging this as at risk. I can't give a date until the design is approved.",
+          "created": "2026-10-29T08:05:37.418+0000"
+        },
+        {
+          "id": "10427",
+          "author": "kerry",
+          "body": "Only Sprint 24 item tied to the November 23 pilot expansion that isn't on track. Keeping it at the top of Thursday's sprint check-in.",
+          "created": "2026-10-29T09:40:12.633+0000"
+        }
+      ],
+      "links": []
+    },
+    {
+      "id": "10151",
+      "key": "AUR-151",
+      "type": "Story",
+      "summary": "Custom dashboard filters for the store status view",
+      "description": "Let store operations save custom filters on the device status dashboard.\n\nLower-priority enhancement. No contractual or pilot dependency.",
+      "status": "To Do",
+      "priority": "Low",
+      "assignee": "triin",
+      "reporter": "kerry",
+      "labels": [
+        "dashboard"
+      ],
+      "sprint": 241,
+      "estimateHours": 16,
+      "created": "2026-10-20T16:31:08.772+0000",
+      "updated": "2026-10-26T13:22:09.506+0000",
+      "comments": [],
+      "links": []
+    }
+  ],
+  "confluence": {
+    "spaces": [
+      {
+        "id": "98306",
+        "key": "AUR",
+        "name": "Aurora Engineering",
+        "type": "global",
+        "status": "current",
+        "homepageId": "98411",
+        "description": "Aurora smart-home hub platform: delivery commitments, sprint plans, runbooks and architecture decisions.",
+        "author": "kerry",
+        "owner": "kerry",
+        "created": "2026-03-02T09:10:00.000Z",
+        "labels": [
+          "aurora",
+          "engineering"
+        ],
+        "icon": "/wiki/download/attachments/98306/AUR?version=1"
+      }
+    ],
+    "pages": [
+      {
+        "id": "98411",
+        "parentId": null,
+        "title": "Aurora Engineering",
+        "author": "kerry",
+        "created": "2026-03-02T09:12:00.000Z",
+        "updatedBy": "kerry",
+        "updated": "2026-10-26T09:05:00.000Z",
+        "version": 4,
+        "labels": [],
+        "body": "Home of the Aurora engineering team: the smart-home hub platform, the store operations dashboard and the status service.\n\n## Start here\n\n- Lakeshore Retail pilot – delivery commitments\n- Aurora Sprint 24 plan\n- Status-service cutover runbook (November 20)\n- ADR-014: Reconnect state handling on the event-driven status service\n\n## Where things live\n\n| What | Where |\n|---|---|\n| Work tracking | Jira project AUR, board 57 |\n| Code | GitHub, zava-lab/aurora-status |\n| Decisions | Architecture decision records (ADRs) in this space |",
+        "spaceId": "98306",
+        "status": "current"
+      },
+      {
+        "id": "98433",
+        "parentId": "98411",
+        "title": "Lakeshore Retail pilot – delivery commitments",
+        "author": "emil",
+        "created": "2026-10-08T14:20:00.000Z",
+        "updatedBy": "emil",
+        "updated": "2026-10-23T16:10:00.000Z",
+        "version": 6,
+        "labels": [
+          "lakeshore-retail-pilot",
+          "commitments"
+        ],
+        "body": "Record of what Zava has committed to Lakeshore Retail for the Aurora pilot. Owner: Emil Vanggaard (Product). Change this page only with Product and Platform agreement.\n\n## Key dates\n\n| Date | Milestone | Owner |\n|---|---|---|\n| Friday, November 20 | Pilot stores cut over from the legacy polling status service to the event-driven status service | Tama Surya (Platform) |\n| Monday, November 23 | Pilot expansion: every Lakeshore Retail pilot store goes live on Aurora | Emil Vanggaard (Product) |\n\n## What must be true for November 23\n\n- Device status is served by the event-driven status service for all pilot stores. The legacy polling path is not used for the pilot after November 20.\n- Reconnected hubs show Online in the store dashboard within one heartbeat interval. Tracked in AUR-142.\n- Automated reconnect tests run against the event-driven status service, not only the legacy path.\n- Rollout regression checks pass on the event-driven status service. Tracked in AUR-139.\n\n## Sign-off\n\n- **Platform sign-off is required for any change to reconnect or status-state handling on the event-driven status service.** Platform approver: Tama Surya. Approval is recorded on the matching ADR in this space.\n- Product sign-off for the expansion: Emil Vanggaard.\n\n## Customer communication\n\nNo release date for the reconnect fix has been shared with Lakeshore Retail. Product sends any date only after Platform sign-off.\n\n## Change log\n\n| Date | Change |\n|---|---|\n| October 23 | Added the reconnect requirement after the Lakeshore Retail report of hubs staying Offline after reconnect. |\n| October 14 | Confirmed November 20 cutover and November 23 expansion. |",
+        "spaceId": "98306",
+        "status": "current"
+      },
+      {
+        "id": "98457",
+        "parentId": "98411",
+        "title": "ADR-014: Reconnect state handling on the event-driven status service",
+        "author": "triin",
+        "created": "2026-10-27T13:40:00.000Z",
+        "updatedBy": "triin",
+        "updated": "2026-10-29T07:50:00.000Z",
+        "version": 3,
+        "labels": [
+          "adr",
+          "status-service",
+          "lakeshore-retail-pilot"
+        ],
+        "body": "| Field | Value |\n|---|---|\n| Status | **Proposed – awaiting platform approval** |\n| Decision owner | Tama Surya (Platform Lead) |\n| Author | Triin Lepp |\n| Related | AUR-142, GitHub zava-lab/aurora-status PR #287 |\n| Needed by | Before the event-driven reconnect fix can be built and tested ahead of the November 20 cutover |\n\n## Context\n\nAfter a network reconnect, Aurora hubs can stay Offline in the store dashboard even though telemetry has resumed (AUR-142). PR #287 fixes this on the legacy polling path only. The Lakeshore Retail pilot stores move to the event-driven status service on November 20, so the same correction is needed there. On the event-driven service, a reconnect can arrive before or after the first heartbeat, so the order of events decides which state wins.\n\n## Options\n\n| Option | How it works | Trade-off |\n|---|---|---|\n| A. Clear Offline on reconnect event | Status consumer sets Online when it receives a device reconnect event | Simple, but a late Offline event can flip the hub back to Offline |\n| B. Reconcile on first heartbeat | Status consumer keeps a per-device session version and sets Online on the first heartbeat after a reconnect, ignoring older events | Needs a schema change to the device state table and new reconnect tests |\n\n## Proposal\n\nOption B. It handles out-of-order events, which the event-driven service produces during store network restarts.\n\n## What happens after approval\n\n1. Triin implements Option B in the event-driven status consumer on PR #287.\n2. Maria adds reconnect tests against the event-driven status service.\n3. Platform re-reviews PR #287.\n\n## Decision\n\nPending. Approval needed from Tama Surya. Option B touches status-state handling on the event-driven status service, so platform sign-off is required (see Lakeshore Retail pilot – delivery commitments).",
+        "spaceId": "98306",
+        "status": "current"
+      },
+      {
+        "id": "98472",
+        "parentId": "98411",
+        "title": "Aurora Sprint 24 plan",
+        "author": "kerry",
+        "created": "2026-10-26T09:20:00.000Z",
+        "updatedBy": "kerry",
+        "updated": "2026-10-26T09:20:00.000Z",
+        "version": 1,
+        "labels": [
+          "sprint-24"
+        ],
+        "body": "Sprint 24 runs Monday, October 26 to Friday, November 20.\n\n## Sprint goal\n\nCut the Aurora pilot stores over to the event-driven status service on November 20, and have the Lakeshore Retail pilot ready for its November 23 expansion.\n\n## Committed work\n\n| Item | Owner | Why it matters |\n|---|---|---|\n| AUR-133 Publish device heartbeat events | Maria Oliva | Event-driven service needs heartbeats to derive status |\n| AUR-136 Cutover runbook | Kerry Allen | Safe November 20 switch and rollback |\n| AUR-137 Telemetry gaps after firmware 4.2 | Triin Lepp | Pilot stores report missing telemetry |\n| AUR-139 Rollout regression checks | Maria Oliva | Required for a safe cutover |\n| AUR-142 Hubs remain offline after reconnect | Triin Lepp | Lakeshore Retail pilot escalation |\n| AUR-151 Custom dashboard filters | Triin Lepp | Stretch, no pilot dependency |\n\n## Ceremonies\n\n- Sprint check-in every Thursday at 10:00 in the Engineering channel.\n- Cutover dry run on Wednesday, November 18.",
+        "spaceId": "98306",
+        "status": "current"
+      },
+      {
+        "id": "98480",
+        "parentId": "98411",
+        "title": "Status-service cutover runbook (November 20)",
+        "author": "kerry",
+        "created": "2026-10-27T10:00:00.000Z",
+        "updatedBy": "kerry",
+        "updated": "2026-10-28T11:25:00.000Z",
+        "version": 2,
+        "labels": [
+          "status-service-cutover",
+          "runbook"
+        ],
+        "body": "Draft. Tracked in AUR-136.\n\n## Switch order\n\n1. Freeze status-service deploys at 12:00 on November 20.\n2. Move the pilot store group to the event-driven status service.\n3. Watch dashboard Online and Offline counts for 30 minutes.\n\n## Rollback\n\nIf Online counts drop by more than 5% for 10 minutes, move the pilot store group back to the legacy polling path. Owner on call: Maria Oliva.\n\n## Open items\n\n- Final switch order to be confirmed at the November 18 dry run.",
+        "spaceId": "98306",
+        "status": "current"
+      }
+    ],
+    "comments": [
+      {
+        "id": "99012",
+        "pageId": "98457",
+        "type": "footer",
+        "parentId": null,
+        "author": "triin",
+        "created": "2026-10-29T07:55:00.000Z",
+        "body": "Tama Surya, this is ready for your decision. The event-driven changes you asked for on PR #287 depend on which option is approved, so I'm holding that work until then."
+      },
+      {
+        "id": "99007",
+        "pageId": "98433",
+        "type": "footer",
+        "parentId": null,
+        "author": "tama",
+        "created": "2026-10-14T15:30:00.000Z",
+        "body": "Platform confirms the November 20 cutover for the pilot store group."
+      }
+    ]
+  }
+}
