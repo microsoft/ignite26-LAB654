@@ -74,6 +74,9 @@ Zava Expense is a custom line-of-business app, so it isn't in the connector cata
 
 Run Steps 1 to 4 in one new chat. Each new chat starts from the original data.
 
+> [!IMPORTANT]
+> Zava Expense works in Copilot Chat only. It doesn't appear in Cowork, so check that **Chat** is selected in the message box for every step.
+
 ### Turn on Zava Expense in Copilot
 
 1. Leave the Microsoft 365 admin center. Open a new browser tab and go to Copilot at [copilot.cloud.microsoft](https://copilot.cloud.microsoft/).
@@ -87,9 +90,9 @@ Run Steps 1 to 4 in one new chat. Each new chat starts from the original data.
 
 > **Where:** Copilot Chat, in a new chat.
 
-1. In Copilot, select **Chat** at the top of the left pane, then select **New chat**.
+1. In the left pane, select **New**. In the message box, check that **Chat** is selected.
 
-   ![The Copilot left pane with the Chat tab selected and New chat highlighted below it](images/copilot-new-chat.png)
+   ![Copilot with New highlighted in the left pane and Chat selected in the message box](images/harness-new-chat.png)
 
 2. Enter:
 

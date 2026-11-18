@@ -45,7 +45,7 @@ By the end of this session, you will be able to:
 - [Copilot connectors, connector skills and write actions](https://learn.microsoft.com/en-us/microsoft-365/copilot/connectors/overview)
 - [Model Context Protocol (MCP) custom connectors in the Microsoft 365 admin center](https://learn.microsoft.com/en-us/microsoft-365/copilot/connectors/set-up-custom-federated-connectors)
 - [Word, Excel, PowerPoint, Outlook and Teams](https://learn.microsoft.com/en-us/office365/servicedescriptions/office-365-platform-service-description/microsoft-365-copilot)
-- [Partner connectors: LSEG, FactSet, Moody's, iManage, SalesDesk, GitHub and EngHub](https://learn.microsoft.com/en-us/microsoft-365/copilot/connectors/connectors-gallery)
+- [Partner connectors: LSEG, FactSet, Moody's, iManage, SalesDesk, GitHub and Atlassian Rovo](https://learn.microsoft.com/en-us/microsoft-365/copilot/connectors/connectors-gallery)
 
 ### 📚 Continue your learning
 

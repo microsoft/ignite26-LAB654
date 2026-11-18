@@ -55,20 +55,19 @@ The iManage matter [Trey Research – AI Platform Agreement](https://mock-imanag
 Cowork uses only the plugins you turn on, so first turn on iManage_Lab.
 
 1. Open a new browser tab and go to [copilot.cloud.microsoft](https://copilot.cloud.microsoft/).
-2. Select **Cowork** at the top of the left pane.
-3. In the left pane, select **Customize**.
-4. Next to **Added**, select **Manage all**.
+2. In the left pane, select **Plugins**.
+3. At the top of the **Plugins** page, select **Cowork**. Then, next to **Added**, select **Manage all**.
 
-   ![The Cowork Customize page, with Customize highlighted in the left pane and Manage all highlighted next to the Added list of connectors](images/cowork-customize.png)
+   ![The Plugins page, with Plugins highlighted in the left pane, Cowork selected at the top and Manage all highlighted next to the Added list](images/harness-plugins-cowork.png)
 
-5. Turn on **iManage_Lab**.
-6. Turn off **Fabric IQ**, which is on by default. Leave every other plugin off.
+4. Turn on **iManage_Lab**.
+5. Turn off **Fabric IQ**, which is on by default. Leave every other plugin off.
 
-   ![The Added list in Cowork Customize, with iManage_Lab turned on and Fabric IQ, Moodys_Lab, SalesDesk_Lab, LSEG_Lab, FactSet_Lab, EngHub_Lab and GitHub_Lab turned off](images/legal-cowork-customize.png)
+   ![The Added list of plugins, with iManage_Lab turned on and Fabric IQ turned off](images/harness-plugins-legal.png)
 
-7. In the left pane, select **New task**.
+6. In the left pane, select **New**. In the message box, select **Cowork**.
 
-   ![The Copilot left pane with the Cowork tab selected and New task highlighted below it](images/copilot-new-cowork-task.png)
+   ![Copilot with New highlighted in the left pane and Cowork selected in the message box](images/harness-new-cowork.png)
 
 You don't need to turn on Outlook, Teams or Word. Cowork has them built in.
 
@@ -208,7 +207,7 @@ Save the negotiation sheet to the Drafts folder of the Trey Research matter in i
 | What happens | Try this |
 |---|---|
 | Step 1 doesn't find Hemanti's email or the Teams chat | Ask: "What did Hemanti send me about Trey Research?" then rerun Step 1. |
-| Cowork says it can't find the playbook | Select **Customize**, check that **iManage_Lab** is on, then rerun the step. |
+| Cowork says it can't find the playbook | Select **Plugins** in the left pane, then **Cowork**, check that **iManage_Lab** is on, then rerun the step. |
 | Cowork asks for permission to use iManage_Lab | Approve it. |
 | Cowork can't find the agreement | Check that **Trey Research Vendor Agreement v4.2** is in the **Trey Research** folder of your OneDrive, then rerun the step. |
 | You don't see the comments or tracked changes | Close the agreement and open it again from the link in Cowork's answer. |
