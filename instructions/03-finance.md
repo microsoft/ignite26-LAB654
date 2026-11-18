@@ -75,9 +75,9 @@ The committee will challenge the case, so every number has to be sourced and che
 ### 1a. Check whether Litware beat expectations
 
 1. Open a new browser tab and go to [copilot.cloud.microsoft](https://copilot.cloud.microsoft/).
-2. In Copilot, select **Chat** at the top of the left pane, then select **New chat**.
+2. In the left pane, select **New**. In the message box, check that **Chat** is selected.
 
-   ![The Copilot left pane with the Chat tab selected and New chat highlighted below it](images/copilot-new-chat.png)
+   ![Copilot with New highlighted in the left pane and Chat selected in the message box](images/harness-new-chat.png)
 
 3. Enter:
 
@@ -129,22 +129,21 @@ This is a long-running task, so you'll use Cowork. Cowork creates the workbook a
 
 Cowork uses only the plugins you turn on, so first turn on the finance connectors.
 
-1. In Copilot, select **Cowork** at the top of the left pane.
-2. In the left pane, select **Customize**.
-3. Next to **Added**, select **Manage all**.
+1. In the left pane, select **Plugins**.
+2. At the top of the **Plugins** page, select **Cowork**. Then, next to **Added**, select **Manage all**.
 
-   ![The Cowork Customize page, with Customize highlighted in the left pane and Manage all highlighted next to the Added list of connectors](images/cowork-customize.png)
+   ![The Plugins page, with Plugins highlighted in the left pane, Cowork selected at the top and Manage all highlighted next to the Added list](images/harness-plugins-cowork.png)
 
-4. Turn on **LSEG_Lab**, **FactSet_Lab** and **Moodys_Lab**.
-5. Turn off **Fabric IQ**, which is on by default.
+3. Turn on **LSEG_Lab**, **FactSet_Lab** and **Moodys_Lab**.
+4. Turn off **Fabric IQ**, which is on by default.
 
-   ![The Added list in Cowork Customize, with Moodys_Lab, LSEG_Lab and FactSet_Lab turned on and Fabric IQ turned off](images/cowork-customize-finance.png)
+   ![The Added list of plugins, with FactSet_Lab, LSEG_Lab and Moodys_Lab turned on and Fabric IQ turned off](images/harness-plugins-finance.png)
 
-6. In the left pane, select **New task**.
+5. In the left pane, select **New**. In the message box, select **Cowork**.
 
-   ![The Copilot left pane with the Cowork tab selected and New task highlighted below it](images/copilot-new-cowork-task.png)
+   ![Copilot with New highlighted in the left pane and Cowork selected in the message box](images/harness-new-cowork.png)
 
-7. Enter:
+6. Enter:
 
    ```text
    Using LSEG, create an Excel workbook called "Litware Committee Pack" with an equity research snapshot of Litware: analysts' earnings and revenue forecasts for this year and next (FY1, FY2), how many analysts cover it and how much they disagree, 5 years of financials, and valuation. Cite sources and dates.

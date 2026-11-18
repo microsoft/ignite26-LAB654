@@ -185,7 +185,7 @@ In this part, you'll find connectors in the catalog, check that the ones for you
     | Finance | +++LSEG_Lab+++, +++FactSet_Lab+++, +++Moodys_Lab+++ |
     | Legal | +++iManage_Lab+++ |
     | Productivity | +++SalesDesk_Lab+++ |
-    | Engineering | +++GitHub_Lab+++, +++EngHub_Lab+++ |
+    | Engineering | +++GitHub_Lab+++, +++Rovo_Lab+++ |
     | Bring your own app (everyone) | Zava Expense (you'll add it yourself later) |
 
     Outlook, Teams and your Microsoft 365 files are available in every track.
@@ -201,18 +201,18 @@ In a real organization, an admin deploys connectors like these once, and people 
 
 ## Ask your first grounded question
 
-Each question below needs facts from a system you'd normally open on its own: market data, a document management system, a CRM record or an EngHub ticket. Without connectors, you'd search that system and copy the answer across. With connectors, Copilot fetches it for you and cites where it came from.
+Each question below needs facts from a system you'd normally open on its own: market data, a document management system, a CRM record or an Jira ticket. Without connectors, you'd search that system and copy the answer across. With connectors, Copilot fetches it for you and cites where it came from.
 
-1. [] In Copilot, select **Chat** at the top of the left pane, then select **New chat**.
+1. [] In the left pane, select **New**. In the message box, check that **Chat** is selected.
 
-    !IMAGE[The Copilot left pane with the Chat tab selected and New chat highlighted below it.](instructions360859/copilot-new-chat.png "Start a new chat"){600}
+    !IMAGE[Copilot with New highlighted in the left pane and Chat selected in the message box.](instructions360859/harness-new-chat.png "Start a new chat"){600}
 
 1. [] Select the question for your track:
 
     - Finance: +++Using LSEG, what was Litware's earnings per share last quarter compared with the analyst consensus?+++
     - Legal: +++Using iManage, what are the hard stops in the Zava AI Procurement Playbook?+++
     - Productivity: +++What's the stage and amount of the Lakeshore Retail opportunity in SalesDesk?+++
-    - Engineering: +++What's the status of EngHub work item AUR-142?+++
+    - Engineering: +++What's the status of Jira work item AUR-142?+++
 
 1. [] Check that the answer cites its source, such as the connector name, a record, a page or a link.
 
@@ -233,9 +233,9 @@ Pick the track closest to your work. Each track takes about 15 to 20 minutes. Se
 
 After your track, everyone goes to [Bring your own app](#bring-your-own-app-zava-expense).
 
-> [!Hint] If Copilot doesn't give the response you expect in any track, select the model name at the top of the chat, switch from _Auto_ to a GPT model that isn't a quick-response one, and send the prompt again.
+> [!Hint] If Copilot doesn't give the response you expect in any track, select **Auto** at the top of the page, then **GPT**, and switch to a GPT model that isn't a quick-response one, and send the prompt again.
 >
-> !IMAGE[The model menu opened from Auto at the top of the chat, with GPT selected and a list of GPT models: GPT-5.6 Sol Quick response, GPT-6, GPT-5.6 Sol Think deeper and GPT-6.1 Sol.](instructions360859/copilot-model-picker-gpt.png "Switch to a GPT model"){600}
+> !IMAGE[The model menu opened from Auto at the top of the page, with GPT highlighted and a list of GPT models: GPT-5.6 Sol Quick response, GPT-6, GPT-5.6 Sol Think deeper and GPT-6.1 Sol.](instructions360859/harness-model-picker.png "Switch to a GPT model"){600}
 
 ===
 
@@ -273,9 +273,9 @@ The committee will challenge the case, so every number has to be sourced and che
 
 ### 1a. Check whether Litware beat expectations
 
-1. [] In Copilot, select **Chat** at the top of the left pane, then select **New chat**.
+1. [] In the left pane, select **New**. In the message box, check that **Chat** is selected.
 
-    !IMAGE[The Copilot left pane with the Chat tab selected and New chat highlighted below it.](instructions360859/copilot-new-chat.png "Start a new chat"){600}
+    !IMAGE[Copilot with New highlighted in the left pane and Chat selected in the message box.](instructions360859/harness-new-chat.png "Start a new chat"){600}
 
 1. [] Enter:
 
@@ -311,20 +311,19 @@ This is a long-running task, so you'll use Cowork. Cowork creates the workbook a
 
 Cowork uses only the plugins you turn on, so first turn on the finance connectors.
 
-1. [] In Copilot, select **Cowork** at the top of the left pane.
-1. [] In the left pane, select **Customize**.
-1. [] Next to **Added**, select **Manage all**.
+1. [] In the left pane, select **Plugins**.
+1. [] At the top of the **Plugins** page, select **Cowork**. Then, next to **Added**, select **Manage all**.
 
-    !IMAGE[The Cowork Customize page, with Customize highlighted in the left pane and Manage all highlighted next to the Added list of connectors.](instructions360859/rebrand-cowork-customize.png "Open Customize, then Manage all"){600}
+    !IMAGE[The Plugins page, with Plugins highlighted in the left pane, Cowork selected at the top and Manage all highlighted next to the Added list.](instructions360859/harness-plugins-cowork.png "Open Plugins, select Cowork, then Manage all"){600}
 
 1. [] Turn on **LSEG_Lab**, **FactSet_Lab** and **Moodys_Lab**.
 1. [] Turn off **Fabric IQ**, which is on by default.
 
-    !IMAGE[The Added list in Cowork Customize, with Moodys_Lab, LSEG_Lab and FactSet_Lab turned on and Fabric IQ turned off.](instructions360859/rebrand-cowork-customize-finance.png "Turn on the finance connectors"){600}
+    !IMAGE[The Added list of plugins, with FactSet_Lab, LSEG_Lab and Moodys_Lab turned on and Fabric IQ turned off.](instructions360859/harness-plugins-finance.png "Turn on the finance connectors"){600}
 
-1. [] In the left pane, select **New task**.
+1. [] In the left pane, select **New**. In the message box, select **Cowork**.
 
-    !IMAGE[The Copilot left pane with the Cowork tab selected and New task highlighted below it.](instructions360859/copilot-new-cowork-task.png "Start a new Cowork task"){600}
+    !IMAGE[Copilot with New highlighted in the left pane and Cowork selected in the message box.](instructions360859/harness-new-cowork.png "Start a new Cowork task"){600}
 
 1. [] Enter:
 
@@ -568,7 +567,7 @@ _Same Word chat, iManage_Lab_
 
 _Copilot Cowork opened from Word, iManage_Lab, Work IQ_
 
-> [!Alert] In Cowork, select **Customize** and turn on iManage_Lab. Then turn off the Fabric IQ plugin, which is on by default.
+> [!Alert] In the left pane, select **Plugins**, then **Cowork** and **Manage all**. Turn on iManage_Lab, then turn off the Fabric IQ plugin, which is on by default.
 
 1. [] Open Cowork from Word, then enter:
 
@@ -604,7 +603,7 @@ _Same Cowork chat, iManage_Lab_
 |:---|:---|
 | Step 1 doesn't find Hemanti's email or the Teams chat | Ask +++What did Hemanti send me about Trey Research?+++ then rerun Step 1. |
 | Comments or tracked changes don't appear in the agreement | Make sure the agreement is the active document, then rerun the step. |
-| Cowork says it can't find the playbook | Select **Customize**, check that **iManage_Lab** is on, then rerun Step 4. |
+| Cowork says it can't find the playbook | Select **Plugins** in the left pane, then **Cowork**, check that **iManage_Lab** is on, then rerun Step 4. |
 
 ## Checkpoint
 
@@ -639,10 +638,10 @@ You'll prep the call, handle the price objection and book the security review, w
 ## Before you start
 
 - [] **SalesDesk_Lab** shows as connected.
-- [] In Copilot, select **Cowork** at the top of the left pane, then select **New task**. Run every step in this one task, because your SalesDesk changes are kept only within it.
+- [] In the left pane, select **New**. In the message box, select **Cowork**. Run every step in this one task, because your SalesDesk changes are kept only within it.
 
-    !IMAGE[The Copilot left pane with the Cowork tab selected and New task highlighted below it.](instructions360859/copilot-new-cowork-task.png "Start a new Cowork task"){600}
-- [] In Cowork, select **Customize** and turn on **SalesDesk_Lab**. Then turn off the **Fabric IQ** plugin, which is on by default.
+    !IMAGE[Copilot with New highlighted in the left pane and Cowork selected in the message box.](instructions360859/harness-new-cowork.png "Start a new Cowork task"){600}
+- [] In the left pane, select **Plugins**, then **Cowork** and **Manage all**. Turn on **SalesDesk_Lab**. Then turn off the **Fabric IQ** plugin, which is on by default.
 
 > [!Knowledge] To see what Copilot will read, open the @[Lakeshore Retail account](`Start-Process "https://mock-salesdesk.yellowsand-9530f5dc.eastus.azurecontainerapps.io/lightning/r/Account/001Hp0000000001IAA/view"`){PowerShell} in SalesDesk_Lab.
 
@@ -731,7 +730,7 @@ When you're done, go to [Bring your own app](#bring-your-own-app-zava-expense), 
 
 # Engineering: Find what's blocking
 
-_About 15 minutes · GitHub_Lab, EngHub_Lab, Teams · Copilot Chat, Copilot Cowork_
+_About 15 minutes · GitHub_Lab, Rovo_Lab, Teams · Copilot Chat, Copilot Cowork_
 
 You're the product manager for Aurora, a smart-home hub that retail stores use to track devices. Lakeshore Retail is piloting it, and on Monday, November 23, every pilot store goes live.
 
@@ -748,42 +747,42 @@ Atul, the pilot coordinator, has emailed again: hubs keep showing _Offline_ afte
 
 You won't change any code. You'll investigate in Copilot Chat, then switch to Copilot Cowork to act.
 
-!IMAGE[Steps 1 and 2 in Copilot Chat find the at-risk item and what it's waiting on across EngHub, EngHub Docs and GitHub. Steps 3 and 4 in Copilot Cowork send Tama a Teams message and create a one-slide sprint update.](instructions360859/rebrand-engineering-workflow.png "How the engineering track flows")
+!IMAGE[Steps 1 and 2 in Copilot Chat find the at-risk item and what it's waiting on across Jira, Confluence and GitHub. Steps 3 and 4 in Copilot Cowork send Tama a Teams message and create a one-slide sprint update.](instructions360859/rebrand-engineering-workflow.png "How the engineering track flows")
 
 ## Before you start
 
-- [] **GitHub_Lab** and **EngHub_Lab** show as connected.
+- [] **GitHub_Lab** and **Rovo_Lab** show as connected.
 
-> [!Knowledge] To see what Copilot will read, open the @[Aurora Sprint 24 board](`Start-Process "https://mock-enghub.yellowsand-9530f5dc.eastus.azurecontainerapps.io/"`){PowerShell}, the @[ADR-014 page](`Start-Process "https://mock-enghub.yellowsand-9530f5dc.eastus.azurecontainerapps.io/wiki/spaces/AUR/pages/98457"`){PowerShell} in EngHub Docs and the @[aurora-status pull requests](`Start-Process "https://mock-github.yellowsand-9530f5dc.eastus.azurecontainerapps.io/zava-lab/aurora-status/pulls"`){PowerShell} in GitHub.
+> [!Knowledge] To see what Copilot will read, open the @[Aurora Sprint 24 board](`Start-Process "https://mock-atlassian.yellowsand-9530f5dc.eastus.azurecontainerapps.io/jira/software/projects/AUR/boards/57"`){PowerShell}, the @[ADR-014 page](`Start-Process "https://mock-atlassian.yellowsand-9530f5dc.eastus.azurecontainerapps.io/wiki/spaces/AUR/pages/98457"`){PowerShell} in Confluence and the @[aurora-status pull requests](`Start-Process "https://mock-github.yellowsand-9530f5dc.eastus.azurecontainerapps.io/zava-lab/aurora-status/pulls"`){PowerShell} in GitHub.
 
 ## Step 1: Check how the sprint is going
 
-_Copilot Chat, EngHub_Lab_
+_Copilot Chat, Rovo_Lab (Jira and Confluence)_
 
-1. [] In Copilot, select **Chat** at the top of the left pane, then select **New chat**.
+1. [] In the left pane, select **New**. In the message box, check that **Chat** is selected.
 
-    !IMAGE[The Copilot left pane with the Chat tab selected and New chat highlighted below it.](instructions360859/copilot-new-chat.png "Start a new chat"){600}
+    !IMAGE[Copilot with New highlighted in the left pane and Chat selected in the message box.](instructions360859/harness-new-chat.png "Start a new chat"){600}
 
 1. [] Enter:
 
     +++What's the status of Aurora Sprint 24? Is anything at risk for the Lakeshore Retail pilot expansion?+++
 
-1. [] Check that you see a summary of the six Sprint 24 items, with one at risk: AUR-142, _Aurora hubs remain offline after reconnect_, with citations to the EngHub items.
+1. [] Check that you see a summary of the six Sprint 24 items, with one at risk: AUR-142, _Aurora hubs remain offline after reconnect_, with citations to the Jira items.
 
     > [!Knowledge] The board is mostly green, and Copilot picks out the one item that matters to your customer.
 
 ## Step 2: Find what AUR-142 is waiting on
 
-_Same chat, EngHub_Lab, GitHub_Lab_
+_Same chat, Rovo_Lab (Jira and Confluence), GitHub_Lab_
 
 1. [] In the same chat, enter:
 
-    +++What's the current status of AUR-142, and what is it waiting on? Check EngHub, EngHub Docs and GitHub.+++
+    +++What's the current status of AUR-142, and what is it waiting on? Check Jira, Confluence and GitHub.+++
 
 1. [] Check that the answer joins all three sources:
 
-    - EngHub: AUR-142 is In Progress and at risk. Triin can't give a date until a design decision gets platform sign-off.
-    - EngHub Docs: the pilot moves to the event-driven status service on November 20, and ADR-014 is still _Proposed_, with Tama Surya as the decision owner.
+    - Jira: AUR-142 is In Progress and at risk. Triin can't give a date until a design decision gets platform sign-off.
+    - Confluence: the pilot moves to the event-driven status service on November 20, and ADR-014 is still _Proposed_, with Tama Surya as the decision owner.
     - GitHub: PR #287 is open. It fixes only the old polling service, and Tama requested changes.
     - The answer: the fix is waiting on Tama's approval of ADR-014.
 
@@ -793,21 +792,21 @@ _Same chat, EngHub_Lab, GitHub_Lab_
 
 _Copilot Cowork, Teams_
 
-> [!Alert] In Cowork, select **Customize** and turn on GitHub_Lab and EngHub_Lab. Then turn off the Fabric IQ plugin, which is on by default.
+> [!Alert] In the left pane, select **Plugins**, then **Cowork** and **Manage all**. Turn on GitHub_Lab and Rovo_Lab, then turn off the Fabric IQ plugin, which is on by default.
 
-1. [] In Copilot, select **Cowork** at the top of the left pane, then select **New task**. Cowork may not have your Chat conversation, so these prompts include the context they need.
+1. [] In the left pane, select **New**. In the message box, select **Cowork**. Cowork may not have your Chat conversation, so these prompts include the context they need.
 
-    !IMAGE[The Copilot left pane with the Cowork tab selected and New task highlighted below it.](instructions360859/copilot-new-cowork-task.png "Start a new Cowork task"){600}
+    !IMAGE[Copilot with New highlighted in the left pane and Cowork selected in the message box.](instructions360859/harness-new-cowork.png "Start a new Cowork task"){600}
 
 1. [] Enter:
 
-    +++Send Tama Surya a Teams message. Ask Tama to approve ADR-014 so Triin can start the event-driven fix for AUR-142, and to re-review PR #287 once it's updated. Mention the November 20 cutover and include links to the ADR, the EngHub item and the PR.+++
+    +++Send Tama Surya a Teams message. Ask Tama to approve ADR-014 so Triin can start the event-driven fix for AUR-142, and to re-review PR #287 once it's updated. Mention the November 20 cutover and include links to the ADR, the Jira item and the PR.+++
 
 1. [] When Cowork shows the Teams message for confirmation, check the recipient and the message, then approve it.
 
 ## Step 4: Turn the sprint into a slide
 
-_Same Cowork task, EngHub_Lab sprint-to-slides skill_
+_Same Cowork task, Rovo_Lab sprint-to-slides skill_
 
 1. [] In the same task, enter +++/skill sprint-to-slides+++, press Shift+Enter for a new line, then enter:
 
@@ -815,14 +814,14 @@ _Same Cowork task, EngHub_Lab sprint-to-slides skill_
 
 1. [] Check that the slide shows the sprint goal and dates, AUR-142 at risk, the blocker (ADR-014 waiting on Tama), next steps with owners, and no invented delivery date.
 
-    > [!Knowledge] A partner skill turned live EngHub and EngHub Docs data into a leadership-ready slide in one step.
+    > [!Knowledge] A partner skill turned live Jira and Confluence data into a leadership-ready slide in one step.
 
 ## If it goes wrong
 
 | What happens | Try this |
 |:---|:---|
-| Step 1 doesn't find the sprint | Ask +++Search EngHub for the Aurora Sprint 24 work items.+++ |
-| Step 2 misses EngHub Docs or GitHub | Ask +++Find ADR-014 in EngHub Docs+++ or +++Search GitHub for a pull request that references AUR-142.+++ |
+| Step 1 doesn't find the sprint | Ask +++Search Jira for the Aurora Sprint 24 work items.+++ |
+| Step 2 misses Confluence or GitHub | Ask +++Find ADR-014 in Confluence+++ or +++Search GitHub for a pull request that references AUR-142.+++ |
 | The skill returns an outline, not a slide | Reply +++Create the .pptx file with one slide.+++ |
 | Cowork sends without showing you the message | Tell a proctor. Messages should always ask for approval first. |
 
@@ -833,7 +832,7 @@ _Same Cowork task, EngHub_Lab sprint-to-slides skill_
 - [] A Teams message to Tama is sent or ready for your approval.
 - [] You have one sprint slide for leadership.
 
-Copilot found the one item at risk, joined EngHub, EngHub Docs and GitHub to show what it was waiting on, then Cowork asked for the decision and gave leadership a one-slide update.
+Copilot found the one item at risk, joined Jira, Confluence and GitHub to show what it was waiting on, then Cowork asked for the decision and gave leadership a one-slide update.
 
 Other connectors that fit this pattern: Azure DevOps, Linear and Webflow.
 
@@ -893,11 +892,13 @@ Zava Expense isn't in the connector catalog. Zava's app team has already made it
 
 Run Steps 1 to 4 in one new chat. Each new chat starts from the original data.
 
+> [!Alert] Zava Expense works in Copilot Chat only. It doesn't appear in Cowork, so check that **Chat** is selected in the message box for every step.
+
 ## Step 1: Check where you stand
 
-1. [] In Copilot, select **Chat** at the top of the left pane, then select **New chat**.
+1. [] In the left pane, select **New**. In the message box, check that **Chat** is selected.
 
-    !IMAGE[The Copilot left pane with the Chat tab selected and New chat highlighted below it.](instructions360859/copilot-new-chat.png "Start a new chat"){600}
+    !IMAGE[Copilot with New highlighted in the left pane and Chat selected in the message box.](instructions360859/harness-new-chat.png "Start a new chat"){600}
 
 1. [] Enter:
 
@@ -974,7 +975,7 @@ This step submits the report, so Copilot asks for your approval first.
 | Finance | A Litware committee pack in Excel and a memo in Word, from LSEG, FactSet and Moody's |
 | Legal | Flags and a redline in Word, then a negotiation sheet and a prep invite in Cowork, from Work IQ and iManage |
 | Productivity | A call brief, a grounded answer to a price objection, and a booked and logged meeting, from SalesDesk, Teams and Outlook |
-| Engineering | The sprint's one at-risk item and what it's waiting on, a Teams message and a sprint slide, from EngHub, EngHub Docs and GitHub |
+| Engineering | The sprint's one at-risk item and what it's waiting on, a Teams message and a sprint slide, from Jira, Confluence and GitHub |
 | Bring your own app | An expense report checked, fixed and submitted, plus a spend summary in Excel, from Zava Expense |
 
 ## Key takeaways

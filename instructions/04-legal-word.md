@@ -110,7 +110,9 @@ Now redline this so we own the fine-tuned model and get 60 days' notice and our 
 *Copilot Cowork (open it from Word) · iManage_Lab · Work IQ*
 
 > [!IMPORTANT]
-> In Cowork, select **Customize** and turn on **iManage_Lab**. Then turn off the **Fabric IQ** plugin, which is on by default.
+> Before you start, turn on **iManage_Lab** for Cowork. In Copilot at [copilot.cloud.microsoft](https://copilot.cloud.microsoft/), select **Plugins** in the left pane. At the top of the **Plugins** page, select **Cowork**. Then, next to **Added**, select **Manage all**. Turn on **iManage_Lab**, and turn off **Fabric IQ**, which is on by default.
+>
+> ![The Added list of plugins, with iManage_Lab turned on and Fabric IQ turned off](images/harness-plugins-legal.png)
 
 ```text
 Get me ready for the December 10 session with Trey Research. Make a one-sheet negotiation list with just my redline, the hard-stop flags and the top gaps against what Colorado and New York insurance regulators expect against our playbook in iManage. Then send Luc and Hemanti a 30-minute prep invite for this week with a five-line summary as agenda.
@@ -147,7 +149,7 @@ Save the negotiation sheet to the Drafts folder of the Trey Research matter in i
 |---|---|
 | Step 1 doesn't find Hemanti's email or the Teams chat | Ask: "What did Hemanti send me about Trey Research?" then rerun Step 1. |
 | Comments or tracked changes don't appear in the agreement | Make sure the agreement is the active document, then rerun the step. |
-| Cowork says it can't find the playbook | Select **Customize**, check that **iManage_Lab** is on, then rerun Step 4. |
+| Cowork says it can't find the playbook | Select **Plugins** in the left pane, then **Cowork**, check that **iManage_Lab** is on, then rerun Step 4. |
 
 ## Checkpoint
 
