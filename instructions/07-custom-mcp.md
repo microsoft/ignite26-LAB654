@@ -117,7 +117,7 @@ Find the receipts from my Seattle trip in my inbox and use them to create a Zava
 
 **What to look for:**
 
-- Draft report **ER-2001** in Zava Expense: six items totalling **$2,052.65**, with every receipt from your inbox attached.
+- Draft report **ER-2001** in Zava Expense, with your Seattle card charges and every receipt from your inbox attached.
 - **Blocking:** the Westin charged $389 for the night of Oct 28, which is $139 over the $250 Seattle cap.
 - **Warning:** the $52.30 Uber ride was charged twice (TX-10111). Copilot suggests asking Ebere Ibeabuchi in Finance Operations to reverse it.
 
@@ -133,7 +133,7 @@ Add a justification for the $389 Westin night: a city-wide convention pushed up 
 
 - Copilot reruns the check: no blocking issues and one justified exception.
 - An approval card appears. Approve it.
-- Copilot confirms that ER-2001 ($2,052.65) was submitted to **Hannes Niemi**.
+- Copilot confirms that ER-2001 was submitted to **Hannes Niemi**.
 
 Then check the status:
 
