@@ -1039,7 +1039,7 @@ Run Steps 1 to 4 in one new chat. Each new chat starts from the original data.
     ++Find the receipts from my Seattle trip in my inbox and use them to create a Zava Expense report for the Fabrikam, Inc. partnership review. Check the report against our travel policy, but don't submit it yet.++
 
 1. [] When Copilot asks you to confirm creating the expense report in Zava Expense, check the details and approve it.
-1. [] Check that Copilot creates draft report ER-2001 with six items totalling $2,052.65 and flags:
+1. [] Check that Copilot creates draft report ER-2001 with your Seattle card charges and flags:
 
     - Blocking: the Westin charged $389 for the night of October 28, which is $139 over the $250 Seattle cap.
     - Warning: the $52.30 Uber ride was charged twice (TX-10111). Copilot suggests asking Ebere Ibeabuchi in Finance Operations to reverse it.
@@ -1054,7 +1054,7 @@ This step submits the report, so Copilot asks for your approval first.
 
 1. [] Check that Copilot reruns the policy check with no blocking issues and one justified exception.
 1. [] When the approval card appears, approve it.
-1. [] Check that Copilot confirms ER-2001 ($2,052.65) was submitted to Hannes Niemi.
+1. [] Check that Copilot confirms ER-2001 was submitted to Hannes Niemi.
 1. [] Check the status: ++Has my Seattle report gone through? Who's approving it?++
 
 ### Step 4: Review your spend
